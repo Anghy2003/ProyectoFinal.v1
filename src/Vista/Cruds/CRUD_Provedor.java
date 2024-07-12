@@ -325,7 +325,7 @@ public class CRUD_Provedor extends javax.swing.JPanel {
         jPanel1.add(btnSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 200, 90, 30));
 
         lblFondoCRUD.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/CRUD_ORIGINAL.jpg"))); // NOI18N
-        jPanel1.add(lblFondoCRUD, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 740, 470));
+        jPanel1.add(lblFondoCRUD, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 780, 460));
 
         add(jPanel1, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents

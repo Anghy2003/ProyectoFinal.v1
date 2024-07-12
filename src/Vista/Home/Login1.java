@@ -1,6 +1,8 @@
 
 package Vista.Home;
 
+import Vista.Menu.VistaMenu;
+
 public class Login1 extends javax.swing.JFrame {
 
     public Login1() {
@@ -192,7 +194,9 @@ public class Login1 extends javax.swing.JFrame {
     }//GEN-LAST:event_btnregresisActionPerformed
 
     private void btnIngresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIngresarActionPerformed
-
+     VistaMenu Mimenu=new VistaMenu();
+     Mimenu.setVisible(true);
+     this.dispose();
     }//GEN-LAST:event_btnIngresarActionPerformed
 
     /**
