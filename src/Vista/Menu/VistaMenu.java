@@ -70,7 +70,7 @@ public class VistaMenu extends javax.swing.JFrame {
         jLabel3.setText("Usuario");
         jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 100, 90, -1));
 
-        lbliconologo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/Logomini1.png"))); // NOI18N
+        lbliconologo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/boton-x (1).png"))); // NOI18N
         lbliconologo.setToolTipText("");
         jPanel2.add(lbliconologo, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 30, -1, 70));
 
