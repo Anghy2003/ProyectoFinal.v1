@@ -12,7 +12,7 @@ package Vista.PanelSubmenus;
 public class PanelSubmenuReportes extends javax.swing.JPanel {
 
     /**
-     * Creates new form PanelSubmenuReportes
+     * Creates new form PanelSubmenu
      */
     public PanelSubmenuReportes() {
         initComponents();
@@ -30,6 +30,8 @@ public class PanelSubmenuReportes extends javax.swing.JPanel {
         jPanel1 = new javax.swing.JPanel();
 
         setLayout(new java.awt.BorderLayout());
+
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);

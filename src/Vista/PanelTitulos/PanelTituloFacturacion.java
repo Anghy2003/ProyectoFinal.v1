@@ -3,18 +3,18 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Vista.PanelSubmenus;
+package Vista.PanelTitulos;
 
 /**
  *
  * @author 59399
  */
-public class PanelSubmenuFacturacion extends javax.swing.JPanel {
+public class PanelTituloFacturacion extends javax.swing.JPanel {
 
     /**
-     * Creates new form PanelSubmenuFacturacion
+     * Creates new form PanelTituloVehiculo
      */
-    public PanelSubmenuFacturacion() {
+    public PanelTituloFacturacion() {
         initComponents();
     }
 
@@ -28,21 +28,17 @@ public class PanelSubmenuFacturacion extends javax.swing.JPanel {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
+        lbltituloFacturacion = new javax.swing.JLabel();
 
         setLayout(new java.awt.BorderLayout());
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 870, Short.MAX_VALUE)
-        );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 80, Short.MAX_VALUE)
-        );
+        lbltituloFacturacion.setFont(new java.awt.Font("Roboto Black", 0, 30)); // NOI18N
+        lbltituloFacturacion.setForeground(new java.awt.Color(0, 53, 79));
+        lbltituloFacturacion.setText("Facturación");
+        jPanel1.add(lbltituloFacturacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 40, 322, 30));
 
         add(jPanel1, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
@@ -50,5 +46,6 @@ public class PanelSubmenuFacturacion extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JLabel lbltituloFacturacion;
     // End of variables declaration//GEN-END:variables
 }
