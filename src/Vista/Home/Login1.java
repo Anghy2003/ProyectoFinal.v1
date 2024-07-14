@@ -7,6 +7,8 @@ public class Login1 extends javax.swing.JFrame {
 
     public Login1() {
         initComponents();
+        this.setLocationRelativeTo(this);
+
     }
 
     /**

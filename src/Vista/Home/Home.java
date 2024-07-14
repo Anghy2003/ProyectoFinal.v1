@@ -5,6 +5,7 @@ public class Home extends javax.swing.JFrame {
 
     public Home() {
         initComponents();
+        this.setLocationRelativeTo(this);
         botonesTransparentesIngresar();
          
     }
