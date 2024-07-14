@@ -22,6 +22,7 @@ public class CRUD_Cliente extends javax.swing.JPanel {
         for (Cliente cliente1 : cliente) {
             listaClienteBase.add(cliente1);
         }
+        CRUD_Cliente.BaseFinal.close();
         return listaClienteBase;
     }
 
@@ -32,9 +33,11 @@ public class CRUD_Cliente extends javax.swing.JPanel {
         if (VerificarCliente(BaseFinal, nombreUsuario) == 0) {
             BaseFinal.set(cliente);
             JOptionPane.showMessageDialog(this, "Cliente Guardado");
+            BaseFinal.close();
         } else {
             JOptionPane.showMessageDialog(this, "Ya existe el Usuario,Intente otro Usuario");
         }
+        CRUD_Cliente.BaseFinal.close();
     }
 
     public static int VerificarCliente(ObjectContainer BaseFinal, String user) {
@@ -317,6 +320,7 @@ public class CRUD_Cliente extends javax.swing.JPanel {
         comboxTipoCliente.setSelectedIndex(-1);
         txtNombreUser.setText("");
         txtPassUser.setText("");
+        CRUD_Cliente.BaseFinal.close();
     }//GEN-LAST:event_btnRegistrarActionPerformed
 
     private void comboxTipoClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_comboxTipoClienteActionPerformed

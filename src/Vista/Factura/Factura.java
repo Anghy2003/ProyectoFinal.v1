@@ -212,10 +212,10 @@ static ObjectContainer BaseFinal = Conexion_db.ConectarBD();
 
         lblverlis.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/lista.png"))); // NOI18N
         lblverlis.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        jPanel3.add(lblverlis, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 370, 710, 70));
+        jPanel3.add(lblverlis, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 380, 710, 70));
 
         lblverFactu.setText("Ver lista de facturas");
-        jPanel3.add(lblverFactu, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 390, -1, 40));
+        jPanel3.add(lblverFactu, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 390, -1, 40));
 
         btnEliminar.setText("Eliminar");
         btnEliminar.addActionListener(new java.awt.event.ActionListener() {

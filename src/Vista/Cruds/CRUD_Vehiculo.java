@@ -20,6 +20,7 @@ static ObjectContainer BaseFinal = Conexion_db.ConectarBD();
      */
     public CRUD_Vehiculo() {
         initComponents();
+        mostrarDatos(BaseFinal);
     }
 
     public final void transparente() {
@@ -62,6 +63,7 @@ static ObjectContainer BaseFinal = Conexion_db.ConectarBD();
         } else {
             JOptionPane.showMessageDialog(null, "Vehiculo ya existe en la BD");
         }
+        CRUD_Vehiculo.BaseFinal.close();
     }
 
     public static int verificarVehiculo(ObjectContainer BaseFinal, String placa_Vehiculo, String modelo_Vehiculo, String marca_Vehiculo, String color_Vehiculo, String anioFabricacion_Vehiculo) {
@@ -73,7 +75,9 @@ static ObjectContainer BaseFinal = Conexion_db.ConectarBD();
     }
 
     private void mostrarDatos(ObjectContainer base) {
+        
         jTable1.setEnabled(true);
+        
         //Guardamos en "resultado" todos proveedores de la base de Datos
         ObjectSet<Vehiculo> resultado = base.get(Vehiculo.class);
         //Creo una matriz
@@ -91,6 +95,7 @@ static ObjectContainer BaseFinal = Conexion_db.ConectarBD();
         // datos configurados
         jTable1.setModel(new javax.swing.table.DefaultTableModel(matriz, new String[]{"Placa", "Modelo ", "Marca", "Color", "Año Fabricacion"}));
         jTable1.setEnabled(false);
+       
     }
 
     private void resetCampos() {
@@ -109,6 +114,7 @@ static ObjectContainer BaseFinal = Conexion_db.ConectarBD();
                 break;
             }
         }
+        CRUD_Vehiculo.BaseFinal.close();
         return vehiculo;
     }
 
@@ -391,6 +397,7 @@ static ObjectContainer BaseFinal = Conexion_db.ConectarBD();
         btnModificar.setVisible(false);
         btnEliminar.setVisible(false);
         mostrarDatos(BaseFinal);
+        CRUD_Vehiculo.BaseFinal.close();
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
@@ -433,7 +440,7 @@ static ObjectContainer BaseFinal = Conexion_db.ConectarBD();
         btnEliminar.setVisible(false);
         txtPlaca.setEnabled(true);
         mostrarDatos(BaseFinal);
-
+        CRUD_Vehiculo.BaseFinal.close();
     }//GEN-LAST:event_btnModificarActionPerformed
 
     private void btnRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegistrarActionPerformed
@@ -492,7 +499,7 @@ static ObjectContainer BaseFinal = Conexion_db.ConectarBD();
             JOptionPane.showMessageDialog(this, "No se encontro al vehiculo con placas "+txtPlaca.getText());
         }
         mostrarDatos(BaseFinal);
-
+        CRUD_Vehiculo.BaseFinal.close();
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed

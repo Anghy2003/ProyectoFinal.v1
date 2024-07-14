@@ -88,20 +88,20 @@
                   </Properties>
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                      <AbsoluteConstraints x="50" y="100" width="90" height="-1"/>
+                      <AbsoluteConstraints x="40" y="120" width="90" height="-1"/>
                     </Constraint>
                   </Constraints>
                 </Component>
                 <Component class="javax.swing.JLabel" name="lbliconologo">
                   <Properties>
                     <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                      <Image iconType="3" name="/Images/boton-x (1).png"/>
+                      <Image iconType="3" name="/Images/logote_resized.png"/>
                     </Property>
                     <Property name="toolTipText" type="java.lang.String" value=""/>
                   </Properties>
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                      <AbsoluteConstraints x="70" y="30" width="-1" height="70"/>
+                      <AbsoluteConstraints x="30" y="0" width="-1" height="120"/>
                     </Constraint>
                   </Constraints>
                 </Component>
@@ -128,16 +128,16 @@
                                   <Group type="103" groupAlignment="1" attributes="0">
                                       <Group type="102" alignment="1" attributes="0">
                                           <EmptySpace max="-2" attributes="0"/>
-                                          <Component id="jLabel11" min="-2" pref="159" max="-2" attributes="0"/>
+                                          <Component id="btnSalir" min="-2" pref="159" max="-2" attributes="0"/>
                                       </Group>
                                       <Group type="102" alignment="0" attributes="0">
                                           <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
                                           <Group type="103" groupAlignment="1" attributes="0">
-                                              <Component id="jLabel6" min="-2" pref="159" max="-2" attributes="0"/>
-                                              <Component id="jLabel9" min="-2" pref="159" max="-2" attributes="0"/>
-                                              <Component id="jLabel8" min="-2" pref="159" max="-2" attributes="0"/>
-                                              <Component id="jLabel7" min="-2" pref="159" max="-2" attributes="0"/>
-                                              <Component id="jLabel10" alignment="1" min="-2" pref="159" max="-2" attributes="0"/>
+                                              <Component id="btnReportes" min="-2" pref="159" max="-2" attributes="0"/>
+                                              <Component id="btnCatalogo" min="-2" pref="159" max="-2" attributes="0"/>
+                                              <Component id="btnFactura" min="-2" pref="159" max="-2" attributes="0"/>
+                                              <Component id="btnServicios" min="-2" pref="159" max="-2" attributes="0"/>
+                                              <Component id="btnProvedores" alignment="1" min="-2" pref="159" max="-2" attributes="0"/>
                                           </Group>
                                       </Group>
                                   </Group>
@@ -145,7 +145,7 @@
                               </Group>
                               <Group type="103" alignment="1" groupAlignment="0" attributes="0">
                                   <Component id="btnVehiculos" min="-2" pref="169" max="-2" attributes="0"/>
-                                  <Component id="jLabel5" alignment="1" min="-2" pref="169" max="-2" attributes="0"/>
+                                  <Component id="btnUsuario" alignment="1" min="-2" pref="169" max="-2" attributes="0"/>
                               </Group>
                           </Group>
                           <EmptySpace pref="32" max="32767" attributes="0"/>
@@ -156,21 +156,21 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
-                          <Component id="jLabel5" min="-2" pref="50" max="-2" attributes="0"/>
+                          <Component id="btnUsuario" min="-2" pref="50" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
                           <Component id="btnVehiculos" min="-2" pref="50" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
-                          <Component id="jLabel7" min="-2" pref="50" max="-2" attributes="0"/>
+                          <Component id="btnServicios" min="-2" pref="50" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
-                          <Component id="jLabel8" min="-2" pref="50" max="-2" attributes="0"/>
+                          <Component id="btnFactura" min="-2" pref="50" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
-                          <Component id="jLabel9" min="-2" pref="50" max="-2" attributes="0"/>
+                          <Component id="btnCatalogo" min="-2" pref="50" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
-                          <Component id="jLabel10" min="-2" pref="50" max="-2" attributes="0"/>
+                          <Component id="btnProvedores" min="-2" pref="50" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Component id="jLabel6" min="-2" pref="50" max="-2" attributes="0"/>
+                          <Component id="btnReportes" min="-2" pref="50" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
-                          <Component id="jLabel11" min="-2" pref="50" max="-2" attributes="0"/>
+                          <Component id="btnSalir" min="-2" pref="50" max="-2" attributes="0"/>
                           <EmptySpace max="32767" attributes="0"/>
                       </Group>
                   </Group>
@@ -194,7 +194,7 @@
                     <EventHandler event="mousePressed" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnVehiculosMousePressed"/>
                   </Events>
                 </Component>
-                <Component class="javax.swing.JLabel" name="jLabel5">
+                <Component class="javax.swing.JLabel" name="btnUsuario">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Roboto Black" size="19" style="0"/>
@@ -207,8 +207,11 @@
                     </Property>
                     <Property name="text" type="java.lang.String" value="Usuario"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnUsuarioMouseClicked"/>
+                  </Events>
                 </Component>
-                <Component class="javax.swing.JLabel" name="jLabel6">
+                <Component class="javax.swing.JLabel" name="btnReportes">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Roboto Black" size="19" style="0"/>
@@ -221,8 +224,11 @@
                     </Property>
                     <Property name="text" type="java.lang.String" value="Reportes"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnReportesMouseClicked"/>
+                  </Events>
                 </Component>
-                <Component class="javax.swing.JLabel" name="jLabel7">
+                <Component class="javax.swing.JLabel" name="btnServicios">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Roboto Black" size="19" style="0"/>
@@ -235,8 +241,11 @@
                     </Property>
                     <Property name="text" type="java.lang.String" value="Servicios"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnServiciosMouseClicked"/>
+                  </Events>
                 </Component>
-                <Component class="javax.swing.JLabel" name="jLabel8">
+                <Component class="javax.swing.JLabel" name="btnFactura">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Roboto Black" size="19" style="0"/>
@@ -249,8 +258,11 @@
                     </Property>
                     <Property name="text" type="java.lang.String" value="Facturaci&#xf3;n"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnFacturaMouseClicked"/>
+                  </Events>
                 </Component>
-                <Component class="javax.swing.JLabel" name="jLabel9">
+                <Component class="javax.swing.JLabel" name="btnCatalogo">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Roboto Black" size="19" style="0"/>
@@ -259,12 +271,15 @@
                       <Color blue="ff" green="ff" red="ff" type="rgb"/>
                     </Property>
                     <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                      <Image iconType="3" name="/Iconos/catalogar.png"/>
+                      <Image iconType="3" name="/Iconos/servicio (1).png"/>
                     </Property>
-                    <Property name="text" type="java.lang.String" value="Cat&#xe1;logo"/>
+                    <Property name="text" type="java.lang.String" value="Cat&#xe1;logos"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnCatalogoMouseClicked"/>
+                  </Events>
                 </Component>
-                <Component class="javax.swing.JLabel" name="jLabel10">
+                <Component class="javax.swing.JLabel" name="btnProvedores">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Roboto Black" size="19" style="0"/>
@@ -277,8 +292,11 @@
                     </Property>
                     <Property name="text" type="java.lang.String" value="Provedores"/>
                   </Properties>
+                  <Events>
+                    <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnProvedoresMouseClicked"/>
+                  </Events>
                 </Component>
-                <Component class="javax.swing.JLabel" name="jLabel11">
+                <Component class="javax.swing.JLabel" name="btnSalir">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Roboto Black" size="19" style="0"/>

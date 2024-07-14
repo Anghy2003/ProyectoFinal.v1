@@ -45,7 +45,7 @@ public class Home extends javax.swing.JFrame {
         });
         jplHome.add(btniniciarsesion, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 180, 230, 50));
 
-        lblBienvenido.setFont(new java.awt.Font("Eras Bold ITC", 3, 48)); // NOI18N
+        lblBienvenido.setFont(new java.awt.Font("Roboto Black", 3, 48)); // NOI18N
         lblBienvenido.setForeground(new java.awt.Color(255, 255, 255));
         lblBienvenido.setText("BIENVENIDO ");
         jplHome.add(lblBienvenido, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, 360, 80));

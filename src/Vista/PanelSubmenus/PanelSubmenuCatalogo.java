@@ -29,6 +29,8 @@ public class PanelSubmenuCatalogo extends javax.swing.JPanel {
 
         jPanel1 = new javax.swing.JPanel();
         jSeparator1 = new javax.swing.JSeparator();
+        btnCatalogopro = new javax.swing.JToggleButton();
+        btnCatalogoser = new javax.swing.JToggleButton();
 
         setLayout(new java.awt.BorderLayout());
 
@@ -36,20 +38,40 @@ public class PanelSubmenuCatalogo extends javax.swing.JPanel {
 
         jSeparator1.setForeground(new java.awt.Color(0, 53, 79));
 
+        btnCatalogopro.setFont(new java.awt.Font("Roboto Medium", 1, 12)); // NOI18N
+        btnCatalogopro.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/servicio.png"))); // NOI18N
+        btnCatalogopro.setText("CATALOGO DE SERVICOS ");
+
+        btnCatalogoser.setFont(new java.awt.Font("Roboto Medium", 1, 12)); // NOI18N
+        btnCatalogoser.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/carretilla.png"))); // NOI18N
+        btnCatalogoser.setText("CATALOGO DE PRODUCTOS ");
+        btnCatalogoser.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCatalogoserActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 870, Short.MAX_VALUE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addContainerGap(355, Short.MAX_VALUE)
+                .addComponent(btnCatalogoser)
+                .addGap(36, 36, 36)
+                .addComponent(btnCatalogopro)
+                .addGap(47, 47, 47))
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel1Layout.createSequentialGroup()
-                    .addContainerGap()
-                    .addComponent(jSeparator1)
-                    .addContainerGap()))
+                .addComponent(jSeparator1, javax.swing.GroupLayout.DEFAULT_SIZE, 870, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 80, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnCatalogoser, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
+                    .addComponent(btnCatalogopro, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(19, 19, 19))
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel1Layout.createSequentialGroup()
                     .addContainerGap()
@@ -60,8 +82,14 @@ public class PanelSubmenuCatalogo extends javax.swing.JPanel {
         add(jPanel1, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnCatalogoserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCatalogoserActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnCatalogoserActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JToggleButton btnCatalogopro;
+    private javax.swing.JToggleButton btnCatalogoser;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JSeparator jSeparator1;
     // End of variables declaration//GEN-END:variables

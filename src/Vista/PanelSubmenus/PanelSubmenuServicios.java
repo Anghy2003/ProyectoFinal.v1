@@ -29,8 +29,8 @@ public class PanelSubmenuServicios extends javax.swing.JPanel {
 
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
-        jToggleButton1 = new javax.swing.JToggleButton();
-        jToggleButton2 = new javax.swing.JToggleButton();
+        btnAgendarc = new javax.swing.JToggleButton();
+        btngestionser = new javax.swing.JToggleButton();
         jSeparator1 = new javax.swing.JSeparator();
 
         setLayout(new java.awt.BorderLayout());
@@ -39,13 +39,13 @@ public class PanelSubmenuServicios extends javax.swing.JPanel {
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
 
-        jToggleButton1.setFont(new java.awt.Font("Roboto Medium", 1, 11)); // NOI18N
-        jToggleButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/programaCitas35.png"))); // NOI18N
-        jToggleButton1.setText("AGENDAR CITAS ");
+        btnAgendarc.setFont(new java.awt.Font("Roboto Medium", 1, 11)); // NOI18N
+        btnAgendarc.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/programaCitas35.png"))); // NOI18N
+        btnAgendarc.setText("AGENDAR CITAS ");
 
-        jToggleButton2.setFont(new java.awt.Font("Roboto Medium", 1, 11)); // NOI18N
-        jToggleButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/gestionarServicios35.png"))); // NOI18N
-        jToggleButton2.setText("GESTION DE SERVICIOS");
+        btngestionser.setFont(new java.awt.Font("Roboto Medium", 1, 11)); // NOI18N
+        btngestionser.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/gestionarServicios35.png"))); // NOI18N
+        btngestionser.setText("GESTION DE SERVICIOS");
 
         jSeparator1.setForeground(new java.awt.Color(0, 53, 79));
 
@@ -54,15 +54,12 @@ public class PanelSubmenuServicios extends javax.swing.JPanel {
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(49, 49, 49)
-                .addComponent(jToggleButton1)
-                .addGap(32, 32, 32)
-                .addComponent(jToggleButton2)
-                .addContainerGap(433, Short.MAX_VALUE))
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jSeparator1)
-                .addContainerGap())
+                .addContainerGap(451, Short.MAX_VALUE)
+                .addComponent(btnAgendarc)
+                .addGap(33, 33, 33)
+                .addComponent(btngestionser)
+                .addGap(30, 30, 30))
+            .addComponent(jSeparator1)
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -71,8 +68,8 @@ public class PanelSubmenuServicios extends javax.swing.JPanel {
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 13, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jToggleButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jToggleButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnAgendarc, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btngestionser, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
@@ -83,10 +80,10 @@ public class PanelSubmenuServicios extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JToggleButton btnAgendarc;
+    private javax.swing.JToggleButton btngestionser;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JToggleButton jToggleButton1;
-    private javax.swing.JToggleButton jToggleButton2;
     // End of variables declaration//GEN-END:variables
 }
