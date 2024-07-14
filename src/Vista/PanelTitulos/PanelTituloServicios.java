@@ -38,7 +38,7 @@ public class PanelTituloServicios extends javax.swing.JPanel {
         lblTituloServicios.setFont(new java.awt.Font("Roboto Black", 0, 30)); // NOI18N
         lblTituloServicios.setForeground(new java.awt.Color(0, 53, 79));
         lblTituloServicios.setText("Servicios");
-        jPanel1.add(lblTituloServicios, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 322, 30));
+        jPanel1.add(lblTituloServicios, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 50, 322, 30));
 
         add(jPanel1, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents

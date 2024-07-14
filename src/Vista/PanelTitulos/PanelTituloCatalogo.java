@@ -38,7 +38,7 @@ public class PanelTituloCatalogo extends javax.swing.JPanel {
         lbltituloCatalgo.setFont(new java.awt.Font("Roboto Black", 0, 30)); // NOI18N
         lbltituloCatalgo.setForeground(new java.awt.Color(0, 53, 79));
         lbltituloCatalgo.setText("Catalogos");
-        jPanel1.add(lbltituloCatalgo, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 30, 322, 30));
+        jPanel1.add(lbltituloCatalgo, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 40, 322, 40));
 
         add(jPanel1, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents

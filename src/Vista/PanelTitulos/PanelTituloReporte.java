@@ -38,7 +38,7 @@ public class PanelTituloReporte extends javax.swing.JPanel {
         lblTituloReportes.setFont(new java.awt.Font("Roboto Black", 0, 30)); // NOI18N
         lblTituloReportes.setForeground(new java.awt.Color(0, 53, 79));
         lblTituloReportes.setText("Reportes");
-        jPanel1.add(lblTituloReportes, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 322, 30));
+        jPanel1.add(lblTituloReportes, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 50, 322, 30));
 
         add(jPanel1, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
