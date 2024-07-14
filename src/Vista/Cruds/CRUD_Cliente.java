@@ -10,7 +10,7 @@ import javax.swing.JOptionPane;
 
 /**
  *
- * @author 59399
+ * @author Angie
  */
 public class CRUD_Cliente extends javax.swing.JPanel {
 
@@ -22,7 +22,6 @@ public class CRUD_Cliente extends javax.swing.JPanel {
         for (Cliente cliente1 : cliente) {
             listaClienteBase.add(cliente1);
         }
-        CRUD_Cliente.BaseFinal.close();
         return listaClienteBase;
     }
 
@@ -37,7 +36,6 @@ public class CRUD_Cliente extends javax.swing.JPanel {
         } else {
             JOptionPane.showMessageDialog(this, "Ya existe el Usuario,Intente otro Usuario");
         }
-        CRUD_Cliente.BaseFinal.close();
     }
 
     public static int VerificarCliente(ObjectContainer BaseFinal, String user) {
