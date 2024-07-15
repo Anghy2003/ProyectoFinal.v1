@@ -76,7 +76,7 @@ public class CrudPanelProveedor extends javax.swing.JPanel {
         txtCodigo.setColorTransparente(true);
         txtCodigo.setFont(new java.awt.Font("Roboto Light", 1, 14)); // NOI18N
         txtCodigo.setPlaceholder("Escriba el Codigo de Prov");
-        jPanel2.add(txtCodigo, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 180, 200, 40));
+        jPanel2.add(txtCodigo, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 190, 200, 40));
 
         txtNombre.setForeground(new java.awt.Color(0, 53, 79));
         txtNombre.setColorTransparente(true);

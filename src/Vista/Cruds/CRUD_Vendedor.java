@@ -380,7 +380,7 @@ public class CRUD_Vendedor extends javax.swing.JPanel {
 
         lblFondoCRUD.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/CRUD_ORIGINAL.jpg"))); // NOI18N
         lblFondoCRUD.setText("ASASADAS");
-        jPanel1.add(lblFondoCRUD, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -80, 740, 640));
+        jPanel1.add(lblFondoCRUD, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -80, 850, 710));
 
         tablaVendedor.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {

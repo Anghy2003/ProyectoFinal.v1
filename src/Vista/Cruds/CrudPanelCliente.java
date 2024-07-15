@@ -152,6 +152,11 @@ public class CrudPanelCliente extends javax.swing.JPanel {
         txtCelular.setColorTransparente(true);
         txtCelular.setFont(new java.awt.Font("Roboto Light", 1, 14)); // NOI18N
         txtCelular.setPlaceholder("Escriba su número celular");
+        txtCelular.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtCelularActionPerformed(evt);
+            }
+        });
         jPanel1.add(txtCelular, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 120, 200, 40));
 
         btnCancelar.setBackground(new java.awt.Color(255, 51, 51));
@@ -188,6 +193,10 @@ public class CrudPanelCliente extends javax.swing.JPanel {
         TablaClientes tblCli = new TablaClientes();
         ShowpanelCruds(tblCli);
     }//GEN-LAST:event_btnCancelarMouseClicked
+
+    private void txtCelularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCelularActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtCelularActionPerformed
     private void ShowpanelCruds(JPanel p) {
         p.setSize(870, 630);
         p.setLocation(0, 0);
