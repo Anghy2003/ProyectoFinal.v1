@@ -5,6 +5,16 @@
  */
 package Vista.PanelSubmenus;
 
+import Vista.Menu.VistaMenu;
+import Vista.Tables.TablaAdministradores;
+import Vista.Tables.TablaClientes;
+import Vista.Tables.TablaMecanicos;
+import Vista.Tables.TablaVendedores;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import javax.swing.JPanel;
+import javax.swing.text.TabableView;
+
 /**
  *
  * @author 59399
@@ -41,10 +51,20 @@ public class PanelSubmenuUsuarioss extends javax.swing.JPanel {
         btnAdministrador.setFont(new java.awt.Font("Roboto Medium", 1, 11)); // NOI18N
         btnAdministrador.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/admin 35x35.png"))); // NOI18N
         btnAdministrador.setText("ADMINISTRADOR");
+        btnAdministrador.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnAdministradorMouseClicked(evt);
+            }
+        });
 
         btnCliente.setFont(new java.awt.Font("Roboto Medium", 1, 11)); // NOI18N
         btnCliente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/cliente 35x35.png"))); // NOI18N
         btnCliente.setText("CLIENTE");
+        btnCliente.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnClienteMouseClicked(evt);
+            }
+        });
         btnCliente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnClienteActionPerformed(evt);
@@ -54,10 +74,20 @@ public class PanelSubmenuUsuarioss extends javax.swing.JPanel {
         btnVendedor.setFont(new java.awt.Font("Roboto Medium", 1, 11)); // NOI18N
         btnVendedor.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/vendedor35.png"))); // NOI18N
         btnVendedor.setText("VENDEDOR");
+        btnVendedor.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnVendedorMouseClicked(evt);
+            }
+        });
 
         btnMecanico.setFont(new java.awt.Font("Roboto Medium", 1, 11)); // NOI18N
         btnMecanico.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/mecanico35.png"))); // NOI18N
         btnMecanico.setText("MECÁNICO");
+        btnMecanico.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnMecanicoMouseClicked(evt);
+            }
+        });
 
         jSeparator1.setForeground(new java.awt.Color(0, 53, 79));
 
@@ -102,6 +132,44 @@ public class PanelSubmenuUsuarioss extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnClienteActionPerformed
 
+    private void btnAdministradorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAdministradorMouseClicked
+        TablaAdministradores tablaAdmin = new TablaAdministradores();
+        ShowpanelCruds(tablaAdmin);
+    }//GEN-LAST:event_btnAdministradorMouseClicked
+
+    private void btnVendedorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnVendedorMouseClicked
+       TablaVendedores tblVended = new TablaVendedores();
+        ShowpanelCruds(tblVended);
+    }//GEN-LAST:event_btnVendedorMouseClicked
+
+    private void btnClienteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnClienteMouseClicked
+        TablaClientes tblCli = new TablaClientes();
+        ShowpanelCruds(tblCli);
+    }//GEN-LAST:event_btnClienteMouseClicked
+
+    private void btnMecanicoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnMecanicoMouseClicked
+        TablaMecanicos tblMecan = new TablaMecanicos();
+        ShowpanelCruds(tblMecan);
+    }//GEN-LAST:event_btnMecanicoMouseClicked
+
+
+    private void ShowpanelTitulo(JPanel p) {
+        p.setSize(870, 80);
+        p.setLocation(0, 0);
+        VistaMenu.PanelHeader.removeAll();
+        VistaMenu.PanelHeader.add(p, BorderLayout.CENTER);
+        VistaMenu.PanelHeader.revalidate();
+        VistaMenu.PanelHeader.repaint();
+    }
+
+    private void ShowpanelCruds(JPanel p) {
+        p.setSize(870, 630);
+        p.setLocation(0, 0);
+        VistaMenu.PanelPrincipal.removeAll();
+        VistaMenu.PanelPrincipal.add(p, BorderLayout.CENTER);
+        VistaMenu.PanelPrincipal.revalidate();
+        VistaMenu.PanelPrincipal.repaint();
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JToggleButton btnAdministrador;

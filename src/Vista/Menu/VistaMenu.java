@@ -9,6 +9,9 @@ import Conexion.Conexion_db;
 import Vista.Cruds.*;
 import Vista.PanelSubmenus.*;
 import Vista.PanelTitulos.*;
+import Vista.Tables.TablaProveedor;
+import Vista.Tables.TablaUsuarios;
+import Vista.Tables.TablaVehiculos;
 import com.db4o.ObjectContainer;
 import java.awt.BorderLayout;
 import javax.swing.JPanel;
@@ -286,7 +289,7 @@ public class VistaMenu extends javax.swing.JFrame {
 
     private void btnVehiculosMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnVehiculosMousePressed
      //   Conexion.Conexion_db.cerrar_BD(BaseFinal);
-        CRUD_Vehiculo vehiculof = new CRUD_Vehiculo();
+        TablaVehiculos vehiculof = new TablaVehiculos();
         ShowpanelCruds(vehiculof);
 
         PanelSubmenuAuto autopanel = new PanelSubmenuAuto();
@@ -297,18 +300,19 @@ public class VistaMenu extends javax.swing.JFrame {
 
 
     }//GEN-LAST:event_btnVehiculosMousePressed
-
+//CrudPanelCliente crudCli = new CrudPanelCliente();
     private void btnUsuarioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnUsuarioMouseClicked
         PanelTituloUsuario titUsu = new PanelTituloUsuario();
         PanelSubmenuUsuarioss SubmenuUsu = new PanelSubmenuUsuarioss();
-        CRUD_Cliente crudCli = new CRUD_Cliente();
+        TablaUsuarios tablaUsu = new TablaUsuarios();
         ShowpanelTitulo(titUsu);
         ShowpanelSubmenu(SubmenuUsu);
-        ShowpanelCruds(crudCli);
+        ShowpanelCruds(tablaUsu);
     }//GEN-LAST:event_btnUsuarioMouseClicked
 
     private void btnServiciosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnServiciosMouseClicked
-        // TODO add your handling code here:
+        CRUD_Prodcuto prod = new CRUD_Prodcuto();
+        ShowpanelCruds(prod);
     }//GEN-LAST:event_btnServiciosMouseClicked
 
     private void btnFacturaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnFacturaMouseClicked
@@ -320,7 +324,12 @@ public class VistaMenu extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCatalogoMouseClicked
 
     private void btnProvedoresMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnProvedoresMouseClicked
-        // TODO add your handling code here:
+        TablaProveedor prov = new TablaProveedor();
+        PanelTituloProvedores titPro = new PanelTituloProvedores();
+        PanelSubmenuProveedores submenProv = new PanelSubmenuProveedores();
+        ShowpanelSubmenu(submenProv);
+        ShowpanelTitulo(titPro);
+        ShowpanelCruds(prov);
     }//GEN-LAST:event_btnProvedoresMouseClicked
 
     private void btnReportesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnReportesMouseClicked
@@ -390,10 +399,10 @@ public class VistaMenu extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPanel PanelHeader;
+    public static javax.swing.JPanel PanelHeader;
     private javax.swing.JPanel PanelMenu;
-    private javax.swing.JPanel PanelPrincipal;
-    private javax.swing.JPanel PanelSubmenu;
+    public static javax.swing.JPanel PanelPrincipal;
+    public static javax.swing.JPanel PanelSubmenu;
     private javax.swing.JLabel btnCatalogo;
     private javax.swing.JLabel btnFactura;
     private javax.swing.JLabel btnProvedores;
@@ -408,6 +417,6 @@ public class VistaMenu extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JLabel lbliconologo;
-    private javax.swing.JPanel panelPrincipal;
+    public javax.swing.JPanel panelPrincipal;
     // End of variables declaration//GEN-END:variables
 }
