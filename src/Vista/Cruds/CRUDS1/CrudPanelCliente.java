@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Vista.Cruds;
+package Vista.Cruds.CRUDS1;
 
 import Conexion.Conexion_db;
 import Models.Cliente;
@@ -57,9 +57,6 @@ public class CrudPanelCliente extends javax.swing.JPanel {
         jLabel11 = new javax.swing.JLabel();
         jLabel13 = new javax.swing.JLabel();
         jLabel14 = new javax.swing.JLabel();
-        txtContraUsu = new app.bolivia.swing.JCTextField();
-        txtNomUsu = new app.bolivia.swing.JCTextField();
-        btnGuardarCli = new rojeru_san.complementos.ButtonHover();
         jPanel1 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         lblCedula_Cli = new javax.swing.JLabel();
@@ -94,13 +91,6 @@ public class CrudPanelCliente extends javax.swing.JPanel {
 
         jLabel14.setText("Contraseña");
 
-        btnGuardarCli.setText("Guardar");
-        btnGuardarCli.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnGuardarCliMouseClicked(evt);
-            }
-        });
-
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
@@ -114,16 +104,8 @@ public class CrudPanelCliente extends javax.swing.JPanel {
                         .addGap(258, 258, 258)
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel13)
-                            .addComponent(jLabel14))
-                        .addGap(95, 95, 95)
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(txtContraUsu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(txtNomUsu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(195, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(btnGuardarCli, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(329, 329, 329))
+                            .addComponent(jLabel14))))
+                .addContainerGap(329, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -131,16 +113,10 @@ public class CrudPanelCliente extends javax.swing.JPanel {
                 .addGap(57, 57, 57)
                 .addComponent(jLabel11)
                 .addGap(73, 73, 73)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel13)
-                    .addComponent(txtNomUsu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(jLabel13)
                 .addGap(25, 25, 25)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel14)
-                    .addComponent(txtContraUsu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 118, Short.MAX_VALUE)
-                .addComponent(btnGuardarCli, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(167, 167, 167))
+                .addComponent(jLabel14)
+                .addContainerGap(167, Short.MAX_VALUE))
         );
 
         PanelDatosUsu.add(jPanel4, java.awt.BorderLayout.CENTER);
@@ -365,32 +341,17 @@ public class CrudPanelCliente extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel PanelDatosUsu;
     private rojeru_san.RSButtonRiple btnCancelar;
-    private rojeru_san.complementos.ButtonHover btnGuardarCli;
     private rojeru_san.RSButtonRiple btnSiguiente;
-    private rojeru_san.complementos.ButtonHover btn_guardarUsu;
-    private rojeru_san.complementos.ButtonHover btn_guardarUsu1;
     private javax.swing.JComboBox<String> cbxEstadoC;
     private javax.swing.JComboBox<String> cbxGenero;
     private com.toedter.calendar.JDateChooser jDateFechaNac;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
-    private javax.swing.JPanel jPanel5;
     private javax.swing.JLabel lblApellidos_Cli;
     private javax.swing.JLabel lblCedula_Cli;
     private javax.swing.JLabel lblCelular_Cli;
@@ -403,16 +364,8 @@ public class CrudPanelCliente extends javax.swing.JPanel {
     private rojeru_san.RSMTextFull txtApellidos_Cli;
     private rojeru_san.RSMTextFull txtCedula_Cli;
     private rojeru_san.RSMTextFull txtCelular_Cli;
-    private app.bolivia.swing.JCTextField txtContra;
-    private app.bolivia.swing.JCTextField txtContra1;
-    private app.bolivia.swing.JCTextField txtContraUsu;
     private rojeru_san.RSMTextFull txtCorreoElectronico_Cli;
     private rojeru_san.RSMTextFull txtDireccion_Cli;
-    private app.bolivia.swing.JCTextField txtNomUsu;
-    private app.bolivia.swing.JCTextField txtNombreUsu;
-    private app.bolivia.swing.JCTextField txtNombreUsu1;
     private rojeru_san.RSMTextFull txtNombres_Cli;
-    private app.bolivia.swing.JCTextField txtUsu1;
-    private app.bolivia.swing.JCTextField txtUsuContra;
     // End of variables declaration//GEN-END:variables
 }

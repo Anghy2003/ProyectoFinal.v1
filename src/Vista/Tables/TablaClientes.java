@@ -7,7 +7,7 @@ package Vista.Tables;
 
 import Conexion.Conexion_db;
 import Models.Cliente;
-import Vista.Cruds.CrudPanelCliente;
+import Vista.Cruds.CRUDS1.CrudPanelCliente;
 import Vista.Menu.VistaMenu;
 import static Vista.Menu.VistaMenu.PanelPrincipal;
 import com.db4o.ObjectContainer;
