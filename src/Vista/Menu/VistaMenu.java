@@ -5,8 +5,10 @@
  */
 package Vista.Menu;
 
+import Vista.Catálogo.CRUD_Prodcuto;
 import Conexion.Conexion_db;
 import Vista.Cruds.*;
+import Vista.Factura.Factura;
 import Vista.PanelSubmenus.*;
 import Vista.PanelTitulos.*;
 import Vista.Tables.TablaProveedor;
@@ -290,13 +292,11 @@ public class VistaMenu extends javax.swing.JFrame {
     private void btnVehiculosMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnVehiculosMousePressed
      //   Conexion.Conexion_db.cerrar_BD(BaseFinal);
         TablaVehiculos vehiculof = new TablaVehiculos();
-        ShowpanelCruds(vehiculof);
-
+        MostarpanelCruds(vehiculof);
         PanelSubmenuAuto autopanel = new PanelSubmenuAuto();
-        ShowpanelSubmenu(autopanel);
-        
+        MostrarpanelSubmenu(autopanel);        
         PanelTituloVehiculo carrotitulo = new PanelTituloVehiculo();
-        ShowpanelTitulo(carrotitulo);
+        MostrarpanelTitulo(carrotitulo);
 
 
     }//GEN-LAST:event_btnVehiculosMousePressed
@@ -305,18 +305,23 @@ public class VistaMenu extends javax.swing.JFrame {
         PanelTituloUsuario titUsu = new PanelTituloUsuario();
         PanelSubmenuUsuarioss SubmenuUsu = new PanelSubmenuUsuarioss();
         TablaUsuarios tablaUsu = new TablaUsuarios();
-        ShowpanelTitulo(titUsu);
-        ShowpanelSubmenu(SubmenuUsu);
-        ShowpanelCruds(tablaUsu);
+        MostrarpanelTitulo(titUsu);
+        MostrarpanelSubmenu(SubmenuUsu);
+        MostarpanelCruds(tablaUsu);
     }//GEN-LAST:event_btnUsuarioMouseClicked
 
     private void btnServiciosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnServiciosMouseClicked
         CRUD_Prodcuto prod = new CRUD_Prodcuto();
-        ShowpanelCruds(prod);
+        MostarpanelCruds(prod);
     }//GEN-LAST:event_btnServiciosMouseClicked
 
     private void btnFacturaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnFacturaMouseClicked
-        // TODO add your handling code here:
+        PanelTituloFacturacion titufac = new PanelTituloFacturacion();
+        PanelSubmenuFacturacion SubmenuFac = new PanelSubmenuFacturacion();
+        Factura fac =new Factura();
+        MostrarpanelTitulo(titufac);
+        MostrarpanelSubmenu(SubmenuFac);
+        MostarpanelCruds(fac);
     }//GEN-LAST:event_btnFacturaMouseClicked
 
     private void btnCatalogoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCatalogoMouseClicked
@@ -327,15 +332,15 @@ public class VistaMenu extends javax.swing.JFrame {
         TablaProveedor prov = new TablaProveedor();
         PanelTituloProvedores titPro = new PanelTituloProvedores();
         PanelSubmenuProveedores submenProv = new PanelSubmenuProveedores();
-        ShowpanelSubmenu(submenProv);
-        ShowpanelTitulo(titPro);
-        ShowpanelCruds(prov);
+        MostrarpanelSubmenu(submenProv);
+        MostrarpanelTitulo(titPro);
+        MostarpanelCruds(prov);
     }//GEN-LAST:event_btnProvedoresMouseClicked
 
     private void btnReportesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnReportesMouseClicked
         // TODO add your handling code here:
     }//GEN-LAST:event_btnReportesMouseClicked
-    private void ShowpanelSubmenu(JPanel p) {
+    private void MostrarpanelSubmenu(JPanel p) {
         p.setSize(870, 80);
         p.setLocation(0, 0);
         PanelSubmenu.removeAll();
@@ -345,7 +350,7 @@ public class VistaMenu extends javax.swing.JFrame {
 
     }
 
-    private void ShowpanelTitulo(JPanel p) {
+    private void MostrarpanelTitulo(JPanel p) {
         p.setSize(870, 80);
         p.setLocation(0, 0);
         PanelHeader.removeAll();
@@ -354,7 +359,7 @@ public class VistaMenu extends javax.swing.JFrame {
         PanelHeader.repaint();
     }
 
-    private void ShowpanelCruds(JPanel p) {
+    private void MostarpanelCruds(JPanel p) {
         p.setSize(870, 630);
         p.setLocation(0, 0);
         PanelPrincipal.removeAll();

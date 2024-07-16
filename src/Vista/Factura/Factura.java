@@ -24,10 +24,7 @@ static ObjectContainer BaseFinal = Conexion_db.ConectarBD();
      */
     public Factura() {
         initComponents();
-        btnAñadir = new JButton("Añadir");
-        btnEliminar = new JButton("Eliminar");
-        btnCancelar = new JButton("Cancelar");
-        btnSalir = new JButton("Salir");
+        
     }
      private void añadirFactura() {
         String Factura = txtcodigoFac.getText();
@@ -47,7 +44,7 @@ static ObjectContainer BaseFinal = Conexion_db.ConectarBD();
              Date.getCalendar();
             txtdireccion.getText();
             txttelefono.getText();
-            txtCodigoFac.getText();
+            txtcodigoFac.getText();
 
             EncabezadoFactura_1 Factura1 = new EncabezadoFactura_1();
             BaseFinal.store(Factura1);  
@@ -69,7 +66,7 @@ static ObjectContainer BaseFinal = Conexion_db.ConectarBD();
         txtdireccion.setText("");
         txtNombre1.setText("");
         txttelefono.setText("");
-        txtCodigoFac.setText("");
+        txtcodigoFac.setText("");
         JOptionPane.showMessageDialog(this, "Operación cancelada");
 }
     public boolean EliminarFac(ObjectContainer BaseFinal, String codigo_encabezadoFactura) {
@@ -104,8 +101,6 @@ static ObjectContainer BaseFinal = Conexion_db.ConectarBD();
         lblTelefono = new javax.swing.JLabel();
         lblDatosCli = new javax.swing.JLabel();
         txttelefono = new javax.swing.JTextField();
-        lblDatosFac = new javax.swing.JLabel();
-        lbldatfact = new javax.swing.JLabel();
         lblFecha = new javax.swing.JLabel();
         txtdireccion = new javax.swing.JTextField();
         lblverlis = new javax.swing.JLabel();
@@ -120,7 +115,6 @@ static ObjectContainer BaseFinal = Conexion_db.ConectarBD();
         lblIva = new javax.swing.JLabel();
         lblTotalFAc = new javax.swing.JLabel();
         lblValorDes = new javax.swing.JLabel();
-        btnFinalizar = new javax.swing.JButton();
         btnNuevo = new javax.swing.JButton();
         btnGenerarVenta = new javax.swing.JButton();
         btnResibo = new javax.swing.JButton();
@@ -134,11 +128,10 @@ static ObjectContainer BaseFinal = Conexion_db.ConectarBD();
         txtcodigoFac = new javax.swing.JTextField();
         lblCuadro1 = new javax.swing.JLabel();
         lblcodFac1 = new javax.swing.JLabel();
-        lblcodigoPro = new javax.swing.JLabel();
-        txtCodigoFac = new javax.swing.JTextField();
         Date = new com.toedter.calendar.JDateChooser();
         lblCuadro = new javax.swing.JLabel();
         txtSubtotal = new javax.swing.JTextField();
+        rSButton1 = new rojeru_san.RSButton();
 
         setLayout(new java.awt.BorderLayout());
 
@@ -157,81 +150,77 @@ static ObjectContainer BaseFinal = Conexion_db.ConectarBD();
         lblTituloFac.setForeground(new java.awt.Color(255, 255, 255));
         lblTituloFac.setText("FACTURACION MECANICA YIN AND YANS");
 
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/logote_resized.png"))); // NOI18N
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/Logomini1.png"))); // NOI18N
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(6, 6, 6)
                 .addComponent(jLabel2)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(lblTituloFac, javax.swing.GroupLayout.PREFERRED_SIZE, 542, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(220, Short.MAX_VALUE))
+                .addContainerGap(282, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblTituloFac, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(lblTituloFac, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2))
+                .addGap(0, 16, Short.MAX_VALUE))
         );
 
-        jPanel3.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 890, 100));
+        jPanel3.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 890, 70));
 
         lblDireccion.setFont(new java.awt.Font("Yu Gothic UI Light", 1, 14)); // NOI18N
         lblDireccion.setText("Direccion:");
-        jPanel3.add(lblDireccion, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 200, -1, -1));
+        jPanel3.add(lblDireccion, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 160, -1, -1));
 
         lblTelefono.setFont(new java.awt.Font("Yu Gothic UI Light", 1, 14)); // NOI18N
         lblTelefono.setText("Telefono:");
-        jPanel3.add(lblTelefono, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 230, -1, -1));
+        jPanel3.add(lblTelefono, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 200, -1, -1));
 
         lblDatosCli.setText("Datos del Cliente");
-        jPanel3.add(lblDatosCli, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 170, -1, 10));
-        jPanel3.add(txttelefono, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 230, 220, -1));
-
-        lblDatosFac.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        jPanel3.add(lblDatosFac, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 280, 710, 90));
-
-        lbldatfact.setText("Datos de Factura");
-        jPanel3.add(lbldatfact, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 310, -1, -1));
+        jPanel3.add(lblDatosCli, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 140, -1, 10));
+        jPanel3.add(txttelefono, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 200, 220, -1));
 
         lblFecha.setFont(new java.awt.Font("Yu Gothic UI Light", 1, 14)); // NOI18N
         lblFecha.setText("Fecha:");
-        jPanel3.add(lblFecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 120, -1, -1));
+        jPanel3.add(lblFecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 90, -1, -1));
 
         txtdireccion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtdireccionActionPerformed(evt);
             }
         });
-        jPanel3.add(txtdireccion, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 200, 220, -1));
+        jPanel3.add(txtdireccion, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 160, 220, -1));
 
         lblverlis.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/lista.png"))); // NOI18N
         lblverlis.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        jPanel3.add(lblverlis, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 380, 710, 70));
+        jPanel3.add(lblverlis, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 250, 710, 70));
 
         lblverFactu.setText("Ver lista de facturas");
-        jPanel3.add(lblverFactu, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 390, -1, 40));
+        jPanel3.add(lblverFactu, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 260, -1, 40));
 
+        btnEliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/boton-x (1).png"))); // NOI18N
         btnEliminar.setText("Eliminar");
         btnEliminar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnEliminarActionPerformed(evt);
             }
         });
-        jPanel3.add(btnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 400, -1, -1));
+        jPanel3.add(btnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 260, -1, -1));
 
+        btnAñadir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/mas (1).png"))); // NOI18N
         btnAñadir.setText("Añadir");
         btnAñadir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAñadirActionPerformed(evt);
             }
         });
-        jPanel3.add(btnAñadir, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 400, -1, -1));
+        jPanel3.add(btnAñadir, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 260, -1, -1));
 
         JtableFactura.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -246,7 +235,7 @@ static ObjectContainer BaseFinal = Conexion_db.ConectarBD();
         ));
         jScrollPane1.setViewportView(JtableFactura);
 
-        jPanel3.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 450, 710, 90));
+        jPanel3.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 330, 710, 90));
 
         jPanel5.setBackground(new java.awt.Color(0, 53, 79));
         jPanel5.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -259,28 +248,25 @@ static ObjectContainer BaseFinal = Conexion_db.ConectarBD();
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 48, Short.MAX_VALUE)
+            .addGap(0, 18, Short.MAX_VALUE)
         );
 
-        jPanel3.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 730, 890, 50));
+        jPanel3.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 670, 890, 20));
 
         lblSubtotal.setText("SubTotal:");
-        jPanel3.add(lblSubtotal, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 560, -1, -1));
+        jPanel3.add(lblSubtotal, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 450, -1, -1));
 
         lblDescuento.setText("%Descuento:");
-        jPanel3.add(lblDescuento, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 590, -1, -1));
+        jPanel3.add(lblDescuento, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 470, -1, -1));
 
         lblIva.setText("IVA 15%:");
-        jPanel3.add(lblIva, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 620, -1, -1));
+        jPanel3.add(lblIva, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 490, -1, -1));
 
         lblTotalFAc.setText("Total Factura:");
-        jPanel3.add(lblTotalFAc, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 650, -1, -1));
+        jPanel3.add(lblTotalFAc, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 510, -1, -1));
 
         lblValorDes.setText("Valor Descontado:");
-        jPanel3.add(lblValorDes, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 600, -1, -1));
-
-        btnFinalizar.setText("Finalizar Factura");
-        jPanel3.add(btnFinalizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 690, -1, 30));
+        jPanel3.add(lblValorDes, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 470, -1, -1));
 
         btnNuevo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/registro (1)_1.png"))); // NOI18N
         btnNuevo.addActionListener(new java.awt.event.ActionListener() {
@@ -288,7 +274,7 @@ static ObjectContainer BaseFinal = Conexion_db.ConectarBD();
                 btnNuevoActionPerformed(evt);
             }
         });
-        jPanel3.add(btnNuevo, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 160, 80, 70));
+        jPanel3.add(btnNuevo, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 120, 80, 70));
 
         btnGenerarVenta.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/dinero.png"))); // NOI18N
         btnGenerarVenta.addActionListener(new java.awt.event.ActionListener() {
@@ -296,7 +282,7 @@ static ObjectContainer BaseFinal = Conexion_db.ConectarBD();
                 btnGenerarVentaActionPerformed(evt);
             }
         });
-        jPanel3.add(btnGenerarVenta, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 260, 80, 70));
+        jPanel3.add(btnGenerarVenta, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 210, 80, 70));
 
         btnResibo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/impresion.png"))); // NOI18N
         btnResibo.addActionListener(new java.awt.event.ActionListener() {
@@ -304,7 +290,7 @@ static ObjectContainer BaseFinal = Conexion_db.ConectarBD();
                 btnResiboActionPerformed(evt);
             }
         });
-        jPanel3.add(btnResibo, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 350, 80, 70));
+        jPanel3.add(btnResibo, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 300, 80, 70));
 
         btnCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/rechazar.png"))); // NOI18N
         btnCancelar.addActionListener(new java.awt.event.ActionListener() {
@@ -312,7 +298,7 @@ static ObjectContainer BaseFinal = Conexion_db.ConectarBD();
                 btnCancelarActionPerformed(evt);
             }
         });
-        jPanel3.add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 460, 80, 70));
+        jPanel3.add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 390, 80, 70));
 
         btnSalir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/cerrar-sesion.png"))); // NOI18N
         btnSalir.addActionListener(new java.awt.event.ActionListener() {
@@ -320,55 +306,55 @@ static ObjectContainer BaseFinal = Conexion_db.ConectarBD();
                 btnSalirActionPerformed(evt);
             }
         });
-        jPanel3.add(btnSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 570, 80, 70));
+        jPanel3.add(btnSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 480, 80, 70));
 
         lbllineas.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        jPanel3.add(lbllineas, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 550, 710, 130));
+        jPanel3.add(lbllineas, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 430, 710, 110));
 
         lblcedula.setFont(new java.awt.Font("Yu Gothic UI Light", 1, 14)); // NOI18N
         lblcedula.setText("Cedula:");
-        jPanel3.add(lblcedula, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 200, -1, -1));
-        jPanel3.add(txtcedula, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 200, 190, -1));
+        jPanel3.add(lblcedula, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 160, -1, -1));
+        jPanel3.add(txtcedula, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 160, 190, -1));
 
         lblNombre1.setFont(new java.awt.Font("Yu Gothic UI Light", 1, 14)); // NOI18N
         lblNombre1.setText("Cliente:");
-        jPanel3.add(lblNombre1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 240, -1, -1));
-        jPanel3.add(txtNombre1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 240, 190, -1));
-        jPanel3.add(txtcodigoFac, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 120, 130, -1));
+        jPanel3.add(lblNombre1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 200, -1, -1));
+        jPanel3.add(txtNombre1, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 200, 190, -1));
+        jPanel3.add(txtcodigoFac, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 90, 130, -1));
 
         lblCuadro1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        jPanel3.add(lblCuadro1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 160, 710, 110));
+        jPanel3.add(lblCuadro1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 130, 710, 110));
 
         lblcodFac1.setFont(new java.awt.Font("Yu Gothic UI Light", 1, 14)); // NOI18N
         lblcodFac1.setText("N° Factura:");
-        jPanel3.add(lblcodFac1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 120, 70, -1));
-
-        lblcodigoPro.setText("Codigo del Producto:");
-        jPanel3.add(lblcodigoPro, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 340, -1, -1));
-        jPanel3.add(txtCodigoFac, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 340, 110, -1));
-        jPanel3.add(Date, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 120, 210, 20));
+        jPanel3.add(lblcodFac1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, 70, -1));
+        jPanel3.add(Date, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 90, 210, 20));
 
         lblCuadro.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        jPanel3.add(lblCuadro, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 110, 710, 40));
-        jPanel3.add(txtSubtotal, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 560, 90, -1));
+        jPanel3.add(lblCuadro, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 80, 710, 40));
+        jPanel3.add(txtSubtotal, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 450, 90, -1));
+
+        rSButton1.setBackground(new java.awt.Color(0, 204, 0));
+        rSButton1.setText("Finalizar Factura");
+        jPanel3.add(rSButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 560, -1, -1));
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addContainerGap()
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 890, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(40, 40, 40))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 619, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 19, Short.MAX_VALUE))
         );
 
-        jPanel1.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+        jPanel1.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 910, 640));
 
         add(jPanel1, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
@@ -378,7 +364,7 @@ static ObjectContainer BaseFinal = Conexion_db.ConectarBD();
     }//GEN-LAST:event_txtdireccionActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-        EliminarFac(BaseFinal, txtCodigoFac.getText());
+        EliminarFac(BaseFinal, txtcodigoFac.getText());
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnAñadirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAñadirActionPerformed
@@ -416,7 +402,6 @@ static ObjectContainer BaseFinal = Conexion_db.ConectarBD();
     private javax.swing.JButton btnAñadir;
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnEliminar;
-    private javax.swing.JButton btnFinalizar;
     private javax.swing.JButton btnGenerarVenta;
     private javax.swing.JButton btnNuevo;
     private javax.swing.JButton btnResibo;
@@ -431,7 +416,6 @@ static ObjectContainer BaseFinal = Conexion_db.ConectarBD();
     private javax.swing.JLabel lblCuadro;
     private javax.swing.JLabel lblCuadro1;
     private javax.swing.JLabel lblDatosCli;
-    private javax.swing.JLabel lblDatosFac;
     private javax.swing.JLabel lblDescuento;
     private javax.swing.JLabel lblDireccion;
     private javax.swing.JLabel lblFecha;
@@ -444,12 +428,10 @@ static ObjectContainer BaseFinal = Conexion_db.ConectarBD();
     private javax.swing.JLabel lblValorDes;
     private javax.swing.JLabel lblcedula;
     private javax.swing.JLabel lblcodFac1;
-    private javax.swing.JLabel lblcodigoPro;
-    private javax.swing.JLabel lbldatfact;
     private javax.swing.JLabel lbllineas;
     private javax.swing.JLabel lblverFactu;
     private javax.swing.JLabel lblverlis;
-    private javax.swing.JTextField txtCodigoFac;
+    private rojeru_san.RSButton rSButton1;
     private javax.swing.JTextField txtNombre1;
     private javax.swing.JTextField txtSubtotal;
     private javax.swing.JTextField txtcedula;

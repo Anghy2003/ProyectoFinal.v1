@@ -5,7 +5,7 @@
  */
 package Vista.Tables;
 
-import Vista.Cruds.CRUDS1.CrudPanelProveedor;
+import Vista.Cruds.CRUDS1.CrudPanelProvedor;
 import Vista.Menu.VistaMenu;
 import java.awt.BorderLayout;
 import javax.swing.JPanel;
@@ -117,13 +117,13 @@ public class TablaProveedor extends javax.swing.JPanel {
                         .addComponent(jLabel1)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 836, Short.MAX_VALUE)
+                        .addComponent(jScrollPane1)
                         .addContainerGap())
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addGap(39, 39, 39)
                         .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 109, Short.MAX_VALUE)
                         .addComponent(btnAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(37, 37, 37)
                         .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -159,7 +159,7 @@ public class TablaProveedor extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAgregarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAgregarMouseClicked
-        CrudPanelProveedor agregarProv = new CrudPanelProveedor();
+        CrudPanelProvedor agregarProv = new CrudPanelProvedor();
         ShowpanelCruds(agregarProv);
     }//GEN-LAST:event_btnAgregarMouseClicked
 

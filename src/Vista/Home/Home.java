@@ -1,12 +1,14 @@
 
 package Vista.Home;
 
+import Vista.Menu.VistaMenu;
+
 public class Home extends javax.swing.JFrame {
 
     public Home() {
         initComponents();
         this.setLocationRelativeTo(this);
-        botonesTransparentesIngresar();
+        
          
     }
 
@@ -19,77 +21,159 @@ public class Home extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        dkpHome = new javax.swing.JDesktopPane();
-        jplHome = new javax.swing.JPanel();
-        btniniciarsesion = new javax.swing.JButton();
-        lblBienvenido = new javax.swing.JLabel();
-        btncrearcuenta = new javax.swing.JButton();
+        panelPron = new javax.swing.JPanel();
+        PanelPrin = new javax.swing.JPanel();
         lblFondo = new javax.swing.JLabel();
+        lblIconoLogo = new javax.swing.JLabel();
+        btnCrearCuenta = new rsbuttongradiente.RSButtonGradiente();
+        txtUsuario = new rojeru_san.RSMTextFull();
+        btnIniciarSesion = new rsbuttongradiente.RSButtonGradiente();
+        jSeparator1 = new javax.swing.JSeparator();
+        rSMPassView1 = new rojeru_san.RSMPassView();
+        jLabel1 = new javax.swing.JLabel();
+        lblImagenFondoHome = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        dkpHome.setBackground(new java.awt.Color(0, 21, 27));
-        dkpHome.setLayout(new java.awt.GridBagLayout());
+        panelPron.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jplHome.setBackground(new java.awt.Color(3, 33, 61));
-        jplHome.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.blue, java.awt.Color.white, java.awt.Color.blue, java.awt.Color.white));
-        jplHome.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        PanelPrin.setBackground(new java.awt.Color(255, 255, 255));
 
-        btniniciarsesion.setFont(new java.awt.Font("Georgia", 3, 18)); // NOI18N
-        btniniciarsesion.setForeground(new java.awt.Color(255, 255, 255));
-        btniniciarsesion.setText("INICIAR SESION");
-        btniniciarsesion.addActionListener(new java.awt.event.ActionListener() {
+        lblFondo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/fondochikis.png"))); // NOI18N
+        lblFondo.setText("jLabel1");
+
+        lblIconoLogo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/logoazul.png"))); // NOI18N
+
+        btnCrearCuenta.setBackground(new java.awt.Color(65, 185, 36));
+        btnCrearCuenta.setText("Crear cuenta nueva");
+        btnCrearCuenta.setColorPrimario(new java.awt.Color(65, 185, 36));
+        btnCrearCuenta.setColorPrimarioHover(new java.awt.Color(65, 185, 36));
+        btnCrearCuenta.setColorSecundario(new java.awt.Color(65, 185, 36));
+        btnCrearCuenta.setColorSecundarioHover(new java.awt.Color(65, 185, 36));
+        btnCrearCuenta.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btniniciarsesionActionPerformed(evt);
+                btnCrearCuentaActionPerformed(evt);
             }
         });
-        jplHome.add(btniniciarsesion, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 180, 230, 50));
 
-        lblBienvenido.setFont(new java.awt.Font("Roboto Black", 3, 48)); // NOI18N
-        lblBienvenido.setForeground(new java.awt.Color(255, 255, 255));
-        lblBienvenido.setText("BIENVENIDO ");
-        jplHome.add(lblBienvenido, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 20, 360, 80));
+        txtUsuario.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 255)));
+        txtUsuario.setForeground(new java.awt.Color(153, 153, 153));
+        txtUsuario.setPlaceholder("Usuario/Cedula");
 
-        btncrearcuenta.setFont(new java.awt.Font("Georgia", 3, 18)); // NOI18N
-        btncrearcuenta.setForeground(new java.awt.Color(255, 255, 255));
-        btncrearcuenta.setText("CREAR CUENTA");
-        btncrearcuenta.addActionListener(new java.awt.event.ActionListener() {
+        btnIniciarSesion.setText("Iniciar Sesión");
+        btnIniciarSesion.setColorPrimario(new java.awt.Color(8, 101, 254));
+        btnIniciarSesion.setColorPrimarioHover(new java.awt.Color(8, 101, 254));
+        btnIniciarSesion.setColorSecundario(new java.awt.Color(8, 101, 254));
+        btnIniciarSesion.setColorSecundarioHover(new java.awt.Color(8, 101, 254));
+        btnIniciarSesion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btncrearcuentaActionPerformed(evt);
+                btnIniciarSesionActionPerformed(evt);
             }
         });
-        jplHome.add(btncrearcuenta, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 280, 230, 50));
 
-        lblFondo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/fondohome2.jpg"))); // NOI18N
-        lblFondo.setText("jLabel2");
-        lblFondo.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.blue, java.awt.Color.white, java.awt.Color.blue, java.awt.Color.white));
-        jplHome.add(lblFondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 690, 520));
+        rSMPassView1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 255)));
+        rSMPassView1.setForeground(new java.awt.Color(153, 153, 153));
+        rSMPassView1.setPlaceholder("Contraseña");
 
-        dkpHome.add(jplHome, new java.awt.GridBagConstraints());
+        jLabel1.setFont(new java.awt.Font("Roboto Medium", 1, 24)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setText("           WELCOME");
+
+        javax.swing.GroupLayout PanelPrinLayout = new javax.swing.GroupLayout(PanelPrin);
+        PanelPrin.setLayout(PanelPrinLayout);
+        PanelPrinLayout.setHorizontalGroup(
+            PanelPrinLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(PanelPrinLayout.createSequentialGroup()
+                .addComponent(lblFondo, javax.swing.GroupLayout.PREFERRED_SIZE, 336, Short.MAX_VALUE)
+                .addGroup(PanelPrinLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(PanelPrinLayout.createSequentialGroup()
+                        .addGroup(PanelPrinLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(PanelPrinLayout.createSequentialGroup()
+                                .addGap(25, 25, 25)
+                                .addGroup(PanelPrinLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(rSMPassView1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(PanelPrinLayout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 274, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addContainerGap())
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelPrinLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(PanelPrinLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelPrinLayout.createSequentialGroup()
+                                .addComponent(lblIconoLogo, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(76, 76, 76))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelPrinLayout.createSequentialGroup()
+                                .addComponent(btnCrearCuenta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(45, 45, 45))))
+                    .addGroup(PanelPrinLayout.createSequentialGroup()
+                        .addGap(44, 44, 44)
+                        .addComponent(btnIniciarSesion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))))
+            .addGroup(PanelPrinLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelPrinLayout.createSequentialGroup()
+                    .addContainerGap(20, Short.MAX_VALUE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 275, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(335, Short.MAX_VALUE)))
+        );
+        PanelPrinLayout.setVerticalGroup(
+            PanelPrinLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(PanelPrinLayout.createSequentialGroup()
+                .addComponent(lblFondo)
+                .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(PanelPrinLayout.createSequentialGroup()
+                .addGap(27, 27, 27)
+                .addComponent(lblIconoLogo)
+                .addGap(23, 23, 23)
+                .addComponent(txtUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(27, 27, 27)
+                .addComponent(rSMPassView1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(35, 35, 35)
+                .addComponent(btnIniciarSesion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnCrearCuenta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(PanelPrinLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelPrinLayout.createSequentialGroup()
+                    .addContainerGap(47, Short.MAX_VALUE)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 303, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(336, Short.MAX_VALUE)))
+        );
+
+        panelPron.add(PanelPrin, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 150, 630, 440));
+
+        lblImagenFondoHome.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/diseñoFondo.1.png"))); // NOI18N
+        lblImagenFondoHome.setText("jLabel1");
+        panelPron.add(lblImagenFondoHome, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1030, 720));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(dkpHome)
+            .addComponent(panelPron, javax.swing.GroupLayout.PREFERRED_SIZE, 1027, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(dkpHome)
+            .addComponent(panelPron, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btniniciarsesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btniniciarsesionActionPerformed
-      Login1 logincito =new Login1();//crear objeto del jframe
-           logincito.setVisible(true);//usar un metodo para mostrar el jframe usando el objeto creado
-            this.dispose();//cerrar el jframe
-    }//GEN-LAST:event_btniniciarsesionActionPerformed
+    private void btnIniciarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIniciarSesionActionPerformed
+        VistaMenu Mimenu=new VistaMenu();
+     Mimenu.setVisible(true);
+     this.dispose();
+    }//GEN-LAST:event_btnIniciarSesionActionPerformed
 
-    private void btncrearcuentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btncrearcuentaActionPerformed
-       
-    }//GEN-LAST:event_btncrearcuentaActionPerformed
+    private void btnCrearCuentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearCuentaActionPerformed
+        RegistrarClientes clientess = new RegistrarClientes();
+        clientess.setVisible(true);
+        this.dispose();
+
+    }//GEN-LAST:event_btnCrearCuentaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -124,23 +208,19 @@ public class Home extends javax.swing.JFrame {
         });
     }
 
-    public final void botonesTransparentesIngresar() {
-        btniniciarsesion.setVisible(true);
-        btncrearcuenta.setVisible(true);
-        btniniciarsesion.setOpaque(false);
-        btniniciarsesion.setContentAreaFilled(false);
-        btniniciarsesion.setBorderPainted(false);
-        btncrearcuenta.setOpaque(false);
-        btncrearcuenta.setContentAreaFilled(false);
-        btncrearcuenta.setBorderPainted(false);
-    }
+    
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btncrearcuenta;
-    private javax.swing.JButton btniniciarsesion;
-    private javax.swing.JDesktopPane dkpHome;
-    private javax.swing.JPanel jplHome;
-    private javax.swing.JLabel lblBienvenido;
+    private javax.swing.JPanel PanelPrin;
+    private rsbuttongradiente.RSButtonGradiente btnCrearCuenta;
+    private rsbuttongradiente.RSButtonGradiente btnIniciarSesion;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JSeparator jSeparator1;
     private javax.swing.JLabel lblFondo;
+    private javax.swing.JLabel lblIconoLogo;
+    private javax.swing.JLabel lblImagenFondoHome;
+    private javax.swing.JPanel panelPron;
+    private rojeru_san.RSMPassView rSMPassView1;
+    private rojeru_san.RSMTextFull txtUsuario;
     // End of variables declaration//GEN-END:variables
 }

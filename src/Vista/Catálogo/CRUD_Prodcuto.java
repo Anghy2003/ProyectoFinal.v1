@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Vista.Cruds;
+package Vista.Catálogo;
 
 import Conexion.Conexion_db;
 import Models.Producto;
@@ -16,7 +16,7 @@ import javax.swing.JOptionPane;
 
 /**
  *
- * @author 59399
+ * @author 
  */
 public class CRUD_Prodcuto extends javax.swing.JPanel {
 static ObjectContainer BaseFinal = Conexion_db.ConectarBD();

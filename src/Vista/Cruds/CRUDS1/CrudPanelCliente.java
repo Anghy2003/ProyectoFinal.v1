@@ -267,8 +267,8 @@ public class CrudPanelCliente extends javax.swing.JPanel {
         celular = txtCelular_Cli.getText();
         genero = cbxGenero.getSelectedItem().toString();
         estadoCivil = cbxEstadoC.getSelectedItem().toString();
-        nombreUsuario = txtNomUsu.getText();
-        password = txtContraUsu.getText();
+        nombreUsuario = jLabel12.getText();
+        password = jLabel12.getText();
 
         // ESTABLECER CONEXION CON LA BASE DE DATOS
         ObjectContainer BaseBD = Conexion_db.ConectarBD();
