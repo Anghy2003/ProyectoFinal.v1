@@ -5,6 +5,7 @@
  */
 package Vista.Tables;
 
+import Vista.Cruds.CrudPanelProveedor;
 import Vista.Cruds.CRUDS1.CrudPanelProveedor;
 import Vista.Menu.VistaMenu;
 import java.awt.BorderLayout;
