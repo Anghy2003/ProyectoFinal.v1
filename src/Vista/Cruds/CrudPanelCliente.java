@@ -35,21 +35,21 @@ public class CrudPanelCliente extends javax.swing.JPanel {
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
-        jLabel9 = new javax.swing.JLabel();
-        jLabel10 = new javax.swing.JLabel();
-        jLabel11 = new javax.swing.JLabel();
-        txtCedula = new rojeru_san.RSMTextFull();
-        txtNombres = new rojeru_san.RSMTextFull();
-        txtApellidos = new rojeru_san.RSMTextFull();
-        txtDireccion = new rojeru_san.RSMTextFull();
-        txtEmail = new rojeru_san.RSMTextFull();
-        txtCelular = new rojeru_san.RSMTextFull();
+        lblCedula_Cli = new javax.swing.JLabel();
+        lblNombres_Cli = new javax.swing.JLabel();
+        lblApellidos_Cli = new javax.swing.JLabel();
+        lblDireccion_Cli = new javax.swing.JLabel();
+        lblCorreoElectronico_Cli = new javax.swing.JLabel();
+        lblCelular_Cli = new javax.swing.JLabel();
+        lblFechaNacimiento_Cli = new javax.swing.JLabel();
+        lblGenero_Cli = new javax.swing.JLabel();
+        lblEstadoCivil_Cli = new javax.swing.JLabel();
+        txtCedula_Cli = new rojeru_san.RSMTextFull();
+        txtNombres_Cli = new rojeru_san.RSMTextFull();
+        txtApellidos_Cli = new rojeru_san.RSMTextFull();
+        txtDireccion_Cli = new rojeru_san.RSMTextFull();
+        txtCorreoElectronico_Cli = new rojeru_san.RSMTextFull();
+        txtCelular_Cli = new rojeru_san.RSMTextFull();
         btnCancelar = new rojeru_san.RSButtonRiple();
         jDateFechaNac = new com.toedter.calendar.JDateChooser();
         cbxTipoClie = new javax.swing.JComboBox<>();
@@ -66,98 +66,93 @@ public class CrudPanelCliente extends javax.swing.JPanel {
         jLabel1.setFont(new java.awt.Font("Roboto Medium", 0, 21)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(0, 53, 79));
         jLabel1.setText("Tipo Cliente:");
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 470, 130, 40));
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 460, 130, 40));
 
         jLabel2.setFont(new java.awt.Font("Roboto Black", 0, 30)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(0, 53, 79));
         jLabel2.setText("Registro Clientes");
         jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 30, 240, 40));
 
-        jLabel3.setFont(new java.awt.Font("Roboto Medium", 0, 21)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(0, 53, 79));
-        jLabel3.setText("Cédula:");
-        jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 130, 70, 40));
+        lblCedula_Cli.setFont(new java.awt.Font("Roboto Medium", 0, 21)); // NOI18N
+        lblCedula_Cli.setForeground(new java.awt.Color(0, 53, 79));
+        lblCedula_Cli.setText("Cédula:");
+        jPanel1.add(lblCedula_Cli, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 130, 100, 40));
 
-        jLabel4.setFont(new java.awt.Font("Roboto Medium", 0, 21)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(0, 53, 79));
-        jLabel4.setText("Nombres:");
-        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 200, 100, 40));
+        lblNombres_Cli.setFont(new java.awt.Font("Roboto Medium", 0, 21)); // NOI18N
+        lblNombres_Cli.setForeground(new java.awt.Color(0, 53, 79));
+        lblNombres_Cli.setText("Nombres:");
+        jPanel1.add(lblNombres_Cli, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 200, 100, 40));
 
-        jLabel5.setFont(new java.awt.Font("Roboto Medium", 0, 21)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(0, 53, 79));
-        jLabel5.setText("Apellidos:");
-        jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 270, 100, 40));
+        lblApellidos_Cli.setFont(new java.awt.Font("Roboto Medium", 0, 21)); // NOI18N
+        lblApellidos_Cli.setForeground(new java.awt.Color(0, 53, 79));
+        lblApellidos_Cli.setText("Apellidos:");
+        jPanel1.add(lblApellidos_Cli, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 270, 100, 40));
 
-        jLabel6.setFont(new java.awt.Font("Roboto Medium", 0, 21)); // NOI18N
-        jLabel6.setForeground(new java.awt.Color(0, 53, 79));
-        jLabel6.setText("Dirección");
-        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 340, 90, 40));
+        lblDireccion_Cli.setFont(new java.awt.Font("Roboto Medium", 0, 21)); // NOI18N
+        lblDireccion_Cli.setForeground(new java.awt.Color(0, 53, 79));
+        lblDireccion_Cli.setText("Dirección");
+        jPanel1.add(lblDireccion_Cli, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 340, 90, 40));
 
-        jLabel7.setFont(new java.awt.Font("Roboto Medium", 0, 21)); // NOI18N
-        jLabel7.setForeground(new java.awt.Color(0, 53, 79));
-        jLabel7.setText("Correo Electrónico:");
-        jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 420, 190, 40));
+        lblCorreoElectronico_Cli.setFont(new java.awt.Font("Roboto Medium", 0, 21)); // NOI18N
+        lblCorreoElectronico_Cli.setForeground(new java.awt.Color(0, 53, 79));
+        lblCorreoElectronico_Cli.setText("Correo Electrónico:");
+        jPanel1.add(lblCorreoElectronico_Cli, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 420, 190, 40));
 
-        jLabel8.setFont(new java.awt.Font("Roboto Medium", 0, 21)); // NOI18N
-        jLabel8.setForeground(new java.awt.Color(0, 53, 79));
-        jLabel8.setText("Celular:");
-        jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 130, 80, 40));
+        lblCelular_Cli.setFont(new java.awt.Font("Roboto Medium", 0, 21)); // NOI18N
+        lblCelular_Cli.setForeground(new java.awt.Color(0, 53, 79));
+        lblCelular_Cli.setText("Celular:");
+        jPanel1.add(lblCelular_Cli, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 130, 80, 40));
 
-        jLabel9.setFont(new java.awt.Font("Roboto Medium", 0, 21)); // NOI18N
-        jLabel9.setForeground(new java.awt.Color(0, 53, 79));
-        jLabel9.setText("Fecha Nacimiento:");
-        jPanel1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 210, 180, 40));
+        lblFechaNacimiento_Cli.setFont(new java.awt.Font("Roboto Medium", 0, 21)); // NOI18N
+        lblFechaNacimiento_Cli.setForeground(new java.awt.Color(0, 53, 79));
+        lblFechaNacimiento_Cli.setText("Fecha Nacimiento:");
+        jPanel1.add(lblFechaNacimiento_Cli, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 210, 180, 40));
 
-        jLabel10.setFont(new java.awt.Font("Roboto Medium", 0, 21)); // NOI18N
-        jLabel10.setForeground(new java.awt.Color(0, 53, 79));
-        jLabel10.setText("Género:");
-        jPanel1.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 290, 80, 40));
+        lblGenero_Cli.setFont(new java.awt.Font("Roboto Medium", 0, 21)); // NOI18N
+        lblGenero_Cli.setForeground(new java.awt.Color(0, 53, 79));
+        lblGenero_Cli.setText("Género:");
+        jPanel1.add(lblGenero_Cli, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 290, 80, 40));
 
-        jLabel11.setFont(new java.awt.Font("Roboto Medium", 0, 21)); // NOI18N
-        jLabel11.setForeground(new java.awt.Color(0, 53, 79));
-        jLabel11.setText("Estado Civil:");
-        jPanel1.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 380, 120, 40));
+        lblEstadoCivil_Cli.setFont(new java.awt.Font("Roboto Medium", 0, 21)); // NOI18N
+        lblEstadoCivil_Cli.setForeground(new java.awt.Color(0, 53, 79));
+        lblEstadoCivil_Cli.setText("Estado Civil:");
+        jPanel1.add(lblEstadoCivil_Cli, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 380, 120, 40));
 
-        txtCedula.setForeground(new java.awt.Color(0, 53, 79));
-        txtCedula.setColorTransparente(true);
-        txtCedula.setFont(new java.awt.Font("Roboto Light", 1, 14)); // NOI18N
-        txtCedula.setPlaceholder("Escriba la cédula");
-        jPanel1.add(txtCedula, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 120, 200, 40));
+        txtCedula_Cli.setForeground(new java.awt.Color(0, 53, 79));
+        txtCedula_Cli.setColorTransparente(true);
+        txtCedula_Cli.setFont(new java.awt.Font("Roboto Light", 1, 14)); // NOI18N
+        txtCedula_Cli.setPlaceholder("Escriba la cédula");
+        jPanel1.add(txtCedula_Cli, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 120, 200, 40));
 
-        txtNombres.setForeground(new java.awt.Color(0, 53, 79));
-        txtNombres.setColorTransparente(true);
-        txtNombres.setFont(new java.awt.Font("Roboto Light", 1, 14)); // NOI18N
-        txtNombres.setPlaceholder("Escriba los nombres");
-        jPanel1.add(txtNombres, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 200, 200, 40));
+        txtNombres_Cli.setForeground(new java.awt.Color(0, 53, 79));
+        txtNombres_Cli.setColorTransparente(true);
+        txtNombres_Cli.setFont(new java.awt.Font("Roboto Light", 1, 14)); // NOI18N
+        txtNombres_Cli.setPlaceholder("Escriba los nombres");
+        jPanel1.add(txtNombres_Cli, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 200, 200, 40));
 
-        txtApellidos.setForeground(new java.awt.Color(0, 53, 79));
-        txtApellidos.setColorTransparente(true);
-        txtApellidos.setFont(new java.awt.Font("Roboto Light", 1, 14)); // NOI18N
-        txtApellidos.setPlaceholder("Escriba los apellidos");
-        jPanel1.add(txtApellidos, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 260, 200, 40));
+        txtApellidos_Cli.setForeground(new java.awt.Color(0, 53, 79));
+        txtApellidos_Cli.setColorTransparente(true);
+        txtApellidos_Cli.setFont(new java.awt.Font("Roboto Light", 1, 14)); // NOI18N
+        txtApellidos_Cli.setPlaceholder("Escriba los apellidos");
+        jPanel1.add(txtApellidos_Cli, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 260, 200, 40));
 
-        txtDireccion.setForeground(new java.awt.Color(0, 53, 79));
-        txtDireccion.setColorTransparente(true);
-        txtDireccion.setFont(new java.awt.Font("Roboto Light", 1, 14)); // NOI18N
-        txtDireccion.setPlaceholder("Escriba la dirección");
-        jPanel1.add(txtDireccion, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 340, 200, 40));
+        txtDireccion_Cli.setForeground(new java.awt.Color(0, 53, 79));
+        txtDireccion_Cli.setColorTransparente(true);
+        txtDireccion_Cli.setFont(new java.awt.Font("Roboto Light", 1, 14)); // NOI18N
+        txtDireccion_Cli.setPlaceholder("Escriba la dirección");
+        jPanel1.add(txtDireccion_Cli, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 340, 200, 40));
 
-        txtEmail.setForeground(new java.awt.Color(0, 53, 79));
-        txtEmail.setColorTransparente(true);
-        txtEmail.setFont(new java.awt.Font("Roboto Light", 1, 14)); // NOI18N
-        txtEmail.setPlaceholder("Escriba el email");
-        jPanel1.add(txtEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 410, 200, 40));
+        txtCorreoElectronico_Cli.setForeground(new java.awt.Color(0, 53, 79));
+        txtCorreoElectronico_Cli.setColorTransparente(true);
+        txtCorreoElectronico_Cli.setFont(new java.awt.Font("Roboto Light", 1, 14)); // NOI18N
+        txtCorreoElectronico_Cli.setPlaceholder("Escriba el email");
+        jPanel1.add(txtCorreoElectronico_Cli, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 410, 200, 40));
 
-        txtCelular.setForeground(new java.awt.Color(0, 53, 79));
-        txtCelular.setColorTransparente(true);
-        txtCelular.setFont(new java.awt.Font("Roboto Light", 1, 14)); // NOI18N
-        txtCelular.setPlaceholder("Escriba su número celular");
-        txtCelular.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtCelularActionPerformed(evt);
-            }
-        });
-        jPanel1.add(txtCelular, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 120, 200, 40));
+        txtCelular_Cli.setForeground(new java.awt.Color(0, 53, 79));
+        txtCelular_Cli.setColorTransparente(true);
+        txtCelular_Cli.setFont(new java.awt.Font("Roboto Light", 1, 14)); // NOI18N
+        txtCelular_Cli.setPlaceholder("Escriba su número celular");
+        jPanel1.add(txtCelular_Cli, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 120, 200, 40));
 
         btnCancelar.setBackground(new java.awt.Color(255, 51, 51));
         btnCancelar.setText("Cancelar");
@@ -170,6 +165,11 @@ public class CrudPanelCliente extends javax.swing.JPanel {
         jPanel1.add(jDateFechaNac, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 220, 140, 30));
 
         cbxTipoClie.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbxTipoClie.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbxTipoClieActionPerformed(evt);
+            }
+        });
         jPanel1.add(cbxTipoClie, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 470, 150, 30));
 
         cbxGenero.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
@@ -181,8 +181,7 @@ public class CrudPanelCliente extends javax.swing.JPanel {
         btnGuardar.setText("Guardar");
         jPanel1.add(btnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 580, -1, -1));
 
-        jLabel12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/burbujas.png"))); // NOI18N
-        jLabel12.setText("jLabel12");
+        jLabel12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/fondomecanicatamano.png"))); // NOI18N
         jPanel1.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 890, 650));
 
         add(jPanel1, java.awt.BorderLayout.CENTER);
@@ -194,9 +193,9 @@ public class CrudPanelCliente extends javax.swing.JPanel {
         ShowpanelCruds(tblCli);
     }//GEN-LAST:event_btnCancelarMouseClicked
 
-    private void txtCelularActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCelularActionPerformed
+    private void cbxTipoClieActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxTipoClieActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtCelularActionPerformed
+    }//GEN-LAST:event_cbxTipoClieActionPerformed
     private void ShowpanelCruds(JPanel p) {
         p.setSize(870, 630);
         p.setLocation(0, 0);
@@ -214,23 +213,23 @@ public class CrudPanelCliente extends javax.swing.JPanel {
     private javax.swing.JComboBox<String> cbxTipoClie;
     private com.toedter.calendar.JDateChooser jDateFechaNac;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
-    private rojeru_san.RSMTextFull txtApellidos;
-    private rojeru_san.RSMTextFull txtCedula;
-    private rojeru_san.RSMTextFull txtCelular;
-    private rojeru_san.RSMTextFull txtDireccion;
-    private rojeru_san.RSMTextFull txtEmail;
-    private rojeru_san.RSMTextFull txtNombres;
+    private javax.swing.JLabel lblApellidos_Cli;
+    private javax.swing.JLabel lblCedula_Cli;
+    private javax.swing.JLabel lblCelular_Cli;
+    private javax.swing.JLabel lblCorreoElectronico_Cli;
+    private javax.swing.JLabel lblDireccion_Cli;
+    private javax.swing.JLabel lblEstadoCivil_Cli;
+    private javax.swing.JLabel lblFechaNacimiento_Cli;
+    private javax.swing.JLabel lblGenero_Cli;
+    private javax.swing.JLabel lblNombres_Cli;
+    private rojeru_san.RSMTextFull txtApellidos_Cli;
+    private rojeru_san.RSMTextFull txtCedula_Cli;
+    private rojeru_san.RSMTextFull txtCelular_Cli;
+    private rojeru_san.RSMTextFull txtCorreoElectronico_Cli;
+    private rojeru_san.RSMTextFull txtDireccion_Cli;
+    private rojeru_san.RSMTextFull txtNombres_Cli;
     // End of variables declaration//GEN-END:variables
 }
