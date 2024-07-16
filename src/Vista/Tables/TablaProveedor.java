@@ -4,8 +4,11 @@
  * and open the template in the editor.
  */
 package Vista.Tables;
-
 import Vista.Cruds.CRUDS1.CrudPanelProvedor;
+
+import Vista.Cruds.CrudPanelProveedor;
+import Vista.Cruds.CRUDS1.CrudPanelProvedor;
+
 import Vista.Menu.VistaMenu;
 import java.awt.BorderLayout;
 import javax.swing.JPanel;
