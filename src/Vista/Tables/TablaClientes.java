@@ -5,12 +5,18 @@
  */
 package Vista.Tables;
 
+import Conexion.Conexion_db;
+import Models.Cliente;
 import Vista.Cruds.CrudPanelCliente;
 import Vista.Menu.VistaMenu;
 import static Vista.Menu.VistaMenu.PanelPrincipal;
+import com.db4o.ObjectContainer;
+import com.db4o.ObjectSet;
 import java.awt.BorderLayout;
 import javax.swing.JPanel;
 import javax.swing.WindowConstants;
+import javax.swing.table.DefaultTableModel;
+import rojeru_san.RSMTextFull;
 
 /**
  *
@@ -18,11 +24,14 @@ import javax.swing.WindowConstants;
  */
 public class TablaClientes extends javax.swing.JPanel {
 
+    private String id_persona;
+
     /**
      * Creates new form TablaClientes
      */
     public TablaClientes() {
         initComponents();
+        mostrarTabla();
     }
 
     /**
@@ -37,7 +46,7 @@ public class TablaClientes extends javax.swing.JPanel {
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tblClientes = new javax.swing.JTable();
         txtBuscar = new rojeru_san.RSMTextFull();
         jLabel2 = new javax.swing.JLabel();
         btnEditar = new rsbuttongradiente.RSButtonGradiente();
@@ -55,8 +64,8 @@ public class TablaClientes extends javax.swing.JPanel {
         jScrollPane1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         jScrollPane1.setForeground(new java.awt.Color(255, 255, 255));
 
-        jTable1.setFont(new java.awt.Font("Roboto Medium", 0, 14)); // NOI18N
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tblClientes.setFont(new java.awt.Font("Roboto Medium", 0, 14)); // NOI18N
+        tblClientes.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -67,7 +76,12 @@ public class TablaClientes extends javax.swing.JPanel {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        tblClientes.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblClientesMouseClicked(evt);
+            }
+        });
+        jScrollPane1.setViewportView(tblClientes);
 
         txtBuscar.setFont(new java.awt.Font("Roboto Bold", 2, 14)); // NOI18N
         txtBuscar.setPlaceholder("ejm. 0106388747");
@@ -161,7 +175,16 @@ public class TablaClientes extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnEditarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditarMouseClicked
-        System.out.println("clickmet");
+        if (id_persona == null) {
+            // Mostrar mensaje si no hay ningún cliente seleccionado
+            javax.swing.JOptionPane.showMessageDialog(this, "Por favor, seleccione un cliente para editar.");
+            return;
+        }
+        
+        CrudPanelCliente crduCli = new CrudPanelCliente();
+        SetearDatosModificar(crduCli.getTxtCedula_Cli(),crduCli.getTxtNombres_Cli(),crduCli.getTxtApellidos_Cli());
+        ShowpanelCruds(crduCli);
+
     }//GEN-LAST:event_btnEditarMouseClicked
 
     private void btnAgregarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAgregarMouseClicked
@@ -170,8 +193,78 @@ public class TablaClientes extends javax.swing.JPanel {
     }//GEN-LAST:event_btnAgregarMouseClicked
 
     private void btnEliminarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEliminarMouseClicked
-        // TODO add your handling code here:
+        if (id_persona == null) {
+            // Mostrar mensaje si no hay ningún cliente seleccionado
+            javax.swing.JOptionPane.showMessageDialog(this, "Por favor, seleccione un cliente para eliminar.");
+            return;
+        }
+
+        int confirmation = javax.swing.JOptionPane.showConfirmDialog(this,
+                "¿Está seguro de que desea eliminar el cliente con cédula " + id_persona + "?",
+                "Confirmación de Eliminación",
+                javax.swing.JOptionPane.YES_NO_OPTION);
+
+        if (confirmation == javax.swing.JOptionPane.YES_OPTION) {
+            ObjectContainer BaseBD = Conexion_db.ConectarBD();
+
+            try {
+                eliminarCliente(BaseBD, id_persona);
+                javax.swing.JOptionPane.showMessageDialog(this, "Cliente eliminado exitosamente.");
+                // Actualizar la tabla
+                BaseBD.close();
+                mostrarTabla();
+            } catch (Exception e) {
+                javax.swing.JOptionPane.showMessageDialog(this, "Error al eliminar el cliente: " + e.getMessage());
+            }
+        }
+        
     }//GEN-LAST:event_btnEliminarMouseClicked
+
+    private void tblClientesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblClientesMouseClicked
+        int selectedRow = tblClientes.getSelectedRow();
+        if (selectedRow >= 0) {
+            id_persona = (String) tblClientes.getValueAt(selectedRow, 0);
+
+        }
+    }//GEN-LAST:event_tblClientesMouseClicked
+
+    private void mostrarTabla() {
+        ObjectContainer BaseBD = Conexion_db.ConectarBD();
+        Cliente cliente = new Cliente(null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+        ObjectSet resul = BaseBD.get(cliente);
+
+        String matriz[][] = new String[resul.size()][11];
+
+        for (int i = 0; i < resul.size(); i++) {
+            Cliente cli = (Cliente) resul.next();
+
+            matriz[i][0] = cli.getCedula();
+            matriz[i][1] = cli.getiD_Cliente();
+            matriz[i][2] = cli.getiD_Usuario();
+            matriz[i][3] = cli.getNombres();
+            matriz[i][4] = cli.getApellidos();
+            matriz[i][5] = cli.getEstadoCivil();
+            matriz[i][6] = cli.getGenero();
+            matriz[i][7] = cli.getFechaNacimiento();
+            matriz[i][8] = cli.getCorreo();
+            matriz[i][9] = cli.getDireccion();
+            matriz[i][10] = cli.getCelular();
+
+        }
+        tblClientes.setModel(new javax.swing.table.DefaultTableModel(
+                matriz,
+                new String[]{
+                    "Cedula", "id_cliente", "id_usuario", "Nombres", "Apellidos", "Estado Civil", "Genero", "Fecha Nacimiento", "Correo", "Direccion", "Celular",}
+        ));
+        BaseBD.close();
+    }
+
+    public void SetearDatosModificar(RSMTextFull txtCedula, RSMTextFull txtNombre, RSMTextFull txtApell) {
+        int i = tblClientes.getSelectedRow();
+        txtCedula.setText(tblClientes.getValueAt(i, 0).toString());
+        txtNombre.setText(tblClientes.getValueAt(i, 3).toString());
+        txtApell.setText(tblClientes.getValueAt(i, 4).toString());
+    }
 
     private void ShowpanelCruds(JPanel p) {
         p.setSize(870, 630);
@@ -181,6 +274,18 @@ public class TablaClientes extends javax.swing.JPanel {
         VistaMenu.PanelPrincipal.revalidate();
         VistaMenu.PanelPrincipal.repaint();
     }
+
+    private void eliminarCliente(ObjectContainer BaseBD, String id_cliente) {
+        Cliente eliminp = new Cliente(id_cliente, null, null, null, null, null, null, null, null, null, null, null, null, null);
+
+        ObjectSet resul = BaseBD.get(eliminp);
+
+        if (resul.hasNext()) {
+            Cliente estP = (Cliente) resul.next();
+            BaseBD.delete(estP);
+
+        }
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private rsbuttongradiente.RSButtonGradiente btnAgregar;
     private rsbuttongradiente.RSButtonGradiente btnEditar;
@@ -189,7 +294,7 @@ public class TablaClientes extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable tblClientes;
     private rojeru_san.RSMTextFull txtBuscar;
     // End of variables declaration//GEN-END:variables
 }
