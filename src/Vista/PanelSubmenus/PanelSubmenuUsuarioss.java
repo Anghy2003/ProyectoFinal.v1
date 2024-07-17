@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package Vista.PanelSubmenus;
 
 import Vista.Menu.VistaMenu;
@@ -15,10 +11,7 @@ import java.awt.Color;
 import javax.swing.JPanel;
 import javax.swing.text.TabableView;
 
-/**
- *
- * @author 59399
- */
+
 public class PanelSubmenuUsuarioss extends javax.swing.JPanel {
 
     /**

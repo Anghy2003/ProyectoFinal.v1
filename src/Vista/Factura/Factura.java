@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package Vista.Factura;
 
 import Conexion.Conexion_db;
@@ -12,10 +8,6 @@ import com.db4o.ObjectSet;
 import javax.swing.JButton;
 import javax.swing.JOptionPane;
 
-/**
- *
- * @author 59399
- */
 public class Factura extends javax.swing.JPanel {
 static ObjectContainer BaseFinal = Conexion_db.ConectarBD();
 

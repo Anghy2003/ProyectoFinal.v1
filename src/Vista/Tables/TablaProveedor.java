@@ -1,22 +1,15 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package Vista.Tables;
-import Vista.Cruds.CRUDS1.CrudPanelProvedor;
+import Vista.Cruds.CRUD_Provedor;
 
 import Vista.Cruds.CrudPanelProveedor;
-import Vista.Cruds.CRUDS1.CrudPanelProvedor;
+import Vista.Cruds.CRUD_Provedor;
 
 import Vista.Menu.VistaMenu;
 import java.awt.BorderLayout;
 import javax.swing.JPanel;
 
-/**
- *
- * @author luisd
- */
+
 public class TablaProveedor extends javax.swing.JPanel {
 
     /**
@@ -162,7 +155,7 @@ public class TablaProveedor extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAgregarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAgregarMouseClicked
-        CrudPanelProvedor agregarProv = new CrudPanelProvedor();
+        CrudPanelProveedor agregarProv = new CrudPanelProveedor();
         ShowpanelCruds(agregarProv);
     }//GEN-LAST:event_btnAgregarMouseClicked
 

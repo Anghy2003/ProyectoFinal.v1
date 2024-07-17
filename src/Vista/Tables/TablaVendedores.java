@@ -5,10 +5,17 @@
  */
 package Vista.Tables;
 
-/**
- *
- * @author Angie
- */
+import Conexion.Conexion_db;
+import Models.Vendedor;
+import Vista.Cruds.CRUDS1.CrudPanelVendedor;
+import Vista.Menu.VistaMenu;
+import com.db4o.ObjectContainer;
+import com.db4o.ObjectSet;
+import java.awt.BorderLayout;
+import javax.swing.JPanel;
+import javax.swing.table.DefaultTableModel;
+
+
 public class TablaVendedores extends javax.swing.JPanel {
 
     /**
@@ -16,6 +23,7 @@ public class TablaVendedores extends javax.swing.JPanel {
      */
     public TablaVendedores() {
         initComponents();
+        mostrarDatosVendedor();
     }
 
     /**
@@ -29,13 +37,13 @@ public class TablaVendedores extends javax.swing.JPanel {
 
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tableVendedor = new javax.swing.JScrollPane();
+        tblVendedor = new javax.swing.JTable();
         txtBuscar = new rojeru_san.RSMTextFull();
-        jLabel2 = new javax.swing.JLabel();
         btnAgregar = new rsbuttongradiente.RSButtonGradiente();
         btnEliminar = new rsbuttongradiente.RSButtonGradiente();
         btnEditar = new rsbuttongradiente.RSButtonGradiente();
+        btnEditar1 = new rsbuttongradiente.RSButtonGradiente();
 
         setLayout(new java.awt.BorderLayout());
 
@@ -44,29 +52,26 @@ public class TablaVendedores extends javax.swing.JPanel {
         jLabel1.setFont(new java.awt.Font("Roboto Black", 0, 22)); // NOI18N
         jLabel1.setText("Listado Vendedores");
 
-        jScrollPane1.setBackground(new java.awt.Color(255, 255, 255));
-        jScrollPane1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        jScrollPane1.setForeground(new java.awt.Color(255, 255, 255));
+        tableVendedor.setBackground(new java.awt.Color(255, 255, 255));
+        tableVendedor.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        tableVendedor.setForeground(new java.awt.Color(255, 255, 255));
 
-        jTable1.setFont(new java.awt.Font("Roboto Medium", 0, 14)); // NOI18N
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tblVendedor.setFont(new java.awt.Font("Roboto Medium", 0, 14)); // NOI18N
+        tblVendedor.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+                {null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Id Vendedor", "Id Usuario", "Usuario", "Contraseña", "Cedula", "Nombres", "Apellidos", "Direccion", "Correo Eletronico", "Correo Recuperacion", "Celular", "Fecha Nacimiento", "Estado Civil", "Genero", "Sueldo", "Comiciones", "# Ventas"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        tableVendedor.setViewportView(tblVendedor);
 
         txtBuscar.setFont(new java.awt.Font("Roboto Bold", 2, 14)); // NOI18N
         txtBuscar.setPlaceholder("ejm. 0106388747");
-
-        jLabel2.setFont(new java.awt.Font("Roboto Black", 0, 18)); // NOI18N
-        jLabel2.setText("Buscar");
 
         btnAgregar.setText("Agregar");
         btnAgregar.setColorPrimario(new java.awt.Color(0, 204, 51));
@@ -76,6 +81,11 @@ public class TablaVendedores extends javax.swing.JPanel {
         btnAgregar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnAgregarMouseClicked(evt);
+            }
+        });
+        btnAgregar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAgregarActionPerformed(evt);
             }
         });
 
@@ -90,7 +100,7 @@ public class TablaVendedores extends javax.swing.JPanel {
             }
         });
 
-        btnEditar.setText("Editar");
+        btnEditar.setText("Buscar");
         btnEditar.setColorPrimario(new java.awt.Color(0, 51, 153));
         btnEditar.setColorPrimarioHover(new java.awt.Color(51, 0, 255));
         btnEditar.setColorSecundario(new java.awt.Color(51, 153, 255));
@@ -98,6 +108,17 @@ public class TablaVendedores extends javax.swing.JPanel {
         btnEditar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnEditarMouseClicked(evt);
+            }
+        });
+
+        btnEditar1.setText("Editar");
+        btnEditar1.setColorPrimario(new java.awt.Color(0, 51, 153));
+        btnEditar1.setColorPrimarioHover(new java.awt.Color(51, 0, 255));
+        btnEditar1.setColorSecundario(new java.awt.Color(51, 153, 255));
+        btnEditar1.setColorSecundarioHover(new java.awt.Color(153, 204, 255));
+        btnEditar1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnEditar1MouseClicked(evt);
             }
         });
 
@@ -112,42 +133,38 @@ public class TablaVendedores extends javax.swing.JPanel {
                         .addComponent(jLabel1)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 836, Short.MAX_VALUE)
-                        .addContainerGap())
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addGap(39, 39, 39)
-                        .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(37, 37, 37)
-                        .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(36, 36, 36))))
+                        .addComponent(tableVendedor, javax.swing.GroupLayout.DEFAULT_SIZE, 840, Short.MAX_VALUE)
+                        .addContainerGap())))
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(25, 25, 25)
+                .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(28, 28, 28)
+                .addComponent(btnEditar1, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(27, 27, 27)
+                .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(36, 36, 36))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(38, 38, 38)
                 .addComponent(jLabel1)
+                .addGap(16, 16, 16)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(jPanel2Layout.createSequentialGroup()
-                            .addGap(14, 14, 14)
-                            .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(jPanel2Layout.createSequentialGroup()
-                            .addGap(26, 26, 26)
-                            .addComponent(jLabel2))))
-                .addGap(44, 44, 44)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 446, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnEditar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(tableVendedor, javax.swing.GroupLayout.PREFERRED_SIZE, 446, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(46, Short.MAX_VALUE))
         );
 
         add(jPanel2, java.awt.BorderLayout.CENTER);
@@ -166,16 +183,73 @@ public class TablaVendedores extends javax.swing.JPanel {
         System.out.println("clickmet");
     }//GEN-LAST:event_btnEditarMouseClicked
 
+    private void btnEditar1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditar1MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnEditar1MouseClicked
 
+    private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
+        CrudPanelVendedor vendee = new CrudPanelVendedor();
+        ShowpanelCruds(vendee);
+            
+    }//GEN-LAST:event_btnAgregarActionPerformed
+
+private void ShowpanelCruds(JPanel p) {
+        p.setSize(870, 630);
+        p.setLocation(0, 0);
+        VistaMenu.PanelPrincipal.removeAll();
+        VistaMenu.PanelPrincipal.add(p, BorderLayout.CENTER);
+        VistaMenu.PanelPrincipal.revalidate();
+        VistaMenu.PanelPrincipal.repaint();
+    }
+    private void  mostrarDatosVendedor() {
+
+        ObjectContainer BaseBD = Conexion_db.ConectarBD();
+        tblVendedor.setEnabled(true);
+        
+        ObjectSet<Vendedor> resultado = BaseBD.get(Vendedor.class);
+       
+        String matriz[][] = new String[resultado.size()][17];
+        int i = 0 ;
+         for (Vendedor vende : resultado) {
+            
+            matriz[i][0] = vende.getiD_Vendedor();
+            matriz[i][1] = vende.getiD_Usuario();
+            matriz[i][2] = vende.getUsuario();
+            matriz[i][3] = vende.getPassword();
+            matriz[i][4] = vende.getCedula();
+            matriz[i][5] = vende.getNombres();
+            matriz[i][6] = vende.getApellidos();
+            matriz[i][7] = vende.getDireccion();
+            matriz[i][8] = vende.getCorreo();
+            matriz[i][9] = vende.getCorreoRecuperacion();
+            matriz[i][10] = vende.getCelular();
+            matriz[i][11] = vende.getFechaNacimiento();
+            matriz[i][12] = vende.getEstadoCivil();
+            matriz[i][13] = vende.getGenero();
+            matriz[i][14] = String.valueOf(vende.getSueldoBase_Vendedor());
+            matriz[i][15] = String.valueOf(vende.getComiciones_Vendedor());
+            matriz[i][16] = String.valueOf(vende.getNumeroVentas_Vendedor());
+                i++;
+                    } 
+        
+        tblVendedor.setModel(new javax.swing.table.DefaultTableModel(
+                matriz,
+                new String[]{"ID Vendedor", "ID Usuario", "Usuario", "Contraseña","Cedula", "Nombres", "Apellidos", "Direccion", "Correo Electronico","Correo recuperacion", "Celular","Fecha Nacimiento"
+                , "Estado Civil", "Genero", "Sueldo", "Comiciones", "Numero de Ventas"}
+        ));
+        BaseBD.close();
+    }
+    
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private rsbuttongradiente.RSButtonGradiente btnAgregar;
     private rsbuttongradiente.RSButtonGradiente btnEditar;
+    private rsbuttongradiente.RSButtonGradiente btnEditar1;
     private rsbuttongradiente.RSButtonGradiente btnEliminar;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JScrollPane tableVendedor;
+    private javax.swing.JTable tblVendedor;
     private rojeru_san.RSMTextFull txtBuscar;
     // End of variables declaration//GEN-END:variables
 }

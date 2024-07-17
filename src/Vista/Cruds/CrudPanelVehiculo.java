@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package Vista.Cruds;
 
 import Conexion.Conexion_db;
@@ -15,10 +11,6 @@ import Models.*;
 import com.db4o.query.Query;
 import javax.swing.JOptionPane;
 
-/**
- *
- * @author aberre
- */
 public class CrudPanelVehiculo extends javax.swing.JPanel {
 
     /**

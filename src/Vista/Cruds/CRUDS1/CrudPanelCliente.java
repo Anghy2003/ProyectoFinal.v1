@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package Vista.Cruds.CRUDS1;
 
 import Conexion.Conexion_db;
@@ -18,10 +14,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import rojeru_san.RSMTextFull;
 
-/**
- *
- * @author luisd
- */
+
 public class CrudPanelCliente extends javax.swing.JPanel {
 
     private String cedula;

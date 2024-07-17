@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package Vista.Menu;
 
 import Vista.Catálogo.CRUD_Prodcuto;
@@ -21,10 +17,6 @@ import com.db4o.ObjectContainer;
 import java.awt.BorderLayout;
 import javax.swing.JPanel;
 
-/**
- *
- * @author 59399
- */
 public class VistaMenu extends javax.swing.JFrame {
    
     /**

@@ -12,10 +12,7 @@ import static Vista.Cruds.CrudPanelVehiculo.verificarVehiculosGuardar;
 import com.db4o.query.Query;
 import javax.swing.JOptionPane;
 
-/**
- *
- * @author aberre
- */
+
 public class BuscarPanelVehiculo1 extends javax.swing.JPanel {
 
     /**
