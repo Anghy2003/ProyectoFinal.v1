@@ -18,7 +18,7 @@ import rojeru_san.RSButtonRiple;
 
 /**
  *
- * @author luisd
+ * @author Angie
  */
 public class TablaVehiculos extends javax.swing.JPanel {
 

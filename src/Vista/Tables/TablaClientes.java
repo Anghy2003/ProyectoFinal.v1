@@ -20,7 +20,7 @@ import rojeru_san.RSMTextFull;
 
 /**
  *
- * @author luisd
+ * @author Angie
  */
 public class TablaClientes extends javax.swing.JPanel {
 

@@ -7,7 +7,7 @@ package Vista.PanelSubmenus;
 
 /**
  *
- * @author 59399
+ * @author Angie
  */
 public class PanelSubmenuFacturacion extends javax.swing.JPanel {
 

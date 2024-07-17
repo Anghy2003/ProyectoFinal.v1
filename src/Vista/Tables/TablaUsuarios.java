@@ -7,7 +7,7 @@ package Vista.Tables;
 
 /**
  *
- * @author luisd
+ * @author Angie
  */
 public class TablaUsuarios extends javax.swing.JPanel {
 

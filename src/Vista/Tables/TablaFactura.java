@@ -7,7 +7,7 @@ package Vista.Tables;
 
 /**
  *
- * @author 59399
+ * @author Angie
  */
 public class TablaFactura extends javax.swing.JPanel {
 
