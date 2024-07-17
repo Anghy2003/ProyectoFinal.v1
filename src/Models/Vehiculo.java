@@ -6,12 +6,12 @@ public class Vehiculo {
     private String modelo_Vehiculo;
     private String marca_Vehiculo;
     private String color_Vehiculo;
-    private String anioFabricacion_Vehiculo;
+    private int anioFabricacion_Vehiculo;
 
     public Vehiculo() {
     }
 
-    public Vehiculo(String placa_Vehiculo, String modelo_Vehiculo, String marca_Vehiculo, String color_Vehiculo, String anioFabricacion_Vehiculo) {
+    public Vehiculo(String placa_Vehiculo, String modelo_Vehiculo, String marca_Vehiculo, String color_Vehiculo, int anioFabricacion_Vehiculo) {
         this.placa_Vehiculo = placa_Vehiculo;
         this.modelo_Vehiculo = modelo_Vehiculo;
         this.marca_Vehiculo = marca_Vehiculo;
@@ -78,15 +78,14 @@ public class Vehiculo {
     /**
      * @return the anioFabricacion_Vehiculo
      */
-    public String getAnioFabricacion_Vehiculo() {
+    public int getAnioFabricacion_Vehiculo() {
         return anioFabricacion_Vehiculo;
     }
 
     /**
      * @param anioFabricacion_Vehiculo the anioFabricacion_Vehiculo to set
      */
-    public void setAnioFabricacion_Vehiculo(String anioFabricacion_Vehiculo) {
+    public void setAnioFabricacion_Vehiculo(int anioFabricacion_Vehiculo) {
         this.anioFabricacion_Vehiculo = anioFabricacion_Vehiculo;
     }
-    
 }

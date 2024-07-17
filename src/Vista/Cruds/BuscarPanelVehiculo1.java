@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package Vista.Cruds;
 
 import Conexion.Conexion_db;
@@ -12,6 +8,7 @@ import com.db4o.*;
 import java.awt.BorderLayout;
 import javax.swing.JPanel;
 import Models.*;
+import static Vista.Cruds.CrudPanelVehiculo.verificarVehiculosGuardar;
 import com.db4o.query.Query;
 import javax.swing.JOptionPane;
 
@@ -19,13 +16,16 @@ import javax.swing.JOptionPane;
  *
  * @author aberre
  */
-public class CrudPanelVehiculo extends javax.swing.JPanel {
+public class BuscarPanelVehiculo1 extends javax.swing.JPanel {
 
     /**
      * Creates new form CrudPanelVehiculo
      */
-    public CrudPanelVehiculo() {
+    private String BuscarPlaca;
+    public BuscarPanelVehiculo1(String receivedString) {
+        this.BuscarPlaca = receivedString;
         initComponents();
+        buscarVehiculo();
     }
 
     /**
@@ -49,8 +49,8 @@ public class CrudPanelVehiculo extends javax.swing.JPanel {
         txtMarca = new rojeru_san.RSMTextFull();
         txtColor = new rojeru_san.RSMTextFull();
         btnCancelar = new rojeru_san.RSButtonRiple();
-        btnGuardar = new rojeru_san.RSButtonRiple();
         YEARAño = new com.toedter.calendar.JYearChooser();
+        btnModificar = new rojeru_san.RSButtonRiple();
         jLabel12 = new javax.swing.JLabel();
 
         setLayout(new java.awt.BorderLayout());
@@ -114,7 +114,6 @@ public class CrudPanelVehiculo extends javax.swing.JPanel {
 
         btnCancelar.setBackground(new java.awt.Color(255, 51, 51));
         btnCancelar.setText("Cancelar");
-        btnCancelar.setToolTipText("Regresar a la lista de Vehiculos");
         btnCancelar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnCancelarMouseClicked(evt);
@@ -126,16 +125,15 @@ public class CrudPanelVehiculo extends javax.swing.JPanel {
             }
         });
         jPanel1.add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 430, -1, -1));
+        jPanel1.add(YEARAño, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 210, 160, 30));
 
-        btnGuardar.setText("Guardar");
-        btnGuardar.setToolTipText("Se guardaran cambios realizados");
-        btnGuardar.addMouseListener(new java.awt.event.MouseAdapter() {
+        btnModificar.setText("Modificar");
+        btnModificar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnGuardarMouseClicked(evt);
+                btnModificarMouseClicked(evt);
             }
         });
-        jPanel1.add(btnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 430, -1, -1));
-        jPanel1.add(YEARAño, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 210, 160, 30));
+        jPanel1.add(btnModificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 430, -1, -1));
 
         jLabel12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/burbujas.png"))); // NOI18N
         jLabel12.setText("jLabel12");
@@ -154,25 +152,32 @@ public class CrudPanelVehiculo extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnCancelarActionPerformed
 
-    
-    
-        //Guardar USUARIO
-    public static void guardarVehiculos(String placa_Vehiculo, String modelo_Vehiculo, String marca_Vehiculo, String color_Vehiculo, int anioFabricacion_Vehiculo) {
+    public static void modificarVehiculo(String placa_Vehiculo, String modelo_Vehiculo, String marca_Vehiculo, String color_Vehiculo, int anioFabricacion_Vehiculo) {
         // ESTABLECER CONEXION CON LA BASE DE DATOS
         ObjectContainer BaseBD = Conexion_db.ConectarBD();
 
-        Vehiculo vehiculo1 = new Vehiculo(placa_Vehiculo, modelo_Vehiculo, marca_Vehiculo, color_Vehiculo, anioFabricacion_Vehiculo);
-        //Cerrar BD (antes de  verificar usuario que abre nuevamente la BD)
-        BaseBD.close();
-        if (verificarVehiculosGuardar(placa_Vehiculo) == 0) {
-            //volvemos a abrir para guardar 
-            BaseBD = Conexion_db.ConectarBD();
-            BaseBD.set(vehiculo1);
-            BaseBD.close();
-            System.out.println("Vehiculo Guardado");
+        // Crear el objeto con los datos nuevos
+        Vehiculo vehiculoModificado = new Vehiculo(placa_Vehiculo, modelo_Vehiculo, marca_Vehiculo, color_Vehiculo, anioFabricacion_Vehiculo);
+
+        // Buscar el objeto existente en la base de datos
+        Vehiculo vehiculoBusca = new Vehiculo(placa_Vehiculo, null, null, null, 0);
+        ObjectSet resultado = BaseBD.get(vehiculoBusca);
+        int coincidencias = resultado.size();
+
+        if (coincidencias > 0) {
+            // Eliminar el objeto existente
+            Vehiculo vehiculoAEliminar = (Vehiculo) resultado.next();
+            BaseBD.delete(vehiculoAEliminar);
+
+            // Guardar el nuevo objeto con los datos modificados
+            BaseBD.set(vehiculoModificado);
+            System.out.println("Vehículo modificado y guardado exitosamente.");
         } else {
-            System.out.println("Vehiculo ya existe en la BD");
-        } 
+            System.out.println("No se encontró ningún vehículo con la placa especificada.");
+        }
+
+        // Cerrar la base de datos
+        BaseBD.close();
     }
     //verificar VEHICULOS
     public static int verificarVehiculosGuardar(String placa_Vehiculo) {
@@ -203,34 +208,53 @@ public class CrudPanelVehiculo extends javax.swing.JPanel {
     txtModelo.setText("");
     YEARAño.setYear(2024);
     }
-    
-    private void btnGuardarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnGuardarMouseClicked
+    public final void buscarVehiculo(){
         Boolean encontrado = false;
-        if (verificarVehiculos(txtPlaca.getText().toUpperCase()) != 0) {
-            JOptionPane.showMessageDialog(null, "Placa de Vehiculo ya registrado");
+        // ESTABLECER CONEXION CON LA BASE DE DATOS
+        ObjectContainer BaseBD = Conexion_db.ConectarBD();
+        Query vehiculo = BaseBD.query();//metodo para iniciar una consulta
+        vehiculo.constrain(Vehiculo.class);//buscaremos en la clase Vehiculo
+        vehiculo.descend("placa_Vehiculo").constrain(BuscarPlaca.toUpperCase()); // verificamos las coincidencias en el atributo especificado
+        ObjectSet<Vehiculo> resultado=vehiculo.execute();//Ejecutamos la consulta y almacenamos en "resultado"
+        // Iterar sobre los resultados para obtener los atributos
+        for (Vehiculo vehi : resultado) {
+            //con esto setteamos en los campos recibiendo del objeto
+            txtPlaca.setText(vehi.getPlaca_Vehiculo());
+            txtPlaca.setEnabled(false);//Para que el usuario no edite la placa
+            txtModelo.setText(vehi.getModelo_Vehiculo());
+            txtMarca.setText(vehi.getMarca_Vehiculo());
+            txtColor.setText(vehi.getColor_Vehiculo());
+            YEARAño.setYear(vehi.getAnioFabricacion_Vehiculo());
             encontrado = true;
+            JOptionPane.showMessageDialog(this, "ENCONTRADO");
         }
-
+        if (!encontrado) {
+            JOptionPane.showMessageDialog(this, "No se encontró Vehiculo");
+        }
+        
+        BaseBD.close();
+    }
+    
+    private void btnModificarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnModificarMouseClicked
         if (!txtMarca.getText().trim().isBlank()) {
             if (!txtModelo.getText().isBlank()) {
-                if (!encontrado) {
-                    Boolean valido = false;//creamos una bandera para validar datos
-                    if (valido = txtPlaca.getText().toUpperCase().matches("^[A-Z]{3}-\\d{3,4}$")) {//aceptamos 3 letras, un guion y luego 3 a 4 numeros
-                        if (valido = txtColor.getText().matches("^[a-zA-Z]+$")) {
-                            guardarVehiculos(txtPlaca.getText().toUpperCase(), txtModelo.getText().toUpperCase(), txtMarca.getText().toUpperCase(), txtColor.getText().toUpperCase(), YEARAño.getYear());
-                            JOptionPane.showMessageDialog(this, "Vehiculo Guardado");
-                        } else {
-                            JOptionPane.showMessageDialog(this, "Ingrese un color sin numeros");
-                        }
-                    } else {
-                        JOptionPane.showMessageDialog(this, "Ingrese una placa Válida");
-                    }
+                Boolean valido = false;//creamos una bandera para validar datos
+                if (valido = txtColor.getText().matches("^[a-zA-Z]+$")) {
+
+                    modificarVehiculo(txtPlaca.getText().toUpperCase(), txtModelo.getText().toUpperCase(), txtMarca.getText().toUpperCase(), txtColor.getText().toUpperCase(), YEARAño.getYear());
+                    JOptionPane.showMessageDialog(this, "Vehiculo Modificado");
+                } else {
+                    JOptionPane.showMessageDialog(this, "Ingrese un color sin numeros");
                 }
+                resetCampos();
+                TablaVehiculos miTablaVehiculos = new TablaVehiculos();
+                ShowpanelCruds(miTablaVehiculos);
             }else{JOptionPane.showMessageDialog(this, "No deje espacios en blanco");}
-            }else{JOptionPane.showMessageDialog(this, "No deje espacios en blanco");}
-        
-        resetCampos();
-    }//GEN-LAST:event_btnGuardarMouseClicked
+
+        }else{JOptionPane.showMessageDialog(this, "No deje espacios en blanco");}
+
+
+    }//GEN-LAST:event_btnModificarMouseClicked
     private void ShowpanelCruds(JPanel p) {
         p.setSize(870, 630);// Establece el tamaño
         p.setLocation(0, 0);// Coloca el panel en la posición (0, 0) 
@@ -243,7 +267,7 @@ public class CrudPanelVehiculo extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.toedter.calendar.JYearChooser YEARAño;
     private rojeru_san.RSButtonRiple btnCancelar;
-    private rojeru_san.RSButtonRiple btnGuardar;
+    private rojeru_san.RSButtonRiple btnModificar;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;

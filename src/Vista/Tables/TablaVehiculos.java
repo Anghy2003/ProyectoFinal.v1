@@ -5,10 +5,16 @@
  */
 package Vista.Tables;
 
+import Conexion.Conexion_db;
 import Vista.Cruds.CrudPanelVehiculo;
+import Models.*;
+import Vista.Cruds.BuscarPanelVehiculo1;
 import Vista.Menu.VistaMenu;
+import com.db4o.*;
 import java.awt.BorderLayout;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import rojeru_san.RSButtonRiple;
 
 /**
  *
@@ -21,6 +27,7 @@ public class TablaVehiculos extends javax.swing.JPanel {
      */
     public TablaVehiculos() {
         initComponents();
+        mostrarDatos();
     }
 
     /**
@@ -35,7 +42,7 @@ public class TablaVehiculos extends javax.swing.JPanel {
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tblVehiculo = new javax.swing.JTable();
         txtBuscar = new rojeru_san.RSMTextFull();
         jLabel2 = new javax.swing.JLabel();
         btnAgregar = new rsbuttongradiente.RSButtonGradiente();
@@ -53,8 +60,8 @@ public class TablaVehiculos extends javax.swing.JPanel {
         jScrollPane1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         jScrollPane1.setForeground(new java.awt.Color(255, 255, 255));
 
-        jTable1.setFont(new java.awt.Font("Roboto Medium", 0, 14)); // NOI18N
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tblVehiculo.setFont(new java.awt.Font("Roboto Medium", 0, 14)); // NOI18N
+        tblVehiculo.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -65,7 +72,7 @@ public class TablaVehiculos extends javax.swing.JPanel {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tblVehiculo);
 
         txtBuscar.setFont(new java.awt.Font("Roboto Bold", 2, 14)); // NOI18N
         txtBuscar.setPlaceholder("ejm. ABG-0023");
@@ -74,6 +81,7 @@ public class TablaVehiculos extends javax.swing.JPanel {
         jLabel2.setText("Buscar");
 
         btnAgregar.setText("Agregar");
+        btnAgregar.setToolTipText("Ingresar un nuevo vehiculo");
         btnAgregar.setColorPrimario(new java.awt.Color(0, 204, 51));
         btnAgregar.setColorPrimarioHover(new java.awt.Color(0, 204, 51));
         btnAgregar.setColorSecundario(new java.awt.Color(153, 255, 153));
@@ -95,7 +103,8 @@ public class TablaVehiculos extends javax.swing.JPanel {
             }
         });
 
-        btnEditar.setText("Editar");
+        btnEditar.setText("Buscar");
+        btnEditar.setToolTipText("Previamente ingrese una placa");
         btnEditar.setColorPrimario(new java.awt.Color(0, 51, 153));
         btnEditar.setColorPrimarioHover(new java.awt.Color(51, 0, 255));
         btnEditar.setColorSecundario(new java.awt.Color(51, 153, 255));
@@ -117,19 +126,19 @@ public class TablaVehiculos extends javax.swing.JPanel {
                         .addComponent(jLabel1)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 836, Short.MAX_VALUE)
+                        .addComponent(jScrollPane1)
                         .addContainerGap())
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addGap(39, 39, 39)
                         .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 84, Short.MAX_VALUE)
                         .addComponent(btnAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(37, 37, 37)
+                        .addGap(44, 44, 44)
                         .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
+                        .addGap(37, 37, 37)
                         .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(36, 36, 36))))
+                        .addGap(17, 17, 17))))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -159,8 +168,8 @@ public class TablaVehiculos extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAgregarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAgregarMouseClicked
-        CrudPanelVehiculo agregarProv = new CrudPanelVehiculo();
-        ShowpanelCruds(agregarProv);
+        CrudPanelVehiculo agregarVehi = new CrudPanelVehiculo();
+        ShowpanelCruds(agregarVehi);
     }//GEN-LAST:event_btnAgregarMouseClicked
 
     private void btnEliminarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEliminarMouseClicked
@@ -168,8 +177,13 @@ public class TablaVehiculos extends javax.swing.JPanel {
     }//GEN-LAST:event_btnEliminarMouseClicked
 
     private void btnEditarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditarMouseClicked
-        // TODO add your handling code here:
-        System.out.println("clickmet");
+        if (!txtBuscar.getText().trim().isEmpty()) {
+            String BuscarPlaca = txtBuscar.getText(); // Obtener el texto de txtBuscar
+            BuscarPanelVehiculo1 miBuscarPanelVehiculo1 = new BuscarPanelVehiculo1(BuscarPlaca);//creo el componente llevando el valor del String
+            ShowpanelCruds(miBuscarPanelVehiculo1);
+        }else{
+            JOptionPane.showMessageDialog(this, "Ingrese una placa");
+        }
     }//GEN-LAST:event_btnEditarMouseClicked
     private void ShowpanelCruds(JPanel p) {
         p.setSize(870, 630);
@@ -178,6 +192,32 @@ public class TablaVehiculos extends javax.swing.JPanel {
         VistaMenu.PanelPrincipal.add(p, BorderLayout.CENTER);
         VistaMenu.PanelPrincipal.revalidate();
         VistaMenu.PanelPrincipal.repaint();
+    }
+    private void mostrarDatos() {
+        // ESTABLECER CONEXION CON LA BASE DE DATOS
+        ObjectContainer BaseBD = Conexion_db.ConectarBD();
+        tblVehiculo.setEnabled(true);
+        
+        //Guardamos en "resultado" todos proveedores de la base de Datos
+        ObjectSet<Vehiculo> resultado = BaseBD.get(Vehiculo.class);
+        //Creo una matriz
+        String matriz[][] = new String[resultado.size()][5];
+        int i = 0;
+        for (Vehiculo miVehi : resultado) {//iteramos en cada elemento de "resultado"
+            matriz[i][0] = miVehi.getPlaca_Vehiculo();
+            matriz[i][1] = miVehi.getModelo_Vehiculo();
+            matriz[i][2] = miVehi.getMarca_Vehiculo();
+            matriz[i][3] = miVehi.getColor_Vehiculo();
+            String Año= String.valueOf(miVehi.getAnioFabricacion_Vehiculo());//Convierto el año a String para la tabla
+            matriz[i][4] = Año;
+            i++;
+        }
+        // datos configurados
+        tblVehiculo.setModel(new javax.swing.table.DefaultTableModel(matriz, new String[]{"Placa", "Modelo ", "Marca", "Color", "Año Fabricacion"}));
+        tblVehiculo.setEnabled(false);{
+        BaseBD.close();
+    }
+       
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -188,7 +228,7 @@ public class TablaVehiculos extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable tblVehiculo;
     private rojeru_san.RSMTextFull txtBuscar;
     // End of variables declaration//GEN-END:variables
 }
