@@ -63,6 +63,7 @@ public class TablaClientes extends javax.swing.JPanel {
         jScrollPane1.setBackground(new java.awt.Color(255, 255, 255));
         jScrollPane1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         jScrollPane1.setForeground(new java.awt.Color(255, 255, 255));
+        jScrollPane1.setEnabled(false);
 
         tblClientes.setFont(new java.awt.Font("Roboto Medium", 0, 14)); // NOI18N
         tblClientes.setModel(new javax.swing.table.DefaultTableModel(
@@ -108,6 +109,11 @@ public class TablaClientes extends javax.swing.JPanel {
         btnAgregar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnAgregarMouseClicked(evt);
+            }
+        });
+        btnAgregar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAgregarActionPerformed(evt);
             }
         });
 
@@ -227,6 +233,10 @@ public class TablaClientes extends javax.swing.JPanel {
 
         }
     }//GEN-LAST:event_tblClientesMouseClicked
+
+    private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnAgregarActionPerformed
 
     private void mostrarTabla() {
         ObjectContainer BaseBD = Conexion_db.ConectarBD();

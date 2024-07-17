@@ -7,11 +7,14 @@ package Vista.Menu;
 
 import Vista.Catálogo.CRUD_Prodcuto;
 import Conexion.Conexion_db;
+import Vista.Catálogo.CrudPanelServicios;
 import Vista.Cruds.*;
 import Vista.Factura.Factura;
 import Vista.PanelSubmenus.*;
 import Vista.PanelTitulos.*;
+import Vista.Tables.TablaProductos;
 import Vista.Tables.TablaProveedor;
+import Vista.Tables.TablaServicios;
 import Vista.Tables.TablaUsuarios;
 import Vista.Tables.TablaVehiculos;
 import com.db4o.ObjectContainer;
@@ -311,8 +314,13 @@ public class VistaMenu extends javax.swing.JFrame {
     }//GEN-LAST:event_btnUsuarioMouseClicked
 
     private void btnServiciosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnServiciosMouseClicked
-        CRUD_Prodcuto prod = new CRUD_Prodcuto();
-        MostarpanelCruds(prod);
+        TablaServicios tablaPro = new TablaServicios();
+        PanelTituloServicios titSer = new PanelTituloServicios(); 
+        PanelSubmenuServicios Submenuserv = new PanelSubmenuServicios();         
+        MostrarpanelTitulo(titSer);
+        MostrarpanelSubmenu(Submenuserv);
+        MostarpanelCruds(tablaPro);
+        
     }//GEN-LAST:event_btnServiciosMouseClicked
 
     private void btnFacturaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnFacturaMouseClicked

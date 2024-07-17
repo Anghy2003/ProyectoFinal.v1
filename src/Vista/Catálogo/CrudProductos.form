@@ -53,7 +53,7 @@
             </Constraint>
           </Constraints>
         </Component>
-        <Component class="rojeru_san.RSMTextFull" name="txtCedula">
+        <Component class="rojeru_san.RSMTextFull" name="txtCodigoProducto">
           <Properties>
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="4f" green="35" red="0" type="rgb"/>
@@ -64,6 +64,9 @@
             </Property>
             <Property name="placeholder" type="java.lang.String" value="C&#xf3;digo"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtCodigoProductoActionPerformed"/>
+          </Events>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
               <AbsoluteConstraints x="140" y="110" width="200" height="40"/>
@@ -86,7 +89,7 @@
             </Constraint>
           </Constraints>
         </Component>
-        <Component class="rojeru_san.RSMTextFull" name="txtNombres">
+        <Component class="rojeru_san.RSMTextFull" name="txtNombreProducto">
           <Properties>
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="4f" green="35" red="0" type="rgb"/>
@@ -103,7 +106,7 @@
             </Constraint>
           </Constraints>
         </Component>
-        <Component class="rojeru_san.RSMTextFull" name="txtApellidos">
+        <Component class="rojeru_san.RSMTextFull" name="txtCodigoCategoria">
           <Properties>
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="4f" green="35" red="0" type="rgb"/>
@@ -132,7 +135,7 @@
           </Events>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="150" y="580" width="-1" height="-1"/>
+              <AbsoluteConstraints x="130" y="540" width="-1" height="-1"/>
             </Constraint>
           </Constraints>
         </Component>
@@ -140,9 +143,12 @@
           <Properties>
             <Property name="text" type="java.lang.String" value="Guardar"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnGuardarActionPerformed"/>
+          </Events>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="530" y="580" width="-1" height="-1"/>
+              <AbsoluteConstraints x="480" y="540" width="-1" height="-1"/>
             </Constraint>
           </Constraints>
         </Component>
@@ -218,11 +224,11 @@
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="4f" green="35" red="0" type="rgb"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="Existencia minima:"/>
+            <Property name="text" type="java.lang.String" value="Existencia maxima:"/>
           </Properties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="460" y="420" width="-1" height="-1"/>
+              <AbsoluteConstraints x="30" y="490" width="-1" height="-1"/>
             </Constraint>
           </Constraints>
         </Component>
@@ -258,7 +264,7 @@
             </Constraint>
           </Constraints>
         </Component>
-        <Component class="rojeru_san.RSMTextFull" name="txtApellidos1">
+        <Component class="rojeru_san.RSMTextFull" name="txtDescripcion">
           <Properties>
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="4f" green="35" red="0" type="rgb"/>
@@ -275,7 +281,7 @@
             </Constraint>
           </Constraints>
         </Component>
-        <Component class="rojeru_san.RSMTextFull" name="txtApellidos2">
+        <Component class="rojeru_san.RSMTextFull" name="txtExistenciaMaxima">
           <Properties>
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="4f" green="35" red="0" type="rgb"/>
@@ -288,11 +294,11 @@
           </Properties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="650" y="400" width="200" height="40"/>
+              <AbsoluteConstraints x="220" y="480" width="200" height="40"/>
             </Constraint>
           </Constraints>
         </Component>
-        <Component class="rojeru_san.RSMTextFull" name="txtApellidos3">
+        <Component class="rojeru_san.RSMTextFull" name="txtProveedorID">
           <Properties>
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="4f" green="35" red="0" type="rgb"/>
@@ -309,7 +315,7 @@
             </Constraint>
           </Constraints>
         </Component>
-        <Component class="rojeru_san.RSMTextFull" name="txtApellidos4">
+        <Component class="rojeru_san.RSMTextFull" name="txtPrecioProducto">
           <Properties>
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="4f" green="35" red="0" type="rgb"/>
@@ -320,13 +326,16 @@
             </Property>
             <Property name="placeholder" type="java.lang.String" value="Escriba el precio"/>
           </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtPrecioProductoActionPerformed"/>
+          </Events>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
               <AbsoluteConstraints x="580" y="210" width="200" height="40"/>
             </Constraint>
           </Constraints>
         </Component>
-        <Component class="rojeru_san.RSMTextFull" name="txtApellidos5">
+        <Component class="rojeru_san.RSMTextFull" name="txtNumeroProductos">
           <Properties>
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="4f" green="35" red="0" type="rgb"/>
@@ -340,6 +349,39 @@
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
               <AbsoluteConstraints x="230" y="400" width="200" height="40"/>
+            </Constraint>
+          </Constraints>
+        </Component>
+        <Component class="javax.swing.JLabel" name="lblExistenciaMinima1">
+          <Properties>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Roboto Medium" size="18" style="1"/>
+            </Property>
+            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="4f" green="35" red="0" type="rgb"/>
+            </Property>
+            <Property name="text" type="java.lang.String" value="Existencia minima:"/>
+          </Properties>
+          <Constraints>
+            <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
+              <AbsoluteConstraints x="460" y="420" width="-1" height="-1"/>
+            </Constraint>
+          </Constraints>
+        </Component>
+        <Component class="rojeru_san.RSMTextFull" name="txtExistenciaMinima">
+          <Properties>
+            <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="4f" green="35" red="0" type="rgb"/>
+            </Property>
+            <Property name="colorTransparente" type="boolean" value="true"/>
+            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+              <Font name="Roboto Light" size="14" style="1"/>
+            </Property>
+            <Property name="placeholder" type="java.lang.String" value="Existencia Minima"/>
+          </Properties>
+          <Constraints>
+            <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
+              <AbsoluteConstraints x="640" y="400" width="200" height="40"/>
             </Constraint>
           </Constraints>
         </Component>

@@ -46,6 +46,11 @@ public class PanelSubmenuServicios extends javax.swing.JPanel {
         btngestionser.setFont(new java.awt.Font("Roboto Medium", 1, 11)); // NOI18N
         btngestionser.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/gestionarServicios35.png"))); // NOI18N
         btngestionser.setText("GESTION DE SERVICIOS");
+        btngestionser.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btngestionserActionPerformed(evt);
+            }
+        });
 
         jSeparator1.setForeground(new java.awt.Color(0, 53, 79));
 
@@ -77,6 +82,10 @@ public class PanelSubmenuServicios extends javax.swing.JPanel {
 
         add(jPanel1, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btngestionserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btngestionserActionPerformed
+       
+    }//GEN-LAST:event_btngestionserActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

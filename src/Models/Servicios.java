@@ -30,6 +30,10 @@ public class Servicios {
         this.placa_Vehiculo = placa_Vehiculo;
     }
 
+    public Servicios(String valueOf, String codigo_Servicio, String nombre_Servicio, String descripcion_Servicio, double precioTotal_Servicio, String duracion_Servicio, boolean estado_Servicio, String Id_mecanico, String placa_Vehiculo) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
     /**
      * @return the codigo_Servicio
      */
