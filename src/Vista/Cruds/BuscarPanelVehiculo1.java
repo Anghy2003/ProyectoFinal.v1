@@ -35,6 +35,7 @@ public class BuscarPanelVehiculo1 extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jLabel12 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         lblPlaca = new javax.swing.JLabel();
@@ -49,7 +50,9 @@ public class BuscarPanelVehiculo1 extends javax.swing.JPanel {
         btnCancelar = new rojeru_san.RSButtonRiple();
         YEARAño = new com.toedter.calendar.JYearChooser();
         btnModificar = new rojeru_san.RSButtonRiple();
-        jLabel12 = new javax.swing.JLabel();
+
+        jLabel12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/burbujas.png"))); // NOI18N
+        jLabel12.setText("jLabel12");
 
         setLayout(new java.awt.BorderLayout());
 
@@ -58,7 +61,7 @@ public class BuscarPanelVehiculo1 extends javax.swing.JPanel {
 
         jLabel2.setFont(new java.awt.Font("Roboto Black", 0, 30)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(0, 53, 79));
-        jLabel2.setText("Registro Vehículos");
+        jLabel2.setText("Modificar Vehículos");
         jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 30, 270, 40));
 
         lblPlaca.setFont(new java.awt.Font("Roboto Medium", 0, 21)); // NOI18N
@@ -69,22 +72,22 @@ public class BuscarPanelVehiculo1 extends javax.swing.JPanel {
         lblModelo.setFont(new java.awt.Font("Roboto Medium", 0, 21)); // NOI18N
         lblModelo.setForeground(new java.awt.Color(0, 53, 79));
         lblModelo.setText("Modelo:");
-        jPanel1.add(lblModelo, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 200, 100, 40));
+        jPanel1.add(lblModelo, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 170, 100, 40));
 
         lblMarca.setFont(new java.awt.Font("Roboto Medium", 0, 21)); // NOI18N
         lblMarca.setForeground(new java.awt.Color(0, 53, 79));
         lblMarca.setText("Marca:");
-        jPanel1.add(lblMarca, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 270, 100, 40));
+        jPanel1.add(lblMarca, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 220, 100, 40));
 
         lblColor.setFont(new java.awt.Font("Roboto Medium", 0, 21)); // NOI18N
         lblColor.setForeground(new java.awt.Color(0, 53, 79));
         lblColor.setText("Color:");
-        jPanel1.add(lblColor, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 140, 60, 40));
+        jPanel1.add(lblColor, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 280, 60, 30));
 
         lblAño.setFont(new java.awt.Font("Roboto Medium", 0, 21)); // NOI18N
         lblAño.setForeground(new java.awt.Color(0, 53, 79));
         lblAño.setText("Año Fabricación:");
-        jPanel1.add(lblAño, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 210, 180, 40));
+        jPanel1.add(lblAño, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 320, 180, 40));
 
         txtPlaca.setForeground(new java.awt.Color(0, 53, 79));
         txtPlaca.setColorTransparente(true);
@@ -96,19 +99,19 @@ public class BuscarPanelVehiculo1 extends javax.swing.JPanel {
         txtModelo.setColorTransparente(true);
         txtModelo.setFont(new java.awt.Font("Roboto Light", 1, 14)); // NOI18N
         txtModelo.setPlaceholder("Ejm: F150 o D-MAX");
-        jPanel1.add(txtModelo, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 200, 200, 40));
+        jPanel1.add(txtModelo, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 170, 200, 40));
 
         txtMarca.setForeground(new java.awt.Color(0, 53, 79));
         txtMarca.setColorTransparente(true);
         txtMarca.setFont(new java.awt.Font("Roboto Light", 1, 14)); // NOI18N
         txtMarca.setPlaceholder("Ejm: Ford");
-        jPanel1.add(txtMarca, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 260, 200, 40));
+        jPanel1.add(txtMarca, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 220, 200, 40));
 
         txtColor.setForeground(new java.awt.Color(0, 53, 79));
         txtColor.setColorTransparente(true);
         txtColor.setFont(new java.awt.Font("Roboto Light", 1, 14)); // NOI18N
         txtColor.setPlaceholder("Ejm: Rojo");
-        jPanel1.add(txtColor, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 130, 200, 40));
+        jPanel1.add(txtColor, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 270, 200, 40));
 
         btnCancelar.setBackground(new java.awt.Color(255, 51, 51));
         btnCancelar.setText("Cancelar");
@@ -122,8 +125,8 @@ public class BuscarPanelVehiculo1 extends javax.swing.JPanel {
                 btnCancelarActionPerformed(evt);
             }
         });
-        jPanel1.add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 430, -1, -1));
-        jPanel1.add(YEARAño, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 210, 160, 30));
+        jPanel1.add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 430, -1, -1));
+        jPanel1.add(YEARAño, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 330, 160, 30));
 
         btnModificar.setText("Modificar");
         btnModificar.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -132,10 +135,6 @@ public class BuscarPanelVehiculo1 extends javax.swing.JPanel {
             }
         });
         jPanel1.add(btnModificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 430, -1, -1));
-
-        jLabel12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/burbujas.png"))); // NOI18N
-        jLabel12.setText("jLabel12");
-        jPanel1.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 890, 650));
 
         add(jPanel1, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
@@ -236,7 +235,7 @@ public class BuscarPanelVehiculo1 extends javax.swing.JPanel {
     }
     
     private void btnModificarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnModificarMouseClicked
-        
+
         if (!txtMarca.getText().trim().isBlank()) {
             if (!txtModelo.getText().isBlank()) {
                 Boolean valido = false;//creamos una bandera para validar datos

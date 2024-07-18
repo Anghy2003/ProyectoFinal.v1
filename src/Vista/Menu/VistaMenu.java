@@ -1,7 +1,7 @@
 
 package Vista.Menu;
 
-import Vista.Catálogo.CRUD_Prodcuto;
+
 import Conexion.Conexion_db;
 import Vista.Catálogo.CrudPanelServicios;
 import Vista.Cruds.*;
@@ -330,6 +330,7 @@ public class VistaMenu extends javax.swing.JFrame {
 
     private void btnProvedoresMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnProvedoresMouseClicked
         TablaProveedor prov = new TablaProveedor();
+        
         PanelTituloProvedores titPro = new PanelTituloProvedores();
         PanelSubmenuProveedores submenProv = new PanelSubmenuProveedores();
         MostrarpanelSubmenu(submenProv);

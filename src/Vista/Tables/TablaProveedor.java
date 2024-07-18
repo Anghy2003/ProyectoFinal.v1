@@ -1,12 +1,12 @@
 
 package Vista.Tables;
-import Vista.Cruds.CRUD_Provedor;
-
-import Vista.Cruds.CrudPanelProveedor;
-import Vista.Cruds.CRUD_Provedor;
-
+import Conexion.Conexion_db;
+import Models.*;
+import Vista.Cruds.*;
 import Vista.Menu.VistaMenu;
+import com.db4o.*;
 import java.awt.BorderLayout;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 
@@ -16,8 +16,42 @@ public class TablaProveedor extends javax.swing.JPanel {
      * Creates new form TablaProveedor
      */
     public TablaProveedor() {
-        initComponents();
+        initComponents();        
+        mostrarDatoshabilitados();
     }
+    
+
+    private void mostrarDatoshabilitados() {
+        // ESTABLECER CONEXION CON LA BASE DE DATOS
+        tblProveedores.setEnabled(true);
+        ObjectContainer BaseBD = Conexion_db.ConectarBD();
+        Proveedor ProveedorBusca = new Proveedor(Boolean.TRUE);
+        ObjectSet<Proveedor> resultado = BaseBD.get(ProveedorBusca);
+
+        // Crear una matriz
+        String matriz[][] = new String[resultado.size()][6];
+        int i = 0;
+        for (Proveedor miProveedor : resultado) {
+            matriz[i][0] = miProveedor.getCodigo_proveedor();
+            matriz[i][1] = miProveedor.getTipo_proveedor();
+            matriz[i][2] = miProveedor.getNombre_proveedor();
+            matriz[i][3] = miProveedor.getDireccion_proveedor();
+            matriz[i][4] = miProveedor.getCorreo_proveedor();
+            matriz[i][5] = miProveedor.getCelular_proveedor();
+            i++;
+        }
+
+        // Configurar datos en la tabla
+        tblProveedores.setModel(new javax.swing.table.DefaultTableModel(matriz, new String[]{"Código", "Tipo", "Nombre", "Dirección", "Email", "Celular"}));
+        tblProveedores.setEnabled(false);
+
+        // Cerrar la conexión con la base de datos
+        BaseBD.close();
+    }
+    
+    
+    
+    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -31,7 +65,7 @@ public class TablaProveedor extends javax.swing.JPanel {
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tblProveedores = new javax.swing.JTable();
         txtBuscar = new rojeru_san.RSMTextFull();
         jLabel2 = new javax.swing.JLabel();
         btnAgregar = new rsbuttongradiente.RSButtonGradiente();
@@ -49,8 +83,8 @@ public class TablaProveedor extends javax.swing.JPanel {
         jScrollPane1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         jScrollPane1.setForeground(new java.awt.Color(255, 255, 255));
 
-        jTable1.setFont(new java.awt.Font("Roboto Medium", 0, 14)); // NOI18N
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tblProveedores.setFont(new java.awt.Font("Roboto Medium", 0, 14)); // NOI18N
+        tblProveedores.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -61,13 +95,13 @@ public class TablaProveedor extends javax.swing.JPanel {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tblProveedores);
 
         txtBuscar.setFont(new java.awt.Font("Roboto Bold", 2, 14)); // NOI18N
-        txtBuscar.setPlaceholder("ejm. 0106388747");
+        txtBuscar.setPlaceholder("ejm: PROV12");
 
         jLabel2.setFont(new java.awt.Font("Roboto Black", 0, 18)); // NOI18N
-        jLabel2.setText("Buscar");
+        jLabel2.setText("Buscar:");
 
         btnAgregar.setText("Agregar");
         btnAgregar.setColorPrimario(new java.awt.Color(0, 204, 51));
@@ -117,13 +151,13 @@ public class TablaProveedor extends javax.swing.JPanel {
                         .addContainerGap())
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel2)
-                        .addGap(39, 39, 39)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 109, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 131, Short.MAX_VALUE)
                         .addComponent(btnAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(37, 37, 37)
+                        .addGap(29, 29, 29)
                         .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
+                        .addGap(26, 26, 26)
                         .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(36, 36, 36))))
         );
@@ -132,23 +166,23 @@ public class TablaProveedor extends javax.swing.JPanel {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(38, 38, 38)
                 .addComponent(jLabel1)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(jPanel2Layout.createSequentialGroup()
-                            .addGap(14, 14, 14)
-                            .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(jPanel2Layout.createSequentialGroup()
-                            .addGap(26, 26, 26)
-                            .addComponent(jLabel2))))
+                        .addGap(16, 16, 16)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(btnAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addGap(6, 6, 6))))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(44, 44, 44)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 446, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(9, Short.MAX_VALUE))
         );
 
         add(jPanel2, java.awt.BorderLayout.CENTER);
@@ -164,8 +198,13 @@ public class TablaProveedor extends javax.swing.JPanel {
     }//GEN-LAST:event_btnEliminarMouseClicked
 
     private void btnEditarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditarMouseClicked
-        // TODO add your handling code here:
-        System.out.println("clickmet");
+        if (!txtBuscar.getText().trim().isEmpty()) {
+            String BuscarPlaca = txtBuscar.getText(); // Obtener el texto de txtBuscar
+            BuscarPanelProveedor miBuscarPanelProveedor = new BuscarPanelProveedor(BuscarPlaca);//creo el componente llevando el valor del String
+            ShowpanelCruds(miBuscarPanelProveedor);
+        }else{
+            JOptionPane.showMessageDialog(this, "Ingrese un codigo");
+        }
     }//GEN-LAST:event_btnEditarMouseClicked
     private void ShowpanelCruds(JPanel p) {
         p.setSize(870, 630);
@@ -184,7 +223,7 @@ public class TablaProveedor extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTable tblProveedores;
     private rojeru_san.RSMTextFull txtBuscar;
     // End of variables declaration//GEN-END:variables
 }

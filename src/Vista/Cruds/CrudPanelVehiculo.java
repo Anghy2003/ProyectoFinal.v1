@@ -63,22 +63,22 @@ public class CrudPanelVehiculo extends javax.swing.JPanel {
         lblModelo.setFont(new java.awt.Font("Roboto Medium", 0, 21)); // NOI18N
         lblModelo.setForeground(new java.awt.Color(0, 53, 79));
         lblModelo.setText("Modelo:");
-        jPanel1.add(lblModelo, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 200, 100, 40));
+        jPanel1.add(lblModelo, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 170, 100, 40));
 
         lblMarca.setFont(new java.awt.Font("Roboto Medium", 0, 21)); // NOI18N
         lblMarca.setForeground(new java.awt.Color(0, 53, 79));
         lblMarca.setText("Marca:");
-        jPanel1.add(lblMarca, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 270, 100, 40));
+        jPanel1.add(lblMarca, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 240, 100, 40));
 
         lblColor.setFont(new java.awt.Font("Roboto Medium", 0, 21)); // NOI18N
         lblColor.setForeground(new java.awt.Color(0, 53, 79));
         lblColor.setText("Color:");
-        jPanel1.add(lblColor, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 140, 60, 40));
+        jPanel1.add(lblColor, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 280, 60, 40));
 
         lblAño.setFont(new java.awt.Font("Roboto Medium", 0, 21)); // NOI18N
         lblAño.setForeground(new java.awt.Color(0, 53, 79));
         lblAño.setText("Año Fabricación:");
-        jPanel1.add(lblAño, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 210, 180, 40));
+        jPanel1.add(lblAño, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 340, 180, 40));
 
         txtPlaca.setForeground(new java.awt.Color(0, 53, 79));
         txtPlaca.setColorTransparente(true);
@@ -90,19 +90,19 @@ public class CrudPanelVehiculo extends javax.swing.JPanel {
         txtModelo.setColorTransparente(true);
         txtModelo.setFont(new java.awt.Font("Roboto Light", 1, 14)); // NOI18N
         txtModelo.setPlaceholder("Ejm: F150 o D-MAX");
-        jPanel1.add(txtModelo, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 200, 200, 40));
+        jPanel1.add(txtModelo, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 170, 200, 40));
 
         txtMarca.setForeground(new java.awt.Color(0, 53, 79));
         txtMarca.setColorTransparente(true);
         txtMarca.setFont(new java.awt.Font("Roboto Light", 1, 14)); // NOI18N
         txtMarca.setPlaceholder("Ejm: Ford");
-        jPanel1.add(txtMarca, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 260, 200, 40));
+        jPanel1.add(txtMarca, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 230, 200, 40));
 
         txtColor.setForeground(new java.awt.Color(0, 53, 79));
         txtColor.setColorTransparente(true);
         txtColor.setFont(new java.awt.Font("Roboto Light", 1, 14)); // NOI18N
         txtColor.setPlaceholder("Ejm: Rojo");
-        jPanel1.add(txtColor, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 130, 200, 40));
+        jPanel1.add(txtColor, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 280, 200, 40));
 
         btnCancelar.setBackground(new java.awt.Color(255, 51, 51));
         btnCancelar.setText("Cancelar");
@@ -117,7 +117,7 @@ public class CrudPanelVehiculo extends javax.swing.JPanel {
                 btnCancelarActionPerformed(evt);
             }
         });
-        jPanel1.add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 430, -1, -1));
+        jPanel1.add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 430, -1, -1));
 
         btnGuardar.setText("Guardar");
         btnGuardar.setToolTipText("Se guardaran cambios realizados");
@@ -127,7 +127,7 @@ public class CrudPanelVehiculo extends javax.swing.JPanel {
             }
         });
         jPanel1.add(btnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 430, -1, -1));
-        jPanel1.add(YEARAño, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 210, 160, 30));
+        jPanel1.add(YEARAño, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 340, 160, 30));
 
         jLabel12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/burbujas.png"))); // NOI18N
         jLabel12.setText("jLabel12");
