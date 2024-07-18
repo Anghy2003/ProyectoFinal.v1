@@ -4,7 +4,6 @@ package Vista.Catálogo;
 import Conexion.Conexion_db;
 import Models.IdManager;
 import Models.Producto;
-import static Vista.Catálogo.CRUD_Prodcuto.BaseFinal;
 import Vista.Menu.VistaMenu;
 import Vista.Tables.TablaProductos;
 import com.db4o.ObjectContainer;
@@ -324,7 +323,13 @@ public class CrudProductos extends javax.swing.JPanel {
         }
         return listaProductosBase;
     }
-    List<Producto> listaProductosBase = getListaProductosBase(BaseFinal);
+    
+    
+    ObjectContainer BaseBD = Conexion_db.ConectarBD();
+    List<Producto> listaProductosBase = getListaProductosBase(BaseBD);
+    
+
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private rojeru_san.RSButtonRiple btnCancelar;
