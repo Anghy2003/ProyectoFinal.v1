@@ -94,6 +94,11 @@ public class TablaVehiculos extends javax.swing.JPanel {
                 btnEliminarMouseClicked(evt);
             }
         });
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarActionPerformed(evt);
+            }
+        });
 
         btnEditar.setText("Buscar");
         btnEditar.setToolTipText("Previamente ingrese una placa");
@@ -104,6 +109,11 @@ public class TablaVehiculos extends javax.swing.JPanel {
         btnEditar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnEditarMouseClicked(evt);
+            }
+        });
+        btnEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditarActionPerformed(evt);
             }
         });
 
@@ -177,6 +187,14 @@ public class TablaVehiculos extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(this, "Ingrese una placa");
         }
     }//GEN-LAST:event_btnEditarMouseClicked
+
+    private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnEditarActionPerformed
+
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnEliminarActionPerformed
     private void ShowpanelCruds(JPanel p) {
         p.setSize(870, 630);
         p.setLocation(0, 0);

@@ -19,129 +19,129 @@ public class CrudPanelAdministrador1 extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel4 = new javax.swing.JPanel();
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
-        jPanel3 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
-        jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel5 = new javax.swing.JLabel();
-        jLabel6 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
-        jLabel8 = new javax.swing.JLabel();
-        jLabel9 = new javax.swing.JLabel();
-        jLabel10 = new javax.swing.JLabel();
-        jLabel11 = new javax.swing.JLabel();
-        txtCedula = new rojeru_san.RSMTextFull();
-        txtNombres = new rojeru_san.RSMTextFull();
-        txtApellidos = new rojeru_san.RSMTextFull();
-        txtDireccion = new rojeru_san.RSMTextFull();
-        txtEmail = new rojeru_san.RSMTextFull();
-        txtCelular = new rojeru_san.RSMTextFull();
+        Cedula_Admi = new javax.swing.JLabel();
+        lblNombres_Admi = new javax.swing.JLabel();
+        lblApellidos_Admi = new javax.swing.JLabel();
+        lblDireccion_Admi = new javax.swing.JLabel();
+        lblCorreo_Admi = new javax.swing.JLabel();
+        lblComiciones_Ven = new javax.swing.JLabel();
+        lblFEchaNac_Admi = new javax.swing.JLabel();
+        lblGenero_Admi = new javax.swing.JLabel();
+        lblEstadoCivil_Admi = new javax.swing.JLabel();
+        txtCedulaAdmi = new rojeru_san.RSMTextFull();
+        txtNombresAdmi = new rojeru_san.RSMTextFull();
+        txtApellidosAdmi = new rojeru_san.RSMTextFull();
+        txtDireccionAdmi = new rojeru_san.RSMTextFull();
+        txtCorreoAdmi = new rojeru_san.RSMTextFull();
+        txtComicionesVendedor = new rojeru_san.RSMTextFull();
         btnCancelar = new rojeru_san.RSButtonRiple();
-        jDateFechaNac = new com.toedter.calendar.JDateChooser();
-        cbxTipoClie = new javax.swing.JComboBox<>();
-        cbxGenero = new javax.swing.JComboBox<>();
-        cbxEstadoC = new javax.swing.JComboBox<>();
+        jDateFechaNacAdmi = new com.toedter.calendar.JDateChooser();
+        cbxGeneroAdmi = new javax.swing.JComboBox<>();
+        cbxEstadoCivilAdmi = new javax.swing.JComboBox<>();
         btnGuardar = new rojeru_san.RSButtonRiple();
-        jLabel12 = new javax.swing.JLabel();
+        lblPassword_Admi = new javax.swing.JLabel();
+        txtPasswordAdmi = new rojeru_san.RSMTextFull();
+        lblNumeroVentas_Ven = new javax.swing.JLabel();
+        lblSueldo_Ven = new javax.swing.JLabel();
+        lblCelular_Admi = new javax.swing.JLabel();
+        txtNumeroVentasVendedor = new rojeru_san.RSMTextFull();
+        txtSueldoVendedor = new rojeru_san.RSMTextFull();
+        txtCelularAdmi = new rojeru_san.RSMTextFull();
 
-        jPanel2.setLayout(new java.awt.BorderLayout());
+        jPanel1.setLayout(new java.awt.BorderLayout());
 
-        jPanel3.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        jLabel1.setFont(new java.awt.Font("Roboto Medium", 0, 21)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(0, 53, 79));
-        jLabel1.setText("Tipo Cliente:");
-        jPanel3.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 470, 130, 40));
+        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel2.setFont(new java.awt.Font("Roboto Black", 0, 30)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(0, 53, 79));
         jLabel2.setText("Registro Administrador");
-        jPanel3.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 30, 330, 40));
+        jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 30, 330, 40));
 
-        jLabel3.setFont(new java.awt.Font("Roboto Medium", 0, 21)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(0, 53, 79));
-        jLabel3.setText("Cédula:");
-        jPanel3.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 130, 90, 40));
+        Cedula_Admi.setFont(new java.awt.Font("Roboto Medium", 0, 21)); // NOI18N
+        Cedula_Admi.setForeground(new java.awt.Color(0, 53, 79));
+        Cedula_Admi.setText("Cédula/Usuario:");
+        jPanel2.add(Cedula_Admi, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 100, 150, 40));
 
-        jLabel4.setFont(new java.awt.Font("Roboto Medium", 0, 21)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(0, 53, 79));
-        jLabel4.setText("Nombres:");
-        jPanel3.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 200, 100, 40));
+        lblNombres_Admi.setFont(new java.awt.Font("Roboto Medium", 0, 21)); // NOI18N
+        lblNombres_Admi.setForeground(new java.awt.Color(0, 53, 79));
+        lblNombres_Admi.setText("Nombres:");
+        jPanel2.add(lblNombres_Admi, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 200, 100, 40));
 
-        jLabel5.setFont(new java.awt.Font("Roboto Medium", 0, 21)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(0, 53, 79));
-        jLabel5.setText("Apellidos:");
-        jPanel3.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 270, 100, 40));
+        lblApellidos_Admi.setFont(new java.awt.Font("Roboto Medium", 0, 21)); // NOI18N
+        lblApellidos_Admi.setForeground(new java.awt.Color(0, 53, 79));
+        lblApellidos_Admi.setText("Apellidos:");
+        jPanel2.add(lblApellidos_Admi, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 260, 100, 40));
 
-        jLabel6.setFont(new java.awt.Font("Roboto Medium", 0, 21)); // NOI18N
-        jLabel6.setForeground(new java.awt.Color(0, 53, 79));
-        jLabel6.setText("Dirección");
-        jPanel3.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 340, 90, 40));
+        lblDireccion_Admi.setFont(new java.awt.Font("Roboto Medium", 0, 21)); // NOI18N
+        lblDireccion_Admi.setForeground(new java.awt.Color(0, 53, 79));
+        lblDireccion_Admi.setText("Dirección");
+        jPanel2.add(lblDireccion_Admi, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 340, 90, 40));
 
-        jLabel7.setFont(new java.awt.Font("Roboto Medium", 0, 21)); // NOI18N
-        jLabel7.setForeground(new java.awt.Color(0, 53, 79));
-        jLabel7.setText("Correo Electrónico:");
-        jPanel3.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 420, 190, 40));
+        lblCorreo_Admi.setFont(new java.awt.Font("Roboto Medium", 0, 21)); // NOI18N
+        lblCorreo_Admi.setForeground(new java.awt.Color(0, 53, 79));
+        lblCorreo_Admi.setText("Correo Electrónico:");
+        jPanel2.add(lblCorreo_Admi, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 420, 190, 40));
 
-        jLabel8.setFont(new java.awt.Font("Roboto Medium", 0, 21)); // NOI18N
-        jLabel8.setForeground(new java.awt.Color(0, 53, 79));
-        jLabel8.setText("Celular:");
-        jPanel3.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 130, 80, 40));
+        lblComiciones_Ven.setFont(new java.awt.Font("Roboto Medium", 0, 21)); // NOI18N
+        lblComiciones_Ven.setForeground(new java.awt.Color(0, 53, 79));
+        lblComiciones_Ven.setText("Comiciones:");
+        jPanel2.add(lblComiciones_Ven, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 330, 120, 40));
 
-        jLabel9.setFont(new java.awt.Font("Roboto Medium", 0, 21)); // NOI18N
-        jLabel9.setForeground(new java.awt.Color(0, 53, 79));
-        jLabel9.setText("Fecha Nacimiento:");
-        jPanel3.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 210, 180, 40));
+        lblFEchaNac_Admi.setFont(new java.awt.Font("Roboto Medium", 0, 21)); // NOI18N
+        lblFEchaNac_Admi.setForeground(new java.awt.Color(0, 53, 79));
+        lblFEchaNac_Admi.setText("Fecha Nacimiento:");
+        jPanel2.add(lblFEchaNac_Admi, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 160, 180, 40));
 
-        jLabel10.setFont(new java.awt.Font("Roboto Medium", 0, 21)); // NOI18N
-        jLabel10.setForeground(new java.awt.Color(0, 53, 79));
-        jLabel10.setText("Género:");
-        jPanel3.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 290, 80, 40));
+        lblGenero_Admi.setFont(new java.awt.Font("Roboto Medium", 0, 21)); // NOI18N
+        lblGenero_Admi.setForeground(new java.awt.Color(0, 53, 79));
+        lblGenero_Admi.setText("Género:");
+        jPanel2.add(lblGenero_Admi, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 220, 80, 40));
 
-        jLabel11.setFont(new java.awt.Font("Roboto Medium", 0, 21)); // NOI18N
-        jLabel11.setForeground(new java.awt.Color(0, 53, 79));
-        jLabel11.setText("Estado Civil:");
-        jPanel3.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 380, 120, 40));
+        lblEstadoCivil_Admi.setFont(new java.awt.Font("Roboto Medium", 0, 21)); // NOI18N
+        lblEstadoCivil_Admi.setForeground(new java.awt.Color(0, 53, 79));
+        lblEstadoCivil_Admi.setText("Estado Civil:");
+        jPanel2.add(lblEstadoCivil_Admi, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 270, 120, 40));
 
-        txtCedula.setForeground(new java.awt.Color(0, 53, 79));
-        txtCedula.setColorTransparente(true);
-        txtCedula.setFont(new java.awt.Font("Roboto Light", 1, 14)); // NOI18N
-        txtCedula.setPlaceholder("Escriba la cédula");
-        jPanel3.add(txtCedula, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 120, 200, 40));
+        txtCedulaAdmi.setForeground(new java.awt.Color(0, 53, 79));
+        txtCedulaAdmi.setColorTransparente(true);
+        txtCedulaAdmi.setFont(new java.awt.Font("Roboto Light", 1, 14)); // NOI18N
+        txtCedulaAdmi.setPlaceholder("0123456789");
+        jPanel2.add(txtCedulaAdmi, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 100, 200, 40));
 
-        txtNombres.setForeground(new java.awt.Color(0, 53, 79));
-        txtNombres.setColorTransparente(true);
-        txtNombres.setFont(new java.awt.Font("Roboto Light", 1, 14)); // NOI18N
-        txtNombres.setPlaceholder("Escriba los nombres");
-        jPanel3.add(txtNombres, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 200, 200, 40));
+        txtNombresAdmi.setForeground(new java.awt.Color(0, 53, 79));
+        txtNombresAdmi.setColorTransparente(true);
+        txtNombresAdmi.setFont(new java.awt.Font("Roboto Light", 1, 14)); // NOI18N
+        txtNombresAdmi.setPlaceholder("Escriba los nombres");
+        jPanel2.add(txtNombresAdmi, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 200, 200, 40));
 
-        txtApellidos.setForeground(new java.awt.Color(0, 53, 79));
-        txtApellidos.setColorTransparente(true);
-        txtApellidos.setFont(new java.awt.Font("Roboto Light", 1, 14)); // NOI18N
-        txtApellidos.setPlaceholder("Escriba los apellidos");
-        jPanel3.add(txtApellidos, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 260, 200, 40));
+        txtApellidosAdmi.setForeground(new java.awt.Color(0, 53, 79));
+        txtApellidosAdmi.setColorTransparente(true);
+        txtApellidosAdmi.setFont(new java.awt.Font("Roboto Light", 1, 14)); // NOI18N
+        txtApellidosAdmi.setPlaceholder("Escriba los apellidos");
+        jPanel2.add(txtApellidosAdmi, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 260, 200, 40));
 
-        txtDireccion.setForeground(new java.awt.Color(0, 53, 79));
-        txtDireccion.setColorTransparente(true);
-        txtDireccion.setFont(new java.awt.Font("Roboto Light", 1, 14)); // NOI18N
-        txtDireccion.setPlaceholder("Escriba la dirección");
-        jPanel3.add(txtDireccion, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 340, 200, 40));
+        txtDireccionAdmi.setForeground(new java.awt.Color(0, 53, 79));
+        txtDireccionAdmi.setColorTransparente(true);
+        txtDireccionAdmi.setFont(new java.awt.Font("Roboto Light", 1, 14)); // NOI18N
+        txtDireccionAdmi.setPlaceholder("Escriba la dirección");
+        jPanel2.add(txtDireccionAdmi, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 340, 200, 40));
 
-        txtEmail.setForeground(new java.awt.Color(0, 53, 79));
-        txtEmail.setColorTransparente(true);
-        txtEmail.setFont(new java.awt.Font("Roboto Light", 1, 14)); // NOI18N
-        txtEmail.setPlaceholder("Escriba el email");
-        jPanel3.add(txtEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 410, 200, 40));
+        txtCorreoAdmi.setForeground(new java.awt.Color(0, 53, 79));
+        txtCorreoAdmi.setColorTransparente(true);
+        txtCorreoAdmi.setFont(new java.awt.Font("Roboto Light", 1, 14)); // NOI18N
+        txtCorreoAdmi.setPlaceholder("Escriba su correo electronico");
+        jPanel2.add(txtCorreoAdmi, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 420, 250, 40));
 
-        txtCelular.setForeground(new java.awt.Color(0, 53, 79));
-        txtCelular.setColorTransparente(true);
-        txtCelular.setFont(new java.awt.Font("Roboto Light", 1, 14)); // NOI18N
-        txtCelular.setPlaceholder("Escriba su número celular");
-        jPanel3.add(txtCelular, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 120, 200, 40));
+        txtComicionesVendedor.setForeground(new java.awt.Color(0, 53, 79));
+        txtComicionesVendedor.setColorTransparente(true);
+        txtComicionesVendedor.setFont(new java.awt.Font("Roboto Light", 1, 14)); // NOI18N
+        txtComicionesVendedor.setPlaceholder("Escriba su número celular");
+        jPanel2.add(txtComicionesVendedor, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 320, 230, 40));
 
         btnCancelar.setBackground(new java.awt.Color(255, 51, 51));
         btnCancelar.setText("Cancelar");
@@ -150,57 +150,97 @@ public class CrudPanelAdministrador1 extends javax.swing.JPanel {
                 btnCancelarMouseClicked(evt);
             }
         });
-        jPanel3.add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 580, -1, -1));
-        jPanel3.add(jDateFechaNac, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 220, 140, 30));
+        jPanel2.add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 520, -1, -1));
+        jPanel2.add(jDateFechaNacAdmi, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 170, 140, 30));
 
-        cbxTipoClie.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jPanel3.add(cbxTipoClie, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 470, 150, 30));
+        cbxGeneroAdmi.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jPanel2.add(cbxGeneroAdmi, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 230, 150, 30));
 
-        cbxGenero.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jPanel3.add(cbxGenero, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 290, 150, 30));
-
-        cbxEstadoC.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jPanel3.add(cbxEstadoC, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 370, 150, 30));
+        cbxEstadoCivilAdmi.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jPanel2.add(cbxEstadoCivilAdmi, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 280, 150, 30));
 
         btnGuardar.setText("Guardar");
-        jPanel3.add(btnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 580, -1, -1));
+        btnGuardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGuardarActionPerformed(evt);
+            }
+        });
+        jPanel2.add(btnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 520, -1, -1));
 
-        jLabel12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/fondomecanicatamano.png"))); // NOI18N
-        jLabel12.setText("jLabel12");
-        jPanel3.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 890, 650));
+        lblPassword_Admi.setFont(new java.awt.Font("Roboto Medium", 0, 21)); // NOI18N
+        lblPassword_Admi.setForeground(new java.awt.Color(0, 53, 79));
+        lblPassword_Admi.setText("Contraseña:");
+        jPanel2.add(lblPassword_Admi, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 150, 130, 40));
 
-        jPanel2.add(jPanel3, java.awt.BorderLayout.CENTER);
+        txtPasswordAdmi.setForeground(new java.awt.Color(0, 53, 79));
+        txtPasswordAdmi.setColorTransparente(true);
+        txtPasswordAdmi.setFont(new java.awt.Font("Roboto Light", 1, 14)); // NOI18N
+        txtPasswordAdmi.setPlaceholder("123abc");
+        jPanel2.add(txtPasswordAdmi, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 150, 200, 40));
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 890, Short.MAX_VALUE)
-            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel1Layout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 0, Short.MAX_VALUE)))
+        lblNumeroVentas_Ven.setFont(new java.awt.Font("Roboto Medium", 0, 21)); // NOI18N
+        lblNumeroVentas_Ven.setForeground(new java.awt.Color(0, 53, 79));
+        lblNumeroVentas_Ven.setText("Numero Ventas:");
+        jPanel2.add(lblNumeroVentas_Ven, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 380, 160, 40));
+
+        lblSueldo_Ven.setFont(new java.awt.Font("Roboto Medium", 0, 21)); // NOI18N
+        lblSueldo_Ven.setForeground(new java.awt.Color(0, 53, 79));
+        lblSueldo_Ven.setText("Sueldo:");
+        jPanel2.add(lblSueldo_Ven, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 430, 80, 40));
+
+        lblCelular_Admi.setFont(new java.awt.Font("Roboto Medium", 0, 21)); // NOI18N
+        lblCelular_Admi.setForeground(new java.awt.Color(0, 53, 79));
+        lblCelular_Admi.setText("Celular:");
+        jPanel2.add(lblCelular_Admi, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 100, 80, 40));
+
+        txtNumeroVentasVendedor.setForeground(new java.awt.Color(0, 53, 79));
+        txtNumeroVentasVendedor.setColorTransparente(true);
+        txtNumeroVentasVendedor.setFont(new java.awt.Font("Roboto Light", 1, 14)); // NOI18N
+        txtNumeroVentasVendedor.setPlaceholder("Escriba su número celular");
+        jPanel2.add(txtNumeroVentasVendedor, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 370, 230, 40));
+
+        txtSueldoVendedor.setForeground(new java.awt.Color(0, 53, 79));
+        txtSueldoVendedor.setColorTransparente(true);
+        txtSueldoVendedor.setFont(new java.awt.Font("Roboto Light", 1, 14)); // NOI18N
+        txtSueldoVendedor.setPlaceholder("Escriba su número celular");
+        jPanel2.add(txtSueldoVendedor, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 430, 230, 40));
+
+        txtCelularAdmi.setForeground(new java.awt.Color(0, 53, 79));
+        txtCelularAdmi.setColorTransparente(true);
+        txtCelularAdmi.setFont(new java.awt.Font("Roboto Light", 1, 14)); // NOI18N
+        txtCelularAdmi.setPlaceholder("Escriba su número celular");
+        jPanel2.add(txtCelularAdmi, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 100, 230, 40));
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 896, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel4Layout.createSequentialGroup()
+                    .addGap(0, 448, Short.MAX_VALUE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 448, Short.MAX_VALUE)))
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 650, Short.MAX_VALUE)
-            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel1Layout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 0, Short.MAX_VALUE)))
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 638, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel4Layout.createSequentialGroup()
+                    .addGap(0, 319, Short.MAX_VALUE)
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 319, Short.MAX_VALUE)))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 890, Short.MAX_VALUE)
+            .addGap(0, 896, Short.MAX_VALUE)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGap(0, 0, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
@@ -209,7 +249,7 @@ public class CrudPanelAdministrador1 extends javax.swing.JPanel {
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGap(0, 0, Short.MAX_VALUE)))
         );
     }// </editor-fold>//GEN-END:initComponents
@@ -218,34 +258,113 @@ public class CrudPanelAdministrador1 extends javax.swing.JPanel {
 
     }//GEN-LAST:event_btnCancelarMouseClicked
 
+    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
+
+//        boolean usuarioRepetido = false;
+//
+//        ObjectContainer BaseBD = Conexion_db.ConectarBD();
+//
+//        if (VerificarVendedor(txtCedulaAdmi.getText()) != 0) {
+//            JOptionPane.showMessageDialog(null, "Vendedor ya registrado");
+//            usuarioRepetido = true;
+//        }
+//
+//        if (!usuarioRepetido) {
+//
+//            Date fechaNacimientoDate = jDateFechaNacAdmi.getDate(); // Obtener la fecha de nacimiento del JDateChooser
+//
+//            // Formatear la fecha como String en el formato deseado (por ejemplo, "dd/MM/yyyy")
+//            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+//            String fechaNacimiento = sdf.format(fechaNacimientoDate);
+//
+//            //            ObjectSet<IdManager> result = BaseBD.query(IdManager.class);
+//            //            IdManager idManager;
+//            //            if (result.isEmpty()) {
+//                //                idManager = new IdManager();
+//                //            } else {
+//                //                idManager = result.get(0);
+//                //            }
+//            //
+//            //            // GENERAR NUEVOS ID
+//            //            int newVendedorId = idManager.getLastClienteId() + 1;
+//            //            int newUsuarioId = idManager.getLastUsuarioId() + 1;
+//
+//            Boolean valido = false;
+//
+//            //asignar id
+//
+//            if (valido = txtCedulaAdmi.getText().matches("\\d{10}")) {
+//                if (valido = txtNombresAdmi.getText().toUpperCase().matches("^[a-zA-Z]+$")) {
+//                    if (valido = txtApellidosAdmi.getText().toUpperCase().matches("^[a-zA-Z]+$")) {
+//                        if (valido = txtDireccionAdmi.getText().toUpperCase().matches("^[a-zA-Z]+$")) {
+//                            if (valido = txtCorreoAdmi.getText().matches("^[\\w.-]+@[\\w.-]+\\.[a-zA-Z]{2,6}$")) {
+//                                if (valido = txtCelularAdmi.getText().matches("^09\\d{8}$")) {
+//
+//                                    GuardarVendedor( Double.parseDouble(txtSueldoVendedor.getText()), Double.parseDouble(txtComicionesVendedor.getText()), Integer.parseInt(txtNumeroVentasVendedor.getText()), null,
+//                                        txtCedulaAdmi.getText(), txtPasswordAdmi.getText(), txtCorreoAdmi.getText(), txtCedulaAdmi.getText(), txtNombresAdmi.getText().toUpperCase(),
+//                                        txtApellidosAdmi.getText().toUpperCase(), txtDireccionAdmi.getText().toUpperCase(), txtCorreoAdmi.getText(), txtCelularAdmi.getText(), (String) cbxGeneroAdmi.getSelectedItem(),
+//                                        fechaNacimiento, (String) cbxEstadoCivilAdmi.getSelectedItem());
+//
+//                                } else {
+//                                    JOptionPane.showMessageDialog(null, "Ingrese un celular valido");
+//                                }
+//
+//                            } else {
+//                                JOptionPane.showMessageDialog(null, "Ingrese un correo valida");
+//                            }
+//
+//                        } else {
+//                            JOptionPane.showMessageDialog(null, "Ingrese una direccion valida");
+//                        }
+//                    } else {
+//                        JOptionPane.showMessageDialog(null, "Ingrese un apellido valido");
+//                    }
+//
+//                } else {
+//                    JOptionPane.showMessageDialog(null, "Ingrese un nombre valido");
+//                }
+//
+//            } else {
+//                JOptionPane.showMessageDialog(null, "Ingrese una cedula valida");
+//            }
+//
+//        }
+
+    }//GEN-LAST:event_btnGuardarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel Cedula_Admi;
     private rojeru_san.RSButtonRiple btnCancelar;
     private rojeru_san.RSButtonRiple btnGuardar;
-    private javax.swing.JComboBox<String> cbxEstadoC;
-    private javax.swing.JComboBox<String> cbxGenero;
-    private javax.swing.JComboBox<String> cbxTipoClie;
-    private com.toedter.calendar.JDateChooser jDateFechaNac;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
+    private javax.swing.JComboBox<String> cbxEstadoCivilAdmi;
+    private javax.swing.JComboBox<String> cbxGeneroAdmi;
+    private com.toedter.calendar.JDateChooser jDateFechaNacAdmi;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
-    private rojeru_san.RSMTextFull txtApellidos;
-    private rojeru_san.RSMTextFull txtCedula;
-    private rojeru_san.RSMTextFull txtCelular;
-    private rojeru_san.RSMTextFull txtDireccion;
-    private rojeru_san.RSMTextFull txtEmail;
-    private rojeru_san.RSMTextFull txtNombres;
+    private javax.swing.JPanel jPanel4;
+    private javax.swing.JLabel lblApellidos_Admi;
+    private javax.swing.JLabel lblCelular_Admi;
+    private javax.swing.JLabel lblComiciones_Ven;
+    private javax.swing.JLabel lblCorreo_Admi;
+    private javax.swing.JLabel lblDireccion_Admi;
+    private javax.swing.JLabel lblEstadoCivil_Admi;
+    private javax.swing.JLabel lblFEchaNac_Admi;
+    private javax.swing.JLabel lblGenero_Admi;
+    private javax.swing.JLabel lblNombres_Admi;
+    private javax.swing.JLabel lblNumeroVentas_Ven;
+    private javax.swing.JLabel lblPassword_Admi;
+    private javax.swing.JLabel lblSueldo_Ven;
+    private rojeru_san.RSMTextFull txtApellidosAdmi;
+    private rojeru_san.RSMTextFull txtCedulaAdmi;
+    private rojeru_san.RSMTextFull txtCelularAdmi;
+    private rojeru_san.RSMTextFull txtComicionesVendedor;
+    private rojeru_san.RSMTextFull txtCorreoAdmi;
+    private rojeru_san.RSMTextFull txtDireccionAdmi;
+    private rojeru_san.RSMTextFull txtNombresAdmi;
+    private rojeru_san.RSMTextFull txtNumeroVentasVendedor;
+    private rojeru_san.RSMTextFull txtPasswordAdmi;
+    private rojeru_san.RSMTextFull txtSueldoVendedor;
     // End of variables declaration//GEN-END:variables
 }

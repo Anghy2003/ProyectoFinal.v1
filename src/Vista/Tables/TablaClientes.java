@@ -24,7 +24,7 @@ public class TablaClientes extends javax.swing.JPanel {
      */
     public TablaClientes() {
         initComponents();
-        mostrarTabla();
+//        mostrarTabla();
     }
 
     /**
@@ -174,49 +174,49 @@ public class TablaClientes extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnEditarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditarMouseClicked
-        if (id_persona == null) {
-            // Mostrar mensaje si no hay ningún cliente seleccionado
-            javax.swing.JOptionPane.showMessageDialog(this, "Por favor, seleccione un cliente para editar.");
-            return;
-        }
-        
-        CrudPanelCliente crduCli = new CrudPanelCliente();
-        SetearDatosModificar(crduCli.getTxtCedula_Cli(),crduCli.getTxtNombres_Cli(),crduCli.getTxtApellidos_Cli());
-        ShowpanelCruds(crduCli);
+//        if (id_persona == null) {
+//            // Mostrar mensaje si no hay ningún cliente seleccionado
+//            javax.swing.JOptionPane.showMessageDialog(this, "Por favor, seleccione un cliente para editar.");
+//            return;
+//        }
+//        
+//        CrudPanelCliente crduCli = new CrudPanelCliente();
+//        SetearDatosModificar(crduCli.getTxtCedula_Cli(),crduCli.getTxtNombres_Cli(),crduCli.getTxtApellidos_Cli());
+//        ShowpanelCruds(crduCli);
 
     }//GEN-LAST:event_btnEditarMouseClicked
 
     private void btnAgregarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAgregarMouseClicked
-        CrudPanelCliente cliente = new CrudPanelCliente();
-        ShowpanelCruds(cliente);
+//        CrudPanelCliente cliente = new CrudPanelCliente();
+//        ShowpanelCruds(cliente);
     }//GEN-LAST:event_btnAgregarMouseClicked
 
     private void btnEliminarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEliminarMouseClicked
-        if (id_persona == null) {
-            // Mostrar mensaje si no hay ningún cliente seleccionado
-            javax.swing.JOptionPane.showMessageDialog(this, "Por favor, seleccione un cliente para eliminar.");
-            return;
-        }
-
-        int confirmation = javax.swing.JOptionPane.showConfirmDialog(this,
-                "¿Está seguro de que desea eliminar el cliente con cédula " + id_persona + "?",
-                "Confirmación de Eliminación",
-                javax.swing.JOptionPane.YES_NO_OPTION);
-
-        if (confirmation == javax.swing.JOptionPane.YES_OPTION) {
-            ObjectContainer BaseBD = Conexion_db.ConectarBD();
-
-            try {
-                eliminarCliente(BaseBD, id_persona);
-                javax.swing.JOptionPane.showMessageDialog(this, "Cliente eliminado exitosamente.");
-                // Actualizar la tabla
-                BaseBD.close();
-                mostrarTabla();
-            } catch (Exception e) {
-                javax.swing.JOptionPane.showMessageDialog(this, "Error al eliminar el cliente: " + e.getMessage());
-            }
-        }
-        
+//        if (id_persona == null) {
+//            // Mostrar mensaje si no hay ningún cliente seleccionado
+//            javax.swing.JOptionPane.showMessageDialog(this, "Por favor, seleccione un cliente para eliminar.");
+//            return;
+//        }
+//
+//        int confirmation = javax.swing.JOptionPane.showConfirmDialog(this,
+//                "¿Está seguro de que desea eliminar el cliente con cédula " + id_persona + "?",
+//                "Confirmación de Eliminación",
+//                javax.swing.JOptionPane.YES_NO_OPTION);
+//
+//        if (confirmation == javax.swing.JOptionPane.YES_OPTION) {
+//            ObjectContainer BaseBD = Conexion_db.ConectarBD();
+//
+//            try {
+//                eliminarCliente(BaseBD, id_persona);
+//                javax.swing.JOptionPane.showMessageDialog(this, "Cliente eliminado exitosamente.");
+//                // Actualizar la tabla
+//                BaseBD.close();
+//                mostrarTabla();
+//            } catch (Exception e) {
+//                javax.swing.JOptionPane.showMessageDialog(this, "Error al eliminar el cliente: " + e.getMessage());
+//            }
+//        }
+//        
     }//GEN-LAST:event_btnEliminarMouseClicked
 
     private void tblClientesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblClientesMouseClicked
@@ -231,64 +231,64 @@ public class TablaClientes extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnAgregarActionPerformed
 
-    private void mostrarTabla() {
-        ObjectContainer BaseBD = Conexion_db.ConectarBD();
-        Cliente cliente = new Cliente(null, null, null, null, null, null, null, null, null, null, null, null, null, null);
-        ObjectSet resul = BaseBD.get(cliente);
-
-        String matriz[][] = new String[resul.size()][11];
-
-        for (int i = 0; i < resul.size(); i++) {
-            Cliente cli = (Cliente) resul.next();
-
-            matriz[i][0] = cli.getCedula();
-            matriz[i][1] = cli.getiD_Cliente();
-            matriz[i][2] = cli.getiD_Usuario();
-            matriz[i][3] = cli.getNombres();
-            matriz[i][4] = cli.getApellidos();
-            matriz[i][5] = cli.getEstadoCivil();
-            matriz[i][6] = cli.getGenero();
-            matriz[i][7] = cli.getFechaNacimiento();
-            matriz[i][8] = cli.getCorreo();
-            matriz[i][9] = cli.getDireccion();
-            matriz[i][10] = cli.getCelular();
-
-        }
-        tblClientes.setModel(new javax.swing.table.DefaultTableModel(
-                matriz,
-                new String[]{
-                    "Cedula", "id_cliente", "id_usuario", "Nombres", "Apellidos", "Estado Civil", "Genero", "Fecha Nacimiento", "Correo", "Direccion", "Celular",}
-        ));
-        BaseBD.close();
-    }
-
-    public void SetearDatosModificar(RSMTextFull txtCedula, RSMTextFull txtNombre, RSMTextFull txtApell) {
-        int i = tblClientes.getSelectedRow();
-        txtCedula.setText(tblClientes.getValueAt(i, 0).toString());
-        txtNombre.setText(tblClientes.getValueAt(i, 3).toString());
-        txtApell.setText(tblClientes.getValueAt(i, 4).toString());
-    }
-
-    private void ShowpanelCruds(JPanel p) {
-        p.setSize(870, 630);
-        p.setLocation(0, 0);
-        VistaMenu.PanelPrincipal.removeAll();
-        VistaMenu.PanelPrincipal.add(p, BorderLayout.CENTER);
-        VistaMenu.PanelPrincipal.revalidate();
-        VistaMenu.PanelPrincipal.repaint();
-    }
-
-    private void eliminarCliente(ObjectContainer BaseBD, String id_cliente) {
-        Cliente eliminp = new Cliente(id_cliente, null, null, null, null, null, null, null, null, null, null, null, null, null);
-
-        ObjectSet resul = BaseBD.get(eliminp);
-
-        if (resul.hasNext()) {
-            Cliente estP = (Cliente) resul.next();
-            BaseBD.delete(estP);
-
-        }
-    }
+//    private void mostrarTabla() {
+//        ObjectContainer BaseBD = Conexion_db.ConectarBD();
+//        Cliente cliente = new Cliente(null, null, null, null, null, null, null, null, null, null, null, null, null, null);
+//        ObjectSet resul = BaseBD.get(cliente);
+//
+//        String matriz[][] = new String[resul.size()][11];
+//
+//        for (int i = 0; i < resul.size(); i++) {
+//            Cliente cli = (Cliente) resul.next();
+//
+//            matriz[i][0] = cli.getCedula();
+//            matriz[i][1] = cli.getiD_Cliente();
+//            matriz[i][2] = cli.getiD_Usuario();
+//            matriz[i][3] = cli.getNombres();
+//            matriz[i][4] = cli.getApellidos();
+//            matriz[i][5] = cli.getEstadoCivil();
+//            matriz[i][6] = cli.getGenero();
+//            matriz[i][7] = cli.getFechaNacimiento();
+//            matriz[i][8] = cli.getCorreo();
+//            matriz[i][9] = cli.getDireccion();
+//            matriz[i][10] = cli.getCelular();
+//
+//        }
+//        tblClientes.setModel(new javax.swing.table.DefaultTableModel(
+//                matriz,
+//                new String[]{
+//                    "Cedula", "id_cliente", "id_usuario", "Nombres", "Apellidos", "Estado Civil", "Genero", "Fecha Nacimiento", "Correo", "Direccion", "Celular",}
+//        ));
+//        BaseBD.close();
+//    }
+//
+//    public void SetearDatosModificar(RSMTextFull txtCedula, RSMTextFull txtNombre, RSMTextFull txtApell) {
+//        int i = tblClientes.getSelectedRow();
+//        txtCedula.setText(tblClientes.getValueAt(i, 0).toString());
+//        txtNombre.setText(tblClientes.getValueAt(i, 3).toString());
+//        txtApell.setText(tblClientes.getValueAt(i, 4).toString());
+//    }
+//
+//    private void ShowpanelCruds(JPanel p) {
+//        p.setSize(870, 630);
+//        p.setLocation(0, 0);
+//        VistaMenu.PanelPrincipal.removeAll();
+//        VistaMenu.PanelPrincipal.add(p, BorderLayout.CENTER);
+//        VistaMenu.PanelPrincipal.revalidate();
+//        VistaMenu.PanelPrincipal.repaint();
+//    }
+//
+//    private void eliminarCliente(ObjectContainer BaseBD, String id_cliente) {
+//        Cliente eliminp = new Cliente(id_cliente, null, null, null, null, null, null, null, null, null, null, null, null, null);
+//
+//        ObjectSet resul = BaseBD.get(eliminp);
+//
+//        if (resul.hasNext()) {
+//            Cliente estP = (Cliente) resul.next();
+//            BaseBD.delete(estP);
+//
+//        }
+//    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private rsbuttongradiente.RSButtonGradiente btnAgregar;
     private rsbuttongradiente.RSButtonGradiente btnEditar;

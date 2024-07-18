@@ -255,52 +255,52 @@ public class CrudPanelCliente extends javax.swing.JPanel {
     }//GEN-LAST:event_btnSiguienteMouseClicked
 
     private void btnGuardarCliMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnGuardarCliMouseClicked
-        // OBTENER TODOS LOS VALORES DE LA INTERFAZ
-        cedula = txtCedula_Cli.getText();
-        nombres = txtNombres_Cli.getText();
-        fechaNacimiento = jDateFechaNac.getDateFormatString();
-        apellidos = txtApellidos_Cli.getText();
-        direccion = txtDireccion_Cli.getText();
-        correo = txtCorreoElectronico_Cli.getText();
-        celular = txtCelular_Cli.getText();
-        genero = cbxGenero.getSelectedItem().toString();
-        estadoCivil = cbxEstadoC.getSelectedItem().toString();
-        nombreUsuario = jLabel12.getText();
-        password = jLabel12.getText();
-
-        // ESTABLECER CONEXION CON LA BASE DE DATOS
-        ObjectContainer BaseBD = Conexion_db.ConectarBD();
-
-        // OBTENER EL GESTOR DE ID
-        ObjectSet<IdManager> result = BaseBD.query(IdManager.class);
-        IdManager idManager;
-        if (result.isEmpty()) {
-            idManager = new IdManager();
-        } else {
-            idManager = result.get(0);
-        }
-
-        // GENERAR NUEVOS ID
-        int newClienteId = idManager.getLastClienteId() + 1;
-        int newUsuarioId = idManager.getLastUsuarioId() + 1;
-
-        // CREAR OBJETO DE CLIENTE
-        Cliente nuevoCli = new Cliente(String.valueOf(newClienteId), String.valueOf(newUsuarioId), nombreUsuario, password, correoRecuperacion, cedula, nombres,
-                apellidos, direccion, correo, celular, genero, fechaNacimiento, estadoCivil);
-
-        // ACTUALIZAR EL GESTOR DE ID
-        idManager.setLastClienteId(newClienteId);
-        idManager.setLastUsuarioId(newUsuarioId);
-
-        // GUARDAR EL CLIENTE Y EL GESTOR DE ID EN LA BASE DE DATOS
-        BaseBD.set(nuevoCli);
-        BaseBD.set(idManager);
-
-        JOptionPane.showMessageDialog(null, "Registro exitoso");
-        //cerrarBD
-        BaseBD.close();
-        TablaClientes tblCli = new TablaClientes();
-        ShowpanelCruds(tblCli);
+//        // OBTENER TODOS LOS VALORES DE LA INTERFAZ
+//        cedula = txtCedula_Cli.getText();
+//        nombres = txtNombres_Cli.getText();
+//        fechaNacimiento = jDateFechaNac.getDateFormatString();
+//        apellidos = txtApellidos_Cli.getText();
+//        direccion = txtDireccion_Cli.getText();
+//        correo = txtCorreoElectronico_Cli.getText();
+//        celular = txtCelular_Cli.getText();
+//        genero = cbxGenero.getSelectedItem().toString();
+//        estadoCivil = cbxEstadoC.getSelectedItem().toString();
+//        nombreUsuario = jLabel12.getText();
+//        password = jLabel12.getText();
+//
+//        // ESTABLECER CONEXION CON LA BASE DE DATOS
+//        ObjectContainer BaseBD = Conexion_db.ConectarBD();
+//
+//        // OBTENER EL GESTOR DE ID
+//        ObjectSet<IdManager> result = BaseBD.query(IdManager.class);
+//        IdManager idManager;
+//        if (result.isEmpty()) {
+//            idManager = new IdManager();
+//        } else {
+//            idManager = result.get(0);
+//        }
+//
+//        // GENERAR NUEVOS ID
+//        int newClienteId = idManager.getLastClienteId() + 1;
+//        int newUsuarioId = idManager.getLastUsuarioId() + 1;
+//
+////        // CREAR OBJETO DE CLIENTE
+////        Cliente nuevoCli = new Cliente(String.valueOf(newClienteId), String.valueOf(newUsuarioId), nombreUsuario, password, correoRecuperacion, cedula, nombres,
+////                apellidos, direccion, correo, celular, genero, fechaNacimiento, estadoCivil);
+//
+//        // ACTUALIZAR EL GESTOR DE ID
+//        idManager.setLastClienteId(newClienteId);
+//        idManager.setLastUsuarioId(newUsuarioId);
+//
+//        // GUARDAR EL CLIENTE Y EL GESTOR DE ID EN LA BASE DE DATOS
+//        BaseBD.set(nuevoCli);
+//        BaseBD.set(idManager);
+//
+//        JOptionPane.showMessageDialog(null, "Registro exitoso");
+//        //cerrarBD
+//        BaseBD.close();
+//        TablaClientes tblCli = new TablaClientes();
+//        ShowpanelCruds(tblCli);
     }//GEN-LAST:event_btnGuardarCliMouseClicked
 
     private void btnSiguienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSiguienteActionPerformed

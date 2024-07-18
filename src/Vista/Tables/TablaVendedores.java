@@ -8,10 +8,12 @@ package Vista.Tables;
 import Conexion.Conexion_db;
 import Models.Vendedor;
 import Vista.Cruds.CRUDS1.CrudPanelVendedor;
+import Vista.Cruds.CRUDS1.CrudPanelVendedor2;
 import Vista.Menu.VistaMenu;
 import com.db4o.ObjectContainer;
 import com.db4o.ObjectSet;
 import java.awt.BorderLayout;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.table.DefaultTableModel;
 
@@ -39,11 +41,11 @@ public class TablaVendedores extends javax.swing.JPanel {
         jLabel1 = new javax.swing.JLabel();
         tableVendedor = new javax.swing.JScrollPane();
         tblVendedor = new javax.swing.JTable();
-        txtBuscar = new rojeru_san.RSMTextFull();
-        btnAgregar = new rsbuttongradiente.RSButtonGradiente();
-        btnEliminar = new rsbuttongradiente.RSButtonGradiente();
-        btnEditar = new rsbuttongradiente.RSButtonGradiente();
-        btnEditar1 = new rsbuttongradiente.RSButtonGradiente();
+        txtBuscarVendedor = new rojeru_san.RSMTextFull();
+        btnAgregarVendedor = new rsbuttongradiente.RSButtonGradiente();
+        btnEliminarVendedor = new rsbuttongradiente.RSButtonGradiente();
+        btnBuscarVendedor = new rsbuttongradiente.RSButtonGradiente();
+        btnEditarVendedor = new rsbuttongradiente.RSButtonGradiente();
 
         setLayout(new java.awt.BorderLayout());
 
@@ -59,66 +61,71 @@ public class TablaVendedores extends javax.swing.JPanel {
         tblVendedor.setFont(new java.awt.Font("Roboto Medium", 0, 14)); // NOI18N
         tblVendedor.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null}
+                {null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "Id Vendedor", "Id Usuario", "Usuario", "Contraseña", "Cedula", "Nombres", "Apellidos", "Direccion", "Correo Eletronico", "Correo Recuperacion", "Celular", "Fecha Nacimiento", "Estado Civil", "Genero", "Sueldo", "Comiciones", "# Ventas"
+                "Id Vendedor", "Usuario", "Contraseña", "Cedula", "Nombres", "Apellidos", "Direccion", "Correo Eletronico", "Correo Recuperacion", "Celular", "Fecha Nacimiento", "Estado Civil", "Genero", "Sueldo", "Comiciones", "# Ventas"
             }
         ));
         tableVendedor.setViewportView(tblVendedor);
 
-        txtBuscar.setFont(new java.awt.Font("Roboto Bold", 2, 14)); // NOI18N
-        txtBuscar.setPlaceholder("ejm. 0106388747");
+        txtBuscarVendedor.setFont(new java.awt.Font("Roboto Bold", 2, 14)); // NOI18N
+        txtBuscarVendedor.setPlaceholder("ejm. 0106388747");
 
-        btnAgregar.setText("Agregar");
-        btnAgregar.setColorPrimario(new java.awt.Color(0, 204, 51));
-        btnAgregar.setColorPrimarioHover(new java.awt.Color(0, 204, 51));
-        btnAgregar.setColorSecundario(new java.awt.Color(153, 255, 153));
-        btnAgregar.setColorSecundarioHover(new java.awt.Color(204, 255, 204));
-        btnAgregar.addMouseListener(new java.awt.event.MouseAdapter() {
+        btnAgregarVendedor.setText("Agregar");
+        btnAgregarVendedor.setColorPrimario(new java.awt.Color(0, 204, 51));
+        btnAgregarVendedor.setColorPrimarioHover(new java.awt.Color(0, 204, 51));
+        btnAgregarVendedor.setColorSecundario(new java.awt.Color(153, 255, 153));
+        btnAgregarVendedor.setColorSecundarioHover(new java.awt.Color(204, 255, 204));
+        btnAgregarVendedor.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnAgregarMouseClicked(evt);
+                btnAgregarVendedorMouseClicked(evt);
             }
         });
-        btnAgregar.addActionListener(new java.awt.event.ActionListener() {
+        btnAgregarVendedor.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAgregarActionPerformed(evt);
+                btnAgregarVendedorActionPerformed(evt);
             }
         });
 
-        btnEliminar.setText("Eliminar");
-        btnEliminar.setColorPrimario(new java.awt.Color(204, 0, 0));
-        btnEliminar.setColorPrimarioHover(new java.awt.Color(255, 51, 51));
-        btnEliminar.setColorSecundario(new java.awt.Color(255, 153, 153));
-        btnEliminar.setColorSecundarioHover(new java.awt.Color(255, 204, 204));
-        btnEliminar.addMouseListener(new java.awt.event.MouseAdapter() {
+        btnEliminarVendedor.setText("Eliminar");
+        btnEliminarVendedor.setColorPrimario(new java.awt.Color(204, 0, 0));
+        btnEliminarVendedor.setColorPrimarioHover(new java.awt.Color(255, 51, 51));
+        btnEliminarVendedor.setColorSecundario(new java.awt.Color(255, 153, 153));
+        btnEliminarVendedor.setColorSecundarioHover(new java.awt.Color(255, 204, 204));
+        btnEliminarVendedor.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnEliminarMouseClicked(evt);
+                btnEliminarVendedorMouseClicked(evt);
             }
         });
 
-        btnEditar.setText("Buscar");
-        btnEditar.setColorPrimario(new java.awt.Color(0, 51, 153));
-        btnEditar.setColorPrimarioHover(new java.awt.Color(51, 0, 255));
-        btnEditar.setColorSecundario(new java.awt.Color(51, 153, 255));
-        btnEditar.setColorSecundarioHover(new java.awt.Color(153, 204, 255));
-        btnEditar.addMouseListener(new java.awt.event.MouseAdapter() {
+        btnBuscarVendedor.setText("Buscar");
+        btnBuscarVendedor.setColorPrimario(new java.awt.Color(0, 51, 153));
+        btnBuscarVendedor.setColorPrimarioHover(new java.awt.Color(51, 0, 255));
+        btnBuscarVendedor.setColorSecundario(new java.awt.Color(51, 153, 255));
+        btnBuscarVendedor.setColorSecundarioHover(new java.awt.Color(153, 204, 255));
+        btnBuscarVendedor.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnEditarMouseClicked(evt);
+                btnBuscarVendedorMouseClicked(evt);
+            }
+        });
+        btnBuscarVendedor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarVendedorActionPerformed(evt);
             }
         });
 
-        btnEditar1.setText("Editar");
-        btnEditar1.setColorPrimario(new java.awt.Color(0, 51, 153));
-        btnEditar1.setColorPrimarioHover(new java.awt.Color(51, 0, 255));
-        btnEditar1.setColorSecundario(new java.awt.Color(51, 153, 255));
-        btnEditar1.setColorSecundarioHover(new java.awt.Color(153, 204, 255));
-        btnEditar1.addMouseListener(new java.awt.event.MouseAdapter() {
+        btnEditarVendedor.setText("Editar");
+        btnEditarVendedor.setColorPrimario(new java.awt.Color(0, 51, 153));
+        btnEditarVendedor.setColorPrimarioHover(new java.awt.Color(51, 0, 255));
+        btnEditarVendedor.setColorSecundario(new java.awt.Color(51, 153, 255));
+        btnEditarVendedor.setColorSecundarioHover(new java.awt.Color(153, 204, 255));
+        btnEditarVendedor.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnEditar1MouseClicked(evt);
+                btnEditarVendedorMouseClicked(evt);
             }
         });
 
@@ -131,22 +138,21 @@ public class TablaVendedores extends javax.swing.JPanel {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel1)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(tableVendedor, javax.swing.GroupLayout.DEFAULT_SIZE, 840, Short.MAX_VALUE)
-                        .addContainerGap())))
-            .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(tableVendedor, javax.swing.GroupLayout.DEFAULT_SIZE, 840, Short.MAX_VALUE))
+                .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addGap(25, 25, 25)
-                .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnBuscarVendedor, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnEditarVendedor, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(btnEliminarVendedor, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(txtBuscarVendedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(28, 28, 28)
-                .addComponent(btnEditar1, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(27, 27, 27)
-                .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(36, 36, 36))
+                .addComponent(btnAgregarVendedor, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(71, 71, 71))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -154,14 +160,12 @@ public class TablaVendedores extends javax.swing.JPanel {
                 .addGap(38, 38, 38)
                 .addComponent(jLabel1)
                 .addGap(16, 16, 16)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(btnAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(btnEditar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnBuscarVendedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnEditarVendedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtBuscarVendedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnAgregarVendedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnEliminarVendedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(tableVendedor, javax.swing.GroupLayout.PREFERRED_SIZE, 446, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(46, Short.MAX_VALUE))
@@ -170,28 +174,42 @@ public class TablaVendedores extends javax.swing.JPanel {
         add(jPanel2, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnAgregarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAgregarMouseClicked
+    private void btnAgregarVendedorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAgregarVendedorMouseClicked
 
-    }//GEN-LAST:event_btnAgregarMouseClicked
+    }//GEN-LAST:event_btnAgregarVendedorMouseClicked
 
-    private void btnEliminarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEliminarMouseClicked
+    private void btnEliminarVendedorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEliminarVendedorMouseClicked
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnEliminarMouseClicked
+    }//GEN-LAST:event_btnEliminarVendedorMouseClicked
 
-    private void btnEditarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditarMouseClicked
+    private void btnBuscarVendedorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBuscarVendedorMouseClicked
         // TODO add your handling code here:
         System.out.println("clickmet");
-    }//GEN-LAST:event_btnEditarMouseClicked
+    }//GEN-LAST:event_btnBuscarVendedorMouseClicked
 
-    private void btnEditar1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditar1MouseClicked
+    private void btnEditarVendedorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditarVendedorMouseClicked
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnEditar1MouseClicked
+    }//GEN-LAST:event_btnEditarVendedorMouseClicked
 
-    private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
+    private void btnAgregarVendedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarVendedorActionPerformed
         CrudPanelVendedor vendee = new CrudPanelVendedor();
         ShowpanelCruds(vendee);
             
-    }//GEN-LAST:event_btnAgregarActionPerformed
+    }//GEN-LAST:event_btnAgregarVendedorActionPerformed
+
+    private void btnBuscarVendedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarVendedorActionPerformed
+        
+        if(!txtBuscarVendedor.getText().trim().isEmpty()){
+            
+            String BuscarVendedor = txtBuscarVendedor.getText();
+            CrudPanelVendedor2 mibuscarvendedor = new CrudPanelVendedor2(BuscarVendedor);
+            ShowpanelCruds(mibuscarvendedor);
+            
+            
+        }else{
+            JOptionPane.showMessageDialog(this, "ingrese una cedula ");
+        }
+    }//GEN-LAST:event_btnBuscarVendedorActionPerformed
 
 private void ShowpanelCruds(JPanel p) {
         p.setSize(870, 630);
@@ -208,33 +226,32 @@ private void ShowpanelCruds(JPanel p) {
         
         ObjectSet<Vendedor> resultado = BaseBD.get(Vendedor.class);
        
-        String matriz[][] = new String[resultado.size()][17];
+        String matriz[][] = new String[resultado.size()][16];
         int i = 0 ;
          for (Vendedor vende : resultado) {
             
-            matriz[i][0] = vende.getiD_Vendedor();
-            matriz[i][1] = vende.getiD_Usuario();
-            matriz[i][2] = vende.getUsuario();
-            matriz[i][3] = vende.getPassword();
-            matriz[i][4] = vende.getCedula();
-            matriz[i][5] = vende.getNombres();
-            matriz[i][6] = vende.getApellidos();
-            matriz[i][7] = vende.getDireccion();
-            matriz[i][8] = vende.getCorreo();
-            matriz[i][9] = vende.getCorreoRecuperacion();
-            matriz[i][10] = vende.getCelular();
-            matriz[i][11] = vende.getFechaNacimiento();
-            matriz[i][12] = vende.getEstadoCivil();
-            matriz[i][13] = vende.getGenero();
-            matriz[i][14] = String.valueOf(vende.getSueldoBase_Vendedor());
-            matriz[i][15] = String.valueOf(vende.getComiciones_Vendedor());
-            matriz[i][16] = String.valueOf(vende.getNumeroVentas_Vendedor());
+            matriz[i][0] = String.valueOf(vende.getiD_Vendedor());
+            matriz[i][1] = vende.getNombreUsuario();
+            matriz[i][2] = vende.getPassword();
+            matriz[i][3] = vende.getCedula();
+            matriz[i][4] = vende.getNombres();
+            matriz[i][5] = vende.getApellidos();
+            matriz[i][6] = vende.getDireccion();
+            matriz[i][7] = vende.getCorreo();
+            matriz[i][8] = vende.getCorreoRecuperacion();
+            matriz[i][9] = vende.getCelular();
+            matriz[i][10] = vende.getFechaNacimiento();
+            matriz[i][11] = vende.getEstadoCivil();
+            matriz[i][12] = vende.getGenero();
+            matriz[i][13] = String.valueOf(vende.getSueldoBase_Vendedor());
+            matriz[i][14] = String.valueOf(vende.getComiciones_Vendedor());
+            matriz[i][15] = String.valueOf(vende.getNumeroVentas_Vendedor());
                 i++;
                     } 
         
         tblVendedor.setModel(new javax.swing.table.DefaultTableModel(
                 matriz,
-                new String[]{"ID Vendedor", "ID Usuario", "Usuario", "Contraseña","Cedula", "Nombres", "Apellidos", "Direccion", "Correo Electronico","Correo recuperacion", "Celular","Fecha Nacimiento"
+                new String[]{"ID Vendedor",  "Usuario", "Contraseña","Cedula", "Nombres", "Apellidos", "Direccion", "Correo Electronico","Correo recuperacion", "Celular","Fecha Nacimiento"
                 , "Estado Civil", "Genero", "Sueldo", "Comiciones", "Numero de Ventas"}
         ));
         BaseBD.close();
@@ -242,14 +259,14 @@ private void ShowpanelCruds(JPanel p) {
     
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private rsbuttongradiente.RSButtonGradiente btnAgregar;
-    private rsbuttongradiente.RSButtonGradiente btnEditar;
-    private rsbuttongradiente.RSButtonGradiente btnEditar1;
-    private rsbuttongradiente.RSButtonGradiente btnEliminar;
+    private rsbuttongradiente.RSButtonGradiente btnAgregarVendedor;
+    private rsbuttongradiente.RSButtonGradiente btnBuscarVendedor;
+    private rsbuttongradiente.RSButtonGradiente btnEditarVendedor;
+    private rsbuttongradiente.RSButtonGradiente btnEliminarVendedor;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane tableVendedor;
     private javax.swing.JTable tblVendedor;
-    private rojeru_san.RSMTextFull txtBuscar;
+    private rojeru_san.RSMTextFull txtBuscarVendedor;
     // End of variables declaration//GEN-END:variables
 }

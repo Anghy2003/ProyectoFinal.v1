@@ -1,102 +1,30 @@
-
 package Vista.Cruds.CRUDS1;
 
 import Conexion.Conexion_db;
-import Models.IdManager;
+import Models.Vehiculo;
 import Models.Vendedor;
+import Vista.Cruds.BuscarPanelVehiculo1;
 import Vista.Menu.VistaMenu;
 import com.db4o.ObjectContainer;
 import com.db4o.ObjectSet;
 import com.db4o.query.Query;
+
 import java.awt.BorderLayout;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
+public class CrudPanelVendedor2 extends javax.swing.JPanel {
 
-public class CrudPanelVendedor extends javax.swing.JPanel {
+    private String BuscarVendedor;
 
-    /**
-     * Creates new form CrudPanelVendedor1
-     *
-     * @param iD_Vendedor     
-     * @param apellidos     
-     * @param direccion     
-     * @param correo     
-     * @param celular     
-     * @param genero     
-     * @param fechaNacimiento     
-     * @param estadoCivil     
-     * @param nombreUsuario     
-     * @param password     
-     * @param correoRecuperacion     
-     */
-    
-    public void GuardarVendedor( double sueldoBase_Vendedor, double comiciones_Vendedor, int numeroVentas_Vendedor, String cedula, String nombres,
-            String apellidos, String direccion, String correo, String celular, String genero, String fechaNacimiento, String estadoCivil, String nombreUsuario,
-            String password, String correoRecuperacion ) {
-
-        ObjectContainer BaseBD = Conexion_db.ConectarBD();
-        
-        int siguienteID = obtenerProximoIDVendedor(BaseBD);
-        
-        Vendedor vendedor1 = new Vendedor(   sueldoBase_Vendedor,  comiciones_Vendedor,  numeroVentas_Vendedor,  cedula,  nombres,
-             apellidos,  direccion,  correo,  celular,  genero,  fechaNacimiento,  estadoCivil,  nombreUsuario,
-             password,  correoRecuperacion );
-      
-        vendedor1.setiD_Vendedor(siguienteID);
-        BaseBD.close();
-
-        if (VerificarVendedor(cedula) == 0) {
-
-            BaseBD = Conexion_db.ConectarBD();
-            BaseBD.set(vendedor1);
-           BaseBD.close();
-
-            JOptionPane.showMessageDialog(this, "Vendedor Guardado");
-
-        } else {
-
-            JOptionPane.showMessageDialog(this, "Ya existe el Vendedor ");
-        }
-    }
-
-    public static int VerificarVendedor(String cedula) {
-
-        ObjectContainer BaseBD = Conexion_db.ConectarBD();
-
-        Vendedor buscaVendedor = new Vendedor(0, 0.0, 0.0, 0, cedula, null, null, null, null,
-                null,  null, null, null, null, null, null);
-
-        ObjectSet resultado = BaseBD.get(buscaVendedor);
-        
-        int coincidencias = resultado.size();
-
-        BaseBD.close();
-        return coincidencias;
-    }
-
-    // Método para obtener el próximo ID_Vendedor disponible
-private int obtenerProximoIDVendedor(ObjectContainer db) {
-    // Consultar el máximo ID_Vendedor almacenado en la base de datos
-    ObjectSet<Vendedor> result = db.queryByExample(Vendedor.class);
-    int maxID = 0;
-    while (result.hasNext()) {
-        Vendedor vendedor = result.next();
-        if (vendedor.getiD_Vendedor() > maxID) {
-            maxID = vendedor.getiD_Vendedor();
-        }
-    }
-    // El próximo ID es el máximo + 1
-    return maxID + 1;
-}
-    
-
-
-
-    public CrudPanelVendedor() {
+    public CrudPanelVendedor2(String receivedString) {
+        this.BuscarVendedor = receivedString;
         initComponents();
+        Vendedorbuscar();
+
     }
 
     /**
@@ -139,7 +67,6 @@ private int obtenerProximoIDVendedor(ObjectContainer db) {
         txtNumeroVentasVendedor = new rojeru_san.RSMTextFull();
         txtSueldoVendedor = new rojeru_san.RSMTextFull();
         txtCelularVendedor = new rojeru_san.RSMTextFull();
-        jFileChooser1 = new javax.swing.JFileChooser();
 
         jPanel1.setLayout(new java.awt.BorderLayout());
 
@@ -239,7 +166,7 @@ private int obtenerProximoIDVendedor(ObjectContainer db) {
                 btnCancelarMouseClicked(evt);
             }
         });
-        jPanel2.add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 590, -1, -1));
+        jPanel2.add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 520, -1, -1));
         jPanel2.add(jDateFechaNacVendedor, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 170, 140, 30));
 
         cbxGeneroVendedor.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "MASCULINO", "FEMENINO" }));
@@ -248,13 +175,13 @@ private int obtenerProximoIDVendedor(ObjectContainer db) {
         cbxEstadoCivilVendedor.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "SOLTERO", "CASADO", "VIUDO", "DIVORCIADO", "UNION LIBRE" }));
         jPanel2.add(cbxEstadoCivilVendedor, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 280, 150, 30));
 
-        btnGuardar.setText("Guardar");
+        btnGuardar.setText("Modificar");
         btnGuardar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnGuardarActionPerformed(evt);
             }
         });
-        jPanel2.add(btnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 590, -1, -1));
+        jPanel2.add(btnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 520, -1, -1));
 
         lblPassword_Ven.setFont(new java.awt.Font("Roboto Medium", 0, 21)); // NOI18N
         lblPassword_Ven.setForeground(new java.awt.Color(0, 53, 79));
@@ -280,7 +207,7 @@ private int obtenerProximoIDVendedor(ObjectContainer db) {
         lblCelular_Ven.setFont(new java.awt.Font("Roboto Medium", 0, 21)); // NOI18N
         lblCelular_Ven.setForeground(new java.awt.Color(0, 53, 79));
         lblCelular_Ven.setText("Celular:");
-        jPanel2.add(lblCelular_Ven, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 480, 80, 40));
+        jPanel2.add(lblCelular_Ven, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 100, 80, 40));
 
         txtNumeroVentasVendedor.setForeground(new java.awt.Color(0, 53, 79));
         txtNumeroVentasVendedor.setColorTransparente(true);
@@ -298,30 +225,27 @@ private int obtenerProximoIDVendedor(ObjectContainer db) {
         txtCelularVendedor.setColorTransparente(true);
         txtCelularVendedor.setFont(new java.awt.Font("Roboto Light", 1, 14)); // NOI18N
         txtCelularVendedor.setPlaceholder("Escriba su número celular");
-        jPanel2.add(txtCelularVendedor, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 480, 230, 40));
-        jPanel2.add(jFileChooser1, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 10, 340, 140));
+        jPanel2.add(txtCelularVendedor, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 100, 230, 40));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 945, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 896, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
-                    .addGap(0, 475, Short.MAX_VALUE)
+                    .addGap(0, 448, Short.MAX_VALUE)
                     .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 476, Short.MAX_VALUE)))
+                    .addGap(0, 448, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, 651, Short.MAX_VALUE)
+            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 638, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
-                    .addGap(0, 325, Short.MAX_VALUE)
+                    .addGap(0, 319, Short.MAX_VALUE)
                     .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 326, Short.MAX_VALUE)))
+                    .addGap(0, 319, Short.MAX_VALUE)))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -331,16 +255,7 @@ private int obtenerProximoIDVendedor(ObjectContainer db) {
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
 
-        boolean usuarioRepetido = false;
-        
-        if (VerificarVendedor(txtCedulaVendedor.getText()) != 0) {
-            JOptionPane.showMessageDialog(null, "Vendedor ya registrado");
-            usuarioRepetido = true;
-        }
-
-        if (!usuarioRepetido) {
-            
-            Boolean valido = false;
+        Boolean valido = false;
             
             Date fechaNacimientoDate = jDateFechaNacVendedor.getDate(); // Obtener la fecha de nacimiento del JDateChooser
 
@@ -357,7 +272,7 @@ private int obtenerProximoIDVendedor(ObjectContainer db) {
                                 if (valido = txtCelularVendedor.getText().matches("^09\\d{8}$")) {
 
                                     
-                                    GuardarVendedor( Double.parseDouble(txtSueldoVendedor.getText()), Double.parseDouble(txtComicionesVendedor.getText()), Integer.parseInt(txtNumeroVentasVendedor.getText()),
+                                    modificarVendedor(Double.parseDouble(txtSueldoVendedor.getText()), Double.parseDouble(txtComicionesVendedor.getText()), Integer.parseInt(txtNumeroVentasVendedor.getText()),
                                             txtCedulaVendedor.getText(), txtNombresVendedor.getText().toUpperCase(), txtApellidosVendedor.getText().toUpperCase(), txtDireccionVendedor.getText().toUpperCase(),
                                             txtCorreoVendedor.getText(), txtCelularVendedor.getText(), (String) cbxGeneroVendedor.getSelectedItem(), fechaNacimiento, (String) cbxEstadoCivilVendedor.getSelectedItem(),
                                             txtCedulaVendedor.getText(), txtPasswordVendedor.getText(), txtCorreoVendedor.getText());
@@ -386,12 +301,91 @@ private int obtenerProximoIDVendedor(ObjectContainer db) {
                 JOptionPane.showMessageDialog(null, "Ingrese una cedula valida");
             }
 
-            
-        }
-
 
     }//GEN-LAST:event_btnGuardarActionPerformed
 
+    public final void Vendedorbuscar() {
+
+        Boolean encontrado = true;
+
+        ObjectContainer BaseBD = Conexion_db.ConectarBD();
+
+        Query vendedor = BaseBD.query();
+        vendedor.constrain(Vendedor.class);
+        vendedor.descend("cedula").constrain(BuscarVendedor);
+        ObjectSet<Vendedor> resultado = vendedor.execute();
+
+        for (Vendedor vende : resultado) {
+
+            txtCedulaVendedor.setText(vende.getCedula());
+            txtCedulaVendedor.setEnabled(false); // porque es el atributo principal
+            txtPasswordVendedor.setText(vende.getPassword());
+            txtNombresVendedor.setText(vende.getNombres());
+            txtApellidosVendedor.setText(vende.getApellidos());
+            txtDireccionVendedor.setText(vende.getDireccion());
+            txtCorreoVendedor.setText(vende.getCorreo());
+            txtCelularVendedor.setText(vende.getCelular());            
+            cbxGeneroVendedor.setSelectedItem(vende.getGenero());
+            cbxEstadoCivilVendedor.setSelectedItem(vende.getEstadoCivil());
+            txtComicionesVendedor.setText(String.valueOf(vende.getComiciones_Vendedor()));
+            txtNumeroVentasVendedor.setText(String.valueOf(vende.getNumeroVentas_Vendedor()));
+            txtSueldoVendedor.setText(String.valueOf(vende.getSueldoBase_Vendedor()));
+
+            try {
+                String fechaNacimientoStr = vende.getFechaNacimiento(); // Suponiendo que getFechaNacimiento() devuelve un String en formato "yyyy-MM-dd"
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                Date fechaNacimientoDate = sdf.parse(fechaNacimientoStr);
+
+                jDateFechaNacVendedor.setDate(fechaNacimientoDate);
+            } catch (ParseException e) {
+                e.printStackTrace();
+                // Manejar la excepción si ocurre algún problema al convertir la fecha
+            }
+
+            encontrado = true;
+            JOptionPane.showMessageDialog(this, "Encontrado");
+        }
+        if (!encontrado) {
+            JOptionPane.showMessageDialog(this, "No se encontraron Datos");
+        }
+        BaseBD.close();
+    }
+
+    public void modificarVendedor(double sueldoBase_Vendedor, double comiciones_Vendedor, int numeroVentas_Vendedor, String cedula, String nombres,
+            String apellidos, String direccion, String correo, String celular, String genero, String fechaNacimiento, String estadoCivil, String nombreUsuario,
+            String password, String correoRecuperacion) {
+
+        ObjectContainer BaseBD = Conexion_db.ConectarBD();
+
+        Vendedor modificarVendedor = new Vendedor(sueldoBase_Vendedor, comiciones_Vendedor, numeroVentas_Vendedor, cedula, nombres,
+                apellidos, direccion, correo, celular, genero, fechaNacimiento, estadoCivil, nombreUsuario,
+                password, correoRecuperacion);
+
+        Vendedor vendedorBusca = new Vendedor(0.0, 0.0, 0, cedula, null,
+                null, null, null, null, null, null, null, null,
+                null, null);
+
+        ObjectSet resultado = BaseBD.get(vendedorBusca);
+
+        int coincidencias = resultado.size();
+
+        if (coincidencias > 0) {
+
+            Vendedor vendedorVEliminar = (Vendedor) resultado.next();
+            BaseBD.delete(vendedorVEliminar);
+
+            BaseBD.set(modificarVendedor);
+            JOptionPane.showMessageDialog(this, "Vendedor Modificado");
+
+        } else {
+            JOptionPane.showMessageDialog(this, "No se encontro ningun vehiculo");
+        }
+
+        BaseBD.close();
+    }
+
+    
+    
     private void ShowpanelCruds(JPanel p) {
         p.setSize(870, 630);
         p.setLocation(0, 0);
@@ -407,7 +401,6 @@ private int obtenerProximoIDVendedor(ObjectContainer db) {
     private javax.swing.JComboBox<String> cbxEstadoCivilVendedor;
     private javax.swing.JComboBox<String> cbxGeneroVendedor;
     private com.toedter.calendar.JDateChooser jDateFechaNacVendedor;
-    private javax.swing.JFileChooser jFileChooser1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;

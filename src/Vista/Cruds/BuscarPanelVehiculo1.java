@@ -19,6 +19,7 @@ public class BuscarPanelVehiculo1 extends javax.swing.JPanel {
      * Creates new form CrudPanelVehiculo
      */
     private String BuscarPlaca;
+    
     public BuscarPanelVehiculo1(String receivedString) {
         this.BuscarPlaca = receivedString;
         initComponents();
@@ -198,6 +199,7 @@ public class BuscarPanelVehiculo1 extends javax.swing.JPanel {
         BaseBD.close();
         return coincidencias;
     }
+    
     public  void resetCampos(){
     txtPlaca.setText("");
     txtMarca.setText("");
@@ -205,6 +207,7 @@ public class BuscarPanelVehiculo1 extends javax.swing.JPanel {
     txtModelo.setText("");
     YEARAño.setYear(2024);
     }
+    
     public final void buscarVehiculo(){
         Boolean encontrado = false;
         // ESTABLECER CONEXION CON LA BASE DE DATOS
@@ -233,6 +236,7 @@ public class BuscarPanelVehiculo1 extends javax.swing.JPanel {
     }
     
     private void btnModificarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnModificarMouseClicked
+        
         if (!txtMarca.getText().trim().isBlank()) {
             if (!txtModelo.getText().isBlank()) {
                 Boolean valido = false;//creamos una bandera para validar datos

@@ -12,11 +12,14 @@ public abstract class  Persona {
    private String genero;
    private String fechaNacimiento;
    private String estadoCivil;
+   private String nombreUsuario;
+   private String password;
+   private String correoRecuperacion;
 
     public Persona() {
     }
 
-    public Persona(String cedula, String nombres, String apellidos, String direccion, String correo, String celular, String genero, String fechaNacimiento, String estadoCivil) {
+    public Persona(String cedula, String nombres, String apellidos, String direccion, String correo, String celular, String genero, String fechaNacimiento, String estadoCivil, String nombreUsuario, String password, String correoRecuperacion) {
         this.cedula = cedula;
         this.nombres = nombres;
         this.apellidos = apellidos;
@@ -26,11 +29,16 @@ public abstract class  Persona {
         this.genero = genero;
         this.fechaNacimiento = fechaNacimiento;
         this.estadoCivil = estadoCivil;
+        this.nombreUsuario = nombreUsuario;
+        this.password = password;
+        this.correoRecuperacion = correoRecuperacion;
     }
 
     @Override
     public String toString() {
-        return "Persona{" + "cedula=" + getCedula() + ", nombres=" + getNombres() + ", apellidos=" + getApellidos() + ", direccion=" + getDireccion() + ", correo=" + getCorreo() + ", celular=" + getCelular() + ", genero=" + getGenero() + ", fechaNacimiento=" + getFechaNacimiento() + ", estadoCivil=" + getEstadoCivil() + '}';
+        return "Persona{" + "cedula=" + getCedula() + ", nombres=" + getNombres() + ", apellidos=" + getApellidos() + ", direccion=" + getDireccion() + 
+                ", correo=" + getCorreo() + ", celular=" + getCelular() + ", genero=" + getGenero() + ", fechaNacimiento=" + getFechaNacimiento() + 
+                ", estadoCivil=" + getEstadoCivil() + ", nombreUsuario=" + getNombreUsuario() + ", password=" + getPassword() + ", correoRecuperacion=" + getCorreoRecuperacion() + '}';
     }
 
     /**
@@ -158,6 +166,50 @@ public abstract class  Persona {
     public void setEstadoCivil(String estadoCivil) {
         this.estadoCivil = estadoCivil;
     }
+
+    /**
+     * @return the nombreUsuario
+     */
+    public String getNombreUsuario() {
+        return nombreUsuario;
+    }
+
+    /**
+     * @param nombreUsuario the nombreUsuario to set
+     */
+    public void setNombreUsuario(String nombreUsuario) {
+        this.nombreUsuario = nombreUsuario;
+    }
+
+    /**
+     * @return the password
+     */
+    public String getPassword() {
+        return password;
+    }
+
+    /**
+     * @param password the password to set
+     */
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    /**
+     * @return the correoRecuperacion
+     */
+    public String getCorreoRecuperacion() {
+        return correoRecuperacion;
+    }
+
+    /**
+     * @param correoRecuperacion the correoRecuperacion to set
+     */
+    public void setCorreoRecuperacion(String correoRecuperacion) {
+        this.correoRecuperacion = correoRecuperacion;
+    }
+
+   
    
    
 }
