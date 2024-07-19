@@ -3,40 +3,83 @@ package Vista.Cruds.CRUDS1;
 
 import Conexion.Conexion_db;
 import Models.Cliente;
-import Models.IdManager;
+
+
+
 import Vista.Menu.VistaMenu;
 import Vista.Tables.TablaClientes;
 import com.db4o.ObjectContainer;
 import com.db4o.ObjectSet;
 import java.awt.BorderLayout;
-import java.awt.Panel;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import rojeru_san.RSMTextFull;
+
 
 
 public class CrudPanelCliente extends javax.swing.JPanel {
 
-    private String cedula;
-    private String nombres;
-    private String apellidos;
-    private String direccion;
-    private String correo;
-    private String celular;
-    private String genero;
-    private String fechaNacimiento;
-    private String estadoCivil;
-    //usuario
-    private String iD_Usuario;
-    private String nombreUsuario;
-    private String password;
-    private String correoRecuperacion;
-    //cliente
-    private String iD_Cliente;
+     public void GuardarCliente( String cedula, String nombres, String apellidos, String direccion, String correo, String celular, String genero, String fechaNacimiento,
+            String estadoCivil, String nombreUsuario, String password, String correoRecuperacion ) {
 
-    /**
-     * Creates new form CrudPanelCliente
-     */
+        ObjectContainer BaseBD = Conexion_db.ConectarBD();
+        
+        int siguienteID = obtenerProximoIDCliente(BaseBD);
+        
+        Cliente cliente1 = new Cliente(    cedula,  nombres,  apellidos,  direccion,  correo,  celular,  genero,  fechaNacimiento,
+             estadoCivil,  nombreUsuario,  password,  correoRecuperacion );
+      
+        cliente1.setiD_Cliente(siguienteID);
+        BaseBD.close();
+
+        if (VerificarCliente(cedula) == 0) {
+
+            BaseBD = Conexion_db.ConectarBD();
+            BaseBD.set(cliente1);
+           BaseBD.close();
+
+            JOptionPane.showMessageDialog(this, "Cliente Guardado");
+
+        } else {
+
+            JOptionPane.showMessageDialog(this, "Ya existe el Cliente ");
+        }
+    }
+
+    public static int VerificarCliente(String cedula) {
+
+        ObjectContainer BaseBD = Conexion_db.ConectarBD();
+
+        Cliente buscaCliente = new Cliente( cedula, null, null, null, null,
+                null,  null, null, null, null, null, null);
+
+        ObjectSet resultado = BaseBD.get(buscaCliente);
+        
+        int coincidencias = resultado.size();
+
+        BaseBD.close();
+        return coincidencias;
+    }
+
+    // Método para obtener el próximo ID_Vendedor disponible
+    private int obtenerProximoIDCliente(ObjectContainer db) {
+    // Consultar el máximo ID_Vendedor almacenado en la base de datos
+    ObjectSet<Cliente> result = db.queryByExample(Cliente.class);
+    int maxID = 0;
+    while (result.hasNext()) {
+        Cliente cliente = result.next();
+        if (cliente.getiD_Cliente() > maxID) {
+            maxID = cliente.getiD_Cliente();
+        }
+    }
+    // El próximo ID es el máximo + 1
+    return maxID + 1;
+}
+    
+    
+    
     public CrudPanelCliente() {
         initComponents();
     }
@@ -53,7 +96,7 @@ public class CrudPanelCliente extends javax.swing.JPanel {
         jPanel1 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         lblCedula_Cli = new javax.swing.JLabel();
-        lblNombres_Cli = new javax.swing.JLabel();
+        lblContraseña_Cli = new javax.swing.JLabel();
         lblApellidos_Cli = new javax.swing.JLabel();
         lblDireccion_Cli = new javax.swing.JLabel();
         lblCorreoElectronico_Cli = new javax.swing.JLabel();
@@ -62,17 +105,18 @@ public class CrudPanelCliente extends javax.swing.JPanel {
         lblGenero_Cli = new javax.swing.JLabel();
         lblEstadoCivil_Cli = new javax.swing.JLabel();
         txtCedula_Cli = new rojeru_san.RSMTextFull();
-        txtNombres_Cli = new rojeru_san.RSMTextFull();
+        txtPassword_Cli = new rojeru_san.RSMTextFull();
         txtApellidos_Cli = new rojeru_san.RSMTextFull();
         txtDireccion_Cli = new rojeru_san.RSMTextFull();
         txtCorreoElectronico_Cli = new rojeru_san.RSMTextFull();
         txtCelular_Cli = new rojeru_san.RSMTextFull();
         btnCancelar = new rojeru_san.RSButtonRiple();
-        jDateFechaNac = new com.toedter.calendar.JDateChooser();
+        jDateFechaNac_Cli = new com.toedter.calendar.JDateChooser();
         cbxGenero = new javax.swing.JComboBox<>();
         cbxEstadoC = new javax.swing.JComboBox<>();
-        btnSiguiente = new rojeru_san.RSButtonRiple();
-        jLabel12 = new javax.swing.JLabel();
+        btnGuardar = new rojeru_san.RSButtonRiple();
+        lblNombres_Cli = new javax.swing.JLabel();
+        txtNombres_Cli = new rojeru_san.RSMTextFull();
 
         PanelDatosUsu.setLayout(new java.awt.BorderLayout());
 
@@ -129,25 +173,25 @@ public class CrudPanelCliente extends javax.swing.JPanel {
         lblCedula_Cli.setText("Cédula:");
         jPanel1.add(lblCedula_Cli, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 130, 100, 40));
 
-        lblNombres_Cli.setFont(new java.awt.Font("Roboto Medium", 0, 21)); // NOI18N
-        lblNombres_Cli.setForeground(new java.awt.Color(0, 53, 79));
-        lblNombres_Cli.setText("Nombres:");
-        jPanel1.add(lblNombres_Cli, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 200, 100, 40));
+        lblContraseña_Cli.setFont(new java.awt.Font("Roboto Medium", 0, 21)); // NOI18N
+        lblContraseña_Cli.setForeground(new java.awt.Color(0, 53, 79));
+        lblContraseña_Cli.setText("Contraseña:");
+        jPanel1.add(lblContraseña_Cli, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 190, 130, 40));
 
         lblApellidos_Cli.setFont(new java.awt.Font("Roboto Medium", 0, 21)); // NOI18N
         lblApellidos_Cli.setForeground(new java.awt.Color(0, 53, 79));
         lblApellidos_Cli.setText("Apellidos:");
-        jPanel1.add(lblApellidos_Cli, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 270, 100, 40));
+        jPanel1.add(lblApellidos_Cli, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 330, 100, 40));
 
         lblDireccion_Cli.setFont(new java.awt.Font("Roboto Medium", 0, 21)); // NOI18N
         lblDireccion_Cli.setForeground(new java.awt.Color(0, 53, 79));
-        lblDireccion_Cli.setText("Dirección");
-        jPanel1.add(lblDireccion_Cli, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 340, 90, 40));
+        lblDireccion_Cli.setText("Dirección:");
+        jPanel1.add(lblDireccion_Cli, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 390, 110, 40));
 
         lblCorreoElectronico_Cli.setFont(new java.awt.Font("Roboto Medium", 0, 21)); // NOI18N
         lblCorreoElectronico_Cli.setForeground(new java.awt.Color(0, 53, 79));
         lblCorreoElectronico_Cli.setText("Correo Electrónico:");
-        jPanel1.add(lblCorreoElectronico_Cli, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 420, 190, 40));
+        jPanel1.add(lblCorreoElectronico_Cli, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 450, 190, 40));
 
         lblCelular_Cli.setFont(new java.awt.Font("Roboto Medium", 0, 21)); // NOI18N
         lblCelular_Cli.setForeground(new java.awt.Color(0, 53, 79));
@@ -167,7 +211,7 @@ public class CrudPanelCliente extends javax.swing.JPanel {
         lblEstadoCivil_Cli.setFont(new java.awt.Font("Roboto Medium", 0, 21)); // NOI18N
         lblEstadoCivil_Cli.setForeground(new java.awt.Color(0, 53, 79));
         lblEstadoCivil_Cli.setText("Estado Civil:");
-        jPanel1.add(lblEstadoCivil_Cli, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 380, 120, 40));
+        jPanel1.add(lblEstadoCivil_Cli, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 360, 120, 40));
 
         txtCedula_Cli.setForeground(new java.awt.Color(0, 53, 79));
         txtCedula_Cli.setColorTransparente(true);
@@ -175,29 +219,29 @@ public class CrudPanelCliente extends javax.swing.JPanel {
         txtCedula_Cli.setPlaceholder("Escriba la cédula");
         jPanel1.add(txtCedula_Cli, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 120, 200, 40));
 
-        txtNombres_Cli.setForeground(new java.awt.Color(0, 53, 79));
-        txtNombres_Cli.setColorTransparente(true);
-        txtNombres_Cli.setFont(new java.awt.Font("Roboto Light", 1, 14)); // NOI18N
-        txtNombres_Cli.setPlaceholder("Escriba los nombres");
-        jPanel1.add(txtNombres_Cli, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 200, 200, 40));
+        txtPassword_Cli.setForeground(new java.awt.Color(0, 53, 79));
+        txtPassword_Cli.setColorTransparente(true);
+        txtPassword_Cli.setFont(new java.awt.Font("Roboto Light", 1, 14)); // NOI18N
+        txtPassword_Cli.setPlaceholder("Escriba contraseña");
+        jPanel1.add(txtPassword_Cli, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 190, 200, 40));
 
         txtApellidos_Cli.setForeground(new java.awt.Color(0, 53, 79));
         txtApellidos_Cli.setColorTransparente(true);
         txtApellidos_Cli.setFont(new java.awt.Font("Roboto Light", 1, 14)); // NOI18N
         txtApellidos_Cli.setPlaceholder("Escriba los apellidos");
-        jPanel1.add(txtApellidos_Cli, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 260, 200, 40));
+        jPanel1.add(txtApellidos_Cli, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 330, 200, 40));
 
         txtDireccion_Cli.setForeground(new java.awt.Color(0, 53, 79));
         txtDireccion_Cli.setColorTransparente(true);
         txtDireccion_Cli.setFont(new java.awt.Font("Roboto Light", 1, 14)); // NOI18N
         txtDireccion_Cli.setPlaceholder("Escriba la dirección");
-        jPanel1.add(txtDireccion_Cli, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 340, 200, 40));
+        jPanel1.add(txtDireccion_Cli, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 390, 200, 40));
 
         txtCorreoElectronico_Cli.setForeground(new java.awt.Color(0, 53, 79));
         txtCorreoElectronico_Cli.setColorTransparente(true);
         txtCorreoElectronico_Cli.setFont(new java.awt.Font("Roboto Light", 1, 14)); // NOI18N
         txtCorreoElectronico_Cli.setPlaceholder("Escriba el email");
-        jPanel1.add(txtCorreoElectronico_Cli, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 410, 200, 40));
+        jPanel1.add(txtCorreoElectronico_Cli, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 450, 200, 40));
 
         txtCelular_Cli.setForeground(new java.awt.Color(0, 53, 79));
         txtCelular_Cli.setColorTransparente(true);
@@ -212,30 +256,38 @@ public class CrudPanelCliente extends javax.swing.JPanel {
                 btnCancelarMouseClicked(evt);
             }
         });
-        jPanel1.add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 530, -1, -1));
-        jPanel1.add(jDateFechaNac, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 220, 140, 30));
+        jPanel1.add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 520, -1, -1));
+        jPanel1.add(jDateFechaNac_Cli, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 220, 140, 30));
 
         cbxGenero.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Masculino", "Femenino", "Otro" }));
         jPanel1.add(cbxGenero, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 290, 150, 30));
 
         cbxEstadoC.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Soltero", "Casado", "Divorciado", "viudo" }));
-        jPanel1.add(cbxEstadoC, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 370, 150, 30));
+        jPanel1.add(cbxEstadoC, new org.netbeans.lib.awtextra.AbsoluteConstraints(660, 360, 150, 30));
 
-        btnSiguiente.setText("Siguiente");
-        btnSiguiente.addMouseListener(new java.awt.event.MouseAdapter() {
+        btnGuardar.setText("Guardar");
+        btnGuardar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnSiguienteMouseClicked(evt);
+                btnGuardarMouseClicked(evt);
             }
         });
-        btnSiguiente.addActionListener(new java.awt.event.ActionListener() {
+        btnGuardar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSiguienteActionPerformed(evt);
+                btnGuardarActionPerformed(evt);
             }
         });
-        jPanel1.add(btnSiguiente, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 530, -1, -1));
+        jPanel1.add(btnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 520, -1, -1));
 
-        jLabel12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/fondomecanicatamano.png"))); // NOI18N
-        jPanel1.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 890, 650));
+        lblNombres_Cli.setFont(new java.awt.Font("Roboto Medium", 0, 21)); // NOI18N
+        lblNombres_Cli.setForeground(new java.awt.Color(0, 53, 79));
+        lblNombres_Cli.setText("Nombres:");
+        jPanel1.add(lblNombres_Cli, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 260, 100, 40));
+
+        txtNombres_Cli.setForeground(new java.awt.Color(0, 53, 79));
+        txtNombres_Cli.setColorTransparente(true);
+        txtNombres_Cli.setFont(new java.awt.Font("Roboto Light", 1, 14)); // NOI18N
+        txtNombres_Cli.setPlaceholder("Escriba los nombres");
+        jPanel1.add(txtNombres_Cli, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 250, 200, 40));
 
         add(jPanel1, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
@@ -247,65 +299,76 @@ public class CrudPanelCliente extends javax.swing.JPanel {
     }//GEN-LAST:event_btnCancelarMouseClicked
 
 
-    private void btnSiguienteMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSiguienteMouseClicked
+    private void btnGuardarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnGuardarMouseClicked
 
         ShowpanelCruds(PanelDatosUsu);
 
 
-    }//GEN-LAST:event_btnSiguienteMouseClicked
+    }//GEN-LAST:event_btnGuardarMouseClicked
 
     private void btnGuardarCliMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnGuardarCliMouseClicked
-//        // OBTENER TODOS LOS VALORES DE LA INTERFAZ
-//        cedula = txtCedula_Cli.getText();
-//        nombres = txtNombres_Cli.getText();
-//        fechaNacimiento = jDateFechaNac.getDateFormatString();
-//        apellidos = txtApellidos_Cli.getText();
-//        direccion = txtDireccion_Cli.getText();
-//        correo = txtCorreoElectronico_Cli.getText();
-//        celular = txtCelular_Cli.getText();
-//        genero = cbxGenero.getSelectedItem().toString();
-//        estadoCivil = cbxEstadoC.getSelectedItem().toString();
-//        nombreUsuario = jLabel12.getText();
-//        password = jLabel12.getText();
-//
-//        // ESTABLECER CONEXION CON LA BASE DE DATOS
-//        ObjectContainer BaseBD = Conexion_db.ConectarBD();
-//
-//        // OBTENER EL GESTOR DE ID
-//        ObjectSet<IdManager> result = BaseBD.query(IdManager.class);
-//        IdManager idManager;
-//        if (result.isEmpty()) {
-//            idManager = new IdManager();
-//        } else {
-//            idManager = result.get(0);
-//        }
-//
-//        // GENERAR NUEVOS ID
-//        int newClienteId = idManager.getLastClienteId() + 1;
-//        int newUsuarioId = idManager.getLastUsuarioId() + 1;
-//
-////        // CREAR OBJETO DE CLIENTE
-////        Cliente nuevoCli = new Cliente(String.valueOf(newClienteId), String.valueOf(newUsuarioId), nombreUsuario, password, correoRecuperacion, cedula, nombres,
-////                apellidos, direccion, correo, celular, genero, fechaNacimiento, estadoCivil);
-//
-//        // ACTUALIZAR EL GESTOR DE ID
-//        idManager.setLastClienteId(newClienteId);
-//        idManager.setLastUsuarioId(newUsuarioId);
-//
-//        // GUARDAR EL CLIENTE Y EL GESTOR DE ID EN LA BASE DE DATOS
-//        BaseBD.set(nuevoCli);
-//        BaseBD.set(idManager);
-//
-//        JOptionPane.showMessageDialog(null, "Registro exitoso");
-//        //cerrarBD
-//        BaseBD.close();
-//        TablaClientes tblCli = new TablaClientes();
-//        ShowpanelCruds(tblCli);
+        
     }//GEN-LAST:event_btnGuardarCliMouseClicked
 
-    private void btnSiguienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSiguienteActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnSiguienteActionPerformed
+    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
+        boolean usuarioRepetido = false;
+        
+        if (VerificarCliente(txtCedula_Cli.getText()) != 0) {
+            JOptionPane.showMessageDialog(null, "Cliente ya registrado");
+            usuarioRepetido = true;
+        }
+
+        if (!usuarioRepetido) {
+            
+            Boolean valido = false;
+            
+            Date fechaNacimientoDate = jDateFechaNac_Cli.getDate(); // Obtener la fecha de nacimiento del JDateChooser
+
+            // Formatear la fecha como String en el formato deseado (por ejemplo, "dd/MM/yyyy")
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+            String fechaNacimiento = sdf.format(fechaNacimientoDate);
+
+           
+            if (valido = txtCedula_Cli.getText().matches("\\d{10}")) {
+                if (valido = txtNombres_Cli.getText().toUpperCase().matches("^[a-zA-Z]+$")) {
+                    if (valido = txtApellidos_Cli.getText().toUpperCase().matches("^[a-zA-Z]+$")) {
+                        if (valido = txtDireccion_Cli.getText().toUpperCase().matches("^[a-zA-Z]+$")) {
+                            if (valido = txtCorreoElectronico_Cli.getText().matches("^[\\w.-]+@[\\w.-]+\\.[a-zA-Z]{2,6}$")) {
+                                if (valido = txtCelular_Cli.getText().matches("^09\\d{8}$")) {
+
+                                    
+                                    GuardarCliente(txtCedula_Cli.getText(), txtNombres_Cli.getText().toUpperCase().toUpperCase(), txtApellidos_Cli.getText().toUpperCase(),
+                                            txtDireccion_Cli.getText().toUpperCase(), txtCorreoElectronico_Cli.getText(),
+                                            txtCelular_Cli.getText(), (String) cbxGenero.getSelectedItem(), fechaNacimiento, (String) cbxEstadoC.getSelectedItem(),
+                                            txtCedula_Cli.getText(), txtPassword_Cli.getText(), fechaNacimiento);
+                                    
+
+                                } else {
+                                    JOptionPane.showMessageDialog(null, "Ingrese un celular valido");
+                                }
+
+                            } else {
+                                JOptionPane.showMessageDialog(null, "Ingrese un correo valida");
+                            }
+
+                        } else {
+                            JOptionPane.showMessageDialog(null, "Ingrese una direccion valida");
+                        }
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Ingrese un apellido valido");
+                    }
+
+                } else {
+                    JOptionPane.showMessageDialog(null, "Ingrese un nombre valido");
+                }
+
+            } else {
+                JOptionPane.showMessageDialog(null, "Ingrese una cedula valida");
+            }
+
+            
+        }
+    }//GEN-LAST:event_btnGuardarActionPerformed
     private void ShowpanelCruds(JPanel p) {
         p.setSize(870, 630);
         p.setLocation(0, 0);
@@ -315,41 +378,16 @@ public class CrudPanelCliente extends javax.swing.JPanel {
         VistaMenu.PanelPrincipal.repaint();
     }
 
-    public RSMTextFull getTxtCedula_Cli() {
-        return txtCedula_Cli;
-    }
-
-    public void setTxtCedula_Cli(RSMTextFull txtCedula_Cli) {
-        this.txtCedula_Cli = txtCedula_Cli;
-    }
-
-    public RSMTextFull getTxtApellidos_Cli() {
-        return txtApellidos_Cli;
-    }
-
-    public void setTxtApellidos_Cli(RSMTextFull txtApellidos_Cli) {
-        this.txtApellidos_Cli = txtApellidos_Cli;
-    }
-
-    public RSMTextFull getTxtNombres_Cli() {
-        return txtNombres_Cli;
-    }
-
-    public void setTxtNombres_Cli(RSMTextFull txtNombres_Cli) {
-        this.txtNombres_Cli = txtNombres_Cli;
-    }
-    
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel PanelDatosUsu;
     private rojeru_san.RSButtonRiple btnCancelar;
-    private rojeru_san.RSButtonRiple btnSiguiente;
+    private rojeru_san.RSButtonRiple btnGuardar;
     private javax.swing.JComboBox<String> cbxEstadoC;
     private javax.swing.JComboBox<String> cbxGenero;
-    private com.toedter.calendar.JDateChooser jDateFechaNac;
+    private com.toedter.calendar.JDateChooser jDateFechaNac_Cli;
     private javax.swing.JLabel jLabel11;
-    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel2;
@@ -358,6 +396,7 @@ public class CrudPanelCliente extends javax.swing.JPanel {
     private javax.swing.JLabel lblApellidos_Cli;
     private javax.swing.JLabel lblCedula_Cli;
     private javax.swing.JLabel lblCelular_Cli;
+    private javax.swing.JLabel lblContraseña_Cli;
     private javax.swing.JLabel lblCorreoElectronico_Cli;
     private javax.swing.JLabel lblDireccion_Cli;
     private javax.swing.JLabel lblEstadoCivil_Cli;
@@ -370,5 +409,6 @@ public class CrudPanelCliente extends javax.swing.JPanel {
     private rojeru_san.RSMTextFull txtCorreoElectronico_Cli;
     private rojeru_san.RSMTextFull txtDireccion_Cli;
     private rojeru_san.RSMTextFull txtNombres_Cli;
+    private rojeru_san.RSMTextFull txtPassword_Cli;
     // End of variables declaration//GEN-END:variables
 }

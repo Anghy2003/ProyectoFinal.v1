@@ -139,7 +139,6 @@ private int obtenerProximoIDVendedor(ObjectContainer db) {
         txtNumeroVentasVendedor = new rojeru_san.RSMTextFull();
         txtSueldoVendedor = new rojeru_san.RSMTextFull();
         txtCelularVendedor = new rojeru_san.RSMTextFull();
-        jFileChooser1 = new javax.swing.JFileChooser();
 
         jPanel1.setLayout(new java.awt.BorderLayout());
 
@@ -239,7 +238,12 @@ private int obtenerProximoIDVendedor(ObjectContainer db) {
                 btnCancelarMouseClicked(evt);
             }
         });
-        jPanel2.add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 590, -1, -1));
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarActionPerformed(evt);
+            }
+        });
+        jPanel2.add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 530, -1, -1));
         jPanel2.add(jDateFechaNacVendedor, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 170, 140, 30));
 
         cbxGeneroVendedor.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "MASCULINO", "FEMENINO" }));
@@ -254,7 +258,7 @@ private int obtenerProximoIDVendedor(ObjectContainer db) {
                 btnGuardarActionPerformed(evt);
             }
         });
-        jPanel2.add(btnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 590, -1, -1));
+        jPanel2.add(btnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 530, -1, -1));
 
         lblPassword_Ven.setFont(new java.awt.Font("Roboto Medium", 0, 21)); // NOI18N
         lblPassword_Ven.setForeground(new java.awt.Color(0, 53, 79));
@@ -280,7 +284,7 @@ private int obtenerProximoIDVendedor(ObjectContainer db) {
         lblCelular_Ven.setFont(new java.awt.Font("Roboto Medium", 0, 21)); // NOI18N
         lblCelular_Ven.setForeground(new java.awt.Color(0, 53, 79));
         lblCelular_Ven.setText("Celular:");
-        jPanel2.add(lblCelular_Ven, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 480, 80, 40));
+        jPanel2.add(lblCelular_Ven, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 100, 80, 40));
 
         txtNumeroVentasVendedor.setForeground(new java.awt.Color(0, 53, 79));
         txtNumeroVentasVendedor.setColorTransparente(true);
@@ -298,8 +302,7 @@ private int obtenerProximoIDVendedor(ObjectContainer db) {
         txtCelularVendedor.setColorTransparente(true);
         txtCelularVendedor.setFont(new java.awt.Font("Roboto Light", 1, 14)); // NOI18N
         txtCelularVendedor.setPlaceholder("Escriba su número celular");
-        jPanel2.add(txtCelularVendedor, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 480, 230, 40));
-        jPanel2.add(jFileChooser1, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 10, 340, 140));
+        jPanel2.add(txtCelularVendedor, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 90, 230, 40));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -392,6 +395,10 @@ private int obtenerProximoIDVendedor(ObjectContainer db) {
 
     }//GEN-LAST:event_btnGuardarActionPerformed
 
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnCancelarActionPerformed
+
     private void ShowpanelCruds(JPanel p) {
         p.setSize(870, 630);
         p.setLocation(0, 0);
@@ -407,7 +414,6 @@ private int obtenerProximoIDVendedor(ObjectContainer db) {
     private javax.swing.JComboBox<String> cbxEstadoCivilVendedor;
     private javax.swing.JComboBox<String> cbxGeneroVendedor;
     private com.toedter.calendar.JDateChooser jDateFechaNacVendedor;
-    private javax.swing.JFileChooser jFileChooser1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;

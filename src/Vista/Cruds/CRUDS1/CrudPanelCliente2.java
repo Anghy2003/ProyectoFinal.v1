@@ -1,6 +1,7 @@
 package Vista.Cruds.CRUDS1;
 
 import Conexion.Conexion_db;
+import Models.Cliente;
 import Models.Vehiculo;
 import Models.Vendedor;
 import Vista.Cruds.BuscarPanelVehiculo1;
@@ -16,14 +17,14 @@ import java.util.Date;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
-public class CrudPanelVendedor2 extends javax.swing.JPanel {
+public class CrudPanelCliente2 extends javax.swing.JPanel {
 
-    private String BuscarVendedor;
+    private String BuscarCliente;
 
-    public CrudPanelVendedor2(String receivedString) {
-        this.BuscarVendedor = receivedString;
+    public CrudPanelCliente2(String receivedString) {
+        this.BuscarCliente = receivedString;
         initComponents();
-        Vendedorbuscar();
+        Clientebuscar();
 
     }
 
@@ -44,7 +45,6 @@ public class CrudPanelVendedor2 extends javax.swing.JPanel {
         lblApellidos_Ven = new javax.swing.JLabel();
         lblDireccion_Ven = new javax.swing.JLabel();
         lblCorreo_Ven = new javax.swing.JLabel();
-        lblComiciones_Ven = new javax.swing.JLabel();
         lblFEchaNac_Ven = new javax.swing.JLabel();
         lblGenero_Ven = new javax.swing.JLabel();
         lblEstadoCivil_Ven = new javax.swing.JLabel();
@@ -53,19 +53,14 @@ public class CrudPanelVendedor2 extends javax.swing.JPanel {
         txtApellidosVendedor = new rojeru_san.RSMTextFull();
         txtDireccionVendedor = new rojeru_san.RSMTextFull();
         txtCorreoVendedor = new rojeru_san.RSMTextFull();
-        txtComicionesVendedor = new rojeru_san.RSMTextFull();
         btnCancelar = new rojeru_san.RSButtonRiple();
-        jDateFechaNacVendedor = new com.toedter.calendar.JDateChooser();
-        cbxGeneroVendedor = new javax.swing.JComboBox<>();
-        cbxEstadoCivilVendedor = new javax.swing.JComboBox<>();
-        btnGuardar = new rojeru_san.RSButtonRiple();
+        jDateFechaNac_Cli = new com.toedter.calendar.JDateChooser();
+        cbxGenero = new javax.swing.JComboBox<>();
+        cbxEstadoCi = new javax.swing.JComboBox<>();
+        btnModificar = new rojeru_san.RSButtonRiple();
         lblPassword_Ven = new javax.swing.JLabel();
-        txtPasswordVendedor = new rojeru_san.RSMTextFull();
-        lblNumeroVentas_Ven = new javax.swing.JLabel();
-        lblSueldo_Ven = new javax.swing.JLabel();
+        txtPassword = new rojeru_san.RSMTextFull();
         lblCelular_Ven = new javax.swing.JLabel();
-        txtNumeroVentasVendedor = new rojeru_san.RSMTextFull();
-        txtSueldoVendedor = new rojeru_san.RSMTextFull();
         txtCelularVendedor = new rojeru_san.RSMTextFull();
 
         jPanel1.setLayout(new java.awt.BorderLayout());
@@ -75,7 +70,7 @@ public class CrudPanelVendedor2 extends javax.swing.JPanel {
 
         jLabel2.setFont(new java.awt.Font("Roboto Black", 0, 30)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(0, 53, 79));
-        jLabel2.setText("Modificar Vendedor");
+        jLabel2.setText("Modificar Cliente");
         jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 30, 260, 40));
 
         Cedula_Ven.setFont(new java.awt.Font("Roboto Medium", 0, 21)); // NOI18N
@@ -102,11 +97,6 @@ public class CrudPanelVendedor2 extends javax.swing.JPanel {
         lblCorreo_Ven.setForeground(new java.awt.Color(0, 53, 79));
         lblCorreo_Ven.setText("Correo Electrónico:");
         jPanel2.add(lblCorreo_Ven, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 420, 190, 40));
-
-        lblComiciones_Ven.setFont(new java.awt.Font("Roboto Medium", 0, 21)); // NOI18N
-        lblComiciones_Ven.setForeground(new java.awt.Color(0, 53, 79));
-        lblComiciones_Ven.setText("Comiciones:");
-        jPanel2.add(lblComiciones_Ven, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 330, 120, 40));
 
         lblFEchaNac_Ven.setFont(new java.awt.Font("Roboto Medium", 0, 21)); // NOI18N
         lblFEchaNac_Ven.setForeground(new java.awt.Color(0, 53, 79));
@@ -153,12 +143,6 @@ public class CrudPanelVendedor2 extends javax.swing.JPanel {
         txtCorreoVendedor.setPlaceholder("Escriba su correo electronico");
         jPanel2.add(txtCorreoVendedor, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 420, 250, 40));
 
-        txtComicionesVendedor.setForeground(new java.awt.Color(0, 53, 79));
-        txtComicionesVendedor.setColorTransparente(true);
-        txtComicionesVendedor.setFont(new java.awt.Font("Roboto Light", 1, 14)); // NOI18N
-        txtComicionesVendedor.setPlaceholder("Escriba su número celular");
-        jPanel2.add(txtComicionesVendedor, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 320, 230, 40));
-
         btnCancelar.setBackground(new java.awt.Color(255, 51, 51));
         btnCancelar.setText("Cancelar");
         btnCancelar.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -167,59 +151,37 @@ public class CrudPanelVendedor2 extends javax.swing.JPanel {
             }
         });
         jPanel2.add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 520, -1, -1));
-        jPanel2.add(jDateFechaNacVendedor, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 170, 140, 30));
+        jPanel2.add(jDateFechaNac_Cli, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 170, 140, 30));
 
-        cbxGeneroVendedor.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "MASCULINO", "FEMENINO" }));
-        jPanel2.add(cbxGeneroVendedor, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 230, 150, 30));
+        cbxGenero.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "MASCULINO", "FEMENINO" }));
+        jPanel2.add(cbxGenero, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 230, 150, 30));
 
-        cbxEstadoCivilVendedor.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "SOLTERO", "CASADO", "VIUDO", "DIVORCIADO", "UNION LIBRE" }));
-        jPanel2.add(cbxEstadoCivilVendedor, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 280, 150, 30));
+        cbxEstadoCi.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "SOLTERO", "CASADO", "VIUDO", "DIVORCIADO", "UNION LIBRE" }));
+        jPanel2.add(cbxEstadoCi, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 280, 150, 30));
 
-        btnGuardar.setText("Modificar");
-        btnGuardar.addActionListener(new java.awt.event.ActionListener() {
+        btnModificar.setText("Modificar");
+        btnModificar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnGuardarActionPerformed(evt);
+                btnModificarActionPerformed(evt);
             }
         });
-        jPanel2.add(btnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 520, -1, -1));
+        jPanel2.add(btnModificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 520, -1, -1));
 
         lblPassword_Ven.setFont(new java.awt.Font("Roboto Medium", 0, 21)); // NOI18N
         lblPassword_Ven.setForeground(new java.awt.Color(0, 53, 79));
         lblPassword_Ven.setText("Contraseña:");
         jPanel2.add(lblPassword_Ven, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 150, 130, 40));
 
-        txtPasswordVendedor.setForeground(new java.awt.Color(0, 53, 79));
-        txtPasswordVendedor.setColorTransparente(true);
-        txtPasswordVendedor.setFont(new java.awt.Font("Roboto Light", 1, 14)); // NOI18N
-        txtPasswordVendedor.setPlaceholder("123abc");
-        jPanel2.add(txtPasswordVendedor, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 150, 200, 40));
-
-        lblNumeroVentas_Ven.setFont(new java.awt.Font("Roboto Medium", 0, 21)); // NOI18N
-        lblNumeroVentas_Ven.setForeground(new java.awt.Color(0, 53, 79));
-        lblNumeroVentas_Ven.setText("Numero Ventas:");
-        jPanel2.add(lblNumeroVentas_Ven, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 380, 160, 40));
-
-        lblSueldo_Ven.setFont(new java.awt.Font("Roboto Medium", 0, 21)); // NOI18N
-        lblSueldo_Ven.setForeground(new java.awt.Color(0, 53, 79));
-        lblSueldo_Ven.setText("Sueldo:");
-        jPanel2.add(lblSueldo_Ven, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 430, 80, 40));
+        txtPassword.setForeground(new java.awt.Color(0, 53, 79));
+        txtPassword.setColorTransparente(true);
+        txtPassword.setFont(new java.awt.Font("Roboto Light", 1, 14)); // NOI18N
+        txtPassword.setPlaceholder("123abc");
+        jPanel2.add(txtPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 150, 200, 40));
 
         lblCelular_Ven.setFont(new java.awt.Font("Roboto Medium", 0, 21)); // NOI18N
         lblCelular_Ven.setForeground(new java.awt.Color(0, 53, 79));
         lblCelular_Ven.setText("Celular:");
         jPanel2.add(lblCelular_Ven, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 100, 80, 40));
-
-        txtNumeroVentasVendedor.setForeground(new java.awt.Color(0, 53, 79));
-        txtNumeroVentasVendedor.setColorTransparente(true);
-        txtNumeroVentasVendedor.setFont(new java.awt.Font("Roboto Light", 1, 14)); // NOI18N
-        txtNumeroVentasVendedor.setPlaceholder("Escriba su número celular");
-        jPanel2.add(txtNumeroVentasVendedor, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 370, 230, 40));
-
-        txtSueldoVendedor.setForeground(new java.awt.Color(0, 53, 79));
-        txtSueldoVendedor.setColorTransparente(true);
-        txtSueldoVendedor.setFont(new java.awt.Font("Roboto Light", 1, 14)); // NOI18N
-        txtSueldoVendedor.setPlaceholder("Escriba su número celular");
-        jPanel2.add(txtSueldoVendedor, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 430, 230, 40));
 
         txtCelularVendedor.setForeground(new java.awt.Color(0, 53, 79));
         txtCelularVendedor.setColorTransparente(true);
@@ -253,11 +215,11 @@ public class CrudPanelVendedor2 extends javax.swing.JPanel {
 
     }//GEN-LAST:event_btnCancelarMouseClicked
 
-    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
+    private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
 
         Boolean valido = false;
             
-            Date fechaNacimientoDate = jDateFechaNacVendedor.getDate(); // Obtener la fecha de nacimiento del JDateChooser
+            Date fechaNacimientoDate = jDateFechaNac_Cli.getDate(); // Obtener la fecha de nacimiento del JDateChooser
 
             // Formatear la fecha como String en el formato deseado (por ejemplo, "dd/MM/yyyy")
             SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
@@ -272,10 +234,10 @@ public class CrudPanelVendedor2 extends javax.swing.JPanel {
                                 if (valido = txtCelularVendedor.getText().matches("^09\\d{8}$")) {
 
                                     
-                                    modificarVendedor(Double.parseDouble(txtSueldoVendedor.getText()), Double.parseDouble(txtComicionesVendedor.getText()), Integer.parseInt(txtNumeroVentasVendedor.getText()),
-                                            txtCedulaVendedor.getText(), txtNombresVendedor.getText().toUpperCase(), txtApellidosVendedor.getText().toUpperCase(), txtDireccionVendedor.getText().toUpperCase(),
-                                            txtCorreoVendedor.getText(), txtCelularVendedor.getText(), (String) cbxGeneroVendedor.getSelectedItem(), fechaNacimiento, (String) cbxEstadoCivilVendedor.getSelectedItem(),
-                                            txtCedulaVendedor.getText(), txtPasswordVendedor.getText(), txtCorreoVendedor.getText());
+                                    modificarCliente(txtCedulaVendedor.getText(), txtNombresVendedor.getText().toUpperCase(), txtApellidosVendedor.getText().toUpperCase(),
+                                            txtDireccionVendedor.getText().toUpperCase(), txtCorreoVendedor.getText(),
+                                            txtCelularVendedor.getText(),(String) cbxGenero.getSelectedItem() , fechaNacimiento, (String) cbxEstadoCi.getSelectedItem(), txtCedulaVendedor.getText(),
+                                            txtPassword.getText(), txtCorreoVendedor.getText());
                                     
 
                                 } else {
@@ -302,41 +264,39 @@ public class CrudPanelVendedor2 extends javax.swing.JPanel {
             }
 
 
-    }//GEN-LAST:event_btnGuardarActionPerformed
+    }//GEN-LAST:event_btnModificarActionPerformed
 
-    public final void Vendedorbuscar() {
+    public final void Clientebuscar() {
 
         Boolean encontrado = true;
 
         ObjectContainer BaseBD = Conexion_db.ConectarBD();
 
-        Query vendedor = BaseBD.query();
-        vendedor.constrain(Vendedor.class);
-        vendedor.descend("cedula").constrain(BuscarVendedor);
-        ObjectSet<Vendedor> resultado = vendedor.execute();
+        Query cliente = BaseBD.query();
+        cliente.constrain(Cliente.class);
+        cliente.descend("cedula").constrain(BuscarCliente);
+        ObjectSet<Cliente> resultado = cliente.execute();
 
-        for (Vendedor vende : resultado) {
+        for (Cliente cli : resultado) {
 
-            txtCedulaVendedor.setText(vende.getCedula());
+            txtCedulaVendedor.setText(cli.getCedula());
             txtCedulaVendedor.setEnabled(false); // porque es el atributo principal
-            txtPasswordVendedor.setText(vende.getPassword());
-            txtNombresVendedor.setText(vende.getNombres());
-            txtApellidosVendedor.setText(vende.getApellidos());
-            txtDireccionVendedor.setText(vende.getDireccion());
-            txtCorreoVendedor.setText(vende.getCorreo());
-            txtCelularVendedor.setText(vende.getCelular());            
-            cbxGeneroVendedor.setSelectedItem(vende.getGenero());
-            cbxEstadoCivilVendedor.setSelectedItem(vende.getEstadoCivil());
-            txtComicionesVendedor.setText(String.valueOf(vende.getComiciones_Vendedor()));
-            txtNumeroVentasVendedor.setText(String.valueOf(vende.getNumeroVentas_Vendedor()));
-            txtSueldoVendedor.setText(String.valueOf(vende.getSueldoBase_Vendedor()));
+            txtPassword.setText(cli.getPassword());
+            txtNombresVendedor.setText(cli.getNombres());
+            txtApellidosVendedor.setText(cli.getApellidos());
+            txtDireccionVendedor.setText(cli.getDireccion());
+            txtCorreoVendedor.setText(cli.getCorreo());
+            txtCelularVendedor.setText(cli.getCelular());            
+            cbxGenero.setSelectedItem(cli.getGenero());
+            cbxEstadoCi.setSelectedItem(cli.getEstadoCivil());
+            
 
             try {
-                String fechaNacimientoStr = vende.getFechaNacimiento(); // Suponiendo que getFechaNacimiento() devuelve un String en formato "yyyy-MM-dd"
+                String fechaNacimientoStr = cli.getFechaNacimiento(); // Suponiendo que getFechaNacimiento() devuelve un String en formato "yyyy-MM-dd"
                 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
                 Date fechaNacimientoDate = sdf.parse(fechaNacimientoStr);
 
-                jDateFechaNacVendedor.setDate(fechaNacimientoDate);
+                jDateFechaNac_Cli.setDate(fechaNacimientoDate);
             } catch (ParseException e) {
                 e.printStackTrace();
                 // Manejar la excepción si ocurre algún problema al convertir la fecha
@@ -351,30 +311,30 @@ public class CrudPanelVendedor2 extends javax.swing.JPanel {
         BaseBD.close();
     }
 
-    public void modificarVendedor(double sueldoBase_Vendedor, double comiciones_Vendedor, int numeroVentas_Vendedor, String cedula, String nombres,
+    public void modificarCliente( String cedula, String nombres,
             String apellidos, String direccion, String correo, String celular, String genero, String fechaNacimiento, String estadoCivil, String nombreUsuario,
             String password, String correoRecuperacion) {
 
         ObjectContainer BaseBD = Conexion_db.ConectarBD();
 
-        Vendedor modificarVendedor = new Vendedor(sueldoBase_Vendedor, comiciones_Vendedor, numeroVentas_Vendedor, cedula, nombres,
+        Cliente modificarCliente = new Cliente( cedula, nombres,
                 apellidos, direccion, correo, celular, genero, fechaNacimiento, estadoCivil, nombreUsuario,
                 password, correoRecuperacion);
 
-        Vendedor vendedorBusca = new Vendedor(0.0, 0.0, 0, cedula, null,
+        Cliente clienteBusca = new Cliente( cedula, null,
                 null, null, null, null, null, null, null, null,
                 null, null);
 
-        ObjectSet resultado = BaseBD.get(vendedorBusca);
+        ObjectSet resultado = BaseBD.get(clienteBusca);
 
         int coincidencias = resultado.size();
 
         if (coincidencias > 0) {
 
-            Vendedor vendedorVEliminar = (Vendedor) resultado.next();
-            BaseBD.delete(vendedorVEliminar);
+            Cliente clienteVEliminar = (Cliente) resultado.next();
+            BaseBD.delete(clienteVEliminar);
 
-            BaseBD.set(modificarVendedor);
+            BaseBD.set(modificarCliente);
             JOptionPane.showMessageDialog(this, "Vendedor Modificado");
 
         } else {
@@ -397,34 +357,28 @@ public class CrudPanelVendedor2 extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Cedula_Ven;
     private rojeru_san.RSButtonRiple btnCancelar;
-    private rojeru_san.RSButtonRiple btnGuardar;
-    private javax.swing.JComboBox<String> cbxEstadoCivilVendedor;
-    private javax.swing.JComboBox<String> cbxGeneroVendedor;
-    private com.toedter.calendar.JDateChooser jDateFechaNacVendedor;
+    private rojeru_san.RSButtonRiple btnModificar;
+    private javax.swing.JComboBox<String> cbxEstadoCi;
+    private javax.swing.JComboBox<String> cbxGenero;
+    private com.toedter.calendar.JDateChooser jDateFechaNac_Cli;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JLabel lblApellidos_Ven;
     private javax.swing.JLabel lblCelular_Ven;
-    private javax.swing.JLabel lblComiciones_Ven;
     private javax.swing.JLabel lblCorreo_Ven;
     private javax.swing.JLabel lblDireccion_Ven;
     private javax.swing.JLabel lblEstadoCivil_Ven;
     private javax.swing.JLabel lblFEchaNac_Ven;
     private javax.swing.JLabel lblGenero_Ven;
     private javax.swing.JLabel lblNombres_Ven;
-    private javax.swing.JLabel lblNumeroVentas_Ven;
     private javax.swing.JLabel lblPassword_Ven;
-    private javax.swing.JLabel lblSueldo_Ven;
     private rojeru_san.RSMTextFull txtApellidosVendedor;
     private rojeru_san.RSMTextFull txtCedulaVendedor;
     private rojeru_san.RSMTextFull txtCelularVendedor;
-    private rojeru_san.RSMTextFull txtComicionesVendedor;
     private rojeru_san.RSMTextFull txtCorreoVendedor;
     private rojeru_san.RSMTextFull txtDireccionVendedor;
     private rojeru_san.RSMTextFull txtNombresVendedor;
-    private rojeru_san.RSMTextFull txtNumeroVentasVendedor;
-    private rojeru_san.RSMTextFull txtPasswordVendedor;
-    private rojeru_san.RSMTextFull txtSueldoVendedor;
+    private rojeru_san.RSMTextFull txtPassword;
     // End of variables declaration//GEN-END:variables
 }

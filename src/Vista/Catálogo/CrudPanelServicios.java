@@ -5,7 +5,7 @@ import Conexion.Conexion_db;
 import Models.IdManager;
 import Models.Producto;
 import Models.Servicios;
-import static Vista.Catálogo.CRUD_Prodcuto.BaseFinal;
+
 import Vista.Menu.VistaMenu;
 import Vista.Tables.TablaClientes;
 import Vista.Tables.TablaServicios;
