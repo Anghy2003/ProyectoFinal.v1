@@ -7,6 +7,7 @@ import javax.swing.JPanel;
 import Conexion.Conexion_db;
 import com.db4o.*;
 import Models.*;
+import static Models.Proveedor.verificarNumeroProveedores;
 import javax.swing.JOptionPane;
 
 public class CrudPanelProveedor extends javax.swing.JPanel {
@@ -153,7 +154,7 @@ public class CrudPanelProveedor extends javax.swing.JPanel {
     public static int verificarProveedores(String codigo_proveedor) {
         // ESTABLECER CONEXION CON LA BASE DE DATOS
         ObjectContainer BaseBD = Conexion_db.ConectarBD();
-        Proveedor ProveedorBusca = new Proveedor(codigo_proveedor, null, null, null, null, null, null);
+        Proveedor ProveedorBusca = new Proveedor(codigo_proveedor, null, null, null, null, null);
         ObjectSet resultado = BaseBD.get(ProveedorBusca);
         int coincidencias= resultado.size();
         //Cerrar BD
@@ -161,7 +162,7 @@ public class CrudPanelProveedor extends javax.swing.JPanel {
         return coincidencias;
     }
     public static int verificarProveedoresGuardar(String codigo_proveedor) {
-    Proveedor ProveedoresBusca = new Proveedor(codigo_proveedor, null, null, null, null, null, null);
+    Proveedor ProveedoresBusca = new Proveedor(codigo_proveedor, null, null, null, null, null);
 
         // ESTABLECER CONEXION CON LA BASE DE DATOS
         ObjectContainer BaseBD = Conexion_db.ConectarBD();
@@ -175,10 +176,10 @@ public class CrudPanelProveedor extends javax.swing.JPanel {
     
     
     //Guardar USUARIO
-    public static void guardarProveedores(String idProv, String tipo, String nombre, String direccion, String correo, String celular, Boolean estado) {
+    public static void guardarProveedores(String idProv, String tipo, String nombre, String direccion, String correo, String celular) {
         
 
-        Proveedor Proveedor1 = new Proveedor( idProv, tipo,  nombre,  direccion,  correo,  celular, estado);
+        Proveedor Proveedor1 = new Proveedor( idProv, tipo,  nombre,  direccion,  correo,  celular);
         
         if (verificarProveedoresGuardar(idProv) == 0) {
             
@@ -208,7 +209,8 @@ public class CrudPanelProveedor extends javax.swing.JPanel {
              //Validamos
              if (txtCorreo.getText().trim().matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$")) {
                  if (txtCelular.getText().trim().matches("^09\\d{8}$")) {
-                     guardarProveedores(null, txtTipo.getText().trim().toUpperCase(),txtNombre.getText().trim().toUpperCase(), txtDireccion.getText().trim().toUpperCase(), txtCorreo.getText().trim(), txtCelular.getText().trim(), true);//siempre creara con estado True que significa activo
+                     int k=verificarNumeroProveedores()+1;
+                     guardarProveedores("PROV"+k, txtTipo.getText().trim().toUpperCase(),txtNombre.getText().trim().toUpperCase(), txtDireccion.getText().trim().toUpperCase(), txtCorreo.getText().trim(), txtCelular.getText().trim());
                      
                      //regresamos a la tabla
                      TablaProveedor tablitaProv = new TablaProveedor();
@@ -219,8 +221,7 @@ public class CrudPanelProveedor extends javax.swing.JPanel {
         } else {
             JOptionPane.showMessageDialog(this, "Ningun campo puede estar vacio");
         } 
-        }  
-//        resetCampos();
+        }
     }//GEN-LAST:event_btnGuardarMouseClicked
     private void ShowpanelCruds(JPanel p) {
         p.setSize(870, 630);
