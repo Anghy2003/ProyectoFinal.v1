@@ -183,7 +183,7 @@
                 </Constraint>
               </Constraints>
             </Component>
-            <Component class="javax.swing.JLabel" name="lblComiciones_Ven">
+            <Component class="javax.swing.JLabel" name="lblTituloMec">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Roboto Medium" size="21" style="0"/>
@@ -191,11 +191,11 @@
                 <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="4f" green="35" red="0" type="rgb"/>
                 </Property>
-                <Property name="text" type="java.lang.String" value="Comiciones:"/>
+                <Property name="text" type="java.lang.String" value="Titulo:"/>
               </Properties>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                  <AbsoluteConstraints x="440" y="330" width="120" height="40"/>
+                  <AbsoluteConstraints x="500" y="330" width="60" height="40"/>
                 </Constraint>
               </Constraints>
             </Component>
@@ -211,7 +211,7 @@
               </Properties>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                  <AbsoluteConstraints x="420" y="160" width="180" height="40"/>
+                  <AbsoluteConstraints x="400" y="160" width="180" height="40"/>
                 </Constraint>
               </Constraints>
             </Component>
@@ -227,7 +227,7 @@
               </Properties>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                  <AbsoluteConstraints x="450" y="220" width="80" height="40"/>
+                  <AbsoluteConstraints x="490" y="220" width="80" height="40"/>
                 </Constraint>
               </Constraints>
             </Component>
@@ -247,7 +247,7 @@
                 </Constraint>
               </Constraints>
             </Component>
-            <Component class="rojeru_san.RSMTextFull" name="txtCedulaVendedor">
+            <Component class="rojeru_san.RSMTextFull" name="txtCedulaMec">
               <Properties>
                 <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="4f" green="35" red="0" type="rgb"/>
@@ -264,7 +264,7 @@
                 </Constraint>
               </Constraints>
             </Component>
-            <Component class="rojeru_san.RSMTextFull" name="txtNombresVendedor">
+            <Component class="rojeru_san.RSMTextFull" name="txtNombresMec">
               <Properties>
                 <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="4f" green="35" red="0" type="rgb"/>
@@ -281,7 +281,7 @@
                 </Constraint>
               </Constraints>
             </Component>
-            <Component class="rojeru_san.RSMTextFull" name="txtApellidosVendedor">
+            <Component class="rojeru_san.RSMTextFull" name="txtApellidosMec">
               <Properties>
                 <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="4f" green="35" red="0" type="rgb"/>
@@ -298,7 +298,7 @@
                 </Constraint>
               </Constraints>
             </Component>
-            <Component class="rojeru_san.RSMTextFull" name="txtDireccionVendedor">
+            <Component class="rojeru_san.RSMTextFull" name="txtDireccionMec">
               <Properties>
                 <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="4f" green="35" red="0" type="rgb"/>
@@ -315,7 +315,7 @@
                 </Constraint>
               </Constraints>
             </Component>
-            <Component class="rojeru_san.RSMTextFull" name="txtCorreoVendedor">
+            <Component class="rojeru_san.RSMTextFull" name="txtCorreoMec">
               <Properties>
                 <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="4f" green="35" red="0" type="rgb"/>
@@ -332,7 +332,7 @@
                 </Constraint>
               </Constraints>
             </Component>
-            <Component class="rojeru_san.RSMTextFull" name="txtComicionesVendedor">
+            <Component class="rojeru_san.RSMTextFull" name="txtTituloMec">
               <Properties>
                 <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="4f" green="35" red="0" type="rgb"/>
@@ -341,7 +341,7 @@
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Roboto Light" size="14" style="1"/>
                 </Property>
-                <Property name="placeholder" type="java.lang.String" value="Escriba su n&#xfa;mero celular"/>
+                <Property name="placeholder" type="java.lang.String" value="Escriba su titulo"/>
               </Properties>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
@@ -365,21 +365,19 @@
                 </Constraint>
               </Constraints>
             </Component>
-            <Component class="com.toedter.calendar.JDateChooser" name="jDateFechaNacVendedor">
+            <Component class="com.toedter.calendar.JDateChooser" name="jDateFechaNacMec">
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
                   <AbsoluteConstraints x="630" y="170" width="140" height="30"/>
                 </Constraint>
               </Constraints>
             </Component>
-            <Component class="javax.swing.JComboBox" name="cbxGeneroVendedor">
+            <Component class="javax.swing.JComboBox" name="cbxGeneroMec">
               <Properties>
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                  <StringArray count="4">
-                    <StringItem index="0" value="Item 1"/>
-                    <StringItem index="1" value="Item 2"/>
-                    <StringItem index="2" value="Item 3"/>
-                    <StringItem index="3" value="Item 4"/>
+                  <StringArray count="2">
+                    <StringItem index="0" value="Masculino&#x9;&#x9;"/>
+                    <StringItem index="1" value="Femenino"/>
                   </StringArray>
                 </Property>
               </Properties>
@@ -392,14 +390,14 @@
                 </Constraint>
               </Constraints>
             </Component>
-            <Component class="javax.swing.JComboBox" name="cbxEstadoCivilVendedor">
+            <Component class="javax.swing.JComboBox" name="cbxEstadoCivilMec">
               <Properties>
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
                   <StringArray count="4">
-                    <StringItem index="0" value="Item 1"/>
-                    <StringItem index="1" value="Item 2"/>
-                    <StringItem index="2" value="Item 3"/>
-                    <StringItem index="3" value="Item 4"/>
+                    <StringItem index="0" value="Soltero"/>
+                    <StringItem index="1" value="Casado"/>
+                    <StringItem index="2" value="Viudo"/>
+                    <StringItem index="3" value="Union Libre"/>
                   </StringArray>
                 </Property>
               </Properties>
@@ -441,7 +439,7 @@
                 </Constraint>
               </Constraints>
             </Component>
-            <Component class="rojeru_san.RSMTextFull" name="txtPasswordVendedor">
+            <Component class="rojeru_san.RSMTextFull" name="txtPasswordMec">
               <Properties>
                 <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="4f" green="35" red="0" type="rgb"/>
@@ -458,23 +456,7 @@
                 </Constraint>
               </Constraints>
             </Component>
-            <Component class="javax.swing.JLabel" name="lblNumeroVentas_Ven">
-              <Properties>
-                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="Roboto Medium" size="21" style="0"/>
-                </Property>
-                <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                  <Color blue="4f" green="35" red="0" type="rgb"/>
-                </Property>
-                <Property name="text" type="java.lang.String" value="Numero Ventas:"/>
-              </Properties>
-              <Constraints>
-                <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                  <AbsoluteConstraints x="430" y="380" width="160" height="40"/>
-                </Constraint>
-              </Constraints>
-            </Component>
-            <Component class="javax.swing.JLabel" name="lblSueldo_Ven">
+            <Component class="javax.swing.JLabel" name="lblSueldoMec">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Roboto Medium" size="21" style="0"/>
@@ -486,7 +468,7 @@
               </Properties>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                  <AbsoluteConstraints x="480" y="430" width="80" height="40"/>
+                  <AbsoluteConstraints x="490" y="380" width="80" height="40"/>
                 </Constraint>
               </Constraints>
             </Component>
@@ -502,11 +484,11 @@
               </Properties>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                  <AbsoluteConstraints x="460" y="100" width="80" height="40"/>
+                  <AbsoluteConstraints x="490" y="100" width="80" height="40"/>
                 </Constraint>
               </Constraints>
             </Component>
-            <Component class="rojeru_san.RSMTextFull" name="txtNumeroVentasVendedor">
+            <Component class="rojeru_san.RSMTextFull" name="txtSueldoMec">
               <Properties>
                 <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="4f" green="35" red="0" type="rgb"/>
@@ -515,32 +497,15 @@
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Roboto Light" size="14" style="1"/>
                 </Property>
-                <Property name="placeholder" type="java.lang.String" value="Escriba su n&#xfa;mero celular"/>
+                <Property name="placeholder" type="java.lang.String" value="Escriba el sueldo"/>
               </Properties>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                  <AbsoluteConstraints x="600" y="370" width="230" height="40"/>
+                  <AbsoluteConstraints x="590" y="380" width="230" height="40"/>
                 </Constraint>
               </Constraints>
             </Component>
-            <Component class="rojeru_san.RSMTextFull" name="txtSueldoVendedor">
-              <Properties>
-                <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-                  <Color blue="4f" green="35" red="0" type="rgb"/>
-                </Property>
-                <Property name="colorTransparente" type="boolean" value="true"/>
-                <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-                  <Font name="Roboto Light" size="14" style="1"/>
-                </Property>
-                <Property name="placeholder" type="java.lang.String" value="Escriba su n&#xfa;mero celular"/>
-              </Properties>
-              <Constraints>
-                <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                  <AbsoluteConstraints x="600" y="430" width="230" height="40"/>
-                </Constraint>
-              </Constraints>
-            </Component>
-            <Component class="rojeru_san.RSMTextFull" name="txtCelularVendedor">
+            <Component class="rojeru_san.RSMTextFull" name="txtCelularMec">
               <Properties>
                 <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
                   <Color blue="4f" green="35" red="0" type="rgb"/>
