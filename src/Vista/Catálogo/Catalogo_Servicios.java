@@ -47,7 +47,7 @@ public class Catalogo_Servicios extends javax.swing.JFrame {
 
         jLabel1.setFont(new java.awt.Font("Roboto Medium", 1, 36)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setText(" PRODUCTOS DE LA  MECANICA ");
+        jLabel1.setText("SERVICIOS DE LA  MECANICA ");
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 30, 570, 30));
 
         jTextField1.setText("jTextField1");
@@ -93,6 +93,7 @@ public class Catalogo_Servicios extends javax.swing.JFrame {
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(Catalogo_Servicios.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
+        //</editor-fold>
         //</editor-fold>
 
         /* Create and display the form */

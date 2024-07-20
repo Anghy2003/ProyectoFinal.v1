@@ -2,7 +2,7 @@
 package Vista.Cruds.CRUDS1;
 
 import Conexion.Conexion_db;
-import Models.IdManager;
+
 import Models.Vendedor;
 import Vista.Menu.VistaMenu;
 import com.db4o.ObjectContainer;

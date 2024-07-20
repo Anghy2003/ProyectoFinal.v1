@@ -1,28 +1,26 @@
-
 package Vista.Tables;
 
 import Conexion.Conexion_db;
 import Models.Producto;
+import Vista.Catálogo.CrudProductos;
+import Vista.Menu.VistaMenu;
 import com.db4o.ObjectContainer;
 import com.db4o.ObjectSet;
+import java.awt.BorderLayout;
 import javax.swing.JOptionPane;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.table.DefaultTableModel;
-import rojeru_san.RSMTextFull;
-
+import javax.swing.JPanel;
+import Vista.Catálogo.BuscarProductos;
+import com.db4o.query.Query;
 
 public class TablaProductos extends javax.swing.JPanel {
-
-  
 
     /**
      * Creates new form TablaProductos
      */
     public TablaProductos() {
         initComponents();
-        mostrarTablaProductos();
-        
+ mostrarTablaProductos();
+
     }
 
     /**
@@ -37,7 +35,7 @@ public class TablaProductos extends javax.swing.JPanel {
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         tblProductos = new javax.swing.JScrollPane();
-        TablProductos = new javax.swing.JTable();
+        TablProductos1 = new javax.swing.JTable();
         txtBuscar = new rojeru_san.RSMTextFull();
         jLabel2 = new javax.swing.JLabel();
         btnAgregar = new rsbuttongradiente.RSButtonGradiente();
@@ -53,8 +51,8 @@ public class TablaProductos extends javax.swing.JPanel {
         tblProductos.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         tblProductos.setForeground(new java.awt.Color(255, 255, 255));
 
-        TablProductos.setFont(new java.awt.Font("Roboto Medium", 0, 14)); // NOI18N
-        TablProductos.setModel(new javax.swing.table.DefaultTableModel(
+        TablProductos1.setFont(new java.awt.Font("Roboto Medium", 0, 14)); // NOI18N
+        TablProductos1.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -65,7 +63,7 @@ public class TablaProductos extends javax.swing.JPanel {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        tblProductos.setViewportView(TablProductos);
+        tblProductos.setViewportView(TablProductos1);
 
         txtBuscar.setFont(new java.awt.Font("Roboto Bold", 2, 14)); // NOI18N
         txtBuscar.setPlaceholder("ejm. Pro-01");
@@ -89,7 +87,7 @@ public class TablaProductos extends javax.swing.JPanel {
             }
         });
 
-        btnEditar.setText("Editar");
+        btnEditar.setText("Buscar");
         btnEditar.setColorPrimario(new java.awt.Color(0, 51, 153));
         btnEditar.setColorPrimarioHover(new java.awt.Color(51, 0, 255));
         btnEditar.setColorSecundario(new java.awt.Color(51, 153, 255));
@@ -113,6 +111,11 @@ public class TablaProductos extends javax.swing.JPanel {
         btnEliminar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnEliminarMouseClicked(evt);
+            }
+        });
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarActionPerformed(evt);
             }
         });
 
@@ -190,64 +193,93 @@ public class TablaProductos extends javax.swing.JPanel {
     }//GEN-LAST:event_btnAgregarMouseClicked
 
     private void btnEditarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditarMouseClicked
-        // TODO add your handling code here:
-        System.out.println("clickmet");
+        if (!txtBuscar.getText().trim().isEmpty()) {
+            String codigoProducto = txtBuscar.getText(); // Obtener el texto de txtBuscar
+            BuscarProductos miBuscarProducto = new BuscarProductos(codigoProducto); // Crear el componente con el código de producto
+            ShowpanelCruds(miBuscarProducto); // Mostrar el panel de búsqueda de producto
+        } else {
+            JOptionPane.showMessageDialog(this, "Ingrese un código de producto");
+        }
     }//GEN-LAST:event_btnEditarMouseClicked
 
     private void btnEliminarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEliminarMouseClicked
-        // TODO add your handling code here:
+       
+       
+       
+    
     }//GEN-LAST:event_btnEliminarMouseClicked
-private void TablProductosMouseClicked(java.awt.event.MouseEvent evt) {                                         
-        int selectedRow = TablProductos.getSelectedRow();
+
+
+    private void TablProductosMouseClicked(java.awt.event.MouseEvent evt) {
+        int selectedRow = TablProductos1.getSelectedRow();
         if (selectedRow >= 0) {
-            String codigo_producto = (String) TablProductos.getValueAt(selectedRow, 0);
+            String codigo_producto = (String) TablProductos1.getValueAt(selectedRow, 0);
 
         }
-    }    
-    private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnAgregarActionPerformed
+    }
 
+
+    
+    private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
+        CrudProductos Prodcuto = new CrudProductos();
+        ShowpanelCruds(Prodcuto);
+    }//GEN-LAST:event_btnAgregarActionPerformed
+    private void ShowpanelCruds(JPanel p) {
+        p.setSize(870, 630);
+        p.setLocation(0, 0);
+        VistaMenu.PanelPrincipal.removeAll();
+        VistaMenu.PanelPrincipal.add(p, BorderLayout.CENTER);
+        VistaMenu.PanelPrincipal.revalidate();
+        VistaMenu.PanelPrincipal.repaint();
+    }
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnEditarActionPerformed
-private void mostrarTablaProductos() {
-    ObjectContainer BaseBD = Conexion_db.ConectarBD();
-    Producto producto = new Producto(null, null, null, null, 0, 0, 0, null, null);
-    ObjectSet resul = BaseBD.get(producto);
 
-    String matriz[][] = new String[resul.size()][9];
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
 
-    for (int i = 0; i < resul.size(); i++) {
-        Producto prod = (Producto) resul.next();
 
-        matriz[i][0] = prod.getCodigo_Producto();
-        matriz[i][1] = prod.getNombre_Producto();
-        matriz[i][2] = String.valueOf(prod.getPrecio_Producto());
-        matriz[i][3] = prod.getCodigo_categoria_Producto();
-        matriz[i][4] = String.valueOf(prod.getNumeroProductos_Producto());
-        matriz[i][5] = String.valueOf(prod.getExistrenciaMaxima_Producto());
-        matriz[i][6] = String.valueOf(prod.getExistenciaMinima_Producto());
-        matriz[i][7] = prod.getDescripcion_Producto();
-        matriz[i][8] = prod.getID_Proveedor_Producto();
-    }
 
-    TablProductos.setModel(new javax.swing.table.DefaultTableModel(
-        matriz,
-        new String[]{
-            "Código Producto", "Nombre Producto", "Precio", "Código Categoría", "Número de Productos", "Existencia Máxima", "Existencia Mínima", "Descripción", "ID Proveedor"
-        }
-    ));
-    BaseBD.close();
-}
+
+    
+    }//GEN-LAST:event_btnEliminarActionPerformed
+  
 
     
 
+    private void mostrarTablaProductos() {
+        ObjectContainer BaseBD = Conexion_db.ConectarBD();
+        Producto producto = new Producto(null, null, null, null, 0, 0, 0, null,null);
+        ObjectSet <Producto>resul = BaseBD.get(producto);
 
+        String matriz[][] = new String[resul.size()][9];
+
+        for (int i = 0; i < resul.size(); i++) {
+            Producto prod = (Producto) resul.next();
+
+            matriz[i][0] = prod.getCodigo_Producto();
+            matriz[i][1] = prod.getNombre_Producto();
+            matriz[i][2] = String.valueOf(prod.getPrecio_Producto());
+            matriz[i][3] = prod.getCodigo_categoria_Producto();
+            matriz[i][4] = String.valueOf(prod.getNumeroProductos_Producto());
+            matriz[i][5] = String.valueOf(prod.getExistenciaMaxima_Producto());
+            matriz[i][6] = String.valueOf(prod.getExistenciaMinima_Producto());
+            matriz[i][7] = prod.getDescripcion_Producto();
+            matriz[i][8] = prod.getID_Proveedor_Producto();
+        }
+
+        TablProductos1.setModel(new javax.swing.table.DefaultTableModel(
+                matriz,
+                new String[]{
+                    "Código Producto", "Nombre Producto", "Precio", "Código Categoría", "Número de Productos", "Existencia Máxima", "Existencia Mínima", "Descripción", "ID Proveedor"
+                }
+        ));
+        BaseBD.close();
+    }
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTable TablProductos;
+    private javax.swing.JTable TablProductos1;
     private rsbuttongradiente.RSButtonGradiente btnAgregar;
     private rsbuttongradiente.RSButtonGradiente btnEditar;
     private rsbuttongradiente.RSButtonGradiente btnEliminar;

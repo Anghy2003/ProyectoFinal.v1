@@ -91,7 +91,7 @@
                   </Properties>
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                      <AbsoluteConstraints x="40" y="120" width="90" height="-1"/>
+                      <AbsoluteConstraints x="40" y="120" width="90" height="20"/>
                     </Constraint>
                   </Constraints>
                 </Component>
@@ -104,7 +104,7 @@
                   </Properties>
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                      <AbsoluteConstraints x="30" y="0" width="-1" height="120"/>
+                      <AbsoluteConstraints x="30" y="0" width="-1" height="110"/>
                     </Constraint>
                   </Constraints>
                 </Component>
@@ -125,31 +125,18 @@
               <Layout>
                 <DimensionLayout dim="0">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" alignment="0" attributes="0">
-                          <Group type="103" groupAlignment="1" attributes="0">
-                              <Group type="102" attributes="0">
-                                  <Group type="103" groupAlignment="1" attributes="0">
-                                      <Group type="102" alignment="1" attributes="0">
-                                          <EmptySpace max="-2" attributes="0"/>
-                                          <Component id="btnSalir" min="-2" pref="159" max="-2" attributes="0"/>
-                                      </Group>
-                                      <Group type="102" alignment="0" attributes="0">
-                                          <EmptySpace min="-2" pref="22" max="-2" attributes="0"/>
-                                          <Group type="103" groupAlignment="1" attributes="0">
-                                              <Component id="btnReportes" min="-2" pref="159" max="-2" attributes="0"/>
-                                              <Component id="btnCatalogo" min="-2" pref="159" max="-2" attributes="0"/>
-                                              <Component id="btnFactura" min="-2" pref="159" max="-2" attributes="0"/>
-                                              <Component id="btnServicios" min="-2" pref="159" max="-2" attributes="0"/>
-                                              <Component id="btnProvedores" alignment="1" min="-2" pref="159" max="-2" attributes="0"/>
-                                          </Group>
-                                      </Group>
-                                  </Group>
-                                  <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
-                              </Group>
-                              <Group type="103" alignment="1" groupAlignment="0" attributes="0">
-                                  <Component id="btnVehiculos" min="-2" pref="169" max="-2" attributes="0"/>
-                                  <Component id="btnUsuario" alignment="1" min="-2" pref="169" max="-2" attributes="0"/>
-                              </Group>
+                      <Group type="102" attributes="0">
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Component id="btnServicios" alignment="0" min="-2" pref="179" max="-2" attributes="0"/>
+                              <Component id="btnFactura" alignment="0" min="-2" pref="179" max="-2" attributes="0"/>
+                              <Component id="btnCatalogo" alignment="0" min="-2" pref="179" max="-2" attributes="0"/>
+                              <Component id="btnSalir" alignment="0" min="-2" pref="181" max="-2" attributes="0"/>
+                              <Component id="btnVehiculos" alignment="0" min="-2" pref="167" max="-2" attributes="0"/>
+                              <Component id="btnUsuario" alignment="0" min="-2" pref="169" max="-2" attributes="0"/>
+                              <Component id="btnProductos" alignment="0" min="-2" pref="179" max="-2" attributes="0"/>
+                              <Component id="btnProvedores" alignment="0" min="-2" pref="169" max="-2" attributes="0"/>
+                              <Component id="btnReportes" alignment="0" min="-2" pref="181" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace pref="32" max="32767" attributes="0"/>
                       </Group>
@@ -158,23 +145,25 @@
                 <DimensionLayout dim="1">
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
                           <Component id="btnUsuario" min="-2" pref="50" max="-2" attributes="0"/>
-                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
                           <Component id="btnVehiculos" min="-2" pref="50" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Component id="btnServicios" min="-2" pref="50" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="35" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Component id="btnFactura" min="-2" pref="50" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="34" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Component id="btnCatalogo" min="-2" pref="50" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Component id="btnProvedores" min="-2" pref="50" max="-2" attributes="0"/>
-                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Component id="btnProductos" pref="60" max="32767" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Component id="btnReportes" min="-2" pref="50" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
+                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Component id="btnSalir" min="-2" pref="50" max="-2" attributes="0"/>
-                          <EmptySpace max="32767" attributes="0"/>
+                          <EmptySpace min="-2" pref="61" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -313,11 +302,33 @@
                     <Property name="text" type="java.lang.String" value="Logout"/>
                   </Properties>
                 </Component>
+                <Component class="javax.swing.JLabel" name="btnProductos">
+                  <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Roboto Black" size="19" style="0"/>
+                    </Property>
+                    <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                      <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                    </Property>
+                    <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                      <Image iconType="3" name="/Iconos/nuevo-producto (1).png"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="Productos"/>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnProductosMouseClicked"/>
+                  </Events>
+                </Component>
               </SubComponents>
             </Container>
           </SubComponents>
         </Container>
         <Container class="javax.swing.JPanel" name="PanelHeader">
+          <Properties>
+            <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+              <Color blue="ff" green="ff" red="ff" type="rgb"/>
+            </Property>
+          </Properties>
           <AuxValues>
             <AuxValue name="JavaCodeGenerator_VariableModifier" type="java.lang.Integer" value="9"/>
           </AuxValues>
@@ -343,7 +354,7 @@
         <Container class="javax.swing.JPanel" name="PanelPrincipal">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="ff" green="cc" red="cc" type="rgb"/>
+              <Color blue="ff" green="ff" red="ff" type="rgb"/>
             </Property>
           </Properties>
           <AuxValues>
@@ -359,9 +370,9 @@
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
-                      <EmptySpace min="-2" pref="265" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" pref="256" max="-2" attributes="0"/>
                       <Component id="jLabel1" min="-2" pref="365" max="-2" attributes="0"/>
-                      <EmptySpace pref="240" max="32767" attributes="0"/>
+                      <EmptySpace pref="249" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>
@@ -392,7 +403,7 @@
         <Container class="javax.swing.JPanel" name="PanelSubmenu">
           <Properties>
             <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
-              <Color blue="cc" green="cc" red="ff" type="rgb"/>
+              <Color blue="ff" green="ff" red="ff" type="rgb"/>
             </Property>
           </Properties>
           <AuxValues>

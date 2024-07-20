@@ -132,7 +132,7 @@
 
           <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
           <SubComponents>
-            <Component class="javax.swing.JTable" name="TablProductos">
+            <Component class="javax.swing.JTable" name="TablProductos1">
               <Properties>
                 <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                   <Font name="Roboto Medium" size="14" style="0"/>
@@ -188,7 +188,7 @@
         </Component>
         <Component class="rsbuttongradiente.RSButtonGradiente" name="btnEditar">
           <Properties>
-            <Property name="text" type="java.lang.String" value="Editar"/>
+            <Property name="text" type="java.lang.String" value="Buscar"/>
             <Property name="colorPrimario" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="99" green="33" red="0" type="rgb"/>
             </Property>
@@ -225,6 +225,7 @@
           </Properties>
           <Events>
             <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnEliminarMouseClicked"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnEliminarActionPerformed"/>
           </Events>
         </Component>
       </SubComponents>
