@@ -231,6 +231,8 @@ public class BuscarPanelProveedor extends javax.swing.JPanel {
         Boolean encontrado = false;
         // ESTABLECER CONEXION CON LA BASE DE DATOS
         ObjectContainer BaseBD = Conexion_db.ConectarBD();
+        
+        //consulta
         Query proveedor = BaseBD.query();//metodo para iniciar una consulta
         proveedor.constrain(Proveedor.class);//buscaremos en la clase Vehiculo
         proveedor.descend("codigo_proveedor").constrain(BuscarId.toUpperCase()); // verificamos las coincidencias en el atributo especificado
@@ -239,7 +241,7 @@ public class BuscarPanelProveedor extends javax.swing.JPanel {
         for (Proveedor miProv : resultado) {
             //con esto setteamos en los campos recibiendo del objeto
             txtCodigo.setText(miProv.getCodigo_proveedor());
-            txtCodigo.setEnabled(false);//Para que el usuario no edite la placa
+            txtCodigo.setEnabled(false);//Para que el usuario no edite el ID
             txtTipo.setText(miProv.getTipo_proveedor());
             txtNombre.setText(miProv.getNombre_proveedor());
             txtDireccion.setText(miProv.getDireccion_proveedor());
@@ -255,15 +257,12 @@ public class BuscarPanelProveedor extends javax.swing.JPanel {
         BaseBD.close();
     }
     public static Boolean  modificado=false;
-    public static void modificarProveedor(String codigo_proveedor, String tipo_proveedor, String nombre_proveedor, String direccion_proveedor, String correo_proveedor, String celular_proveedor, Boolean estado_proveedor) {
+    public static String modi;
+    public static void modificarProveedor(String codigo_proveedor, String tipo_proveedor, String nombre_proveedor, String direccion_proveedor, String correo_proveedor, String celular_proveedor) {
         // ESTABLECER CONEXION CON LA BASE DE DATOS
         
-
-        // Crear el objeto con los datos nuevos
-        Proveedor ProveedorModificado = new Proveedor(  tipo_proveedor,  nombre_proveedor,  direccion_proveedor,  correo_proveedor,  celular_proveedor);
-
         // Buscar el objeto existente en la base de datos
-        Proveedor ProveedorBusca = new Proveedor(codigo_proveedor, Boolean.TRUE);//buscaremos a los que tengan ese id y esten activos
+        Proveedor ProveedorBusca = new Proveedor(codigo_proveedor,null,null,null,null,null);//buscaremos a los que tengan ese id y esten activos
         ObjectContainer BaseBD = Conexion_db.ConectarBD();
         ObjectSet resultado = BaseBD.get(ProveedorBusca);
         int coincidencias = resultado.size();
@@ -271,6 +270,8 @@ public class BuscarPanelProveedor extends javax.swing.JPanel {
         if (coincidencias != 0) {
             // Eliminar el objeto existente
             Proveedor ProveedorAEliminar = (Proveedor) resultado.next();
+            // Crear el objeto con los datos nuevos
+            Proveedor ProveedorModificado = new Proveedor(  codigo_proveedor,  tipo_proveedor,  nombre_proveedor, direccion_proveedor,  correo_proveedor,  celular_proveedor);
             BaseBD.delete(ProveedorAEliminar);
 
             // Guardar el nuevo objeto con los datos modificados
@@ -294,7 +295,7 @@ public class BuscarPanelProveedor extends javax.swing.JPanel {
              //Validamos
              if (txtEmail.getText().trim().matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$")) {
                  if (txtCelular.getText().trim().matches("^09\\d{8}$")) {
-                    modificarProveedor(txtCodigo.getText().toUpperCase().trim(), txtTipo.getText().toUpperCase().trim(), txtNombre.getText().toUpperCase().trim(),txtDireccion.getText().toUpperCase().trim(), txtEmail.getText().trim(), txtCelular.getText(), true);
+                    modificarProveedor(txtCodigo.getText().toUpperCase().trim(), txtTipo.getText().toUpperCase().trim(), txtNombre.getText().toUpperCase().trim(),txtDireccion.getText().toUpperCase().trim(), txtEmail.getText().trim(), txtCelular.getText());
                     
                     
                      if (modificado) {

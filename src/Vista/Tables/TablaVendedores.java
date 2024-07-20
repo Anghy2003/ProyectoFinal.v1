@@ -101,6 +101,11 @@ public class TablaVendedores extends javax.swing.JPanel {
                 btnEliminarVendedorMouseClicked(evt);
             }
         });
+        btnEliminarVendedor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarVendedorActionPerformed(evt);
+            }
+        });
 
         btnBuscarVendedor.setText("Buscar");
         btnBuscarVendedor.setColorPrimario(new java.awt.Color(0, 51, 153));
@@ -211,6 +216,18 @@ public class TablaVendedores extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_btnBuscarVendedorActionPerformed
 
+    private void btnEliminarVendedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarVendedorActionPerformed
+        if(!txtBuscarVendedor.getText().trim().isEmpty()){
+            String eliminarVen = txtBuscarVendedor.getText();
+            eliminarVendedor(eliminarVen);
+            JOptionPane.showMessageDialog(this, "Vendedor Eliminado");
+            mostrarDatosVendedor();
+            
+        }else{
+            JOptionPane.showMessageDialog(this, "Vebdedor no encontrado ");
+        }
+    }//GEN-LAST:event_btnEliminarVendedorActionPerformed
+
 private void ShowpanelCruds(JPanel p) {
         p.setSize(870, 630);
         p.setLocation(0, 0);
@@ -219,6 +236,35 @@ private void ShowpanelCruds(JPanel p) {
         VistaMenu.PanelPrincipal.revalidate();
         VistaMenu.PanelPrincipal.repaint();
     }
+
+public void eliminarVendedor(String cedula) {
+
+         ObjectContainer BaseBD = Conexion_db.ConectarBD();
+
+        ObjectSet<Vendedor> result = BaseBD.queryByExample(new Vendedor(0, 0.0, 0.0, 0, cedula, null, null, null, null,
+                null,  null, null, null, null, null, null)); // Crear objeto para consultar
+
+        if (result.hasNext()) {
+            Vendedor vendedorAEliminar = result.next();
+
+            // Preguntar al usuario si está seguro de eliminar
+            int opcion = JOptionPane.showConfirmDialog(null, "¿Está seguro de eliminar este vendedor?",
+                    "Confirmación de eliminación", JOptionPane.YES_NO_OPTION);
+
+            if (opcion == JOptionPane.YES_OPTION) {
+                BaseBD.delete(vendedorAEliminar);
+                System.out.println("Vendedor eliminado correctamente.");
+            } else {
+                System.out.println("Eliminación cancelada por el usuario.");
+            }
+        } else {
+            System.out.println("No se encontró vendedor con ese número de cédula.");
+        }
+
+        BaseBD.close();
+    
+    }
+
     private void  mostrarDatosVendedor() {
 
         ObjectContainer BaseBD = Conexion_db.ConectarBD();

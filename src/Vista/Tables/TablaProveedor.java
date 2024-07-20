@@ -17,15 +17,15 @@ public class TablaProveedor extends javax.swing.JPanel {
      */
     public TablaProveedor() {
         initComponents();        
-        mostrarDatoshabilitados();
+        mostrarDatos();
     }
     
 
-    private void mostrarDatoshabilitados() {
+    private void mostrarDatos() {
         // ESTABLECER CONEXION CON LA BASE DE DATOS
         tblProveedores.setEnabled(true);
         ObjectContainer BaseBD = Conexion_db.ConectarBD();
-        Proveedor ProveedorBusca = new Proveedor(Boolean.TRUE);
+        Proveedor ProveedorBusca = new Proveedor();
         ObjectSet<Proveedor> resultado = BaseBD.get(ProveedorBusca);
 
         // Crear una matriz
@@ -140,35 +140,36 @@ public class TablaProveedor extends javax.swing.JPanel {
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(24, 24, 24)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jScrollPane1)
-                        .addContainerGap())
+                    .addComponent(jScrollPane1)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 131, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 141, Short.MAX_VALUE)
                         .addComponent(btnAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(29, 29, 29)
                         .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(26, 26, 26)
                         .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(36, 36, 36))))
+                        .addGap(30, 30, 30)))
+                .addGap(14, 14, 14))
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(24, 24, 24)
+                .addComponent(jLabel1)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(38, 38, 38)
                 .addComponent(jLabel1)
+                .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(16, 16, 16)
+                        .addGap(4, 4, 4)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                 .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -177,12 +178,10 @@ public class TablaProveedor extends javax.swing.JPanel {
                             .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addComponent(jLabel2)
                                 .addGap(6, 6, 6))))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(44, 44, 44)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 446, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(9, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 390, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(59, Short.MAX_VALUE))
         );
 
         add(jPanel2, java.awt.BorderLayout.CENTER);
@@ -192,11 +191,82 @@ public class TablaProveedor extends javax.swing.JPanel {
         CrudPanelProveedor agregarProv = new CrudPanelProveedor();
         ShowpanelCruds(agregarProv);
     }//GEN-LAST:event_btnAgregarMouseClicked
+    
+    public void eliminarProveedor(String codigo) {
 
+         ObjectContainer BaseBD = Conexion_db.ConectarBD();
+
+        ObjectSet<Proveedor> result = BaseBD.queryByExample(new Proveedor(codigo, null, null, null,null, null)); // Crear objeto para consultar
+
+        if (result.hasNext()) {
+            Proveedor ProveedorAEliminar = result.next();
+          
+
+            // Preguntar al usuario si está seguro de eliminar
+            int opcion = JOptionPane.showConfirmDialog(null, "¿Está seguro de eliminar este Proveedor?",
+                    "Confirmación de eliminación", JOptionPane.YES_NO_OPTION);
+
+            if (opcion == JOptionPane.YES_OPTION) {
+                BaseBD.delete(ProveedorAEliminar);
+                System.out.println("Proveedor eliminado correctamente.");
+            } else {
+                System.out.println("Eliminación cancelada por el usuario.");
+            }
+        } else {
+            System.out.println("No se encontró Proveedor con ese codigo.");
+        }
+
+        BaseBD.close();
+    }
+  
+ //            if (verificarProductoDetalle(BaseBD, idProv) == 0) {
+//
+//                Proveedor EliminarPROV = (Proveedor) resultado.next();//conversion creando un objeto de tipo clientes (CASTEO)
+//
+//                BaseBD.delete(EliminarPROV);//ELIMINAMOS EN LA BASE el objeto
+//
+//                System.out.println("Proveedor Eliminado");
+//
+//            } else {
+//                System.out.println("No se puede eliminar por que tiene productos");
+//            }     
+    
+    
+    
+    
     private void btnEliminarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEliminarMouseClicked
-        // TODO add your handling code here:
+        if (!txtBuscar.getText().trim().isEmpty()) {
+            String eliminarProv = txtBuscar.getText().toUpperCase();
+            eliminarProveedor(eliminarProv);
+            JOptionPane.showMessageDialog(this, "Proveedor Eliminado");
+            mostrarDatos();
+
+        } else {
+            JOptionPane.showMessageDialog(this, "Proveedor no encontrado ");
+        }
+
     }//GEN-LAST:event_btnEliminarMouseClicked
 
+
+    
+    
+    public static int verificarProveedor(String idProv) {
+        // Crear un nuevo objeto  para usar como plantilla de búsqueda
+        Proveedor ProvBusca = new Proveedor(idProv, null,null,null,null,null);
+
+        //abrir BD
+        ObjectContainer BaseBD = Conexion_db.ConectarBD();
+        // Obtener todos los objetos que coincidan con la plantilla de búsqueda
+        ObjectSet resultado = BaseBD.get(ProvBusca);
+        int coincidencias=resultado.size();
+        //cierro BD
+        BaseBD.close();
+        return coincidencias;
+    }
+    
+    
+    
+    
     private void btnEditarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditarMouseClicked
         if (!txtBuscar.getText().trim().isEmpty()) {
             String BuscarPlaca = txtBuscar.getText(); // Obtener el texto de txtBuscar

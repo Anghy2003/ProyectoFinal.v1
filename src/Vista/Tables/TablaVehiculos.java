@@ -175,8 +175,44 @@ public class TablaVehiculos extends javax.swing.JPanel {
         ShowpanelCruds(agregarVehi);
     }//GEN-LAST:event_btnAgregarMouseClicked
 
+    
+    public void eliminarVehiculo(String placa) {
+
+         ObjectContainer BaseBD = Conexion_db.ConectarBD();
+
+        ObjectSet<Vehiculo> result = BaseBD.queryByExample(new Vehiculo(placa, null, null, null,0)); // Crear objeto para consultar
+
+        if (result.hasNext()) {
+            Vehiculo VehiculoAEliminar = result.next();
+          
+
+            // Preguntar al usuario si está seguro de eliminar
+            int opcion = JOptionPane.showConfirmDialog(null, "¿Está seguro de eliminar este Vehiculo?",
+                    "Confirmación de eliminación", JOptionPane.YES_NO_OPTION);
+
+            if (opcion == JOptionPane.YES_OPTION) {
+                BaseBD.delete(VehiculoAEliminar);
+                System.out.println("Vehiculo eliminado correctamente.");
+            } else {
+                System.out.println("Vehiculo cancelada por el usuario.");
+            }
+        } else {
+            System.out.println("No se encontró Vehiculo con esa placa.");
+        }
+
+        BaseBD.close();
+    }
+    
     private void btnEliminarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEliminarMouseClicked
-        // TODO add your handling code here:
+        if (!txtBuscar.getText().trim().isEmpty()) {
+            String eliminarVehi = txtBuscar.getText().toUpperCase();
+            eliminarVehiculo(eliminarVehi);
+            JOptionPane.showMessageDialog(this, "Vehiculo Eliminado");
+            mostrarDatos();
+
+        } else {
+            JOptionPane.showMessageDialog(this, "Vehiculo no encontrado ");
+        }
     }//GEN-LAST:event_btnEliminarMouseClicked
 
     private void btnEditarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditarMouseClicked
@@ -185,7 +221,7 @@ public class TablaVehiculos extends javax.swing.JPanel {
             BuscarPanelVehiculo1 miBuscarPanelVehiculo1 = new BuscarPanelVehiculo1(BuscarPlaca);//creo el componente llevando el valor del String
             ShowpanelCruds(miBuscarPanelVehiculo1);
         }else{
-            JOptionPane.showMessageDialog(this, "Ingrese una placa");
+            JOptionPane.showMessageDialog(this, "No deje el campo vacio");
         }
     }//GEN-LAST:event_btnEditarMouseClicked
 

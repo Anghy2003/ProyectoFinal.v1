@@ -211,6 +211,8 @@ public class CrudPanelVehiculo extends javax.swing.JPanel {
                         if (valido = txtColor.getText().matches("^[a-zA-Z]+$")) {
                             guardarVehiculos(txtPlaca.getText().toUpperCase(), txtModelo.getText().toUpperCase(), txtMarca.getText().toUpperCase(), txtColor.getText().toUpperCase(), YEARAño.getYear());
                             JOptionPane.showMessageDialog(this, "Vehiculo Guardado");
+                            TablaVehiculos tablaVehi = new TablaVehiculos();
+                            ShowpanelCruds(tablaVehi);
                         } else {
                             JOptionPane.showMessageDialog(this, "Ingrese un color sin numeros");
                         }

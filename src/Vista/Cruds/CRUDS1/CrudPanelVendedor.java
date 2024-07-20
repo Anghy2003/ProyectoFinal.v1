@@ -20,6 +20,11 @@ public class CrudPanelVendedor extends javax.swing.JPanel {
     /**
      * Creates new form CrudPanelVendedor1
      *
+     * @param sueldoBase_Vendedor
+     * @param comiciones_Vendedor
+     * @param numeroVentas_Vendedor
+     * @param cedula
+     * @param nombres
      * @param iD_Vendedor     
      * @param apellidos     
      * @param direccion     

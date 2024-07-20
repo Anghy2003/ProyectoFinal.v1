@@ -1,13 +1,81 @@
 
 package Vista.Cruds.CRUDS1;
 
+import Conexion.Conexion_db;
+import Models.Mecanico;
+import com.db4o.ObjectContainer;
+import com.db4o.ObjectSet;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import javax.swing.JOptionPane;
+
 public class CrudPanelMecanico extends javax.swing.JPanel {
 
     /**
      * Creates new form CrudPanelMecanico1
      */
+    
+    public void GuardarMecanico( String titulo, double Sueldo, String cedula, String nombres, String apellidos, String direccion, String correo, String celular, String genero,
+            String fechaNacimiento, String estadoCivil, String nombreUsuario, String password, String correoRecuperacion ) {
+
+        ObjectContainer BaseBD = Conexion_db.ConectarBD();
+        
+        int siguienteID = obtenerProximoIDMecanico(BaseBD);
+        
+        Mecanico mecanico1 = new Mecanico( titulo,  Sueldo,  cedula,  nombres,  apellidos,  direccion,  correo,  celular,  genero,
+             fechaNacimiento,  estadoCivil,  nombreUsuario,  password,  correoRecuperacion );
+      
+        mecanico1.setiD_Mecanico(siguienteID);
+        BaseBD.close();
+
+        if (VerificarMecanico(cedula) == 0) {
+
+            BaseBD = Conexion_db.ConectarBD();
+            BaseBD.set(mecanico1);
+           BaseBD.close();
+
+            JOptionPane.showMessageDialog(this, "Mecanico Guardado");
+
+        } else {
+
+            JOptionPane.showMessageDialog(this, "Ya existe el Mecanico ");
+        }
+    }
+
+    public static int VerificarMecanico(String cedula) {
+
+        ObjectContainer BaseBD = Conexion_db.ConectarBD();
+
+        Mecanico buscaVendedor = new Mecanico(null,0.0,cedula, null, null, null, null,
+                null,  null, null, null, null, null, null);
+
+        ObjectSet resultado = BaseBD.get(buscaVendedor);
+        
+        int coincidencias = resultado.size();
+
+        BaseBD.close();
+        return coincidencias;
+    }
+
+    // Método para obtener el próximo ID_Vendedor disponible
+private int obtenerProximoIDMecanico(ObjectContainer db) {
+    // Consultar el máximo ID_Vendedor almacenado en la base de datos
+    ObjectSet<Mecanico> result = db.queryByExample(Mecanico.class);
+    int maxID = 0;
+    while (result.hasNext()) {
+        Mecanico mecanico = result.next();
+        if (mecanico.getiD_Mecanico()> maxID) {
+            maxID = mecanico.getiD_Mecanico();
+        }
+    }
+    // El próximo ID es el máximo + 1
+    return maxID + 1;
+}
+    
+    
     public CrudPanelMecanico() {
         initComponents();
+        
     }
 
     /**
@@ -28,29 +96,27 @@ public class CrudPanelMecanico extends javax.swing.JPanel {
         lblApellidos_Meca = new javax.swing.JLabel();
         lblDireccion_Meca = new javax.swing.JLabel();
         lblCorreo_Meca = new javax.swing.JLabel();
-        lblComiciones_Ven = new javax.swing.JLabel();
+        lblTituloMec = new javax.swing.JLabel();
         lblFEchaNac_Meca = new javax.swing.JLabel();
         lblGenero_Meca = new javax.swing.JLabel();
         lblEstadoCivil_Meca = new javax.swing.JLabel();
-        txtCedulaVendedor = new rojeru_san.RSMTextFull();
-        txtNombresVendedor = new rojeru_san.RSMTextFull();
-        txtApellidosVendedor = new rojeru_san.RSMTextFull();
-        txtDireccionVendedor = new rojeru_san.RSMTextFull();
-        txtCorreoVendedor = new rojeru_san.RSMTextFull();
-        txtComicionesVendedor = new rojeru_san.RSMTextFull();
+        txtCedulaMec = new rojeru_san.RSMTextFull();
+        txtNombresMec = new rojeru_san.RSMTextFull();
+        txtApellidosMec = new rojeru_san.RSMTextFull();
+        txtDireccionMec = new rojeru_san.RSMTextFull();
+        txtCorreoMec = new rojeru_san.RSMTextFull();
+        txtTituloMec = new rojeru_san.RSMTextFull();
         btnCancelar = new rojeru_san.RSButtonRiple();
-        jDateFechaNacVendedor = new com.toedter.calendar.JDateChooser();
-        cbxGeneroVendedor = new javax.swing.JComboBox<>();
-        cbxEstadoCivilVendedor = new javax.swing.JComboBox<>();
+        jDateFechaNacMec = new com.toedter.calendar.JDateChooser();
+        cbxGeneroMec = new javax.swing.JComboBox<>();
+        cbxEstadoCivilMec = new javax.swing.JComboBox<>();
         btnGuardar = new rojeru_san.RSButtonRiple();
         lblPassword_Meca = new javax.swing.JLabel();
-        txtPasswordVendedor = new rojeru_san.RSMTextFull();
-        lblNumeroVentas_Ven = new javax.swing.JLabel();
-        lblSueldo_Ven = new javax.swing.JLabel();
+        txtPasswordMec = new rojeru_san.RSMTextFull();
+        lblSueldoMec = new javax.swing.JLabel();
         lblCelular_Meca = new javax.swing.JLabel();
-        txtNumeroVentasVendedor = new rojeru_san.RSMTextFull();
-        txtSueldoVendedor = new rojeru_san.RSMTextFull();
-        txtCelularVendedor = new rojeru_san.RSMTextFull();
+        txtSueldoMec = new rojeru_san.RSMTextFull();
+        txtCelularMec = new rojeru_san.RSMTextFull();
 
         jPanel1.setLayout(new java.awt.BorderLayout());
 
@@ -87,61 +153,61 @@ public class CrudPanelMecanico extends javax.swing.JPanel {
         lblCorreo_Meca.setText("Correo Electrónico:");
         jPanel2.add(lblCorreo_Meca, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 420, 190, 40));
 
-        lblComiciones_Ven.setFont(new java.awt.Font("Roboto Medium", 0, 21)); // NOI18N
-        lblComiciones_Ven.setForeground(new java.awt.Color(0, 53, 79));
-        lblComiciones_Ven.setText("Comiciones:");
-        jPanel2.add(lblComiciones_Ven, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 330, 120, 40));
+        lblTituloMec.setFont(new java.awt.Font("Roboto Medium", 0, 21)); // NOI18N
+        lblTituloMec.setForeground(new java.awt.Color(0, 53, 79));
+        lblTituloMec.setText("Titulo:");
+        jPanel2.add(lblTituloMec, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 330, 60, 40));
 
         lblFEchaNac_Meca.setFont(new java.awt.Font("Roboto Medium", 0, 21)); // NOI18N
         lblFEchaNac_Meca.setForeground(new java.awt.Color(0, 53, 79));
         lblFEchaNac_Meca.setText("Fecha Nacimiento:");
-        jPanel2.add(lblFEchaNac_Meca, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 160, 180, 40));
+        jPanel2.add(lblFEchaNac_Meca, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 160, 180, 40));
 
         lblGenero_Meca.setFont(new java.awt.Font("Roboto Medium", 0, 21)); // NOI18N
         lblGenero_Meca.setForeground(new java.awt.Color(0, 53, 79));
         lblGenero_Meca.setText("Género:");
-        jPanel2.add(lblGenero_Meca, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 220, 80, 40));
+        jPanel2.add(lblGenero_Meca, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 220, 80, 40));
 
         lblEstadoCivil_Meca.setFont(new java.awt.Font("Roboto Medium", 0, 21)); // NOI18N
         lblEstadoCivil_Meca.setForeground(new java.awt.Color(0, 53, 79));
         lblEstadoCivil_Meca.setText("Estado Civil:");
         jPanel2.add(lblEstadoCivil_Meca, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 270, 120, 40));
 
-        txtCedulaVendedor.setForeground(new java.awt.Color(0, 53, 79));
-        txtCedulaVendedor.setColorTransparente(true);
-        txtCedulaVendedor.setFont(new java.awt.Font("Roboto Light", 1, 14)); // NOI18N
-        txtCedulaVendedor.setPlaceholder("0123456789");
-        jPanel2.add(txtCedulaVendedor, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 100, 200, 40));
+        txtCedulaMec.setForeground(new java.awt.Color(0, 53, 79));
+        txtCedulaMec.setColorTransparente(true);
+        txtCedulaMec.setFont(new java.awt.Font("Roboto Light", 1, 14)); // NOI18N
+        txtCedulaMec.setPlaceholder("0123456789");
+        jPanel2.add(txtCedulaMec, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 100, 200, 40));
 
-        txtNombresVendedor.setForeground(new java.awt.Color(0, 53, 79));
-        txtNombresVendedor.setColorTransparente(true);
-        txtNombresVendedor.setFont(new java.awt.Font("Roboto Light", 1, 14)); // NOI18N
-        txtNombresVendedor.setPlaceholder("Escriba los nombres");
-        jPanel2.add(txtNombresVendedor, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 200, 200, 40));
+        txtNombresMec.setForeground(new java.awt.Color(0, 53, 79));
+        txtNombresMec.setColorTransparente(true);
+        txtNombresMec.setFont(new java.awt.Font("Roboto Light", 1, 14)); // NOI18N
+        txtNombresMec.setPlaceholder("Escriba los nombres");
+        jPanel2.add(txtNombresMec, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 200, 200, 40));
 
-        txtApellidosVendedor.setForeground(new java.awt.Color(0, 53, 79));
-        txtApellidosVendedor.setColorTransparente(true);
-        txtApellidosVendedor.setFont(new java.awt.Font("Roboto Light", 1, 14)); // NOI18N
-        txtApellidosVendedor.setPlaceholder("Escriba los apellidos");
-        jPanel2.add(txtApellidosVendedor, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 260, 200, 40));
+        txtApellidosMec.setForeground(new java.awt.Color(0, 53, 79));
+        txtApellidosMec.setColorTransparente(true);
+        txtApellidosMec.setFont(new java.awt.Font("Roboto Light", 1, 14)); // NOI18N
+        txtApellidosMec.setPlaceholder("Escriba los apellidos");
+        jPanel2.add(txtApellidosMec, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 260, 200, 40));
 
-        txtDireccionVendedor.setForeground(new java.awt.Color(0, 53, 79));
-        txtDireccionVendedor.setColorTransparente(true);
-        txtDireccionVendedor.setFont(new java.awt.Font("Roboto Light", 1, 14)); // NOI18N
-        txtDireccionVendedor.setPlaceholder("Escriba la dirección");
-        jPanel2.add(txtDireccionVendedor, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 340, 200, 40));
+        txtDireccionMec.setForeground(new java.awt.Color(0, 53, 79));
+        txtDireccionMec.setColorTransparente(true);
+        txtDireccionMec.setFont(new java.awt.Font("Roboto Light", 1, 14)); // NOI18N
+        txtDireccionMec.setPlaceholder("Escriba la dirección");
+        jPanel2.add(txtDireccionMec, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 340, 200, 40));
 
-        txtCorreoVendedor.setForeground(new java.awt.Color(0, 53, 79));
-        txtCorreoVendedor.setColorTransparente(true);
-        txtCorreoVendedor.setFont(new java.awt.Font("Roboto Light", 1, 14)); // NOI18N
-        txtCorreoVendedor.setPlaceholder("Escriba su correo electronico");
-        jPanel2.add(txtCorreoVendedor, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 420, 250, 40));
+        txtCorreoMec.setForeground(new java.awt.Color(0, 53, 79));
+        txtCorreoMec.setColorTransparente(true);
+        txtCorreoMec.setFont(new java.awt.Font("Roboto Light", 1, 14)); // NOI18N
+        txtCorreoMec.setPlaceholder("Escriba su correo electronico");
+        jPanel2.add(txtCorreoMec, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 420, 250, 40));
 
-        txtComicionesVendedor.setForeground(new java.awt.Color(0, 53, 79));
-        txtComicionesVendedor.setColorTransparente(true);
-        txtComicionesVendedor.setFont(new java.awt.Font("Roboto Light", 1, 14)); // NOI18N
-        txtComicionesVendedor.setPlaceholder("Escriba su número celular");
-        jPanel2.add(txtComicionesVendedor, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 320, 230, 40));
+        txtTituloMec.setForeground(new java.awt.Color(0, 53, 79));
+        txtTituloMec.setColorTransparente(true);
+        txtTituloMec.setFont(new java.awt.Font("Roboto Light", 1, 14)); // NOI18N
+        txtTituloMec.setPlaceholder("Escriba su titulo");
+        jPanel2.add(txtTituloMec, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 320, 230, 40));
 
         btnCancelar.setBackground(new java.awt.Color(255, 51, 51));
         btnCancelar.setText("Cancelar");
@@ -151,13 +217,13 @@ public class CrudPanelMecanico extends javax.swing.JPanel {
             }
         });
         jPanel2.add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 520, -1, -1));
-        jPanel2.add(jDateFechaNacVendedor, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 170, 140, 30));
+        jPanel2.add(jDateFechaNacMec, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 170, 140, 30));
 
-        cbxGeneroVendedor.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jPanel2.add(cbxGeneroVendedor, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 230, 150, 30));
+        cbxGeneroMec.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Masculino\t\t", "Femenino" }));
+        jPanel2.add(cbxGeneroMec, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 230, 150, 30));
 
-        cbxEstadoCivilVendedor.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jPanel2.add(cbxEstadoCivilVendedor, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 280, 150, 30));
+        cbxEstadoCivilMec.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Soltero", "Casado", "Viudo", "Union Libre" }));
+        jPanel2.add(cbxEstadoCivilMec, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 280, 150, 30));
 
         btnGuardar.setText("Guardar");
         btnGuardar.addActionListener(new java.awt.event.ActionListener() {
@@ -172,44 +238,33 @@ public class CrudPanelMecanico extends javax.swing.JPanel {
         lblPassword_Meca.setText("Contraseña:");
         jPanel2.add(lblPassword_Meca, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 150, 130, 40));
 
-        txtPasswordVendedor.setForeground(new java.awt.Color(0, 53, 79));
-        txtPasswordVendedor.setColorTransparente(true);
-        txtPasswordVendedor.setFont(new java.awt.Font("Roboto Light", 1, 14)); // NOI18N
-        txtPasswordVendedor.setPlaceholder("123abc");
-        jPanel2.add(txtPasswordVendedor, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 150, 200, 40));
+        txtPasswordMec.setForeground(new java.awt.Color(0, 53, 79));
+        txtPasswordMec.setColorTransparente(true);
+        txtPasswordMec.setFont(new java.awt.Font("Roboto Light", 1, 14)); // NOI18N
+        txtPasswordMec.setPlaceholder("123abc");
+        jPanel2.add(txtPasswordMec, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 150, 200, 40));
 
-        lblNumeroVentas_Ven.setFont(new java.awt.Font("Roboto Medium", 0, 21)); // NOI18N
-        lblNumeroVentas_Ven.setForeground(new java.awt.Color(0, 53, 79));
-        lblNumeroVentas_Ven.setText("Numero Ventas:");
-        jPanel2.add(lblNumeroVentas_Ven, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 380, 160, 40));
-
-        lblSueldo_Ven.setFont(new java.awt.Font("Roboto Medium", 0, 21)); // NOI18N
-        lblSueldo_Ven.setForeground(new java.awt.Color(0, 53, 79));
-        lblSueldo_Ven.setText("Sueldo:");
-        jPanel2.add(lblSueldo_Ven, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 430, 80, 40));
+        lblSueldoMec.setFont(new java.awt.Font("Roboto Medium", 0, 21)); // NOI18N
+        lblSueldoMec.setForeground(new java.awt.Color(0, 53, 79));
+        lblSueldoMec.setText("Sueldo:");
+        jPanel2.add(lblSueldoMec, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 380, 80, 40));
 
         lblCelular_Meca.setFont(new java.awt.Font("Roboto Medium", 0, 21)); // NOI18N
         lblCelular_Meca.setForeground(new java.awt.Color(0, 53, 79));
         lblCelular_Meca.setText("Celular:");
-        jPanel2.add(lblCelular_Meca, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 100, 80, 40));
+        jPanel2.add(lblCelular_Meca, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 100, 80, 40));
 
-        txtNumeroVentasVendedor.setForeground(new java.awt.Color(0, 53, 79));
-        txtNumeroVentasVendedor.setColorTransparente(true);
-        txtNumeroVentasVendedor.setFont(new java.awt.Font("Roboto Light", 1, 14)); // NOI18N
-        txtNumeroVentasVendedor.setPlaceholder("Escriba su número celular");
-        jPanel2.add(txtNumeroVentasVendedor, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 370, 230, 40));
+        txtSueldoMec.setForeground(new java.awt.Color(0, 53, 79));
+        txtSueldoMec.setColorTransparente(true);
+        txtSueldoMec.setFont(new java.awt.Font("Roboto Light", 1, 14)); // NOI18N
+        txtSueldoMec.setPlaceholder("Escriba el sueldo");
+        jPanel2.add(txtSueldoMec, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 380, 230, 40));
 
-        txtSueldoVendedor.setForeground(new java.awt.Color(0, 53, 79));
-        txtSueldoVendedor.setColorTransparente(true);
-        txtSueldoVendedor.setFont(new java.awt.Font("Roboto Light", 1, 14)); // NOI18N
-        txtSueldoVendedor.setPlaceholder("Escriba su número celular");
-        jPanel2.add(txtSueldoVendedor, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 430, 230, 40));
-
-        txtCelularVendedor.setForeground(new java.awt.Color(0, 53, 79));
-        txtCelularVendedor.setColorTransparente(true);
-        txtCelularVendedor.setFont(new java.awt.Font("Roboto Light", 1, 14)); // NOI18N
-        txtCelularVendedor.setPlaceholder("Escriba su número celular");
-        jPanel2.add(txtCelularVendedor, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 100, 230, 40));
+        txtCelularMec.setForeground(new java.awt.Color(0, 53, 79));
+        txtCelularMec.setColorTransparente(true);
+        txtCelularMec.setFont(new java.awt.Font("Roboto Light", 1, 14)); // NOI18N
+        txtCelularMec.setPlaceholder("Escriba su número celular");
+        jPanel2.add(txtCelularMec, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 100, 230, 40));
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
@@ -259,76 +314,62 @@ public class CrudPanelMecanico extends javax.swing.JPanel {
     }//GEN-LAST:event_btnCancelarMouseClicked
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-//
-//        boolean usuarioRepetido = false;
-//
-//        ObjectContainer BaseBD = Conexion_db.ConectarBD();
-//
-//        if (VerificarVendedor(txtCedulaVendedor.getText()) != 0) {
-//            JOptionPane.showMessageDialog(null, "Vendedor ya registrado");
-//            usuarioRepetido = true;
-//        }
-//
-//        if (!usuarioRepetido) {
-//
-//            Date fechaNacimientoDate = jDateFechaNacVendedor.getDate(); // Obtener la fecha de nacimiento del JDateChooser
-//
-//            // Formatear la fecha como String en el formato deseado (por ejemplo, "dd/MM/yyyy")
-//            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-//            String fechaNacimiento = sdf.format(fechaNacimientoDate);
-//
-//            //            ObjectSet<IdManager> result = BaseBD.query(IdManager.class);
-//            //            IdManager idManager;
-//            //            if (result.isEmpty()) {
-//                //                idManager = new IdManager();
-//                //            } else {
-//                //                idManager = result.get(0);
-//                //            }
-//            //
-//            //            // GENERAR NUEVOS ID
-//            //            int newVendedorId = idManager.getLastClienteId() + 1;
-//            //            int newUsuarioId = idManager.getLastUsuarioId() + 1;
-//
-//            Boolean valido = false;
-//
-//            //asignar id
-//
-//            if (valido = txtCedulaVendedor.getText().matches("\\d{10}")) {
-//                if (valido = txtNombresVendedor.getText().toUpperCase().matches("^[a-zA-Z]+$")) {
-//                    if (valido = txtApellidosVendedor.getText().toUpperCase().matches("^[a-zA-Z]+$")) {
-//                        if (valido = txtDireccionVendedor.getText().toUpperCase().matches("^[a-zA-Z]+$")) {
-//                            if (valido = txtCorreoVendedor.getText().matches("^[\\w.-]+@[\\w.-]+\\.[a-zA-Z]{2,6}$")) {
-//                                if (valido = txtCelularVendedor.getText().matches("^09\\d{8}$")) {
-//
-//                                    GuardarVendedor( Double.parseDouble(txtSueldoVendedor.getText()), Double.parseDouble(txtComicionesVendedor.getText()), Integer.parseInt(txtNumeroVentasVendedor.getText()), null,
-//                                        txtCedulaVendedor.getText(), txtPasswordVendedor.getText(), txtCorreoVendedor.getText(), txtCedulaVendedor.getText(), txtNombresVendedor.getText().toUpperCase(),
-//                                        txtApellidosVendedor.getText().toUpperCase(), txtDireccionVendedor.getText().toUpperCase(), txtCorreoVendedor.getText(), txtCelularVendedor.getText(), (String) cbxGeneroVendedor.getSelectedItem(),
-//                                        fechaNacimiento, (String) cbxEstadoCivilVendedor.getSelectedItem());
-//
-//                                } else {
-//                                    JOptionPane.showMessageDialog(null, "Ingrese un celular valido");
-//                                }
-//
-//                            } else {
-//                                JOptionPane.showMessageDialog(null, "Ingrese un correo valida");
-//                            }
-//
-//                        } else {
-//                            JOptionPane.showMessageDialog(null, "Ingrese una direccion valida");
-//                        }
-//                    } else {
-//                        JOptionPane.showMessageDialog(null, "Ingrese un apellido valido");
-//                    }
-//
-//                } else {
-//                    JOptionPane.showMessageDialog(null, "Ingrese un nombre valido");
-//                }
-//
-//            } else {
-//                JOptionPane.showMessageDialog(null, "Ingrese una cedula valida");
-//            }
-//
-//        }
+ boolean usuarioRepetido = false;
+        
+        if (VerificarMecanico(txtCedulaMec.getText()) != 0) {
+            JOptionPane.showMessageDialog(null, "Mecanico ya registrado");
+            usuarioRepetido = true;
+        }
+
+        if (!usuarioRepetido) {
+            
+            Boolean valido = false;
+            
+            Date fechaNacimientoDate = jDateFechaNacMec.getDate(); // Obtener la fecha de nacimiento del JDateChooser
+
+            // Formatear la fecha como String en el formato deseado (por ejemplo, "dd/MM/yyyy")
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+            String fechaNacimiento = sdf.format(fechaNacimientoDate);
+
+           
+            if (valido = txtCedulaMec.getText().matches("\\d{10}")) {
+                if (valido = txtNombresMec.getText().toUpperCase().matches("^[a-zA-Z]+$")) {
+                    if (valido = txtApellidosMec.getText().toUpperCase().matches("^[a-zA-Z]+$")) {
+                        if (valido = txtDireccionMec.getText().toUpperCase().matches("^[a-zA-Z]+$")) {
+                            if (valido = txtCorreoMec.getText().matches("^[\\w.-]+@[\\w.-]+\\.[a-zA-Z]{2,6}$")) {
+                                if (valido = txtCelularMec.getText().matches("^09\\d{8}$")) {
+
+                                    
+                                    GuardarMecanico(fechaNacimiento, ERROR, fechaNacimiento, fechaNacimiento, fechaNacimiento,
+                                            fechaNacimiento, fechaNacimiento, fechaNacimiento, fechaNacimiento, fechaNacimiento,
+                                            fechaNacimiento, fechaNacimiento, fechaNacimiento, fechaNacimiento);
+                                    
+
+                                } else {
+                                    JOptionPane.showMessageDialog(null, "Ingrese un celular valido");
+                                }
+
+                            } else {
+                                JOptionPane.showMessageDialog(null, "Ingrese un correo valida");
+                            }
+
+                        } else {
+                            JOptionPane.showMessageDialog(null, "Ingrese una direccion valida");
+                        }
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Ingrese un apellido valido");
+                    }
+
+                } else {
+                    JOptionPane.showMessageDialog(null, "Ingrese un nombre valido");
+                }
+
+            } else {
+                JOptionPane.showMessageDialog(null, "Ingrese una cedula valida");
+            }
+
+            
+        }
 
     }//GEN-LAST:event_btnGuardarActionPerformed
 
@@ -337,34 +378,32 @@ public class CrudPanelMecanico extends javax.swing.JPanel {
     private javax.swing.JLabel Cedula_Meca;
     private rojeru_san.RSButtonRiple btnCancelar;
     private rojeru_san.RSButtonRiple btnGuardar;
-    private javax.swing.JComboBox<String> cbxEstadoCivilVendedor;
-    private javax.swing.JComboBox<String> cbxGeneroVendedor;
-    private com.toedter.calendar.JDateChooser jDateFechaNacVendedor;
+    private javax.swing.JComboBox<String> cbxEstadoCivilMec;
+    private javax.swing.JComboBox<String> cbxGeneroMec;
+    private com.toedter.calendar.JDateChooser jDateFechaNacMec;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JLabel lblApellidos_Meca;
     private javax.swing.JLabel lblCelular_Meca;
-    private javax.swing.JLabel lblComiciones_Ven;
     private javax.swing.JLabel lblCorreo_Meca;
     private javax.swing.JLabel lblDireccion_Meca;
     private javax.swing.JLabel lblEstadoCivil_Meca;
     private javax.swing.JLabel lblFEchaNac_Meca;
     private javax.swing.JLabel lblGenero_Meca;
     private javax.swing.JLabel lblNombres_Meca;
-    private javax.swing.JLabel lblNumeroVentas_Ven;
     private javax.swing.JLabel lblPassword_Meca;
-    private javax.swing.JLabel lblSueldo_Ven;
-    private rojeru_san.RSMTextFull txtApellidosVendedor;
-    private rojeru_san.RSMTextFull txtCedulaVendedor;
-    private rojeru_san.RSMTextFull txtCelularVendedor;
-    private rojeru_san.RSMTextFull txtComicionesVendedor;
-    private rojeru_san.RSMTextFull txtCorreoVendedor;
-    private rojeru_san.RSMTextFull txtDireccionVendedor;
-    private rojeru_san.RSMTextFull txtNombresVendedor;
-    private rojeru_san.RSMTextFull txtNumeroVentasVendedor;
-    private rojeru_san.RSMTextFull txtPasswordVendedor;
-    private rojeru_san.RSMTextFull txtSueldoVendedor;
+    private javax.swing.JLabel lblSueldoMec;
+    private javax.swing.JLabel lblTituloMec;
+    private rojeru_san.RSMTextFull txtApellidosMec;
+    private rojeru_san.RSMTextFull txtCedulaMec;
+    private rojeru_san.RSMTextFull txtCelularMec;
+    private rojeru_san.RSMTextFull txtCorreoMec;
+    private rojeru_san.RSMTextFull txtDireccionMec;
+    private rojeru_san.RSMTextFull txtNombresMec;
+    private rojeru_san.RSMTextFull txtPasswordMec;
+    private rojeru_san.RSMTextFull txtSueldoMec;
+    private rojeru_san.RSMTextFull txtTituloMec;
     // End of variables declaration//GEN-END:variables
 }
