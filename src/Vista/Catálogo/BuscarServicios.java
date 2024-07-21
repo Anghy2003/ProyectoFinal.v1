@@ -5,7 +5,7 @@ import Conexion.Conexion_db;
 
 
 import Models.Servicios;
-import static Vista.Catálogo.CrudPanelServicios.convertImageToBytes;
+
 
 import Vista.Menu.VistaMenu;
 

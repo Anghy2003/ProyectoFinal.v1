@@ -290,13 +290,7 @@ if (!txtNombres.getText().trim().isBlank()) {
     private void txtPlacaVehiculoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPlacaVehiculoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtPlacaVehiculoActionPerformed
-    public static byte[] convertImageToBytes(File imageFile) throws IOException {
-        FileInputStream fis = new FileInputStream(imageFile);
-        byte[] imageBytes = new byte[(int) imageFile.length()];
-        fis.read(imageBytes);
-        fis.close();
-        return imageBytes;
-    }
+   
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private rojeru_san.RSButtonRiple btnCancelar;

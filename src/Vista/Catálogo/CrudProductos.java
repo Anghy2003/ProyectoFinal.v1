@@ -84,7 +84,7 @@ public class CrudProductos extends javax.swing.JPanel {
         txtCodigoCategoria.setColorTransparente(true);
         txtCodigoCategoria.setFont(new java.awt.Font("Roboto Light", 1, 14)); // NOI18N
         txtCodigoCategoria.setPlaceholder("Código de la Categoria");
-        jPanel1.add(txtCodigoCategoria, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 160, 260, 40));
+        jPanel1.add(txtCodigoCategoria, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 160, 330, 40));
 
         btnCancelar.setBackground(new java.awt.Color(255, 51, 51));
         btnCancelar.setText("Cancelar");
@@ -115,8 +115,8 @@ public class CrudProductos extends javax.swing.JPanel {
 
         lblCodigoocategoria.setFont(new java.awt.Font("Roboto Medium", 1, 18)); // NOI18N
         lblCodigoocategoria.setForeground(new java.awt.Color(0, 53, 79));
-        lblCodigoocategoria.setText("Código de categoría:");
-        jPanel1.add(lblCodigoocategoria, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 170, -1, 40));
+        lblCodigoocategoria.setText("Categoría:");
+        jPanel1.add(lblCodigoocategoria, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 170, 120, 40));
 
         lblNumeroProductos.setFont(new java.awt.Font("Roboto Medium", 1, 18)); // NOI18N
         lblNumeroProductos.setForeground(new java.awt.Color(0, 53, 79));
@@ -130,7 +130,7 @@ public class CrudProductos extends javax.swing.JPanel {
 
         lblProveedorID.setFont(new java.awt.Font("Roboto Medium", 1, 18)); // NOI18N
         lblProveedorID.setForeground(new java.awt.Color(0, 53, 79));
-        lblProveedorID.setText("ID proveedor:");
+        lblProveedorID.setText(" Proveedor:");
         jPanel1.add(lblProveedorID, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 270, -1, 40));
 
         txtDescripcion.setForeground(new java.awt.Color(0, 53, 79));
@@ -160,7 +160,7 @@ public class CrudProductos extends javax.swing.JPanel {
                 txtPrecioProductoActionPerformed(evt);
             }
         });
-        jPanel1.add(txtPrecioProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 210, 380, 40));
+        jPanel1.add(txtPrecioProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 210, 340, 40));
 
         lblExistenciaMinima1.setFont(new java.awt.Font("Roboto Medium", 1, 18)); // NOI18N
         lblExistenciaMinima1.setForeground(new java.awt.Color(0, 53, 79));
@@ -185,7 +185,7 @@ public class CrudProductos extends javax.swing.JPanel {
         jPanel1.add(txtNumeroProductos1, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 320, 350, 40));
 
         lblImagen.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
-        jPanel1.add(lblImagen, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 70, 180, 140));
+        jPanel1.add(lblImagen, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 70, 180, 140));
 
         btnSeleccionarImgen.setText("Selecionar Imagen");
         btnSeleccionarImgen.addActionListener(new java.awt.event.ActionListener() {
@@ -193,17 +193,17 @@ public class CrudProductos extends javax.swing.JPanel {
                 btnSeleccionarImgenActionPerformed(evt);
             }
         });
-        jPanel1.add(btnSeleccionarImgen, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 220, 180, -1));
+        jPanel1.add(btnSeleccionarImgen, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 220, 180, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 806, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 551, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
 

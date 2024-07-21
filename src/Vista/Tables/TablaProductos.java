@@ -266,6 +266,7 @@ public class TablaProductos extends javax.swing.JPanel {
             matriz[i][6] = String.valueOf(prod.getExistenciaMinima_Producto());
             matriz[i][7] = prod.getDescripcion_Producto();
             matriz[i][8] = prod.getID_Proveedor_Producto();
+            
         }
 
         TablProductos1.setModel(new javax.swing.table.DefaultTableModel(
