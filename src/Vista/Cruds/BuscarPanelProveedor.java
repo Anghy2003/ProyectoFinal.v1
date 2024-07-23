@@ -170,55 +170,7 @@ public class BuscarPanelProveedor extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnCancelarActionPerformed
 
-    public static void modificarVehiculo(String placa_Vehiculo, String modelo_Vehiculo, String marca_Vehiculo, String color_Vehiculo, int anioFabricacion_Vehiculo) {
-        // ESTABLECER CONEXION CON LA BASE DE DATOS
-        ObjectContainer BaseBD = Conexion_db.ConectarBD();
-
-        // Crear el objeto con los datos nuevos
-        Vehiculo vehiculoModificado = new Vehiculo(placa_Vehiculo, modelo_Vehiculo, marca_Vehiculo, color_Vehiculo, anioFabricacion_Vehiculo);
-
-        // Buscar el objeto existente en la base de datos
-        Vehiculo vehiculoBusca = new Vehiculo(placa_Vehiculo, null, null, null, 0);
-        ObjectSet resultado = BaseBD.get(vehiculoBusca);
-        int coincidencias = resultado.size();
-
-        if (coincidencias > 0) {
-            // Eliminar el objeto existente
-            Vehiculo vehiculoAEliminar = (Vehiculo) resultado.next();
-            BaseBD.delete(vehiculoAEliminar);
-
-            // Guardar el nuevo objeto con los datos modificados
-            BaseBD.set(vehiculoModificado);
-            System.out.println("Vehículo modificado y guardado exitosamente.");
-        } else {
-            System.out.println("No se encontró ningún vehículo con la placa especificada.");
-        }
-
-        // Cerrar la base de datos
-        BaseBD.close();
-    }
-    //verificar VEHICULOS
-    public static int verificarVehiculosGuardar(String placa_Vehiculo) {
-        // ESTABLECER CONEXION CON LA BASE DE DATOS
-        ObjectContainer BaseBD = Conexion_db.ConectarBD();
-        Vehiculo VehiculosBusca = new Vehiculo(placa_Vehiculo, null, null, null, 0);
-        ObjectSet resultado = BaseBD.get(VehiculosBusca);
-        int coincidencias= resultado.size();
-        //Cerrar BD
-        BaseBD.close();
-        return coincidencias;
-    }
-    //verificar VEHICULOS
-    public static int verificarVehiculos(String placa_Vehiculo) {
-        // ESTABLECER CONEXION CON LA BASE DE DATOS
-        ObjectContainer BaseBD = Conexion_db.ConectarBD();
-        Vehiculo VehiculosBusca = new Vehiculo(placa_Vehiculo, null, null, null, 0);
-        ObjectSet resultado = BaseBD.get(VehiculosBusca);
-        int coincidencias= resultado.size();
-        //Cerrar BD
-        BaseBD.close();
-        return coincidencias;
-    }
+    
     public  void resetCampos(){
     txtCodigo.setText("");
     txtNombre.setText("");
@@ -258,30 +210,26 @@ public class BuscarPanelProveedor extends javax.swing.JPanel {
     }
     public static Boolean  modificado=false;
     public static String modi;
-    public static void modificarProveedor(String codigo_proveedor, String tipo_proveedor, String nombre_proveedor, String direccion_proveedor, String correo_proveedor, String celular_proveedor) {
+    public static void modificarProveedor(String codigo_proveedor, String tipo_proveedor, String nombre_proveedor, String direccion_proveedor, String correo_proveedor, String celular_proveedor, Proveedor.Estado estado) {
         // ESTABLECER CONEXION CON LA BASE DE DATOS
         
         // Buscar el objeto existente en la base de datos
-        Proveedor ProveedorBusca = new Proveedor(codigo_proveedor,null,null,null,null,null);//buscaremos a los que tengan ese id y esten activos
+        Proveedor ProveedorBusca = new Proveedor(codigo_proveedor,null,null,null,null,null,null);//buscaremos a los que tengan ese id y esten activos
         ObjectContainer BaseBD = Conexion_db.ConectarBD();
         ObjectSet resultado = BaseBD.get(ProveedorBusca);
         int coincidencias = resultado.size();
 
-        if (coincidencias != 0) {
+        if (coincidencias > 0) {
             // Eliminar el objeto existente
-            Proveedor ProveedorAEliminar = (Proveedor) resultado.next();
-            // Crear el objeto con los datos nuevos
-            Proveedor ProveedorModificado = new Proveedor(  codigo_proveedor,  tipo_proveedor,  nombre_proveedor, direccion_proveedor,  correo_proveedor,  celular_proveedor);
-            BaseBD.delete(ProveedorAEliminar);
+            Proveedor proveedorAEliminar = (Proveedor) resultado.next();
+            BaseBD.delete(proveedorAEliminar);
 
             // Guardar el nuevo objeto con los datos modificados
-            BaseBD.set(ProveedorModificado);
-            modificado=true;
+            BaseBD.set(ProveedorBusca);
             System.out.println("Proveedor modificado y guardado exitosamente.");
         } else {
-            System.out.println("No se encontró ningún Proveedor con el código especificado.");
+            System.out.println("No se encontró ningún proveedor con el codigo especificado.");
         }
-
         // Cerrar la base de datos
         BaseBD.close();
     }
@@ -295,7 +243,7 @@ public class BuscarPanelProveedor extends javax.swing.JPanel {
              //Validamos
              if (txtEmail.getText().trim().matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$")) {
                  if (txtCelular.getText().trim().matches("^09\\d{8}$")) {
-                    modificarProveedor(txtCodigo.getText().toUpperCase().trim(), txtTipo.getText().toUpperCase().trim(), txtNombre.getText().toUpperCase().trim(),txtDireccion.getText().toUpperCase().trim(), txtEmail.getText().trim(), txtCelular.getText());
+                    modificarProveedor(txtCodigo.getText().toUpperCase().trim(), txtTipo.getText().toUpperCase().trim(), txtNombre.getText().toUpperCase().trim(),txtDireccion.getText().toUpperCase().trim(), txtEmail.getText().trim(), txtCelular.getText(),Proveedor.Estado.ACTIVO);
                     
                     
                      if (modificado) {

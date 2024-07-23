@@ -7,7 +7,9 @@ import javax.swing.JPanel;
 import Conexion.Conexion_db;
 import com.db4o.*;
 import Models.*;
+import Models.Proveedor.Estado;
 import static Models.Proveedor.verificarNumeroProveedores;
+import com.db4o.query.Query;
 import javax.swing.JOptionPane;
 
 public class CrudPanelProveedor extends javax.swing.JPanel {
@@ -154,7 +156,7 @@ public class CrudPanelProveedor extends javax.swing.JPanel {
     public static int verificarProveedores(String codigo_proveedor) {
         // ESTABLECER CONEXION CON LA BASE DE DATOS
         ObjectContainer BaseBD = Conexion_db.ConectarBD();
-        Proveedor ProveedorBusca = new Proveedor(codigo_proveedor, null, null, null, null, null);
+        Proveedor ProveedorBusca = new Proveedor(codigo_proveedor, null, null, null, null, null,null);
         ObjectSet resultado = BaseBD.get(ProveedorBusca);
         int coincidencias= resultado.size();
         //Cerrar BD
@@ -162,7 +164,7 @@ public class CrudPanelProveedor extends javax.swing.JPanel {
         return coincidencias;
     }
     public static int verificarProveedoresGuardar(String codigo_proveedor) {
-    Proveedor ProveedoresBusca = new Proveedor(codigo_proveedor, null, null, null, null, null);
+    Proveedor ProveedoresBusca = new Proveedor(codigo_proveedor, null, null, null, null, null,null);
 
         // ESTABLECER CONEXION CON LA BASE DE DATOS
         ObjectContainer BaseBD = Conexion_db.ConectarBD();
@@ -175,11 +177,11 @@ public class CrudPanelProveedor extends javax.swing.JPanel {
     }
     
     
-    //Guardar USUARIO
-    public static void guardarProveedores(String idProv, String tipo, String nombre, String direccion, String correo, String celular) {
+    //Guardar 
+    public static void guardarProveedores(String idProv, String tipo, String nombre, String direccion, String correo, String celular, Estado estado) {
         
 
-        Proveedor Proveedor1 = new Proveedor( idProv, tipo,  nombre,  direccion,  correo,  celular);
+        Proveedor Proveedor1 = new Proveedor( idProv, tipo,  nombre,  direccion,  correo,  celular,Estado.ACTIVO);
         
         if (verificarProveedoresGuardar(idProv) == 0) {
             
@@ -192,8 +194,36 @@ public class CrudPanelProveedor extends javax.swing.JPanel {
             System.out.println("Proveedor ya existe en la BD");
         } 
     }
+    public static void guardarProveedore(String codigo_proveedor, String tipo_proveedor, String nombre_proveedor, String direccion_proveedor, String correo_proveedor, String celular_proveedor, Estado estado) {
+        // ESTABLECER CONEXION CON LA BASE DE DATOS
+        ObjectContainer BaseBD = Conexion_db.ConectarBD();
+
+        Proveedor proveedor1 = new Proveedor(codigo_proveedor,  tipo_proveedor,  nombre_proveedor,  direccion_proveedor,  correo_proveedor,  celular_proveedor,  estado);
+        //Cerrar BD (antes de  verificar usuario que abre nuevamente la BD)
+        BaseBD.close();
+        if (verificarVehiculosGuardar(codigo_proveedor) == 0) {
+            //volvemos a abrir para guardar 
+            BaseBD = Conexion_db.ConectarBD();
+            proveedor1.activarProveedor();//definimos el proveedor com activo
+            BaseBD.set(proveedor1);
+            BaseBD.close();
+            System.out.println("Proveedor Guardado");
+        } else {
+            System.out.println("Proveedor ya existe en la BD");
+        } 
+    }
+    //verificar 
+    public static int verificarVehiculosGuardar(String placa_Vehiculo) {
+        // ESTABLECER CONEXION CON LA BASE DE DATOS
+        ObjectContainer BaseBD = Conexion_db.ConectarBD();
+        Vehiculo VehiculosBusca = new Vehiculo(placa_Vehiculo, null, null, null, 0,null,null);
+        ObjectSet resultado = BaseBD.get(VehiculosBusca);
+        int coincidencias= resultado.size();
+        //Cerrar BD
+        BaseBD.close();
+        return coincidencias;
+    }
    
-    
     
     
     
@@ -210,7 +240,7 @@ public class CrudPanelProveedor extends javax.swing.JPanel {
              if (txtCorreo.getText().trim().matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$")) {
                  if (txtCelular.getText().trim().matches("^09\\d{8}$")) {
                      int k=verificarNumeroProveedores()+1;
-                     guardarProveedores("PROV"+k, txtTipo.getText().trim().toUpperCase(),txtNombre.getText().trim().toUpperCase(), txtDireccion.getText().trim().toUpperCase(), txtCorreo.getText().trim(), txtCelular.getText().trim());
+                     guardarProveedores("PROV"+k, txtTipo.getText().trim().toUpperCase(),txtNombre.getText().trim().toUpperCase(), txtDireccion.getText().trim().toUpperCase(), txtCorreo.getText().trim(), txtCelular.getText().trim(),Estado.ACTIVO);
                      
                      //regresamos a la tabla
                      TablaProveedor tablitaProv = new TablaProveedor();

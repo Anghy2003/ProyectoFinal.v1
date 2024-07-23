@@ -2,9 +2,12 @@
 package Vista.Tables;
 import Conexion.Conexion_db;
 import Models.*;
+import static Models.Proveedor.Estado.ACTIVO;
+import static Models.Proveedor.Estado.INACTIVO;
 import Vista.Cruds.*;
 import Vista.Menu.VistaMenu;
 import com.db4o.*;
+import com.db4o.query.Query;
 import java.awt.BorderLayout;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -16,39 +19,103 @@ public class TablaProveedor extends javax.swing.JPanel {
      * Creates new form TablaProveedor
      */
     public TablaProveedor() {
-        initComponents();        
-        mostrarDatos();
+        initComponents();
+        mostrarDatosActivos();
+        mostrarDatosInactivos();
+        //mostrarDatos();
     }
     
 
-    private void mostrarDatos() {
+//    private void mostrarDatos() {
+//        // ESTABLECER CONEXION CON LA BASE DE DATOS
+//        tblProveedores.setEnabled(true);
+//        ObjectContainer BaseBD = Conexion_db.ConectarBD();
+//        Proveedor ProveedorBusca = new Proveedor();
+//        ObjectSet<Proveedor> resultado = BaseBD.get(ProveedorBusca);
+//
+//        // Crear una matriz
+//        String matriz[][] = new String[resultado.size()][6];
+//        int i = 0;
+//        for (Proveedor miProveedor : resultado) {
+//            matriz[i][0] = miProveedor.getCodigo_proveedor();
+//            matriz[i][1] = miProveedor.getTipo_proveedor();
+//            matriz[i][2] = miProveedor.getNombre_proveedor();
+//            matriz[i][3] = miProveedor.getDireccion_proveedor();
+//            matriz[i][4] = miProveedor.getCorreo_proveedor();
+//            matriz[i][5] = miProveedor.getCelular_proveedor();
+//            i++;
+//        }
+//
+//        // Configurar datos en la tabla
+//        tblProveedores.setModel(new javax.swing.table.DefaultTableModel(matriz, new String[]{"Código", "Tipo", "Nombre", "Dirección", "Email", "Celular"}));
+//        tblProveedores.setEnabled(false);
+//
+//        // Cerrar la conexión con la base de datos
+//        BaseBD.close();
+//    }
+    
+    private void mostrarDatosActivos() {
         // ESTABLECER CONEXION CON LA BASE DE DATOS
-        tblProveedores.setEnabled(true);
         ObjectContainer BaseBD = Conexion_db.ConectarBD();
-        Proveedor ProveedorBusca = new Proveedor();
-        ObjectSet<Proveedor> resultado = BaseBD.get(ProveedorBusca);
-
-        // Crear una matriz
-        String matriz[][] = new String[resultado.size()][6];
+        tblProveedores.setEnabled(true);
+        // Consulta para filtrar solo  inactivos
+        Query query = BaseBD.query();
+        query.constrain(Proveedor.class);
+        query.descend("estado").constrain(ACTIVO);
+        ObjectSet<Proveedor> resultado = query.execute();
+        //Creo una matriz
+        String matriz[][] = new String[resultado.size()][7];
         int i = 0;
-        for (Proveedor miProveedor : resultado) {
-            matriz[i][0] = miProveedor.getCodigo_proveedor();
-            matriz[i][1] = miProveedor.getTipo_proveedor();
-            matriz[i][2] = miProveedor.getNombre_proveedor();
-            matriz[i][3] = miProveedor.getDireccion_proveedor();
-            matriz[i][4] = miProveedor.getCorreo_proveedor();
-            matriz[i][5] = miProveedor.getCelular_proveedor();
+        for (Proveedor miProv : resultado) {//iteramos en cada elemento de "resultado"
+            matriz[i][0] = miProv.getCodigo_proveedor();
+            matriz[i][1] = miProv.getTipo_proveedor();
+            matriz[i][2] = miProv.getNombre_proveedor();
+            matriz[i][3] = miProv.getDireccion_proveedor();
+            matriz[i][4] = miProv.getCorreo_proveedor();
+            matriz[i][5] = miProv.getCelular_proveedor();
+            String Estao= String.valueOf(miProv.getEstado());
+            matriz[i][6]=Estao;
             i++;
         }
-
-        // Configurar datos en la tabla
-        tblProveedores.setModel(new javax.swing.table.DefaultTableModel(matriz, new String[]{"Código", "Tipo", "Nombre", "Dirección", "Email", "Celular"}));
-        tblProveedores.setEnabled(false);
-
-        // Cerrar la conexión con la base de datos
+        // datos configurados
+        tblProveedores.setModel(new javax.swing.table.DefaultTableModel(matriz, new String[]{"Código", "Tipo", "Nombre", "Dirección", "Email", "Celular","Estado"}));
+        tblProveedores.setEnabled(false);{
         BaseBD.close();
     }
+    }
     
+    
+    
+    
+    private void mostrarDatosInactivos() {
+        // ESTABLECER CONEXION CON LA BASE DE DATOS
+        ObjectContainer BaseBD = Conexion_db.ConectarBD();
+        tblProveedoresInactivos.setEnabled(true);
+        // Consulta para filtrar solo vehículos inactivos
+        Query query = BaseBD.query();
+        query.constrain(Proveedor.class);
+        query.descend("estado").constrain(INACTIVO);
+        ObjectSet<Proveedor> resultado = query.execute();
+        //Creo una matriz
+        String matriz[][] = new String[resultado.size()][7];
+        int i = 0;
+        for (Proveedor miProv : resultado) {//iteramos en cada elemento de "resultado"
+            matriz[i][0] = miProv.getCodigo_proveedor();
+            matriz[i][1] = miProv.getTipo_proveedor();
+            matriz[i][2] = miProv.getNombre_proveedor();
+            matriz[i][3] = miProv.getDireccion_proveedor();
+            matriz[i][4] = miProv.getCorreo_proveedor();
+            matriz[i][5] = miProv.getCelular_proveedor();
+            String Estao= String.valueOf(miProv.getEstado());
+            matriz[i][6]=Estao;
+            i++;
+        }
+        // datos configurados
+        tblProveedoresInactivos.setModel(new javax.swing.table.DefaultTableModel(matriz, new String[]{"Código", "Tipo", "Nombre", "Dirección", "Email", "Celular","Estado"}));
+        tblProveedoresInactivos.setEnabled(false);{
+        BaseBD.close();
+    }
+    }
     
     
     
@@ -71,6 +138,8 @@ public class TablaProveedor extends javax.swing.JPanel {
         btnAgregar = new rsbuttongradiente.RSButtonGradiente();
         btnEliminar = new rsbuttongradiente.RSButtonGradiente();
         btnEditar = new rsbuttongradiente.RSButtonGradiente();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tblProveedoresInactivos = new javax.swing.JTable();
 
         setLayout(new java.awt.BorderLayout());
 
@@ -136,6 +205,24 @@ public class TablaProveedor extends javax.swing.JPanel {
             }
         });
 
+        jScrollPane2.setBackground(new java.awt.Color(255, 255, 255));
+        jScrollPane2.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        jScrollPane2.setForeground(new java.awt.Color(255, 255, 255));
+
+        tblProveedoresInactivos.setFont(new java.awt.Font("Roboto Medium", 0, 14)); // NOI18N
+        tblProveedoresInactivos.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane2.setViewportView(tblProveedoresInactivos);
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -154,7 +241,8 @@ public class TablaProveedor extends javax.swing.JPanel {
                         .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(26, 26, 26)
                         .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(30, 30, 30)))
+                        .addGap(30, 30, 30))
+                    .addComponent(jScrollPane2))
                 .addGap(14, 14, 14))
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(24, 24, 24)
@@ -180,8 +268,10 @@ public class TablaProveedor extends javax.swing.JPanel {
                                 .addGap(6, 6, 6))))
                     .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(44, 44, 44)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 390, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(59, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(44, 44, 44)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(87, Short.MAX_VALUE))
         );
 
         add(jPanel2, java.awt.BorderLayout.CENTER);
@@ -191,23 +281,18 @@ public class TablaProveedor extends javax.swing.JPanel {
         CrudPanelProveedor agregarProv = new CrudPanelProveedor();
         ShowpanelCruds(agregarProv);
     }//GEN-LAST:event_btnAgregarMouseClicked
-    
+
     public void eliminarProveedor(String codigo) {
-
          ObjectContainer BaseBD = Conexion_db.ConectarBD();
-
-        ObjectSet<Proveedor> result = BaseBD.queryByExample(new Proveedor(codigo, null, null, null,null, null)); // Crear objeto para consultar
-
+        ObjectSet<Proveedor> result = BaseBD.queryByExample(new Proveedor(codigo, null, null, null,null, null,null)); // Crear objeto para consultar
         if (result.hasNext()) {
             Proveedor ProveedorAEliminar = result.next();
-          
-
             // Preguntar al usuario si está seguro de eliminar
             int opcion = JOptionPane.showConfirmDialog(null, "¿Está seguro de eliminar este Proveedor?",
                     "Confirmación de eliminación", JOptionPane.YES_NO_OPTION);
-
             if (opcion == JOptionPane.YES_OPTION) {
-                BaseBD.delete(ProveedorAEliminar);
+                ProveedorAEliminar.desactivarProveedor();
+                BaseBD.store(ProveedorAEliminar);
                 System.out.println("Proveedor eliminado correctamente.");
             } else {
                 System.out.println("Eliminación cancelada por el usuario.");
@@ -215,22 +300,8 @@ public class TablaProveedor extends javax.swing.JPanel {
         } else {
             System.out.println("No se encontró Proveedor con ese codigo.");
         }
-
         BaseBD.close();
     }
-  
- //            if (verificarProductoDetalle(BaseBD, idProv) == 0) {
-//
-//                Proveedor EliminarPROV = (Proveedor) resultado.next();//conversion creando un objeto de tipo clientes (CASTEO)
-//
-//                BaseBD.delete(EliminarPROV);//ELIMINAMOS EN LA BASE el objeto
-//
-//                System.out.println("Proveedor Eliminado");
-//
-//            } else {
-//                System.out.println("No se puede eliminar por que tiene productos");
-//            }     
-    
     
     
     
@@ -239,20 +310,20 @@ public class TablaProveedor extends javax.swing.JPanel {
             String eliminarProv = txtBuscar.getText().toUpperCase();
             eliminarProveedor(eliminarProv);
             JOptionPane.showMessageDialog(this, "Proveedor Eliminado");
-            mostrarDatos();
+            mostrarDatosActivos();
+            mostrarDatosInactivos();
 
         } else {
             JOptionPane.showMessageDialog(this, "Proveedor no encontrado ");
         }
-
     }//GEN-LAST:event_btnEliminarMouseClicked
-
+    
 
     
     
     public static int verificarProveedor(String idProv) {
         // Crear un nuevo objeto  para usar como plantilla de búsqueda
-        Proveedor ProvBusca = new Proveedor(idProv, null,null,null,null,null);
+        Proveedor ProvBusca = new Proveedor(idProv, null,null,null,null,null,null);
 
         //abrir BD
         ObjectContainer BaseBD = Conexion_db.ConectarBD();
@@ -293,7 +364,9 @@ public class TablaProveedor extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable tblProveedores;
+    private javax.swing.JTable tblProveedoresInactivos;
     private rojeru_san.RSMTextFull txtBuscar;
     // End of variables declaration//GEN-END:variables
 }

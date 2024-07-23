@@ -8,6 +8,8 @@ import com.db4o.*;
 import java.awt.BorderLayout;
 import javax.swing.JPanel;
 import Models.*;
+import Models.Vehiculo.Estado;
+import static Models.Vehiculo.Estado.ACTIVO;
 import com.db4o.query.Query;
 import javax.swing.JOptionPane;
 
@@ -18,6 +20,7 @@ public class CrudPanelVehiculo extends javax.swing.JPanel {
      */
     public CrudPanelVehiculo() {
         initComponents();
+        mostrarCombo();
     }
 
     /**
@@ -43,6 +46,8 @@ public class CrudPanelVehiculo extends javax.swing.JPanel {
         btnCancelar = new rojeru_san.RSButtonRiple();
         btnGuardar = new rojeru_san.RSButtonRiple();
         YEARAño = new com.toedter.calendar.JYearChooser();
+        cmbPropietario = new javax.swing.JComboBox<>();
+        lblPropietario = new javax.swing.JLabel();
         jLabel12 = new javax.swing.JLabel();
 
         setLayout(new java.awt.BorderLayout());
@@ -58,22 +63,22 @@ public class CrudPanelVehiculo extends javax.swing.JPanel {
         lblPlaca.setFont(new java.awt.Font("Roboto Medium", 0, 21)); // NOI18N
         lblPlaca.setForeground(new java.awt.Color(0, 53, 79));
         lblPlaca.setText("Placa:");
-        jPanel1.add(lblPlaca, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 130, 70, 40));
+        jPanel1.add(lblPlaca, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 120, 70, 40));
 
         lblModelo.setFont(new java.awt.Font("Roboto Medium", 0, 21)); // NOI18N
         lblModelo.setForeground(new java.awt.Color(0, 53, 79));
         lblModelo.setText("Modelo:");
-        jPanel1.add(lblModelo, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 170, 100, 40));
+        jPanel1.add(lblModelo, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 160, 100, 40));
 
         lblMarca.setFont(new java.awt.Font("Roboto Medium", 0, 21)); // NOI18N
         lblMarca.setForeground(new java.awt.Color(0, 53, 79));
         lblMarca.setText("Marca:");
-        jPanel1.add(lblMarca, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 240, 100, 40));
+        jPanel1.add(lblMarca, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 200, 100, 40));
 
         lblColor.setFont(new java.awt.Font("Roboto Medium", 0, 21)); // NOI18N
         lblColor.setForeground(new java.awt.Color(0, 53, 79));
         lblColor.setText("Color:");
-        jPanel1.add(lblColor, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 280, 60, 40));
+        jPanel1.add(lblColor, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 240, 60, 40));
 
         lblAño.setFont(new java.awt.Font("Roboto Medium", 0, 21)); // NOI18N
         lblAño.setForeground(new java.awt.Color(0, 53, 79));
@@ -84,25 +89,25 @@ public class CrudPanelVehiculo extends javax.swing.JPanel {
         txtPlaca.setColorTransparente(true);
         txtPlaca.setFont(new java.awt.Font("Roboto Light", 1, 14)); // NOI18N
         txtPlaca.setPlaceholder("Ejm: AAA-9999");
-        jPanel1.add(txtPlaca, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 120, 200, 40));
+        jPanel1.add(txtPlaca, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 110, 200, 40));
 
         txtModelo.setForeground(new java.awt.Color(0, 53, 79));
         txtModelo.setColorTransparente(true);
         txtModelo.setFont(new java.awt.Font("Roboto Light", 1, 14)); // NOI18N
         txtModelo.setPlaceholder("Ejm: F150 o D-MAX");
-        jPanel1.add(txtModelo, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 170, 200, 40));
+        jPanel1.add(txtModelo, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 150, 200, 40));
 
         txtMarca.setForeground(new java.awt.Color(0, 53, 79));
         txtMarca.setColorTransparente(true);
         txtMarca.setFont(new java.awt.Font("Roboto Light", 1, 14)); // NOI18N
         txtMarca.setPlaceholder("Ejm: Ford");
-        jPanel1.add(txtMarca, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 230, 200, 40));
+        jPanel1.add(txtMarca, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 190, 200, 40));
 
         txtColor.setForeground(new java.awt.Color(0, 53, 79));
         txtColor.setColorTransparente(true);
         txtColor.setFont(new java.awt.Font("Roboto Light", 1, 14)); // NOI18N
         txtColor.setPlaceholder("Ejm: Rojo");
-        jPanel1.add(txtColor, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 280, 200, 40));
+        jPanel1.add(txtColor, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 240, 200, 40));
 
         btnCancelar.setBackground(new java.awt.Color(255, 51, 51));
         btnCancelar.setText("Cancelar");
@@ -129,6 +134,13 @@ public class CrudPanelVehiculo extends javax.swing.JPanel {
         jPanel1.add(btnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 430, -1, -1));
         jPanel1.add(YEARAño, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 340, 160, 30));
 
+        jPanel1.add(cmbPropietario, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 290, 200, 40));
+
+        lblPropietario.setFont(new java.awt.Font("Roboto Medium", 0, 21)); // NOI18N
+        lblPropietario.setForeground(new java.awt.Color(0, 53, 79));
+        lblPropietario.setText("Propietario:");
+        jPanel1.add(lblPropietario, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 290, 120, 40));
+
         jLabel12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/burbujas.png"))); // NOI18N
         jLabel12.setText("jLabel12");
         jPanel1.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 890, 650));
@@ -149,16 +161,17 @@ public class CrudPanelVehiculo extends javax.swing.JPanel {
     
     
         //Guardar USUARIO
-    public static void guardarVehiculos(String placa_Vehiculo, String modelo_Vehiculo, String marca_Vehiculo, String color_Vehiculo, int anioFabricacion_Vehiculo) {
+    public static void guardarVehiculos(String placa_Vehiculo, String modelo_Vehiculo, String marca_Vehiculo, String color_Vehiculo, int anioFabricacion_Vehiculo, String id_Cliente, Estado estado) {
         // ESTABLECER CONEXION CON LA BASE DE DATOS
         ObjectContainer BaseBD = Conexion_db.ConectarBD();
 
-        Vehiculo vehiculo1 = new Vehiculo(placa_Vehiculo, modelo_Vehiculo, marca_Vehiculo, color_Vehiculo, anioFabricacion_Vehiculo);
+        Vehiculo vehiculo1 = new Vehiculo( placa_Vehiculo,  modelo_Vehiculo,  marca_Vehiculo,  color_Vehiculo,  anioFabricacion_Vehiculo,  id_Cliente,  ACTIVO);
         //Cerrar BD (antes de  verificar usuario que abre nuevamente la BD)
         BaseBD.close();
         if (verificarVehiculosGuardar(placa_Vehiculo) == 0) {
             //volvemos a abrir para guardar 
             BaseBD = Conexion_db.ConectarBD();
+            vehiculo1.activarVehiculo();//definimos el vehiculo com activo
             BaseBD.set(vehiculo1);
             BaseBD.close();
             System.out.println("Vehiculo Guardado");
@@ -170,24 +183,14 @@ public class CrudPanelVehiculo extends javax.swing.JPanel {
     public static int verificarVehiculosGuardar(String placa_Vehiculo) {
         // ESTABLECER CONEXION CON LA BASE DE DATOS
         ObjectContainer BaseBD = Conexion_db.ConectarBD();
-        Vehiculo VehiculosBusca = new Vehiculo(placa_Vehiculo, null, null, null, 0);
+        Vehiculo VehiculosBusca = new Vehiculo(placa_Vehiculo, null, null, null, 0,null,null);
         ObjectSet resultado = BaseBD.get(VehiculosBusca);
         int coincidencias= resultado.size();
         //Cerrar BD
         BaseBD.close();
         return coincidencias;
     }
-    //verificar VEHICULOS
-    public static int verificarVehiculos(String placa_Vehiculo) {
-        // ESTABLECER CONEXION CON LA BASE DE DATOS
-        ObjectContainer BaseBD = Conexion_db.ConectarBD();
-        Vehiculo VehiculosBusca = new Vehiculo(placa_Vehiculo, null, null, null, 0);
-        ObjectSet resultado = BaseBD.get(VehiculosBusca);
-        int coincidencias= resultado.size();
-        //Cerrar BD
-        BaseBD.close();
-        return coincidencias;
-    }
+    
     public  void resetCampos(){
     txtPlaca.setText("");
     txtMarca.setText("");
@@ -195,10 +198,22 @@ public class CrudPanelVehiculo extends javax.swing.JPanel {
     txtModelo.setText("");
     YEARAño.setYear(2024);
     }
+    public final int verificarPlacasRepetidas(){
+        Boolean encontrado = false;
+        // ESTABLECER CONEXION CON LA BASE DE DATOS
+        ObjectContainer BaseBD = Conexion_db.ConectarBD();
+        Query vehiculo = BaseBD.query();//metodo para iniciar una consulta
+        vehiculo.constrain(Vehiculo.class);//buscaremos en la clase Vehiculo
+        vehiculo.descend("placa_Vehiculo").constrain(txtPlaca.getText().toUpperCase()); // verificamos las coincidencias en el atributo especificado
+        ObjectSet<Vehiculo> resultado=vehiculo.execute();//Ejecutamos la consulta y almacenamos en "resultado"
+        int coincidencias= resultado.size();
+        BaseBD.close();
+        return coincidencias;
+    }
     
     private void btnGuardarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnGuardarMouseClicked
         Boolean encontrado = false;
-        if (verificarVehiculos(txtPlaca.getText().toUpperCase()) != 0) {
+        if (verificarPlacasRepetidas()!=0) {
             JOptionPane.showMessageDialog(null, "Placa de Vehiculo ya registrado");
             encontrado = true;
         }
@@ -209,7 +224,7 @@ public class CrudPanelVehiculo extends javax.swing.JPanel {
                     Boolean valido = false;//creamos una bandera para validar datos
                     if (valido = txtPlaca.getText().toUpperCase().matches("^[A-Z]{3}-\\d{3,4}$")) {//aceptamos 3 letras, un guion y luego 3 a 4 numeros
                         if (valido = txtColor.getText().matches("^[a-zA-Z]+$")) {
-                            guardarVehiculos(txtPlaca.getText().toUpperCase(), txtModelo.getText().toUpperCase(), txtMarca.getText().toUpperCase(), txtColor.getText().toUpperCase(), YEARAño.getYear());
+                            guardarVehiculos(txtPlaca.getText().toUpperCase(), txtModelo.getText().toUpperCase(), txtMarca.getText().toUpperCase(), txtColor.getText().toUpperCase(), YEARAño.getYear(),(String)/*Convierto a String*/cmbPropietario.getSelectedItem(),Estado.ACTIVO);
                             JOptionPane.showMessageDialog(this, "Vehiculo Guardado");
                             TablaVehiculos tablaVehi = new TablaVehiculos();
                             ShowpanelCruds(tablaVehi);
@@ -233,11 +248,24 @@ public class CrudPanelVehiculo extends javax.swing.JPanel {
         VistaMenu.PanelPrincipal.revalidate();// Vuelve a validar el panel principal para asegurarse de que se actualicen los cambios
         VistaMenu.PanelPrincipal.repaint();// Repinta el panel principal para reflejar los cambios visualmente
     }
+    private void mostrarCombo() {
+//abrir base
+        ObjectContainer BaseBD = Conexion_db.ConectarBD();
+// Consulta a la base de datos para obtener todos los objetos Cliente
+        ObjectSet<Cliente> ciudades = BaseBD.query(Cliente.class);
+
+// Itera sobre los resultados y agrega los nombres de ciudades al JComboBox
+        ciudades.forEach((cliente) -> {
+            cmbPropietario.addItem(cliente.getNombres()+" "+cliente.getApellidos()+" CED:"+cliente.getCedula());
+        });
+        BaseBD.close();
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.toedter.calendar.JYearChooser YEARAño;
     private rojeru_san.RSButtonRiple btnCancelar;
     private rojeru_san.RSButtonRiple btnGuardar;
+    private javax.swing.JComboBox<String> cmbPropietario;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
@@ -246,6 +274,7 @@ public class CrudPanelVehiculo extends javax.swing.JPanel {
     private javax.swing.JLabel lblMarca;
     private javax.swing.JLabel lblModelo;
     private javax.swing.JLabel lblPlaca;
+    private javax.swing.JLabel lblPropietario;
     private rojeru_san.RSMTextFull txtColor;
     private rojeru_san.RSMTextFull txtMarca;
     private rojeru_san.RSMTextFull txtModelo;
