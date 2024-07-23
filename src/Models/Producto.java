@@ -6,21 +6,23 @@ public class Producto {
     private Double precio_Producto;
     private String codigo_categoria_Producto;
     private int numeroProductos_Producto;
-    private int existrenciaMaxima_Producto;
+    private int existenciaMaxima_Producto;
     private int existenciaMinima_Producto;
     private String descripcion_Producto;
     private String ID_Proveedor_Producto;
+  
+    
 
     public Producto() {
     }
 
-    public Producto(String codigo_Producto, String nombre_Producto, Double precio_Producto, String codigo_categoria_Producto, int numeroProductos_Producto, int existrenciaMaxima_Producto, int existenciaMinima_Producto, String descripcion_Producto, String ID_Proveedor_Producto) {
+    public Producto(String codigo_Producto, String nombre_Producto, Double precio_Producto, String codigo_categoria_Producto, int numeroProductos_Producto, int existenciaMaxima_Producto, int existenciaMinima_Producto, String descripcion_Producto, String ID_Proveedor_Producto) {
         this.codigo_Producto = codigo_Producto;
         this.nombre_Producto = nombre_Producto;
         this.precio_Producto = precio_Producto;
         this.codigo_categoria_Producto = codigo_categoria_Producto;
         this.numeroProductos_Producto = numeroProductos_Producto;
-        this.existrenciaMaxima_Producto = existrenciaMaxima_Producto;
+        this.existenciaMaxima_Producto = existenciaMaxima_Producto;
         this.existenciaMinima_Producto = existenciaMinima_Producto;
         this.descripcion_Producto = descripcion_Producto;
         this.ID_Proveedor_Producto = ID_Proveedor_Producto;
@@ -66,12 +68,12 @@ public class Producto {
         this.numeroProductos_Producto = numeroProductos_Producto;
     }
 
-    public int getExistrenciaMaxima_Producto() {
-        return existrenciaMaxima_Producto;
+    public int getExistenciaMaxima_Producto() {
+        return existenciaMaxima_Producto;
     }
 
-    public void setExistrenciaMaxima_Producto(int existrenciaMaxima_Producto) {
-        this.existrenciaMaxima_Producto = existrenciaMaxima_Producto;
+    public void setExistenciaMaxima_Producto(int existenciaMaxima_Producto) {
+        this.existenciaMaxima_Producto = existenciaMaxima_Producto;
     }
 
     public int getExistenciaMinima_Producto() {
@@ -98,11 +100,5 @@ public class Producto {
         this.ID_Proveedor_Producto = ID_Proveedor_Producto;
     }
 
-    @Override
-    public String toString() {
-        return "Producto{" + "codigo_Producto=" + codigo_Producto + ", nombre_Producto=" + nombre_Producto + ", precio_Producto=" + precio_Producto + ", codigo_categoria_Producto=" + codigo_categoria_Producto + ", numeroProductos_Producto=" + numeroProductos_Producto + ", existrenciaMaxima_Producto=" + existrenciaMaxima_Producto + ", existenciaMinima_Producto=" + existenciaMinima_Producto + ", descripcion_Producto=" + descripcion_Producto + ", ID_Proveedor_Producto=" + ID_Proveedor_Producto + '}';
-    }
    
-
-    
 }

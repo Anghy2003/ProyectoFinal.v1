@@ -83,5 +83,7 @@ private double total_encabezadoFactura;
     public String toString() {
         return "EncabezadoFactura{" + "codigo_encabezadoFactura=" + codigo_encabezadoFactura + ", fecha_encabezadoFactura=" + fecha_encabezadoFactura + ", cedulaCliente_encabezadoFactura=" + cedulaCliente_encabezadoFactura + ", total_encabezadoFactura=" + total_encabezadoFactura + '}';
     }
+    
+    
 
 }

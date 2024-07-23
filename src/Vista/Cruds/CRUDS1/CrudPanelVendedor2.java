@@ -76,7 +76,7 @@ public class CrudPanelVendedor2 extends javax.swing.JPanel {
         jLabel2.setFont(new java.awt.Font("Roboto Black", 0, 30)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(0, 53, 79));
         jLabel2.setText("Modificar Vendedor");
-        jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 30, 260, 40));
+        jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 30, 300, 40));
 
         Cedula_Ven.setFont(new java.awt.Font("Roboto Medium", 0, 21)); // NOI18N
         Cedula_Ven.setForeground(new java.awt.Color(0, 53, 79));

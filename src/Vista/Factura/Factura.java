@@ -1,77 +1,45 @@
-
 package Vista.Factura;
 
 import Conexion.Conexion_db;
+import Models.Cliente;
+import Models.DetalleFactura_1;
 import Models.EncabezadoFactura_1;
+import Models.Producto;
+import Models.Servicios;
+import Vista.Cruds.CRUDS1.CrudPanelCliente;
+import static Vista.Menu.VistaMenu.PanelPrincipal;
 import com.db4o.ObjectContainer;
 import com.db4o.ObjectSet;
-import javax.swing.JButton;
+import com.db4o.query.Query;
+import java.awt.BorderLayout;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.JDialog;
+
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.RowFilter;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
 
 public class Factura extends javax.swing.JPanel {
-static ObjectContainer BaseFinal = Conexion_db.ConectarBD();
 
     /**
      * Creates new form Factura
      */
+   
     public Factura() {
-        initComponents();
         
-    }
-     private void añadirFactura() {
-        String Factura = txtcodigoFac.getText();
-        if (verificarrregis(BaseFinal, txtcodigoFac.getText()) != 0) {
-            JOptionPane.showMessageDialog(this, "Codigo de La factura ya existe");
-
-        } else {
-            if (Factura.isEmpty() || !Factura.matches("\\d+")) {
-                JOptionPane.showMessageDialog(this, "Ingrese una codigo valido");
-                return; // Salir del método si la validación no pasa
-            }else{
-              String auxnombre = txtNombre1.getText();
-            if (auxnombre.isEmpty() || !auxnombre.matches("^[a-zA-Z]+$")) {
-                JOptionPane.showMessageDialog(this, "Ingrese un cliente valido válido (solo letras)");
-                return; // Salir del método si la validación no pasa
-            }else{
-             Date.getCalendar();
-            txtdireccion.getText();
-            txttelefono.getText();
-            txtcodigoFac.getText();
-
-            EncabezadoFactura_1 Factura1 = new EncabezadoFactura_1();
-            BaseFinal.store(Factura1);  
-            JOptionPane.showMessageDialog(this, "FACTURA AGREGADA");
-            }
-            }
-        }
-    }
-
-    public static int verificarrregis(ObjectContainer BaseFinal, String codigo_encabezadoFactura) {
-        EncabezadoFactura_1 CBusca = new EncabezadoFactura_1(codigo_encabezadoFactura);
-        ObjectSet resultado = BaseFinal.get(CBusca);
-        return resultado.size();
-    }
-      private void cancelarOperacion() {
-        txtcodigoFac.setText("");
-        Date.setCalendar(null);
-        txtcedula.setText("");
-        txtdireccion.setText("");
-        txtNombre1.setText("");
-        txttelefono.setText("");
-        txtcodigoFac.setText("");
-        JOptionPane.showMessageDialog(this, "Operación cancelada");
-}
-    public boolean EliminarFac(ObjectContainer BaseFinal, String codigo_encabezadoFactura) {
-        EncabezadoFactura_1 FacturaElimi = new EncabezadoFactura_1(codigo_encabezadoFactura, null, null, 0);
-        ObjectSet<EncabezadoFactura_1> resultado = BaseFinal.get(FacturaElimi);
-
-        if (!resultado.isEmpty()) {
-            EncabezadoFactura_1 ciudadi = resultado.next();
-            BaseFinal.delete(ciudadi); // Elimina 
-            return true; // Éxito en la eliminación
-        } else {
-            return false; 
-        }
+        initComponents();
+        setearcabe();
+        txtNombre1.setEnabled(false);
+        txtdireccion.setEnabled(false);
+        txtcedula.setEnabled(false);
+        txttelefono.setEnabled(false);
+        mostrarTablaProductos();
+        mostrarDatosCliente();
+        mostrarTablaServicios();
     }
 
     /**
@@ -83,6 +51,32 @@ static ObjectContainer BaseFinal = Conexion_db.ConectarBD();
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        tablaproductos = new javax.swing.JDialog();
+        jPanel6 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        tblProductos = new javax.swing.JScrollPane();
+        Tablproductos1 = new javax.swing.JTable();
+        txtBuscarProducto = new rojeru_san.RSMTextFull();
+        jLabel3 = new javax.swing.JLabel();
+        btnInsertarProductos = new rsbuttongradiente.RSButtonGradiente();
+        btnbuscarproductos = new rsbuttongradiente.RSButtonGradiente();
+        tablaClientes = new javax.swing.JDialog();
+        jPanel7 = new javax.swing.JPanel();
+        jLabel4 = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tblClientes = new javax.swing.JTable();
+        txtBuscar1 = new rojeru_san.RSMTextFull();
+        btnInsertarCliente = new rsbuttongradiente.RSButtonGradiente();
+        btnBuscarcliente = new rsbuttongradiente.RSButtonGradiente();
+        TablaServicios = new javax.swing.JDialog();
+        jPanel8 = new javax.swing.JPanel();
+        jLabel5 = new javax.swing.JLabel();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        tblServicios = new javax.swing.JTable();
+        txtBuscarServicio = new rojeru_san.RSMTextFull();
+        jLabel6 = new javax.swing.JLabel();
+        btnBuscarServicio = new rsbuttongradiente.RSButtonGradiente();
+        btnInsetarServicios = new rsbuttongradiente.RSButtonGradiente();
         jPanel1 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
@@ -96,9 +90,8 @@ static ObjectContainer BaseFinal = Conexion_db.ConectarBD();
         lblFecha = new javax.swing.JLabel();
         txtdireccion = new javax.swing.JTextField();
         lblverlis = new javax.swing.JLabel();
-        lblverFactu = new javax.swing.JLabel();
         btnEliminar = new javax.swing.JButton();
-        btnAñadir = new javax.swing.JButton();
+        btnAñadircliente = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         JtableFactura = new javax.swing.JTable();
         jPanel5 = new javax.swing.JPanel();
@@ -106,7 +99,6 @@ static ObjectContainer BaseFinal = Conexion_db.ConectarBD();
         lblDescuento = new javax.swing.JLabel();
         lblIva = new javax.swing.JLabel();
         lblTotalFAc = new javax.swing.JLabel();
-        lblValorDes = new javax.swing.JLabel();
         btnNuevo = new javax.swing.JButton();
         btnGenerarVenta = new javax.swing.JButton();
         btnResibo = new javax.swing.JButton();
@@ -120,10 +112,347 @@ static ObjectContainer BaseFinal = Conexion_db.ConectarBD();
         txtcodigoFac = new javax.swing.JTextField();
         lblCuadro1 = new javax.swing.JLabel();
         lblcodFac1 = new javax.swing.JLabel();
-        Date = new com.toedter.calendar.JDateChooser();
-        lblCuadro = new javax.swing.JLabel();
         txtSubtotal = new javax.swing.JTextField();
-        rSButton1 = new rojeru_san.RSButton();
+        btnFinalizarFac = new rojeru_san.RSButton();
+        btnAñadirProductos = new javax.swing.JButton();
+        txtfecha = new javax.swing.JTextField();
+        lblCuadro = new javax.swing.JLabel();
+        btnAñadirServicos = new javax.swing.JButton();
+        txtDescuento = new javax.swing.JTextField();
+        txtTotalfac = new javax.swing.JTextField();
+        txtiva = new javax.swing.JTextField();
+
+        jPanel6.setBackground(new java.awt.Color(255, 255, 255));
+
+        jLabel1.setFont(new java.awt.Font("Roboto Black", 0, 22)); // NOI18N
+        jLabel1.setText("Listado Productos");
+
+        tblProductos.setBackground(new java.awt.Color(255, 255, 255));
+        tblProductos.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        tblProductos.setForeground(new java.awt.Color(255, 255, 255));
+
+        Tablproductos1.setFont(new java.awt.Font("Roboto Medium", 0, 14)); // NOI18N
+        Tablproductos1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        tblProductos.setViewportView(Tablproductos1);
+
+        txtBuscarProducto.setFont(new java.awt.Font("Roboto Bold", 2, 14)); // NOI18N
+        txtBuscarProducto.setPlaceholder("ejm. Pro-01");
+
+        jLabel3.setFont(new java.awt.Font("Roboto Black", 0, 18)); // NOI18N
+        jLabel3.setText("Buscar");
+
+        btnInsertarProductos.setBackground(new java.awt.Color(0, 204, 51));
+        btnInsertarProductos.setText("Insertar");
+        btnInsertarProductos.setColorPrimario(new java.awt.Color(0, 153, 51));
+        btnInsertarProductos.setColorPrimarioHover(new java.awt.Color(51, 204, 0));
+        btnInsertarProductos.setColorSecundario(new java.awt.Color(0, 255, 102));
+        btnInsertarProductos.setColorSecundarioHover(new java.awt.Color(204, 255, 204));
+        btnInsertarProductos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnInsertarProductosActionPerformed(evt);
+            }
+        });
+
+        btnbuscarproductos.setText("Buscar");
+        btnbuscarproductos.setColorPrimario(new java.awt.Color(0, 51, 153));
+        btnbuscarproductos.setColorPrimarioHover(new java.awt.Color(51, 0, 255));
+        btnbuscarproductos.setColorSecundario(new java.awt.Color(51, 153, 255));
+        btnbuscarproductos.setColorSecundarioHover(new java.awt.Color(153, 204, 255));
+        btnbuscarproductos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnbuscarproductosActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
+        jPanel6.setLayout(jPanel6Layout);
+        jPanel6Layout.setHorizontalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addGap(24, 24, 24)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(tblProductos, javax.swing.GroupLayout.DEFAULT_SIZE, 836, Short.MAX_VALUE)
+                    .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1)
+                            .addGroup(jPanel6Layout.createSequentialGroup()
+                                .addComponent(jLabel3)
+                                .addGap(39, 39, 39)
+                                .addComponent(txtBuscarProducto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(btnbuscarproductos, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnInsertarProductos, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
+        );
+        jPanel6Layout.setVerticalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addGap(38, 38, 38)
+                .addComponent(jLabel1)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addGap(12, 12, 12)
+                        .addComponent(txtBuscarProducto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addGap(26, 26, 26)
+                        .addComponent(jLabel3))
+                    .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnbuscarproductos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnInsertarProductos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(40, 40, 40)
+                .addComponent(tblProductos, javax.swing.GroupLayout.PREFERRED_SIZE, 446, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+
+        tablaproductos.getContentPane().add(jPanel6, java.awt.BorderLayout.CENTER);
+
+        jPanel7.setBackground(new java.awt.Color(255, 255, 255));
+
+        jLabel4.setFont(new java.awt.Font("Roboto Black", 0, 22)); // NOI18N
+        jLabel4.setText("Listado Clientes");
+
+        jScrollPane2.setBackground(new java.awt.Color(255, 255, 255));
+        jScrollPane2.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        jScrollPane2.setForeground(new java.awt.Color(255, 255, 255));
+        jScrollPane2.setEnabled(false);
+
+        tblClientes.setFont(new java.awt.Font("Roboto Medium", 0, 14)); // NOI18N
+        tblClientes.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane2.setViewportView(tblClientes);
+
+        txtBuscar1.setFont(new java.awt.Font("Roboto Bold", 2, 14)); // NOI18N
+        txtBuscar1.setPlaceholder("ejm. 0106388747");
+
+        btnInsertarCliente.setText("Insertar");
+        btnInsertarCliente.setColorPrimario(new java.awt.Color(0, 204, 51));
+        btnInsertarCliente.setColorPrimarioHover(new java.awt.Color(0, 255, 51));
+        btnInsertarCliente.setColorSecundario(new java.awt.Color(0, 153, 51));
+        btnInsertarCliente.setColorSecundarioHover(new java.awt.Color(51, 255, 102));
+        btnInsertarCliente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnInsertarClienteActionPerformed(evt);
+            }
+        });
+
+        btnBuscarcliente.setText("Buscar");
+        btnBuscarcliente.setColorPrimario(new java.awt.Color(0, 51, 153));
+        btnBuscarcliente.setColorPrimarioHover(new java.awt.Color(51, 0, 255));
+        btnBuscarcliente.setColorSecundario(new java.awt.Color(51, 153, 255));
+        btnBuscarcliente.setColorSecundarioHover(new java.awt.Color(153, 204, 255));
+        btnBuscarcliente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarclienteActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
+        jPanel7.setLayout(jPanel7Layout);
+        jPanel7Layout.setHorizontalGroup(
+            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel7Layout.createSequentialGroup()
+                .addGap(12, 12, 12)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 848, Short.MAX_VALUE)
+                .addContainerGap())
+            .addGroup(jPanel7Layout.createSequentialGroup()
+                .addGap(24, 24, 24)
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel7Layout.createSequentialGroup()
+                        .addComponent(txtBuscar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnBuscarcliente, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnInsertarCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel4))
+                .addContainerGap(368, Short.MAX_VALUE))
+        );
+        jPanel7Layout.setVerticalGroup(
+            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel7Layout.createSequentialGroup()
+                .addGap(38, 38, 38)
+                .addComponent(jLabel4)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel7Layout.createSequentialGroup()
+                        .addComponent(txtBuscar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(35, 35, 35))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
+                        .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnBuscarcliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnInsertarCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(31, 31, 31)))
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 446, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(29, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout tablaClientesLayout = new javax.swing.GroupLayout(tablaClientes.getContentPane());
+        tablaClientes.getContentPane().setLayout(tablaClientesLayout);
+        tablaClientesLayout.setHorizontalGroup(
+            tablaClientesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 870, Short.MAX_VALUE)
+            .addGroup(tablaClientesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(tablaClientesLayout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 0, Short.MAX_VALUE)))
+        );
+        tablaClientesLayout.setVerticalGroup(
+            tablaClientesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 630, Short.MAX_VALUE)
+            .addGroup(tablaClientesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(tablaClientesLayout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addComponent(jPanel7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 0, Short.MAX_VALUE)))
+        );
+
+        jPanel8.setBackground(new java.awt.Color(255, 255, 255));
+
+        jLabel5.setFont(new java.awt.Font("Roboto Black", 0, 22)); // NOI18N
+        jLabel5.setText("Listado Servicios");
+
+        jScrollPane3.setBackground(new java.awt.Color(255, 255, 255));
+        jScrollPane3.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        jScrollPane3.setForeground(new java.awt.Color(255, 255, 255));
+        jScrollPane3.setToolTipText("");
+        jScrollPane3.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+
+        tblServicios.setFont(new java.awt.Font("Roboto Medium", 0, 14)); // NOI18N
+        tblServicios.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null},
+                {null, null, null, null, null}
+            },
+            new String [] {
+                "Cedula", "Nombre ", "Apellido", "Direccion", "Telefono"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane3.setViewportView(tblServicios);
+
+        txtBuscarServicio.setFont(new java.awt.Font("Roboto Bold", 2, 14)); // NOI18N
+        txtBuscarServicio.setPlaceholder("ejm. Ser-01");
+
+        jLabel6.setFont(new java.awt.Font("Roboto Black", 0, 18)); // NOI18N
+        jLabel6.setText("Buscar");
+
+        btnBuscarServicio.setText("Buscar");
+        btnBuscarServicio.setColorPrimario(new java.awt.Color(0, 51, 153));
+        btnBuscarServicio.setColorPrimarioHover(new java.awt.Color(51, 0, 255));
+        btnBuscarServicio.setColorSecundario(new java.awt.Color(51, 153, 255));
+        btnBuscarServicio.setColorSecundarioHover(new java.awt.Color(153, 204, 255));
+        btnBuscarServicio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarServicioActionPerformed(evt);
+            }
+        });
+
+        btnInsetarServicios.setText("Insertar");
+        btnInsetarServicios.setColorPrimario(new java.awt.Color(0, 153, 51));
+        btnInsetarServicios.setColorPrimarioHover(new java.awt.Color(0, 204, 102));
+        btnInsetarServicios.setColorSecundario(new java.awt.Color(0, 255, 51));
+        btnInsetarServicios.setColorSecundarioHover(new java.awt.Color(153, 204, 255));
+        btnInsetarServicios.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnInsetarServiciosActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel8Layout = new javax.swing.GroupLayout(jPanel8);
+        jPanel8.setLayout(jPanel8Layout);
+        jPanel8Layout.setHorizontalGroup(
+            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel8Layout.createSequentialGroup()
+                .addGap(24, 24, 24)
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane3)
+                    .addGroup(jPanel8Layout.createSequentialGroup()
+                        .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel5)
+                            .addGroup(jPanel8Layout.createSequentialGroup()
+                                .addComponent(jLabel6)
+                                .addGap(39, 39, 39)
+                                .addComponent(txtBuscarServicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(btnBuscarServicio, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(btnInsetarServicios, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 260, Short.MAX_VALUE)))
+                .addContainerGap())
+        );
+        jPanel8Layout.setVerticalGroup(
+            jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel8Layout.createSequentialGroup()
+                .addGap(38, 38, 38)
+                .addComponent(jLabel5)
+                .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel8Layout.createSequentialGroup()
+                        .addGap(12, 12, 12)
+                        .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(txtBuscarServicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(btnBuscarServicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(btnInsetarServicios, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(jPanel8Layout.createSequentialGroup()
+                        .addGap(26, 26, 26)
+                        .addComponent(jLabel6)))
+                .addGap(44, 44, 44)
+                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 446, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(13, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout TablaServiciosLayout = new javax.swing.GroupLayout(TablaServicios.getContentPane());
+        TablaServicios.getContentPane().setLayout(TablaServiciosLayout);
+        TablaServiciosLayout.setHorizontalGroup(
+            TablaServiciosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 863, Short.MAX_VALUE)
+            .addGroup(TablaServiciosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(TablaServiciosLayout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 0, Short.MAX_VALUE)))
+        );
+        TablaServiciosLayout.setVerticalGroup(
+            TablaServiciosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 622, Short.MAX_VALUE)
+            .addGroup(TablaServiciosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(TablaServiciosLayout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addComponent(jPanel8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 0, Short.MAX_VALUE)))
+        );
 
         setLayout(new java.awt.BorderLayout());
 
@@ -181,50 +510,40 @@ static ObjectContainer BaseFinal = Conexion_db.ConectarBD();
         lblFecha.setFont(new java.awt.Font("Yu Gothic UI Light", 1, 14)); // NOI18N
         lblFecha.setText("Fecha:");
         jPanel3.add(lblFecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 90, -1, -1));
-
-        txtdireccion.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtdireccionActionPerformed(evt);
-            }
-        });
         jPanel3.add(txtdireccion, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 160, 220, -1));
 
-        lblverlis.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/lista.png"))); // NOI18N
         lblverlis.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jPanel3.add(lblverlis, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 250, 710, 70));
 
-        lblverFactu.setText("Ver lista de facturas");
-        jPanel3.add(lblverFactu, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 260, -1, 40));
-
         btnEliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/boton-x (1).png"))); // NOI18N
         btnEliminar.setText("Eliminar");
-        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEliminarActionPerformed(evt);
-            }
-        });
-        jPanel3.add(btnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 260, -1, -1));
+        jPanel3.add(btnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 270, -1, -1));
 
-        btnAñadir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/mas (1).png"))); // NOI18N
-        btnAñadir.setText("Añadir");
-        btnAñadir.addActionListener(new java.awt.event.ActionListener() {
+        btnAñadircliente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/mas (1).png"))); // NOI18N
+        btnAñadircliente.setText("Buscar");
+        btnAñadircliente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAñadirActionPerformed(evt);
+                btnAñadirclienteActionPerformed(evt);
             }
         });
-        jPanel3.add(btnAñadir, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 260, -1, -1));
+        jPanel3.add(btnAñadircliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 160, -1, 30));
 
         JtableFactura.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
+
             },
             new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
+                "Codigo Producto/Servicio", "Nombre Producto/Servicio", "Precio Producto/Servicio", "Cantidad Producto/Servicio", "Subtotal"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, true
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane1.setViewportView(JtableFactura);
 
         jPanel3.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 330, 710, 90));
@@ -246,7 +565,7 @@ static ObjectContainer BaseFinal = Conexion_db.ConectarBD();
         jPanel3.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 670, 890, 20));
 
         lblSubtotal.setText("SubTotal:");
-        jPanel3.add(lblSubtotal, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 450, -1, -1));
+        jPanel3.add(lblSubtotal, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 450, -1, 20));
 
         lblDescuento.setText("%Descuento:");
         jPanel3.add(lblDescuento, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 470, -1, -1));
@@ -257,47 +576,19 @@ static ObjectContainer BaseFinal = Conexion_db.ConectarBD();
         lblTotalFAc.setText("Total Factura:");
         jPanel3.add(lblTotalFAc, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 510, -1, -1));
 
-        lblValorDes.setText("Valor Descontado:");
-        jPanel3.add(lblValorDes, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 470, -1, -1));
-
         btnNuevo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/registro (1)_1.png"))); // NOI18N
-        btnNuevo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnNuevoActionPerformed(evt);
-            }
-        });
         jPanel3.add(btnNuevo, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 120, 80, 70));
 
         btnGenerarVenta.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/dinero.png"))); // NOI18N
-        btnGenerarVenta.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnGenerarVentaActionPerformed(evt);
-            }
-        });
         jPanel3.add(btnGenerarVenta, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 210, 80, 70));
 
         btnResibo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/impresion.png"))); // NOI18N
-        btnResibo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnResiboActionPerformed(evt);
-            }
-        });
         jPanel3.add(btnResibo, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 300, 80, 70));
 
         btnCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/rechazar.png"))); // NOI18N
-        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCancelarActionPerformed(evt);
-            }
-        });
         jPanel3.add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 390, 80, 70));
 
         btnSalir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/cerrar-sesion.png"))); // NOI18N
-        btnSalir.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnSalirActionPerformed(evt);
-            }
-        });
         jPanel3.add(btnSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 480, 80, 70));
 
         lbllineas.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -306,12 +597,14 @@ static ObjectContainer BaseFinal = Conexion_db.ConectarBD();
         lblcedula.setFont(new java.awt.Font("Yu Gothic UI Light", 1, 14)); // NOI18N
         lblcedula.setText("Cedula:");
         jPanel3.add(lblcedula, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 160, -1, -1));
-        jPanel3.add(txtcedula, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 160, 190, -1));
+        jPanel3.add(txtcedula, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 160, 190, 30));
 
         lblNombre1.setFont(new java.awt.Font("Yu Gothic UI Light", 1, 14)); // NOI18N
         lblNombre1.setText("Cliente:");
         jPanel3.add(lblNombre1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 200, -1, -1));
         jPanel3.add(txtNombre1, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 200, 190, -1));
+
+        txtcodigoFac.setToolTipText("AUTOGENERADO");
         jPanel3.add(txtcodigoFac, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 90, 130, -1));
 
         lblCuadro1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -320,15 +613,41 @@ static ObjectContainer BaseFinal = Conexion_db.ConectarBD();
         lblcodFac1.setFont(new java.awt.Font("Yu Gothic UI Light", 1, 14)); // NOI18N
         lblcodFac1.setText("N° Factura:");
         jPanel3.add(lblcodFac1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, 70, -1));
-        jPanel3.add(Date, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 90, 210, 20));
+        jPanel3.add(txtSubtotal, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 450, 100, -1));
+
+        btnFinalizarFac.setBackground(new java.awt.Color(0, 204, 0));
+        btnFinalizarFac.setText("Finalizar Factura");
+        btnFinalizarFac.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnFinalizarFacActionPerformed(evt);
+            }
+        });
+        jPanel3.add(btnFinalizarFac, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 560, -1, -1));
+
+        btnAñadirProductos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/mas (1).png"))); // NOI18N
+        btnAñadirProductos.setText("Añadir Productos");
+        btnAñadirProductos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAñadirProductosActionPerformed(evt);
+            }
+        });
+        jPanel3.add(btnAñadirProductos, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 270, -1, -1));
+        jPanel3.add(txtfecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 90, 220, -1));
 
         lblCuadro.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jPanel3.add(lblCuadro, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 80, 710, 40));
-        jPanel3.add(txtSubtotal, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 450, 90, -1));
 
-        rSButton1.setBackground(new java.awt.Color(0, 204, 0));
-        rSButton1.setText("Finalizar Factura");
-        jPanel3.add(rSButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 560, -1, -1));
+        btnAñadirServicos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/mas (1).png"))); // NOI18N
+        btnAñadirServicos.setText("Añadir Servicios ");
+        btnAñadirServicos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAñadirServicosActionPerformed(evt);
+            }
+        });
+        jPanel3.add(btnAñadirServicos, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 270, -1, -1));
+        jPanel3.add(txtDescuento, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 470, 100, -1));
+        jPanel3.add(txtTotalfac, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 510, 100, 20));
+        jPanel3.add(txtiva, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 490, 100, -1));
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -342,8 +661,8 @@ static ObjectContainer BaseFinal = Conexion_db.ConectarBD();
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 619, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 19, Short.MAX_VALUE))
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 608, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 30, Short.MAX_VALUE))
         );
 
         jPanel1.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 910, 640));
@@ -351,60 +670,471 @@ static ObjectContainer BaseFinal = Conexion_db.ConectarBD();
         add(jPanel1, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txtdireccionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtdireccionActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtdireccionActionPerformed
+    private void btnInsertarProductosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInsertarProductosActionPerformed
+        seteardatosPro();
+    }//GEN-LAST:event_btnInsertarProductosActionPerformed
 
-    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-        EliminarFac(BaseFinal, txtcodigoFac.getText());
-    }//GEN-LAST:event_btnEliminarActionPerformed
+    private void btnAñadirProductosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAñadirProductosActionPerformed
+        activarJdialog(tablaproductos);        
+        actualizarFactura();
+    }//GEN-LAST:event_btnAñadirProductosActionPerformed
 
-    private void btnAñadirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAñadirActionPerformed
-        añadirFactura();
-    }//GEN-LAST:event_btnAñadirActionPerformed
+    private void btnInsertarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInsertarClienteActionPerformed
+           CrudPanelCliente registroVehiculo =new CrudPanelCliente();
+           MostarpanelCruds(registroVehiculo);
+    }//GEN-LAST:event_btnInsertarClienteActionPerformed
 
-    private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
+    private void btnAñadirclienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAñadirclienteActionPerformed
+            activarJadialog( tablaClientes);
+    }//GEN-LAST:event_btnAñadirclienteActionPerformed
 
-    }//GEN-LAST:event_btnNuevoActionPerformed
+    private void btnAñadirServicosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAñadirServicosActionPerformed
+           activarJadialogser(TablaServicios);
+           actualizarFactura();
+    }//GEN-LAST:event_btnAñadirServicosActionPerformed
 
-    private void btnGenerarVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenerarVentaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnGenerarVentaActionPerformed
+    private void btnFinalizarFacActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFinalizarFacActionPerformed
+       actualizarFactura();
+       guardarFactura();
+    }//GEN-LAST:event_btnFinalizarFacActionPerformed
 
-    private void btnResiboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnResiboActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnResiboActionPerformed
-
-    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-        cancelarOperacion();
-    }//GEN-LAST:event_btnCancelarActionPerformed
-
-    private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
+    private void btnbuscarproductosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnbuscarproductosActionPerformed
         
-        Cerrar_BD(BaseFinal);
-    }//GEN-LAST:event_btnSalirActionPerformed
+        String textoBusqueda = txtBuscarProducto.getText();
+        filtrarTabla(textoBusqueda);
+    
+    }//GEN-LAST:event_btnbuscarproductosActionPerformed
 
- public static void Cerrar_BD(ObjectContainer BaseFinal) {
-        BaseFinal.close();
+    private void btnInsetarServiciosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInsetarServiciosActionPerformed
+           seteardatosSer();
+    }//GEN-LAST:event_btnInsetarServiciosActionPerformed
+
+    private void btnBuscarclienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarclienteActionPerformed
+     CargarCliente();
+    }//GEN-LAST:event_btnBuscarclienteActionPerformed
+
+    private void btnBuscarServicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarServicioActionPerformed
+       String textoBusqueda = txtBuscarServicio.getText();
+        filtrarTablaServicios(textoBusqueda);
+    }//GEN-LAST:event_btnBuscarServicioActionPerformed
+    private static String obtenerProximoCodigoFactura(ObjectContainer db) {
+    // Consultar todos los encabezados de factura
+    ObjectSet<EncabezadoFactura_1> result = db.queryByExample(EncabezadoFactura_1.class);
+
+    // Determinar el máximo ID numérico existente
+    int maxID = 0;
+    while (result.hasNext()) {
+        EncabezadoFactura_1 facturacion = result.next();
+        String codigo = facturacion.getCodigo_encabezadoFactura();
+        if (codigo != null && codigo.startsWith("FAC-")) {
+            try {
+                int id = Integer.parseInt(codigo.substring(4)); // Extraer la parte numérica del código
+                if (id > maxID) {
+                    maxID = id;
+                }
+            } catch (NumberFormatException e) {
+                // Manejar el caso en que el substring no sea un número válido
+                System.err.println("Error al parsear el código de factura: " + codigo);
+            }
+        }
     }
+
+    // El próximo ID es el máximo + 1
+    int siguienteID = maxID + 1;
+    // Retornar el nuevo código concatenado con "FAC-"
+    return String.format("FAC-%04d", siguienteID); // Asegura 4 dígitos con ceros a la izquierda
+}
+
+    public void setearcabe() {
+    ObjectContainer baseBD = Conexion_db.ConectarBD();
+    String fac = obtenerProximoCodigoFactura(baseBD);
+    txtcodigoFac.setText(fac);
+    txtcodigoFac.setEnabled(false);
+    txtfecha.setText(obtenerFechaActual());
+    txtfecha.setEnabled(false);
+    baseBD.close();
+    }
+
+    public static String obtenerFechaActual() {
+        LocalDate fechaActual = LocalDate.now();
+        String fechita = fechaActual.toString();
+        return fechita;
+    }
+
+    private void activarJdialog(JDialog tablaProductos) {
+
+        tablaProductos.setTitle("Listado Productos");
+        tablaProductos.setSize(680, 330);
+        tablaProductos.setLocationRelativeTo(this);
+        tablaProductos.setVisible(true);
+    }
+
+    private void mostrarTablaProductos() {
+        ObjectContainer BaseBD = Conexion_db.ConectarBD();
+        Producto producto = new Producto(null, null, null, null, 0, 0, 0, null, null);
+        ObjectSet<Producto> resul = BaseBD.get(producto);
+
+        String matriz[][] = new String[resul.size()][4];
+
+        for (int i = 0; i < resul.size(); i++) {
+            Producto prod = (Producto) resul.next();
+
+            matriz[i][0] = prod.getCodigo_Producto();
+            matriz[i][1] = prod.getNombre_Producto();
+            matriz[i][2] = String.valueOf(prod.getPrecio_Producto());
+            matriz[i][3] = String.valueOf(prod.getNumeroProductos_Producto());
+        }
+
+        Tablproductos1.setModel(new javax.swing.table.DefaultTableModel(
+                matriz,
+                new String[]{
+                    "Código Producto", "Nombre Producto", "Precio", "Número de Productos"
+                }
+        ));
+        BaseBD.close();
+    }
+
+ private void filtrarTabla(String consulta) {
+    DefaultTableModel modelo = (DefaultTableModel) Tablproductos1.getModel();
+    TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(modelo);
+    Tablproductos1.setRowSorter(sorter);
+
+    if (consulta.trim().length() == 0) {
+        sorter.setRowFilter(null);
+    } else {
+        sorter.setRowFilter(RowFilter.regexFilter("(?i)" + consulta));
+    }
+
+    // Selecciona automáticamente la primera fila filtrada
+    if (Tablproductos1.getRowCount() > 0) {
+        Tablproductos1.setRowSelectionInterval(0, 0);
+    }
+}
+
+ public void seteardatosPro() {
+    int filaSeleccionada = Tablproductos1.getSelectedRow();
+    if (filaSeleccionada != -1) {
+        int filaModelo = Tablproductos1.convertRowIndexToModel(filaSeleccionada);
+        String codigoProducto = (String) Tablproductos1.getModel().getValueAt(filaModelo, 0);
+        String nombreProducto = (String) Tablproductos1.getModel().getValueAt(filaModelo, 1);
+        String precioProducto = (String) Tablproductos1.getModel().getValueAt(filaModelo, 2);
+
+        String numeroProductos = "";
+        boolean esValido = false;
+        
+        while (!esValido) {
+            numeroProductos = JOptionPane.showInputDialog("Ingrese la cantidad de productos");
+            if (numeroProductos != null && numeroProductos.matches("\\d+")) {
+                esValido = true;
+            } else {
+                JOptionPane.showMessageDialog(null, "Por favor ingrese solo dígitos.");
+            }
+        }
+
+        DefaultTableModel modeloFactura = (DefaultTableModel) JtableFactura.getModel();
+        modeloFactura.addRow(new Object[]{codigoProducto, nombreProducto, precioProducto, numeroProductos});
+        
+        // Limpia la selección de la tabla
+        Tablproductos1.clearSelection();
+        
+        tablaproductos.setVisible(true);
+    } else {
+        JOptionPane.showMessageDialog(null, "No se seleccionó ningún producto");
+    }
+}
+    
+//clientes
+
+    private void activarJadialog(JDialog tablaClientes) {
+
+        tablaClientes.setTitle("Listado Clientes");
+        tablaClientes.setSize(680, 330);
+        tablaClientes.setLocationRelativeTo(this);
+        tablaClientes.setVisible(true);
+    }
+
+    private void mostrarDatosCliente() {
+
+        ObjectContainer BaseBD = Conexion_db.ConectarBD();
+        tblClientes.setEnabled(true);
+
+        ObjectSet<Cliente> resultado = BaseBD.get(Cliente.class);
+
+        String matriz[][] = new String[resultado.size()][5];
+        int i = 0;
+        for (Cliente cli : resultado) {
+
+                             
+            matriz[i][0] = cli.getCedula();
+            matriz[i][1] = cli.getNombres();
+            matriz[i][2] = cli.getApellidos();
+           
+            
+            i++;
+        }
+
+        tblClientes.setModel(new javax.swing.table.DefaultTableModel(
+                matriz,
+                new String[]{ "Cedula", "Nombres", "Apellidos"} ));
+        BaseBD.close();
+    }
+
+    
+   public final void CargarCliente() {
+   Boolean encontrado = false;
+    
+    // Verifica que el campo de búsqueda no esté vacío
+    String cedulaBuscar = txtBuscar1.getText().trim();
+    if (cedulaBuscar.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Por favor, ingrese una cédula para buscar.");
+        return;
+    }
+
+    // ESTABLECER CONEXION CON LA BASE DE DATOS
+    ObjectContainer BaseBD = null;
+    try {
+        BaseBD = Conexion_db.ConectarBD();
+        Query clienteQuery = BaseBD.query(); // Método para iniciar una consulta
+        clienteQuery.constrain(Cliente.class); // Buscaremos en la clase Cliente
+        clienteQuery.descend("cedula").constrain(cedulaBuscar); // Verificamos las coincidencias en el atributo especificado
+        ObjectSet<Cliente> resultado = clienteQuery.execute(); // Ejecutamos la consulta y almacenamos en "resultado"
+
+        // si s los resultados
+        if (!resultado.isEmpty()) {
+            for (Cliente cliente : resultado) {
+                // Seteamos en los campos recibiendo del objeto
+                txtcedula.setText(cliente.getCedula());
+                txtcedula.setEnabled(false); // Para que el usuario no edite la cédula
+                txtNombre1.setText(cliente.getNombres());
+                txtdireccion.setText(cliente.getDireccion());
+                txttelefono.setText(cliente.getCelular());
+                encontrado = true;
+                JOptionPane.showMessageDialog(this, "Cliente encontrado");
+                break; // Salimos del bucle una vez encontrado el cliente
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "No se encontró Cliente");
+        }
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(this, "Error al buscar el cliente: " + e.getMessage());
+    } finally {
+        if (BaseBD != null) {
+            BaseBD.close();
+        }
+    }
+}
+    //Servicios 
+    private void mostrarTablaServicios() {
+    ObjectContainer BaseBD = Conexion_db.ConectarBD();
+    Servicios servicio = new Servicios();
+    ObjectSet<Servicios> resul = BaseBD.get(servicio);
+
+    String[][] matriz = new String[resul.size()][8];
+
+    int i = 0;
+    while (resul.hasNext()) {
+        Servicios serv = resul.next();
+
+        matriz[i][0] = serv.getCodigo_Servicio();
+        matriz[i][1] = serv.getNombre_Servicio();        
+        matriz[i][2] = String.valueOf(serv.getPrecioTotal_Servicio());
+        
+       
+
+        i++;
+    }
+
+    tblServicios.setModel(new javax.swing.table.DefaultTableModel(
+            matriz,
+            new String[]{
+                "Código Servicio", "Nombre Servicio", "Precio Total"} ));
+    BaseBD.close();
+}
+  private void activarJadialogser(JDialog TablaServicios) {
+
+        TablaServicios.setTitle("Listado Servicios");
+        TablaServicios.setSize(680, 330);
+        TablaServicios.setLocationRelativeTo(this);
+        TablaServicios.setVisible(true);
+    } 
+  private void filtrarTablaServicios(String consulta) {
+    DefaultTableModel modelo = (DefaultTableModel) tblServicios.getModel();
+    TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(modelo);
+    tblServicios.setRowSorter(sorter);
+
+    if (consulta.trim().length() == 0) {
+        sorter.setRowFilter(null);
+    } else {
+        sorter.setRowFilter(RowFilter.regexFilter("(?i)" + consulta));
+    }
+
+    // Selecciona automáticamente la primera fila filtrada
+    if (tblServicios.getRowCount() > 0) {
+        tblServicios.setRowSelectionInterval(0, 0);
+    }
+}
+
+  public void seteardatosSer() {
+    int filaSeleccionada = tblServicios.getSelectedRow();
+    if (filaSeleccionada != -1) {
+        int filaModelo = tblServicios.convertRowIndexToModel(filaSeleccionada);
+        String codigoServicio = (String) tblServicios.getModel().getValueAt(filaModelo, 0);
+        String nombreServicio = (String) tblServicios.getModel().getValueAt(filaModelo, 1);
+        String precioServicio = (String) tblServicios.getModel().getValueAt(filaModelo, 2);
+
+        String numerodevehuculos = "";
+        boolean esValido = false;
+        
+        while (!esValido) {
+            numerodevehuculos = JOptionPane.showInputDialog("Ingrese el número de vehículos a los que se les realizó el servicio");
+            if (numerodevehuculos != null && numerodevehuculos.matches("\\d+")) {
+                esValido = true;
+            } else {
+                JOptionPane.showMessageDialog(null, "Por favor ingrese solo dígitos.");
+            }
+        }
+
+          DefaultTableModel modeloFactura = (DefaultTableModel) JtableFactura.getModel();
+        modeloFactura.addRow(new Object[]{codigoServicio, nombreServicio, precioServicio, numerodevehuculos});
+        // Limpia la selección de la tabla
+        tblServicios.clearSelection();
+        
+        tblServicios.setVisible(true);
+    } else {
+        JOptionPane.showMessageDialog(null, "No se seleccionó ningún producto");
+    }
+}
+//  
+
+  //subtotal por producto/Servicio 
+ private void actualizarSubtotalesFila() {
+    DefaultTableModel model = (DefaultTableModel) JtableFactura.getModel();
+    for (int i = 0; i < model.getRowCount(); i++) {
+        String precioStr = ((String) model.getValueAt(i, 2)).replace(",", ".");
+        String cantidadStr = ((String) model.getValueAt(i, 3)).replace(",", ".");
+        double precio = Double.parseDouble(precioStr);
+        int cantidad = Integer.parseInt(cantidadStr);
+        double subtotal = precio * cantidad;
+        model.setValueAt(String.format("%.2f", subtotal), i, 4); // Suponiendo que la columna de subtotal es la 5ta (índice 4)
+    }
+}
+ private double calcularSubtotalTabla() {
+    double subtotal = 0.0;
+    DefaultTableModel model = (DefaultTableModel) JtableFactura.getModel();
+    for (int i = 0; i < model.getRowCount(); i++) {
+        String subtotalStr = ((String) model.getValueAt(i, 4)).replace(",", ".");
+        subtotal += Double.parseDouble(subtotalStr);
+    }
+    return subtotal;
+}
+private void actualizarFactura() {
+    actualizarSubtotalesFila(); // Primero actualizar los subtotales por fila
+    double subtotal = calcularSubtotalTabla();
+    double porcentajeDescuento = 0.0;
+    if (!txtDescuento.getText().isEmpty()) {
+        String descuentoStr = txtDescuento.getText().replace(",", ".");
+        porcentajeDescuento = Double.parseDouble(descuentoStr);
+    }
+    double porcentajeIVA = 15.0; // IVA del 15%
+    double descuento = calcularDescuento(subtotal, porcentajeDescuento);
+    double iva = calcularIVA(subtotal, porcentajeIVA);
+    double total = calcularTotal(subtotal, descuento, iva);
+
+    txtSubtotal.setText(String.format("%.2f", subtotal));
+    txtDescuento.setText(String.format("%.2f", descuento));
+    txtiva.setText(String.format("%.2f", iva));
+    txtTotalfac.setText(String.format("%.2f", total));
+}
+ // Método para calcular el descuento
+private double calcularDescuento(double subtotal, double porcentajeDescuento) {
+    return subtotal * (porcentajeDescuento / 100.0);
+}
+
+// Método para calcular el IVA
+private double calcularIVA(double subtotal, double porcentajeIVA) {
+    return subtotal * (porcentajeIVA / 100.0);
+}
+
+// Método para calcular el total
+private double calcularTotal(double subtotal, double descuento, double iva) {
+    return subtotal - descuento + iva;
+}
  
+    private void MostarpanelCruds(JPanel p) {
+        p.setSize(870, 630);
+        p.setLocation(0, 0);
+        PanelPrincipal.removeAll();
+        PanelPrincipal.add(p, BorderLayout.CENTER);
+        PanelPrincipal.revalidate();
+        PanelPrincipal.repaint();
+    }
+    private void guardarFactura() {
+    DefaultTableModel model = (DefaultTableModel) JtableFactura.getModel();
+    List<DetalleFactura_1> detallesFactura = new ArrayList<>();
+
+    // Obtener los datos de los detalles de la factura
+    for (int i = 0; i < model.getRowCount(); i++) {
+        String codigoProducto = (String) model.getValueAt(i, 0);
+        int cantidadProducto = Integer.parseInt(((String) model.getValueAt(i, 3)).replace(",", "."));
+        detallesFactura.add(new DetalleFactura_1(txtcodigoFac.getText(), codigoProducto, cantidadProducto));
+    }
+
+    // Obtener los datos del encabezado de la factura
+    String codigoFactura = txtcodigoFac.getText();
+    String fecha = txtfecha.getText();
+    String cedula = txtcedula.getText();
+    double total = Double.parseDouble(txtTotalfac.getText().replace(",", "."));
+
+    // Crear el encabezado de la factura
+    EncabezadoFactura_1 factura = new EncabezadoFactura_1(codigoFactura, fecha, cedula, total);
+
+    // Guardar el encabezado y los detalles en la base de datos
+    ObjectContainer baseBD = Conexion_db.ConectarBD();
+    baseBD.store(factura);
+    for (DetalleFactura_1 detalle : detallesFactura) {
+        baseBD.store(detalle);
+    }
+    baseBD.close();
+
+    JOptionPane.showMessageDialog(this, "Factura guardada exitosamente!");
+}
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private com.toedter.calendar.JDateChooser Date;
     private javax.swing.JTable JtableFactura;
-    private javax.swing.JButton btnAñadir;
+    private javax.swing.JDialog TablaServicios;
+    private javax.swing.JTable Tablproductos1;
+    private javax.swing.JButton btnAñadirProductos;
+    private javax.swing.JButton btnAñadirServicos;
+    private javax.swing.JButton btnAñadircliente;
+    private rsbuttongradiente.RSButtonGradiente btnBuscarServicio;
+    private rsbuttongradiente.RSButtonGradiente btnBuscarcliente;
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnEliminar;
+    private rojeru_san.RSButton btnFinalizarFac;
     private javax.swing.JButton btnGenerarVenta;
+    private rsbuttongradiente.RSButtonGradiente btnInsertarCliente;
+    private rsbuttongradiente.RSButtonGradiente btnInsertarProductos;
+    private rsbuttongradiente.RSButtonGradiente btnInsetarServicios;
     private javax.swing.JButton btnNuevo;
     private javax.swing.JButton btnResibo;
     private javax.swing.JButton btnSalir;
+    private rsbuttongradiente.RSButtonGradiente btnbuscarproductos;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel jPanel6;
+    private javax.swing.JPanel jPanel7;
+    private javax.swing.JPanel jPanel8;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JLabel lblCuadro;
     private javax.swing.JLabel lblCuadro1;
     private javax.swing.JLabel lblDatosCli;
@@ -417,18 +1147,27 @@ static ObjectContainer BaseFinal = Conexion_db.ConectarBD();
     private javax.swing.JLabel lblTelefono;
     private javax.swing.JLabel lblTituloFac;
     private javax.swing.JLabel lblTotalFAc;
-    private javax.swing.JLabel lblValorDes;
     private javax.swing.JLabel lblcedula;
     private javax.swing.JLabel lblcodFac1;
     private javax.swing.JLabel lbllineas;
-    private javax.swing.JLabel lblverFactu;
     private javax.swing.JLabel lblverlis;
-    private rojeru_san.RSButton rSButton1;
+    private javax.swing.JDialog tablaClientes;
+    private javax.swing.JDialog tablaproductos;
+    private javax.swing.JTable tblClientes;
+    private javax.swing.JScrollPane tblProductos;
+    private javax.swing.JTable tblServicios;
+    private rojeru_san.RSMTextFull txtBuscar1;
+    private rojeru_san.RSMTextFull txtBuscarProducto;
+    private rojeru_san.RSMTextFull txtBuscarServicio;
+    private javax.swing.JTextField txtDescuento;
     private javax.swing.JTextField txtNombre1;
     private javax.swing.JTextField txtSubtotal;
+    private javax.swing.JTextField txtTotalfac;
     private javax.swing.JTextField txtcedula;
     private javax.swing.JTextField txtcodigoFac;
     private javax.swing.JTextField txtdireccion;
+    private javax.swing.JTextField txtfecha;
+    private javax.swing.JTextField txtiva;
     private javax.swing.JTextField txttelefono;
     // End of variables declaration//GEN-END:variables
 }
