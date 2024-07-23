@@ -1,23 +1,29 @@
 package Vista.Catálogo;
 
 import Conexion.Conexion_db;
+import Models.Categoria;
 
 import Models.Producto;
-import static Vista.Catálogo.CrudProductos.guardarProducto;
+import Models.Proveedor;
+
 
 import Vista.Menu.VistaMenu;
-import static Vista.Menu.VistaMenu.PanelPrincipal;
+
 import Vista.Tables.TablaProductos;
 import com.db4o.ObjectContainer;
 import com.db4o.ObjectSet;
 import com.db4o.query.Query;
 
 import java.awt.BorderLayout;
-import java.util.ArrayList;
-import java.util.List;
+import java.awt.Image;
+import javax.swing.ImageIcon;
+import javax.swing.JDialog;
+import javax.swing.JFileChooser;
+
 import javax.swing.JOptionPane;
 
 import javax.swing.JPanel;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class BuscarProductos extends javax.swing.JPanel {
 
@@ -36,12 +42,20 @@ public class BuscarProductos extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        TablaProvedores = new javax.swing.JDialog();
+        jPanel2 = new javax.swing.JPanel();
+        jPanel3 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tblProveedores = new javax.swing.JTable();
+        txtBuscar = new rojeru_san.RSMTextFull();
+        jLabel3 = new javax.swing.JLabel();
+        btnAgregar = new rsbuttongradiente.RSButtonGradiente();
         jPanel1 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         txtCodigoProducto = new rojeru_san.RSMTextFull();
         jLabel4 = new javax.swing.JLabel();
         txtNombreProducto = new rojeru_san.RSMTextFull();
-        txtCodigoCategoria = new rojeru_san.RSMTextFull();
         btnCancelar = new rojeru_san.RSButtonRiple();
         btnModficar = new rojeru_san.RSButtonRiple();
         lblCodigooProducto = new javax.swing.JLabel();
@@ -58,6 +72,115 @@ public class BuscarProductos extends javax.swing.JPanel {
         txtNumeroProductos = new rojeru_san.RSMTextFull();
         lblExistenciaMinima1 = new javax.swing.JLabel();
         txtExistenciaMinima = new rojeru_san.RSMTextFull();
+        cmbCategoria = new javax.swing.JComboBox<>();
+        BtnBuscar = new rojeru_san.RSButtonRiple();
+        lblImagen = new javax.swing.JLabel();
+        btnSeleccionarImgen = new rojeru_san.RSButtonRiple();
+
+        jPanel2.setLayout(new java.awt.BorderLayout());
+
+        jPanel3.setBackground(new java.awt.Color(255, 255, 255));
+
+        jLabel1.setFont(new java.awt.Font("Roboto Black", 0, 22)); // NOI18N
+        jLabel1.setText("Listado Proveedores");
+
+        jScrollPane1.setBackground(new java.awt.Color(255, 255, 255));
+        jScrollPane1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        jScrollPane1.setForeground(new java.awt.Color(255, 255, 255));
+
+        tblProveedores.setFont(new java.awt.Font("Roboto Medium", 0, 14)); // NOI18N
+        tblProveedores.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane1.setViewportView(tblProveedores);
+
+        txtBuscar.setFont(new java.awt.Font("Roboto Bold", 2, 14)); // NOI18N
+        txtBuscar.setPlaceholder("ejm: PROV12");
+
+        jLabel3.setFont(new java.awt.Font("Roboto Black", 0, 18)); // NOI18N
+        jLabel3.setText("Buscar:");
+
+        btnAgregar.setBackground(new java.awt.Color(51, 102, 255));
+        btnAgregar.setText("Agregar");
+        btnAgregar.setColorPrimario(new java.awt.Color(0, 204, 51));
+        btnAgregar.setColorPrimarioHover(new java.awt.Color(0, 204, 51));
+        btnAgregar.setColorSecundario(new java.awt.Color(153, 255, 153));
+        btnAgregar.setColorSecundarioHover(new java.awt.Color(204, 255, 204));
+        btnAgregar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAgregarActionPerformed(evt);
+            }
+        });
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 851, Short.MAX_VALUE)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addGap(14, 14, 14))
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(24, 24, 24)
+                .addComponent(jLabel1)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel3Layout.createSequentialGroup()
+                .addGap(38, 38, 38)
+                .addComponent(jLabel1)
+                .addGap(18, 18, 18)
+                .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(16, 16, 16)
+                        .addComponent(jLabel3))
+                    .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(btnAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(46, 46, 46)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 390, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(61, Short.MAX_VALUE))
+        );
+
+        jPanel2.add(jPanel3, java.awt.BorderLayout.CENTER);
+
+        javax.swing.GroupLayout TablaProvedoresLayout = new javax.swing.GroupLayout(TablaProvedores.getContentPane());
+        TablaProvedores.getContentPane().setLayout(TablaProvedoresLayout);
+        TablaProvedoresLayout.setHorizontalGroup(
+            TablaProvedoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 875, Short.MAX_VALUE)
+            .addGroup(TablaProvedoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(TablaProvedoresLayout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 875, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 0, Short.MAX_VALUE)))
+        );
+        TablaProvedoresLayout.setVerticalGroup(
+            TablaProvedoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 622, Short.MAX_VALUE)
+            .addGroup(TablaProvedoresLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(TablaProvedoresLayout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 622, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 0, Short.MAX_VALUE)))
+        );
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -88,12 +211,6 @@ public class BuscarProductos extends javax.swing.JPanel {
         txtNombreProducto.setFont(new java.awt.Font("Roboto Light", 1, 14)); // NOI18N
         txtNombreProducto.setPlaceholder("Escriba el nombre");
         jPanel1.add(txtNombreProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 100, 200, 40));
-
-        txtCodigoCategoria.setForeground(new java.awt.Color(0, 53, 79));
-        txtCodigoCategoria.setColorTransparente(true);
-        txtCodigoCategoria.setFont(new java.awt.Font("Roboto Light", 1, 14)); // NOI18N
-        txtCodigoCategoria.setPlaceholder("Código de la Categoria");
-        jPanel1.add(txtCodigoCategoria, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 190, 200, 40));
 
         btnCancelar.setBackground(new java.awt.Color(255, 51, 51));
         btnCancelar.setText("Cancelar");
@@ -193,11 +310,34 @@ public class BuscarProductos extends javax.swing.JPanel {
         txtExistenciaMinima.setPlaceholder("Existencia Minima");
         jPanel1.add(txtExistenciaMinima, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 410, 190, 40));
 
+        cmbCategoria.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jPanel1.add(cmbCategoria, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 200, 200, 30));
+
+        BtnBuscar.setBackground(new java.awt.Color(0, 204, 51));
+        BtnBuscar.setText("Buscar");
+        BtnBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtnBuscarActionPerformed(evt);
+            }
+        });
+        jPanel1.add(BtnBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 290, 80, 30));
+
+        lblImagen.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+        jPanel1.add(lblImagen, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 70, 180, 140));
+
+        btnSeleccionarImgen.setText("Selecionar Imagen");
+        btnSeleccionarImgen.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSeleccionarImgenActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnSeleccionarImgen, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 220, 180, -1));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 870, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -226,57 +366,93 @@ public class BuscarProductos extends javax.swing.JPanel {
     }//GEN-LAST:event_txtCodigoProductoActionPerformed
 
     private void btnModficarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModficarActionPerformed
- if (!txtNombreProducto.getText().trim().isBlank()) {
-        if (!txtDescripcion.getText().isBlank()) {
-            Boolean valido = false; // Creamos una bandera para validar datos
-            
-            // Validar que la categoría sea alfabética
-            if (valido = txtCodigoCategoria.getText().matches("^[a-zA-Z]+$")) {
-                // Validar que los campos numéricos contengan valores válidos
-                if (txtPrecioProducto.getText().matches("\\d+(\\.\\d{1,2})?")
-                        && txtNumeroProductos.getText().matches("\\d+")
-                        && txtExistenciaMaxima.getText().matches("\\d+")
-                        && txtExistenciaMinima.getText().matches("\\d+")) {
-
-                    // Convertir los campos de texto a tipos numéricos
-                    Double precioProducto = Double.parseDouble(txtPrecioProducto.getText());
-                    int numeroProductosProducto = Integer.parseInt(txtNumeroProductos.getText());
-                    int existenciaMaximaProducto = Integer.parseInt(txtExistenciaMaxima.getText());
-                    int existenciaMinimaProducto = Integer.parseInt(txtExistenciaMinima.getText());
-
-                    // Llamar al método modificarProducto
-                    modificarProducto(
-                            txtCodigoProducto.getText().toUpperCase(),
-                            txtNombreProducto.getText(),
-                            precioProducto,
-                            txtCodigoCategoria.getText().toUpperCase(),
-                            numeroProductosProducto,
-                            existenciaMaximaProducto,
-                            existenciaMinimaProducto,
-                            txtDescripcion.getText(),
-                            txtProveedorID.getText()
-                    );
-
-                    // Mostrar mensaje de éxito
-                    JOptionPane.showMessageDialog(this, "Producto Modificado");
-
-                    // Limpiar campos y actualizar la tabla
-                    resetCampos();
-                    //mostrarTablaProductos(); // Actualizar la tabla de productos
-
-                } else {
-                    JOptionPane.showMessageDialog(this, "Ingrese valores numéricos válidos para precio, número de productos, existencia máxima y mínima");
-                }
-            } else {
-                JOptionPane.showMessageDialog(this, "Ingrese una categoría válida sin números");
-            }
-        } else {
-            JOptionPane.showMessageDialog(this, "No deje espacios en blanco en la descripción del producto");
-        }
-    } else {
+ // Validar campos de texto
+    if (txtNombreProducto.getText().trim().isBlank()) {
         JOptionPane.showMessageDialog(this, "No deje espacios en blanco en el nombre del producto");
+        return;
     }
+    if (txtDescripcion.getText().isBlank()) {
+        JOptionPane.showMessageDialog(this, "No deje espacios en blanco en la descripción del producto");
+        return;
+    }
+
+    // Validar campos numéricos
+    if (!txtPrecioProducto.getText().matches("\\d+(\\.\\d{1,2})?")) {
+        JOptionPane.showMessageDialog(this, "Ingrese un precio válido (ejemplo: 10.99)");
+        return;
+    }
+    if (!txtNumeroProductos.getText().matches("\\d+")) {
+        JOptionPane.showMessageDialog(this, "Ingrese un número de productos válido");
+        return;
+    }
+    if (!txtExistenciaMaxima.getText().matches("\\d+")) {
+        JOptionPane.showMessageDialog(this, "Ingrese una existencia máxima válida");
+        return;
+    }
+    if (!txtExistenciaMinima.getText().matches("\\d+")) {
+        JOptionPane.showMessageDialog(this, "Ingrese una existencia mínima válida");
+        return;
+    }
+
+    // Validar que se haya seleccionado una categoría del JComboBox
+    if (cmbCategoria.getSelectedIndex() == -1) {
+        JOptionPane.showMessageDialog(this, "Seleccione una categoría válida");
+        return;
+    }
+
+    // Convertir campos de texto a tipos numéricos
+    Double precioProducto = Double.parseDouble(txtPrecioProducto.getText());
+    int numeroProductosProducto = Integer.parseInt(txtNumeroProductos.getText());
+    int existenciaMaximaProducto = Integer.parseInt(txtExistenciaMaxima.getText());
+    int existenciaMinimaProducto = Integer.parseInt(txtExistenciaMinima.getText());
+
+    // Obtener la categoría seleccionada del JComboBox
+    String categoriaSeleccionada = (String) cmbCategoria.getSelectedItem();
+
+    // Llamar al método modificarProducto
+    modificarProducto(
+        txtCodigoProducto.getText().toUpperCase(),
+        txtNombreProducto.getText(),
+        precioProducto,
+        categoriaSeleccionada.toUpperCase(),  // Usar la categoría seleccionada
+        numeroProductosProducto,
+        existenciaMaximaProducto,
+        existenciaMinimaProducto,
+        txtDescripcion.getText(),
+        txtProveedorID.getText()
+    );
+
+    // Mostrar mensaje de éxito
+    JOptionPane.showMessageDialog(this, "Producto Modificado");
+
+    // Limpiar campos y actualizar la tabla
+    resetCampos();
     }//GEN-LAST:event_btnModficarActionPerformed
+
+    private void BtnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnBuscarActionPerformed
+        activarJdialog(TablaProvedores);
+    }//GEN-LAST:event_BtnBuscarActionPerformed
+
+    private void btnSeleccionarImgenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSeleccionarImgenActionPerformed
+        String Ruta = "";
+        JFileChooser jFileChooser = new JFileChooser();
+        FileNameExtensionFilter filtrado = new FileNameExtensionFilter("JPG, PNG & GIF", "jpg", "png", "gif");
+        jFileChooser.setFileFilter(filtrado);
+
+        int respuesta = jFileChooser.showOpenDialog(this);
+
+        if (respuesta == JFileChooser.APPROVE_OPTION) {
+            Ruta = jFileChooser.getSelectedFile().getPath();
+
+            Image mImagen = new ImageIcon(Ruta).getImage();
+            ImageIcon mIcono = new ImageIcon(mImagen.getScaledInstance(lblImagen.getWidth(), lblImagen.getHeight(), Image.SCALE_SMOOTH));
+            lblImagen.setIcon(mIcono);
+        }
+    }//GEN-LAST:event_btnSeleccionarImgenActionPerformed
+
+    private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
+        mostrarNombreProveedor();
+    }//GEN-LAST:event_btnAgregarActionPerformed
    // Método para modificar producto
 public static void modificarProducto(String codigo_Producto, String nombre_Producto, Double precio_Producto, String codigo_categoria_Producto, int numeroProductos_Producto, int existenciaMaxima_Producto, int existenciaMinima_Producto, String descripcion_Producto, String ID_Proveedor_Producto) {
     // ESTABLECER CONEXION CON LA BASE DE DATOS
@@ -336,18 +512,19 @@ public static int verificarProducto(String codigo_Producto) {
     return coincidencias;
 }
 
-    
-    private void resetCampos() {
-        txtCodigoProducto.setText("");
-        txtNombreProducto.setText("");
-        txtPrecioProducto.setText("");
-        txtCodigoCategoria.setText("");
-        txtNumeroProductos.setText("");
-        txtExistenciaMaxima.setText("");
-        txtExistenciaMinima.setText("");
-        txtDescripcion.setText("");
-        txtProveedorID.setText("");
-    }
+   
+   private void resetCampos() {
+    txtCodigoProducto.setText("");
+    txtNombreProducto.setText("");
+    txtPrecioProducto.setText("");    
+    txtNumeroProductos.setText("");
+    txtExistenciaMaxima.setText("");
+    txtExistenciaMinima.setText("");
+    txtDescripcion.setText("");
+    txtProveedorID.setText("");
+    cmbCategoria.setSelectedIndex(-1); 
+    txtNombreProducto.setEnabled(true); 
+}
 public final void buscarProducto() {
     Boolean encontrado = false;
     // ESTABLECER CONEXIÓN CON LA BASE DE DATOS
@@ -358,43 +535,91 @@ public final void buscarProducto() {
     ObjectSet<Producto> resultado = productoQuery.execute(); // Ejecutamos la consulta y almacenamos en "resultado"
     
     // Iterar sobre los resultados para obtener los atributos
-    for (Producto prod : resultado) {
+    if (resultado.hasNext()) {
+        Producto prod = resultado.next(); // Obtener el primer resultado
         // Seteamos en los campos recibiendo del objeto
-        txtNombreProducto.setText(prod.getNombre_Producto());
-        txtCodigoCategoria.setText(prod.getCodigo_categoria_Producto());
-        txtPrecioProducto.setText(String.format("%.2f", prod.getPrecio_Producto())); 
+        txtNombreProducto.setText(prod.getNombre_Producto());       
+        txtPrecioProducto.setText(String.format("%.2f", prod.getPrecio_Producto()));
         txtNumeroProductos.setText(String.valueOf(prod.getNumeroProductos_Producto()));
         txtExistenciaMaxima.setText(String.valueOf(prod.getExistenciaMaxima_Producto()));
         txtExistenciaMinima.setText(String.valueOf(prod.getExistenciaMinima_Producto()));
         txtDescripcion.setText(prod.getDescripcion_Producto());
         txtProveedorID.setText(prod.getID_Proveedor_Producto());
-        // Puede ser útil deshabilitar los campos si no quieres que el usuario los edite
-        txtNombreProducto.setEnabled(false);
+        cmbCategoria.setSelectedItem(prod.getCodigo_categoria_Producto()); // Seleccionar la categoría en el JComboBox
+       
+        txtNombreProducto.setEnabled(true);
         encontrado = true;
         JOptionPane.showMessageDialog(this, "PRODUCTO ENCONTRADO");
-    }
-    if (!encontrado) {
+    } else {
         JOptionPane.showMessageDialog(this, "No se encontró el Producto");
     }
     
     BaseBD.close();
 }
+private void mostrarNombreProveedor() {
+    // Establecer conexión con la base de datos
+    ObjectContainer BaseBD = Conexion_db.ConectarBD();
 
+    // Crear un objeto de consulta para buscar proveedores
+    Query proveedorQuery = BaseBD.query();
+    proveedorQuery.constrain(Proveedor.class);
+    ObjectSet<Proveedor> resultado = proveedorQuery.execute();
+
+    boolean encontrado = false;
+    String inputCodigo = txtBuscar.getText().trim();
+
+    // Iterar sobre los resultados para encontrar y cargar el nombre del proveedor
+    for (Proveedor miProveedor : resultado) {
+        String codigoProveedor = miProveedor.getCodigo_proveedor().trim();
+        
+        if (codigoProveedor.equals(inputCodigo)) {
+            txtProveedorID.setText(miProveedor.getNombre_proveedor());
+            encontrado = true;
+            break;
+        }
+    }
+
+    if (!encontrado) {
+        JOptionPane.showMessageDialog(this, "No se encontró Proveedor");
+    }
+
+    // Cerrar la conexión con la base de datos
+    BaseBD.close();
+}
+private void activarJdialog(JDialog TablaProvedores) {
+
+        TablaProvedores.setTitle("Listado Provedores");
+        TablaProvedores.setSize(680, 330);
+        TablaProvedores.setLocationRelativeTo(this);
+        TablaProvedores.setVisible(true);
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private rojeru_san.RSButtonRiple BtnBuscar;
+    private javax.swing.JDialog TablaProvedores;
+    private rsbuttongradiente.RSButtonGradiente btnAgregar;
     private rojeru_san.RSButtonRiple btnCancelar;
     private rojeru_san.RSButtonRiple btnModficar;
+    private rojeru_san.RSButtonRiple btnSeleccionarImgen;
+    private javax.swing.JComboBox<String> cmbCategoria;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblCodigooProducto;
     private javax.swing.JLabel lblCodigoocategoria;
     private javax.swing.JLabel lblDescripcion;
     private javax.swing.JLabel lblExistenciaMinima;
     private javax.swing.JLabel lblExistenciaMinima1;
+    private javax.swing.JLabel lblImagen;
     private javax.swing.JLabel lblNumeroProductos;
     private javax.swing.JLabel lblPrecioProducto;
     private javax.swing.JLabel lblProveedorID;
-    private rojeru_san.RSMTextFull txtCodigoCategoria;
+    private javax.swing.JTable tblProveedores;
+    private rojeru_san.RSMTextFull txtBuscar;
     private rojeru_san.RSMTextFull txtCodigoProducto;
     private rojeru_san.RSMTextFull txtDescripcion;
     private rojeru_san.RSMTextFull txtExistenciaMaxima;
