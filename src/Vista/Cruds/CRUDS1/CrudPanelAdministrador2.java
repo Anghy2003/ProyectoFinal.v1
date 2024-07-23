@@ -1,12 +1,12 @@
 
 package Vista.Cruds.CRUDS1;
 
-public class CrudPanelAdministrador1 extends javax.swing.JPanel {
+public class CrudPanelAdministrador2 extends javax.swing.JPanel {
 
     /**
      * Creates new form CrudPanelAdministrador1
      */
-    public CrudPanelAdministrador1() {
+    public CrudPanelAdministrador2() {
         initComponents();
     }
 
@@ -28,7 +28,7 @@ public class CrudPanelAdministrador1 extends javax.swing.JPanel {
         lblApellidos_Admi = new javax.swing.JLabel();
         lblDireccion_Admi = new javax.swing.JLabel();
         lblCorreo_Admi = new javax.swing.JLabel();
-        lblComiciones_Ven = new javax.swing.JLabel();
+        lblTituloAdmi = new javax.swing.JLabel();
         lblFEchaNac_Admi = new javax.swing.JLabel();
         lblGenero_Admi = new javax.swing.JLabel();
         lblEstadoCivil_Admi = new javax.swing.JLabel();
@@ -37,7 +37,7 @@ public class CrudPanelAdministrador1 extends javax.swing.JPanel {
         txtApellidosAdmi = new rojeru_san.RSMTextFull();
         txtDireccionAdmi = new rojeru_san.RSMTextFull();
         txtCorreoAdmi = new rojeru_san.RSMTextFull();
-        txtComicionesVendedor = new rojeru_san.RSMTextFull();
+        txtTituloAdmi = new rojeru_san.RSMTextFull();
         btnCancelar = new rojeru_san.RSButtonRiple();
         jDateFechaNacAdmi = new com.toedter.calendar.JDateChooser();
         cbxGeneroAdmi = new javax.swing.JComboBox<>();
@@ -45,11 +45,7 @@ public class CrudPanelAdministrador1 extends javax.swing.JPanel {
         btnGuardar = new rojeru_san.RSButtonRiple();
         lblPassword_Admi = new javax.swing.JLabel();
         txtPasswordAdmi = new rojeru_san.RSMTextFull();
-        lblNumeroVentas_Ven = new javax.swing.JLabel();
-        lblSueldo_Ven = new javax.swing.JLabel();
         lblCelular_Admi = new javax.swing.JLabel();
-        txtNumeroVentasVendedor = new rojeru_san.RSMTextFull();
-        txtSueldoVendedor = new rojeru_san.RSMTextFull();
         txtCelularAdmi = new rojeru_san.RSMTextFull();
 
         jPanel1.setLayout(new java.awt.BorderLayout());
@@ -87,10 +83,10 @@ public class CrudPanelAdministrador1 extends javax.swing.JPanel {
         lblCorreo_Admi.setText("Correo Electrónico:");
         jPanel2.add(lblCorreo_Admi, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 420, 190, 40));
 
-        lblComiciones_Ven.setFont(new java.awt.Font("Roboto Medium", 0, 21)); // NOI18N
-        lblComiciones_Ven.setForeground(new java.awt.Color(0, 53, 79));
-        lblComiciones_Ven.setText("Comiciones:");
-        jPanel2.add(lblComiciones_Ven, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 330, 120, 40));
+        lblTituloAdmi.setFont(new java.awt.Font("Roboto Medium", 0, 21)); // NOI18N
+        lblTituloAdmi.setForeground(new java.awt.Color(0, 53, 79));
+        lblTituloAdmi.setText("Titulo");
+        jPanel2.add(lblTituloAdmi, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 330, 120, 40));
 
         lblFEchaNac_Admi.setFont(new java.awt.Font("Roboto Medium", 0, 21)); // NOI18N
         lblFEchaNac_Admi.setForeground(new java.awt.Color(0, 53, 79));
@@ -137,11 +133,11 @@ public class CrudPanelAdministrador1 extends javax.swing.JPanel {
         txtCorreoAdmi.setPlaceholder("Escriba su correo electronico");
         jPanel2.add(txtCorreoAdmi, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 420, 250, 40));
 
-        txtComicionesVendedor.setForeground(new java.awt.Color(0, 53, 79));
-        txtComicionesVendedor.setColorTransparente(true);
-        txtComicionesVendedor.setFont(new java.awt.Font("Roboto Light", 1, 14)); // NOI18N
-        txtComicionesVendedor.setPlaceholder("Escriba su número celular");
-        jPanel2.add(txtComicionesVendedor, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 320, 230, 40));
+        txtTituloAdmi.setForeground(new java.awt.Color(0, 53, 79));
+        txtTituloAdmi.setColorTransparente(true);
+        txtTituloAdmi.setFont(new java.awt.Font("Roboto Light", 1, 14)); // NOI18N
+        txtTituloAdmi.setPlaceholder("Escriba su número celular");
+        jPanel2.add(txtTituloAdmi, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 330, 230, 40));
 
         btnCancelar.setBackground(new java.awt.Color(255, 51, 51));
         btnCancelar.setText("Cancelar");
@@ -178,32 +174,10 @@ public class CrudPanelAdministrador1 extends javax.swing.JPanel {
         txtPasswordAdmi.setPlaceholder("123abc");
         jPanel2.add(txtPasswordAdmi, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 150, 200, 40));
 
-        lblNumeroVentas_Ven.setFont(new java.awt.Font("Roboto Medium", 0, 21)); // NOI18N
-        lblNumeroVentas_Ven.setForeground(new java.awt.Color(0, 53, 79));
-        lblNumeroVentas_Ven.setText("Numero Ventas:");
-        jPanel2.add(lblNumeroVentas_Ven, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 380, 160, 40));
-
-        lblSueldo_Ven.setFont(new java.awt.Font("Roboto Medium", 0, 21)); // NOI18N
-        lblSueldo_Ven.setForeground(new java.awt.Color(0, 53, 79));
-        lblSueldo_Ven.setText("Sueldo:");
-        jPanel2.add(lblSueldo_Ven, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 430, 80, 40));
-
         lblCelular_Admi.setFont(new java.awt.Font("Roboto Medium", 0, 21)); // NOI18N
         lblCelular_Admi.setForeground(new java.awt.Color(0, 53, 79));
         lblCelular_Admi.setText("Celular:");
         jPanel2.add(lblCelular_Admi, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 100, 80, 40));
-
-        txtNumeroVentasVendedor.setForeground(new java.awt.Color(0, 53, 79));
-        txtNumeroVentasVendedor.setColorTransparente(true);
-        txtNumeroVentasVendedor.setFont(new java.awt.Font("Roboto Light", 1, 14)); // NOI18N
-        txtNumeroVentasVendedor.setPlaceholder("Escriba su número celular");
-        jPanel2.add(txtNumeroVentasVendedor, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 370, 230, 40));
-
-        txtSueldoVendedor.setForeground(new java.awt.Color(0, 53, 79));
-        txtSueldoVendedor.setColorTransparente(true);
-        txtSueldoVendedor.setFont(new java.awt.Font("Roboto Light", 1, 14)); // NOI18N
-        txtSueldoVendedor.setPlaceholder("Escriba su número celular");
-        jPanel2.add(txtSueldoVendedor, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 430, 230, 40));
 
         txtCelularAdmi.setForeground(new java.awt.Color(0, 53, 79));
         txtCelularAdmi.setColorTransparente(true);
@@ -346,25 +320,21 @@ public class CrudPanelAdministrador1 extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JLabel lblApellidos_Admi;
     private javax.swing.JLabel lblCelular_Admi;
-    private javax.swing.JLabel lblComiciones_Ven;
     private javax.swing.JLabel lblCorreo_Admi;
     private javax.swing.JLabel lblDireccion_Admi;
     private javax.swing.JLabel lblEstadoCivil_Admi;
     private javax.swing.JLabel lblFEchaNac_Admi;
     private javax.swing.JLabel lblGenero_Admi;
     private javax.swing.JLabel lblNombres_Admi;
-    private javax.swing.JLabel lblNumeroVentas_Ven;
     private javax.swing.JLabel lblPassword_Admi;
-    private javax.swing.JLabel lblSueldo_Ven;
+    private javax.swing.JLabel lblTituloAdmi;
     private rojeru_san.RSMTextFull txtApellidosAdmi;
     private rojeru_san.RSMTextFull txtCedulaAdmi;
     private rojeru_san.RSMTextFull txtCelularAdmi;
-    private rojeru_san.RSMTextFull txtComicionesVendedor;
     private rojeru_san.RSMTextFull txtCorreoAdmi;
     private rojeru_san.RSMTextFull txtDireccionAdmi;
     private rojeru_san.RSMTextFull txtNombresAdmi;
-    private rojeru_san.RSMTextFull txtNumeroVentasVendedor;
     private rojeru_san.RSMTextFull txtPasswordAdmi;
-    private rojeru_san.RSMTextFull txtSueldoVendedor;
+    private rojeru_san.RSMTextFull txtTituloAdmi;
     // End of variables declaration//GEN-END:variables
 }

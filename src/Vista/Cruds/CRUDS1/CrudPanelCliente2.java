@@ -2,10 +2,8 @@ package Vista.Cruds.CRUDS1;
 
 import Conexion.Conexion_db;
 import Models.Cliente;
-import Models.Vehiculo;
-import Models.Vendedor;
-import Vista.Cruds.BuscarPanelVehiculo1;
 import Vista.Menu.VistaMenu;
+import Vista.Tables.TablaClientes;
 import com.db4o.ObjectContainer;
 import com.db4o.ObjectSet;
 import com.db4o.query.Query;
@@ -59,9 +57,9 @@ public class CrudPanelCliente2 extends javax.swing.JPanel {
         cbxEstadoCi = new javax.swing.JComboBox<>();
         btnModificar = new rojeru_san.RSButtonRiple();
         lblPassword_Ven = new javax.swing.JLabel();
-        txtPassword = new rojeru_san.RSMTextFull();
         lblCelular_Ven = new javax.swing.JLabel();
         txtCelularVendedor = new rojeru_san.RSMTextFull();
+        txtPasswordCli = new rojeru_san.RSMPassView();
 
         jPanel1.setLayout(new java.awt.BorderLayout());
 
@@ -150,6 +148,11 @@ public class CrudPanelCliente2 extends javax.swing.JPanel {
                 btnCancelarMouseClicked(evt);
             }
         });
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarActionPerformed(evt);
+            }
+        });
         jPanel2.add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 520, -1, -1));
         jPanel2.add(jDateFechaNac_Cli, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 170, 140, 30));
 
@@ -172,12 +175,6 @@ public class CrudPanelCliente2 extends javax.swing.JPanel {
         lblPassword_Ven.setText("Contraseña:");
         jPanel2.add(lblPassword_Ven, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 150, 130, 40));
 
-        txtPassword.setForeground(new java.awt.Color(0, 53, 79));
-        txtPassword.setColorTransparente(true);
-        txtPassword.setFont(new java.awt.Font("Roboto Light", 1, 14)); // NOI18N
-        txtPassword.setPlaceholder("123abc");
-        jPanel2.add(txtPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 150, 200, 40));
-
         lblCelular_Ven.setFont(new java.awt.Font("Roboto Medium", 0, 21)); // NOI18N
         lblCelular_Ven.setForeground(new java.awt.Color(0, 53, 79));
         lblCelular_Ven.setText("Celular:");
@@ -188,6 +185,16 @@ public class CrudPanelCliente2 extends javax.swing.JPanel {
         txtCelularVendedor.setFont(new java.awt.Font("Roboto Light", 1, 14)); // NOI18N
         txtCelularVendedor.setPlaceholder("Escriba su número celular");
         jPanel2.add(txtCelularVendedor, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 100, 230, 40));
+
+        txtPasswordCli.setForeground(new java.awt.Color(0, 53, 79));
+        txtPasswordCli.setOpaque(false);
+        txtPasswordCli.setPlaceholder("Digite su Contraseña");
+        txtPasswordCli.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtPasswordCliActionPerformed(evt);
+            }
+        });
+        jPanel2.add(txtPasswordCli, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 150, 210, 40));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -234,10 +241,10 @@ public class CrudPanelCliente2 extends javax.swing.JPanel {
                                 if (valido = txtCelularVendedor.getText().matches("^09\\d{8}$")) {
 
                                     
-                                    modificarCliente(txtCedulaVendedor.getText(), txtNombresVendedor.getText().toUpperCase(), txtApellidosVendedor.getText().toUpperCase(),
+                                    modificarCliente( Cliente.Estado.ACTIVO,  txtCedulaVendedor.getText(), txtNombresVendedor.getText().toUpperCase(), txtApellidosVendedor.getText().toUpperCase(),
                                             txtDireccionVendedor.getText().toUpperCase(), txtCorreoVendedor.getText(),
                                             txtCelularVendedor.getText(),(String) cbxGenero.getSelectedItem() , fechaNacimiento, (String) cbxEstadoCi.getSelectedItem(), txtCedulaVendedor.getText(),
-                                            txtPassword.getText(), txtCorreoVendedor.getText());
+                                            txtPasswordCli.getText(), txtCorreoVendedor.getText());
                                     
 
                                 } else {
@@ -266,6 +273,16 @@ public class CrudPanelCliente2 extends javax.swing.JPanel {
 
     }//GEN-LAST:event_btnModificarActionPerformed
 
+    private void txtPasswordCliActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPasswordCliActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtPasswordCliActionPerformed
+
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+         System.out.println("salir");
+        TablaClientes tblCli = new TablaClientes();
+        ShowpanelCruds(tblCli);
+    }//GEN-LAST:event_btnCancelarActionPerformed
+
     public final void Clientebuscar() {
 
         Boolean encontrado = true;
@@ -281,7 +298,7 @@ public class CrudPanelCliente2 extends javax.swing.JPanel {
 
             txtCedulaVendedor.setText(cli.getCedula());
             txtCedulaVendedor.setEnabled(false); // porque es el atributo principal
-            txtPassword.setText(cli.getPassword());
+            txtPasswordCli.setText(cli.getPassword());
             txtNombresVendedor.setText(cli.getNombres());
             txtApellidosVendedor.setText(cli.getApellidos());
             txtDireccionVendedor.setText(cli.getDireccion());
@@ -311,17 +328,15 @@ public class CrudPanelCliente2 extends javax.swing.JPanel {
         BaseBD.close();
     }
 
-    public void modificarCliente( String cedula, String nombres,
-            String apellidos, String direccion, String correo, String celular, String genero, String fechaNacimiento, String estadoCivil, String nombreUsuario,
-            String password, String correoRecuperacion) {
+    public void modificarCliente( Cliente.Estado estado, String cedula, String nombres, String apellidos, String direccion, String correo, String celular,
+            String genero, String fechaNacimiento, String estadoCivil, String nombreUsuario, String password, String correoRecuperacion) {
 
         ObjectContainer BaseBD = Conexion_db.ConectarBD();
 
-        Cliente modificarCliente = new Cliente( cedula, nombres,
-                apellidos, direccion, correo, celular, genero, fechaNacimiento, estadoCivil, nombreUsuario,
-                password, correoRecuperacion);
+        Cliente modificarCliente = new Cliente( estado,  cedula,  nombres,  apellidos,  direccion,  correo,  celular,
+             genero,  fechaNacimiento,  estadoCivil,  nombreUsuario,  password,  correoRecuperacion);
 
-        Cliente clienteBusca = new Cliente( cedula, null,
+        Cliente clienteBusca = new Cliente( null, cedula, null,
                 null, null, null, null, null, null, null, null,
                 null, null);
 
@@ -379,6 +394,6 @@ public class CrudPanelCliente2 extends javax.swing.JPanel {
     private rojeru_san.RSMTextFull txtCorreoVendedor;
     private rojeru_san.RSMTextFull txtDireccionVendedor;
     private rojeru_san.RSMTextFull txtNombresVendedor;
-    private rojeru_san.RSMTextFull txtPassword;
+    private rojeru_san.RSMPassView txtPasswordCli;
     // End of variables declaration//GEN-END:variables
 }

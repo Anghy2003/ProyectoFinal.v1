@@ -1,10 +1,10 @@
-
 package Vista.Cruds.CRUDS1;
 
 import Conexion.Conexion_db;
-
 import Models.Vendedor;
+import Models.Vendedor.Estado;
 import Vista.Menu.VistaMenu;
+import Vista.Tables.TablaVendedores;
 import com.db4o.ObjectContainer;
 import com.db4o.ObjectSet;
 import com.db4o.query.Query;
@@ -14,50 +14,28 @@ import java.util.Date;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
-
 public class CrudPanelVendedor extends javax.swing.JPanel {
 
-    /**
-     * Creates new form CrudPanelVendedor1
-     *
-     * @param sueldoBase_Vendedor
-     * @param comiciones_Vendedor
-     * @param numeroVentas_Vendedor
-     * @param cedula
-     * @param nombres
-     * @param iD_Vendedor     
-     * @param apellidos     
-     * @param direccion     
-     * @param correo     
-     * @param celular     
-     * @param genero     
-     * @param fechaNacimiento     
-     * @param estadoCivil     
-     * @param nombreUsuario     
-     * @param password     
-     * @param correoRecuperacion     
-     */
-    
-    public void GuardarVendedor( double sueldoBase_Vendedor, double comiciones_Vendedor, int numeroVentas_Vendedor, String cedula, String nombres,
-            String apellidos, String direccion, String correo, String celular, String genero, String fechaNacimiento, String estadoCivil, String nombreUsuario,
-            String password, String correoRecuperacion ) {
+    public void GuardarVendedor(double sueldoBase_Vendedor, double comiciones_Vendedor, int numeroVentas_Vendedor, Vendedor.Estado estado, String cedula,
+            String nombres, String apellidos, String direccion, String correo, String celular, String genero,
+            String fechaNacimiento, String estadoCivil, String nombreUsuario, String password, String correoRecuperacion) {
 
         ObjectContainer BaseBD = Conexion_db.ConectarBD();
-        
+
         int siguienteID = obtenerProximoIDVendedor(BaseBD);
-        
-        Vendedor vendedor1 = new Vendedor(   sueldoBase_Vendedor,  comiciones_Vendedor,  numeroVentas_Vendedor,  cedula,  nombres,
-             apellidos,  direccion,  correo,  celular,  genero,  fechaNacimiento,  estadoCivil,  nombreUsuario,
-             password,  correoRecuperacion );
-      
+
+        Vendedor vendedor1 = new Vendedor(sueldoBase_Vendedor, comiciones_Vendedor, numeroVentas_Vendedor, estado, cedula,
+                nombres, apellidos, direccion, correo, celular, genero,
+                fechaNacimiento, estadoCivil, nombreUsuario, password, correoRecuperacion);
+
         vendedor1.setiD_Vendedor(siguienteID);
         BaseBD.close();
 
-        if (VerificarVendedor(cedula) == 0) {
+        if (VerificarVendedorRepetidos() == 0) {
 
             BaseBD = Conexion_db.ConectarBD();
             BaseBD.set(vendedor1);
-           BaseBD.close();
+            BaseBD.close();
 
             JOptionPane.showMessageDialog(this, "Vendedor Guardado");
 
@@ -67,15 +45,14 @@ public class CrudPanelVendedor extends javax.swing.JPanel {
         }
     }
 
-    public static int VerificarVendedor(String cedula) {
+    public final int VerificarVendedorRepetidos() {
 
         ObjectContainer BaseBD = Conexion_db.ConectarBD();
+        Query vendedor = BaseBD.query();
+        vendedor.constrain(Vendedor.class);
+        vendedor.descend("cedula").constrain(txtCedulaVendedor.getText());
+        ObjectSet<Vendedor> resultado = vendedor.execute();
 
-        Vendedor buscaVendedor = new Vendedor(0, 0.0, 0.0, 0, cedula, null, null, null, null,
-                null,  null, null, null, null, null, null);
-
-        ObjectSet resultado = BaseBD.get(buscaVendedor);
-        
         int coincidencias = resultado.size();
 
         BaseBD.close();
@@ -83,22 +60,19 @@ public class CrudPanelVendedor extends javax.swing.JPanel {
     }
 
     // Método para obtener el próximo ID_Vendedor disponible
-private int obtenerProximoIDVendedor(ObjectContainer db) {
-    // Consultar el máximo ID_Vendedor almacenado en la base de datos
-    ObjectSet<Vendedor> result = db.queryByExample(Vendedor.class);
-    int maxID = 0;
-    while (result.hasNext()) {
-        Vendedor vendedor = result.next();
-        if (vendedor.getiD_Vendedor() > maxID) {
-            maxID = vendedor.getiD_Vendedor();
+    private int obtenerProximoIDVendedor(ObjectContainer db) {
+        // Consultar el máximo ID_Vendedor almacenado en la base de datos
+        ObjectSet<Vendedor> result = db.queryByExample(Vendedor.class);
+        int maxID = 0;
+        while (result.hasNext()) {
+            Vendedor vendedor = result.next();
+            if (vendedor.getiD_Vendedor() > maxID) {
+                maxID = vendedor.getiD_Vendedor();
+            }
         }
+        // El próximo ID es el máximo + 1
+        return maxID + 1;
     }
-    // El próximo ID es el máximo + 1
-    return maxID + 1;
-}
-    
-
-
 
     public CrudPanelVendedor() {
         initComponents();
@@ -137,13 +111,13 @@ private int obtenerProximoIDVendedor(ObjectContainer db) {
         cbxEstadoCivilVendedor = new javax.swing.JComboBox<>();
         btnGuardar = new rojeru_san.RSButtonRiple();
         lblPassword_Ven = new javax.swing.JLabel();
-        txtPasswordVendedor = new rojeru_san.RSMTextFull();
         lblNumeroVentas_Ven = new javax.swing.JLabel();
         lblSueldo_Ven = new javax.swing.JLabel();
         lblCelular_Ven = new javax.swing.JLabel();
         txtNumeroVentasVendedor = new rojeru_san.RSMTextFull();
         txtSueldoVendedor = new rojeru_san.RSMTextFull();
         txtCelularVendedor = new rojeru_san.RSMTextFull();
+        txtPasswordVendedor = new rojeru_san.RSMPassView();
 
         jPanel1.setLayout(new java.awt.BorderLayout());
 
@@ -270,12 +244,6 @@ private int obtenerProximoIDVendedor(ObjectContainer db) {
         lblPassword_Ven.setText("Contraseña:");
         jPanel2.add(lblPassword_Ven, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 150, 130, 40));
 
-        txtPasswordVendedor.setForeground(new java.awt.Color(0, 53, 79));
-        txtPasswordVendedor.setColorTransparente(true);
-        txtPasswordVendedor.setFont(new java.awt.Font("Roboto Light", 1, 14)); // NOI18N
-        txtPasswordVendedor.setPlaceholder("123abc");
-        jPanel2.add(txtPasswordVendedor, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 150, 200, 40));
-
         lblNumeroVentas_Ven.setFont(new java.awt.Font("Roboto Medium", 0, 21)); // NOI18N
         lblNumeroVentas_Ven.setForeground(new java.awt.Color(0, 53, 79));
         lblNumeroVentas_Ven.setText("Numero Ventas:");
@@ -309,6 +277,16 @@ private int obtenerProximoIDVendedor(ObjectContainer db) {
         txtCelularVendedor.setPlaceholder("Escriba su número celular");
         jPanel2.add(txtCelularVendedor, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 90, 230, 40));
 
+        txtPasswordVendedor.setForeground(new java.awt.Color(0, 53, 79));
+        txtPasswordVendedor.setOpaque(false);
+        txtPasswordVendedor.setPlaceholder("Digite su Contraseña");
+        txtPasswordVendedor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtPasswordVendedorActionPerformed(evt);
+            }
+        });
+        jPanel2.add(txtPasswordVendedor, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 150, 210, 40));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -340,47 +318,40 @@ private int obtenerProximoIDVendedor(ObjectContainer db) {
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
 
         boolean usuarioRepetido = false;
-        
-        if (VerificarVendedor(txtCedulaVendedor.getText()) != 0) {
+
+        if (VerificarVendedorRepetidos() != 0) {
             JOptionPane.showMessageDialog(null, "Vendedor ya registrado");
             usuarioRepetido = true;
         }
 
         if (!usuarioRepetido) {
-            
+
             Boolean valido = false;
-            
+
             Date fechaNacimientoDate = jDateFechaNacVendedor.getDate(); // Obtener la fecha de nacimiento del JDateChooser
 
             // Formatear la fecha como String en el formato deseado (por ejemplo, "dd/MM/yyyy")
             SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
             String fechaNacimiento = sdf.format(fechaNacimientoDate);
 
-           
             if (valido = txtCedulaVendedor.getText().matches("\\d{10}")) {
-                if (valido = txtNombresVendedor.getText().toUpperCase().matches("^[a-zA-Z]+$")) {
-                    if (valido = txtApellidosVendedor.getText().toUpperCase().matches("^[a-zA-Z]+$")) {
-                        if (valido = txtDireccionVendedor.getText().toUpperCase().matches("^[a-zA-Z]+$")) {
-                            if (valido = txtCorreoVendedor.getText().matches("^[\\w.-]+@[\\w.-]+\\.[a-zA-Z]{2,6}$")) {
-                                if (valido = txtCelularVendedor.getText().matches("^09\\d{8}$")) {
+                if (valido = txtNombresVendedor.getText().toUpperCase().matches("^[a-zA-Z]+(?:\\s[a-zA-Z]+)?$")) {
+                    if (valido = txtApellidosVendedor.getText().toUpperCase().matches("^[a-zA-Z]+(?:\\s[a-zA-Z]+)?$")) {
 
-                                    
-                                    GuardarVendedor( Double.parseDouble(txtSueldoVendedor.getText()), Double.parseDouble(txtComicionesVendedor.getText()), Integer.parseInt(txtNumeroVentasVendedor.getText()),
-                                            txtCedulaVendedor.getText(), txtNombresVendedor.getText().toUpperCase(), txtApellidosVendedor.getText().toUpperCase(), txtDireccionVendedor.getText().toUpperCase(),
-                                            txtCorreoVendedor.getText(), txtCelularVendedor.getText(), (String) cbxGeneroVendedor.getSelectedItem(), fechaNacimiento, (String) cbxEstadoCivilVendedor.getSelectedItem(),
-                                            txtCedulaVendedor.getText(), txtPasswordVendedor.getText(), txtCorreoVendedor.getText());
-                                    
+                        if (valido = txtCorreoVendedor.getText().matches("^[\\w.-]+@[\\w.-]+\\.[a-zA-Z]{2,6}$")) {
+                            if (valido = txtCelularVendedor.getText().matches("^09\\d{8}$")) {
 
-                                } else {
-                                    JOptionPane.showMessageDialog(null, "Ingrese un celular valido");
-                                }
+                                GuardarVendedor(Double.parseDouble(txtSueldoVendedor.getText()), Double.parseDouble(txtComicionesVendedor.getText()), Integer.parseInt(txtNumeroVentasVendedor.getText()), Estado.ACTIVO,
+                                        txtCedulaVendedor.getText(), txtNombresVendedor.getText().toUpperCase(), txtApellidosVendedor.getText().toUpperCase(), txtDireccionVendedor.getText().toUpperCase(),
+                                        txtCorreoVendedor.getText(), txtCelularVendedor.getText(), (String) cbxGeneroVendedor.getSelectedItem(), fechaNacimiento, (String) cbxEstadoCivilVendedor.getSelectedItem(),
+                                        txtCedulaVendedor.getText(), txtPasswordVendedor.getText(), txtCorreoVendedor.getText());
 
                             } else {
-                                JOptionPane.showMessageDialog(null, "Ingrese un correo valida");
+                                JOptionPane.showMessageDialog(null, "Ingrese un celular valido");
                             }
 
                         } else {
-                            JOptionPane.showMessageDialog(null, "Ingrese una direccion valida");
+                            JOptionPane.showMessageDialog(null, "Ingrese un correo valida");
                         }
                     } else {
                         JOptionPane.showMessageDialog(null, "Ingrese un apellido valido");
@@ -394,15 +365,20 @@ private int obtenerProximoIDVendedor(ObjectContainer db) {
                 JOptionPane.showMessageDialog(null, "Ingrese una cedula valida");
             }
 
-            
         }
 
 
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-        // TODO add your handling code here:
+        System.out.println("salir");
+        TablaVendedores tblCli = new TablaVendedores();
+        ShowpanelCruds(tblCli);
     }//GEN-LAST:event_btnCancelarActionPerformed
+
+    private void txtPasswordVendedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPasswordVendedorActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtPasswordVendedorActionPerformed
 
     private void ShowpanelCruds(JPanel p) {
         p.setSize(870, 630);
@@ -442,7 +418,7 @@ private int obtenerProximoIDVendedor(ObjectContainer db) {
     private rojeru_san.RSMTextFull txtDireccionVendedor;
     private rojeru_san.RSMTextFull txtNombresVendedor;
     private rojeru_san.RSMTextFull txtNumeroVentasVendedor;
-    private rojeru_san.RSMTextFull txtPasswordVendedor;
+    private rojeru_san.RSMPassView txtPasswordVendedor;
     private rojeru_san.RSMTextFull txtSueldoVendedor;
     // End of variables declaration//GEN-END:variables
 }

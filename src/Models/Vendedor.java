@@ -6,40 +6,42 @@ public class Vendedor extends Persona {
     private double sueldoBase_Vendedor;
     private double comiciones_Vendedor;
     private int numeroVentas_Vendedor;
+    private Estado estado;
+    
+    //haremos que tenga solo dos posibles valores
+    public enum Estado {
+        ACTIVO,
+        INACTIVO
+    }
 
     public Vendedor() {
         super();
     }
 
-    public Vendedor(int iD_Vendedor, double sueldoBase_Vendedor, double comiciones_Vendedor, int numeroVentas_Vendedor) {
-        this.iD_Vendedor = iD_Vendedor;
-        this.sueldoBase_Vendedor = sueldoBase_Vendedor;
-        this.comiciones_Vendedor = comiciones_Vendedor;
-        this.numeroVentas_Vendedor = numeroVentas_Vendedor;
-    }
-
-    public Vendedor(double sueldoBase_Vendedor, double comiciones_Vendedor, int numeroVentas_Vendedor, String cedula, String nombres, String apellidos, String direccion, String correo, String celular, String genero, String fechaNacimiento, String estadoCivil, String nombreUsuario, String password, String correoRecuperacion) {
+    public Vendedor(double sueldoBase_Vendedor, double comiciones_Vendedor, int numeroVentas_Vendedor, Estado estado, String cedula,
+            String nombres, String apellidos, String direccion, String correo, String celular, String genero,
+            String fechaNacimiento, String estadoCivil, String nombreUsuario, String password, String correoRecuperacion) {
         super(cedula, nombres, apellidos, direccion, correo, celular, genero, fechaNacimiento, estadoCivil, nombreUsuario, password, correoRecuperacion);
         this.sueldoBase_Vendedor = sueldoBase_Vendedor;
         this.comiciones_Vendedor = comiciones_Vendedor;
         this.numeroVentas_Vendedor = numeroVentas_Vendedor;
+        this.estado = Estado.ACTIVO;
     }
 
-   
-    
     
 
-    public Vendedor(int iD_Vendedor, double sueldoBase_Vendedor, double comiciones_Vendedor, int numeroVentas_Vendedor, String cedula, String nombres,
-            String apellidos, String direccion, String correo, String celular, String genero, String fechaNacimiento, String estadoCivil, String nombreUsuario,
-            String password, String correoRecuperacion) {
-        super(cedula, nombres, apellidos, direccion, correo, celular, genero, fechaNacimiento, estadoCivil, nombreUsuario, password, correoRecuperacion);
-        this.iD_Vendedor = iD_Vendedor;
-        this.sueldoBase_Vendedor = sueldoBase_Vendedor;
-        this.comiciones_Vendedor = comiciones_Vendedor;
-        this.numeroVentas_Vendedor = numeroVentas_Vendedor;
+    
+
+    public Estado getEstado() {
+        return estado;
     }
 
-    @Override
+    public void setEstado(Estado estado) {
+        this.estado = estado;
+    }
+    
+
+       @Override
     public String toString() {
         return "Vendedor{" + "iD_Vendedor=" + getiD_Vendedor() + ", sueldoBase_Vendedor=" + getSueldoBase_Vendedor() + ", comiciones_Vendedor=" + getComiciones_Vendedor() + ", numeroVentas_Vendedor=" + getNumeroVentas_Vendedor() + '}';
     }
@@ -100,4 +102,13 @@ public class Vendedor extends Persona {
         this.numeroVentas_Vendedor = numeroVentas_Vendedor;
     }
 
+    
+   //METODOS
+    public  void activarVendedor() {
+        this.estado = Estado.ACTIVO;
+    }
+
+    public  void desactivarVendedor() {
+        this.estado = Estado.INACTIVO;
+    } 
 }

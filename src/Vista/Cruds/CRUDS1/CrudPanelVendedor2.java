@@ -1,14 +1,12 @@
 package Vista.Cruds.CRUDS1;
 
 import Conexion.Conexion_db;
-import Models.Vehiculo;
 import Models.Vendedor;
-import Vista.Cruds.BuscarPanelVehiculo1;
 import Vista.Menu.VistaMenu;
+import Vista.Tables.TablaVendedores;
 import com.db4o.ObjectContainer;
 import com.db4o.ObjectSet;
 import com.db4o.query.Query;
-
 import java.awt.BorderLayout;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -58,15 +56,15 @@ public class CrudPanelVendedor2 extends javax.swing.JPanel {
         jDateFechaNacVendedor = new com.toedter.calendar.JDateChooser();
         cbxGeneroVendedor = new javax.swing.JComboBox<>();
         cbxEstadoCivilVendedor = new javax.swing.JComboBox<>();
-        btnGuardar = new rojeru_san.RSButtonRiple();
+        btnModificar = new rojeru_san.RSButtonRiple();
         lblPassword_Ven = new javax.swing.JLabel();
-        txtPasswordVendedor = new rojeru_san.RSMTextFull();
         lblNumeroVentas_Ven = new javax.swing.JLabel();
         lblSueldo_Ven = new javax.swing.JLabel();
         lblCelular_Ven = new javax.swing.JLabel();
         txtNumeroVentasVendedor = new rojeru_san.RSMTextFull();
         txtSueldoVendedor = new rojeru_san.RSMTextFull();
         txtCelularVendedor = new rojeru_san.RSMTextFull();
+        txtPasswordVendedor = new rojeru_san.RSMPassView();
 
         jPanel1.setLayout(new java.awt.BorderLayout());
 
@@ -166,6 +164,11 @@ public class CrudPanelVendedor2 extends javax.swing.JPanel {
                 btnCancelarMouseClicked(evt);
             }
         });
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarActionPerformed(evt);
+            }
+        });
         jPanel2.add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 520, -1, -1));
         jPanel2.add(jDateFechaNacVendedor, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 170, 140, 30));
 
@@ -175,24 +178,18 @@ public class CrudPanelVendedor2 extends javax.swing.JPanel {
         cbxEstadoCivilVendedor.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "SOLTERO", "CASADO", "VIUDO", "DIVORCIADO", "UNION LIBRE" }));
         jPanel2.add(cbxEstadoCivilVendedor, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 280, 150, 30));
 
-        btnGuardar.setText("Modificar");
-        btnGuardar.addActionListener(new java.awt.event.ActionListener() {
+        btnModificar.setText("Modificar");
+        btnModificar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnGuardarActionPerformed(evt);
+                btnModificarActionPerformed(evt);
             }
         });
-        jPanel2.add(btnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 520, -1, -1));
+        jPanel2.add(btnModificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 520, -1, -1));
 
         lblPassword_Ven.setFont(new java.awt.Font("Roboto Medium", 0, 21)); // NOI18N
         lblPassword_Ven.setForeground(new java.awt.Color(0, 53, 79));
         lblPassword_Ven.setText("Contraseña:");
         jPanel2.add(lblPassword_Ven, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 150, 130, 40));
-
-        txtPasswordVendedor.setForeground(new java.awt.Color(0, 53, 79));
-        txtPasswordVendedor.setColorTransparente(true);
-        txtPasswordVendedor.setFont(new java.awt.Font("Roboto Light", 1, 14)); // NOI18N
-        txtPasswordVendedor.setPlaceholder("123abc");
-        jPanel2.add(txtPasswordVendedor, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 150, 200, 40));
 
         lblNumeroVentas_Ven.setFont(new java.awt.Font("Roboto Medium", 0, 21)); // NOI18N
         lblNumeroVentas_Ven.setForeground(new java.awt.Color(0, 53, 79));
@@ -227,6 +224,16 @@ public class CrudPanelVendedor2 extends javax.swing.JPanel {
         txtCelularVendedor.setPlaceholder("Escriba su número celular");
         jPanel2.add(txtCelularVendedor, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 100, 230, 40));
 
+        txtPasswordVendedor.setForeground(new java.awt.Color(0, 53, 79));
+        txtPasswordVendedor.setOpaque(false);
+        txtPasswordVendedor.setPlaceholder("Digite su Contraseña");
+        txtPasswordVendedor.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtPasswordVendedorActionPerformed(evt);
+            }
+        });
+        jPanel2.add(txtPasswordVendedor, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 150, 210, 40));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -253,56 +260,59 @@ public class CrudPanelVendedor2 extends javax.swing.JPanel {
 
     }//GEN-LAST:event_btnCancelarMouseClicked
 
-    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
+    private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
 
         Boolean valido = false;
-            
-            Date fechaNacimientoDate = jDateFechaNacVendedor.getDate(); // Obtener la fecha de nacimiento del JDateChooser
 
-            // Formatear la fecha como String en el formato deseado (por ejemplo, "dd/MM/yyyy")
-            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-            String fechaNacimiento = sdf.format(fechaNacimientoDate);
+        Date fechaNacimientoDate = jDateFechaNacVendedor.getDate(); // Obtener la fecha de nacimiento del JDateChooser
 
-           
-            if (valido = txtCedulaVendedor.getText().matches("\\d{10}")) {
-                if (valido = txtNombresVendedor.getText().toUpperCase().matches("^[a-zA-Z]+$")) {
-                    if (valido = txtApellidosVendedor.getText().toUpperCase().matches("^[a-zA-Z]+$")) {
-                        if (valido = txtDireccionVendedor.getText().toUpperCase().matches("^[a-zA-Z]+$")) {
-                            if (valido = txtCorreoVendedor.getText().matches("^[\\w.-]+@[\\w.-]+\\.[a-zA-Z]{2,6}$")) {
-                                if (valido = txtCelularVendedor.getText().matches("^09\\d{8}$")) {
+        // Formatear la fecha como String en el formato deseado (por ejemplo, "dd/MM/yyyy")
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        String fechaNacimiento = sdf.format(fechaNacimientoDate);
 
-                                    
-                                    modificarVendedor(Double.parseDouble(txtSueldoVendedor.getText()), Double.parseDouble(txtComicionesVendedor.getText()), Integer.parseInt(txtNumeroVentasVendedor.getText()),
-                                            txtCedulaVendedor.getText(), txtNombresVendedor.getText().toUpperCase(), txtApellidosVendedor.getText().toUpperCase(), txtDireccionVendedor.getText().toUpperCase(),
-                                            txtCorreoVendedor.getText(), txtCelularVendedor.getText(), (String) cbxGeneroVendedor.getSelectedItem(), fechaNacimiento, (String) cbxEstadoCivilVendedor.getSelectedItem(),
-                                            txtCedulaVendedor.getText(), txtPasswordVendedor.getText(), txtCorreoVendedor.getText());
-                                    
+        if (valido = txtCedulaVendedor.getText().matches("\\d{10}")) {
+            if (valido = txtNombresVendedor.getText().toUpperCase().matches("^[a-zA-Z]+(?:\\s[a-zA-Z]+)?$")) {
+                if (valido = txtApellidosVendedor.getText().toUpperCase().matches("^[a-zA-Z]+(?:\\s[a-zA-Z]+)?$")) {
+                    if (valido = txtCorreoVendedor.getText().matches("^[\\w.-]+@[\\w.-]+\\.[a-zA-Z]{2,6}$")) {
+                        if (valido = txtCelularVendedor.getText().matches("^09\\d{8}$")) {
 
-                                } else {
-                                    JOptionPane.showMessageDialog(null, "Ingrese un celular valido");
-                                }
-
-                            } else {
-                                JOptionPane.showMessageDialog(null, "Ingrese un correo valida");
-                            }
+                            modificarVendedor(Double.parseDouble(txtSueldoVendedor.getText()), Double.parseDouble(txtComicionesVendedor.getText()), Integer.parseInt(txtNumeroVentasVendedor.getText()), Vendedor.Estado.ACTIVO,
+                                    txtCedulaVendedor.getText(), txtNombresVendedor.getText().toUpperCase(), txtApellidosVendedor.getText().toUpperCase(), txtDireccionVendedor.getText().toUpperCase(),
+                                    txtCorreoVendedor.getText(), txtCelularVendedor.getText(), (String) cbxGeneroVendedor.getSelectedItem(), fechaNacimiento, (String) cbxEstadoCivilVendedor.getSelectedItem(),
+                                    txtCedulaVendedor.getText(), txtPasswordVendedor.getText(), txtCorreoVendedor.getText());
 
                         } else {
-                            JOptionPane.showMessageDialog(null, "Ingrese una direccion valida");
+                            JOptionPane.showMessageDialog(null, "Ingrese un celular valido");
                         }
+
                     } else {
-                        JOptionPane.showMessageDialog(null, "Ingrese un apellido valido");
+                        JOptionPane.showMessageDialog(null, "Ingrese un correo valida");
                     }
 
                 } else {
-                    JOptionPane.showMessageDialog(null, "Ingrese un nombre valido");
+                    JOptionPane.showMessageDialog(null, "Ingrese un apellido valido");
                 }
 
             } else {
-                JOptionPane.showMessageDialog(null, "Ingrese una cedula valida");
+                JOptionPane.showMessageDialog(null, "Ingrese un nombre valido");
             }
 
+        } else {
+            JOptionPane.showMessageDialog(null, "Ingrese una cedula valida");
+        }
 
-    }//GEN-LAST:event_btnGuardarActionPerformed
+
+    }//GEN-LAST:event_btnModificarActionPerformed
+
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        System.out.println("salir");
+        TablaVendedores tblVen = new TablaVendedores();
+        ShowpanelCruds(tblVen);
+    }//GEN-LAST:event_btnCancelarActionPerformed
+
+    private void txtPasswordVendedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPasswordVendedorActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtPasswordVendedorActionPerformed
 
     public final void Vendedorbuscar() {
 
@@ -324,7 +334,7 @@ public class CrudPanelVendedor2 extends javax.swing.JPanel {
             txtApellidosVendedor.setText(vende.getApellidos());
             txtDireccionVendedor.setText(vende.getDireccion());
             txtCorreoVendedor.setText(vende.getCorreo());
-            txtCelularVendedor.setText(vende.getCelular());            
+            txtCelularVendedor.setText(vende.getCelular());
             cbxGeneroVendedor.setSelectedItem(vende.getGenero());
             cbxEstadoCivilVendedor.setSelectedItem(vende.getEstadoCivil());
             txtComicionesVendedor.setText(String.valueOf(vende.getComiciones_Vendedor()));
@@ -333,7 +343,7 @@ public class CrudPanelVendedor2 extends javax.swing.JPanel {
 
             try {
                 String fechaNacimientoStr = vende.getFechaNacimiento(); // Suponiendo que getFechaNacimiento() devuelve un String en formato "yyyy-MM-dd"
-                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
                 Date fechaNacimientoDate = sdf.parse(fechaNacimientoStr);
 
                 jDateFechaNacVendedor.setDate(fechaNacimientoDate);
@@ -351,17 +361,17 @@ public class CrudPanelVendedor2 extends javax.swing.JPanel {
         BaseBD.close();
     }
 
-    public void modificarVendedor(double sueldoBase_Vendedor, double comiciones_Vendedor, int numeroVentas_Vendedor, String cedula, String nombres,
-            String apellidos, String direccion, String correo, String celular, String genero, String fechaNacimiento, String estadoCivil, String nombreUsuario,
-            String password, String correoRecuperacion) {
+    public void modificarVendedor(double sueldoBase_Vendedor, double comiciones_Vendedor, int numeroVentas_Vendedor, Vendedor.Estado estado, String cedula,
+            String nombres, String apellidos, String direccion, String correo, String celular, String genero,
+            String fechaNacimiento, String estadoCivil, String nombreUsuario, String password, String correoRecuperacion) {
 
         ObjectContainer BaseBD = Conexion_db.ConectarBD();
 
-        Vendedor modificarVendedor = new Vendedor(sueldoBase_Vendedor, comiciones_Vendedor, numeroVentas_Vendedor, cedula, nombres,
+        Vendedor modificarVendedor = new Vendedor(sueldoBase_Vendedor, comiciones_Vendedor, numeroVentas_Vendedor, estado, cedula, nombres,
                 apellidos, direccion, correo, celular, genero, fechaNacimiento, estadoCivil, nombreUsuario,
                 password, correoRecuperacion);
 
-        Vendedor vendedorBusca = new Vendedor(0.0, 0.0, 0, cedula, null,
+        Vendedor vendedorBusca = new Vendedor(0.0, 0.0, 0, null, cedula, null,
                 null, null, null, null, null, null, null, null,
                 null, null);
 
@@ -377,6 +387,9 @@ public class CrudPanelVendedor2 extends javax.swing.JPanel {
             BaseBD.set(modificarVendedor);
             JOptionPane.showMessageDialog(this, "Vendedor Modificado");
 
+            TablaVendedores miTablaVendedored = new TablaVendedores();
+            ShowpanelCruds(miTablaVendedored);
+
         } else {
             JOptionPane.showMessageDialog(this, "No se encontro ningun vehiculo");
         }
@@ -384,8 +397,6 @@ public class CrudPanelVendedor2 extends javax.swing.JPanel {
         BaseBD.close();
     }
 
-    
-    
     private void ShowpanelCruds(JPanel p) {
         p.setSize(870, 630);
         p.setLocation(0, 0);
@@ -397,7 +408,7 @@ public class CrudPanelVendedor2 extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Cedula_Ven;
     private rojeru_san.RSButtonRiple btnCancelar;
-    private rojeru_san.RSButtonRiple btnGuardar;
+    private rojeru_san.RSButtonRiple btnModificar;
     private javax.swing.JComboBox<String> cbxEstadoCivilVendedor;
     private javax.swing.JComboBox<String> cbxGeneroVendedor;
     private com.toedter.calendar.JDateChooser jDateFechaNacVendedor;
@@ -424,7 +435,7 @@ public class CrudPanelVendedor2 extends javax.swing.JPanel {
     private rojeru_san.RSMTextFull txtDireccionVendedor;
     private rojeru_san.RSMTextFull txtNombresVendedor;
     private rojeru_san.RSMTextFull txtNumeroVentasVendedor;
-    private rojeru_san.RSMTextFull txtPasswordVendedor;
+    private rojeru_san.RSMPassView txtPasswordVendedor;
     private rojeru_san.RSMTextFull txtSueldoVendedor;
     // End of variables declaration//GEN-END:variables
 }

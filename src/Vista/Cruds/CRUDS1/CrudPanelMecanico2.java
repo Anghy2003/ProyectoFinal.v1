@@ -1,3 +1,4 @@
+
 package Vista.Cruds.CRUDS1;
 
 import Conexion.Conexion_db;
@@ -8,75 +9,23 @@ import com.db4o.ObjectContainer;
 import com.db4o.ObjectSet;
 import com.db4o.query.Query;
 import java.awt.BorderLayout;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
-public class CrudPanelMecanico extends javax.swing.JPanel {
+public class CrudPanelMecanico2 extends javax.swing.JPanel {
 
-    public void GuardarMecanico(String titulo, double Sueldo, Mecanico.Estado estado, String cedula, String nombres, String apellidos,
-            String direccion, String correo, String celular, String genero, String fechaNacimiento, String estadoCivil,
-            String nombreUsuario, String password, String correoRecuperacion) {
-
-        ObjectContainer BaseBD = Conexion_db.ConectarBD();
-
-        int siguienteID = obtenerProximoIDMecanico(BaseBD);
-
-        Mecanico mecanico1 = new Mecanico(titulo, Sueldo, estado, cedula, nombres, apellidos,
-                direccion, correo, celular, genero, fechaNacimiento, estadoCivil,
-                nombreUsuario, password, correoRecuperacion);
-
-        mecanico1.setiD_Mecanico(siguienteID);
-        BaseBD.close();
-
-        if (VerificarMecanicoRepetidos() == 0) {
-
-            BaseBD = Conexion_db.ConectarBD();
-            BaseBD.set(mecanico1);
-            BaseBD.close();
-
-            JOptionPane.showMessageDialog(this, "Mecanico Guardado");
-
-        } else {
-
-            JOptionPane.showMessageDialog(this, "Ya existe el Mecanico ");
-        }
-    }
-
+    private String BuscarMecanico;
     
-    public final int VerificarMecanicoRepetidos() {
+    
+    
 
-        ObjectContainer BaseBD = Conexion_db.ConectarBD();
-        Query vendedor = BaseBD.query();
-        vendedor.constrain(Mecanico.class);
-        vendedor.descend("cedula").constrain(txtCedulaMeca.getText());
-        ObjectSet<Mecanico> resultado = vendedor.execute();
-
-        int coincidencias = resultado.size();
-
-        BaseBD.close();
-        return coincidencias;
-    }
-
-    // Método para obtener el próximo ID_Vendedor disponible
-    private int obtenerProximoIDMecanico(ObjectContainer db) {
-        // Consultar el máximo ID_Vendedor almacenado en la base de datos
-        ObjectSet<Mecanico> result = db.queryByExample(Mecanico.class);
-        int maxID = 0;
-        while (result.hasNext()) {
-            Mecanico mecanico = result.next();
-            if (mecanico.getiD_Mecanico() > maxID) {
-                maxID = mecanico.getiD_Mecanico();
-            }
-        }
-        // El próximo ID es el máximo + 1
-        return maxID + 1;
-    }
-
-    public CrudPanelMecanico() {
+    public CrudPanelMecanico2(String receivedString) {
+        this.BuscarMecanico = receivedString;
         initComponents();
-
+        Mecanicobuscar();
     }
 
     /**
@@ -111,7 +60,7 @@ public class CrudPanelMecanico extends javax.swing.JPanel {
         jDateFechaNacMeca = new com.toedter.calendar.JDateChooser();
         cbxGeneroMeca = new javax.swing.JComboBox<>();
         cbxEstadoCivilMeca = new javax.swing.JComboBox<>();
-        btnGuardar = new rojeru_san.RSButtonRiple();
+        btnModificar = new rojeru_san.RSButtonRiple();
         lblPassword_Meca = new javax.swing.JLabel();
         lblSueldoMec = new javax.swing.JLabel();
         lblCelular_Meca = new javax.swing.JLabel();
@@ -231,13 +180,13 @@ public class CrudPanelMecanico extends javax.swing.JPanel {
         cbxEstadoCivilMeca.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Soltero", "Casado", "Viudo", "Union Libre" }));
         jPanel2.add(cbxEstadoCivilMeca, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 280, 150, 30));
 
-        btnGuardar.setText("Guardar");
-        btnGuardar.addActionListener(new java.awt.event.ActionListener() {
+        btnModificar.setText("Modificar");
+        btnModificar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnGuardarActionPerformed(evt);
+                btnModificarActionPerformed(evt);
             }
         });
-        jPanel2.add(btnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 520, -1, -1));
+        jPanel2.add(btnModificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 520, -1, -1));
 
         lblPassword_Meca.setFont(new java.awt.Font("Roboto Medium", 0, 21)); // NOI18N
         lblPassword_Meca.setForeground(new java.awt.Color(0, 53, 79));
@@ -323,41 +272,42 @@ public class CrudPanelMecanico extends javax.swing.JPanel {
 
     }//GEN-LAST:event_btnCancelarMouseClicked
 
-    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-        boolean usuarioRepetido = false;
-
-        if (VerificarMecanicoRepetidos() != 0) {
-            JOptionPane.showMessageDialog(null, "Mecanico ya registrado");
-            usuarioRepetido = true;
-        }
-
-        if (!usuarioRepetido) {
-
+    private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
+ 
+            
             Boolean valido = false;
-
+            
             Date fechaNacimientoDate = jDateFechaNacMeca.getDate(); // Obtener la fecha de nacimiento del JDateChooser
 
             // Formatear la fecha como String en el formato deseado (por ejemplo, "dd/MM/yyyy")
             SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
             String fechaNacimiento = sdf.format(fechaNacimientoDate);
 
+           
             if (valido = txtCedulaMeca.getText().matches("\\d{10}")) {
-                if (valido = txtNombresMeca.getText().toUpperCase().matches("^[a-zA-Z]+(?:\\s[a-zA-Z]+)?$")) {
-                    if (valido = txtApellidosMeca.getText().toUpperCase().matches("^[a-zA-Z]+(?:\\s[a-zA-Z]+)?$")) {
-                        if (valido = txtCorreoMeca.getText().matches("^[\\w.-]+@[\\w.-]+\\.[a-zA-Z]{2,6}$")) {
-                            if (valido = txtCelularMeca.getText().matches("^09\\d{8}$")) {
+                if (valido = txtNombresMeca.getText().toUpperCase().matches("^[a-zA-Z]+$")) {
+                    if (valido = txtApellidosMeca.getText().toUpperCase().matches("^[a-zA-Z]+$")) {
+                        if (valido = txtDireccionMeca.getText().toUpperCase().matches("^[a-zA-Z]+$")) {
+                            if (valido = txtCorreoMeca.getText().matches("^[\\w.-]+@[\\w.-]+\\.[a-zA-Z]{2,6}$")) {
+                                if (valido = txtCelularMeca.getText().matches("^09\\d{8}$")) {
 
-                                GuardarMecanico(txtTituloMeca.getText().toUpperCase(), Double.parseDouble(txtSueldoMeca.getText()), Mecanico.Estado.ACTIVO, txtCedulaMeca.getText(), txtNombresMeca.getText().toUpperCase(),
+                                    
+                                    modificarMecanico(txtTituloMeca.getText().toUpperCase(), Double.parseDouble(txtSueldoMeca.getText()), Mecanico.Estado.ACTIVO, txtCedulaMeca.getText(), txtNombresMeca.getText().toUpperCase(),
                                         txtApellidosMeca.getText().toUpperCase(), txtDireccionMeca.getText().toUpperCase(), txtCorreoMeca.getText(), txtCelularMeca.getText(),
                                         (String) cbxGeneroMeca.getSelectedItem(), fechaNacimiento, (String) cbxEstadoCivilMeca.getSelectedItem(), txtCedulaMeca.getText(), txtPasswordMeca.getText(),
                                         txtCorreoMeca.getText());
+                                    
+
+                                } else {
+                                    JOptionPane.showMessageDialog(null, "Ingrese un celular valido");
+                                }
 
                             } else {
-                                JOptionPane.showMessageDialog(null, "Ingrese un celular valido");
+                                JOptionPane.showMessageDialog(null, "Ingrese un correo valida");
                             }
 
                         } else {
-                            JOptionPane.showMessageDialog(null, "Ingrese un correo valida");
+                            JOptionPane.showMessageDialog(null, "Ingrese una direccion valida");
                         }
                     } else {
                         JOptionPane.showMessageDialog(null, "Ingrese un apellido valido");
@@ -371,20 +321,101 @@ public class CrudPanelMecanico extends javax.swing.JPanel {
                 JOptionPane.showMessageDialog(null, "Ingrese una cedula valida");
             }
 
-        }
-        TablaMecanicos tblCli = new TablaMecanicos();
-        ShowpanelCruds(tblCli);
-    }//GEN-LAST:event_btnGuardarActionPerformed
+            
+        
+
+    }//GEN-LAST:event_btnModificarActionPerformed
 
     private void txtPasswordMecaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPasswordMecaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtPasswordMecaActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-        System.out.println("salir");
-        TablaMecanicos tblCli = new TablaMecanicos();
-        ShowpanelCruds(tblCli);
+         System.out.println("salir");
+        TablaMecanicos tblMeca = new TablaMecanicos();
+        ShowpanelCruds(tblMeca);
     }//GEN-LAST:event_btnCancelarActionPerformed
+
+    public final void Mecanicobuscar() {
+
+        Boolean encontrado = true;
+
+        ObjectContainer BaseBD = Conexion_db.ConectarBD();
+
+        Query mecanico = BaseBD.query();
+        mecanico.constrain(Mecanico.class);
+        mecanico.descend("cedula").constrain(BuscarMecanico);
+        ObjectSet<Mecanico> resultado = mecanico.execute();
+
+        for (Mecanico meca : resultado) {
+
+            txtCedulaMeca.setText(meca.getCedula());
+            txtCedulaMeca.setEnabled(false); // porque es el atributo principal
+            txtPasswordMeca.setText(meca.getPassword());
+            txtNombresMeca.setText(meca.getNombres());
+            txtApellidosMeca.setText(meca.getApellidos());
+            txtDireccionMeca.setText(meca.getDireccion());
+            txtCorreoMeca.setText(meca.getCorreo());
+            txtCelularMeca.setText(meca.getCelular());
+            cbxGeneroMeca.setSelectedItem(meca.getGenero());
+            cbxEstadoCivilMeca.setSelectedItem(meca.getEstadoCivil());
+            txtTituloMeca.setText(meca.getTitulo());            
+            txtSueldoMeca.setText(String.valueOf(meca.getSueldo()));
+
+            try {
+                String fechaNacimientoStr = meca.getFechaNacimiento(); // Suponiendo que getFechaNacimiento() devuelve un String en formato "yyyy-MM-dd"
+                SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+                Date fechaNacimientoDate = sdf.parse(fechaNacimientoStr);
+
+                jDateFechaNacMeca.setDate(fechaNacimientoDate);
+            } catch (ParseException e) {
+                e.printStackTrace();
+                // Manejar la excepción si ocurre algún problema al convertir la fecha
+            }
+
+            encontrado = true;
+            JOptionPane.showMessageDialog(this, "Encontrado");
+        }
+        if (!encontrado) {
+            JOptionPane.showMessageDialog(this, "No se encontraron Datos");
+        }
+        BaseBD.close();
+    }
+
+    public void modificarMecanico(String titulo, double Sueldo, Mecanico.Estado estado, String cedula, String nombres, String apellidos,
+            String direccion, String correo, String celular, String genero, String fechaNacimiento, String estadoCivil,
+            String nombreUsuario, String password, String correoRecuperacion) {
+
+        ObjectContainer BaseBD = Conexion_db.ConectarBD();
+
+        Mecanico modificarMecanico = new Mecanico(titulo, Sueldo, estado, cedula, nombres, apellidos,
+                direccion, correo, celular, genero, fechaNacimiento, estadoCivil,
+                nombreUsuario, password, correoRecuperacion);
+
+        Mecanico mecanicoBusca = new Mecanico(null,0.0,null,cedula, null, null, null, null,
+                null,  null, null, null, null, null, null);
+
+        ObjectSet resultado = BaseBD.get(mecanicoBusca);
+
+        int coincidencias = resultado.size();
+
+        if (coincidencias > 0) {
+
+            Mecanico vendedorVEliminar = (Mecanico) resultado.next();
+            BaseBD.delete(vendedorVEliminar);
+
+            BaseBD.set(modificarMecanico);
+            JOptionPane.showMessageDialog(this, "Mecanico Modificado");
+
+            TablaMecanicos miTablaVendedored = new TablaMecanicos();
+            ShowpanelCruds(miTablaVendedored);
+
+        } else {
+            JOptionPane.showMessageDialog(this, "No se encontro ningun Mecanico");
+        }
+
+        BaseBD.close();
+    }
 
     private void ShowpanelCruds(JPanel p) {
         p.setSize(870, 630);
@@ -398,7 +429,7 @@ public class CrudPanelMecanico extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Cedula_Meca;
     private rojeru_san.RSButtonRiple btnCancelar;
-    private rojeru_san.RSButtonRiple btnGuardar;
+    private rojeru_san.RSButtonRiple btnModificar;
     private javax.swing.JComboBox<String> cbxEstadoCivilMeca;
     private javax.swing.JComboBox<String> cbxGeneroMeca;
     private com.toedter.calendar.JDateChooser jDateFechaNacMeca;

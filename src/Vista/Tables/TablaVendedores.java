@@ -7,25 +7,25 @@ package Vista.Tables;
 
 import Conexion.Conexion_db;
 import Models.Vendedor;
+import static Models.Vendedor.Estado.ACTIVO;
+import static Models.Vendedor.Estado.INACTIVO;
 import Vista.Cruds.CRUDS1.CrudPanelVendedor;
 import Vista.Cruds.CRUDS1.CrudPanelVendedor2;
 import Vista.Menu.VistaMenu;
 import com.db4o.ObjectContainer;
 import com.db4o.ObjectSet;
+import com.db4o.query.Query;
 import java.awt.BorderLayout;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.table.DefaultTableModel;
 
 
 public class TablaVendedores extends javax.swing.JPanel {
 
-    /**
-     * Creates new form TablaVendedores
-     */
     public TablaVendedores() {
         initComponents();
-        mostrarDatosVendedor();
+        mostrarDatosActivos();
+        mostrarDatosInactivos();
     }
 
     /**
@@ -45,7 +45,9 @@ public class TablaVendedores extends javax.swing.JPanel {
         btnAgregarVendedor = new rsbuttongradiente.RSButtonGradiente();
         btnEliminarVendedor = new rsbuttongradiente.RSButtonGradiente();
         btnBuscarVendedor = new rsbuttongradiente.RSButtonGradiente();
-        btnEditarVendedor = new rsbuttongradiente.RSButtonGradiente();
+        tableVendedor1 = new javax.swing.JScrollPane();
+        tblVendedorInactivo = new javax.swing.JTable();
+        jLabel2 = new javax.swing.JLabel();
 
         setLayout(new java.awt.BorderLayout());
 
@@ -123,41 +125,59 @@ public class TablaVendedores extends javax.swing.JPanel {
             }
         });
 
-        btnEditarVendedor.setText("Editar");
-        btnEditarVendedor.setColorPrimario(new java.awt.Color(0, 51, 153));
-        btnEditarVendedor.setColorPrimarioHover(new java.awt.Color(51, 0, 255));
-        btnEditarVendedor.setColorSecundario(new java.awt.Color(51, 153, 255));
-        btnEditarVendedor.setColorSecundarioHover(new java.awt.Color(153, 204, 255));
-        btnEditarVendedor.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnEditarVendedorMouseClicked(evt);
+        tableVendedor1.setBackground(new java.awt.Color(255, 255, 255));
+        tableVendedor1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        tableVendedor1.setForeground(new java.awt.Color(255, 255, 255));
+
+        tblVendedorInactivo.setFont(new java.awt.Font("Roboto Medium", 0, 14)); // NOI18N
+        tblVendedorInactivo.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null}
+            },
+            new String [] {
+                "Id Vendedor", "Usuario", "Contraseña", "Cedula", "Nombres", "Apellidos", "Direccion", "Correo Eletronico", "Correo Recuperacion", "Celular", "Fecha Nacimiento", "Estado Civil", "Genero", "Sueldo", "Comiciones", "# Ventas"
             }
-        });
+        ));
+        tableVendedor1.setViewportView(tblVendedorInactivo);
+
+        jLabel2.setFont(new java.awt.Font("Roboto Black", 0, 22)); // NOI18N
+        jLabel2.setText("Listado Vendedores Inactivados");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(24, 24, 24)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(tableVendedor, javax.swing.GroupLayout.DEFAULT_SIZE, 840, Short.MAX_VALUE))
-                .addContainerGap())
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addGap(25, 25, 25)
                 .addComponent(btnBuscarVendedor, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(btnEditarVendedor, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btnEliminarVendedor, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(txtBuscarVendedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(18, 18, 18)
                 .addComponent(btnAgregarVendedor, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(71, 71, 71))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(tableVendedor1, javax.swing.GroupLayout.DEFAULT_SIZE, 864, Short.MAX_VALUE))
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(tableVendedor, javax.swing.GroupLayout.DEFAULT_SIZE, 858, Short.MAX_VALUE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGap(24, 24, 24)
+                                .addComponent(jLabel1))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabel2)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -167,24 +187,28 @@ public class TablaVendedores extends javax.swing.JPanel {
                 .addGap(16, 16, 16)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnBuscarVendedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnEditarVendedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtBuscarVendedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnAgregarVendedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnEliminarVendedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(tableVendedor, javax.swing.GroupLayout.PREFERRED_SIZE, 446, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(46, Short.MAX_VALUE))
+                .addComponent(tableVendedor, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 38, Short.MAX_VALUE)
+                .addComponent(jLabel2)
+                .addGap(27, 27, 27)
+                .addComponent(tableVendedor1, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(68, 68, 68))
         );
 
         add(jPanel2, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAgregarVendedorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAgregarVendedorMouseClicked
-
+        CrudPanelVendedor agregarVehi = new CrudPanelVendedor();
+        ShowpanelCruds(agregarVehi);
     }//GEN-LAST:event_btnAgregarVendedorMouseClicked
 
     private void btnEliminarVendedorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEliminarVendedorMouseClicked
-        // TODO add your handling code here:
+
     }//GEN-LAST:event_btnEliminarVendedorMouseClicked
 
     private void btnBuscarVendedorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBuscarVendedorMouseClicked
@@ -192,43 +216,40 @@ public class TablaVendedores extends javax.swing.JPanel {
         System.out.println("clickmet");
     }//GEN-LAST:event_btnBuscarVendedorMouseClicked
 
-    private void btnEditarVendedorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditarVendedorMouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnEditarVendedorMouseClicked
-
     private void btnAgregarVendedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarVendedorActionPerformed
         CrudPanelVendedor vendee = new CrudPanelVendedor();
         ShowpanelCruds(vendee);
-            
+
     }//GEN-LAST:event_btnAgregarVendedorActionPerformed
 
     private void btnBuscarVendedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarVendedorActionPerformed
-        
-        if(!txtBuscarVendedor.getText().trim().isEmpty()){
-            
+
+        if (!txtBuscarVendedor.getText().trim().isEmpty()) {
+
             String BuscarVendedor = txtBuscarVendedor.getText();
             CrudPanelVendedor2 mibuscarvendedor = new CrudPanelVendedor2(BuscarVendedor);
             ShowpanelCruds(mibuscarvendedor);
-            
-            
-        }else{
+
+        } else {
             JOptionPane.showMessageDialog(this, "ingrese una cedula ");
         }
     }//GEN-LAST:event_btnBuscarVendedorActionPerformed
 
     private void btnEliminarVendedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarVendedorActionPerformed
-        if(!txtBuscarVendedor.getText().trim().isEmpty()){
-            String eliminarVen = txtBuscarVendedor.getText();
-            eliminarVendedor(eliminarVen);
+
+        if (!txtBuscarVendedor.getText().trim().isEmpty()) {
+            String eliminarVende = txtBuscarVendedor.getText();
+            eliminarVendedor(eliminarVende);
             JOptionPane.showMessageDialog(this, "Vendedor Eliminado");
-            mostrarDatosVendedor();
-            
-        }else{
-            JOptionPane.showMessageDialog(this, "Vebdedor no encontrado ");
+            mostrarDatosActivos();
+            mostrarDatosInactivos();
+
+        } else {
+            JOptionPane.showMessageDialog(this, "Vendedor no encontrado ");
         }
     }//GEN-LAST:event_btnEliminarVendedorActionPerformed
 
-private void ShowpanelCruds(JPanel p) {
+    private void ShowpanelCruds(JPanel p) {
         p.setSize(870, 630);
         p.setLocation(0, 0);
         VistaMenu.PanelPrincipal.removeAll();
@@ -237,45 +258,21 @@ private void ShowpanelCruds(JPanel p) {
         VistaMenu.PanelPrincipal.repaint();
     }
 
-public void eliminarVendedor(String cedula) {
-
-         ObjectContainer BaseBD = Conexion_db.ConectarBD();
-
-        ObjectSet<Vendedor> result = BaseBD.queryByExample(new Vendedor(0, 0.0, 0.0, 0, cedula, null, null, null, null,
-                null,  null, null, null, null, null, null)); // Crear objeto para consultar
-
-        if (result.hasNext()) {
-            Vendedor vendedorAEliminar = result.next();
-
-            // Preguntar al usuario si está seguro de eliminar
-            int opcion = JOptionPane.showConfirmDialog(null, "¿Está seguro de eliminar este vendedor?",
-                    "Confirmación de eliminación", JOptionPane.YES_NO_OPTION);
-
-            if (opcion == JOptionPane.YES_OPTION) {
-                BaseBD.delete(vendedorAEliminar);
-                System.out.println("Vendedor eliminado correctamente.");
-            } else {
-                System.out.println("Eliminación cancelada por el usuario.");
-            }
-        } else {
-            System.out.println("No se encontró vendedor con ese número de cédula.");
-        }
-
-        BaseBD.close();
-    
-    }
-
-    private void  mostrarDatosVendedor() {
+    private void mostrarDatosInactivos() {
 
         ObjectContainer BaseBD = Conexion_db.ConectarBD();
-        tblVendedor.setEnabled(true);
-        
-        ObjectSet<Vendedor> resultado = BaseBD.get(Vendedor.class);
-       
-        String matriz[][] = new String[resultado.size()][16];
-        int i = 0 ;
-         for (Vendedor vende : resultado) {
-            
+        tblVendedorInactivo.setEnabled(true);
+
+        Query query = BaseBD.query();
+        query.constrain(Vendedor.class);
+        query.descend("estado").constrain(INACTIVO);
+
+        ObjectSet<Vendedor> resultado = query.execute();
+
+        String matriz[][] = new String[resultado.size()][17];
+        int i = 0;
+        for (Vendedor vende : resultado) {
+
             matriz[i][0] = String.valueOf(vende.getiD_Vendedor());
             matriz[i][1] = vende.getNombreUsuario();
             matriz[i][2] = vende.getPassword();
@@ -292,27 +289,98 @@ public void eliminarVendedor(String cedula) {
             matriz[i][13] = String.valueOf(vende.getSueldoBase_Vendedor());
             matriz[i][14] = String.valueOf(vende.getComiciones_Vendedor());
             matriz[i][15] = String.valueOf(vende.getNumeroVentas_Vendedor());
-                i++;
-                    } 
+            matriz[i][16] = String.valueOf(vende.getEstado());
+            i++;
+        }
         
-        tblVendedor.setModel(new javax.swing.table.DefaultTableModel(
-                matriz,
-                new String[]{"ID Vendedor",  "Usuario", "Contraseña","Cedula", "Nombres", "Apellidos", "Direccion", "Correo Electronico","Correo recuperacion", "Celular","Fecha Nacimiento"
-                , "Estado Civil", "Genero", "Sueldo", "Comiciones", "Numero de Ventas"}
-        ));
+        //datos configurados
+        tblVendedorInactivo.setModel(new javax.swing.table.DefaultTableModel(matriz, new String[]{"ID Vendedor", "Usuario", "Contraseña", "Cedula", "Nombres", "Apellidos", "Direccion", "Correo Electronico", "Correo recuperacion", "Celular", "Fecha Nacimiento",
+                    "Estado Civil", "Genero", "Sueldo", "Comiciones", "Numero de Ventas", "Estado"}));
+        tblVendedorInactivo.setEnabled(false);
         BaseBD.close();
     }
-    
-    
+
+    private void mostrarDatosActivos() {
+
+        ObjectContainer BaseBD = Conexion_db.ConectarBD();
+        tblVendedor.setEnabled(true);
+
+        Query query = BaseBD.query();
+        query.constrain(Vendedor.class);
+        query.descend("estado").constrain(ACTIVO);
+
+        ObjectSet<Vendedor> resultado = query.execute();
+
+        String matriz[][] = new String[resultado.size()][17];
+        int i = 0;
+        for (Vendedor vende : resultado) {
+
+            matriz[i][0] = String.valueOf(vende.getiD_Vendedor());
+            matriz[i][1] = vende.getNombreUsuario();
+            matriz[i][2] = vende.getPassword();
+            matriz[i][3] = vende.getCedula();
+            matriz[i][4] = vende.getNombres();
+            matriz[i][5] = vende.getApellidos();
+            matriz[i][6] = vende.getDireccion();
+            matriz[i][7] = vende.getCorreo();
+            matriz[i][8] = vende.getCorreoRecuperacion();
+            matriz[i][9] = vende.getCelular();
+            matriz[i][10] = vende.getFechaNacimiento();
+            matriz[i][11] = vende.getEstadoCivil();
+            matriz[i][12] = vende.getGenero();
+            matriz[i][13] = String.valueOf(vende.getSueldoBase_Vendedor());
+            matriz[i][14] = String.valueOf(vende.getComiciones_Vendedor());
+            matriz[i][15] = String.valueOf(vende.getNumeroVentas_Vendedor());
+            matriz[i][16] = String.valueOf(vende.getEstado());
+            i++;
+        }
+
+        tblVendedor.setModel(new javax.swing.table.DefaultTableModel(matriz, new String[]{"ID Vendedor", "Usuario", "Contraseña", "Cedula", "Nombres", "Apellidos", "Direccion", "Correo Electronico", "Correo recuperacion", "Celular", "Fecha Nacimiento",
+                    "Estado Civil", "Genero", "Sueldo", "Comiciones", "Numero de Ventas", "Estado"}));
+        tblVendedor.setEnabled(false);
+        BaseBD.close();
+    }
+
+    public void eliminarVendedor(String cedula) {
+
+        ObjectContainer BaseBD = Conexion_db.ConectarBD();
+
+        ObjectSet<Vendedor> result = BaseBD.queryByExample(new Vendedor(0.0, 0.0, 0, null, cedula, null,
+                null, null, null, null, null, null, null, null,
+                null, null)); // Crear objeto para consultar
+
+        if (result.hasNext()) {
+            Vendedor VendedorAEliminar = result.next();
+
+            // Preguntar al usuario si está seguro de eliminar
+            int opcion = JOptionPane.showConfirmDialog(null, "¿Está seguro de eliminar este Vehiculo?",
+                    "Confirmación de eliminación", JOptionPane.YES_NO_OPTION);
+
+            if (opcion == JOptionPane.YES_OPTION) {
+                VendedorAEliminar.desactivarVendedor();
+                BaseBD.store(VendedorAEliminar);
+                System.out.println("Vendedor eliminado correctamente.");
+            } else {
+                System.out.println("Cancelado por el usuario.");
+            }
+        } else {
+            System.out.println("No se encontró Vendedor");
+        }
+
+        BaseBD.close();
+    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private rsbuttongradiente.RSButtonGradiente btnAgregarVendedor;
     private rsbuttongradiente.RSButtonGradiente btnBuscarVendedor;
-    private rsbuttongradiente.RSButtonGradiente btnEditarVendedor;
     private rsbuttongradiente.RSButtonGradiente btnEliminarVendedor;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane tableVendedor;
+    private javax.swing.JScrollPane tableVendedor1;
     private javax.swing.JTable tblVendedor;
+    private javax.swing.JTable tblVendedorInactivo;
     private rojeru_san.RSMTextFull txtBuscarVendedor;
     // End of variables declaration//GEN-END:variables
 }

@@ -1,37 +1,38 @@
-
 package Models;
 
 public class Mecanico extends Persona {
-    
+
     private int iD_Mecanico;
     private String titulo;
     private double Sueldo;
+    private Estado estado;
+
+    //haremos que tenga solo dos posibles valores
+    public enum Estado {
+        ACTIVO,
+        INACTIVO
+    }
+
+    public Mecanico(String titulo, double Sueldo, Estado estado, String cedula, String nombres, String apellidos,
+            String direccion, String correo, String celular, String genero, String fechaNacimiento, String estadoCivil,
+            String nombreUsuario, String password, String correoRecuperacion) {
+        super(cedula, nombres, apellidos, direccion, correo, celular, genero, fechaNacimiento, estadoCivil, nombreUsuario, password, correoRecuperacion);
+        this.titulo = titulo;
+        this.Sueldo = Sueldo;
+        this.estado = Estado.ACTIVO;
+    }
 
     public Mecanico() {
         super();
     }
 
-    public Mecanico(int iD_Mecanico, String titulo, double Sueldo) {
-        this.iD_Mecanico = iD_Mecanico;
-        this.titulo = titulo;
-        this.Sueldo = Sueldo;
+    public Estado getEstado() {
+        return estado;
     }
 
-    public Mecanico(int iD_Mecanico, String titulo, double Sueldo, String cedula, String nombres, String apellidos, String direccion, String correo, String celular, String genero, String fechaNacimiento, String estadoCivil, String nombreUsuario, String password, String correoRecuperacion) {
-        super(cedula, nombres, apellidos, direccion, correo, celular, genero, fechaNacimiento, estadoCivil, nombreUsuario, password, correoRecuperacion);
-        this.iD_Mecanico = iD_Mecanico;
-        this.titulo = titulo;
-        this.Sueldo = Sueldo;
+    public void setEstado(Estado estado) {
+        this.estado = estado;
     }
-
-    public Mecanico(String titulo, double Sueldo, String cedula, String nombres, String apellidos, String direccion, String correo, String celular, String genero,
-            String fechaNacimiento, String estadoCivil, String nombreUsuario, String password, String correoRecuperacion) {
-        super(cedula, nombres, apellidos, direccion, correo, celular, genero, fechaNacimiento, estadoCivil, nombreUsuario, password, correoRecuperacion);
-        this.titulo = titulo;
-        this.Sueldo = Sueldo;
-    }
-    
-    
 
     @Override
     public String toString() {
@@ -79,6 +80,14 @@ public class Mecanico extends Persona {
     public void setSueldo(double Sueldo) {
         this.Sueldo = Sueldo;
     }
-    
-    
+
+    //METODOS
+    public void activarMecanico() {
+        this.estado = Estado.ACTIVO;
+    }
+
+    public void desactivarMecanico() {
+        this.estado = Estado.INACTIVO;
+    }
+
 }
