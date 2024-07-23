@@ -38,7 +38,7 @@ public class BuscarPanelVehiculo1 extends javax.swing.JPanel {
         jLabel12 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
-        lblPlaca = new javax.swing.JLabel();
+        lblCedCliente = new javax.swing.JLabel();
         lblModelo = new javax.swing.JLabel();
         lblMarca = new javax.swing.JLabel();
         lblColor = new javax.swing.JLabel();
@@ -50,6 +50,9 @@ public class BuscarPanelVehiculo1 extends javax.swing.JPanel {
         btnCancelar = new rojeru_san.RSButtonRiple();
         YEARAño = new com.toedter.calendar.JYearChooser();
         btnModificar = new rojeru_san.RSButtonRiple();
+        lblPlaca1 = new javax.swing.JLabel();
+        YEARAño1 = new com.toedter.calendar.JYearChooser();
+        cmbCedCliente = new javax.swing.JComboBox<>();
 
         jLabel12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/burbujas.png"))); // NOI18N
         jLabel12.setText("jLabel12");
@@ -64,10 +67,10 @@ public class BuscarPanelVehiculo1 extends javax.swing.JPanel {
         jLabel2.setText("Modificar Vehículos");
         jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 30, 270, 40));
 
-        lblPlaca.setFont(new java.awt.Font("Roboto Medium", 0, 21)); // NOI18N
-        lblPlaca.setForeground(new java.awt.Color(0, 53, 79));
-        lblPlaca.setText("Placa:");
-        jPanel1.add(lblPlaca, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 130, 70, 40));
+        lblCedCliente.setFont(new java.awt.Font("Roboto Medium", 0, 21)); // NOI18N
+        lblCedCliente.setForeground(new java.awt.Color(0, 53, 79));
+        lblCedCliente.setText("Dueño:");
+        jPanel1.add(lblCedCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 130, 70, 40));
 
         lblModelo.setFont(new java.awt.Font("Roboto Medium", 0, 21)); // NOI18N
         lblModelo.setForeground(new java.awt.Color(0, 53, 79));
@@ -93,7 +96,7 @@ public class BuscarPanelVehiculo1 extends javax.swing.JPanel {
         txtPlaca.setColorTransparente(true);
         txtPlaca.setFont(new java.awt.Font("Roboto Light", 1, 14)); // NOI18N
         txtPlaca.setPlaceholder("Ejm: AAA-9999");
-        jPanel1.add(txtPlaca, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 120, 200, 40));
+        jPanel1.add(txtPlaca, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 80, 200, 40));
 
         txtModelo.setForeground(new java.awt.Color(0, 53, 79));
         txtModelo.setColorTransparente(true);
@@ -136,6 +139,15 @@ public class BuscarPanelVehiculo1 extends javax.swing.JPanel {
         });
         jPanel1.add(btnModificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 430, -1, -1));
 
+        lblPlaca1.setFont(new java.awt.Font("Roboto Medium", 0, 21)); // NOI18N
+        lblPlaca1.setForeground(new java.awt.Color(0, 53, 79));
+        lblPlaca1.setText("Placa:");
+        jPanel1.add(lblPlaca1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 90, 70, 40));
+        jPanel1.add(YEARAño1, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 330, 160, 30));
+
+        cmbCedCliente.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        jPanel1.add(cmbCedCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 130, 200, 40));
+
         add(jPanel1, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
 
@@ -149,15 +161,15 @@ public class BuscarPanelVehiculo1 extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnCancelarActionPerformed
 
-    public static void modificarVehiculo(String placa_Vehiculo, String modelo_Vehiculo, String marca_Vehiculo, String color_Vehiculo, int anioFabricacion_Vehiculo) {
+    public static void modificarVehiculo(String placa_Vehiculo, String modelo_Vehiculo, String marca_Vehiculo, String color_Vehiculo, int anioFabricacion_Vehiculo, String id_Cliente, Vehiculo.Estado estado) {
         // ESTABLECER CONEXION CON LA BASE DE DATOS
         ObjectContainer BaseBD = Conexion_db.ConectarBD();
 
         // Crear el objeto con los datos nuevos
-        Vehiculo vehiculoModificado = new Vehiculo(placa_Vehiculo, modelo_Vehiculo, marca_Vehiculo, color_Vehiculo, anioFabricacion_Vehiculo);
+        Vehiculo vehiculoModificado = new Vehiculo(placa_Vehiculo, modelo_Vehiculo, marca_Vehiculo, color_Vehiculo, anioFabricacion_Vehiculo, id_Cliente, estado);
 
         // Buscar el objeto existente en la base de datos
-        Vehiculo vehiculoBusca = new Vehiculo(placa_Vehiculo, null, null, null, 0);
+        Vehiculo vehiculoBusca = new Vehiculo(placa_Vehiculo, null, null, null, 0, null, null);
         ObjectSet resultado = BaseBD.get(vehiculoBusca);
         int coincidencias = resultado.size();
 
@@ -180,7 +192,7 @@ public class BuscarPanelVehiculo1 extends javax.swing.JPanel {
     public static int verificarVehiculosGuardar(String placa_Vehiculo) {
         // ESTABLECER CONEXION CON LA BASE DE DATOS
         ObjectContainer BaseBD = Conexion_db.ConectarBD();
-        Vehiculo VehiculosBusca = new Vehiculo(placa_Vehiculo, null, null, null, 0);
+        Vehiculo VehiculosBusca = new Vehiculo(placa_Vehiculo, null, null, null, 0, null, null);
         ObjectSet resultado = BaseBD.get(VehiculosBusca);
         int coincidencias= resultado.size();
         //Cerrar BD
@@ -191,7 +203,7 @@ public class BuscarPanelVehiculo1 extends javax.swing.JPanel {
     public static int verificarVehiculos(String placa_Vehiculo) {
         // ESTABLECER CONEXION CON LA BASE DE DATOS
         ObjectContainer BaseBD = Conexion_db.ConectarBD();
-        Vehiculo VehiculosBusca = new Vehiculo(placa_Vehiculo, null, null, null, 0);
+        Vehiculo VehiculosBusca = new Vehiculo(placa_Vehiculo, null, null, null, 0, null, null);
         ObjectSet resultado = BaseBD.get(VehiculosBusca);
         int coincidencias= resultado.size();
         //Cerrar BD
@@ -234,6 +246,22 @@ public class BuscarPanelVehiculo1 extends javax.swing.JPanel {
         BaseBD.close();
     }
     
+    
+    
+    public final int verificarPlacasRepetidas(){
+        Boolean encontrado = false;
+        // ESTABLECER CONEXION CON LA BASE DE DATOS
+        ObjectContainer BaseBD = Conexion_db.ConectarBD();
+        Query vehiculo = BaseBD.query();//metodo para iniciar una consulta
+        vehiculo.constrain(Vehiculo.class);//buscaremos en la clase Vehiculo
+        vehiculo.descend("placa_Vehiculo").constrain(BuscarPlaca.toUpperCase()); // verificamos las coincidencias en el atributo especificado
+        ObjectSet<Vehiculo> resultado=vehiculo.execute();//Ejecutamos la consulta y almacenamos en "resultado"
+        int coincidencias= resultado.size();
+        BaseBD.close();
+        return coincidencias;
+    }
+    
+    
     private void btnModificarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnModificarMouseClicked
 
         if (!txtMarca.getText().trim().isBlank()) {
@@ -241,7 +269,7 @@ public class BuscarPanelVehiculo1 extends javax.swing.JPanel {
                 Boolean valido = false;//creamos una bandera para validar datos
                 if (valido = txtColor.getText().matches("^[a-zA-Z]+$")) {
 
-                    modificarVehiculo(txtPlaca.getText().toUpperCase(), txtModelo.getText().toUpperCase(), txtMarca.getText().toUpperCase(), txtColor.getText().toUpperCase(), YEARAño.getYear());
+                    modificarVehiculo(txtPlaca.getText().toUpperCase(), txtModelo.getText().toUpperCase(), txtMarca.getText().toUpperCase(), txtColor.getText().toUpperCase(), YEARAño.getYear(),(String)cmbCedCliente.getSelectedItem()/*Transformo a string el objeto del combo box*/,Vehiculo.Estado.ACTIVO );
                     JOptionPane.showMessageDialog(this, "Vehiculo Modificado");
                 } else {
                     JOptionPane.showMessageDialog(this, "Ingrese un color sin numeros");
@@ -266,16 +294,19 @@ public class BuscarPanelVehiculo1 extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.toedter.calendar.JYearChooser YEARAño;
+    private com.toedter.calendar.JYearChooser YEARAño1;
     private rojeru_san.RSButtonRiple btnCancelar;
     private rojeru_san.RSButtonRiple btnModificar;
+    private javax.swing.JComboBox<String> cmbCedCliente;
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel lblAño;
+    private javax.swing.JLabel lblCedCliente;
     private javax.swing.JLabel lblColor;
     private javax.swing.JLabel lblMarca;
     private javax.swing.JLabel lblModelo;
-    private javax.swing.JLabel lblPlaca;
+    private javax.swing.JLabel lblPlaca1;
     private rojeru_san.RSMTextFull txtColor;
     private rojeru_san.RSMTextFull txtMarca;
     private rojeru_san.RSMTextFull txtModelo;

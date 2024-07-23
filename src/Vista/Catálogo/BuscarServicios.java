@@ -18,9 +18,11 @@ import java.awt.Image;
 import java.io.File;
 import java.io.IOException;
 import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
 
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class BuscarServicios extends javax.swing.JPanel {
 
@@ -62,7 +64,8 @@ public class BuscarServicios extends javax.swing.JPanel {
         txtPlacaVehiculo = new rojeru_san.RSMTextFull();
         txtPrecio = new rojeru_san.RSMTextFull();
         txtIdMecanico = new rojeru_san.RSMTextFull();
-        btnImagenProduc = new javax.swing.JLabel();
+        btnSeleccionarImgen = new rojeru_san.RSButtonRiple();
+        lblImagen = new javax.swing.JLabel();
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -186,24 +189,26 @@ public class BuscarServicios extends javax.swing.JPanel {
         txtIdMecanico.setPlaceholder("ID del Mecanico");
         jPanel1.add(txtIdMecanico, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 290, 200, 40));
 
-        btnImagenProduc.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnImagenProducMouseClicked(evt);
+        btnSeleccionarImgen.setText("Selecionar Imagen");
+        btnSeleccionarImgen.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSeleccionarImgenActionPerformed(evt);
             }
         });
-        jPanel1.add(btnImagenProduc, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 130, 200, 200));
+        jPanel1.add(btnSeleccionarImgen, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 230, 180, -1));
+
+        lblImagen.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+        jPanel1.add(lblImagen, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 80, 180, 140));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 858, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 870, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 605, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 630, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -353,9 +358,22 @@ private void btnModficarActionPerformed(java.awt.event.ActionEvent evt) {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtPlacaVehiculoActionPerformed
 
-    private void btnImagenProducMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnImagenProducMouseClicked
+    private void btnSeleccionarImgenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSeleccionarImgenActionPerformed
+        String Ruta = "";
+        JFileChooser jFileChooser = new JFileChooser();
+        FileNameExtensionFilter filtrado = new FileNameExtensionFilter("JPG, PNG & GIF", "jpg", "png", "gif");
+        jFileChooser.setFileFilter(filtrado);
 
-    }//GEN-LAST:event_btnImagenProducMouseClicked
+        int respuesta = jFileChooser.showOpenDialog(this);
+
+        if (respuesta == JFileChooser.APPROVE_OPTION) {
+            Ruta = jFileChooser.getSelectedFile().getPath();
+
+            Image mImagen = new ImageIcon(Ruta).getImage();
+            ImageIcon mIcono = new ImageIcon(mImagen.getScaledInstance(lblImagen.getWidth(), lblImagen.getHeight(), Image.SCALE_SMOOTH));
+            lblImagen.setIcon(mIcono);
+        }
+    }//GEN-LAST:event_btnSeleccionarImgenActionPerformed
 
 private void resetCampos() {
     txtCodigo.setText("");
@@ -368,8 +386,8 @@ private void resetCampos() {
 }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private rojeru_san.RSButtonRiple btnCancelar;
-    private javax.swing.JLabel btnImagenProduc;
     private rojeru_san.RSButtonRiple btnModificar;
+    private rojeru_san.RSButtonRiple btnSeleccionarImgen;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
@@ -377,6 +395,7 @@ private void resetCampos() {
     private javax.swing.JLabel lblCodigoocategoria;
     private javax.swing.JLabel lblDescripcion;
     private javax.swing.JLabel lblExistenciaMinima;
+    private javax.swing.JLabel lblImagen;
     private javax.swing.JLabel lblNumeroProductos;
     private javax.swing.JLabel lblPrecioProducto;
     private rojeru_san.RSMTextFull txtCodigo;

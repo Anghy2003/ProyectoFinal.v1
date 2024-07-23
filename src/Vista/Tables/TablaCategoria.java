@@ -1,26 +1,32 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package Vista.Tables;
 
 import Conexion.Conexion_db;
-import Models.Producto;
-import Vista.Catálogo.CrudProductos;
+import Models.Categoria;
+import Vista.Catálogo.CrudCategoria;
 import Vista.Menu.VistaMenu;
 import com.db4o.ObjectContainer;
 import com.db4o.ObjectSet;
 import java.awt.BorderLayout;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import Vista.Catálogo.BuscarProductos;
-
-
-public class TablaProductos extends javax.swing.JPanel {
+import Vista.Catálogo.BuscarCategoria;
+import javax.swing.JOptionPane;
+/**
+ *
+ * @author 59399
+ */
+public class TablaCategoria extends javax.swing.JPanel {
 
     /**
-     * Creates new form TablaProductos
+     * Creates new form TablaCategoria
      */
-    public TablaProductos() {
+    public TablaCategoria() {
         initComponents();
- mostrarTablaProductos();
-
+        mostrarTablaServicios();
     }
 
     /**
@@ -34,25 +40,25 @@ public class TablaProductos extends javax.swing.JPanel {
 
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        tblProductos = new javax.swing.JScrollPane();
-        TablProductos1 = new javax.swing.JTable();
+        tblaCategoria = new javax.swing.JScrollPane();
+        tblCategoria = new javax.swing.JTable();
         txtBuscar = new rojeru_san.RSMTextFull();
         jLabel2 = new javax.swing.JLabel();
         btnAgregar = new rsbuttongradiente.RSButtonGradiente();
-        btnEditar = new rsbuttongradiente.RSButtonGradiente();
+        btnBuscar = new rsbuttongradiente.RSButtonGradiente();
         btnEliminar = new rsbuttongradiente.RSButtonGradiente();
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
 
         jLabel1.setFont(new java.awt.Font("Roboto Black", 0, 22)); // NOI18N
-        jLabel1.setText("Listado Productos");
+        jLabel1.setText("Listado Categorias");
 
-        tblProductos.setBackground(new java.awt.Color(255, 255, 255));
-        tblProductos.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        tblProductos.setForeground(new java.awt.Color(255, 255, 255));
+        tblaCategoria.setBackground(new java.awt.Color(255, 255, 255));
+        tblaCategoria.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        tblaCategoria.setForeground(new java.awt.Color(255, 255, 255));
 
-        TablProductos1.setFont(new java.awt.Font("Roboto Medium", 0, 14)); // NOI18N
-        TablProductos1.setModel(new javax.swing.table.DefaultTableModel(
+        tblCategoria.setFont(new java.awt.Font("Roboto Medium", 0, 14)); // NOI18N
+        tblCategoria.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -63,10 +69,10 @@ public class TablaProductos extends javax.swing.JPanel {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        tblProductos.setViewportView(TablProductos1);
+        tblaCategoria.setViewportView(tblCategoria);
 
         txtBuscar.setFont(new java.awt.Font("Roboto Bold", 2, 14)); // NOI18N
-        txtBuscar.setPlaceholder("ejm. Pro-01");
+        txtBuscar.setPlaceholder("ejm. CAT-1");
 
         jLabel2.setFont(new java.awt.Font("Roboto Black", 0, 18)); // NOI18N
         jLabel2.setText("Buscar");
@@ -76,30 +82,20 @@ public class TablaProductos extends javax.swing.JPanel {
         btnAgregar.setColorPrimarioHover(new java.awt.Color(0, 204, 51));
         btnAgregar.setColorSecundario(new java.awt.Color(153, 255, 153));
         btnAgregar.setColorSecundarioHover(new java.awt.Color(204, 255, 204));
-        btnAgregar.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnAgregarMouseClicked(evt);
-            }
-        });
         btnAgregar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnAgregarActionPerformed(evt);
             }
         });
 
-        btnEditar.setText("Buscar");
-        btnEditar.setColorPrimario(new java.awt.Color(0, 51, 153));
-        btnEditar.setColorPrimarioHover(new java.awt.Color(51, 0, 255));
-        btnEditar.setColorSecundario(new java.awt.Color(51, 153, 255));
-        btnEditar.setColorSecundarioHover(new java.awt.Color(153, 204, 255));
-        btnEditar.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnEditarMouseClicked(evt);
-            }
-        });
-        btnEditar.addActionListener(new java.awt.event.ActionListener() {
+        btnBuscar.setText("Buscar");
+        btnBuscar.setColorPrimario(new java.awt.Color(0, 51, 153));
+        btnBuscar.setColorPrimarioHover(new java.awt.Color(51, 0, 255));
+        btnBuscar.setColorSecundario(new java.awt.Color(51, 153, 255));
+        btnBuscar.setColorSecundarioHover(new java.awt.Color(153, 204, 255));
+        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEditarActionPerformed(evt);
+                btnBuscarActionPerformed(evt);
             }
         });
 
@@ -108,16 +104,6 @@ public class TablaProductos extends javax.swing.JPanel {
         btnEliminar.setColorPrimarioHover(new java.awt.Color(255, 51, 51));
         btnEliminar.setColorSecundario(new java.awt.Color(255, 153, 153));
         btnEliminar.setColorSecundarioHover(new java.awt.Color(255, 204, 204));
-        btnEliminar.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnEliminarMouseClicked(evt);
-            }
-        });
-        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEliminarActionPerformed(evt);
-            }
-        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -130,7 +116,7 @@ public class TablaProductos extends javax.swing.JPanel {
                         .addComponent(jLabel1)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(tblProductos)
+                        .addComponent(tblaCategoria)
                         .addContainerGap())
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel2)
@@ -139,7 +125,7 @@ public class TablaProductos extends javax.swing.JPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 96, Short.MAX_VALUE)
                         .addComponent(btnAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(37, 37, 37)
-                        .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(37, 37, 37))))
@@ -154,7 +140,7 @@ public class TablaProductos extends javax.swing.JPanel {
                         .addGap(12, 12, 12)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(btnAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -162,7 +148,7 @@ public class TablaProductos extends javax.swing.JPanel {
                         .addGap(26, 26, 26)
                         .addComponent(jLabel2)))
                 .addGap(44, 44, 44)
-                .addComponent(tblProductos, javax.swing.GroupLayout.PREFERRED_SIZE, 446, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(tblaCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 446, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(13, Short.MAX_VALUE))
         );
 
@@ -170,7 +156,7 @@ public class TablaProductos extends javax.swing.JPanel {
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 863, Short.MAX_VALUE)
+            .addGap(0, 870, Short.MAX_VALUE)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addGap(0, 0, Short.MAX_VALUE)
@@ -179,7 +165,7 @@ public class TablaProductos extends javax.swing.JPanel {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 622, Short.MAX_VALUE)
+            .addGap(0, 630, Short.MAX_VALUE)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addGap(0, 0, Short.MAX_VALUE)
@@ -188,43 +174,47 @@ public class TablaProductos extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnAgregarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAgregarMouseClicked
+    private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
+        CrudCategoria Categoria = new CrudCategoria();
+        MostrarpaneCruds(Categoria);
+    }//GEN-LAST:event_btnAgregarActionPerformed
 
-    }//GEN-LAST:event_btnAgregarMouseClicked
-
-    private void btnEditarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditarMouseClicked
-        if (!txtBuscar.getText().trim().isEmpty()) {
-            String codigoProducto = txtBuscar.getText(); // Obtener el texto de txtBuscar
-            BuscarProductos miBuscarProducto = new BuscarProductos(codigoProducto); // Crear el componente con el código de producto
-            ShowpanelCruds(miBuscarProducto); // Mostrar el panel de búsqueda de producto
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+               if (!txtBuscar.getText().trim().isEmpty()) {
+            String codigocat = txtBuscar.getText(); // Obtener el texto de txtBuscar
+            BuscarCategoria miBuscarser = new BuscarCategoria(codigocat); // Crear el componente con el código de producto
+            MostrarpaneCruds(miBuscarser); // Mostrar el panel de búsqueda de producto
         } else {
             JOptionPane.showMessageDialog(this, "Ingrese un código de producto");
         }
-    }//GEN-LAST:event_btnEditarMouseClicked
+    }//GEN-LAST:event_btnBuscarActionPerformed
+private void mostrarTablaServicios() {
+    ObjectContainer BaseBD = Conexion_db.ConectarBD();
+    Categoria Categorias = new Categoria();
+    ObjectSet<Categoria> resul = BaseBD.get(Categorias);
 
-    private void btnEliminarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEliminarMouseClicked
-       
-       
-       
-    
-    }//GEN-LAST:event_btnEliminarMouseClicked
+    String[][] matriz = new String[resul.size()][8];
 
+    int i = 0;
+    while (resul.hasNext()) {
+        Categoria cat = resul.next();
 
-    private void TablProductosMouseClicked(java.awt.event.MouseEvent evt) {
-        int selectedRow = TablProductos1.getSelectedRow();
-        if (selectedRow >= 0) {
-            String codigo_producto = (String) TablProductos1.getValueAt(selectedRow, 0);
-
-        }
+        matriz[i][0] = cat.getCodigoCat();
+        matriz[i][1] = cat.getNombreCat();
+        matriz[i][2] = cat.getDescripcionCat();
+        i++;
     }
-
-
+    tblCategoria.setModel(new javax.swing.table.DefaultTableModel(
+            matriz,
+            new String[]{
+                "Código Categoria", "Nombre Categoria", "Descripción"} ));
+    BaseBD.close();
+}
     
-    private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
-        CrudProductos Prodcuto = new CrudProductos();
-        ShowpanelCruds(Prodcuto);
-    }//GEN-LAST:event_btnAgregarActionPerformed
-    private void ShowpanelCruds(JPanel p) {
+    
+    
+    
+    private void MostrarpaneCruds(JPanel p) {
         p.setSize(870, 630);
         p.setLocation(0, 0);
         VistaMenu.PanelPrincipal.removeAll();
@@ -232,62 +222,16 @@ public class TablaProductos extends javax.swing.JPanel {
         VistaMenu.PanelPrincipal.revalidate();
         VistaMenu.PanelPrincipal.repaint();
     }
-    private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnEditarActionPerformed
-
-    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-
-
-
-
-    
-    }//GEN-LAST:event_btnEliminarActionPerformed
-  
-
-    
-
-    private void mostrarTablaProductos() {
-        ObjectContainer BaseBD = Conexion_db.ConectarBD();
-        Producto producto = new Producto(null, null, null, null, 0, 0, 0, null,null);
-        ObjectSet <Producto>resul = BaseBD.get(producto);
-
-        String matriz[][] = new String[resul.size()][9];
-
-        for (int i = 0; i < resul.size(); i++) {
-            Producto prod = (Producto) resul.next();
-
-            matriz[i][0] = prod.getCodigo_Producto();
-            matriz[i][1] = prod.getNombre_Producto();
-            matriz[i][2] = String.valueOf(prod.getPrecio_Producto());
-            matriz[i][3] = prod.getCodigo_categoria_Producto();
-            matriz[i][4] = String.valueOf(prod.getNumeroProductos_Producto());
-            matriz[i][5] = String.valueOf(prod.getExistenciaMaxima_Producto());
-            matriz[i][6] = String.valueOf(prod.getExistenciaMinima_Producto());
-            matriz[i][7] = prod.getDescripcion_Producto();
-            matriz[i][8] = prod.getID_Proveedor_Producto();
-            
-        }
-
-        TablProductos1.setModel(new javax.swing.table.DefaultTableModel(
-                matriz,
-                new String[]{
-                    "Código Producto", "Nombre Producto", "Precio", "Código Categoría", "Número de Productos", "Existencia Máxima", "Existencia Mínima", "Descripción", "Proveedor"
-                }
-        ));
-        BaseBD.close();
-    }
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTable TablProductos1;
     private rsbuttongradiente.RSButtonGradiente btnAgregar;
-    private rsbuttongradiente.RSButtonGradiente btnEditar;
+    private rsbuttongradiente.RSButtonGradiente btnBuscar;
     private rsbuttongradiente.RSButtonGradiente btnEliminar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JScrollPane tblProductos;
+    private javax.swing.JTable tblCategoria;
+    private javax.swing.JScrollPane tblaCategoria;
     private rojeru_san.RSMTextFull txtBuscar;
     // End of variables declaration//GEN-END:variables
 }

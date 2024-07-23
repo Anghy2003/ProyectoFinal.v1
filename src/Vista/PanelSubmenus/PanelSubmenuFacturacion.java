@@ -1,6 +1,13 @@
 
 package Vista.PanelSubmenus;
 
+import Vista.Factura.Factura;
+import Vista.Menu.VistaMenu;
+import Vista.Tables.TablaCategoria;
+import Vista.Tables.TablaFactura;
+import java.awt.BorderLayout;
+import javax.swing.JPanel;
+
 public class PanelSubmenuFacturacion extends javax.swing.JPanel {
 
     /**
@@ -22,6 +29,7 @@ public class PanelSubmenuFacturacion extends javax.swing.JPanel {
         jPanel1 = new javax.swing.JPanel();
         jSeparator1 = new javax.swing.JSeparator();
         btnFacturacion = new javax.swing.JToggleButton();
+        btnFacturacion1 = new javax.swing.JToggleButton();
 
         setLayout(new java.awt.BorderLayout());
 
@@ -31,33 +39,77 @@ public class PanelSubmenuFacturacion extends javax.swing.JPanel {
 
         btnFacturacion.setFont(new java.awt.Font("Roboto Medium", 1, 12)); // NOI18N
         btnFacturacion.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/detalle35.png"))); // NOI18N
-        btnFacturacion.setText("FACTURACION");
+        btnFacturacion.setText("FACTURAS REGISTRADAS");
+        btnFacturacion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnFacturacionActionPerformed(evt);
+            }
+        });
+
+        btnFacturacion1.setFont(new java.awt.Font("Roboto Medium", 1, 12)); // NOI18N
+        btnFacturacion1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/detalle35.png"))); // NOI18N
+        btnFacturacion1.setText("FACTURACION");
+        btnFacturacion1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnFacturacion1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jSeparator1)
+            .addComponent(jSeparator1, javax.swing.GroupLayout.DEFAULT_SIZE, 870, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(627, Short.MAX_VALUE)
-                .addComponent(btnFacturacion, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(82, 82, 82))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnFacturacion)
+                .addGap(249, 249, 249))
+            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                    .addContainerGap(643, Short.MAX_VALUE)
+                    .addComponent(btnFacturacion1, javax.swing.GroupLayout.PREFERRED_SIZE, 161, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(66, 66, 66)))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 6, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(18, 18, 18)
                 .addComponent(btnFacturacion, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(39, Short.MAX_VALUE))
+                .addContainerGap(27, Short.MAX_VALUE))
+            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel1Layout.createSequentialGroup()
+                    .addGap(22, 22, 22)
+                    .addComponent(btnFacturacion1, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(29, Short.MAX_VALUE)))
         );
 
         add(jPanel1, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnFacturacionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFacturacionActionPerformed
+        TablaFactura tblFac = new TablaFactura();
+        MostrarpaneCruds(tblFac);
+    }//GEN-LAST:event_btnFacturacionActionPerformed
+
+    private void btnFacturacion1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFacturacion1ActionPerformed
+        Factura crudfac = new Factura();
+        MostrarpaneCruds(crudfac);
+    }//GEN-LAST:event_btnFacturacion1ActionPerformed
+ 
+                                             
+private void MostrarpaneCruds(JPanel p) {
+        p.setSize(870, 630);
+        p.setLocation(0, 0);
+        VistaMenu.PanelPrincipal.removeAll();
+        VistaMenu.PanelPrincipal.add(p, BorderLayout.CENTER);
+        VistaMenu.PanelPrincipal.revalidate();
+        VistaMenu.PanelPrincipal.repaint();
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JToggleButton btnFacturacion;
+    private javax.swing.JToggleButton btnFacturacion1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JSeparator jSeparator1;
     // End of variables declaration//GEN-END:variables

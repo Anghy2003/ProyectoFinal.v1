@@ -1,6 +1,11 @@
 
 package Vista.Tables;
 
+import Conexion.Conexion_db;
+import Models.EncabezadoFactura_1;
+import com.db4o.ObjectContainer;
+import com.db4o.ObjectSet;
+
 public class TablaFactura extends javax.swing.JPanel {
 
     /**
@@ -8,6 +13,7 @@ public class TablaFactura extends javax.swing.JPanel {
      */
     public TablaFactura() {
         initComponents();
+        mostrarDatosFacturas();
     }
 
     /**
@@ -19,19 +25,142 @@ public class TablaFactura extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jPanel2 = new javax.swing.JPanel();
+        lbltitulo = new javax.swing.JLabel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tblFacturas = new javax.swing.JTable();
+        txtBuscar = new rojeru_san.RSMTextFull();
+        jLabel2 = new javax.swing.JLabel();
+        btnEliminar = new rsbuttongradiente.RSButtonGradiente();
+
+        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
+
+        lbltitulo.setFont(new java.awt.Font("Roboto Black", 0, 22)); // NOI18N
+        lbltitulo.setText("Listado Facturas Ingresadas ");
+
+        jScrollPane1.setBackground(new java.awt.Color(255, 255, 255));
+        jScrollPane1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        jScrollPane1.setForeground(new java.awt.Color(255, 255, 255));
+
+        tblFacturas.setFont(new java.awt.Font("Roboto Medium", 0, 14)); // NOI18N
+        tblFacturas.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane1.setViewportView(tblFacturas);
+
+        txtBuscar.setFont(new java.awt.Font("Roboto Bold", 2, 14)); // NOI18N
+        txtBuscar.setPlaceholder("ejm. FAC-001");
+
+        jLabel2.setFont(new java.awt.Font("Roboto Black", 0, 18)); // NOI18N
+        jLabel2.setText("Buscar");
+
+        btnEliminar.setText("Eliminar");
+        btnEliminar.setColorPrimario(new java.awt.Color(204, 0, 0));
+        btnEliminar.setColorPrimarioHover(new java.awt.Color(255, 51, 51));
+        btnEliminar.setColorSecundario(new java.awt.Color(255, 153, 153));
+        btnEliminar.setColorSecundarioHover(new java.awt.Color(255, 204, 204));
+
+        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
+        jPanel2.setLayout(jPanel2Layout);
+        jPanel2Layout.setHorizontalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(24, 24, 24)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 829, Short.MAX_VALUE)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lbltitulo)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addGap(39, 39, 39)
+                                .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(47, 47, 47)
+                                .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
+        );
+        jPanel2Layout.setVerticalGroup(
+            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(38, 38, 38)
+                .addComponent(lbltitulo)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(12, 12, 12)
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(26, 26, 26)
+                        .addComponent(jLabel2)))
+                .addGap(44, 44, 44)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 446, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(13, Short.MAX_VALUE))
+        );
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 866, Short.MAX_VALUE)
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addGap(0, 1, Short.MAX_VALUE)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 2, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 562, Short.MAX_VALUE)
+            .addGap(0, 622, Short.MAX_VALUE)
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 0, Short.MAX_VALUE)))
         );
     }// </editor-fold>//GEN-END:initComponents
+private void mostrarDatosFacturas() {
+    // ESTABLECER CONEXION CON LA BASE DE DATOS
+    tblFacturas.setEnabled(true);
+    ObjectContainer BaseBD = Conexion_db.ConectarBD();
+    EncabezadoFactura_1 facturaBuscar = new EncabezadoFactura_1();
+    ObjectSet<EncabezadoFactura_1> resultado = BaseBD.get(facturaBuscar);
 
+    // Crear una matriz para almacenar los datos
+    String matriz[][] = new String[resultado.size()][4];
+    int i = 0;
+    for (EncabezadoFactura_1 miFactura : resultado) {
+        matriz[i][0] = miFactura.getCodigo_encabezadoFactura();
+        matriz[i][1] = miFactura.getFecha_encabezadoFactura();
+        matriz[i][2] = miFactura.getCedulaCliente_encabezadoFactura();
+        matriz[i][3] = String.valueOf(miFactura.getTotal_encabezadoFactura());
+        i++;
+    }
+
+    // Configurar datos en la tabla
+    tblFacturas.setModel(new javax.swing.table.DefaultTableModel(matriz, new String[]{"Código Factura", "Fecha", "Cédula", "Total"}));
+    tblFacturas.setEnabled(false);
+
+    // Cerrar la conexión con la base de datos
+    BaseBD.close();
+}
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private rsbuttongradiente.RSButtonGradiente btnEliminar;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JPanel jPanel2;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lbltitulo;
+    private javax.swing.JTable tblFacturas;
+    private rojeru_san.RSMTextFull txtBuscar;
     // End of variables declaration//GEN-END:variables
 }

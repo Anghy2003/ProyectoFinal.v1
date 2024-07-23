@@ -2,19 +2,26 @@ package Vista.Factura;
 
 import Conexion.Conexion_db;
 import Models.Cliente;
+import Models.DetalleFactura_1;
 import Models.EncabezadoFactura_1;
 import Models.Producto;
 import Models.Servicios;
-import Vista.Menu.VistaMenu;
+import Vista.Cruds.CRUDS1.CrudPanelCliente;
+import static Vista.Menu.VistaMenu.PanelPrincipal;
 import com.db4o.ObjectContainer;
 import com.db4o.ObjectSet;
 import com.db4o.query.Query;
+import java.awt.BorderLayout;
 import java.time.LocalDate;
-import javax.swing.JButton;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.JDialog;
-import javax.swing.JFrame;
+
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
 
 public class Factura extends javax.swing.JPanel {
 
@@ -49,9 +56,10 @@ public class Factura extends javax.swing.JPanel {
         jLabel1 = new javax.swing.JLabel();
         tblProductos = new javax.swing.JScrollPane();
         Tablproductos1 = new javax.swing.JTable();
-        txtBuscar = new rojeru_san.RSMTextFull();
+        txtBuscarProducto = new rojeru_san.RSMTextFull();
         jLabel3 = new javax.swing.JLabel();
-        btnInsertar = new rsbuttongradiente.RSButtonGradiente();
+        btnInsertarProductos = new rsbuttongradiente.RSButtonGradiente();
+        btnbuscarproductos = new rsbuttongradiente.RSButtonGradiente();
         tablaClientes = new javax.swing.JDialog();
         jPanel7 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
@@ -59,14 +67,16 @@ public class Factura extends javax.swing.JPanel {
         tblClientes = new javax.swing.JTable();
         txtBuscar1 = new rojeru_san.RSMTextFull();
         btnInsertarCliente = new rsbuttongradiente.RSButtonGradiente();
+        btnBuscarcliente = new rsbuttongradiente.RSButtonGradiente();
         TablaServicios = new javax.swing.JDialog();
         jPanel8 = new javax.swing.JPanel();
         jLabel5 = new javax.swing.JLabel();
         jScrollPane3 = new javax.swing.JScrollPane();
         tblServicios = new javax.swing.JTable();
-        txtBuscar2 = new rojeru_san.RSMTextFull();
+        txtBuscarServicio = new rojeru_san.RSMTextFull();
         jLabel6 = new javax.swing.JLabel();
-        btnBuscar1 = new rsbuttongradiente.RSButtonGradiente();
+        btnBuscarServicio = new rsbuttongradiente.RSButtonGradiente();
+        btnInsetarServicios = new rsbuttongradiente.RSButtonGradiente();
         jPanel1 = new javax.swing.JPanel();
         jPanel4 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
@@ -81,7 +91,7 @@ public class Factura extends javax.swing.JPanel {
         txtdireccion = new javax.swing.JTextField();
         lblverlis = new javax.swing.JLabel();
         btnEliminar = new javax.swing.JButton();
-        btnAñadir = new javax.swing.JButton();
+        btnAñadircliente = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         JtableFactura = new javax.swing.JTable();
         jPanel5 = new javax.swing.JPanel();
@@ -103,14 +113,14 @@ public class Factura extends javax.swing.JPanel {
         lblCuadro1 = new javax.swing.JLabel();
         lblcodFac1 = new javax.swing.JLabel();
         txtSubtotal = new javax.swing.JTextField();
-        rSButton1 = new rojeru_san.RSButton();
+        btnFinalizarFac = new rojeru_san.RSButton();
         btnAñadirProductos = new javax.swing.JButton();
         txtfecha = new javax.swing.JTextField();
         lblCuadro = new javax.swing.JLabel();
         btnAñadirServicos = new javax.swing.JButton();
         txtDescuento = new javax.swing.JTextField();
         txtTotalfac = new javax.swing.JTextField();
-        jTextField3 = new javax.swing.JTextField();
+        txtiva = new javax.swing.JTextField();
 
         jPanel6.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -135,20 +145,32 @@ public class Factura extends javax.swing.JPanel {
         ));
         tblProductos.setViewportView(Tablproductos1);
 
-        txtBuscar.setFont(new java.awt.Font("Roboto Bold", 2, 14)); // NOI18N
-        txtBuscar.setPlaceholder("ejm. Pro-01");
+        txtBuscarProducto.setFont(new java.awt.Font("Roboto Bold", 2, 14)); // NOI18N
+        txtBuscarProducto.setPlaceholder("ejm. Pro-01");
 
         jLabel3.setFont(new java.awt.Font("Roboto Black", 0, 18)); // NOI18N
         jLabel3.setText("Buscar");
 
-        btnInsertar.setText("Insertar");
-        btnInsertar.setColorPrimario(new java.awt.Color(0, 51, 153));
-        btnInsertar.setColorPrimarioHover(new java.awt.Color(51, 0, 255));
-        btnInsertar.setColorSecundario(new java.awt.Color(51, 153, 255));
-        btnInsertar.setColorSecundarioHover(new java.awt.Color(153, 204, 255));
-        btnInsertar.addActionListener(new java.awt.event.ActionListener() {
+        btnInsertarProductos.setBackground(new java.awt.Color(0, 204, 51));
+        btnInsertarProductos.setText("Insertar");
+        btnInsertarProductos.setColorPrimario(new java.awt.Color(0, 153, 51));
+        btnInsertarProductos.setColorPrimarioHover(new java.awt.Color(51, 204, 0));
+        btnInsertarProductos.setColorSecundario(new java.awt.Color(0, 255, 102));
+        btnInsertarProductos.setColorSecundarioHover(new java.awt.Color(204, 255, 204));
+        btnInsertarProductos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnInsertarActionPerformed(evt);
+                btnInsertarProductosActionPerformed(evt);
+            }
+        });
+
+        btnbuscarproductos.setText("Buscar");
+        btnbuscarproductos.setColorPrimario(new java.awt.Color(0, 51, 153));
+        btnbuscarproductos.setColorPrimarioHover(new java.awt.Color(51, 0, 255));
+        btnbuscarproductos.setColorSecundario(new java.awt.Color(51, 153, 255));
+        btnbuscarproductos.setColorSecundarioHover(new java.awt.Color(153, 204, 255));
+        btnbuscarproductos.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnbuscarproductosActionPerformed(evt);
             }
         });
 
@@ -159,20 +181,20 @@ public class Factura extends javax.swing.JPanel {
             .addGroup(jPanel6Layout.createSequentialGroup()
                 .addGap(24, 24, 24)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel6Layout.createSequentialGroup()
-                        .addComponent(jLabel3)
-                        .addGap(39, 39, 39)
-                        .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnInsertar, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(37, 292, Short.MAX_VALUE))
+                    .addComponent(tblProductos, javax.swing.GroupLayout.DEFAULT_SIZE, 836, Short.MAX_VALUE)
                     .addGroup(jPanel6Layout.createSequentialGroup()
                         .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1)
                             .addGroup(jPanel6Layout.createSequentialGroup()
-                                .addComponent(jLabel1)
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addComponent(tblProductos))
-                        .addContainerGap())))
+                                .addComponent(jLabel3)
+                                .addGap(39, 39, 39)
+                                .addComponent(txtBuscarProducto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(btnbuscarproductos, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnInsertarProductos, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -181,14 +203,17 @@ public class Factura extends javax.swing.JPanel {
                 .addComponent(jLabel1)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel6Layout.createSequentialGroup()
-                        .addGap(10, 10, 10)
-                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnInsertar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(12, 12, 12)
+                        .addComponent(txtBuscarProducto, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel6Layout.createSequentialGroup()
                         .addGap(26, 26, 26)
-                        .addComponent(jLabel3)))
-                .addGap(44, 44, 44)
+                        .addComponent(jLabel3))
+                    .addGroup(jPanel6Layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnbuscarproductos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnInsertarProductos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(40, 40, 40)
                 .addComponent(tblProductos, javax.swing.GroupLayout.PREFERRED_SIZE, 446, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -223,13 +248,24 @@ public class Factura extends javax.swing.JPanel {
         txtBuscar1.setPlaceholder("ejm. 0106388747");
 
         btnInsertarCliente.setText("Insertar");
-        btnInsertarCliente.setColorPrimario(new java.awt.Color(0, 51, 153));
-        btnInsertarCliente.setColorPrimarioHover(new java.awt.Color(51, 0, 255));
-        btnInsertarCliente.setColorSecundario(new java.awt.Color(51, 153, 255));
-        btnInsertarCliente.setColorSecundarioHover(new java.awt.Color(153, 204, 255));
+        btnInsertarCliente.setColorPrimario(new java.awt.Color(0, 204, 51));
+        btnInsertarCliente.setColorPrimarioHover(new java.awt.Color(0, 255, 51));
+        btnInsertarCliente.setColorSecundario(new java.awt.Color(0, 153, 51));
+        btnInsertarCliente.setColorSecundarioHover(new java.awt.Color(51, 255, 102));
         btnInsertarCliente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnInsertarClienteActionPerformed(evt);
+            }
+        });
+
+        btnBuscarcliente.setText("Buscar");
+        btnBuscarcliente.setColorPrimario(new java.awt.Color(0, 51, 153));
+        btnBuscarcliente.setColorPrimarioHover(new java.awt.Color(51, 0, 255));
+        btnBuscarcliente.setColorSecundario(new java.awt.Color(51, 153, 255));
+        btnBuscarcliente.setColorSecundarioHover(new java.awt.Color(153, 204, 255));
+        btnBuscarcliente.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarclienteActionPerformed(evt);
             }
         });
 
@@ -246,10 +282,12 @@ public class Factura extends javax.swing.JPanel {
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel7Layout.createSequentialGroup()
                         .addComponent(txtBuscar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnBuscarcliente, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
                         .addComponent(btnInsertarCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jLabel4))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(368, Short.MAX_VALUE))
         );
         jPanel7Layout.setVerticalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -257,10 +295,15 @@ public class Factura extends javax.swing.JPanel {
                 .addGap(38, 38, 38)
                 .addComponent(jLabel4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnInsertarCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtBuscar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(35, 35, 35)
+                .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel7Layout.createSequentialGroup()
+                        .addComponent(txtBuscar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(35, 35, 35))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
+                        .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnBuscarcliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnInsertarCliente, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(31, 31, 31)))
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 446, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(29, Short.MAX_VALUE))
         );
@@ -319,20 +362,31 @@ public class Factura extends javax.swing.JPanel {
         });
         jScrollPane3.setViewportView(tblServicios);
 
-        txtBuscar2.setFont(new java.awt.Font("Roboto Bold", 2, 14)); // NOI18N
-        txtBuscar2.setPlaceholder("ejm. Ser-01");
+        txtBuscarServicio.setFont(new java.awt.Font("Roboto Bold", 2, 14)); // NOI18N
+        txtBuscarServicio.setPlaceholder("ejm. Ser-01");
 
         jLabel6.setFont(new java.awt.Font("Roboto Black", 0, 18)); // NOI18N
         jLabel6.setText("Buscar");
 
-        btnBuscar1.setText("Buscar");
-        btnBuscar1.setColorPrimario(new java.awt.Color(0, 51, 153));
-        btnBuscar1.setColorPrimarioHover(new java.awt.Color(51, 0, 255));
-        btnBuscar1.setColorSecundario(new java.awt.Color(51, 153, 255));
-        btnBuscar1.setColorSecundarioHover(new java.awt.Color(153, 204, 255));
-        btnBuscar1.addActionListener(new java.awt.event.ActionListener() {
+        btnBuscarServicio.setText("Buscar");
+        btnBuscarServicio.setColorPrimario(new java.awt.Color(0, 51, 153));
+        btnBuscarServicio.setColorPrimarioHover(new java.awt.Color(51, 0, 255));
+        btnBuscarServicio.setColorSecundario(new java.awt.Color(51, 153, 255));
+        btnBuscarServicio.setColorSecundarioHover(new java.awt.Color(153, 204, 255));
+        btnBuscarServicio.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnBuscar1ActionPerformed(evt);
+                btnBuscarServicioActionPerformed(evt);
+            }
+        });
+
+        btnInsetarServicios.setText("Insertar");
+        btnInsetarServicios.setColorPrimario(new java.awt.Color(0, 153, 51));
+        btnInsetarServicios.setColorPrimarioHover(new java.awt.Color(0, 204, 102));
+        btnInsetarServicios.setColorSecundario(new java.awt.Color(0, 255, 51));
+        btnInsetarServicios.setColorSecundarioHover(new java.awt.Color(153, 204, 255));
+        btnInsetarServicios.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnInsetarServiciosActionPerformed(evt);
             }
         });
 
@@ -343,17 +397,19 @@ public class Factura extends javax.swing.JPanel {
             .addGroup(jPanel8Layout.createSequentialGroup()
                 .addGap(24, 24, 24)
                 .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel8Layout.createSequentialGroup()
-                        .addComponent(jLabel5)
-                        .addGap(0, 0, Short.MAX_VALUE))
                     .addComponent(jScrollPane3)
                     .addGroup(jPanel8Layout.createSequentialGroup()
-                        .addComponent(jLabel6)
-                        .addGap(39, 39, 39)
-                        .addComponent(txtBuscar2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnBuscar1, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 372, Short.MAX_VALUE)))
+                        .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel5)
+                            .addGroup(jPanel8Layout.createSequentialGroup()
+                                .addComponent(jLabel6)
+                                .addGap(39, 39, 39)
+                                .addComponent(txtBuscarServicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(btnBuscarServicio, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(btnInsetarServicios, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 260, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel8Layout.setVerticalGroup(
@@ -365,8 +421,10 @@ public class Factura extends javax.swing.JPanel {
                     .addGroup(jPanel8Layout.createSequentialGroup()
                         .addGap(12, 12, 12)
                         .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(txtBuscar2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnBuscar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(txtBuscarServicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel8Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(btnBuscarServicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(btnInsetarServicios, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(jPanel8Layout.createSequentialGroup()
                         .addGap(26, 26, 26)
                         .addComponent(jLabel6)))
@@ -461,14 +519,14 @@ public class Factura extends javax.swing.JPanel {
         btnEliminar.setText("Eliminar");
         jPanel3.add(btnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 270, -1, -1));
 
-        btnAñadir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/mas (1).png"))); // NOI18N
-        btnAñadir.setText("Buscar");
-        btnAñadir.addActionListener(new java.awt.event.ActionListener() {
+        btnAñadircliente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/mas (1).png"))); // NOI18N
+        btnAñadircliente.setText("Buscar");
+        btnAñadircliente.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAñadirActionPerformed(evt);
+                btnAñadirclienteActionPerformed(evt);
             }
         });
-        jPanel3.add(btnAñadir, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 160, -1, 30));
+        jPanel3.add(btnAñadircliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 160, -1, 30));
 
         JtableFactura.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -545,6 +603,8 @@ public class Factura extends javax.swing.JPanel {
         lblNombre1.setText("Cliente:");
         jPanel3.add(lblNombre1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 200, -1, -1));
         jPanel3.add(txtNombre1, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 200, 190, -1));
+
+        txtcodigoFac.setToolTipText("AUTOGENERADO");
         jPanel3.add(txtcodigoFac, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 90, 130, -1));
 
         lblCuadro1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -553,11 +613,16 @@ public class Factura extends javax.swing.JPanel {
         lblcodFac1.setFont(new java.awt.Font("Yu Gothic UI Light", 1, 14)); // NOI18N
         lblcodFac1.setText("N° Factura:");
         jPanel3.add(lblcodFac1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, 70, -1));
-        jPanel3.add(txtSubtotal, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 450, 100, -1));
+        jPanel3.add(txtSubtotal, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 450, 100, -1));
 
-        rSButton1.setBackground(new java.awt.Color(0, 204, 0));
-        rSButton1.setText("Finalizar Factura");
-        jPanel3.add(rSButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 560, -1, -1));
+        btnFinalizarFac.setBackground(new java.awt.Color(0, 204, 0));
+        btnFinalizarFac.setText("Finalizar Factura");
+        btnFinalizarFac.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnFinalizarFacActionPerformed(evt);
+            }
+        });
+        jPanel3.add(btnFinalizarFac, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 560, -1, -1));
 
         btnAñadirProductos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/mas (1).png"))); // NOI18N
         btnAñadirProductos.setText("Añadir Productos");
@@ -580,9 +645,9 @@ public class Factura extends javax.swing.JPanel {
             }
         });
         jPanel3.add(btnAñadirServicos, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 270, -1, -1));
-        jPanel3.add(txtDescuento, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 470, 100, -1));
-        jPanel3.add(txtTotalfac, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 510, 100, 20));
-        jPanel3.add(jTextField3, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 490, 100, -1));
+        jPanel3.add(txtDescuento, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 470, 100, -1));
+        jPanel3.add(txtTotalfac, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 510, 100, 20));
+        jPanel3.add(txtiva, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 490, 100, -1));
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
@@ -596,8 +661,8 @@ public class Factura extends javax.swing.JPanel {
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 619, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 19, Short.MAX_VALUE))
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 608, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 30, Short.MAX_VALUE))
         );
 
         jPanel1.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 910, 640));
@@ -605,61 +670,89 @@ public class Factura extends javax.swing.JPanel {
         add(jPanel1, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnInsertarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInsertarActionPerformed
+    private void btnInsertarProductosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInsertarProductosActionPerformed
         seteardatosPro();
-    }//GEN-LAST:event_btnInsertarActionPerformed
+    }//GEN-LAST:event_btnInsertarProductosActionPerformed
 
     private void btnAñadirProductosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAñadirProductosActionPerformed
-        activarJdialog(tablaproductos);
+        activarJdialog(tablaproductos);        
+        actualizarFactura();
     }//GEN-LAST:event_btnAñadirProductosActionPerformed
 
     private void btnInsertarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInsertarClienteActionPerformed
-             CargarCliente();
+           CrudPanelCliente registroVehiculo =new CrudPanelCliente();
+           MostarpanelCruds(registroVehiculo);
     }//GEN-LAST:event_btnInsertarClienteActionPerformed
 
-    private void btnAñadirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAñadirActionPerformed
+    private void btnAñadirclienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAñadirclienteActionPerformed
             activarJadialog( tablaClientes);
-    }//GEN-LAST:event_btnAñadirActionPerformed
+    }//GEN-LAST:event_btnAñadirclienteActionPerformed
 
     private void btnAñadirServicosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAñadirServicosActionPerformed
            activarJadialogser(TablaServicios);
+           actualizarFactura();
     }//GEN-LAST:event_btnAñadirServicosActionPerformed
 
-    private void btnBuscar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscar1ActionPerformed
-         seteardatosServicio();
-    }//GEN-LAST:event_btnBuscar1ActionPerformed
-    private static String obtenerProximoCodigoFactura(ObjectContainer db) {
-        // Consultar todos los servicios
-        ObjectSet<EncabezadoFactura_1> result = db.queryByExample(EncabezadoFactura_1.class);
+    private void btnFinalizarFacActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFinalizarFacActionPerformed
+       actualizarFactura();
+       guardarFactura();
+    }//GEN-LAST:event_btnFinalizarFacActionPerformed
 
-        // Determinar el máximo ID numérico existente
-        int maxID = 0;
-        while (result.hasNext()) {
-            EncabezadoFactura_1 facturacion = result.next();
-            String codigo = facturacion.getCodigo_encabezadoFactura();
-            if (codigo != null && codigo.startsWith("FAC-000")) {
-                int id = Integer.parseInt(codigo.substring(3)); // Extraer la parte numérica del código
+    private void btnbuscarproductosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnbuscarproductosActionPerformed
+        
+        String textoBusqueda = txtBuscarProducto.getText();
+        filtrarTabla(textoBusqueda);
+    
+    }//GEN-LAST:event_btnbuscarproductosActionPerformed
+
+    private void btnInsetarServiciosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInsetarServiciosActionPerformed
+           seteardatosSer();
+    }//GEN-LAST:event_btnInsetarServiciosActionPerformed
+
+    private void btnBuscarclienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarclienteActionPerformed
+     CargarCliente();
+    }//GEN-LAST:event_btnBuscarclienteActionPerformed
+
+    private void btnBuscarServicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarServicioActionPerformed
+       String textoBusqueda = txtBuscarServicio.getText();
+        filtrarTablaServicios(textoBusqueda);
+    }//GEN-LAST:event_btnBuscarServicioActionPerformed
+    private static String obtenerProximoCodigoFactura(ObjectContainer db) {
+    // Consultar todos los encabezados de factura
+    ObjectSet<EncabezadoFactura_1> result = db.queryByExample(EncabezadoFactura_1.class);
+
+    // Determinar el máximo ID numérico existente
+    int maxID = 0;
+    while (result.hasNext()) {
+        EncabezadoFactura_1 facturacion = result.next();
+        String codigo = facturacion.getCodigo_encabezadoFactura();
+        if (codigo != null && codigo.startsWith("FAC-")) {
+            try {
+                int id = Integer.parseInt(codigo.substring(4)); // Extraer la parte numérica del código
                 if (id > maxID) {
                     maxID = id;
                 }
+            } catch (NumberFormatException e) {
+                // Manejar el caso en que el substring no sea un número válido
+                System.err.println("Error al parsear el código de factura: " + codigo);
             }
         }
-
-        // El próximo ID es el máximo + 1
-        int siguienteID = maxID + 1;
-        // Retornar el nuevo código concatenado con "SER"
-        return "FAC-000" + siguienteID;
-
     }
 
+    // El próximo ID es el máximo + 1
+    int siguienteID = maxID + 1;
+    // Retornar el nuevo código concatenado con "FAC-"
+    return String.format("FAC-%04d", siguienteID); // Asegura 4 dígitos con ceros a la izquierda
+}
+
     public void setearcabe() {
-        ObjectContainer baseBD = Conexion_db.ConectarBD();
-        String fac = obtenerProximoCodigoFactura(baseBD);
-        txtcodigoFac.setText(fac);
-        txtcodigoFac.setEnabled(false);
-        txtfecha.setText(obtenerFechaActual());
-        txtfecha.setEnabled(false);
-        baseBD.close();
+    ObjectContainer baseBD = Conexion_db.ConectarBD();
+    String fac = obtenerProximoCodigoFactura(baseBD);
+    txtcodigoFac.setText(fac);
+    txtcodigoFac.setEnabled(false);
+    txtfecha.setText(obtenerFechaActual());
+    txtfecha.setEnabled(false);
+    baseBD.close();
     }
 
     public static String obtenerFechaActual() {
@@ -701,22 +794,56 @@ public class Factura extends javax.swing.JPanel {
         BaseBD.close();
     }
 
-    public void seteardatosPro() {
-        int selectedRow = Tablproductos1.getSelectedRow();
-        if (selectedRow != -1) {
-            String codigoProducto = (String) Tablproductos1.getValueAt(selectedRow, 0);
-            String nombreProducto = (String) Tablproductos1.getValueAt(selectedRow, 1);
-            String precioProducto = (String) Tablproductos1.getValueAt(selectedRow, 2);
-            //validar
-            String numeroProductos = JOptionPane.showInputDialog("Ingrese la cantidad de Productos");
-            DefaultTableModel modelFactura = (DefaultTableModel) JtableFactura.getModel();
-            modelFactura.addRow(new Object[]{codigoProducto, nombreProducto, precioProducto, numeroProductos});
-            tablaproductos.setVisible(false);
-        } else {
-            JOptionPane.showMessageDialog(null, "No se seleccionó ningún producto");
-        }
+ private void filtrarTabla(String consulta) {
+    DefaultTableModel modelo = (DefaultTableModel) Tablproductos1.getModel();
+    TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(modelo);
+    Tablproductos1.setRowSorter(sorter);
+
+    if (consulta.trim().length() == 0) {
+        sorter.setRowFilter(null);
+    } else {
+        sorter.setRowFilter(RowFilter.regexFilter("(?i)" + consulta));
     }
-    //clientes
+
+    // Selecciona automáticamente la primera fila filtrada
+    if (Tablproductos1.getRowCount() > 0) {
+        Tablproductos1.setRowSelectionInterval(0, 0);
+    }
+}
+
+ public void seteardatosPro() {
+    int filaSeleccionada = Tablproductos1.getSelectedRow();
+    if (filaSeleccionada != -1) {
+        int filaModelo = Tablproductos1.convertRowIndexToModel(filaSeleccionada);
+        String codigoProducto = (String) Tablproductos1.getModel().getValueAt(filaModelo, 0);
+        String nombreProducto = (String) Tablproductos1.getModel().getValueAt(filaModelo, 1);
+        String precioProducto = (String) Tablproductos1.getModel().getValueAt(filaModelo, 2);
+
+        String numeroProductos = "";
+        boolean esValido = false;
+        
+        while (!esValido) {
+            numeroProductos = JOptionPane.showInputDialog("Ingrese la cantidad de productos");
+            if (numeroProductos != null && numeroProductos.matches("\\d+")) {
+                esValido = true;
+            } else {
+                JOptionPane.showMessageDialog(null, "Por favor ingrese solo dígitos.");
+            }
+        }
+
+        DefaultTableModel modeloFactura = (DefaultTableModel) JtableFactura.getModel();
+        modeloFactura.addRow(new Object[]{codigoProducto, nombreProducto, precioProducto, numeroProductos});
+        
+        // Limpia la selección de la tabla
+        Tablproductos1.clearSelection();
+        
+        tablaproductos.setVisible(true);
+    } else {
+        JOptionPane.showMessageDialog(null, "No se seleccionó ningún producto");
+    }
+}
+    
+//clientes
 
     private void activarJadialog(JDialog tablaClientes) {
 
@@ -741,43 +868,60 @@ public class Factura extends javax.swing.JPanel {
             matriz[i][0] = cli.getCedula();
             matriz[i][1] = cli.getNombres();
             matriz[i][2] = cli.getApellidos();
-            matriz[i][3] = cli.getDireccion();            
-            matriz[i][4] = cli.getCelular();
+           
             
             i++;
         }
 
         tblClientes.setModel(new javax.swing.table.DefaultTableModel(
                 matriz,
-                new String[]{ "Cedula", "Nombres", "Apellidos", "Direccion",  "Celular",} ));
+                new String[]{ "Cedula", "Nombres", "Apellidos"} ));
         BaseBD.close();
     }
 
     
-    public final void CargarCliente() {
-    Boolean encontrado = false;
+   public final void CargarCliente() {
+   Boolean encontrado = false;
+    
+    // Verifica que el campo de búsqueda no esté vacío
+    String cedulaBuscar = txtBuscar1.getText().trim();
+    if (cedulaBuscar.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Por favor, ingrese una cédula para buscar.");
+        return;
+    }
+
     // ESTABLECER CONEXION CON LA BASE DE DATOS
-    ObjectContainer BaseBD = Conexion_db.ConectarBD();
+    ObjectContainer BaseBD = null;
+    try {
+        BaseBD = Conexion_db.ConectarBD();
+        Query clienteQuery = BaseBD.query(); // Método para iniciar una consulta
+        clienteQuery.constrain(Cliente.class); // Buscaremos en la clase Cliente
+        clienteQuery.descend("cedula").constrain(cedulaBuscar); // Verificamos las coincidencias en el atributo especificado
+        ObjectSet<Cliente> resultado = clienteQuery.execute(); // Ejecutamos la consulta y almacenamos en "resultado"
 
-    // consulta
-    Query clienteQuery = BaseBD.query(); // metodo para iniciar una consulta
-     clienteQuery.constrain(Cliente.class); // buscaremos en la clase Cliente   
-    ObjectSet<Cliente> resultado = clienteQuery.execute(); // Ejecutamos la consulta y almacenamos en "resultado"
-
-    // Iterar sobre los resultados para obtener los atributos
-    for (Cliente miCliente : resultado) {
-        // Con esto seteamos en los campos recibiendo del objeto
-        txtcedula.setText(miCliente.getCedula());       
-        txtNombre1.setText(miCliente.getNombres());
-        txtdireccion.setText(miCliente.getDireccion());
-        txttelefono.setText(miCliente.getCelular());
-        encontrado = true;
+        // si s los resultados
+        if (!resultado.isEmpty()) {
+            for (Cliente cliente : resultado) {
+                // Seteamos en los campos recibiendo del objeto
+                txtcedula.setText(cliente.getCedula());
+                txtcedula.setEnabled(false); // Para que el usuario no edite la cédula
+                txtNombre1.setText(cliente.getNombres());
+                txtdireccion.setText(cliente.getDireccion());
+                txttelefono.setText(cliente.getCelular());
+                encontrado = true;
+                JOptionPane.showMessageDialog(this, "Cliente encontrado");
+                break; // Salimos del bucle una vez encontrado el cliente
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "No se encontró Cliente");
+        }
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(this, "Error al buscar el cliente: " + e.getMessage());
+    } finally {
+        if (BaseBD != null) {
+            BaseBD.close();
+        }
     }
-    if (!encontrado) {
-        JOptionPane.showMessageDialog(this, "No se encontró Cliente");
-    }
-
-    BaseBD.close();
 }
     //Servicios 
     private void mostrarTablaServicios() {
@@ -813,43 +957,167 @@ public class Factura extends javax.swing.JPanel {
         TablaServicios.setLocationRelativeTo(this);
         TablaServicios.setVisible(true);
     } 
-  public void seteardatosServicio() {
-    int selectedRow = tblServicios.getSelectedRow();
-    if (selectedRow != -1) {
-        String codigoServicio = (String) tblServicios.getValueAt(selectedRow, 0);
-        String nombreServicio = (String) tblServicios.getValueAt(selectedRow, 1);
-        String precioServicio = (String) tblServicios.getValueAt(selectedRow, 2);
-        // validar
-        String numero = JOptionPane.showInputDialog("Ingrese el numero de vehiculos alos que se les realizo el servicio");
-        DefaultTableModel modelFactura = (DefaultTableModel) JtableFactura.getModel();
-        modelFactura.addRow(new Object[]{codigoServicio, nombreServicio, precioServicio,numero});
-        tblServicios.setVisible(false);
+  private void filtrarTablaServicios(String consulta) {
+    DefaultTableModel modelo = (DefaultTableModel) tblServicios.getModel();
+    TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(modelo);
+    tblServicios.setRowSorter(sorter);
+
+    if (consulta.trim().length() == 0) {
+        sorter.setRowFilter(null);
     } else {
-        JOptionPane.showMessageDialog(null, "No se seleccionó ningún servicio");
+        sorter.setRowFilter(RowFilter.regexFilter("(?i)" + consulta));
+    }
+
+    // Selecciona automáticamente la primera fila filtrada
+    if (tblServicios.getRowCount() > 0) {
+        tblServicios.setRowSelectionInterval(0, 0);
     }
 }
+
+  public void seteardatosSer() {
+    int filaSeleccionada = tblServicios.getSelectedRow();
+    if (filaSeleccionada != -1) {
+        int filaModelo = tblServicios.convertRowIndexToModel(filaSeleccionada);
+        String codigoServicio = (String) tblServicios.getModel().getValueAt(filaModelo, 0);
+        String nombreServicio = (String) tblServicios.getModel().getValueAt(filaModelo, 1);
+        String precioServicio = (String) tblServicios.getModel().getValueAt(filaModelo, 2);
+
+        String numerodevehuculos = "";
+        boolean esValido = false;
+        
+        while (!esValido) {
+            numerodevehuculos = JOptionPane.showInputDialog("Ingrese el número de vehículos a los que se les realizó el servicio");
+            if (numerodevehuculos != null && numerodevehuculos.matches("\\d+")) {
+                esValido = true;
+            } else {
+                JOptionPane.showMessageDialog(null, "Por favor ingrese solo dígitos.");
+            }
+        }
+
+          DefaultTableModel modeloFactura = (DefaultTableModel) JtableFactura.getModel();
+        modeloFactura.addRow(new Object[]{codigoServicio, nombreServicio, precioServicio, numerodevehuculos});
+        // Limpia la selección de la tabla
+        tblServicios.clearSelection();
+        
+        tblServicios.setVisible(true);
+    } else {
+        JOptionPane.showMessageDialog(null, "No se seleccionó ningún producto");
+    }
+}
+//  
+
   //subtotal por producto/Servicio 
-  
-  //subtotal total 
-  //iva al 15%
-  //total de la factura
-  
+ private void actualizarSubtotalesFila() {
+    DefaultTableModel model = (DefaultTableModel) JtableFactura.getModel();
+    for (int i = 0; i < model.getRowCount(); i++) {
+        String precioStr = ((String) model.getValueAt(i, 2)).replace(",", ".");
+        String cantidadStr = ((String) model.getValueAt(i, 3)).replace(",", ".");
+        double precio = Double.parseDouble(precioStr);
+        int cantidad = Integer.parseInt(cantidadStr);
+        double subtotal = precio * cantidad;
+        model.setValueAt(String.format("%.2f", subtotal), i, 4); // Suponiendo que la columna de subtotal es la 5ta (índice 4)
+    }
+}
+ private double calcularSubtotalTabla() {
+    double subtotal = 0.0;
+    DefaultTableModel model = (DefaultTableModel) JtableFactura.getModel();
+    for (int i = 0; i < model.getRowCount(); i++) {
+        String subtotalStr = ((String) model.getValueAt(i, 4)).replace(",", ".");
+        subtotal += Double.parseDouble(subtotalStr);
+    }
+    return subtotal;
+}
+private void actualizarFactura() {
+    actualizarSubtotalesFila(); // Primero actualizar los subtotales por fila
+    double subtotal = calcularSubtotalTabla();
+    double porcentajeDescuento = 0.0;
+    if (!txtDescuento.getText().isEmpty()) {
+        String descuentoStr = txtDescuento.getText().replace(",", ".");
+        porcentajeDescuento = Double.parseDouble(descuentoStr);
+    }
+    double porcentajeIVA = 15.0; // IVA del 15%
+    double descuento = calcularDescuento(subtotal, porcentajeDescuento);
+    double iva = calcularIVA(subtotal, porcentajeIVA);
+    double total = calcularTotal(subtotal, descuento, iva);
+
+    txtSubtotal.setText(String.format("%.2f", subtotal));
+    txtDescuento.setText(String.format("%.2f", descuento));
+    txtiva.setText(String.format("%.2f", iva));
+    txtTotalfac.setText(String.format("%.2f", total));
+}
+ // Método para calcular el descuento
+private double calcularDescuento(double subtotal, double porcentajeDescuento) {
+    return subtotal * (porcentajeDescuento / 100.0);
+}
+
+// Método para calcular el IVA
+private double calcularIVA(double subtotal, double porcentajeIVA) {
+    return subtotal * (porcentajeIVA / 100.0);
+}
+
+// Método para calcular el total
+private double calcularTotal(double subtotal, double descuento, double iva) {
+    return subtotal - descuento + iva;
+}
+ 
+    private void MostarpanelCruds(JPanel p) {
+        p.setSize(870, 630);
+        p.setLocation(0, 0);
+        PanelPrincipal.removeAll();
+        PanelPrincipal.add(p, BorderLayout.CENTER);
+        PanelPrincipal.revalidate();
+        PanelPrincipal.repaint();
+    }
+    private void guardarFactura() {
+    DefaultTableModel model = (DefaultTableModel) JtableFactura.getModel();
+    List<DetalleFactura_1> detallesFactura = new ArrayList<>();
+
+    // Obtener los datos de los detalles de la factura
+    for (int i = 0; i < model.getRowCount(); i++) {
+        String codigoProducto = (String) model.getValueAt(i, 0);
+        int cantidadProducto = Integer.parseInt(((String) model.getValueAt(i, 3)).replace(",", "."));
+        detallesFactura.add(new DetalleFactura_1(txtcodigoFac.getText(), codigoProducto, cantidadProducto));
+    }
+
+    // Obtener los datos del encabezado de la factura
+    String codigoFactura = txtcodigoFac.getText();
+    String fecha = txtfecha.getText();
+    String cedula = txtcedula.getText();
+    double total = Double.parseDouble(txtTotalfac.getText().replace(",", "."));
+
+    // Crear el encabezado de la factura
+    EncabezadoFactura_1 factura = new EncabezadoFactura_1(codigoFactura, fecha, cedula, total);
+
+    // Guardar el encabezado y los detalles en la base de datos
+    ObjectContainer baseBD = Conexion_db.ConectarBD();
+    baseBD.store(factura);
+    for (DetalleFactura_1 detalle : detallesFactura) {
+        baseBD.store(detalle);
+    }
+    baseBD.close();
+
+    JOptionPane.showMessageDialog(this, "Factura guardada exitosamente!");
+}
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable JtableFactura;
     private javax.swing.JDialog TablaServicios;
     private javax.swing.JTable Tablproductos1;
-    private javax.swing.JButton btnAñadir;
     private javax.swing.JButton btnAñadirProductos;
     private javax.swing.JButton btnAñadirServicos;
-    private rsbuttongradiente.RSButtonGradiente btnBuscar1;
+    private javax.swing.JButton btnAñadircliente;
+    private rsbuttongradiente.RSButtonGradiente btnBuscarServicio;
+    private rsbuttongradiente.RSButtonGradiente btnBuscarcliente;
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnEliminar;
+    private rojeru_san.RSButton btnFinalizarFac;
     private javax.swing.JButton btnGenerarVenta;
-    private rsbuttongradiente.RSButtonGradiente btnInsertar;
     private rsbuttongradiente.RSButtonGradiente btnInsertarCliente;
+    private rsbuttongradiente.RSButtonGradiente btnInsertarProductos;
+    private rsbuttongradiente.RSButtonGradiente btnInsetarServicios;
     private javax.swing.JButton btnNuevo;
     private javax.swing.JButton btnResibo;
     private javax.swing.JButton btnSalir;
+    private rsbuttongradiente.RSButtonGradiente btnbuscarproductos;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
@@ -867,7 +1135,6 @@ public class Factura extends javax.swing.JPanel {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JTextField jTextField3;
     private javax.swing.JLabel lblCuadro;
     private javax.swing.JLabel lblCuadro1;
     private javax.swing.JLabel lblDatosCli;
@@ -884,15 +1151,14 @@ public class Factura extends javax.swing.JPanel {
     private javax.swing.JLabel lblcodFac1;
     private javax.swing.JLabel lbllineas;
     private javax.swing.JLabel lblverlis;
-    private rojeru_san.RSButton rSButton1;
     private javax.swing.JDialog tablaClientes;
     private javax.swing.JDialog tablaproductos;
     private javax.swing.JTable tblClientes;
     private javax.swing.JScrollPane tblProductos;
     private javax.swing.JTable tblServicios;
-    private rojeru_san.RSMTextFull txtBuscar;
     private rojeru_san.RSMTextFull txtBuscar1;
-    private rojeru_san.RSMTextFull txtBuscar2;
+    private rojeru_san.RSMTextFull txtBuscarProducto;
+    private rojeru_san.RSMTextFull txtBuscarServicio;
     private javax.swing.JTextField txtDescuento;
     private javax.swing.JTextField txtNombre1;
     private javax.swing.JTextField txtSubtotal;
@@ -901,6 +1167,7 @@ public class Factura extends javax.swing.JPanel {
     private javax.swing.JTextField txtcodigoFac;
     private javax.swing.JTextField txtdireccion;
     private javax.swing.JTextField txtfecha;
+    private javax.swing.JTextField txtiva;
     private javax.swing.JTextField txttelefono;
     // End of variables declaration//GEN-END:variables
 }
