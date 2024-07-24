@@ -43,7 +43,7 @@ public class TablaProductos extends javax.swing.JPanel {
         txtBuscar = new rojeru_san.RSMTextFull();
         jLabel2 = new javax.swing.JLabel();
         btnAgregar = new rsbuttongradiente.RSButtonGradiente();
-        btnEditar = new rsbuttongradiente.RSButtonGradiente();
+        btnBuscar = new rsbuttongradiente.RSButtonGradiente();
         btnEliminar = new rsbuttongradiente.RSButtonGradiente();
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
@@ -91,19 +91,19 @@ public class TablaProductos extends javax.swing.JPanel {
             }
         });
 
-        btnEditar.setText("Buscar");
-        btnEditar.setColorPrimario(new java.awt.Color(0, 51, 153));
-        btnEditar.setColorPrimarioHover(new java.awt.Color(51, 0, 255));
-        btnEditar.setColorSecundario(new java.awt.Color(51, 153, 255));
-        btnEditar.setColorSecundarioHover(new java.awt.Color(153, 204, 255));
-        btnEditar.addMouseListener(new java.awt.event.MouseAdapter() {
+        btnBuscar.setText("Buscar");
+        btnBuscar.setColorPrimario(new java.awt.Color(0, 51, 153));
+        btnBuscar.setColorPrimarioHover(new java.awt.Color(51, 0, 255));
+        btnBuscar.setColorSecundario(new java.awt.Color(51, 153, 255));
+        btnBuscar.setColorSecundarioHover(new java.awt.Color(153, 204, 255));
+        btnBuscar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnEditarMouseClicked(evt);
+                btnBuscarMouseClicked(evt);
             }
         });
-        btnEditar.addActionListener(new java.awt.event.ActionListener() {
+        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEditarActionPerformed(evt);
+                btnBuscarActionPerformed(evt);
             }
         });
 
@@ -143,7 +143,7 @@ public class TablaProductos extends javax.swing.JPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 96, Short.MAX_VALUE)
                         .addComponent(btnAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(37, 37, 37)
-                        .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(37, 37, 37))))
@@ -158,7 +158,7 @@ public class TablaProductos extends javax.swing.JPanel {
                         .addGap(12, 12, 12)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(btnAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -196,15 +196,9 @@ public class TablaProductos extends javax.swing.JPanel {
 
     }//GEN-LAST:event_btnAgregarMouseClicked
 
-    private void btnEditarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditarMouseClicked
-        if (!txtBuscar.getText().trim().isEmpty()) {
-            String codigoProducto = txtBuscar.getText(); // Obtener el texto de txtBuscar
-            BuscarProductos miBuscarProducto = new BuscarProductos(codigoProducto); // Crear el componente con el código de producto
-            ShowpanelCruds(miBuscarProducto); // Mostrar el panel de búsqueda de producto
-        } else {
-            JOptionPane.showMessageDialog(this, "Ingrese un código de producto");
-        }
-    }//GEN-LAST:event_btnEditarMouseClicked
+    private void btnBuscarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBuscarMouseClicked
+        
+    }//GEN-LAST:event_btnBuscarMouseClicked
 
     private void btnEliminarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEliminarMouseClicked
        
@@ -236,9 +230,15 @@ public class TablaProductos extends javax.swing.JPanel {
         VistaMenu.PanelPrincipal.revalidate();
         VistaMenu.PanelPrincipal.repaint();
     }
-    private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnEditarActionPerformed
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+       if (!txtBuscar.getText().trim().isEmpty()) {
+            String codigoProducto = txtBuscar.getText(); // Obtener el texto de txtBuscar
+            BuscarProductos miBuscarProducto = new BuscarProductos(codigoProducto); // Crear el componente con el código de producto
+            ShowpanelCruds(miBuscarProducto); // Mostrar el panel de búsqueda de producto
+        } else {
+            JOptionPane.showMessageDialog(this, "Ingrese un código de producto");
+        }
+    }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
 
@@ -300,7 +300,7 @@ public class TablaProductos extends javax.swing.JPanel {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable TablProductos1;
     private rsbuttongradiente.RSButtonGradiente btnAgregar;
-    private rsbuttongradiente.RSButtonGradiente btnEditar;
+    private rsbuttongradiente.RSButtonGradiente btnBuscar;
     private rsbuttongradiente.RSButtonGradiente btnEliminar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

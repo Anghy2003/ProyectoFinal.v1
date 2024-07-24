@@ -347,7 +347,9 @@ public class BuscarProductos extends javax.swing.JPanel {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 560, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -557,43 +559,54 @@ public static int verificarProducto(String codigo_Producto) {
 }
 public final void buscarProducto() {
     Boolean encontrado = false;
-        // ESTABLECER CONEXIÓN CON LA BASE DE DATOS
-        ObjectContainer BaseBD = Conexion_db.ConectarBD();
-        Query productoQuery = BaseBD.query(); // método para iniciar una consulta
-        productoQuery.constrain(Producto.class); // buscaremos en la clase Producto
-        productoQuery.descend("codigo_Producto").constrain(BuscarCodigo.toUpperCase()); // verificamos las coincidencias en el atributo especificado
-        ObjectSet<Producto> resultado = productoQuery.execute(); // Ejecutamos la consulta y almacenamos en "resultado"
+    // ESTABLECER CONEXIÓN CON LA BASE DE DATOS
+    ObjectContainer BaseBD = Conexion_db.ConectarBD();
+    Query productoQuery = BaseBD.query(); // método para iniciar una consulta
+    productoQuery.constrain(Producto.class); // buscaremos en la clase Producto
+    productoQuery.descend("codigo_Producto").constrain(BuscarCodigo.toUpperCase()); // verificamos las coincidencias en el atributo especificado
+    ObjectSet<Producto> resultado = productoQuery.execute(); // Ejecutamos la consulta y almacenamos en "resultado"
 
-        // Iterar sobre los resultados para obtener los atributos
-        if (resultado.hasNext()) {
-            Producto prod = resultado.next(); // Obtener el primer resultado
-            // Seteamos en los campos recibiendo del objeto
-            txtCodigoProducto.setText(prod.getCodigo_Producto());
-            txtNombreProducto.setText(prod.getNombre_Producto());
-            txtPrecioProducto.setText(String.format("%.2f", prod.getPrecio_Producto()));
-            txtNumeroProductos.setText(String.valueOf(prod.getNumeroProductos_Producto()));
-            txtExistenciaMaxima.setText(String.valueOf(prod.getExistenciaMaxima_Producto()));
-            txtExistenciaMinima.setText(String.valueOf(prod.getExistenciaMinima_Producto()));
-            txtDescripcion.setText(prod.getDescripcion_Producto());
-            txtProveedorID.setText(prod.getID_Proveedor_Producto());
-            cmbCategoria.setSelectedItem(prod.getCodigo_categoria_Producto()); // Seleccionar la categoría en el JComboBox
+    // Iterar sobre los resultados para obtener los atributos
+    if (resultado.hasNext()) {
+        Producto prod = resultado.next(); // Obtener el primer resultado
+        // Seteamos en los campos recibiendo del objeto
+        txtCodigoProducto.setText(prod.getCodigo_Producto());
+        txtNombreProducto.setText(prod.getNombre_Producto());
+        txtPrecioProducto.setText(String.format("%.2f", prod.getPrecio_Producto()));
+        txtNumeroProductos.setText(String.valueOf(prod.getNumeroProductos_Producto()));
+        txtExistenciaMaxima.setText(String.valueOf(prod.getExistenciaMaxima_Producto()));
+        txtExistenciaMinima.setText(String.valueOf(prod.getExistenciaMinima_Producto()));
+        txtDescripcion.setText(prod.getDescripcion_Producto());
+        txtProveedorID.setText(prod.getID_Proveedor_Producto());
+        cmbCategoria.setSelectedItem(prod.getCodigo_categoria_Producto()); // Seleccionar la categoría en el JComboBox
 
-            // Mostrar la imagen
-            byte[] imagen = prod.getImagen();
-            if (imagen != null) {
-                ImageIcon icono = new ImageIcon(new ImageIcon(imagen).getImage().getScaledInstance(lblImagen.getWidth(), lblImagen.getHeight(), Image.SCALE_SMOOTH));
-                lblImagen.setIcon(icono);
+        // Mostrar la imagen
+        byte[] imagen = prod.getImagen();
+        if (imagen != null) {
+            try {
+                ImageIcon icono = new ImageIcon(imagen);
+                // Asegúrate de que lblImagen tiene un tamaño definido
+                if (lblImagen.getWidth() > 0 && lblImagen.getHeight() > 0) {
+                    Image scaledImage = icono.getImage().getScaledInstance(lblImagen.getWidth(), lblImagen.getHeight(), Image.SCALE_SMOOTH);
+                    lblImagen.setIcon(new ImageIcon(scaledImage));
+                } else {
+                    lblImagen.setIcon(icono); // Configura la imagen original si el tamaño no está definido
+                }
                 imagenProducto = imagen; // Guardar la imagen en el campo de la clase
+            } catch (Exception e) {
+                e.printStackTrace();
+                lblImagen.setIcon(null); // O puedes poner una imagen por defecto
             }
-
-            txtNombreProducto.setEnabled(true);
-            encontrado = true;
-            JOptionPane.showMessageDialog(this, "PRODUCTO ENCONTRADO");
-        } else {
-            JOptionPane.showMessageDialog(this, "No se encontró el Producto");
         }
 
-        BaseBD.close();
+        txtNombreProducto.setEnabled(true);
+        encontrado = true;
+        JOptionPane.showMessageDialog(this, "PRODUCTO ENCONTRADO");
+    } else {
+        JOptionPane.showMessageDialog(this, "No se encontró el Producto");
+    }
+
+    BaseBD.close();
 }
 private void activarJdialog(JDialog TablaProvedores) {
 
