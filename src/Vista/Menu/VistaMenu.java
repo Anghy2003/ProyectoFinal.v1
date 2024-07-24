@@ -3,9 +3,12 @@ package Vista.Menu;
 
 
 import Conexion.Conexion_db;
+import Vista.Catálogo.CatalogoProductos;
+
 import Vista.Catálogo.CrudPanelServicios;
 import Vista.Cruds.*;
 import Vista.Factura.Factura;
+import Vista.Home.Home;
 import Vista.PanelSubmenus.*;
 import Vista.PanelTitulos.*;
 import Vista.Tables.TablaProductos;
@@ -55,9 +58,9 @@ public class VistaMenu extends javax.swing.JFrame {
         btnProductos = new javax.swing.JLabel();
         PanelHeader = new javax.swing.JPanel();
         PanelPrincipal = new javax.swing.JPanel();
+        jLabel2 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
         PanelSubmenu = new javax.swing.JPanel();
-        jLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -157,6 +160,11 @@ public class VistaMenu extends javax.swing.JFrame {
         btnSalir.setForeground(new java.awt.Color(255, 255, 255));
         btnSalir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/cerrar-sesion (2).png"))); // NOI18N
         btnSalir.setText("Logout");
+        btnSalir.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnSalirMouseClicked(evt);
+            }
+        });
 
         btnProductos.setFont(new java.awt.Font("Roboto Black", 0, 19)); // NOI18N
         btnProductos.setForeground(new java.awt.Color(255, 255, 255));
@@ -202,12 +210,12 @@ public class VistaMenu extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnProvedores, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnProductos, javax.swing.GroupLayout.DEFAULT_SIZE, 111, Short.MAX_VALUE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnProductos, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addComponent(btnReportes, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(40, 40, 40))
+                .addContainerGap(97, Short.MAX_VALUE))
         );
 
         PanelMenu.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 140, -1, 660));
@@ -231,50 +239,50 @@ public class VistaMenu extends javax.swing.JFrame {
 
         PanelPrincipal.setBackground(new java.awt.Color(255, 255, 255));
 
-        jLabel1.setFont(new java.awt.Font("Roboto Black", 0, 48)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("Roboto Black", 0, 18)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(204, 204, 204));
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/logoplomo120.png"))); // NOI18N
+
+        jLabel1.setFont(new java.awt.Font("Roboto Black", 0, 18)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(204, 204, 204));
-        jLabel1.setText("Panel Principal");
+        jLabel1.setText("Tu vehículo en las mejores manos, tu tiempo bien administrado");
 
         javax.swing.GroupLayout PanelPrincipalLayout = new javax.swing.GroupLayout(PanelPrincipal);
         PanelPrincipal.setLayout(PanelPrincipalLayout);
         PanelPrincipalLayout.setHorizontalGroup(
             PanelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelPrincipalLayout.createSequentialGroup()
+                .addContainerGap(156, Short.MAX_VALUE)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 561, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(153, 153, 153))
             .addGroup(PanelPrincipalLayout.createSequentialGroup()
-                .addGap(256, 256, 256)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 365, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(249, Short.MAX_VALUE))
+                .addGap(362, 362, 362)
+                .addComponent(jLabel2)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         PanelPrincipalLayout.setVerticalGroup(
             PanelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(PanelPrincipalLayout.createSequentialGroup()
-                .addGap(212, 212, 212)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 175, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(243, Short.MAX_VALUE))
+                .addGap(150, 150, 150)
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(297, Short.MAX_VALUE))
         );
 
         panelPrincipal.add(PanelPrincipal, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 160, 870, 630));
 
         PanelSubmenu.setBackground(new java.awt.Color(255, 255, 255));
 
-        jLabel2.setFont(new java.awt.Font("Roboto Black", 0, 48)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(204, 204, 204));
-        jLabel2.setText("Panel Submenu");
-
         javax.swing.GroupLayout PanelSubmenuLayout = new javax.swing.GroupLayout(PanelSubmenu);
         PanelSubmenu.setLayout(PanelSubmenuLayout);
         PanelSubmenuLayout.setHorizontalGroup(
             PanelSubmenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(PanelSubmenuLayout.createSequentialGroup()
-                .addGap(257, 257, 257)
-                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 351, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(262, Short.MAX_VALUE))
+            .addGap(0, 870, Short.MAX_VALUE)
         );
         PanelSubmenuLayout.setVerticalGroup(
             PanelSubmenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(PanelSubmenuLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel2)
-                .addContainerGap(12, Short.MAX_VALUE))
+            .addGap(0, 80, Short.MAX_VALUE)
         );
 
         panelPrincipal.add(PanelSubmenu, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 80, 870, 80));
@@ -304,6 +312,8 @@ public class VistaMenu extends javax.swing.JFrame {
 
 
     }//GEN-LAST:event_btnVehiculosMousePressed
+
+
 //CrudPanelCliente crudCli = new CrudPanelCliente();
     private void btnUsuarioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnUsuarioMouseClicked
         PanelTituloUsuario titUsu = new PanelTituloUsuario();
@@ -325,7 +335,7 @@ public class VistaMenu extends javax.swing.JFrame {
     }//GEN-LAST:event_btnServiciosMouseClicked
 
     private void btnFacturaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnFacturaMouseClicked
-        PanelTituloFacturacion titufac = new PanelTituloFacturacion();
+       PanelTituloFacturacion titufac = new PanelTituloFacturacion();
         PanelSubmenuFacturacion SubmenuFac = new PanelSubmenuFacturacion();
         Factura fac =new Factura();
         MostrarpanelTitulo(titufac);
@@ -334,7 +344,12 @@ public class VistaMenu extends javax.swing.JFrame {
     }//GEN-LAST:event_btnFacturaMouseClicked
 
     private void btnCatalogoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCatalogoMouseClicked
-        // TODO add your handling code here:
+      PanelTituloCatalogo tituCat = new PanelTituloCatalogo();
+        PanelSubmenuCatalogo SubmenuCat = new PanelSubmenuCatalogo();
+        //CatalogoProductos pro =new CatalogoProductos();
+        MostrarpanelTitulo(tituCat);
+        MostrarpanelSubmenu(SubmenuCat);
+        
     }//GEN-LAST:event_btnCatalogoMouseClicked
 
     private void btnProvedoresMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnProvedoresMouseClicked
@@ -347,7 +362,10 @@ public class VistaMenu extends javax.swing.JFrame {
     }//GEN-LAST:event_btnProvedoresMouseClicked
 
     private void btnReportesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnReportesMouseClicked
-        // TODO add your handling code here:
+        PanelTituloReporte titreo = new PanelTituloReporte();
+        PanelSubmenuReportes submenrep = new PanelSubmenuReportes();
+        MostrarpanelSubmenu(submenrep);
+        MostrarpanelTitulo(titreo);
     }//GEN-LAST:event_btnReportesMouseClicked
 
     private void btnProductosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnProductosMouseClicked
@@ -358,6 +376,12 @@ public class VistaMenu extends javax.swing.JFrame {
         MostrarpanelTitulo(titProd);
         MostarpanelCruds(prod);
     }//GEN-LAST:event_btnProductosMouseClicked
+
+    private void btnSalirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSalirMouseClicked
+       Home homesito=new Home();
+     homesito.setVisible(true);
+     this.dispose();
+    }//GEN-LAST:event_btnSalirMouseClicked
     private void MostrarpanelSubmenu(JPanel p) {
         p.setSize(870, 80);
         p.setLocation(0, 0);

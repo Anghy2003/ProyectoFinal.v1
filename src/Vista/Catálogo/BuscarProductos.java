@@ -16,9 +16,16 @@ import com.db4o.query.Query;
 
 import java.awt.BorderLayout;
 import java.awt.Image;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import javax.swing.ImageIcon;
 import javax.swing.JDialog;
 import javax.swing.JFileChooser;
+import javax.swing.JLabel;
 
 import javax.swing.JOptionPane;
 
@@ -26,15 +33,14 @@ import javax.swing.JPanel;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class BuscarProductos extends javax.swing.JPanel {
-
-    /**
-     * Creates new form CrudProductos
-     */
+     private byte[] imagenProducto; // Añadir campo para la imagen
     private String BuscarCodigo;
     public BuscarProductos(String receivedString) {
         this.BuscarCodigo = receivedString;
         initComponents();
         buscarProducto();
+        txtCodigoProducto.setEnabled(false);
+      
         
     }
 
@@ -366,67 +372,70 @@ public class BuscarProductos extends javax.swing.JPanel {
     }//GEN-LAST:event_txtCodigoProductoActionPerformed
 
     private void btnModficarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModficarActionPerformed
- // Validar campos de texto
-    if (txtNombreProducto.getText().trim().isBlank()) {
-        JOptionPane.showMessageDialog(this, "No deje espacios en blanco en el nombre del producto");
-        return;
-    }
-    if (txtDescripcion.getText().isBlank()) {
-        JOptionPane.showMessageDialog(this, "No deje espacios en blanco en la descripción del producto");
-        return;
-    }
+        // Validar campos de texto
+        if (txtNombreProducto.getText().trim().isBlank()) {
+            JOptionPane.showMessageDialog(this, "No deje espacios en blanco en el nombre del producto");
+            return;
+        }
+        if (txtDescripcion.getText().isBlank()) {
+            JOptionPane.showMessageDialog(this, "No deje espacios en blanco en la descripción del producto");
+            return;
+        }
 
-    // Validar campos numéricos
-    if (!txtPrecioProducto.getText().matches("\\d+(\\.\\d{1,2})?")) {
-        JOptionPane.showMessageDialog(this, "Ingrese un precio válido (ejemplo: 10.99)");
-        return;
-    }
-    if (!txtNumeroProductos.getText().matches("\\d+")) {
-        JOptionPane.showMessageDialog(this, "Ingrese un número de productos válido");
-        return;
-    }
-    if (!txtExistenciaMaxima.getText().matches("\\d+")) {
-        JOptionPane.showMessageDialog(this, "Ingrese una existencia máxima válida");
-        return;
-    }
-    if (!txtExistenciaMinima.getText().matches("\\d+")) {
-        JOptionPane.showMessageDialog(this, "Ingrese una existencia mínima válida");
-        return;
-    }
+        // Validar campos numéricos
+        if (!txtPrecioProducto.getText().matches("\\d+(\\.\\d{1,2})?")) {
+            JOptionPane.showMessageDialog(this, "Ingrese un precio válido (ejemplo: 10.99)");
+            return;
+        }
+        if (!txtNumeroProductos.getText().matches("\\d+")) {
+            JOptionPane.showMessageDialog(this, "Ingrese un número de productos válido");
+            return;
+        }
+        if (!txtExistenciaMaxima.getText().matches("\\d+")) {
+            JOptionPane.showMessageDialog(this, "Ingrese una existencia máxima válida");
+            return;
+        }
+        if (!txtExistenciaMinima.getText().matches("\\d+")) {
+            JOptionPane.showMessageDialog(this, "Ingrese una existencia mínima válida");
+            return;
+        }
 
-    // Validar que se haya seleccionado una categoría del JComboBox
-    if (cmbCategoria.getSelectedIndex() == -1) {
-        JOptionPane.showMessageDialog(this, "Seleccione una categoría válida");
-        return;
-    }
+        // Validar que se haya seleccionado una categoría del JComboBox
+        if (cmbCategoria.getSelectedIndex() == -1) {
+            JOptionPane.showMessageDialog(this, "Seleccione una categoría válida");
+            return;
+        }
 
-    // Convertir campos de texto a tipos numéricos
-    Double precioProducto = Double.parseDouble(txtPrecioProducto.getText());
-    int numeroProductosProducto = Integer.parseInt(txtNumeroProductos.getText());
-    int existenciaMaximaProducto = Integer.parseInt(txtExistenciaMaxima.getText());
-    int existenciaMinimaProducto = Integer.parseInt(txtExistenciaMinima.getText());
+        // Convertir campos de texto a tipos numéricos
+        Double precioProducto = Double.parseDouble(txtPrecioProducto.getText());
+        int numeroProductosProducto = Integer.parseInt(txtNumeroProductos.getText());
+        int existenciaMaximaProducto = Integer.parseInt(txtExistenciaMaxima.getText());
+        int existenciaMinimaProducto = Integer.parseInt(txtExistenciaMinima.getText());
 
-    // Obtener la categoría seleccionada del JComboBox
-    String categoriaSeleccionada = (String) cmbCategoria.getSelectedItem();
+        // Obtener la categoría seleccionada del JComboBox
+        String categoriaSeleccionada = (String) cmbCategoria.getSelectedItem();
 
-    // Llamar al método modificarProducto
-    modificarProducto(
-        txtCodigoProducto.getText().toUpperCase(),
-        txtNombreProducto.getText(),
-        precioProducto,
-        categoriaSeleccionada.toUpperCase(),  // Usar la categoría seleccionada
-        numeroProductosProducto,
-        existenciaMaximaProducto,
-        existenciaMinimaProducto,
-        txtDescripcion.getText(),
-        txtProveedorID.getText()
-    );
+        // Llamar al método modificarProducto
+        modificarProducto(
+            txtCodigoProducto.getText().toUpperCase(),
+            txtNombreProducto.getText(),
+            precioProducto,
+            categoriaSeleccionada.toUpperCase(), // Usar la categoría seleccionada
+            numeroProductosProducto,
+            existenciaMaximaProducto,
+            existenciaMinimaProducto,
+            txtDescripcion.getText(),
+            txtProveedorID.getText(),
+            imagenProducto, // Incluir la imagen
+            Producto.Estado.ACTIVO
+        );
 
-    // Mostrar mensaje de éxito
-    JOptionPane.showMessageDialog(this, "Producto Modificado");
+        // Mostrar mensaje de éxito
+        JOptionPane.showMessageDialog(this, "Producto Modificado");
 
-    // Limpiar campos y actualizar la tabla
-    resetCampos();
+        // Limpiar campos y actualizar la tabla
+        resetCampos();
+    
     }//GEN-LAST:event_btnModficarActionPerformed
 
     private void BtnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnBuscarActionPerformed
@@ -434,66 +443,85 @@ public class BuscarProductos extends javax.swing.JPanel {
     }//GEN-LAST:event_BtnBuscarActionPerformed
 
     private void btnSeleccionarImgenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSeleccionarImgenActionPerformed
-        String Ruta = "";
-        JFileChooser jFileChooser = new JFileChooser();
+      JFileChooser jFileChooser = new JFileChooser();
         FileNameExtensionFilter filtrado = new FileNameExtensionFilter("JPG, PNG & GIF", "jpg", "png", "gif");
         jFileChooser.setFileFilter(filtrado);
 
         int respuesta = jFileChooser.showOpenDialog(this);
 
         if (respuesta == JFileChooser.APPROVE_OPTION) {
-            Ruta = jFileChooser.getSelectedFile().getPath();
+            File archivoImagen = jFileChooser.getSelectedFile();
+            String Ruta = archivoImagen.getPath();
 
-            Image mImagen = new ImageIcon(Ruta).getImage();
-            ImageIcon mIcono = new ImageIcon(mImagen.getScaledInstance(lblImagen.getWidth(), lblImagen.getHeight(), Image.SCALE_SMOOTH));
-            lblImagen.setIcon(mIcono);
+            try {
+                // Leer la imagen y convertirla a un array de bytes
+                imagenProducto = leerImagen(archivoImagen);
+
+                // Mostrar la imagen en el label
+                Image mImagen = new ImageIcon(Ruta).getImage();
+                ImageIcon mIcono = new ImageIcon(mImagen.getScaledInstance(lblImagen.getWidth(), lblImagen.getHeight(), Image.SCALE_SMOOTH));
+                lblImagen.setIcon(mIcono);
+            } catch (IOException e) {
+                JOptionPane.showMessageDialog(this, "Error al leer la imagen: " + e.getMessage());
+            }
         }
     }//GEN-LAST:event_btnSeleccionarImgenActionPerformed
+ 
 
+
+    private byte[] leerImagen(File archivoImagen) throws IOException {
+        try (ByteArrayOutputStream baos = new ByteArrayOutputStream(); FileInputStream fis = new FileInputStream(archivoImagen)) {
+            byte[] buffer = new byte[1024];
+            int bytesRead;
+            while ((bytesRead = fis.read(buffer)) != -1) {
+                baos.write(buffer, 0, bytesRead);
+            }
+            return baos.toByteArray();
+        }
+    }
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
         mostrarNombreProveedor();
     }//GEN-LAST:event_btnAgregarActionPerformed
    // Método para modificar producto
-public static void modificarProducto(String codigo_Producto, String nombre_Producto, Double precio_Producto, String codigo_categoria_Producto, int numeroProductos_Producto, int existenciaMaxima_Producto, int existenciaMinima_Producto, String descripcion_Producto, String ID_Proveedor_Producto) {
-    // ESTABLECER CONEXION CON LA BASE DE DATOS
-    ObjectContainer BaseBD = Conexion_db.ConectarBD();
+// Método para modificar producto
+    public static void modificarProducto(String codigo_Producto, String nombre_Producto, Double precio_Producto, String codigo_categoria_Producto, int numeroProductos_Producto, int existenciaMaxima_Producto, int existenciaMinima_Producto, String descripcion_Producto, String ID_Proveedor_Producto, byte[] imagen, Producto.Estado estado) {
+        // ESTABLECER CONEXION CON LA BASE DE DATOS
+        ObjectContainer BaseBD = Conexion_db.ConectarBD();
 
-    // Crear el objeto con los datos nuevos
-    Producto productoModificado = new Producto(codigo_Producto, nombre_Producto, precio_Producto, codigo_categoria_Producto, numeroProductos_Producto, existenciaMaxima_Producto, existenciaMinima_Producto, descripcion_Producto, ID_Proveedor_Producto);
+        // Buscar el objeto existente en la base de datos
+        Producto productoBusca = new Producto(codigo_Producto, null, null, null, 0, 0, 0, null, null, null, null);
+        ObjectSet<Producto> resultado = BaseBD.get(productoBusca);
 
-    // Buscar el objeto existente en la base de datos
-    Producto productoBusca = new Producto(codigo_Producto, null, null, null, 0, 0, 0, null, null);
-    ObjectSet<Producto> resultado = BaseBD.get(productoBusca);
+        if (resultado.size() > 0) {
+            // Actualizar el objeto existente
+            Producto productoExistente = resultado.next();
 
-    if (resultado.size() > 0) {
-        // Actualizar el objeto existente
-        Producto productoExistente = (Producto) resultado.next();
-        
-        // Actualizar campos del objeto existente con los nuevos valores
-        productoExistente.setNombre_Producto(nombre_Producto);
-        productoExistente.setPrecio_Producto(precio_Producto);
-        productoExistente.setCodigo_categoria_Producto(codigo_categoria_Producto);
-        productoExistente.setNumeroProductos_Producto(numeroProductos_Producto);
-        productoExistente.setExistenciaMaxima_Producto(existenciaMaxima_Producto);
-        productoExistente.setExistenciaMinima_Producto(existenciaMinima_Producto);
-        productoExistente.setDescripcion_Producto(descripcion_Producto);
-        productoExistente.setID_Proveedor_Producto(ID_Proveedor_Producto);
+            // Actualizar campos del objeto existente con los nuevos valores
+            productoExistente.setNombre_Producto(nombre_Producto);
+            productoExistente.setPrecio_Producto(precio_Producto);
+            productoExistente.setCodigo_categoria_Producto(codigo_categoria_Producto);
+            productoExistente.setNumeroProductos_Producto(numeroProductos_Producto);
+            productoExistente.setExistenciaMaxima_Producto(existenciaMaxima_Producto);
+            productoExistente.setExistenciaMinima_Producto(existenciaMinima_Producto);
+            productoExistente.setDescripcion_Producto(descripcion_Producto);
+            productoExistente.setID_Proveedor_Producto(ID_Proveedor_Producto);
+            productoExistente.setImagen(imagen); // Actualizar la imagen
 
-        // Guardar los cambios en la base de datos
-        BaseBD.store(productoExistente);
-        
-    } else {
-        System.out.println("No se encontró ningún producto con el código especificado.");
+            // Guardar los cambios en la base de datos
+            BaseBD.store(productoExistente);
+
+        } else {
+            System.out.println("No se encontró ningún producto con el código especificado.");
+        }
+
+        // Cerrar la base de datos
+        BaseBD.close();
     }
-
-    // Cerrar la base de datos
-    BaseBD.close();
-}
 // Método para verificar si un producto existe antes de guardar
 public static int verificarProductoGuardar(String codigo_Producto) {
     // ESTABLECER CONEXION CON LA BASE DE DATOS
     ObjectContainer BaseBD = Conexion_db.ConectarBD();
-    Producto productoBusca = new Producto(codigo_Producto, null, null, null, 0, 0, 0, null, null);
+    Producto productoBusca = new Producto(codigo_Producto, null, null, null, 0, 0, 0, null, null,null,null);
     ObjectSet resultado = BaseBD.get(productoBusca);
     int coincidencias = resultado.size();
     // Cerrar la base de datos
@@ -504,7 +532,7 @@ public static int verificarProductoGuardar(String codigo_Producto) {
 public static int verificarProducto(String codigo_Producto) {
     // ESTABLECER CONEXION CON LA BASE DE DATOS
     ObjectContainer BaseBD = Conexion_db.ConectarBD();
-    Producto productoBusca = new Producto(codigo_Producto, null, null, null, 0, 0, 0, null, null);
+    Producto productoBusca = new Producto(codigo_Producto, null, null, null, 0, 0, 0, null, null,null,null);
     ObjectSet resultado = BaseBD.get(productoBusca);
     int coincidencias = resultado.size();
     // Cerrar la base de datos
@@ -513,7 +541,7 @@ public static int verificarProducto(String codigo_Producto) {
 }
 
    
-   private void resetCampos() {
+  private void resetCampos() {
     txtCodigoProducto.setText("");
     txtNombreProducto.setText("");
     txtPrecioProducto.setText("");    
@@ -523,68 +551,49 @@ public static int verificarProducto(String codigo_Producto) {
     txtDescripcion.setText("");
     txtProveedorID.setText("");
     cmbCategoria.setSelectedIndex(-1); 
-    txtNombreProducto.setEnabled(true); 
+    txtNombreProducto.setEnabled(true);
+    lblImagen.setIcon(null);  // Restablecer la imagen a null
+    lblImagen.setText("No image available"); // Establecer texto por defecto si no hay imagen
 }
 public final void buscarProducto() {
     Boolean encontrado = false;
-    // ESTABLECER CONEXIÓN CON LA BASE DE DATOS
-    ObjectContainer BaseBD = Conexion_db.ConectarBD();
-    Query productoQuery = BaseBD.query(); // método para iniciar una consulta
-    productoQuery.constrain(Producto.class); // buscaremos en la clase Producto
-    productoQuery.descend("codigo_Producto").constrain(BuscarCodigo.toUpperCase()); // verificamos las coincidencias en el atributo especificado
-    ObjectSet<Producto> resultado = productoQuery.execute(); // Ejecutamos la consulta y almacenamos en "resultado"
-    
-    // Iterar sobre los resultados para obtener los atributos
-    if (resultado.hasNext()) {
-        Producto prod = resultado.next(); // Obtener el primer resultado
-        // Seteamos en los campos recibiendo del objeto
-        txtNombreProducto.setText(prod.getNombre_Producto());       
-        txtPrecioProducto.setText(String.format("%.2f", prod.getPrecio_Producto()));
-        txtNumeroProductos.setText(String.valueOf(prod.getNumeroProductos_Producto()));
-        txtExistenciaMaxima.setText(String.valueOf(prod.getExistenciaMaxima_Producto()));
-        txtExistenciaMinima.setText(String.valueOf(prod.getExistenciaMinima_Producto()));
-        txtDescripcion.setText(prod.getDescripcion_Producto());
-        txtProveedorID.setText(prod.getID_Proveedor_Producto());
-        cmbCategoria.setSelectedItem(prod.getCodigo_categoria_Producto()); // Seleccionar la categoría en el JComboBox
-       
-        txtNombreProducto.setEnabled(true);
-        encontrado = true;
-        JOptionPane.showMessageDialog(this, "PRODUCTO ENCONTRADO");
-    } else {
-        JOptionPane.showMessageDialog(this, "No se encontró el Producto");
-    }
-    
-    BaseBD.close();
-}
-private void mostrarNombreProveedor() {
-    // Establecer conexión con la base de datos
-    ObjectContainer BaseBD = Conexion_db.ConectarBD();
+        // ESTABLECER CONEXIÓN CON LA BASE DE DATOS
+        ObjectContainer BaseBD = Conexion_db.ConectarBD();
+        Query productoQuery = BaseBD.query(); // método para iniciar una consulta
+        productoQuery.constrain(Producto.class); // buscaremos en la clase Producto
+        productoQuery.descend("codigo_Producto").constrain(BuscarCodigo.toUpperCase()); // verificamos las coincidencias en el atributo especificado
+        ObjectSet<Producto> resultado = productoQuery.execute(); // Ejecutamos la consulta y almacenamos en "resultado"
 
-    // Crear un objeto de consulta para buscar proveedores
-    Query proveedorQuery = BaseBD.query();
-    proveedorQuery.constrain(Proveedor.class);
-    ObjectSet<Proveedor> resultado = proveedorQuery.execute();
+        // Iterar sobre los resultados para obtener los atributos
+        if (resultado.hasNext()) {
+            Producto prod = resultado.next(); // Obtener el primer resultado
+            // Seteamos en los campos recibiendo del objeto
+            txtCodigoProducto.setText(prod.getCodigo_Producto());
+            txtNombreProducto.setText(prod.getNombre_Producto());
+            txtPrecioProducto.setText(String.format("%.2f", prod.getPrecio_Producto()));
+            txtNumeroProductos.setText(String.valueOf(prod.getNumeroProductos_Producto()));
+            txtExistenciaMaxima.setText(String.valueOf(prod.getExistenciaMaxima_Producto()));
+            txtExistenciaMinima.setText(String.valueOf(prod.getExistenciaMinima_Producto()));
+            txtDescripcion.setText(prod.getDescripcion_Producto());
+            txtProveedorID.setText(prod.getID_Proveedor_Producto());
+            cmbCategoria.setSelectedItem(prod.getCodigo_categoria_Producto()); // Seleccionar la categoría en el JComboBox
 
-    boolean encontrado = false;
-    String inputCodigo = txtBuscar.getText().trim();
+            // Mostrar la imagen
+            byte[] imagen = prod.getImagen();
+            if (imagen != null) {
+                ImageIcon icono = new ImageIcon(new ImageIcon(imagen).getImage().getScaledInstance(lblImagen.getWidth(), lblImagen.getHeight(), Image.SCALE_SMOOTH));
+                lblImagen.setIcon(icono);
+                imagenProducto = imagen; // Guardar la imagen en el campo de la clase
+            }
 
-    // Iterar sobre los resultados para encontrar y cargar el nombre del proveedor
-    for (Proveedor miProveedor : resultado) {
-        String codigoProveedor = miProveedor.getCodigo_proveedor().trim();
-        
-        if (codigoProveedor.equals(inputCodigo)) {
-            txtProveedorID.setText(miProveedor.getNombre_proveedor());
+            txtNombreProducto.setEnabled(true);
             encontrado = true;
-            break;
+            JOptionPane.showMessageDialog(this, "PRODUCTO ENCONTRADO");
+        } else {
+            JOptionPane.showMessageDialog(this, "No se encontró el Producto");
         }
-    }
 
-    if (!encontrado) {
-        JOptionPane.showMessageDialog(this, "No se encontró Proveedor");
-    }
-
-    // Cerrar la conexión con la base de datos
-    BaseBD.close();
+        BaseBD.close();
 }
 private void activarJdialog(JDialog TablaProvedores) {
 
@@ -592,6 +601,36 @@ private void activarJdialog(JDialog TablaProvedores) {
         TablaProvedores.setSize(680, 330);
         TablaProvedores.setLocationRelativeTo(this);
         TablaProvedores.setVisible(true);
+    }
+    private void mostrarNombreProveedor() {
+        // Establecer conexión con la base de datos
+        ObjectContainer BaseBD = Conexion_db.ConectarBD();
+
+        // Crear un objeto de consulta para buscar proveedores
+        Query proveedorQuery = BaseBD.query();
+        proveedorQuery.constrain(Proveedor.class);
+        ObjectSet<Proveedor> resultado = proveedorQuery.execute();
+
+        boolean encontrado = false;
+        String inputCodigo = txtBuscar.getText().trim();
+
+        // Iterar sobre los resultados para encontrar y cargar el nombre del proveedor
+        for (Proveedor miProveedor : resultado) {
+            String codigoProveedor = miProveedor.getCodigo_proveedor().trim();
+
+            if (codigoProveedor.equals(inputCodigo)) {
+                txtProveedorID.setText(miProveedor.getNombre_proveedor());
+                encontrado = true;
+                break;
+            }
+        }
+
+        if (!encontrado) {
+            JOptionPane.showMessageDialog(this, "No se encontró Proveedor");
+        }
+
+        // Cerrar la conexión con la base de datos
+        BaseBD.close();
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private rojeru_san.RSButtonRiple BtnBuscar;

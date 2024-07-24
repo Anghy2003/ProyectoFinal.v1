@@ -1,6 +1,7 @@
 package Vista.Tables;
 
 import Conexion.Conexion_db;
+import Conexion.ImageRenderer;
 import Models.Producto;
 import Vista.Catálogo.CrudProductos;
 import Vista.Menu.VistaMenu;
@@ -10,6 +11,9 @@ import java.awt.BorderLayout;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import Vista.Catálogo.BuscarProductos;
+import java.awt.Image;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 
 
 public class TablaProductos extends javax.swing.JPanel {
@@ -248,36 +252,50 @@ public class TablaProductos extends javax.swing.JPanel {
     
 
     private void mostrarTablaProductos() {
-        ObjectContainer BaseBD = Conexion_db.ConectarBD();
-        Producto producto = new Producto(null, null, null, null, 0, 0, 0, null,null);
-        ObjectSet <Producto>resul = BaseBD.get(producto);
+     ObjectContainer BaseBD = Conexion_db.ConectarBD();
+    Producto producto = new Producto(null, null, null, null, 0, 0, 0, null, null, null, null);
+    ObjectSet<Producto> resul = BaseBD.get(producto);
 
-        String matriz[][] = new String[resul.size()][9];
+    Object matriz[][] = new Object[resul.size()][11]; // Cambiar a Object
 
-        for (int i = 0; i < resul.size(); i++) {
-            Producto prod = (Producto) resul.next();
+    for (int i = 0; i < resul.size(); i++) {
+        Producto prod = resul.next();
 
-            matriz[i][0] = prod.getCodigo_Producto();
-            matriz[i][1] = prod.getNombre_Producto();
-            matriz[i][2] = String.valueOf(prod.getPrecio_Producto());
-            matriz[i][3] = prod.getCodigo_categoria_Producto();
-            matriz[i][4] = String.valueOf(prod.getNumeroProductos_Producto());
-            matriz[i][5] = String.valueOf(prod.getExistenciaMaxima_Producto());
-            matriz[i][6] = String.valueOf(prod.getExistenciaMinima_Producto());
-            matriz[i][7] = prod.getDescripcion_Producto();
-            matriz[i][8] = prod.getID_Proveedor_Producto();
-            
+        matriz[i][0] = prod.getCodigo_Producto();
+        matriz[i][1] = prod.getNombre_Producto();
+        matriz[i][2] = String.valueOf(prod.getPrecio_Producto());
+        matriz[i][3] = prod.getCodigo_categoria_Producto();
+        matriz[i][4] = String.valueOf(prod.getNumeroProductos_Producto());
+        matriz[i][5] = String.valueOf(prod.getExistenciaMaxima_Producto());
+        matriz[i][6] = String.valueOf(prod.getExistenciaMinima_Producto());
+        matriz[i][7] = prod.getDescripcion_Producto();
+        matriz[i][8] = prod.getID_Proveedor_Producto();
+
+        // Convertir imagen a un icono para mostrar en la tabla
+        byte[] imagen = prod.getImagen();
+        if (imagen != null) {
+            ImageIcon icono = new ImageIcon(new ImageIcon(imagen).getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH));
+            matriz[i][9] = new JLabel(icono); // Agregar imagen a la matriz
+        } else {
+            matriz[i][9] = new JLabel("No image"); // Placeholder para productos sin imagen
         }
 
-        TablProductos1.setModel(new javax.swing.table.DefaultTableModel(
-                matriz,
-                new String[]{
-                    "Código Producto", "Nombre Producto", "Precio", "Código Categoría", "Número de Productos", "Existencia Máxima", "Existencia Mínima", "Descripción", "Proveedor"
-                }
-        ));
-        BaseBD.close();
+        matriz[i][10] = String.valueOf(prod.getEstado());
     }
 
+    TablProductos1.setModel(new javax.swing.table.DefaultTableModel(
+            matriz,
+            new String[]{
+                "Código Producto", "Nombre Producto", "Precio", "Código Categoría", "Número de Productos", "Existencia Máxima", "Existencia Mínima", "Descripción", "Proveedor", "Imagen", "Estado"
+            }
+    ));
+
+    // Usar el ImageRenderer para la columna de imágenes
+    TablProductos1.getColumnModel().getColumn(9).setCellRenderer(new ImageRenderer());
+     TablProductos1.setRowHeight(100);
+
+    BaseBD.close();
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable TablProductos1;

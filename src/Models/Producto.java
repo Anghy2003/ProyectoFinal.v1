@@ -10,13 +10,20 @@ public class Producto {
     private int existenciaMinima_Producto;
     private String descripcion_Producto;
     private String ID_Proveedor_Producto;
-  
+    private byte[] imagen;
+    private Estado estado; 
     
-
+    //haremos que tenga solo dos posibles valores
+     public enum Estado {
+        ACTIVO,
+        INACTIVO
+    }
     public Producto() {
     }
 
-    public Producto(String codigo_Producto, String nombre_Producto, Double precio_Producto, String codigo_categoria_Producto, int numeroProductos_Producto, int existenciaMaxima_Producto, int existenciaMinima_Producto, String descripcion_Producto, String ID_Proveedor_Producto) {
+    
+
+    public Producto(String codigo_Producto, String nombre_Producto, Double precio_Producto, String codigo_categoria_Producto, int numeroProductos_Producto, int existenciaMaxima_Producto, int existenciaMinima_Producto, String descripcion_Producto, String ID_Proveedor_Producto, byte[] imagen, Estado estado) {
         this.codigo_Producto = codigo_Producto;
         this.nombre_Producto = nombre_Producto;
         this.precio_Producto = precio_Producto;
@@ -26,6 +33,24 @@ public class Producto {
         this.existenciaMinima_Producto = existenciaMinima_Producto;
         this.descripcion_Producto = descripcion_Producto;
         this.ID_Proveedor_Producto = ID_Proveedor_Producto;
+        this.imagen = imagen;
+        this.estado = Estado.ACTIVO;
+    }
+
+    public byte[] getImagen() {
+        return imagen;
+    }
+     public void setImagen(byte[] imagen) {
+        this.imagen = imagen;
+    }
+   
+
+    public Estado getEstado() {
+        return estado;
+    }
+
+    public void setEstado(Estado estado) {
+        this.estado = estado;
     }
 
     public String getCodigo_Producto() {
@@ -98,6 +123,14 @@ public class Producto {
 
     public void setID_Proveedor_Producto(String ID_Proveedor_Producto) {
         this.ID_Proveedor_Producto = ID_Proveedor_Producto;
+    }
+    //METODOS
+    public  void activarProducto() {
+        this.estado = Estado.ACTIVO;
+    }
+
+    public  void desactivarProducto() {
+        this.estado = Estado.INACTIVO;
     }
 
    
