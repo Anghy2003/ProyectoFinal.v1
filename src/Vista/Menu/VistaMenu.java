@@ -271,7 +271,7 @@ public class VistaMenu extends javax.swing.JFrame {
                 .addContainerGap(272, Short.MAX_VALUE))
         );
 
-        panelPrincipal.add(PanelPrincipal, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 160, 890, 640));
+        panelPrincipal.add(PanelPrincipal, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 150, 890, 640));
 
         PanelSubmenu.setBackground(new java.awt.Color(255, 255, 255));
 
