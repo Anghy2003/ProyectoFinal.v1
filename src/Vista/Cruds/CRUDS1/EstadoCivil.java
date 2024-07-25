@@ -346,36 +346,7 @@ public class EstadoCivil extends javax.swing.JPanel {
 
     
 
-    private void mostrarTablaProductos() {
-        ObjectContainer BaseBD = Conexion_db.ConectarBD();
-        Producto producto = new Producto(null, null, null, null, 0, 0, 0, null,null);
-        ObjectSet <Producto>resul = BaseBD.get(producto);
-
-        String matriz[][] = new String[resul.size()][9];
-
-        for (int i = 0; i < resul.size(); i++) {
-            Producto prod = (Producto) resul.next();
-
-            matriz[i][0] = prod.getCodigo_Producto();
-            matriz[i][1] = prod.getNombre_Producto();
-            matriz[i][2] = String.valueOf(prod.getPrecio_Producto());
-            matriz[i][3] = prod.getCodigo_categoria_Producto();
-            matriz[i][4] = String.valueOf(prod.getNumeroProductos_Producto());
-            matriz[i][5] = String.valueOf(prod.getExistenciaMaxima_Producto());
-            matriz[i][6] = String.valueOf(prod.getExistenciaMinima_Producto());
-            matriz[i][7] = prod.getDescripcion_Producto();
-            matriz[i][8] = prod.getID_Proveedor_Producto();
-            
-        }
-
-        TablProductos1.setModel(new javax.swing.table.DefaultTableModel(
-                matriz,
-                new String[]{
-                    "Código Producto", "Nombre Producto", "Precio", "Código Categoría", "Número de Productos", "Existencia Máxima", "Existencia Mínima", "Descripción", "Proveedor"
-                }
-        ));
-        BaseBD.close();
-    }
+    
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
