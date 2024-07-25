@@ -1,9 +1,9 @@
 package Vista.Tables;
 
 import Conexion.Conexion_db;
+import static Models.Mecanico.Estado.ACTIVO;
 import Models.Mecanico;
-import static Models.Vendedor.Estado.ACTIVO;
-import static Models.Vendedor.Estado.INACTIVO;
+import static Models.Mecanico.Estado.INACTIVO;
 import Vista.Cruds.CRUDS1.CrudPanelMecanico;
 import Vista.Cruds.CRUDS1.CrudPanelMecanico2;
 import Vista.Menu.VistaMenu;
@@ -16,9 +16,6 @@ import javax.swing.JPanel;
 
 public class TablaMecanicos extends javax.swing.JPanel {
 
-    /**
-     * Creates new form TablaMecanicos
-     */
     public TablaMecanicos() {
         initComponents();
         mostrarDatosActivos();
@@ -292,7 +289,7 @@ public class TablaMecanicos extends javax.swing.JPanel {
 
         ObjectSet<Mecanico> resultado = query.execute();
 
-        String matriz[][] = new String[resultado.size()][17];
+        String matriz[][] = new String[resultado.size()][16];
         int i = 0;
         for (Mecanico meca : resultado) {
 

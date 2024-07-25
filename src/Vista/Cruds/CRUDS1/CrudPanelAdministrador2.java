@@ -1,13 +1,26 @@
-
 package Vista.Cruds.CRUDS1;
 
-public class CrudPanelAdministrador2 extends javax.swing.JPanel {
+import Conexion.Conexion_db;
+import Models.Administrador;
+import Vista.Menu.VistaMenu;
+import Vista.Tables.TablaAdministradores;
+import com.db4o.ObjectContainer;
+import com.db4o.ObjectSet;
+import com.db4o.query.Query;
+import java.awt.BorderLayout;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 
-    /**
-     * Creates new form CrudPanelAdministrador1
-     */
-    public CrudPanelAdministrador2() {
+public class CrudPanelAdministrador2 extends javax.swing.JPanel {
+    
+    private String BuscarAdministrador;
+
+    public CrudPanelAdministrador2(String receivedString) {
+        this.BuscarAdministrador = receivedString;
         initComponents();
+        Administradorbuscar();
     }
 
     /**
@@ -42,7 +55,7 @@ public class CrudPanelAdministrador2 extends javax.swing.JPanel {
         jDateFechaNacAdmi = new com.toedter.calendar.JDateChooser();
         cbxGeneroAdmi = new javax.swing.JComboBox<>();
         cbxEstadoCivilAdmi = new javax.swing.JComboBox<>();
-        btnGuardar = new rojeru_san.RSButtonRiple();
+        btnModificar = new rojeru_san.RSButtonRiple();
         lblPassword_Admi = new javax.swing.JLabel();
         txtPasswordAdmi = new rojeru_san.RSMTextFull();
         lblCelular_Admi = new javax.swing.JLabel();
@@ -146,6 +159,11 @@ public class CrudPanelAdministrador2 extends javax.swing.JPanel {
                 btnCancelarMouseClicked(evt);
             }
         });
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarActionPerformed(evt);
+            }
+        });
         jPanel2.add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 520, -1, -1));
         jPanel2.add(jDateFechaNacAdmi, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 170, 140, 30));
 
@@ -155,13 +173,13 @@ public class CrudPanelAdministrador2 extends javax.swing.JPanel {
         cbxEstadoCivilAdmi.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         jPanel2.add(cbxEstadoCivilAdmi, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 280, 150, 30));
 
-        btnGuardar.setText("Guardar");
-        btnGuardar.addActionListener(new java.awt.event.ActionListener() {
+        btnModificar.setText("Modificar");
+        btnModificar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnGuardarActionPerformed(evt);
+                btnModificarActionPerformed(evt);
             }
         });
-        jPanel2.add(btnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 520, -1, -1));
+        jPanel2.add(btnModificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 520, -1, -1));
 
         lblPassword_Admi.setFont(new java.awt.Font("Roboto Medium", 0, 21)); // NOI18N
         lblPassword_Admi.setForeground(new java.awt.Color(0, 53, 79));
@@ -232,85 +250,147 @@ public class CrudPanelAdministrador2 extends javax.swing.JPanel {
 
     }//GEN-LAST:event_btnCancelarMouseClicked
 
-    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
+    private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
 
-//        boolean usuarioRepetido = false;
-//
-//        ObjectContainer BaseBD = Conexion_db.ConectarBD();
-//
-//        if (VerificarVendedor(txtCedulaAdmi.getText()) != 0) {
-//            JOptionPane.showMessageDialog(null, "Vendedor ya registrado");
-//            usuarioRepetido = true;
-//        }
-//
-//        if (!usuarioRepetido) {
-//
-//            Date fechaNacimientoDate = jDateFechaNacAdmi.getDate(); // Obtener la fecha de nacimiento del JDateChooser
-//
-//            // Formatear la fecha como String en el formato deseado (por ejemplo, "dd/MM/yyyy")
-//            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-//            String fechaNacimiento = sdf.format(fechaNacimientoDate);
-//
-//            //            ObjectSet<IdManager> result = BaseBD.query(IdManager.class);
-//            //            IdManager idManager;
-//            //            if (result.isEmpty()) {
-//                //                idManager = new IdManager();
-//                //            } else {
-//                //                idManager = result.get(0);
-//                //            }
-//            //
-//            //            // GENERAR NUEVOS ID
-//            //            int newVendedorId = idManager.getLastClienteId() + 1;
-//            //            int newUsuarioId = idManager.getLastUsuarioId() + 1;
-//
-//            Boolean valido = false;
-//
-//            //asignar id
-//
-//            if (valido = txtCedulaAdmi.getText().matches("\\d{10}")) {
-//                if (valido = txtNombresAdmi.getText().toUpperCase().matches("^[a-zA-Z]+$")) {
-//                    if (valido = txtApellidosAdmi.getText().toUpperCase().matches("^[a-zA-Z]+$")) {
-//                        if (valido = txtDireccionAdmi.getText().toUpperCase().matches("^[a-zA-Z]+$")) {
-//                            if (valido = txtCorreoAdmi.getText().matches("^[\\w.-]+@[\\w.-]+\\.[a-zA-Z]{2,6}$")) {
-//                                if (valido = txtCelularAdmi.getText().matches("^09\\d{8}$")) {
-//
-//                                    GuardarVendedor( Double.parseDouble(txtSueldoVendedor.getText()), Double.parseDouble(txtComicionesVendedor.getText()), Integer.parseInt(txtNumeroVentasVendedor.getText()), null,
-//                                        txtCedulaAdmi.getText(), txtPasswordAdmi.getText(), txtCorreoAdmi.getText(), txtCedulaAdmi.getText(), txtNombresAdmi.getText().toUpperCase(),
-//                                        txtApellidosAdmi.getText().toUpperCase(), txtDireccionAdmi.getText().toUpperCase(), txtCorreoAdmi.getText(), txtCelularAdmi.getText(), (String) cbxGeneroAdmi.getSelectedItem(),
-//                                        fechaNacimiento, (String) cbxEstadoCivilAdmi.getSelectedItem());
-//
-//                                } else {
-//                                    JOptionPane.showMessageDialog(null, "Ingrese un celular valido");
-//                                }
-//
-//                            } else {
-//                                JOptionPane.showMessageDialog(null, "Ingrese un correo valida");
-//                            }
-//
-//                        } else {
-//                            JOptionPane.showMessageDialog(null, "Ingrese una direccion valida");
-//                        }
-//                    } else {
-//                        JOptionPane.showMessageDialog(null, "Ingrese un apellido valido");
-//                    }
-//
-//                } else {
-//                    JOptionPane.showMessageDialog(null, "Ingrese un nombre valido");
-//                }
-//
-//            } else {
-//                JOptionPane.showMessageDialog(null, "Ingrese una cedula valida");
-//            }
-//
-//        }
+        Boolean valido = false;
 
-    }//GEN-LAST:event_btnGuardarActionPerformed
+        Date fechaNacimientoDate = jDateFechaNacAdmi.getDate(); // Obtener la fecha de nacimiento del JDateChooser
 
+        // Formatear la fecha como String en el formato deseado (por ejemplo, "dd/MM/yyyy")
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        String fechaNacimiento = sdf.format(fechaNacimientoDate);
+
+        if (valido = txtCedulaAdmi.getText().matches("\\d{10}")) {
+            if (valido = txtNombresAdmi.getText().toUpperCase().matches("^[a-zA-Z]+(?:\\s[a-zA-Z]+)?$")) {
+                if (valido = txtApellidosAdmi.getText().toUpperCase().matches("^[a-zA-Z]+(?:\\s[a-zA-Z]+)?$")) {
+                    if (valido = txtCorreoAdmi.getText().matches("^[\\w.-]+@[\\w.-]+\\.[a-zA-Z]{2,6}$")) {
+                        if (valido = txtCelularAdmi.getText().matches("^09\\d{8}$")) {
+
+                            modificarAdministrador(txtTituloAdmi.getText().toUpperCase(), Administrador.Estado.ACTIVO, txtCedulaAdmi.getText(), txtNombresAdmi.getText().toUpperCase(),
+                                        txtApellidosAdmi.getText().toUpperCase(), txtDireccionAdmi.getText().toUpperCase(), txtCorreoAdmi.getText(), txtCelularAdmi.getText(),
+                                        (String) cbxGeneroAdmi.getSelectedItem(), fechaNacimiento, (String) cbxEstadoCivilAdmi.getSelectedItem(), txtCedulaAdmi.getText(), txtPasswordAdmi.getText(),
+                                        txtCorreoAdmi.getText());
+
+                        } else {
+                            JOptionPane.showMessageDialog(null, "Ingrese un celular valido");
+                        }
+
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Ingrese un correo valida");
+                    }
+
+                } else {
+                    JOptionPane.showMessageDialog(null, "Ingrese un apellido valido");
+                }
+
+            } else {
+                JOptionPane.showMessageDialog(null, "Ingrese un nombre valido");
+            }
+
+        } else {
+            JOptionPane.showMessageDialog(null, "Ingrese una cedula valida");
+        }
+
+    }//GEN-LAST:event_btnModificarActionPerformed
+
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        System.out.println("salir");
+        TablaAdministradores admi1 = new TablaAdministradores();
+        ShowpanelCruds(admi1);
+    }//GEN-LAST:event_btnCancelarActionPerformed
+
+    public final void Administradorbuscar() {
+        
+        Boolean encontrado = true;
+        
+        ObjectContainer BaseBD = Conexion_db.ConectarBD();
+        
+        Query vendedor = BaseBD.query();
+        vendedor.constrain(Administrador.class);
+        vendedor.descend("cedula").constrain(BuscarAdministrador);
+        ObjectSet<Administrador> resultado = vendedor.execute();
+        
+        for (Administrador admi2 : resultado) {
+            
+            txtCedulaAdmi.setText(admi2.getCedula());
+            txtCedulaAdmi.setEnabled(false); // porque es el atributo principal
+            txtPasswordAdmi.setText(admi2.getPassword());
+            txtNombresAdmi.setText(admi2.getNombres());
+            txtApellidosAdmi.setText(admi2.getApellidos());
+            txtDireccionAdmi.setText(admi2.getDireccion());
+            txtCorreoAdmi.setText(admi2.getCorreo());
+            txtCelularAdmi.setText(admi2.getCelular());
+            cbxGeneroAdmi.setSelectedItem(admi2.getGenero());
+            cbxEstadoCivilAdmi.setSelectedItem(admi2.getEstadoCivil());
+            txtTituloAdmi.setText(admi2.getTitulo_Administrador());            
+            jDateFechaNacAdmi.setDate(convertirStringADate(admi2.getFechaNacimiento()));
+            
+            encontrado = true;
+            JOptionPane.showMessageDialog(this, "Encontrado");
+        }
+        if (!encontrado) {
+            JOptionPane.showMessageDialog(this, "No se encontraron Datos");
+        }
+        BaseBD.close();
+    }
+    
+    public static Date convertirStringADate(String fechaString) {
+        SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+        try {
+            return formato.parse(fechaString);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+    
+    public void modificarAdministrador(String titulo_Administrador, Administrador.Estado estado, String cedula, String nombres, String apellidos, String direccion, String correo, String celular, String genero,
+            String fechaNacimiento, String estadoCivil, String nombreUsuario, String password, String correoRecuperacion) {
+        
+        ObjectContainer BaseBD = Conexion_db.ConectarBD();
+        
+        Administrador modificarAdministrador = new Administrador(titulo_Administrador, estado,  cedula,  nombres,  apellidos,  direccion,  correo,  celular,  genero,
+             fechaNacimiento,  estadoCivil,  nombreUsuario,  password,  correoRecuperacion);
+        
+        Administrador administradorBusca = new Administrador(null, null, cedula, null,
+                null, null, null, null, null, null, null, null,
+                null, null);
+        
+        ObjectSet resultado = BaseBD.get(administradorBusca);
+        
+        int coincidencias = resultado.size();
+        
+        if (coincidencias > 0) {
+            
+            Administrador administadorVEliminar = (Administrador) resultado.next();
+            BaseBD.delete(administadorVEliminar);
+            
+            BaseBD.set(modificarAdministrador);
+            JOptionPane.showMessageDialog(this, "Aministrador Modificado");
+            
+            TablaAdministradores miTablaVendedored = new TablaAdministradores();
+            ShowpanelCruds(miTablaVendedored);
+            
+        } else {
+            JOptionPane.showMessageDialog(this, "No se encontro ningun Administrador");
+        }
+        
+        BaseBD.close();
+    }
+    
+    private void ShowpanelCruds(JPanel p) {
+        p.setSize(870, 630);
+        p.setLocation(0, 0);
+        VistaMenu.PanelPrincipal.removeAll();
+        VistaMenu.PanelPrincipal.add(p, BorderLayout.CENTER);
+        VistaMenu.PanelPrincipal.revalidate();
+        VistaMenu.PanelPrincipal.repaint();
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Cedula_Admi;
     private rojeru_san.RSButtonRiple btnCancelar;
-    private rojeru_san.RSButtonRiple btnGuardar;
+    private rojeru_san.RSButtonRiple btnModificar;
     private javax.swing.JComboBox<String> cbxEstadoCivilAdmi;
     private javax.swing.JComboBox<String> cbxGeneroAdmi;
     private com.toedter.calendar.JDateChooser jDateFechaNacAdmi;

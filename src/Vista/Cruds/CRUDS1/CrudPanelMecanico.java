@@ -44,7 +44,6 @@ public class CrudPanelMecanico extends javax.swing.JPanel {
         }
     }
 
-    
     public final int VerificarMecanicoRepetidos() {
 
         ObjectContainer BaseBD = Conexion_db.ConectarBD();
@@ -372,8 +371,8 @@ public class CrudPanelMecanico extends javax.swing.JPanel {
             }
 
         }
-        TablaMecanicos tblCli = new TablaMecanicos();
-        ShowpanelCruds(tblCli);
+
+       
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void txtPasswordMecaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPasswordMecaActionPerformed

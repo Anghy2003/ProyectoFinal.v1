@@ -364,7 +364,7 @@ public class CrudPanelMecanico2 extends javax.swing.JPanel {
 
             try {
                 String fechaNacimientoStr = meca.getFechaNacimiento(); // Suponiendo que getFechaNacimiento() devuelve un String en formato "yyyy-MM-dd"
-                SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
                 Date fechaNacimientoDate = sdf.parse(fechaNacimientoStr);
 
                 jDateFechaNacMeca.setDate(fechaNacimientoDate);
