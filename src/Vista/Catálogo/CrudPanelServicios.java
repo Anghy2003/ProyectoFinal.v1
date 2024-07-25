@@ -70,7 +70,7 @@ public class CrudPanelServicios extends javax.swing.JPanel {
         txtPrecio = new rojeru_san.RSMTextFull();
         lblImagen = new javax.swing.JLabel();
         btnSeleccionarImgen = new rojeru_san.RSButtonRiple();
-        ComboDuracion = new javax.swing.JSpinner();
+        CbmDuracion = new javax.swing.JComboBox<>();
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -255,7 +255,9 @@ public class CrudPanelServicios extends javax.swing.JPanel {
             }
         });
         jPanel1.add(btnSeleccionarImgen, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 210, 180, -1));
-        jPanel1.add(ComboDuracion, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 190, 90, -1));
+
+        CbmDuracion.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1 Hora ", "2 Horas ", "3 Horas", "4 Horas", "5 horas" }));
+        jPanel1.add(CbmDuracion, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 190, 120, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -288,29 +290,27 @@ public class CrudPanelServicios extends javax.swing.JPanel {
     }
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
  if (!txtNombres.getText().trim().isBlank()) {
-            
-                Boolean valido = false; // creamos una bandera para validar datos
+        Boolean valido = false; // creamos una bandera para validar datos
 
-                // número con dos decimales para el precio
-                if (valido = txtPrecio.getText().matches("^\\d+(\\.\\d{1,2})?$")) {
-                    guardarServicio(
-                            txtNombres.getText(),
-                            txtDescripcion.getText(),
-                            Double.parseDouble(txtPrecio.getText()),
-                            ComboDuracion.getValue().toString(),
-                            imagenServicio,
-                            Servicios.Estado.ACTIVO
-                    );
+        // número con dos decimales para el precio
+        if (valido = txtPrecio.getText().matches("^\\d+(\\.\\d{1,2})?$")) {
+            guardarServicio(
+                txtNombres.getText(),
+                txtDescripcion.getText(),
+                Double.parseDouble(txtPrecio.getText()),
+                CbmDuracion.getSelectedItem().toString(),
+                imagenServicio,
+                Servicios.Estado.ACTIVO
+            );
 
-                    JOptionPane.showMessageDialog(this, "Servicio Guardado");
-                    resetCampos();
-                } else {
-                    JOptionPane.showMessageDialog(this, "Ingrese un precio válido (ejemplo: 10.99)");
-                }
-            
+            JOptionPane.showMessageDialog(this, "Servicio Guardado");
+            resetCampos();
         } else {
-            JOptionPane.showMessageDialog(this, "No deje espacios en blanco en el nombre del servicio");
+            JOptionPane.showMessageDialog(this, "Ingrese un precio válido (ejemplo: 10.99)");
         }
+    } else {
+        JOptionPane.showMessageDialog(this, "No deje espacios en blanco en el nombre del servicio");
+    }
     }//GEN-LAST:event_btnGuardarActionPerformed
     private void resetCampos() {
         txtNombres.setText("");
@@ -343,19 +343,19 @@ public class CrudPanelServicios extends javax.swing.JPanel {
 }
 
 // Método para guardar un nuevo servicio
-   public static void guardarServicio(String nombre_Servicio, String descripcion_Servicio, double precioTotal_Servicio, String duracion_Servicio, byte[] imagen, Servicios.Estado estado) {
-        ObjectContainer baseBD = Conexion_db.ConectarBD();
-        String codigo_Servicio = obtenerProximoCodigoServicio(baseBD);
+  public static void guardarServicio(String nombre_Servicio, String descripcion_Servicio, double precioTotal_Servicio, String duracion_Servicio, byte[] imagen, Servicios.Estado estado) {
+    ObjectContainer baseBD = Conexion_db.ConectarBD();
+    String codigo_Servicio = obtenerProximoCodigoServicio(baseBD);
 
-        if (verificarServicio(baseBD, codigo_Servicio) == 0) {
-            Servicios nuevoServicio = new Servicios(codigo_Servicio, nombre_Servicio, descripcion_Servicio, precioTotal_Servicio, duracion_Servicio,imagen, Servicios.Estado.ACTIVO);
-            baseBD.set(nuevoServicio);
-            JOptionPane.showMessageDialog(null, "Servicio guardado exitosamente.");
-        } else {
-            JOptionPane.showMessageDialog(null, "El código de servicio ya existe. Intente nuevamente.");
-        }
-        baseBD.close();
+    if (verificarServicio(baseBD, codigo_Servicio) == 0) {
+        Servicios nuevoServicio = new Servicios(codigo_Servicio, nombre_Servicio, descripcion_Servicio, precioTotal_Servicio, duracion_Servicio, imagen, Servicios.Estado.ACTIVO);
+        baseBD.set(nuevoServicio);
+        JOptionPane.showMessageDialog(null, "Servicio guardado exitosamente.");
+    } else {
+        JOptionPane.showMessageDialog(null, "El código de servicio ya existe. Intente nuevamente.");
     }
+    baseBD.close();
+}
 // Método para verificar si un servicio existe
     public static int verificarServicio(ObjectContainer baseBD, String codigo_Servicio) {
         // Crear objeto para buscar el servicio por su código
@@ -397,7 +397,7 @@ public class CrudPanelServicios extends javax.swing.JPanel {
 
  
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JSpinner ComboDuracion;
+    private javax.swing.JComboBox<String> CbmDuracion;
     private javax.swing.JDialog TablaMeacanicos;
     private rsbuttongradiente.RSButtonGradiente btnAgregar;
     private rojeru_san.RSButtonRiple btnCancelar;

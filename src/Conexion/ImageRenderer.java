@@ -31,4 +31,5 @@ public class ImageRenderer extends DefaultTableCellRenderer {
             setText((value == null) ? "" : value.toString());
         }
     }
+    
 }

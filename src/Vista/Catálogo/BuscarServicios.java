@@ -18,6 +18,7 @@ import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
@@ -38,6 +39,7 @@ public class BuscarServicios extends javax.swing.JPanel {
         initComponents();
         this.BuscarCodigo = receivedString;
         buscarServicio();
+        txtCodigo.setEnabled(false);
     }
 
     /**
@@ -65,7 +67,7 @@ public class BuscarServicios extends javax.swing.JPanel {
         txtPrecio = new rojeru_san.RSMTextFull();
         btnSeleccionarImgen = new rojeru_san.RSButtonRiple();
         lblImagen = new javax.swing.JLabel();
-        cmbduracion = new javax.swing.JSpinner();
+        CmbDuracion = new javax.swing.JComboBox<>();
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setFocusTraversalPolicyProvider(true);
@@ -167,7 +169,9 @@ public class BuscarServicios extends javax.swing.JPanel {
 
         lblImagen.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
         jPanel1.add(lblImagen, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 80, 180, 140));
-        jPanel1.add(cmbduracion, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 250, 70, 30));
+
+        CmbDuracion.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1 Hora ", "2 Horas ", "3 Horas", "4 Horas", "5 horas" }));
+        jPanel1.add(CmbDuracion, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 250, 140, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -199,29 +203,26 @@ public class BuscarServicios extends javax.swing.JPanel {
         VistaMenu.PanelPrincipal.repaint();
     }
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
-       if (!txtNombres.getText().trim().isEmpty()) {
+        if (!txtNombres.getText().trim().isEmpty()) {
         if (!txtDescripcion.getText().isEmpty()) {
             boolean valido = false; // Creamos una bandera para validar datos
 
             // Validar que los campos numéricos contengan valores válidos
-            if (txtPrecio.getText().matches("\\d+(\\.\\d{1,2})?")
-                   ) {
-
+            if (txtPrecio.getText().matches("\\d+(\\.\\d{1,2})?")) {
                 double precioTotalServicio = Double.parseDouble(txtPrecio.getText());
-                
-               
 
                 modificarServicio(
-                        txtCodigo.getText().toUpperCase(),
-                        txtNombres.getText(),
-                        txtDescripcion.getText(),
-                        precioTotalServicio,
-                         cmbduracion.getValue().toString(),
-                        imagenServicio, // Incluir la imagen
-                        Servicios.Estado.ACTIVO
+                    txtCodigo.getText().toUpperCase(),
+                    txtNombres.getText(),
+                    txtDescripcion.getText(),
+                    precioTotalServicio,
+                    CmbDuracion.getSelectedItem().toString(),
+                    imagenServicio, // Incluir la imagen
+                    Servicios.Estado.ACTIVO
                 );
 
                 JOptionPane.showMessageDialog(this, "Servicio Modificado");
+                resetCampos(); // Limpiar campos después de la modificación
             } else {
                 JOptionPane.showMessageDialog(this, "Ingrese valores numéricos válidos para precio total");
             }
@@ -230,25 +231,20 @@ public class BuscarServicios extends javax.swing.JPanel {
         }
     } else {
         JOptionPane.showMessageDialog(this, "Ingrese un nombre válido");
-    }
-
-    resetCampos(); // Limpiar campos después de la modificación                                            
-                                              
-    
+    }                                
+    JOptionPane.showMessageDialog(this, "Servicio modificado y guardado exitosamente");
        
     }//GEN-LAST:event_btnModificarActionPerformed
-private void btnModficarActionPerformed(java.awt.event.ActionEvent evt) {
-  
-}
- public static void modificarServicio(String codigo_Servicio, String nombre_Servicio, String descripcion_Servicio, double precioTotal_Servicio, String duracion_Servicio,  byte[] imagen, Servicios.Estado estado) {
+
+ public static void modificarServicio(String codigo_Servicio, String nombre_Servicio, String descripcion_Servicio, double precioTotal_Servicio, String duracion_Servicio, byte[] imagen, Servicios.Estado estado) {
     // ESTABLECER CONEXION CON LA BASE DE DATOS
     ObjectContainer BaseBD = Conexion_db.ConectarBD();
 
     // Crear el objeto con los datos nuevos
-    Servicios servicioModificado = new Servicios(codigo_Servicio, nombre_Servicio, descripcion_Servicio, precioTotal_Servicio, duracion_Servicio,  imagen, estado);
+    Servicios servicioModificado = new Servicios(codigo_Servicio, nombre_Servicio, descripcion_Servicio, precioTotal_Servicio, duracion_Servicio, imagen, estado);
 
     // Buscar el objeto existente en la base de datos
-    Servicios servicioBusca = new Servicios(codigo_Servicio, null, null, 0.0, null, null,  null);
+    Servicios servicioBusca = new Servicios(codigo_Servicio, null, null, 0.0, null, null, null);
     ObjectSet resultado = BaseBD.get(servicioBusca);
     int coincidencias = resultado.size();
 
@@ -256,12 +252,10 @@ private void btnModficarActionPerformed(java.awt.event.ActionEvent evt) {
         // Eliminar el objeto existente
         Servicios servicioAEliminar = (Servicios) resultado.next();
         BaseBD.delete(servicioAEliminar);
-
+        
         // Guardar el nuevo objeto con los datos modificados
-        BaseBD.set(servicioModificado);
-        System.out.println("Servicio modificado y guardado exitosamente.");
-    } else {
-        System.out.println("No se encontró ningún servicio con el código especificado.");
+        BaseBD.set(servicioModificado); 
+       
     }
 
     // Cerrar la base de datos
@@ -287,45 +281,54 @@ private void btnModficarActionPerformed(java.awt.event.ActionEvent evt) {
     BaseBD.close();
     return coincidencias;
 }
- public final void buscarServicio() {
+public final void buscarServicio() {
     Boolean encontrado = false;
-    // ESTABLECER CONEXION CON LA BASE DE DATOS
+    // ESTABLECER CONEXIÓN CON LA BASE DE DATOS
     ObjectContainer BaseBD = Conexion_db.ConectarBD();
-    Query servicioQuery = BaseBD.query(); // metodo para iniciar una consulta
-    servicioQuery.constrain(Servicios.class); // buscaremos en la clase Servicio
+    Query servicioQuery = BaseBD.query(); // método para iniciar una consulta
+    servicioQuery.constrain(Servicios.class); // buscaremos en la clase Servicios
     servicioQuery.descend("codigo_Servicio").constrain(BuscarCodigo.toUpperCase()); // verificamos las coincidencias en el atributo especificado
     ObjectSet<Servicios> resultado = servicioQuery.execute(); // Ejecutamos la consulta y almacenamos en "resultado"
-    
+
     // Iterar sobre los resultados para obtener los atributos
-    for (Servicios serv : resultado) {
+    if (resultado.hasNext()) {
+        Servicios ser = resultado.next(); // Obtener el primer resultado
         // Seteamos en los campos recibiendo del objeto
-        txtCodigo.setText(serv.getCodigo_Servicio());
-        txtNombres.setText(serv.getNombre_Servicio());
-        txtDescripcion.setText(serv.getDescripcion_Servicio());
-        txtPrecio.setText(String.valueOf(serv.getPrecioTotal_Servicio()));
-        
-        
-        // Mostrar la imagen si está disponible
-        if (serv.getImagen() != null) {
-            imagenServicio = serv.getImagen();
-            Image mImagen = new ImageIcon(imagenServicio).getImage();
-            ImageIcon mIcono = new ImageIcon(mImagen.getScaledInstance(lblImagen.getWidth(), lblImagen.getHeight(), Image.SCALE_SMOOTH));
-            lblImagen.setIcon(mIcono);
-        } else {
-            lblImagen.setIcon(new ImageIcon()); // Si no hay imagen, limpiar el label
+        txtCodigo.setText(ser.getCodigo_Servicio());
+        txtNombres.setText(ser.getNombre_Servicio());
+        txtDescripcion.setText(ser.getDescripcion_Servicio());
+        txtPrecio.setText(String.format("%.2f", ser.getPrecioTotal_Servicio()));
+        CmbDuracion.setSelectedItem(ser.getDuracion_Servicio()); // Seleccionar la duración en el JComboBox
+
+        // Mostrar la imagen
+        byte[] imagen = ser.getImagen();
+        if (imagen != null) {
+            try {
+                ImageIcon icono = new ImageIcon(imagen);
+                // Asegúrate de que lblImagen tiene un tamaño definido
+                if (lblImagen.getWidth() > 0 && lblImagen.getHeight() > 0) {
+                    Image scaledImage = icono.getImage().getScaledInstance(lblImagen.getWidth(), lblImagen.getHeight(), Image.SCALE_SMOOTH);
+                    lblImagen.setIcon(new ImageIcon(scaledImage));
+                } else {
+                    lblImagen.setIcon(icono); // Configura la imagen original si el tamaño no está definido
+                }
+                imagenServicio = imagen; // Guardar la imagen en el campo de la clase
+            } catch (Exception e) {
+                e.printStackTrace();
+                lblImagen.setIcon(null); // O puedes poner una imagen por defecto
+            }
         }
 
-        // Puede ser útil deshabilitar los campos si no quieres que el usuario los edite
-        txtCodigo.setEnabled(false);
+        txtNombres.setEnabled(true);
         encontrado = true;
         JOptionPane.showMessageDialog(this, "SERVICIO ENCONTRADO");
-    }
-    if (!encontrado) {
+    } else {
         JOptionPane.showMessageDialog(this, "No se encontró el Servicio");
     }
-    
+
     BaseBD.close();
 }
+ 
     private void txtCodigoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCodigoActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtCodigoActionPerformed
@@ -335,28 +338,39 @@ private void btnModficarActionPerformed(java.awt.event.ActionEvent evt) {
     }//GEN-LAST:event_txtPrecioActionPerformed
 
     private void btnSeleccionarImgenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSeleccionarImgenActionPerformed
-        JFileChooser jFileChooser = new JFileChooser();
+         JFileChooser jFileChooser = new JFileChooser();
         FileNameExtensionFilter filtrado = new FileNameExtensionFilter("JPG, PNG & GIF", "jpg", "png", "gif");
         jFileChooser.setFileFilter(filtrado);
 
         int respuesta = jFileChooser.showOpenDialog(this);
 
         if (respuesta == JFileChooser.APPROVE_OPTION) {
-            try {
-                BufferedImage bufferedImage = ImageIO.read(jFileChooser.getSelectedFile());
-                ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                ImageIO.write(bufferedImage, "jpg", baos); // Cambiar el formato según sea necesario
-                imagenServicio = baos.toByteArray();
+            File archivoImagen = jFileChooser.getSelectedFile();
+            String Ruta = archivoImagen.getPath();
 
-                Image mImagen = new ImageIcon(imagenServicio).getImage();
+            try {
+                // Leer la imagen y convertirla a un array de bytes
+                imagenServicio = leerImagen(archivoImagen);
+
+                // Mostrar la imagen en el label
+                Image mImagen = new ImageIcon(Ruta).getImage();
                 ImageIcon mIcono = new ImageIcon(mImagen.getScaledInstance(lblImagen.getWidth(), lblImagen.getHeight(), Image.SCALE_SMOOTH));
                 lblImagen.setIcon(mIcono);
             } catch (IOException e) {
-                e.printStackTrace();
+                JOptionPane.showMessageDialog(this, "Error al leer la imagen: " + e.getMessage());
             }
         }
     }//GEN-LAST:event_btnSeleccionarImgenActionPerformed
-
+ private byte[] leerImagen(File archivoImagen) throws IOException {
+        try (ByteArrayOutputStream baos = new ByteArrayOutputStream(); FileInputStream fis = new FileInputStream(archivoImagen)) {
+            byte[] buffer = new byte[1024];
+            int bytesRead;
+            while ((bytesRead = fis.read(buffer)) != -1) {
+                baos.write(buffer, 0, bytesRead);
+            }
+            return baos.toByteArray();
+        }
+    }
 private void resetCampos() {
     txtCodigo.setText("");
     txtNombres.setText("");
@@ -365,10 +379,10 @@ private void resetCampos() {
     lblImagen.setIcon(null);
 }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<String> CmbDuracion;
     private rojeru_san.RSButtonRiple btnCancelar;
     private rojeru_san.RSButtonRiple btnModificar;
     private rojeru_san.RSButtonRiple btnSeleccionarImgen;
-    private javax.swing.JSpinner cmbduracion;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;

@@ -186,8 +186,8 @@ public class CrudlistadosServicios extends javax.swing.JPanel {
 
         jLabel2.setFont(new java.awt.Font("Roboto Black", 0, 30)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(0, 53, 79));
-        jLabel2.setText("Ordenes De Servicios");
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 330, 40));
+        jLabel2.setText("Ordenes De Servicios ");
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 310, 40));
 
         jLabel4.setFont(new java.awt.Font("Roboto Medium", 1, 18)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(0, 53, 79));

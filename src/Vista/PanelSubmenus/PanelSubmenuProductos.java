@@ -26,8 +26,8 @@ public class PanelSubmenuProductos extends javax.swing.JPanel {
 
         jPanel1 = new javax.swing.JPanel();
         jSeparator1 = new javax.swing.JSeparator();
-        btnGestionProductos = new javax.swing.JLabel();
-        btnCategoria = new javax.swing.JLabel();
+        btngestion = new javax.swing.JToggleButton();
+        btnCategoria1 = new javax.swing.JToggleButton();
 
         setLayout(new java.awt.BorderLayout());
 
@@ -35,22 +35,21 @@ public class PanelSubmenuProductos extends javax.swing.JPanel {
 
         jSeparator1.setForeground(new java.awt.Color(0, 53, 79));
 
-        btnGestionProductos.setBackground(new java.awt.Color(145, 181, 246));
-        btnGestionProductos.setFont(new java.awt.Font("Roboto Light", 0, 15)); // NOI18N
-        btnGestionProductos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/agregar-producto.png"))); // NOI18N
-        btnGestionProductos.setText("Gestión de Productos");
-        btnGestionProductos.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        btnGestionProductos.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btngestion.setFont(new java.awt.Font("Roboto Medium", 1, 12)); // NOI18N
+        btngestion.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/agregar-producto.png"))); // NOI18N
+        btngestion.setText("GESTION PRODUCTOS");
+        btngestion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btngestionActionPerformed(evt);
+            }
+        });
 
-        btnCategoria.setBackground(new java.awt.Color(145, 181, 246));
-        btnCategoria.setFont(new java.awt.Font("Roboto Light", 0, 15)); // NOI18N
-        btnCategoria.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/agregar-producto.png"))); // NOI18N
-        btnCategoria.setText("Categoria Productos");
-        btnCategoria.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        btnCategoria.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnCategoria.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnCategoriaMouseClicked(evt);
+        btnCategoria1.setFont(new java.awt.Font("Roboto Medium", 1, 12)); // NOI18N
+        btnCategoria1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/categorias.png"))); // NOI18N
+        btnCategoria1.setText("CATEGORIA PRODUCTOS");
+        btnCategoria1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCategoria1ActionPerformed(evt);
             }
         });
 
@@ -58,13 +57,13 @@ public class PanelSubmenuProductos extends javax.swing.JPanel {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.TRAILING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(437, Short.MAX_VALUE)
-                .addComponent(btnCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(26, 26, 26)
-                .addComponent(btnGestionProductos, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(33, 33, 33))
+                .addContainerGap(405, Short.MAX_VALUE)
+                .addComponent(btngestion)
+                .addGap(18, 18, 18)
+                .addComponent(btnCategoria1)
+                .addGap(51, 51, 51))
+            .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.TRAILING)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -73,18 +72,22 @@ public class PanelSubmenuProductos extends javax.swing.JPanel {
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnGestionProductos, javax.swing.GroupLayout.DEFAULT_SIZE, 54, Short.MAX_VALUE)
-                    .addComponent(btnCategoria, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
+                    .addComponent(btnCategoria1)
+                    .addComponent(btngestion))
+                .addContainerGap(24, Short.MAX_VALUE))
         );
 
         add(jPanel1, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnCategoriaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCategoriaMouseClicked
-       TablaCategoria tblcat = new TablaCategoria();
+    private void btngestionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btngestionActionPerformed
+     
+    }//GEN-LAST:event_btngestionActionPerformed
+
+    private void btnCategoria1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCategoria1ActionPerformed
+        TablaCategoria tblcat = new TablaCategoria();
         MostrarpaneCruds(tblcat);
-    }//GEN-LAST:event_btnCategoriaMouseClicked
+    }//GEN-LAST:event_btnCategoria1ActionPerformed
 private void MostrarpaneCruds(JPanel p) {
         p.setSize(870, 630);
         p.setLocation(0, 0);
@@ -95,8 +98,8 @@ private void MostrarpaneCruds(JPanel p) {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel btnCategoria;
-    private javax.swing.JLabel btnGestionProductos;
+    private javax.swing.JToggleButton btnCategoria1;
+    private javax.swing.JToggleButton btngestion;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JSeparator jSeparator1;
     // End of variables declaration//GEN-END:variables

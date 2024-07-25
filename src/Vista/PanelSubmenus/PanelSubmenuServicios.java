@@ -24,6 +24,7 @@ public class PanelSubmenuServicios extends javax.swing.JPanel {
         btnAgendarc = new javax.swing.JToggleButton();
         btngestionser = new javax.swing.JToggleButton();
         jSeparator1 = new javax.swing.JSeparator();
+        btngestionser1 = new javax.swing.JToggleButton();
 
         setLayout(new java.awt.BorderLayout());
 
@@ -36,8 +37,8 @@ public class PanelSubmenuServicios extends javax.swing.JPanel {
         btnAgendarc.setText("AGENDAR CITAS ");
 
         btngestionser.setFont(new java.awt.Font("Roboto Medium", 1, 11)); // NOI18N
-        btngestionser.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/gestionarServicios35.png"))); // NOI18N
-        btngestionser.setText("GESTION DE SERVICIOS");
+        btngestionser.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/portapapeles.png"))); // NOI18N
+        btngestionser.setText("ORDENES DE TRABAJO");
         btngestionser.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btngestionserActionPerformed(evt);
@@ -46,27 +47,39 @@ public class PanelSubmenuServicios extends javax.swing.JPanel {
 
         jSeparator1.setForeground(new java.awt.Color(0, 53, 79));
 
+        btngestionser1.setFont(new java.awt.Font("Roboto Medium", 1, 11)); // NOI18N
+        btngestionser1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/gestionarServicios35.png"))); // NOI18N
+        btngestionser1.setText("GESTION DE SERVICIOS");
+        btngestionser1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btngestionser1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap(451, Short.MAX_VALUE)
-                .addComponent(btnAgendarc)
-                .addGap(33, 33, 33)
+                .addContainerGap(252, Short.MAX_VALUE)
                 .addComponent(btngestionser)
-                .addGap(30, 30, 30))
+                .addGap(18, 18, 18)
+                .addComponent(btnAgendarc)
+                .addGap(31, 31, 31)
+                .addComponent(btngestionser1)
+                .addGap(24, 24, 24))
             .addComponent(jSeparator1)
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(13, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 13, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAgendarc, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btngestionser, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btngestionser)
+                    .addComponent(btngestionser1, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
@@ -79,10 +92,15 @@ public class PanelSubmenuServicios extends javax.swing.JPanel {
        
     }//GEN-LAST:event_btngestionserActionPerformed
 
+    private void btngestionser1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btngestionser1ActionPerformed
+       
+    }//GEN-LAST:event_btngestionser1ActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JToggleButton btnAgendarc;
     private javax.swing.JToggleButton btngestionser;
+    private javax.swing.JToggleButton btngestionser1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JSeparator jSeparator1;

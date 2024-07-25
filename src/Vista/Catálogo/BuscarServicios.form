@@ -265,10 +265,24 @@
             </Constraint>
           </Constraints>
         </Component>
-        <Component class="javax.swing.JSpinner" name="cmbduracion">
+        <Component class="javax.swing.JComboBox" name="CmbDuracion">
+          <Properties>
+            <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+              <StringArray count="5">
+                <StringItem index="0" value="1 Hora "/>
+                <StringItem index="1" value="2 Horas "/>
+                <StringItem index="2" value="3 Horas"/>
+                <StringItem index="3" value="4 Horas"/>
+                <StringItem index="4" value="5 horas"/>
+              </StringArray>
+            </Property>
+          </Properties>
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+          </AuxValues>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="240" y="250" width="70" height="30"/>
+              <AbsoluteConstraints x="230" y="250" width="140" height="-1"/>
             </Constraint>
           </Constraints>
         </Component>

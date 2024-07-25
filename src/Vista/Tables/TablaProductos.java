@@ -11,6 +11,7 @@ import java.awt.BorderLayout;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import Vista.Catálogo.BuscarProductos;
+import com.db4o.query.Query;
 import java.awt.Image;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
@@ -23,7 +24,8 @@ public class TablaProductos extends javax.swing.JPanel {
      */
     public TablaProductos() {
         initComponents();
- mostrarTablaProductos();
+      mostrarDatosActivos();
+      mostrarDatosInactivo();
 
     }
 
@@ -45,6 +47,9 @@ public class TablaProductos extends javax.swing.JPanel {
         btnAgregar = new rsbuttongradiente.RSButtonGradiente();
         btnBuscar = new rsbuttongradiente.RSButtonGradiente();
         btnEliminar = new rsbuttongradiente.RSButtonGradiente();
+        scrlpTablaVehi2 = new javax.swing.JScrollPane();
+        tblProInactivo = new javax.swing.JTable();
+        lbl_Inactivos = new javax.swing.JLabel();
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -123,30 +128,57 @@ public class TablaProductos extends javax.swing.JPanel {
             }
         });
 
+        scrlpTablaVehi2.setBackground(new java.awt.Color(255, 255, 255));
+        scrlpTablaVehi2.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        scrlpTablaVehi2.setForeground(new java.awt.Color(255, 255, 255));
+
+        tblProInactivo.setFont(new java.awt.Font("Roboto Medium", 0, 14)); // NOI18N
+        tblProInactivo.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        scrlpTablaVehi2.setViewportView(tblProInactivo);
+
+        lbl_Inactivos.setFont(new java.awt.Font("Roboto Black", 0, 18)); // NOI18N
+        lbl_Inactivos.setText("Productos Eliminados:");
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(24, 24, 24)
+                .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(tblProductos)
-                        .addContainerGap())
-                    .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addGap(39, 39, 39)
                         .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 96, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 137, Short.MAX_VALUE)
                         .addComponent(btnAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(37, 37, 37)
                         .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(37, 37, 37))))
+                        .addGap(37, 37, 37))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(lbl_Inactivos)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                        .addComponent(tblProductos)
+                        .addContainerGap())))
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(scrlpTablaVehi2))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -166,29 +198,27 @@ public class TablaProductos extends javax.swing.JPanel {
                         .addGap(26, 26, 26)
                         .addComponent(jLabel2)))
                 .addGap(44, 44, 44)
-                .addComponent(tblProductos, javax.swing.GroupLayout.PREFERRED_SIZE, 446, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(13, Short.MAX_VALUE))
+                .addComponent(tblProductos, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 34, Short.MAX_VALUE)
+                .addComponent(lbl_Inactivos)
+                .addGap(29, 29, 29)
+                .addComponent(scrlpTablaVehi2, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(27, 27, 27))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 863, Short.MAX_VALUE)
+            .addGap(0, 890, Short.MAX_VALUE)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 0, Short.MAX_VALUE)))
+                .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 622, Short.MAX_VALUE)
+            .addGap(0, 644, Short.MAX_VALUE)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 0, Short.MAX_VALUE)))
+                .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -207,14 +237,6 @@ public class TablaProductos extends javax.swing.JPanel {
     
     }//GEN-LAST:event_btnEliminarMouseClicked
 
-
-    private void TablProductosMouseClicked(java.awt.event.MouseEvent evt) {
-        int selectedRow = TablProductos1.getSelectedRow();
-        if (selectedRow >= 0) {
-            String codigo_producto = (String) TablProductos1.getValueAt(selectedRow, 0);
-
-        }
-    }
 
 
     
@@ -241,17 +263,86 @@ public class TablaProductos extends javax.swing.JPanel {
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-
-
-
-
-    
+  if (!txtBuscar.getText().trim().isEmpty()) {
+            String codigoProducto = txtBuscar.getText();
+            inactivarProducto(codigoProducto);
+            JOptionPane.showMessageDialog(this, "Producto inactivado");
+            mostrarDatosActivos();
+            mostrarDatosInactivo();
+        } else {
+            JOptionPane.showMessageDialog(this, "Producto no encontrado");
+        }  
     }//GEN-LAST:event_btnEliminarActionPerformed
-  
+  public void inactivarProducto(String codigoProducto) {
+    ObjectContainer BaseBD = Conexion_db.ConectarBD();
+    ObjectSet<Producto> result = BaseBD.queryByExample(new Producto(codigoProducto, null, null, null, 0, 0, 0, null, null, null, null));
+    if (result.hasNext()) {
+        Producto productoAInactivar = result.next();
+        int opcion = JOptionPane.showConfirmDialog(null, "¿Está seguro de inactivar este producto?", "Confirmación de inactivación", JOptionPane.YES_NO_OPTION);
+        if (opcion == JOptionPane.YES_OPTION) {
+            productoAInactivar.desactivarProducto();
+            BaseBD.store(productoAInactivar);
+            BaseBD.commit(); // Asegúrate de que el cambio se guarda en la base de datos
+            System.out.println("Producto inactivado correctamente: " + productoAInactivar.getCodigo_Producto() + " Estado: " + productoAInactivar.getEstado());
+            mostrarDatosActivos();
+            mostrarDatosInactivo();
+        } else {
+            System.out.println("Inactivación cancelada por el usuario");
+        }
+    } else {
+        System.out.println("No se encontró producto con ese código");
+    }
+    BaseBD.close();
+}
 
-    
+  private void mostrarDatosInactivo() {
+    ObjectContainer BaseBD = Conexion_db.ConectarBD();
+    tblProInactivo.setEnabled(true);
 
-    private void mostrarTablaProductos() {
+    Query query = BaseBD.query();
+    query.constrain(Producto.class);
+    query.descend("estado").constrain(Producto.Estado.INACTIVO);
+    ObjectSet<Producto> resultado = query.execute();
+
+    Object matriz[][] = new Object[resultado.size()][11];
+    int i = 0;
+    for (Producto producto : resultado) {
+        matriz[i][0] = producto.getCodigo_Producto();
+        matriz[i][1] = producto.getNombre_Producto();
+        matriz[i][2] = String.valueOf(producto.getPrecio_Producto());
+        matriz[i][3] = producto.getCodigo_categoria_Producto();
+        matriz[i][4] = String.valueOf(producto.getNumeroProductos_Producto());
+        matriz[i][5] = String.valueOf(producto.getExistenciaMaxima_Producto());
+        matriz[i][6] = String.valueOf(producto.getExistenciaMinima_Producto());
+        matriz[i][7] = producto.getDescripcion_Producto();
+        matriz[i][8] = producto.getID_Proveedor_Producto();
+
+        byte[] imagen = producto.getImagen();
+        if (imagen != null) {
+            ImageIcon icono = new ImageIcon(new ImageIcon(imagen).getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH));
+            matriz[i][9] = new JLabel(icono);
+        } else {
+            matriz[i][9] = new JLabel("No image");
+        }
+
+        matriz[i][10] = producto.getEstado().toString(); // Asegúrate de convertir el enum a string para mostrar
+        i++;
+    }
+
+
+    tblProInactivo.setModel(new javax.swing.table.DefaultTableModel(
+        matriz, new String[]{"Código Producto", "Nombre Producto", "Precio", "Código Categoría", "Número de Productos", "Existencia Máxima", "Existencia Mínima", "Descripción", "Proveedor", "Imagen", "Estado"}
+    ));
+    tblProInactivo.getColumnModel().getColumn(9).setCellRenderer(new ImageRenderer());
+    tblProInactivo.setRowHeight(100);
+    tblProInactivo.setEnabled(false);
+   
+
+    BaseBD.close();
+
+}
+  private void mostrarDatosActivos() {
+        
      ObjectContainer BaseBD = Conexion_db.ConectarBD();
     Producto producto = new Producto(null, null, null, null, 0, 0, 0, null, null, null, null);
     ObjectSet<Producto> resul = BaseBD.get(producto);
@@ -295,8 +386,17 @@ public class TablaProductos extends javax.swing.JPanel {
      TablProductos1.setRowHeight(100);
 
     BaseBD.close();
+    
     }
 
+    public static ObjectSet verificarProductosActivos() {
+        ObjectContainer BaseBD = Conexion_db.ConectarBD();
+        Producto productoBusca = new Producto(null, null, null, null, 0, 0, 0, null, null, null, Producto.Estado.ACTIVO);
+        ObjectSet resultado = BaseBD.get(productoBusca);
+        BaseBD.close();
+        return resultado;
+    }
+ 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable TablProductos1;
     private rsbuttongradiente.RSButtonGradiente btnAgregar;
@@ -305,6 +405,9 @@ public class TablaProductos extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JLabel lbl_Inactivos;
+    private javax.swing.JScrollPane scrlpTablaVehi2;
+    private javax.swing.JTable tblProInactivo;
     private javax.swing.JScrollPane tblProductos;
     private rojeru_san.RSMTextFull txtBuscar;
     // End of variables declaration//GEN-END:variables

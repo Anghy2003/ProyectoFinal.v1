@@ -16,6 +16,7 @@ import java.awt.BorderLayout;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import Vista.Catálogo.BuscarServicios;
+import com.db4o.query.Query;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayInputStream;
@@ -35,7 +36,8 @@ public class TablaServicios extends javax.swing.JPanel {
      */
     public TablaServicios() {
         initComponents();
-        mostrarTablaServicios();
+        mostrarDatosActivos();
+        mostrarDatosInactivos();
     }
 
     /**
@@ -57,6 +59,8 @@ public class TablaServicios extends javax.swing.JPanel {
         btnBuscar = new rsbuttongradiente.RSButtonGradiente();
         btnEliminar = new rsbuttongradiente.RSButtonGradiente();
         lbl_Inactivos = new javax.swing.JLabel();
+        scrlpTablaVehi2 = new javax.swing.JScrollPane();
+        tblserInactivo = new javax.swing.JTable();
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -138,6 +142,24 @@ public class TablaServicios extends javax.swing.JPanel {
         lbl_Inactivos.setFont(new java.awt.Font("Roboto Black", 0, 18)); // NOI18N
         lbl_Inactivos.setText("Servicios Eliminados:");
 
+        scrlpTablaVehi2.setBackground(new java.awt.Color(255, 255, 255));
+        scrlpTablaVehi2.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        scrlpTablaVehi2.setForeground(new java.awt.Color(255, 255, 255));
+
+        tblserInactivo.setFont(new java.awt.Font("Roboto Medium", 0, 14)); // NOI18N
+        tblserInactivo.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        scrlpTablaVehi2.setViewportView(tblserInactivo);
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -148,9 +170,6 @@ public class TablaServicios extends javax.swing.JPanel {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(lbl_Inactivos, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jScrollPane1)
-                        .addContainerGap())
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addGap(39, 39, 39)
@@ -165,6 +184,12 @@ public class TablaServicios extends javax.swing.JPanel {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel1)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(scrlpTablaVehi2)
+                    .addComponent(jScrollPane1))
+                .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -187,7 +212,9 @@ public class TablaServicios extends javax.swing.JPanel {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(lbl_Inactivos, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(222, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(scrlpTablaVehi2, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(34, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -217,47 +244,51 @@ public class TablaServicios extends javax.swing.JPanel {
          MostarpanelCruds(servcios);
     }//GEN-LAST:event_btnAgregarMouseClicked
 
-private void mostrarTablaServicios() {
+ private void mostrarDatosActivos() {
         ObjectContainer BaseBD = Conexion_db.ConectarBD();
-    Servicios servicio = new Servicios(null, null, null, 0.0, null, null, null);
-    ObjectSet<Servicios> resul = BaseBD.get(servicio);
+        Servicios servicio = new Servicios(null, null, null, 0.0, null, null, Servicios.Estado.ACTIVO);
+        ObjectSet<Servicios> resul = BaseBD.get(servicio);
 
-    Object matriz[][] = new Object[resul.size()][7]; // Cambiar a Object y definir el tamaño de las columnas
+        Object matriz[][] = new Object[resul.size()][7]; 
 
-    for (int i = 0; i < resul.size(); i++) {
-        Servicios ser = resul.next();
+        for (int i = 0; i < resul.size(); i++) {
+            Servicios ser = resul.next();
 
-        matriz[i][0] = ser.getCodigo_Servicio();
-        matriz[i][1] = ser.getNombre_Servicio();
-        matriz[i][2] = ser.getDescripcion_Servicio();
-        matriz[i][3] = String.valueOf(ser.getPrecioTotal_Servicio());
-        matriz[i][4] = ser.getDuracion_Servicio();
-        
+            matriz[i][0] = ser.getCodigo_Servicio();
+            matriz[i][1] = ser.getNombre_Servicio();
+            matriz[i][2] = ser.getDescripcion_Servicio();
+            matriz[i][3] = String.valueOf(ser.getPrecioTotal_Servicio());
+            matriz[i][4] = ser.getDuracion_Servicio();
 
-        // Convertir imagen a un icono para mostrar en la tabla
-        byte[] imagen = ser.getImagen();
-        if (imagen != null) {
-            ImageIcon icono = new ImageIcon(new ImageIcon(imagen).getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH));
-            matriz[i][5] = new JLabel(icono); // Agregar imagen a la matriz
-        } else {
-            matriz[i][5] = new JLabel("No image"); // Placeholder para servicios sin imagen
+            byte[] imagen = ser.getImagen();
+            if (imagen != null && imagen.length > 0) {
+                ImageIcon originalIcono = new ImageIcon(imagen);
+                Image originalImage = originalIcono.getImage();
+                if (originalImage.getWidth(null) > 0 && originalImage.getHeight(null) > 0) {
+                    ImageIcon icono = new ImageIcon(originalImage.getScaledInstance(50, 50, Image.SCALE_SMOOTH));
+                    matriz[i][5] = new JLabel(icono);
+                } else {
+                    matriz[i][5] = new JLabel("Invalid image");
+                }
+            } else {
+                matriz[i][5] = new JLabel("No image");
+            }
+
+            matriz[i][6] = ser.getEstado().toString();
         }
 
-        matriz[i][8] = String.valueOf(ser.getEstado()); // Agregar estado a la matriz
+        tblServicios.setModel(new javax.swing.table.DefaultTableModel(
+            matriz, 
+            new String[]{"Código Servicio", "Nombre Servicio", "Descripción", "Precio Total", "Duración", "Imagen", "Estado"}
+        ));
+
+        tblServicios.getColumnModel().getColumn(5).setCellRenderer(new ImageRenderer());
+        tblServicios.setRowHeight(100);
+
+        BaseBD.close();
     }
 
-    tblServicios.setModel(new javax.swing.table.DefaultTableModel(
-            matriz,
-            new String[]{
-                "Código Servicio", "Nombre Servicio", "Descripción", "Precio Total", "Duración",  "Imagen", "Estado"
-            }
-    ));
 
-    // Usar el ImageRenderer para la columna de imágenes
-    tblServicios.getColumnModel().getColumn(7).setCellRenderer(new ImageRenderer());
-    tblServicios.setRowHeight(100);
-
-    BaseBD.close();}
     private void btnBuscarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBuscarMouseClicked
       
           
@@ -272,18 +303,94 @@ private void mostrarTablaServicios() {
     }//GEN-LAST:event_btnAgregarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-        // TODO add your handling code here:
+      if (!txtBuscar.getText().trim().isEmpty()) {
+            String codigoServicio = txtBuscar.getText();
+            inactivarServicio(codigoServicio);
+            JOptionPane.showMessageDialog(this, "Servicio inactivado");
+            mostrarDatosActivos();
+            mostrarDatosInactivos();
+        } else {
+            JOptionPane.showMessageDialog(this, "Servicio no encontrado");
+        }
     }//GEN-LAST:event_btnEliminarActionPerformed
+ private void inactivarServicio(String codigoServicio) {
+        ObjectContainer BaseBD = Conexion_db.ConectarBD();
+        ObjectSet<Servicios> result = BaseBD.queryByExample(new Servicios(codigoServicio, null, null, 0.0, null, null, null));
+        if (result.hasNext()) {
+            Servicios servicioAInactivar = result.next();
+            int opcion = JOptionPane.showConfirmDialog(null, "¿Está seguro de inactivar este servicio?", "Confirmación de inactivación", JOptionPane.YES_NO_OPTION);
+            if (opcion == JOptionPane.YES_OPTION) {
+                servicioAInactivar.desactivarServicio();
+                BaseBD.store(servicioAInactivar);
+                BaseBD.commit(); // Asegúrate de que el cambio se guarda en la base de datos
+                System.out.println("Servicio inactivado correctamente: " + servicioAInactivar.getCodigo_Servicio() + " Estado: " + servicioAInactivar.getEstado());
+            } else {
+                System.out.println("Inactivación cancelada por el usuario");
+            }
+        } else {
+            System.out.println("No se encontró servicio con ese código");
+        }
+        BaseBD.close();
+    }
+private void mostrarDatosInactivos() {
+        ObjectContainer BaseBD = Conexion_db.ConectarBD();
+        tblserInactivo.setEnabled(true);
 
+        Query query = BaseBD.query();
+        query.constrain(Servicios.class);
+        query.descend("estado").constrain(Servicios.Estado.INACTIVO);
+        ObjectSet<Servicios> resultado = query.execute();
+
+        System.out.println("Número de servicios inactivos: " + resultado.size());
+
+        Object matriz[][] = new Object[resultado.size()][7];
+        int i = 0;
+        for (Servicios servicio : resultado) {
+            matriz[i][0] = servicio.getCodigo_Servicio();
+            matriz[i][1] = servicio.getNombre_Servicio();
+            matriz[i][2] = servicio.getDescripcion_Servicio();
+            matriz[i][3] = String.valueOf(servicio.getPrecioTotal_Servicio());
+            matriz[i][4] = servicio.getDuracion_Servicio();
+
+            byte[] imagen = servicio.getImagen();
+            if (imagen != null && imagen.length > 0) {
+                ImageIcon originalIcono = new ImageIcon(imagen);
+                Image originalImage = originalIcono.getImage();
+                if (originalImage.getWidth(null) > 0 && originalImage.getHeight(null) > 0) {
+                    ImageIcon icono = new ImageIcon(originalImage.getScaledInstance(50, 50, Image.SCALE_SMOOTH));
+                    matriz[i][5] = new JLabel(icono);
+                } else {
+                    matriz[i][5] = new JLabel("Invalid image");
+                }
+            } else {
+                matriz[i][5] = new JLabel("No image");
+            }
+
+            matriz[i][6] = servicio.getEstado().toString();
+            i++;
+        }
+
+        System.out.println("Datos de servicios inactivos configurados en la matriz.");
+
+        tblserInactivo.setModel(new javax.swing.table.DefaultTableModel(
+            matriz, 
+            new String[]{"Código Servicio", "Nombre Servicio", "Descripción", "Precio Total", "Duración", "Imagen", "Estado"}
+        ));
+        tblserInactivo.getColumnModel().getColumn(5).setCellRenderer(new ImageRenderer());
+        tblserInactivo.setRowHeight(100);
+        tblserInactivo.setEnabled(false);
+
+        BaseBD.close();
+    }
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         if (!txtBuscar.getText().trim().isEmpty()) {
-            String codigoServicio = txtBuscar.getText(); // Obtener el texto de txtBuscar
-            BuscarServicios miBuscarser = new BuscarServicios(codigoServicio); // Crear el componente con el código de servicio
-            MostarpanelCruds(miBuscarser); // Mostrar el panel de búsqueda de servicio
-        } else {
-            JOptionPane.showMessageDialog(this, "Ingrese un código de servicio");
-        }
+        String codigoServicio = txtBuscar.getText(); // Obtener el texto de txtBuscar
+        BuscarServicios miBuscarServicio = new BuscarServicios(codigoServicio); // Crear el componente con el código de servicio
+        MostarpanelCruds(miBuscarServicio); // Mostrar el panel de búsqueda de servicio
+    } else {
+        JOptionPane.showMessageDialog(this, "Ingrese un código de servicio");
+    }
     }//GEN-LAST:event_btnBuscarActionPerformed
  private void MostarpanelCruds(JPanel p) {
         p.setSize(870, 630);
@@ -303,7 +410,9 @@ private void mostrarTablaServicios() {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lbl_Inactivos;
+    private javax.swing.JScrollPane scrlpTablaVehi2;
     private javax.swing.JTable tblServicios;
+    private javax.swing.JTable tblserInactivo;
     private rojeru_san.RSMTextFull txtBuscar;
     // End of variables declaration//GEN-END:variables
 }

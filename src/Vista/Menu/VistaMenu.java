@@ -11,6 +11,7 @@ import Vista.Factura.Factura;
 import Vista.Home.Home;
 import Vista.PanelSubmenus.*;
 import Vista.PanelTitulos.*;
+import Vista.Tables.TablaFactura;
 import Vista.Tables.TablaProductos;
 import Vista.Tables.TablaProveedor;
 import Vista.Tables.TablaServicios;
@@ -192,7 +193,7 @@ public class VistaMenu extends javax.swing.JFrame {
                     .addComponent(btnProductos, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnProvedores, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnReportes, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(32, Short.MAX_VALUE))
+                .addContainerGap(26, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -228,14 +229,14 @@ public class VistaMenu extends javax.swing.JFrame {
         PanelHeader.setLayout(PanelHeaderLayout);
         PanelHeaderLayout.setHorizontalGroup(
             PanelHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 870, Short.MAX_VALUE)
+            .addGap(0, 890, Short.MAX_VALUE)
         );
         PanelHeaderLayout.setVerticalGroup(
             PanelHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 80, Short.MAX_VALUE)
         );
 
-        panelPrincipal.add(PanelHeader, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 0, 870, 80));
+        panelPrincipal.add(PanelHeader, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 0, 890, 80));
 
         PanelPrincipal.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -252,25 +253,25 @@ public class VistaMenu extends javax.swing.JFrame {
         PanelPrincipalLayout.setHorizontalGroup(
             PanelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelPrincipalLayout.createSequentialGroup()
-                .addContainerGap(156, Short.MAX_VALUE)
+                .addContainerGap(172, Short.MAX_VALUE)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 561, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(153, 153, 153))
+                .addGap(157, 157, 157))
             .addGroup(PanelPrincipalLayout.createSequentialGroup()
-                .addGap(362, 362, 362)
-                .addComponent(jLabel2)
+                .addGap(373, 373, 373)
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         PanelPrincipalLayout.setVerticalGroup(
             PanelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(PanelPrincipalLayout.createSequentialGroup()
                 .addGap(150, 150, 150)
-                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(297, Short.MAX_VALUE))
+                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(272, Short.MAX_VALUE))
         );
 
-        panelPrincipal.add(PanelPrincipal, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 160, 870, 630));
+        panelPrincipal.add(PanelPrincipal, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 160, 890, 640));
 
         PanelSubmenu.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -278,14 +279,14 @@ public class VistaMenu extends javax.swing.JFrame {
         PanelSubmenu.setLayout(PanelSubmenuLayout);
         PanelSubmenuLayout.setHorizontalGroup(
             PanelSubmenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 870, Short.MAX_VALUE)
+            .addGap(0, 890, Short.MAX_VALUE)
         );
         PanelSubmenuLayout.setVerticalGroup(
             PanelSubmenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 80, Short.MAX_VALUE)
         );
 
-        panelPrincipal.add(PanelSubmenu, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 80, 870, 80));
+        panelPrincipal.add(PanelSubmenu, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 80, 890, 80));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -331,11 +332,11 @@ public class VistaMenu extends javax.swing.JFrame {
         MostrarpanelTitulo(titSer);
         MostrarpanelSubmenu(Submenuserv);
         MostarpanelCruds(tablaPro);
-        
     }//GEN-LAST:event_btnServiciosMouseClicked
 
     private void btnFacturaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnFacturaMouseClicked
-       PanelTituloFacturacion titufac = new PanelTituloFacturacion();
+       
+        PanelTituloFacturacion titufac = new PanelTituloFacturacion();
         PanelSubmenuFacturacion SubmenuFac = new PanelSubmenuFacturacion();
         Factura fac =new Factura();
         MostrarpanelTitulo(titufac);

@@ -40,6 +40,7 @@ public class BuscarProductos extends javax.swing.JPanel {
         initComponents();
         buscarProducto();
         txtCodigoProducto.setEnabled(false);
+        mostrarCombo();
       
         
     }
@@ -316,7 +317,6 @@ public class BuscarProductos extends javax.swing.JPanel {
         txtExistenciaMinima.setPlaceholder("Existencia Minima");
         jPanel1.add(txtExistenciaMinima, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 410, 190, 40));
 
-        cmbCategoria.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         jPanel1.add(cmbCategoria, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 200, 200, 30));
 
         BtnBuscar.setBackground(new java.awt.Color(0, 204, 51));
@@ -643,6 +643,18 @@ private void activarJdialog(JDialog TablaProvedores) {
         }
 
         // Cerrar la conexión con la base de datos
+        BaseBD.close();
+    }
+     private void mostrarCombo() {
+//abrir base
+        ObjectContainer BaseBD = Conexion_db.ConectarBD();
+// Consulta a la base de datos para obtener todos los objetos Ciudad
+        ObjectSet<Categoria> categorias = BaseBD.query(Categoria.class);
+
+// Itera sobre los resultados y agrega los nombres de ciudades al JComboBox
+        categorias.forEach((categoria) -> {
+            cmbCategoria.addItem(categoria.getNombreCat());
+        });
         BaseBD.close();
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
