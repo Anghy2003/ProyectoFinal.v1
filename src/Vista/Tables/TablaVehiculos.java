@@ -1,4 +1,3 @@
-
 package Vista.Tables;
 
 import Conexion.Conexion_db;
@@ -25,7 +24,6 @@ public class TablaVehiculos extends javax.swing.JPanel {
         mostrarDatosActivos();
         mostrarDatosInactivo();
     }
-    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -220,11 +218,13 @@ public class TablaVehiculos extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAgregarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAgregarMouseClicked
-        if (verificarClientes()!=0) {
-        CrudPanelVehiculo agregarVehi = new CrudPanelVehiculo();
-        ShowpanelCruds(agregarVehi);    
-        }else{JOptionPane.showMessageDialog(this, "No se puede crear vehiculo sin Clientes");}
- 
+        if (verificarClientes() != 0) {
+            CrudPanelVehiculo agregarVehi = new CrudPanelVehiculo();
+            ShowpanelCruds(agregarVehi);
+        } else {
+            JOptionPane.showMessageDialog(this, "No se puede crear vehiculo sin Clientes");
+        }
+
     }//GEN-LAST:event_btnAgregarMouseClicked
     public static int verificarClientes() {
         // ESTABLECER CONEXION CON LA BASE DE DATOS
@@ -237,7 +237,7 @@ public class TablaVehiculos extends javax.swing.JPanel {
         BaseBD.close();
         return numClientes;
     }
-    
+
     public void eliminarVehiculo(String placa) {
         ObjectContainer BaseBD = Conexion_db.ConectarBD();
         ObjectSet<Vehiculo> result = BaseBD.queryByExample(new Vehiculo(placa, null, null, null, 0, null, null)); // Crear objeto para consultar
@@ -258,7 +258,7 @@ public class TablaVehiculos extends javax.swing.JPanel {
         }
         BaseBD.close();
     }
-    
+
     private void btnEliminarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEliminarMouseClicked
         if (!txtBuscar.getText().trim().isEmpty()) {
             String eliminarVehi = txtBuscar.getText().toUpperCase();
@@ -277,7 +277,7 @@ public class TablaVehiculos extends javax.swing.JPanel {
             String BuscarPlaca = txtBuscar.getText(); // Obtener el texto de txtBuscar
             BuscarPanelVehiculo1 miBuscarPanelVehiculo1 = new BuscarPanelVehiculo1(BuscarPlaca);//creo el componente llevando el valor del String
             ShowpanelCruds(miBuscarPanelVehiculo1);
-        }else{
+        } else {
             JOptionPane.showMessageDialog(this, "No deje el campo vacio");
         }
     }//GEN-LAST:event_btnEditarMouseClicked
@@ -297,48 +297,38 @@ public class TablaVehiculos extends javax.swing.JPanel {
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnAgregarActionPerformed
-    private void ShowpanelCruds(JPanel p) {
-        p.setSize(870, 630);
-        p.setLocation(0, 0);
-        VistaMenu.PanelPrincipal.removeAll();
-        VistaMenu.PanelPrincipal.add(p, BorderLayout.CENTER);
-        VistaMenu.PanelPrincipal.revalidate();
-        VistaMenu.PanelPrincipal.repaint();
-    }
-    
-    private void mostrarDatosInactivo() {
-    // ESTABLECER CONEXION CON LA BASE DE DATOS
-    ObjectContainer BaseBD = Conexion_db.ConectarBD();
-    tblVehiculoInactivo.setEnabled(true);
 
-    // Consulta para filtrar solo vehículos inactivos
+    private void mostrarDatosInactivo() {
+        // ESTABLECER CONEXION CON LA BASE DE DATOS
+        ObjectContainer BaseBD = Conexion_db.ConectarBD();
+        tblVehiculoInactivo.setEnabled(true);
+
+        // Consulta para filtrar solo vehículos inactivos
         Query query = BaseBD.query();
         query.constrain(Vehiculo.class);
         query.descend("estado").constrain(INACTIVO);
         ObjectSet<Vehiculo> resultado = query.execute();
 
-    String matriz[][] = new String[resultado.size()][7];
-    int i = 0;
-    for (Vehiculo miVehi : resultado) {//iteramos en cada elemento de "resultado"
-        matriz[i][0] = miVehi.getPlaca_Vehiculo();
-        matriz[i][1] = miVehi.getModelo_Vehiculo();
-        matriz[i][2] = miVehi.getMarca_Vehiculo();
-        matriz[i][3] = miVehi.getColor_Vehiculo();
-        String Año= String.valueOf(miVehi.getAnioFabricacion_Vehiculo());//Convierto el año a String para la tabla
-        matriz[i][4] = Año;
-        matriz[i][5]=miVehi.getId_Cliente();
-        String estao = String.valueOf(miVehi.getEstado());
-        matriz[i][6] = estao;
-        i++;
+        String matriz[][] = new String[resultado.size()][7];
+        int i = 0;
+        for (Vehiculo miVehi : resultado) {//iteramos en cada elemento de "resultado"
+            matriz[i][0] = miVehi.getPlaca_Vehiculo();
+            matriz[i][1] = miVehi.getModelo_Vehiculo();
+            matriz[i][2] = miVehi.getMarca_Vehiculo();
+            matriz[i][3] = miVehi.getColor_Vehiculo();
+            String Año = String.valueOf(miVehi.getAnioFabricacion_Vehiculo());//Convierto el año a String para la tabla
+            matriz[i][4] = Año;
+            matriz[i][5] = miVehi.getId_Cliente();
+            String estao = String.valueOf(miVehi.getEstado());
+            matriz[i][6] = estao;
+            i++;
+        }
+        // datos configurados
+        tblVehiculoInactivo.setModel(new javax.swing.table.DefaultTableModel(matriz, new String[]{"Placa", "Modelo ", "Marca", "Color", "Año Fabricacion", "Propietario", "Estado"}));
+        tblVehiculoInactivo.setEnabled(false);
+        BaseBD.close();
     }
-    // datos configurados
-    tblVehiculoInactivo.setModel(new javax.swing.table.DefaultTableModel(matriz, new String[]{"Placa", "Modelo ", "Marca", "Color", "Año Fabricacion","Propietario","Estado"}));
-    tblVehiculoInactivo.setEnabled(false);
-    BaseBD.close();
-}
-    
-    
-    
+
     private void mostrarDatosActivos() {
         // ESTABLECER CONEXION CON LA BASE DE DATOS
         ObjectContainer BaseBD = Conexion_db.ConectarBD();
@@ -356,29 +346,39 @@ public class TablaVehiculos extends javax.swing.JPanel {
             matriz[i][1] = miVehi.getModelo_Vehiculo();
             matriz[i][2] = miVehi.getMarca_Vehiculo();
             matriz[i][3] = miVehi.getColor_Vehiculo();
-            String Año= String.valueOf(miVehi.getAnioFabricacion_Vehiculo());//Convierto el año a String para la tabla
+            String Año = String.valueOf(miVehi.getAnioFabricacion_Vehiculo());//Convierto el año a String para la tabla
             matriz[i][4] = Año;
-            matriz[i][5]=miVehi.getId_Cliente();
-            String Estao= String.valueOf(miVehi.getEstado());
-            matriz[i][6]=Estao;
+            matriz[i][5] = miVehi.getId_Cliente();
+            String Estao = String.valueOf(miVehi.getEstado());
+            matriz[i][6] = Estao;
             i++;
         }
         // datos configurados
-        tblVehiculo.setModel(new javax.swing.table.DefaultTableModel(matriz, new String[]{"Placa", "Modelo ", "Marca", "Color", "Año Fabricacion","Propietario","Estado"}));
-        tblVehiculo.setEnabled(false);{
-        BaseBD.close();
+        tblVehiculo.setModel(new javax.swing.table.DefaultTableModel(matriz, new String[]{"Placa", "Modelo ", "Marca", "Color", "Año Fabricacion", "Propietario", "Estado"}));
+        tblVehiculo.setEnabled(false);
+        {
+            BaseBD.close();
+        }
     }
-    }
-    
+
     public static ObjectSet verificarVehiculosActivos() {
         // ESTABLECER CONEXION CON LA BASE DE DATOS
         ObjectContainer BaseBD = Conexion_db.ConectarBD();
-        Vehiculo VehiculosBusca = new Vehiculo(null, null, null, null, 0,null,Estado.ACTIVO);
+        Vehiculo VehiculosBusca = new Vehiculo(null, null, null, null, 0, null, Estado.ACTIVO);
         ObjectSet resultado = BaseBD.get(VehiculosBusca);
         //Cerrar BD
         BaseBD.close();
         return resultado;
     }
+    
+    private void ShowpanelCruds(JPanel p) {
+    p.setSize(870, 630);
+    p.setLocation(0, 0);
+    VistaMenu.PanelPrincipal.removeAll();
+    VistaMenu.PanelPrincipal.add(p, BorderLayout.CENTER);
+    VistaMenu.PanelPrincipal.revalidate();
+    VistaMenu.PanelPrincipal.repaint();
+}
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private rsbuttongradiente.RSButtonGradiente btnAgregar;

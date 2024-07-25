@@ -35,11 +35,11 @@ public class CrudPanelAdministrador extends javax.swing.JPanel {
             BaseBD.set(administrador1);
             BaseBD.close();
 
-            JOptionPane.showMessageDialog(this, "Mecanico Guardado");
+            JOptionPane.showMessageDialog(this, "Administrador Guardado");
 
         } else {
 
-            JOptionPane.showMessageDialog(this, "Ya existe el Mecanico ");
+            JOptionPane.showMessageDialog(this, "Ya existe el Administrador ");
         }
     }
 
@@ -47,10 +47,10 @@ public class CrudPanelAdministrador extends javax.swing.JPanel {
     public final int VerificarAdministradorRepetidos() {
 
         ObjectContainer BaseBD = Conexion_db.ConectarBD();
-        Query vendedor = BaseBD.query();
-        vendedor.constrain(Administrador.class);
-        vendedor.descend("cedula").constrain(txtCedulaAdmi.getText());
-        ObjectSet<Administrador> resultado = vendedor.execute();
+        Query admin = BaseBD.query();
+        admin.constrain(Administrador.class);
+        admin.descend("cedula").constrain(txtCedulaAdmi.getText());
+        ObjectSet<Administrador> resultado = admin.execute();
 
         int coincidencias = resultado.size();
 
@@ -58,9 +58,9 @@ public class CrudPanelAdministrador extends javax.swing.JPanel {
         return coincidencias;
     }
 
-    // Método para obtener el próximo ID_Vendedor disponible
+    // Método para obtener el próximo ID_Administrador disponible
     private int obtenerProximoIDAdministrador(ObjectContainer db) {
-        // Consultar el máximo ID_Vendedor almacenado en la base de datos
+        // Consultar el máximo ID_Administrador almacenado en la base de datos
         ObjectSet<Administrador> result = db.queryByExample(Administrador.class);
         int maxID = 0;
         while (result.hasNext()) {

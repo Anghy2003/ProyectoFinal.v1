@@ -306,19 +306,9 @@ public class CrudPanelCliente2 extends javax.swing.JPanel {
             txtCelularVendedor.setText(cli.getCelular());            
             cbxGenero.setSelectedItem(cli.getGenero());
             cbxEstadoCi.setSelectedItem(cli.getEstadoCivil());
-            
+            jDateFechaNac_Cli.setDate(convertirStringADate(cli.getFechaNacimiento()));
 
-            try {
-                String fechaNacimientoStr = cli.getFechaNacimiento(); // Suponiendo que getFechaNacimiento() devuelve un String en formato "yyyy-MM-dd"
-                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-                Date fechaNacimientoDate = sdf.parse(fechaNacimientoStr);
-
-                jDateFechaNac_Cli.setDate(fechaNacimientoDate);
-            } catch (ParseException e) {
-                e.printStackTrace();
-                // Manejar la excepción si ocurre algún problema al convertir la fecha
-            }
-
+           
             encontrado = true;
             JOptionPane.showMessageDialog(this, "Encontrado");
         }
@@ -328,6 +318,15 @@ public class CrudPanelCliente2 extends javax.swing.JPanel {
         BaseBD.close();
     }
 
+    public static Date convertirStringADate(String fechaString) {
+        SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+        try {
+            return formato.parse(fechaString);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
     public void modificarCliente( Cliente.Estado estado, String cedula, String nombres, String apellidos, String direccion, String correo, String celular,
             String genero, String fechaNacimiento, String estadoCivil, String nombreUsuario, String password, String correoRecuperacion) {
 

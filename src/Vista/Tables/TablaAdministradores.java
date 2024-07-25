@@ -1,5 +1,18 @@
-
 package Vista.Tables;
+
+import Conexion.Conexion_db;
+import Models.Administrador;
+import static Models.Administrador.Estado.ACTIVO;
+import static Models.Administrador.Estado.INACTIVO;
+import Vista.Cruds.CRUDS1.CrudPanelAdministrador;
+import Vista.Cruds.CRUDS1.CrudPanelAdministrador2;
+import Vista.Menu.VistaMenu;
+import com.db4o.ObjectContainer;
+import com.db4o.ObjectSet;
+import com.db4o.query.Query;
+import java.awt.BorderLayout;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 
 public class TablaAdministradores extends javax.swing.JPanel {
 
@@ -8,6 +21,8 @@ public class TablaAdministradores extends javax.swing.JPanel {
      */
     public TablaAdministradores() {
         initComponents();
+        mostrarDatosActivos();
+        mostrarDatosInactivos();
     }
 
     /**
@@ -23,12 +38,12 @@ public class TablaAdministradores extends javax.swing.JPanel {
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tblAdmiInactivos = new javax.swing.JTable();
         txtBuscar = new rojeru_san.RSMTextFull();
         btnAgregar = new rsbuttongradiente.RSButtonGradiente();
         btnBuscar = new rsbuttongradiente.RSButtonGradiente();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
+        tblAdmi = new javax.swing.JTable();
         jLabel2 = new javax.swing.JLabel();
         btnEliminar = new rsbuttongradiente.RSButtonGradiente();
 
@@ -45,8 +60,8 @@ public class TablaAdministradores extends javax.swing.JPanel {
         jScrollPane1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         jScrollPane1.setForeground(new java.awt.Color(255, 255, 255));
 
-        jTable1.setFont(new java.awt.Font("Roboto Medium", 0, 14)); // NOI18N
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tblAdmiInactivos.setFont(new java.awt.Font("Roboto Medium", 0, 14)); // NOI18N
+        tblAdmiInactivos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -57,7 +72,7 @@ public class TablaAdministradores extends javax.swing.JPanel {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tblAdmiInactivos);
 
         txtBuscar.setFont(new java.awt.Font("Roboto Bold", 2, 14)); // NOI18N
         txtBuscar.setPlaceholder("ejm. 0106388747");
@@ -72,6 +87,11 @@ public class TablaAdministradores extends javax.swing.JPanel {
                 btnAgregarMouseClicked(evt);
             }
         });
+        btnAgregar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAgregarActionPerformed(evt);
+            }
+        });
 
         btnBuscar.setText("Buscar");
         btnBuscar.setColorPrimario(new java.awt.Color(0, 51, 153));
@@ -83,13 +103,18 @@ public class TablaAdministradores extends javax.swing.JPanel {
                 btnBuscarMouseClicked(evt);
             }
         });
+        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarActionPerformed(evt);
+            }
+        });
 
         jScrollPane2.setBackground(new java.awt.Color(255, 255, 255));
         jScrollPane2.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         jScrollPane2.setForeground(new java.awt.Color(255, 255, 255));
 
-        jTable2.setFont(new java.awt.Font("Roboto Medium", 0, 14)); // NOI18N
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+        tblAdmi.setFont(new java.awt.Font("Roboto Medium", 0, 14)); // NOI18N
+        tblAdmi.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -100,7 +125,7 @@ public class TablaAdministradores extends javax.swing.JPanel {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jScrollPane2.setViewportView(jTable2);
+        jScrollPane2.setViewportView(tblAdmi);
 
         jLabel2.setFont(new java.awt.Font("Roboto Black", 0, 22)); // NOI18N
         jLabel2.setText("Listado Administradores Inactivos");
@@ -113,6 +138,11 @@ public class TablaAdministradores extends javax.swing.JPanel {
         btnEliminar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnEliminarMouseClicked(evt);
+            }
+        });
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarActionPerformed(evt);
             }
         });
 
@@ -176,7 +206,7 @@ public class TablaAdministradores extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAgregarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAgregarMouseClicked
-      
+
     }//GEN-LAST:event_btnAgregarMouseClicked
 
     private void btnBuscarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBuscarMouseClicked
@@ -188,7 +218,157 @@ public class TablaAdministradores extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnEliminarMouseClicked
 
-    
+    private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
+        CrudPanelAdministrador agregaradmi3 = new CrudPanelAdministrador();
+        ShowpanelCruds(agregaradmi3);
+    }//GEN-LAST:event_btnAgregarActionPerformed
+
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+        if (!txtBuscar.getText().trim().isEmpty()) {
+
+            String BuscarAdministrador = txtBuscar.getText();
+            CrudPanelAdministrador2 mibuscarvendedor = new CrudPanelAdministrador2(BuscarAdministrador);
+            ShowpanelCruds(mibuscarvendedor);
+
+        } else {
+            JOptionPane.showMessageDialog(this, "ingrese una cedula ");
+        }
+    }//GEN-LAST:event_btnBuscarActionPerformed
+
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+
+        if (!txtBuscar.getText().trim().isEmpty()) {
+
+            String eliminarVende = txtBuscar.getText();
+            eliminarVendedor(eliminarVende);
+            JOptionPane.showMessageDialog(this, "Administrador Eliminado");
+            mostrarDatosActivos();
+            mostrarDatosInactivos();
+
+        } else {
+            JOptionPane.showMessageDialog(this, "Administrador no encontrado ");
+        }
+
+    }//GEN-LAST:event_btnEliminarActionPerformed
+
+    private void ShowpanelCruds(JPanel p) {
+        p.setSize(870, 630);
+        p.setLocation(0, 0);
+        VistaMenu.PanelPrincipal.removeAll();
+        VistaMenu.PanelPrincipal.add(p, BorderLayout.CENTER);
+        VistaMenu.PanelPrincipal.revalidate();
+        VistaMenu.PanelPrincipal.repaint();
+    }
+
+    private void mostrarDatosInactivos() {
+
+        ObjectContainer BaseBD = Conexion_db.ConectarBD();
+        tblAdmiInactivos.setEnabled(true);
+
+        Query query = BaseBD.query();
+        query.constrain(Administrador.class);
+        query.descend("estado").constrain(INACTIVO);
+
+        ObjectSet<Administrador> resultado = query.execute();
+
+        String matriz[][] = new String[resultado.size()][15];
+        int i = 0;
+        for (Administrador admin3 : resultado) {
+
+            matriz[i][0] = String.valueOf(admin3.getiD_Administrador());
+            matriz[i][1] = admin3.getNombreUsuario();
+            matriz[i][2] = admin3.getPassword();
+            matriz[i][3] = admin3.getCedula();
+            matriz[i][4] = admin3.getNombres();
+            matriz[i][5] = admin3.getApellidos();
+            matriz[i][6] = admin3.getDireccion();
+            matriz[i][7] = admin3.getCorreo();
+            matriz[i][8] = admin3.getCorreoRecuperacion();
+            matriz[i][9] = admin3.getCelular();
+            matriz[i][10] = admin3.getFechaNacimiento();
+            matriz[i][11] = admin3.getEstadoCivil();
+            matriz[i][12] = admin3.getGenero();
+            matriz[i][13] = admin3.getTitulo_Administrador();
+            matriz[i][14] = String.valueOf(admin3.getEstado());
+            i++;
+        }
+
+        //datos configurados
+        tblAdmiInactivos.setModel(new javax.swing.table.DefaultTableModel(matriz, new String[]{"ID Vendedor", "Usuario", "Contraseña", "Cedula", "Nombres", "Apellidos", "Direccion", "Correo Electronico", "Correo recuperacion", "Celular", "Fecha Nacimiento",
+            "Estado Civil", "Genero", "Titulo", "Estado"}));
+        tblAdmiInactivos.setEnabled(false);
+        BaseBD.close();
+    }
+
+    private void mostrarDatosActivos() {
+
+        ObjectContainer BaseBD = Conexion_db.ConectarBD();
+        tblAdmi.setEnabled(true);
+
+        Query query = BaseBD.query();
+        query.constrain(Administrador.class);
+        query.descend("estado").constrain(ACTIVO);
+
+        ObjectSet<Administrador> resultado = query.execute();
+
+        String matriz[][] = new String[resultado.size()][15];
+        int i = 0;
+        for (Administrador admin3 : resultado) {
+
+            matriz[i][0] = String.valueOf(admin3.getiD_Administrador());
+            matriz[i][1] = admin3.getNombreUsuario();
+            matriz[i][2] = admin3.getPassword();
+            matriz[i][3] = admin3.getCedula();
+            matriz[i][4] = admin3.getNombres();
+            matriz[i][5] = admin3.getApellidos();
+            matriz[i][6] = admin3.getDireccion();
+            matriz[i][7] = admin3.getCorreo();
+            matriz[i][8] = admin3.getCorreoRecuperacion();
+            matriz[i][9] = admin3.getCelular();
+            matriz[i][10] = admin3.getFechaNacimiento();
+            matriz[i][11] = admin3.getEstadoCivil();
+            matriz[i][12] = admin3.getGenero();
+            matriz[i][13] = admin3.getTitulo_Administrador();
+            matriz[i][14] = String.valueOf(admin3.getEstado());
+            i++;
+
+        }
+
+        tblAdmi.setModel(new javax.swing.table.DefaultTableModel(matriz, new String[]{"ID Vendedor", "Usuario", "Contraseña", "Cedula", "Nombres", "Apellidos", "Direccion", "Correo Electronico", "Correo recuperacion", "Celular", "Fecha Nacimiento",
+            "Estado Civil", "Genero", "Titulo" ,"Estado"}));
+        tblAdmi.setEnabled(false);
+        BaseBD.close();
+    }
+
+    public void eliminarVendedor(String cedula) {
+
+        ObjectContainer BaseBD = Conexion_db.ConectarBD();
+
+        ObjectSet<Administrador> result = BaseBD.queryByExample(new Administrador(null, null, cedula, null,
+                null, null, null, null, null, null, null, null,
+                null, null)); // Crear objeto para consultar
+
+        if (result.hasNext()) {
+            Administrador VendedorAEliminar = result.next();
+
+            // Preguntar al usuario si está seguro de eliminar
+            int opcion = JOptionPane.showConfirmDialog(null, "¿Está seguro de eliminar este Administrador?",
+                    "Confirmación de eliminación", JOptionPane.YES_NO_OPTION);
+
+            if (opcion == JOptionPane.YES_OPTION) {
+                VendedorAEliminar.desactivarAdministrador();
+                BaseBD.store(VendedorAEliminar);
+                System.out.println("Administrador eliminado correctamente.");
+            } else {
+                System.out.println("Cancelado por el usuario.");
+            }
+        } else {
+            System.out.println("No se encontró Administrador");
+        }
+
+        BaseBD.close();
+    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private rsbuttongradiente.RSButtonGradiente btnAgregar;
     private rsbuttongradiente.RSButtonGradiente btnBuscar;
@@ -199,8 +379,8 @@ public class TablaAdministradores extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTable jTable2;
+    private javax.swing.JTable tblAdmi;
+    private javax.swing.JTable tblAdmiInactivos;
     private rojeru_san.RSMTextFull txtBuscar;
     // End of variables declaration//GEN-END:variables
 }

@@ -15,14 +15,14 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 public class CrudPanelVendedor2 extends javax.swing.JPanel {
-
+    
     private String BuscarVendedor;
-
+    
     public CrudPanelVendedor2(String receivedString) {
         this.BuscarVendedor = receivedString;
         initComponents();
         Vendedorbuscar();
-
+        
     }
 
     /**
@@ -261,46 +261,46 @@ public class CrudPanelVendedor2 extends javax.swing.JPanel {
     }//GEN-LAST:event_btnCancelarMouseClicked
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
-
+        
         Boolean valido = false;
-
+        
         Date fechaNacimientoDate = jDateFechaNacVendedor.getDate(); // Obtener la fecha de nacimiento del JDateChooser
 
         // Formatear la fecha como String en el formato deseado (por ejemplo, "dd/MM/yyyy")
         SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
         String fechaNacimiento = sdf.format(fechaNacimientoDate);
-
+        
         if (valido = txtCedulaVendedor.getText().matches("\\d{10}")) {
             if (valido = txtNombresVendedor.getText().toUpperCase().matches("^[a-zA-Z]+(?:\\s[a-zA-Z]+)?$")) {
                 if (valido = txtApellidosVendedor.getText().toUpperCase().matches("^[a-zA-Z]+(?:\\s[a-zA-Z]+)?$")) {
                     if (valido = txtCorreoVendedor.getText().matches("^[\\w.-]+@[\\w.-]+\\.[a-zA-Z]{2,6}$")) {
                         if (valido = txtCelularVendedor.getText().matches("^09\\d{8}$")) {
-
+                            
                             modificarVendedor(Double.parseDouble(txtSueldoVendedor.getText()), Double.parseDouble(txtComicionesVendedor.getText()), Integer.parseInt(txtNumeroVentasVendedor.getText()), Vendedor.Estado.ACTIVO,
                                     txtCedulaVendedor.getText(), txtNombresVendedor.getText().toUpperCase(), txtApellidosVendedor.getText().toUpperCase(), txtDireccionVendedor.getText().toUpperCase(),
                                     txtCorreoVendedor.getText(), txtCelularVendedor.getText(), (String) cbxGeneroVendedor.getSelectedItem(), fechaNacimiento, (String) cbxEstadoCivilVendedor.getSelectedItem(),
                                     txtCedulaVendedor.getText(), txtPasswordVendedor.getText(), txtCorreoVendedor.getText());
-
+                            
                         } else {
                             JOptionPane.showMessageDialog(null, "Ingrese un celular valido");
                         }
-
+                        
                     } else {
                         JOptionPane.showMessageDialog(null, "Ingrese un correo valida");
                     }
-
+                    
                 } else {
                     JOptionPane.showMessageDialog(null, "Ingrese un apellido valido");
                 }
-
+                
             } else {
                 JOptionPane.showMessageDialog(null, "Ingrese un nombre valido");
             }
-
+            
         } else {
             JOptionPane.showMessageDialog(null, "Ingrese una cedula valida");
         }
-
+        
 
     }//GEN-LAST:event_btnModificarActionPerformed
 
@@ -313,20 +313,20 @@ public class CrudPanelVendedor2 extends javax.swing.JPanel {
     private void txtPasswordVendedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPasswordVendedorActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtPasswordVendedorActionPerformed
-
+    
     public final void Vendedorbuscar() {
-
+        
         Boolean encontrado = true;
-
+        
         ObjectContainer BaseBD = Conexion_db.ConectarBD();
-
+        
         Query vendedor = BaseBD.query();
         vendedor.constrain(Vendedor.class);
         vendedor.descend("cedula").constrain(BuscarVendedor);
         ObjectSet<Vendedor> resultado = vendedor.execute();
-
+        
         for (Vendedor vende : resultado) {
-
+            
             txtCedulaVendedor.setText(vende.getCedula());
             txtCedulaVendedor.setEnabled(false); // porque es el atributo principal
             txtPasswordVendedor.setText(vende.getPassword());
@@ -340,18 +340,8 @@ public class CrudPanelVendedor2 extends javax.swing.JPanel {
             txtComicionesVendedor.setText(String.valueOf(vende.getComiciones_Vendedor()));
             txtNumeroVentasVendedor.setText(String.valueOf(vende.getNumeroVentas_Vendedor()));
             txtSueldoVendedor.setText(String.valueOf(vende.getSueldoBase_Vendedor()));
-
-            try {
-                String fechaNacimientoStr = vende.getFechaNacimiento(); // Suponiendo que getFechaNacimiento() devuelve un String en formato "yyyy-MM-dd"
-                SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
-                Date fechaNacimientoDate = sdf.parse(fechaNacimientoStr);
-
-                jDateFechaNacVendedor.setDate(fechaNacimientoDate);
-            } catch (ParseException e) {
-                e.printStackTrace();
-                // Manejar la excepción si ocurre algún problema al convertir la fecha
-            }
-
+            jDateFechaNacVendedor.setDate(convertirStringADate(vende.getFechaNacimiento()));
+            
             encontrado = true;
             JOptionPane.showMessageDialog(this, "Encontrado");
         }
@@ -360,43 +350,53 @@ public class CrudPanelVendedor2 extends javax.swing.JPanel {
         }
         BaseBD.close();
     }
-
+    
+    public static Date convertirStringADate(String fechaString) {
+        SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+        try {
+            return formato.parse(fechaString);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+    
     public void modificarVendedor(double sueldoBase_Vendedor, double comiciones_Vendedor, int numeroVentas_Vendedor, Vendedor.Estado estado, String cedula,
             String nombres, String apellidos, String direccion, String correo, String celular, String genero,
             String fechaNacimiento, String estadoCivil, String nombreUsuario, String password, String correoRecuperacion) {
-
+        
         ObjectContainer BaseBD = Conexion_db.ConectarBD();
-
+        
         Vendedor modificarVendedor = new Vendedor(sueldoBase_Vendedor, comiciones_Vendedor, numeroVentas_Vendedor, estado, cedula, nombres,
                 apellidos, direccion, correo, celular, genero, fechaNacimiento, estadoCivil, nombreUsuario,
                 password, correoRecuperacion);
-
+        
         Vendedor vendedorBusca = new Vendedor(0.0, 0.0, 0, null, cedula, null,
                 null, null, null, null, null, null, null, null,
                 null, null);
-
+        
         ObjectSet resultado = BaseBD.get(vendedorBusca);
-
+        
         int coincidencias = resultado.size();
-
+        
         if (coincidencias > 0) {
-
+            
             Vendedor vendedorVEliminar = (Vendedor) resultado.next();
             BaseBD.delete(vendedorVEliminar);
-
+            
             BaseBD.set(modificarVendedor);
             JOptionPane.showMessageDialog(this, "Vendedor Modificado");
-
+            
             TablaVendedores miTablaVendedored = new TablaVendedores();
             ShowpanelCruds(miTablaVendedored);
-
+            
         } else {
             JOptionPane.showMessageDialog(this, "No se encontro ningun vehiculo");
         }
-
+        
         BaseBD.close();
     }
-
+    
     private void ShowpanelCruds(JPanel p) {
         p.setSize(870, 630);
         p.setLocation(0, 0);

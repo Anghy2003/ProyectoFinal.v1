@@ -203,8 +203,8 @@ public class TablaVendedores extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnAgregarVendedorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAgregarVendedorMouseClicked
-        CrudPanelVendedor agregarVehi = new CrudPanelVendedor();
-        ShowpanelCruds(agregarVehi);
+        CrudPanelVendedor agregarVende = new CrudPanelVendedor();
+        ShowpanelCruds(agregarVende);
     }//GEN-LAST:event_btnAgregarVendedorMouseClicked
 
     private void btnEliminarVendedorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEliminarVendedorMouseClicked
@@ -353,7 +353,7 @@ public class TablaVendedores extends javax.swing.JPanel {
             Vendedor VendedorAEliminar = result.next();
 
             // Preguntar al usuario si está seguro de eliminar
-            int opcion = JOptionPane.showConfirmDialog(null, "¿Está seguro de eliminar este Vehiculo?",
+            int opcion = JOptionPane.showConfirmDialog(null, "¿Está seguro de eliminar este Vendedor?",
                     "Confirmación de eliminación", JOptionPane.YES_NO_OPTION);
 
             if (opcion == JOptionPane.YES_OPTION) {
