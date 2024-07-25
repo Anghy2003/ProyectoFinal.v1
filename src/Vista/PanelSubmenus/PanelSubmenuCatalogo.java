@@ -1,6 +1,13 @@
 
 package Vista.PanelSubmenus;
 
+
+import Vista.Catálogo.CatalogoProductos;
+import Vista.Catálogo.CatalogoServicios;
+import Vista.Menu.VistaMenu;
+import java.awt.BorderLayout;
+import javax.swing.JPanel;
+
 public class PanelSubmenuCatalogo extends javax.swing.JPanel {
 
     /**
@@ -21,8 +28,8 @@ public class PanelSubmenuCatalogo extends javax.swing.JPanel {
 
         jPanel1 = new javax.swing.JPanel();
         jSeparator1 = new javax.swing.JSeparator();
-        btnCatalogopro = new javax.swing.JToggleButton();
-        btnCatalogoser = new javax.swing.JToggleButton();
+        btnCatser = new javax.swing.JToggleButton();
+        btnCatalogoPro = new javax.swing.JToggleButton();
 
         setLayout(new java.awt.BorderLayout());
 
@@ -30,16 +37,21 @@ public class PanelSubmenuCatalogo extends javax.swing.JPanel {
 
         jSeparator1.setForeground(new java.awt.Color(0, 53, 79));
 
-        btnCatalogopro.setFont(new java.awt.Font("Roboto Medium", 1, 12)); // NOI18N
-        btnCatalogopro.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/servicio.png"))); // NOI18N
-        btnCatalogopro.setText("CATALOGO DE SERVICOS ");
-
-        btnCatalogoser.setFont(new java.awt.Font("Roboto Medium", 1, 12)); // NOI18N
-        btnCatalogoser.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/carretilla.png"))); // NOI18N
-        btnCatalogoser.setText("CATALOGO DE PRODUCTOS ");
-        btnCatalogoser.addActionListener(new java.awt.event.ActionListener() {
+        btnCatser.setFont(new java.awt.Font("Roboto Medium", 1, 12)); // NOI18N
+        btnCatser.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/servicio.png"))); // NOI18N
+        btnCatser.setText("CATALOGO DE SERVICOS ");
+        btnCatser.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCatalogoserActionPerformed(evt);
+                btnCatserActionPerformed(evt);
+            }
+        });
+
+        btnCatalogoPro.setFont(new java.awt.Font("Roboto Medium", 1, 12)); // NOI18N
+        btnCatalogoPro.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/carretilla.png"))); // NOI18N
+        btnCatalogoPro.setText("CATALOGO DE PRODUCTOS ");
+        btnCatalogoPro.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCatalogoProActionPerformed(evt);
             }
         });
 
@@ -49,9 +61,9 @@ public class PanelSubmenuCatalogo extends javax.swing.JPanel {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap(355, Short.MAX_VALUE)
-                .addComponent(btnCatalogoser)
+                .addComponent(btnCatalogoPro)
                 .addGap(36, 36, 36)
-                .addComponent(btnCatalogopro)
+                .addComponent(btnCatser)
                 .addGap(47, 47, 47))
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.DEFAULT_SIZE, 870, Short.MAX_VALUE))
@@ -61,8 +73,8 @@ public class PanelSubmenuCatalogo extends javax.swing.JPanel {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnCatalogoser, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
-                    .addComponent(btnCatalogopro, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btnCatalogoPro, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
+                    .addComponent(btnCatser, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addGap(19, 19, 19))
             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel1Layout.createSequentialGroup()
@@ -74,14 +86,29 @@ public class PanelSubmenuCatalogo extends javax.swing.JPanel {
         add(jPanel1, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnCatalogoserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCatalogoserActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnCatalogoserActionPerformed
+    private void btnCatalogoProActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCatalogoProActionPerformed
+       CatalogoProductos cat = new CatalogoProductos();
+        MostrarpaneCruds(cat);
+    }//GEN-LAST:event_btnCatalogoProActionPerformed
+
+    private void btnCatserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCatserActionPerformed
+        CatalogoServicios cat1 = new CatalogoServicios();
+        MostrarpaneCruds(cat1);
+    }//GEN-LAST:event_btnCatserActionPerformed
+                                         
+private void MostrarpaneCruds(JPanel p) {
+        p.setSize(870, 630);
+        p.setLocation(0, 0);
+        VistaMenu.PanelPrincipal.removeAll();
+        VistaMenu.PanelPrincipal.add(p, BorderLayout.CENTER);
+        VistaMenu.PanelPrincipal.revalidate();
+        VistaMenu.PanelPrincipal.repaint();
+    }
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JToggleButton btnCatalogopro;
-    private javax.swing.JToggleButton btnCatalogoser;
+    private javax.swing.JToggleButton btnCatalogoPro;
+    private javax.swing.JToggleButton btnCatser;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JSeparator jSeparator1;
     // End of variables declaration//GEN-END:variables

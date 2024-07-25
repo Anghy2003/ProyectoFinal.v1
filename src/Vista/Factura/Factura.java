@@ -7,6 +7,7 @@ import Models.EncabezadoFactura_1;
 import Models.Producto;
 import Models.Servicios;
 import Vista.Cruds.CRUDS1.CrudPanelCliente;
+import Vista.Menu.VistaMenu;
 import static Vista.Menu.VistaMenu.PanelPrincipal;
 import com.db4o.ObjectContainer;
 import com.db4o.ObjectSet;
@@ -40,6 +41,10 @@ public class Factura extends javax.swing.JPanel {
         mostrarTablaProductos();
         mostrarDatosCliente();
         mostrarTablaServicios();
+        txtSubtotal.setEnabled(false);
+        txtTotalfac.setEnabled(false);
+        txtiva.setEnabled(false);
+        
     }
 
     /**
@@ -100,7 +105,7 @@ public class Factura extends javax.swing.JPanel {
         lblIva = new javax.swing.JLabel();
         lblTotalFAc = new javax.swing.JLabel();
         btnNuevo = new javax.swing.JButton();
-        btnGenerarVenta = new javax.swing.JButton();
+        btnVentasGeneradas = new javax.swing.JButton();
         btnResibo = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
         btnSalir = new javax.swing.JButton();
@@ -577,18 +582,38 @@ public class Factura extends javax.swing.JPanel {
         jPanel3.add(lblTotalFAc, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 510, -1, -1));
 
         btnNuevo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/registro (1)_1.png"))); // NOI18N
+        btnNuevo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNuevoActionPerformed(evt);
+            }
+        });
         jPanel3.add(btnNuevo, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 120, 80, 70));
 
-        btnGenerarVenta.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/dinero.png"))); // NOI18N
-        jPanel3.add(btnGenerarVenta, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 210, 80, 70));
+        btnVentasGeneradas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/dinero.png"))); // NOI18N
+        btnVentasGeneradas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnVentasGeneradasActionPerformed(evt);
+            }
+        });
+        jPanel3.add(btnVentasGeneradas, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 210, 80, 70));
 
         btnResibo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/impresion.png"))); // NOI18N
         jPanel3.add(btnResibo, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 300, 80, 70));
 
         btnCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/rechazar.png"))); // NOI18N
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarActionPerformed(evt);
+            }
+        });
         jPanel3.add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 390, 80, 70));
 
         btnSalir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/cerrar-sesion.png"))); // NOI18N
+        btnSalir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSalirActionPerformed(evt);
+            }
+        });
         jPanel3.add(btnSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 480, 80, 70));
 
         lbllineas.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
@@ -717,6 +742,26 @@ public class Factura extends javax.swing.JPanel {
        String textoBusqueda = txtBuscarServicio.getText();
         filtrarTablaServicios(textoBusqueda);
     }//GEN-LAST:event_btnBuscarServicioActionPerformed
+
+    private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
+       Factura nuevo =new Factura();
+           MostarpanelCruds(nuevo);
+    }//GEN-LAST:event_btnNuevoActionPerformed
+
+    private void btnVentasGeneradasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVentasGeneradasActionPerformed
+       JOptionPane.showMessageDialog(this, "SERVICIO DE INVENTARIO AUN NO DISPONIBLE");
+    }//GEN-LAST:event_btnVentasGeneradasActionPerformed
+
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+       VistaMenu cancelar = new VistaMenu();
+        cancelar.setEnabled(true);
+        
+    }//GEN-LAST:event_btnCancelarActionPerformed
+
+    private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
+        VistaMenu Salir = new VistaMenu();
+        Salir.setEnabled(true);
+    }//GEN-LAST:event_btnSalirActionPerformed
     private static String obtenerProximoCodigoFactura(ObjectContainer db) {
     // Consultar todos los encabezados de factura
     ObjectSet<EncabezadoFactura_1> result = db.queryByExample(EncabezadoFactura_1.class);
@@ -771,7 +816,7 @@ public class Factura extends javax.swing.JPanel {
 
     private void mostrarTablaProductos() {
         ObjectContainer BaseBD = Conexion_db.ConectarBD();
-        Producto producto = new Producto(null, null, null, null, 0, 0, 0, null, null);
+        Producto producto = new Producto(null, null, null, null, 0, 0, 0, null, null,null,null);
         ObjectSet<Producto> resul = BaseBD.get(producto);
 
         String matriz[][] = new String[resul.size()][4];
@@ -1110,13 +1155,13 @@ private double calcularTotal(double subtotal, double descuento, double iva) {
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnEliminar;
     private rojeru_san.RSButton btnFinalizarFac;
-    private javax.swing.JButton btnGenerarVenta;
     private rsbuttongradiente.RSButtonGradiente btnInsertarCliente;
     private rsbuttongradiente.RSButtonGradiente btnInsertarProductos;
     private rsbuttongradiente.RSButtonGradiente btnInsetarServicios;
     private javax.swing.JButton btnNuevo;
     private javax.swing.JButton btnResibo;
     private javax.swing.JButton btnSalir;
+    private javax.swing.JButton btnVentasGeneradas;
     private rsbuttongradiente.RSButtonGradiente btnbuscarproductos;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

@@ -14,6 +14,10 @@ import com.db4o.query.Query;
 
 import java.awt.BorderLayout;
 import java.awt.Image;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 
 import javax.swing.ImageIcon;
 import javax.swing.JDialog;
@@ -27,13 +31,13 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class CrudProductos extends javax.swing.JPanel {
 
-    /**
-     * Creates new form CrudProductos
-     */
+    private byte[] imagenProducto;
     public CrudProductos() {
         initComponents();
         mostrarCombo();
         mostrarDatos();
+        mostrarDatospro();
+        
     }
 
     @SuppressWarnings("unchecked")
@@ -385,7 +389,9 @@ public class CrudProductos extends javax.swing.JPanel {
                 Integer.parseInt(txtExistenciaMaxima.getText()),
                 Integer.parseInt(txtExistenciaMinima.getText()),
                 txtDescripcion.getText(),
-                txtProveedorID.getText()
+                txtProveedorID.getText(),
+                imagenProducto,
+                Producto.Estado.ACTIVO
         );
 
         // Resetear los campos
@@ -397,22 +403,43 @@ public class CrudProductos extends javax.swing.JPanel {
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnSeleccionarImgenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSeleccionarImgenActionPerformed
-        String Ruta = "";
-        JFileChooser jFileChooser = new JFileChooser();
+       JFileChooser jFileChooser = new JFileChooser();
         FileNameExtensionFilter filtrado = new FileNameExtensionFilter("JPG, PNG & GIF", "jpg", "png", "gif");
         jFileChooser.setFileFilter(filtrado);
 
         int respuesta = jFileChooser.showOpenDialog(this);
 
         if (respuesta == JFileChooser.APPROVE_OPTION) {
-            Ruta = jFileChooser.getSelectedFile().getPath();
+            File archivoImagen = jFileChooser.getSelectedFile();
+            String Ruta = archivoImagen.getPath();
 
-            Image mImagen = new ImageIcon(Ruta).getImage();
-            ImageIcon mIcono = new ImageIcon(mImagen.getScaledInstance(lblImagen.getWidth(), lblImagen.getHeight(), Image.SCALE_SMOOTH));
-            lblImagen.setIcon(mIcono);
+            try {
+                // Leer la imagen y convertirla a un array de bytes
+                imagenProducto = leerImagen(archivoImagen);
+
+                // Mostrar la imagen en el label
+                Image mImagen = new ImageIcon(Ruta).getImage();
+                ImageIcon mIcono = new ImageIcon(mImagen.getScaledInstance(lblImagen.getWidth(), lblImagen.getHeight(), Image.SCALE_SMOOTH));
+                lblImagen.setIcon(mIcono);
+            } catch (IOException e) {
+                JOptionPane.showMessageDialog(this, "Error al leer la imagen: " + e.getMessage());
+            }
         }
     }//GEN-LAST:event_btnSeleccionarImgenActionPerformed
+private void mostrarDatos() {
+        // Método para mostrar datos si es necesario
+    }
 
+    private byte[] leerImagen(File archivoImagen) throws IOException {
+        try (ByteArrayOutputStream baos = new ByteArrayOutputStream(); FileInputStream fis = new FileInputStream(archivoImagen)) {
+            byte[] buffer = new byte[1024];
+            int bytesRead;
+            while ((bytesRead = fis.read(buffer)) != -1) {
+                baos.write(buffer, 0, bytesRead);
+            }
+            return baos.toByteArray();
+        }
+    }
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
        mostrarNombreProveedor();
     }//GEN-LAST:event_btnAgregarActionPerformed
@@ -420,15 +447,20 @@ public class CrudProductos extends javax.swing.JPanel {
     private void BtnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnBuscarActionPerformed
        activarJdialog(TablaProvedores);
     }//GEN-LAST:event_BtnBuscarActionPerformed
-    private void resetCampos() {
-        txtNombreProducto.setText("");
-        txtPrecioProducto.setText("");
-        CmbCategoria.setSelectedIndex(0);
-        txtExistenciaMaxima.setText("");
-        txtExistenciaMinima.setText("");
-        txtDescripcion.setText("");
-        txtProveedorID.setText("");
-    }
+   private void resetCampos() {
+    
+    txtNombreProducto.setText("");
+    txtPrecioProducto.setText("");    
+    txtNumeroProductos1.setText("");
+    txtExistenciaMaxima.setText("");
+    txtExistenciaMinima.setText("");
+    txtDescripcion.setText("");
+    txtProveedorID.setText("");
+    CmbCategoria.setSelectedIndex(-1); 
+    txtNombreProducto.setEnabled(true);
+    lblImagen.setIcon(null);  // Restablecer la imagen a null
+    lblImagen.setText("No image available"); // Establecer texto por defecto si no hay imagen
+}
 
     private static String obtenerProximoCodigoProducto(ObjectContainer db) {
         // Consultar todos los productos
@@ -452,7 +484,9 @@ public class CrudProductos extends javax.swing.JPanel {
         return "PRO" + siguienteID;
     }
 
-    public static void guardarProducto(String nombre_Producto, Double precio_Producto, String codigo_categoria_Producto, int numeroProductos_Producto, int existenciaMaxima_Producto, int existenciaMinima_Producto, String descripcion_Producto, String ID_Proveedor_Producto) {
+    public static void guardarProducto(String nombre_Producto, Double precio_Producto, String codigo_categoria_Producto, int numeroProductos_Producto,
+            int existenciaMaxima_Producto, int existenciaMinima_Producto, String descripcion_Producto,
+            String ID_Proveedor_Producto,byte[] imagen, Producto.Estado estado) {
         // ESTABLECER CONEXION CON LA BASE DE DATOS
         ObjectContainer baseBD = Conexion_db.ConectarBD();
 
@@ -462,7 +496,7 @@ public class CrudProductos extends javax.swing.JPanel {
         // Verificar si el código ya existe (esto no debería suceder, pero es una precaución)
         if (verificarProducto(baseBD, codigo_Producto) == 0) {
             // Crear objeto de Producto con los datos proporcionados
-            Producto nuevoProducto = new Producto(codigo_Producto, nombre_Producto, precio_Producto, codigo_categoria_Producto, numeroProductos_Producto, existenciaMaxima_Producto, existenciaMinima_Producto, descripcion_Producto, ID_Proveedor_Producto);
+            Producto nuevoProducto = new Producto(codigo_Producto, nombre_Producto, precio_Producto, codigo_categoria_Producto, numeroProductos_Producto, existenciaMaxima_Producto, existenciaMinima_Producto, descripcion_Producto, ID_Proveedor_Producto, imagen, Producto.Estado.ACTIVO);
 
             // Guardar el producto en la base de datos
             baseBD.set(nuevoProducto);
@@ -477,7 +511,7 @@ public class CrudProductos extends javax.swing.JPanel {
 
     public static int verificarProducto(ObjectContainer baseBD, String codigo_Producto) {
         // Crear objeto para buscar el producto por su código
-        Producto productoBusca = new Producto(codigo_Producto, null, null, null, 0, 0, 0, null, null);
+        Producto productoBusca = new Producto(codigo_Producto, null, null, null, 0, 0, 0, null, null,null,null);
         ObjectSet<Producto> resultado = baseBD.get(productoBusca);
         return resultado.size();
     }
@@ -494,7 +528,7 @@ public class CrudProductos extends javax.swing.JPanel {
         });
         BaseBD.close();
     }
-private void mostrarDatos() {
+private void mostrarDatospro() {
         // ESTABLECER CONEXION CON LA BASE DE DATOS
         tblProveedores.setEnabled(true);
         ObjectContainer BaseBD = Conexion_db.ConectarBD();

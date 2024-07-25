@@ -1,15 +1,14 @@
-
 package Vista.Home;
 
 import Vista.Menu.VistaMenu;
+import javax.swing.JOptionPane;
 
 public class Home extends javax.swing.JFrame {
-
+    
     public Home() {
         initComponents();
         this.setLocationRelativeTo(this);
         
-         
     }
 
     /**
@@ -29,7 +28,7 @@ public class Home extends javax.swing.JFrame {
         txtUsuario = new rojeru_san.RSMTextFull();
         btnIniciarSesion = new rsbuttongradiente.RSButtonGradiente();
         jSeparator1 = new javax.swing.JSeparator();
-        rSMPassView1 = new rojeru_san.RSMPassView();
+        txtpassword = new rojeru_san.RSMPassView();
         jLabel1 = new javax.swing.JLabel();
         lblImagenFondoHome = new javax.swing.JLabel();
 
@@ -71,9 +70,9 @@ public class Home extends javax.swing.JFrame {
             }
         });
 
-        rSMPassView1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 255)));
-        rSMPassView1.setForeground(new java.awt.Color(153, 153, 153));
-        rSMPassView1.setPlaceholder("Contraseña");
+        txtpassword.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 255)));
+        txtpassword.setForeground(new java.awt.Color(153, 153, 153));
+        txtpassword.setPlaceholder("Contraseña");
 
         jLabel1.setFont(new java.awt.Font("Roboto Medium", 1, 24)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
@@ -99,7 +98,7 @@ public class Home extends javax.swing.JFrame {
                             .addGroup(PanelPrinLayout.createSequentialGroup()
                                 .addGap(25, 25, 25)
                                 .addGroup(PanelPrinLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(rSMPassView1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(txtpassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(txtUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addGroup(PanelPrinLayout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -125,7 +124,7 @@ public class Home extends javax.swing.JFrame {
                 .addGap(23, 23, 23)
                 .addComponent(txtUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(27, 27, 27)
-                .addComponent(rSMPassView1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtpassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(35, 35, 35)
                 .addComponent(btnIniciarSesion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
@@ -161,9 +160,15 @@ public class Home extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnIniciarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIniciarSesionActionPerformed
-        VistaMenu Mimenu=new VistaMenu();
-     Mimenu.setVisible(true);
-     this.dispose();
+        if (txtUsuario.getText().equalsIgnoreCase("admin") && txtpassword.getText().equalsIgnoreCase("admin")) {
+            VistaMenu Mimenu = new VistaMenu();
+            
+            Mimenu.setVisible(true);
+            this.dispose();
+        }else{
+            JOptionPane.showMessageDialog(this, "Usuario no registrado");
+        }
+        
     }//GEN-LAST:event_btnIniciarSesionActionPerformed
 
     private void btnCrearCuentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearCuentaActionPerformed
@@ -206,8 +211,7 @@ public class Home extends javax.swing.JFrame {
         });
     }
 
-    
-    
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel PanelPrin;
     private rsbuttongradiente.RSButtonGradiente btnCrearCuenta;
@@ -218,7 +222,7 @@ public class Home extends javax.swing.JFrame {
     private javax.swing.JLabel lblIconoLogo;
     private javax.swing.JLabel lblImagenFondoHome;
     private javax.swing.JPanel panelPron;
-    private rojeru_san.RSMPassView rSMPassView1;
     private rojeru_san.RSMTextFull txtUsuario;
+    private rojeru_san.RSMPassView txtpassword;
     // End of variables declaration//GEN-END:variables
 }

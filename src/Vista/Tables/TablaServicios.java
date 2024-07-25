@@ -6,6 +6,7 @@
 package Vista.Tables;
 
 import Conexion.Conexion_db;
+import Conexion.ImageRenderer;
 import Models.Servicios;
 import Vista.Catálogo.CrudPanelServicios;
 import Vista.Menu.VistaMenu;
@@ -15,6 +16,14 @@ import java.awt.BorderLayout;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import Vista.Catálogo.BuscarServicios;
+import java.awt.Image;
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import javax.imageio.ImageIO;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
+import javax.swing.table.DefaultTableModel;
 /**
  *
  * @author Angie
@@ -47,6 +56,7 @@ public class TablaServicios extends javax.swing.JPanel {
         btnAgregar = new rsbuttongradiente.RSButtonGradiente();
         btnBuscar = new rsbuttongradiente.RSButtonGradiente();
         btnEliminar = new rsbuttongradiente.RSButtonGradiente();
+        lbl_Inactivos = new javax.swing.JLabel();
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -125,6 +135,9 @@ public class TablaServicios extends javax.swing.JPanel {
             }
         });
 
+        lbl_Inactivos.setFont(new java.awt.Font("Roboto Black", 0, 18)); // NOI18N
+        lbl_Inactivos.setText("Servicios Eliminados:");
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
@@ -133,8 +146,8 @@ public class TablaServicios extends javax.swing.JPanel {
                 .addGap(24, 24, 24)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(lbl_Inactivos, javax.swing.GroupLayout.PREFERRED_SIZE, 193, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jScrollPane1)
                         .addContainerGap())
@@ -148,7 +161,10 @@ public class TablaServicios extends javax.swing.JPanel {
                         .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(37, 37, 37))))
+                        .addGap(37, 37, 37))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -168,8 +184,10 @@ public class TablaServicios extends javax.swing.JPanel {
                         .addGap(26, 26, 26)
                         .addComponent(jLabel2)))
                 .addGap(44, 44, 44)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 446, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(13, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 178, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(lbl_Inactivos, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(222, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -198,37 +216,48 @@ public class TablaServicios extends javax.swing.JPanel {
       CrudPanelServicios servcios = new CrudPanelServicios(); 
          MostarpanelCruds(servcios);
     }//GEN-LAST:event_btnAgregarMouseClicked
+
 private void mostrarTablaServicios() {
-    ObjectContainer BaseBD = Conexion_db.ConectarBD();
-    Servicios servicio = new Servicios();
+        ObjectContainer BaseBD = Conexion_db.ConectarBD();
+    Servicios servicio = new Servicios(null, null, null, 0.0, null, null, null);
     ObjectSet<Servicios> resul = BaseBD.get(servicio);
 
-    String[][] matriz = new String[resul.size()][8];
+    Object matriz[][] = new Object[resul.size()][7]; // Cambiar a Object y definir el tamaño de las columnas
 
-    int i = 0;
-    while (resul.hasNext()) {
-        Servicios serv = resul.next();
+    for (int i = 0; i < resul.size(); i++) {
+        Servicios ser = resul.next();
 
-        matriz[i][0] = serv.getCodigo_Servicio();
-        matriz[i][1] = serv.getNombre_Servicio();
-        matriz[i][2] = serv.getDescripcion_Servicio();
-        matriz[i][3] = String.valueOf(serv.getPrecioTotal_Servicio());
-        matriz[i][4] = serv.getDuracion_Servicio();
-        matriz[i][5] = serv.getId_mecanico();
-        matriz[i][6] = serv.getPlaca_Vehiculo();
-       
+        matriz[i][0] = ser.getCodigo_Servicio();
+        matriz[i][1] = ser.getNombre_Servicio();
+        matriz[i][2] = ser.getDescripcion_Servicio();
+        matriz[i][3] = String.valueOf(ser.getPrecioTotal_Servicio());
+        matriz[i][4] = ser.getDuracion_Servicio();
+        
 
-        i++;
+        // Convertir imagen a un icono para mostrar en la tabla
+        byte[] imagen = ser.getImagen();
+        if (imagen != null) {
+            ImageIcon icono = new ImageIcon(new ImageIcon(imagen).getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH));
+            matriz[i][5] = new JLabel(icono); // Agregar imagen a la matriz
+        } else {
+            matriz[i][5] = new JLabel("No image"); // Placeholder para servicios sin imagen
+        }
+
+        matriz[i][8] = String.valueOf(ser.getEstado()); // Agregar estado a la matriz
     }
 
     tblServicios.setModel(new javax.swing.table.DefaultTableModel(
             matriz,
             new String[]{
-                "Código Servicio", "Nombre Servicio", "Descripción", "Precio Total", "Duración", "ID Mecánico", "Placa Vehículo" 
+                "Código Servicio", "Nombre Servicio", "Descripción", "Precio Total", "Duración",  "Imagen", "Estado"
             }
     ));
-    BaseBD.close();
-}
+
+    // Usar el ImageRenderer para la columna de imágenes
+    tblServicios.getColumnModel().getColumn(7).setCellRenderer(new ImageRenderer());
+    tblServicios.setRowHeight(100);
+
+    BaseBD.close();}
     private void btnBuscarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBuscarMouseClicked
       
           
@@ -249,11 +278,11 @@ private void mostrarTablaServicios() {
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         if (!txtBuscar.getText().trim().isEmpty()) {
-            String codigoProducto = txtBuscar.getText(); // Obtener el texto de txtBuscar
-            BuscarServicios miBuscarser = new BuscarServicios(codigoProducto); // Crear el componente con el código de producto
-            MostarpanelCruds(miBuscarser); // Mostrar el panel de búsqueda de producto
+            String codigoServicio = txtBuscar.getText(); // Obtener el texto de txtBuscar
+            BuscarServicios miBuscarser = new BuscarServicios(codigoServicio); // Crear el componente con el código de servicio
+            MostarpanelCruds(miBuscarser); // Mostrar el panel de búsqueda de servicio
         } else {
-            JOptionPane.showMessageDialog(this, "Ingrese un código de producto");
+            JOptionPane.showMessageDialog(this, "Ingrese un código de servicio");
         }
     }//GEN-LAST:event_btnBuscarActionPerformed
  private void MostarpanelCruds(JPanel p) {
@@ -273,6 +302,7 @@ private void mostrarTablaServicios() {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lbl_Inactivos;
     private javax.swing.JTable tblServicios;
     private rojeru_san.RSMTextFull txtBuscar;
     // End of variables declaration//GEN-END:variables

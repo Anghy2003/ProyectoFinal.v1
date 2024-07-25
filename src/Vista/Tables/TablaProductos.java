@@ -1,6 +1,7 @@
 package Vista.Tables;
 
 import Conexion.Conexion_db;
+import Conexion.ImageRenderer;
 import Models.Producto;
 import Vista.Catálogo.CrudProductos;
 import Vista.Menu.VistaMenu;
@@ -10,6 +11,9 @@ import java.awt.BorderLayout;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import Vista.Catálogo.BuscarProductos;
+import java.awt.Image;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 
 
 public class TablaProductos extends javax.swing.JPanel {
@@ -39,7 +43,7 @@ public class TablaProductos extends javax.swing.JPanel {
         txtBuscar = new rojeru_san.RSMTextFull();
         jLabel2 = new javax.swing.JLabel();
         btnAgregar = new rsbuttongradiente.RSButtonGradiente();
-        btnEditar = new rsbuttongradiente.RSButtonGradiente();
+        btnBuscar = new rsbuttongradiente.RSButtonGradiente();
         btnEliminar = new rsbuttongradiente.RSButtonGradiente();
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
@@ -87,19 +91,19 @@ public class TablaProductos extends javax.swing.JPanel {
             }
         });
 
-        btnEditar.setText("Buscar");
-        btnEditar.setColorPrimario(new java.awt.Color(0, 51, 153));
-        btnEditar.setColorPrimarioHover(new java.awt.Color(51, 0, 255));
-        btnEditar.setColorSecundario(new java.awt.Color(51, 153, 255));
-        btnEditar.setColorSecundarioHover(new java.awt.Color(153, 204, 255));
-        btnEditar.addMouseListener(new java.awt.event.MouseAdapter() {
+        btnBuscar.setText("Buscar");
+        btnBuscar.setColorPrimario(new java.awt.Color(0, 51, 153));
+        btnBuscar.setColorPrimarioHover(new java.awt.Color(51, 0, 255));
+        btnBuscar.setColorSecundario(new java.awt.Color(51, 153, 255));
+        btnBuscar.setColorSecundarioHover(new java.awt.Color(153, 204, 255));
+        btnBuscar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnEditarMouseClicked(evt);
+                btnBuscarMouseClicked(evt);
             }
         });
-        btnEditar.addActionListener(new java.awt.event.ActionListener() {
+        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEditarActionPerformed(evt);
+                btnBuscarActionPerformed(evt);
             }
         });
 
@@ -139,7 +143,7 @@ public class TablaProductos extends javax.swing.JPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 96, Short.MAX_VALUE)
                         .addComponent(btnAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(37, 37, 37)
-                        .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(37, 37, 37))))
@@ -154,7 +158,7 @@ public class TablaProductos extends javax.swing.JPanel {
                         .addGap(12, 12, 12)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addComponent(btnAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
@@ -192,15 +196,9 @@ public class TablaProductos extends javax.swing.JPanel {
 
     }//GEN-LAST:event_btnAgregarMouseClicked
 
-    private void btnEditarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditarMouseClicked
-        if (!txtBuscar.getText().trim().isEmpty()) {
-            String codigoProducto = txtBuscar.getText(); // Obtener el texto de txtBuscar
-            BuscarProductos miBuscarProducto = new BuscarProductos(codigoProducto); // Crear el componente con el código de producto
-            ShowpanelCruds(miBuscarProducto); // Mostrar el panel de búsqueda de producto
-        } else {
-            JOptionPane.showMessageDialog(this, "Ingrese un código de producto");
-        }
-    }//GEN-LAST:event_btnEditarMouseClicked
+    private void btnBuscarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBuscarMouseClicked
+        
+    }//GEN-LAST:event_btnBuscarMouseClicked
 
     private void btnEliminarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEliminarMouseClicked
        
@@ -232,9 +230,15 @@ public class TablaProductos extends javax.swing.JPanel {
         VistaMenu.PanelPrincipal.revalidate();
         VistaMenu.PanelPrincipal.repaint();
     }
-    private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnEditarActionPerformed
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+       if (!txtBuscar.getText().trim().isEmpty()) {
+            String codigoProducto = txtBuscar.getText(); // Obtener el texto de txtBuscar
+            BuscarProductos miBuscarProducto = new BuscarProductos(codigoProducto); // Crear el componente con el código de producto
+            ShowpanelCruds(miBuscarProducto); // Mostrar el panel de búsqueda de producto
+        } else {
+            JOptionPane.showMessageDialog(this, "Ingrese un código de producto");
+        }
+    }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
 
@@ -248,41 +252,55 @@ public class TablaProductos extends javax.swing.JPanel {
     
 
     private void mostrarTablaProductos() {
-        ObjectContainer BaseBD = Conexion_db.ConectarBD();
-        Producto producto = new Producto(null, null, null, null, 0, 0, 0, null,null);
-        ObjectSet <Producto>resul = BaseBD.get(producto);
+     ObjectContainer BaseBD = Conexion_db.ConectarBD();
+    Producto producto = new Producto(null, null, null, null, 0, 0, 0, null, null, null, null);
+    ObjectSet<Producto> resul = BaseBD.get(producto);
 
-        String matriz[][] = new String[resul.size()][9];
+    Object matriz[][] = new Object[resul.size()][11]; // Cambiar a Object
 
-        for (int i = 0; i < resul.size(); i++) {
-            Producto prod = (Producto) resul.next();
+    for (int i = 0; i < resul.size(); i++) {
+        Producto prod = resul.next();
 
-            matriz[i][0] = prod.getCodigo_Producto();
-            matriz[i][1] = prod.getNombre_Producto();
-            matriz[i][2] = String.valueOf(prod.getPrecio_Producto());
-            matriz[i][3] = prod.getCodigo_categoria_Producto();
-            matriz[i][4] = String.valueOf(prod.getNumeroProductos_Producto());
-            matriz[i][5] = String.valueOf(prod.getExistenciaMaxima_Producto());
-            matriz[i][6] = String.valueOf(prod.getExistenciaMinima_Producto());
-            matriz[i][7] = prod.getDescripcion_Producto();
-            matriz[i][8] = prod.getID_Proveedor_Producto();
-            
+        matriz[i][0] = prod.getCodigo_Producto();
+        matriz[i][1] = prod.getNombre_Producto();
+        matriz[i][2] = String.valueOf(prod.getPrecio_Producto());
+        matriz[i][3] = prod.getCodigo_categoria_Producto();
+        matriz[i][4] = String.valueOf(prod.getNumeroProductos_Producto());
+        matriz[i][5] = String.valueOf(prod.getExistenciaMaxima_Producto());
+        matriz[i][6] = String.valueOf(prod.getExistenciaMinima_Producto());
+        matriz[i][7] = prod.getDescripcion_Producto();
+        matriz[i][8] = prod.getID_Proveedor_Producto();
+
+        // Convertir imagen a un icono para mostrar en la tabla
+        byte[] imagen = prod.getImagen();
+        if (imagen != null) {
+            ImageIcon icono = new ImageIcon(new ImageIcon(imagen).getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH));
+            matriz[i][9] = new JLabel(icono); // Agregar imagen a la matriz
+        } else {
+            matriz[i][9] = new JLabel("No image"); // Placeholder para productos sin imagen
         }
 
-        TablProductos1.setModel(new javax.swing.table.DefaultTableModel(
-                matriz,
-                new String[]{
-                    "Código Producto", "Nombre Producto", "Precio", "Código Categoría", "Número de Productos", "Existencia Máxima", "Existencia Mínima", "Descripción", "Proveedor"
-                }
-        ));
-        BaseBD.close();
+        matriz[i][10] = String.valueOf(prod.getEstado());
     }
 
+    TablProductos1.setModel(new javax.swing.table.DefaultTableModel(
+            matriz,
+            new String[]{
+                "Código Producto", "Nombre Producto", "Precio", "Código Categoría", "Número de Productos", "Existencia Máxima", "Existencia Mínima", "Descripción", "Proveedor", "Imagen", "Estado"
+            }
+    ));
+
+    // Usar el ImageRenderer para la columna de imágenes
+    TablProductos1.getColumnModel().getColumn(9).setCellRenderer(new ImageRenderer());
+     TablProductos1.setRowHeight(100);
+
+    BaseBD.close();
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable TablProductos1;
     private rsbuttongradiente.RSButtonGradiente btnAgregar;
-    private rsbuttongradiente.RSButtonGradiente btnEditar;
+    private rsbuttongradiente.RSButtonGradiente btnBuscar;
     private rsbuttongradiente.RSButtonGradiente btnEliminar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;

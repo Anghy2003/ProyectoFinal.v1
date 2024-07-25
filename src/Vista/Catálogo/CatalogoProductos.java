@@ -1,13 +1,34 @@
-
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package Vista.Catálogo;
 
-public class Catalogo_Productos extends javax.swing.JFrame {
+import Conexion.Conexion_db;
+import Conexion.ImageRenderer;
+import Models.Producto;
+import Vista.Menu.VistaMenu;
+import com.db4o.ObjectContainer;
+import com.db4o.ObjectSet;
+import java.awt.BorderLayout;
+import java.awt.Image;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+
+/**
+ *
+ * @author 59399
+ */
+public class CatalogoProductos extends javax.swing.JPanel {
 
     /**
-     * Creates new form Catalogo_Productos
+     * Creates new form CatalogoProductos
      */
-    public Catalogo_Productos() {
+    public CatalogoProductos() {
         initComponents();
+        mostrarTablaProductos();
     }
 
     /**
@@ -26,8 +47,6 @@ public class Catalogo_Productos extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         txtNombreProducto = new rojeru_san.RSMTextFull();
         btnBuscarProducto = new rojeru_san.RSButtonRiple();
-
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jPanel1.setBackground(new java.awt.Color(0, 53, 79));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -71,56 +90,60 @@ public class Catalogo_Productos extends javax.swing.JFrame {
         btnBuscarProducto.setText("Buscar");
         jPanel1.add(btnBuscarProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 70, 80, -1));
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
-        getContentPane().setLayout(layout);
+        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
+        this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 870, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
-
-        pack();
     }// </editor-fold>//GEN-END:initComponents
+private void mostrarTablaProductos() {
+        ObjectContainer BaseBD = Conexion_db.ConectarBD();
+        Producto producto = new Producto(null, null, null, null, 0, 0, 0, null, null, null, null);
+        ObjectSet<Producto> resul = BaseBD.get(producto);
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
-        try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
+        Object matriz[][] = new Object[resul.size()][3]; // Cambiar a Object
+
+        for (int i = 0; i < resul.size(); i++) {
+            Producto prod = resul.next();
+
+            matriz[i][0] = prod.getCodigo_Producto();
+            matriz[i][1] = prod.getNombre_Producto();
+            
+            // Convertir imagen a un icono para mostrar en la tabla
+            byte[] imagen = prod.getImagen();
+            if (imagen != null) {
+                ImageIcon icono = new ImageIcon(new ImageIcon(imagen).getImage().getScaledInstance(100, 100, Image.SCALE_SMOOTH)); // Tamaño más grande
+                matriz[i][2] = new JLabel(icono); // Agregar imagen a la matriz
+            } else {
+                matriz[i][2] = new JLabel("No image"); // Placeholder para productos sin imagen
             }
-        } catch (ClassNotFoundException ex) {
-            java.util.logging.Logger.getLogger(Catalogo_Productos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (InstantiationException ex) {
-            java.util.logging.Logger.getLogger(Catalogo_Productos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (IllegalAccessException ex) {
-            java.util.logging.Logger.getLogger(Catalogo_Productos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-            java.util.logging.Logger.getLogger(Catalogo_Productos.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
-        //</editor-fold>
 
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Catalogo_Productos().setVisible(true);
-            }
-        });
+        tblCatalgoProductos.setModel(new javax.swing.table.DefaultTableModel(
+                matriz,
+                new String[]{
+                    "Código Producto", "Nombre Producto", "Imagen"
+                }
+        ));
+
+       
+        if (tblCatalgoProductos.getColumnModel().getColumnCount() > 2) {
+            tblCatalgoProductos.getColumnModel().getColumn(2).setCellRenderer(new ImageRenderer());
+        } else {
+            System.out.println("No hay suficientes columnas en la tabla para renderizar imágenes.");
+        }
+
+        // Ajustar el tamaño de las filas para mostrar imágenes más grandes
+        tblCatalgoProductos.setRowHeight(100);
+
+        BaseBD.close();
     }
-
+     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private rojeru_san.RSButtonRiple btnBuscarProducto;
     private javax.swing.JLabel jLabel1;
