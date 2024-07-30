@@ -1,4 +1,3 @@
-
 package Vista.Cruds.CRUDS1;
 
 import Conexion.Conexion_db;
@@ -9,22 +8,32 @@ import com.db4o.ObjectContainer;
 import com.db4o.ObjectSet;
 import com.db4o.query.Query;
 import java.awt.BorderLayout;
+import java.awt.Image;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class CrudPanelAdministrador extends javax.swing.JPanel {
 
-    public void GuardarMecanico(String titulo_Administrador, Administrador.Estado estado, String cedula, String nombres, String apellidos, String direccion, String correo, String celular, String genero,
+    private byte[] imagenAdmi;
+
+    public void GuardarAdministrador(String titulo_Administrador, Administrador.Estado estado, String ciudad, byte[] imagenAdmi, String cedula, String nombres, String apellidos, String direccion, String correo, String celular, String genero,
             String fechaNacimiento, String estadoCivil, String nombreUsuario, String password, String correoRecuperacion) {
 
         ObjectContainer BaseBD = Conexion_db.ConectarBD();
 
         int siguienteID = obtenerProximoIDAdministrador(BaseBD);
 
-        Administrador administrador1 = new Administrador( titulo_Administrador, estado,  cedula,  nombres,  apellidos,  direccion,  correo,  celular,  genero,
-             fechaNacimiento,  estadoCivil,  nombreUsuario,  password,  correoRecuperacion);
+        Administrador administrador1 = new Administrador(titulo_Administrador, estado, ciudad, imagenAdmi, cedula, nombres, apellidos, direccion, correo, celular, genero,
+                fechaNacimiento, estadoCivil, nombreUsuario, password, correoRecuperacion);
 
         administrador1.setiD_Administrador(siguienteID);
         BaseBD.close();
@@ -43,7 +52,6 @@ public class CrudPanelAdministrador extends javax.swing.JPanel {
         }
     }
 
-    
     public final int VerificarAdministradorRepetidos() {
 
         ObjectContainer BaseBD = Conexion_db.ConectarBD();
@@ -73,7 +81,6 @@ public class CrudPanelAdministrador extends javax.swing.JPanel {
         return maxID + 1;
     }
 
-   
     public CrudPanelAdministrador() {
         initComponents();
     }
@@ -96,9 +103,9 @@ public class CrudPanelAdministrador extends javax.swing.JPanel {
         lblApellidos_Admi = new javax.swing.JLabel();
         lblDireccion_Admi = new javax.swing.JLabel();
         lblCorreo_Admi = new javax.swing.JLabel();
-        lblComiciones_Ven = new javax.swing.JLabel();
+        lblTituloAdmi = new javax.swing.JLabel();
         lblFEchaNac_Admi = new javax.swing.JLabel();
-        lblGenero_Admi = new javax.swing.JLabel();
+        lblCiudad_Admi = new javax.swing.JLabel();
         lblEstadoCivil_Admi = new javax.swing.JLabel();
         txtCedulaAdmi = new rojeru_san.RSMTextFull();
         txtNombresAdmi = new rojeru_san.RSMTextFull();
@@ -108,13 +115,17 @@ public class CrudPanelAdministrador extends javax.swing.JPanel {
         txtTituloAdmi = new rojeru_san.RSMTextFull();
         btnCancelar = new rojeru_san.RSButtonRiple();
         jDateFechaNacAdmi = new com.toedter.calendar.JDateChooser();
-        cbxGeneroAdmi = new javax.swing.JComboBox<>();
+        cbxCiudadAdmi = new javax.swing.JComboBox<>();
         cbxEstadoCivilAdmi = new javax.swing.JComboBox<>();
-        btnGuardar = new rojeru_san.RSButtonRiple();
         lblPassword_Admi = new javax.swing.JLabel();
-        txtPasswordAdmi = new rojeru_san.RSMTextFull();
-        lblCelular_Admi = new javax.swing.JLabel();
+        lblCelularAdmi = new javax.swing.JLabel();
         txtCelularAdmi = new rojeru_san.RSMTextFull();
+        lblGenero_Admi = new javax.swing.JLabel();
+        cbxGeneroAdmi = new javax.swing.JComboBox<>();
+        btnGuardar = new rojeru_san.RSButtonRiple();
+        btnSeleccionarImgen = new rojeru_san.RSButtonRiple();
+        lblImagenAdmi = new javax.swing.JLabel();
+        txtPasswordAdmi = new rojeru_san.RSMPassView();
 
         jPanel1.setLayout(new java.awt.BorderLayout());
 
@@ -124,88 +135,88 @@ public class CrudPanelAdministrador extends javax.swing.JPanel {
         jLabel2.setFont(new java.awt.Font("Roboto Black", 0, 30)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(0, 53, 79));
         jLabel2.setText("Registro Administrador");
-        jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 30, 330, 40));
+        jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 20, 330, 40));
 
         Cedula_Admi.setFont(new java.awt.Font("Roboto Medium", 0, 21)); // NOI18N
         Cedula_Admi.setForeground(new java.awt.Color(0, 53, 79));
-        Cedula_Admi.setText("Cédula/Usuario:");
-        jPanel2.add(Cedula_Admi, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 100, 150, 40));
+        Cedula_Admi.setText("Usuario/Cédula:");
+        jPanel2.add(Cedula_Admi, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 280, 150, 40));
 
         lblNombres_Admi.setFont(new java.awt.Font("Roboto Medium", 0, 21)); // NOI18N
         lblNombres_Admi.setForeground(new java.awt.Color(0, 53, 79));
         lblNombres_Admi.setText("Nombres:");
-        jPanel2.add(lblNombres_Admi, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 200, 100, 40));
+        jPanel2.add(lblNombres_Admi, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 360, 90, 40));
 
         lblApellidos_Admi.setFont(new java.awt.Font("Roboto Medium", 0, 21)); // NOI18N
         lblApellidos_Admi.setForeground(new java.awt.Color(0, 53, 79));
         lblApellidos_Admi.setText("Apellidos:");
-        jPanel2.add(lblApellidos_Admi, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 260, 100, 40));
+        jPanel2.add(lblApellidos_Admi, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 400, 90, 40));
 
         lblDireccion_Admi.setFont(new java.awt.Font("Roboto Medium", 0, 21)); // NOI18N
         lblDireccion_Admi.setForeground(new java.awt.Color(0, 53, 79));
-        lblDireccion_Admi.setText("Dirección");
-        jPanel2.add(lblDireccion_Admi, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 340, 90, 40));
+        lblDireccion_Admi.setText("Dirección:");
+        jPanel2.add(lblDireccion_Admi, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 440, -1, 40));
 
         lblCorreo_Admi.setFont(new java.awt.Font("Roboto Medium", 0, 21)); // NOI18N
         lblCorreo_Admi.setForeground(new java.awt.Color(0, 53, 79));
         lblCorreo_Admi.setText("Correo Electrónico:");
-        jPanel2.add(lblCorreo_Admi, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 420, 190, 40));
+        jPanel2.add(lblCorreo_Admi, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 480, 180, 40));
 
-        lblComiciones_Ven.setFont(new java.awt.Font("Roboto Medium", 0, 21)); // NOI18N
-        lblComiciones_Ven.setForeground(new java.awt.Color(0, 53, 79));
-        lblComiciones_Ven.setText("Titulo");
-        jPanel2.add(lblComiciones_Ven, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 330, 120, 40));
+        lblTituloAdmi.setFont(new java.awt.Font("Roboto Medium", 0, 21)); // NOI18N
+        lblTituloAdmi.setForeground(new java.awt.Color(0, 53, 79));
+        lblTituloAdmi.setText("Titulo:");
+        jPanel2.add(lblTituloAdmi, new org.netbeans.lib.awtextra.AbsoluteConstraints(550, 330, 70, 40));
 
         lblFEchaNac_Admi.setFont(new java.awt.Font("Roboto Medium", 0, 21)); // NOI18N
         lblFEchaNac_Admi.setForeground(new java.awt.Color(0, 53, 79));
         lblFEchaNac_Admi.setText("Fecha Nacimiento:");
-        jPanel2.add(lblFEchaNac_Admi, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 160, 180, 40));
+        jPanel2.add(lblFEchaNac_Admi, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 410, 180, 40));
 
-        lblGenero_Admi.setFont(new java.awt.Font("Roboto Medium", 0, 21)); // NOI18N
-        lblGenero_Admi.setForeground(new java.awt.Color(0, 53, 79));
-        lblGenero_Admi.setText("Género:");
-        jPanel2.add(lblGenero_Admi, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 220, 80, 40));
+        lblCiudad_Admi.setFont(new java.awt.Font("Roboto Medium", 0, 21)); // NOI18N
+        lblCiudad_Admi.setForeground(new java.awt.Color(0, 53, 79));
+        lblCiudad_Admi.setText("Ciudad:");
+        jPanel2.add(lblCiudad_Admi, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 380, 80, 30));
 
         lblEstadoCivil_Admi.setFont(new java.awt.Font("Roboto Medium", 0, 21)); // NOI18N
         lblEstadoCivil_Admi.setForeground(new java.awt.Color(0, 53, 79));
         lblEstadoCivil_Admi.setText("Estado Civil:");
-        jPanel2.add(lblEstadoCivil_Admi, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 270, 120, 40));
+        jPanel2.add(lblEstadoCivil_Admi, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 450, 120, 40));
 
         txtCedulaAdmi.setForeground(new java.awt.Color(0, 53, 79));
         txtCedulaAdmi.setColorTransparente(true);
         txtCedulaAdmi.setFont(new java.awt.Font("Roboto Light", 1, 14)); // NOI18N
         txtCedulaAdmi.setPlaceholder("0123456789");
-        jPanel2.add(txtCedulaAdmi, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 100, 200, 40));
+        jPanel2.add(txtCedulaAdmi, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 280, 220, 40));
 
         txtNombresAdmi.setForeground(new java.awt.Color(0, 53, 79));
         txtNombresAdmi.setColorTransparente(true);
         txtNombresAdmi.setFont(new java.awt.Font("Roboto Light", 1, 14)); // NOI18N
-        txtNombresAdmi.setPlaceholder("Escriba los nombres");
-        jPanel2.add(txtNombresAdmi, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 200, 200, 40));
+        txtNombresAdmi.setPlaceholder("Yins Yan");
+        jPanel2.add(txtNombresAdmi, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 360, 220, 40));
 
         txtApellidosAdmi.setForeground(new java.awt.Color(0, 53, 79));
         txtApellidosAdmi.setColorTransparente(true);
         txtApellidosAdmi.setFont(new java.awt.Font("Roboto Light", 1, 14)); // NOI18N
-        txtApellidosAdmi.setPlaceholder("Escriba los apellidos");
-        jPanel2.add(txtApellidosAdmi, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 260, 200, 40));
+        txtApellidosAdmi.setPlaceholder("Yins Yan");
+        jPanel2.add(txtApellidosAdmi, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 400, 220, 40));
 
         txtDireccionAdmi.setForeground(new java.awt.Color(0, 53, 79));
         txtDireccionAdmi.setColorTransparente(true);
         txtDireccionAdmi.setFont(new java.awt.Font("Roboto Light", 1, 14)); // NOI18N
-        txtDireccionAdmi.setPlaceholder("Escriba la dirección");
-        jPanel2.add(txtDireccionAdmi, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 340, 200, 40));
+        txtDireccionAdmi.setPlaceholder("Octavio Chacon");
+        jPanel2.add(txtDireccionAdmi, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 440, 220, 40));
 
         txtCorreoAdmi.setForeground(new java.awt.Color(0, 53, 79));
         txtCorreoAdmi.setColorTransparente(true);
         txtCorreoAdmi.setFont(new java.awt.Font("Roboto Light", 1, 14)); // NOI18N
-        txtCorreoAdmi.setPlaceholder("Escriba su correo electronico");
-        jPanel2.add(txtCorreoAdmi, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 420, 250, 40));
+        txtCorreoAdmi.setPlaceholder("Yins_Yan@tecazuay.com");
+        jPanel2.add(txtCorreoAdmi, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 480, 220, 40));
 
         txtTituloAdmi.setForeground(new java.awt.Color(0, 53, 79));
         txtTituloAdmi.setColorTransparente(true);
         txtTituloAdmi.setFont(new java.awt.Font("Roboto Light", 1, 14)); // NOI18N
-        txtTituloAdmi.setPlaceholder("Escriba su número celular");
-        jPanel2.add(txtTituloAdmi, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 330, 230, 40));
+        txtTituloAdmi.setPlaceholder("Tglo. Software");
+        jPanel2.add(txtTituloAdmi, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 330, 190, 40));
 
         btnCancelar.setBackground(new java.awt.Color(255, 51, 51));
         btnCancelar.setText("Cancelar");
@@ -219,14 +230,37 @@ public class CrudPanelAdministrador extends javax.swing.JPanel {
                 btnCancelarActionPerformed(evt);
             }
         });
-        jPanel2.add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 520, -1, -1));
-        jPanel2.add(jDateFechaNacAdmi, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 170, 140, 30));
+        jPanel2.add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 560, -1, -1));
+        jPanel2.add(jDateFechaNacAdmi, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 420, 190, 30));
 
-        cbxGeneroAdmi.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jPanel2.add(cbxGeneroAdmi, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 230, 150, 30));
+        jPanel2.add(cbxCiudadAdmi, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 380, 190, 30));
 
-        cbxEstadoCivilAdmi.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        jPanel2.add(cbxEstadoCivilAdmi, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 280, 150, 30));
+        cbxEstadoCivilAdmi.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Masculino", "Femenino" }));
+        jPanel2.add(cbxEstadoCivilAdmi, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 500, 190, 30));
+
+        lblPassword_Admi.setFont(new java.awt.Font("Roboto Medium", 0, 21)); // NOI18N
+        lblPassword_Admi.setForeground(new java.awt.Color(0, 53, 79));
+        lblPassword_Admi.setText("Contraseña:");
+        jPanel2.add(lblPassword_Admi, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 320, -1, 40));
+
+        lblCelularAdmi.setFont(new java.awt.Font("Roboto Medium", 0, 21)); // NOI18N
+        lblCelularAdmi.setForeground(new java.awt.Color(0, 53, 79));
+        lblCelularAdmi.setText("Celular:");
+        jPanel2.add(lblCelularAdmi, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 290, -1, 40));
+
+        txtCelularAdmi.setForeground(new java.awt.Color(0, 53, 79));
+        txtCelularAdmi.setColorTransparente(true);
+        txtCelularAdmi.setFont(new java.awt.Font("Roboto Light", 1, 14)); // NOI18N
+        txtCelularAdmi.setPlaceholder("0960188019");
+        jPanel2.add(txtCelularAdmi, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 280, 190, 40));
+
+        lblGenero_Admi.setFont(new java.awt.Font("Roboto Medium", 0, 21)); // NOI18N
+        lblGenero_Admi.setForeground(new java.awt.Color(0, 53, 79));
+        lblGenero_Admi.setText("Género:");
+        jPanel2.add(lblGenero_Admi, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 490, 80, 40));
+
+        cbxGeneroAdmi.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Soltero/a", "Casado/a", "Divorciado/a", "Viudo/a", "Union Libre", " " }));
+        jPanel2.add(cbxGeneroAdmi, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 460, 190, 30));
 
         btnGuardar.setText("Guardar");
         btnGuardar.addActionListener(new java.awt.event.ActionListener() {
@@ -234,35 +268,36 @@ public class CrudPanelAdministrador extends javax.swing.JPanel {
                 btnGuardarActionPerformed(evt);
             }
         });
-        jPanel2.add(btnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 520, -1, -1));
+        jPanel2.add(btnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 560, -1, 40));
 
-        lblPassword_Admi.setFont(new java.awt.Font("Roboto Medium", 0, 21)); // NOI18N
-        lblPassword_Admi.setForeground(new java.awt.Color(0, 53, 79));
-        lblPassword_Admi.setText("Contraseña:");
-        jPanel2.add(lblPassword_Admi, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 150, 130, 40));
+        btnSeleccionarImgen.setText("Selecionar Imagen");
+        btnSeleccionarImgen.setToolTipText("SOLO JPG");
+        btnSeleccionarImgen.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSeleccionarImgenActionPerformed(evt);
+            }
+        });
+        jPanel2.add(btnSeleccionarImgen, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 230, 180, -1));
+
+        lblImagenAdmi.setToolTipText("SOLO JPG");
+        lblImagenAdmi.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+        jPanel2.add(lblImagenAdmi, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 80, 180, 140));
 
         txtPasswordAdmi.setForeground(new java.awt.Color(0, 53, 79));
-        txtPasswordAdmi.setColorTransparente(true);
-        txtPasswordAdmi.setFont(new java.awt.Font("Roboto Light", 1, 14)); // NOI18N
-        txtPasswordAdmi.setPlaceholder("123abc");
-        jPanel2.add(txtPasswordAdmi, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 150, 200, 40));
-
-        lblCelular_Admi.setFont(new java.awt.Font("Roboto Medium", 0, 21)); // NOI18N
-        lblCelular_Admi.setForeground(new java.awt.Color(0, 53, 79));
-        lblCelular_Admi.setText("Celular:");
-        jPanel2.add(lblCelular_Admi, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 100, 80, 40));
-
-        txtCelularAdmi.setForeground(new java.awt.Color(0, 53, 79));
-        txtCelularAdmi.setColorTransparente(true);
-        txtCelularAdmi.setFont(new java.awt.Font("Roboto Light", 1, 14)); // NOI18N
-        txtCelularAdmi.setPlaceholder("Escriba su número celular");
-        jPanel2.add(txtCelularAdmi, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 100, 230, 40));
+        txtPasswordAdmi.setOpaque(false);
+        txtPasswordAdmi.setPlaceholder("Digite su Contraseña");
+        txtPasswordAdmi.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtPasswordAdmiActionPerformed(evt);
+            }
+        });
+        jPanel2.add(txtPasswordAdmi, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 320, 220, 40));
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 896, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 896, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel4Layout.createSequentialGroup()
                     .addGap(0, 448, Short.MAX_VALUE)
@@ -271,7 +306,7 @@ public class CrudPanelAdministrador extends javax.swing.JPanel {
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 638, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 638, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel4Layout.createSequentialGroup()
                     .addGap(0, 319, Short.MAX_VALUE)
@@ -292,7 +327,7 @@ public class CrudPanelAdministrador extends javax.swing.JPanel {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 638, Short.MAX_VALUE)
+            .addGap(0, 640, Short.MAX_VALUE)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addGap(0, 0, Short.MAX_VALUE)
@@ -305,9 +340,19 @@ public class CrudPanelAdministrador extends javax.swing.JPanel {
 
     }//GEN-LAST:event_btnCancelarMouseClicked
 
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        System.out.println("salir");
+        cambiartabla();
+    }//GEN-LAST:event_btnCancelarActionPerformed
+
+    public void cambiartabla() {
+        TablaAdministradores tblCli = new TablaAdministradores();
+        ShowpanelCruds(tblCli);
+    }
+
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
 
- boolean usuarioRepetido = false;
+        boolean usuarioRepetido = false;
 
         if (VerificarAdministradorRepetidos() != 0) {
             JOptionPane.showMessageDialog(null, "Administrador ya registrado");
@@ -327,14 +372,17 @@ public class CrudPanelAdministrador extends javax.swing.JPanel {
             if (valido = txtCedulaAdmi.getText().matches("\\d{10}")) {
                 if (valido = txtNombresAdmi.getText().toUpperCase().matches("^[a-zA-Z]+(?:\\s[a-zA-Z]+)?$")) {
                     if (valido = txtApellidosAdmi.getText().toUpperCase().matches("^[a-zA-Z]+(?:\\s[a-zA-Z]+)?$")) {
+
                         if (valido = txtCorreoAdmi.getText().matches("^[\\w.-]+@[\\w.-]+\\.[a-zA-Z]{2,6}$")) {
                             if (valido = txtCelularAdmi.getText().matches("^09\\d{8}$")) {
 
-                                GuardarMecanico(txtTituloAdmi.getText().toUpperCase(), Administrador.Estado.ACTIVO, txtCedulaAdmi.getText(), txtNombresAdmi.getText().toUpperCase(),
-                                        txtApellidosAdmi.getText().toUpperCase(), txtDireccionAdmi.getText().toUpperCase(), txtCorreoAdmi.getText(), txtCelularAdmi.getText(),
+                                GuardarAdministrador(txtTituloAdmi.getText(), Administrador.Estado.ACTIVO, (String) cbxCiudadAdmi.getSelectedItem(), imagenAdmi, txtCedulaAdmi.getText(),
+                                        txtNombresAdmi.getText().toUpperCase(), txtApellidosAdmi.getText().toUpperCase(), txtDireccionAdmi.getText().toUpperCase(), txtCorreoAdmi.getText(), txtCelularAdmi.getText(),
                                         (String) cbxGeneroAdmi.getSelectedItem(), fechaNacimiento, (String) cbxEstadoCivilAdmi.getSelectedItem(), txtCedulaAdmi.getText(), txtPasswordAdmi.getText(),
                                         txtCorreoAdmi.getText());
 
+                                cambiartabla();
+                                limpiar();
                             } else {
                                 JOptionPane.showMessageDialog(null, "Ingrese un celular valido");
                             }
@@ -353,20 +401,52 @@ public class CrudPanelAdministrador extends javax.swing.JPanel {
             } else {
                 JOptionPane.showMessageDialog(null, "Ingrese una cedula valida");
             }
-
         }
-        TablaAdministradores tblCli = new TablaAdministradores();
-        ShowpanelCruds(tblCli);
 
     }//GEN-LAST:event_btnGuardarActionPerformed
 
-    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-         System.out.println("salir");
-        TablaAdministradores tblCli = new TablaAdministradores();
-        ShowpanelCruds(tblCli);
-    }//GEN-LAST:event_btnCancelarActionPerformed
+    private void btnSeleccionarImgenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSeleccionarImgenActionPerformed
+        JFileChooser jFileChooser = new JFileChooser();
+        FileNameExtensionFilter filtrado = new FileNameExtensionFilter("JPG, PNG & GIF", "jpg", "png", "gif");
+        jFileChooser.setFileFilter(filtrado);
 
-private void ShowpanelCruds(JPanel p) {
+        int respuesta = jFileChooser.showOpenDialog(this);
+
+        if (respuesta == JFileChooser.APPROVE_OPTION) {
+            File archivoImagen = jFileChooser.getSelectedFile();
+            String Ruta = archivoImagen.getPath();
+
+            try {
+                // Leer la imagen y convertirla a un array de bytes
+                imagenAdmi = leerImagen(archivoImagen);
+
+                // Mostrar la imagen en el label
+                Image mImagen = new ImageIcon(Ruta).getImage();
+                ImageIcon mIcono = new ImageIcon(mImagen.getScaledInstance(lblImagenAdmi.getWidth(), lblImagenAdmi.getHeight(), Image.SCALE_SMOOTH));
+                lblImagenAdmi.setIcon(mIcono);
+            } catch (IOException e) {
+                JOptionPane.showMessageDialog(this, "Error al leer la imagen: " + e.getMessage());
+            }
+        }
+    }//GEN-LAST:event_btnSeleccionarImgenActionPerformed
+
+    private void txtPasswordAdmiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPasswordAdmiActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtPasswordAdmiActionPerformed
+
+    //transforma la imagen en bytes
+    private byte[] leerImagen(File archivoImagen) throws IOException {
+        try ( ByteArrayOutputStream baos = new ByteArrayOutputStream();  FileInputStream fis = new FileInputStream(archivoImagen)) {
+            byte[] buffer = new byte[1024];
+            int bytesRead;
+            while ((bytesRead = fis.read(buffer)) != -1) {
+                baos.write(buffer, 0, bytesRead);
+            }
+            return baos.toByteArray();
+        }
+    }
+
+    private void ShowpanelCruds(JPanel p) {
         p.setSize(870, 630);
         p.setLocation(0, 0);
         VistaMenu.PanelPrincipal.removeAll();
@@ -374,10 +454,30 @@ private void ShowpanelCruds(JPanel p) {
         VistaMenu.PanelPrincipal.revalidate();
         VistaMenu.PanelPrincipal.repaint();
     }
+
+    public void limpiar() {
+        txtCedulaAdmi.setText("");
+        txtPasswordAdmi.setText("");
+        txtNombresAdmi.setText("");
+        txtApellidosAdmi.setText("");
+        txtDireccionAdmi.setText("");
+        txtCorreoAdmi.setText("");
+        txtCelularAdmi.setText("");
+        txtTituloAdmi.setText("");
+        cbxCiudadAdmi.setSelectedItem(-1);        
+        jDateFechaNacAdmi.setDate(null);
+        cbxEstadoCivilAdmi.setSelectedIndex(-1);
+        cbxGeneroAdmi.setSelectedIndex(-1);
+        imagenAdmi = null;
+        lblImagenAdmi.setIcon(null);
+    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Cedula_Admi;
     private rojeru_san.RSButtonRiple btnCancelar;
     private rojeru_san.RSButtonRiple btnGuardar;
+    private rojeru_san.RSButtonRiple btnSeleccionarImgen;
+    private javax.swing.JComboBox<String> cbxCiudadAdmi;
     private javax.swing.JComboBox<String> cbxEstadoCivilAdmi;
     private javax.swing.JComboBox<String> cbxGeneroAdmi;
     private com.toedter.calendar.JDateChooser jDateFechaNacAdmi;
@@ -386,22 +486,24 @@ private void ShowpanelCruds(JPanel p) {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel4;
     private javax.swing.JLabel lblApellidos_Admi;
-    private javax.swing.JLabel lblCelular_Admi;
-    private javax.swing.JLabel lblComiciones_Ven;
+    private javax.swing.JLabel lblCelularAdmi;
+    private javax.swing.JLabel lblCiudad_Admi;
     private javax.swing.JLabel lblCorreo_Admi;
     private javax.swing.JLabel lblDireccion_Admi;
     private javax.swing.JLabel lblEstadoCivil_Admi;
     private javax.swing.JLabel lblFEchaNac_Admi;
     private javax.swing.JLabel lblGenero_Admi;
+    private javax.swing.JLabel lblImagenAdmi;
     private javax.swing.JLabel lblNombres_Admi;
     private javax.swing.JLabel lblPassword_Admi;
+    private javax.swing.JLabel lblTituloAdmi;
     private rojeru_san.RSMTextFull txtApellidosAdmi;
     private rojeru_san.RSMTextFull txtCedulaAdmi;
     private rojeru_san.RSMTextFull txtCelularAdmi;
     private rojeru_san.RSMTextFull txtCorreoAdmi;
     private rojeru_san.RSMTextFull txtDireccionAdmi;
     private rojeru_san.RSMTextFull txtNombresAdmi;
-    private rojeru_san.RSMTextFull txtPasswordAdmi;
+    private rojeru_san.RSMPassView txtPasswordAdmi;
     private rojeru_san.RSMTextFull txtTituloAdmi;
     // End of variables declaration//GEN-END:variables
 }

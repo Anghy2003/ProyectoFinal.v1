@@ -5,10 +5,8 @@ import Models.Categoria;
 ;
 import Models.Producto;
 import Models.Proveedor;
-import static Vista.Catálogo.CrudCategoria.guardarCategoria;
 
 import Vista.Menu.VistaMenu;
-import Vista.Tables.TablaCategoria;
 import Vista.Tables.TablaProductos;
 import com.db4o.ObjectContainer;
 import com.db4o.ObjectSet;
@@ -34,11 +32,13 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 public class CrudProductos extends javax.swing.JPanel {
 
     private byte[] imagenProducto;
+
     public CrudProductos() {
         initComponents();
-        mostrarCombo();       
+        mostrarCombo();
+        mostrarDatos();
         mostrarDatospro();
-        
+
     }
 
     @SuppressWarnings("unchecked")
@@ -77,7 +77,6 @@ public class CrudProductos extends javax.swing.JPanel {
         btnSeleccionarImgen = new rojeru_san.RSButtonRiple();
         CmbCategoria = new javax.swing.JComboBox<>();
         BtnBuscar = new rojeru_san.RSButtonRiple();
-        rSButtonGradiente1 = new rsbuttongradiente.RSButtonGradiente();
 
         jPanel2.setLayout(new java.awt.BorderLayout());
 
@@ -135,7 +134,8 @@ public class CrudProductos extends javax.swing.JPanel {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(btnAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addGap(14, 14, 14))
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGap(24, 24, 24)
@@ -147,6 +147,7 @@ public class CrudProductos extends javax.swing.JPanel {
             .addGroup(jPanel3Layout.createSequentialGroup()
                 .addGap(38, 38, 38)
                 .addComponent(jLabel1)
+                .addGap(18, 18, 18)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGap(16, 16, 16)
@@ -310,7 +311,7 @@ public class CrudProductos extends javax.swing.JPanel {
         });
         jPanel1.add(btnSeleccionarImgen, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 220, 180, -1));
 
-        jPanel1.add(CmbCategoria, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 172, 160, 30));
+        jPanel1.add(CmbCategoria, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 180, 270, -1));
 
         BtnBuscar.setBackground(new java.awt.Color(0, 204, 51));
         BtnBuscar.setText("Buscar");
@@ -320,18 +321,6 @@ public class CrudProductos extends javax.swing.JPanel {
             }
         });
         jPanel1.add(BtnBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 270, 80, 30));
-
-        rSButtonGradiente1.setText("Añadir");
-        rSButtonGradiente1.setColorPrimario(new java.awt.Color(0, 112, 192));
-        rSButtonGradiente1.setColorSecundario(new java.awt.Color(51, 102, 255));
-        rSButtonGradiente1.setColorSecundarioHover(new java.awt.Color(0, 102, 255));
-        rSButtonGradiente1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
-        rSButtonGradiente1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                rSButtonGradiente1ActionPerformed(evt);
-            }
-        });
-        jPanel1.add(rSButtonGradiente1, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 170, 80, 30));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -411,11 +400,11 @@ public class CrudProductos extends javax.swing.JPanel {
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-        
+
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnSeleccionarImgenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSeleccionarImgenActionPerformed
-       JFileChooser jFileChooser = new JFileChooser();
+        JFileChooser jFileChooser = new JFileChooser();
         FileNameExtensionFilter filtrado = new FileNameExtensionFilter("JPG, PNG & GIF", "jpg", "png", "gif");
         jFileChooser.setFileFilter(filtrado);
 
@@ -438,10 +427,12 @@ public class CrudProductos extends javax.swing.JPanel {
             }
         }
     }//GEN-LAST:event_btnSeleccionarImgenActionPerformed
-
+    private void mostrarDatos() {
+        // Método para mostrar datos si es necesario
+    }
 
     private byte[] leerImagen(File archivoImagen) throws IOException {
-        try (ByteArrayOutputStream baos = new ByteArrayOutputStream(); FileInputStream fis = new FileInputStream(archivoImagen)) {
+        try ( ByteArrayOutputStream baos = new ByteArrayOutputStream();  FileInputStream fis = new FileInputStream(archivoImagen)) {
             byte[] buffer = new byte[1024];
             int bytesRead;
             while ((bytesRead = fis.read(buffer)) != -1) {
@@ -451,31 +442,26 @@ public class CrudProductos extends javax.swing.JPanel {
         }
     }
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
-       mostrarNombreProveedor();
+        mostrarNombreProveedor();
     }//GEN-LAST:event_btnAgregarActionPerformed
 
     private void BtnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnBuscarActionPerformed
-       activarJdialog(TablaProvedores);
+        activarJdialog(TablaProvedores);
     }//GEN-LAST:event_BtnBuscarActionPerformed
+    private void resetCampos() {
 
-    private void rSButtonGradiente1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonGradiente1ActionPerformed
-        CrudCategoria cate= new CrudCategoria();
-        MostrarpaneCruds(cate);
-    }//GEN-LAST:event_rSButtonGradiente1ActionPerformed
-   private void resetCampos() {
-    
-    txtNombreProducto.setText("");
-    txtPrecioProducto.setText("");    
-    txtNumeroProductos1.setText("");
-    txtExistenciaMaxima.setText("");
-    txtExistenciaMinima.setText("");
-    txtDescripcion.setText("");
-    txtProveedorID.setText("");
-    CmbCategoria.setSelectedIndex(-1); 
-    txtNombreProducto.setEnabled(true);
-    lblImagen.setIcon(null);  // Restablecer la imagen a null
-    lblImagen.setText("No image available"); // Establecer texto por defecto si no hay imagen
-}
+        txtNombreProducto.setText("");
+        txtPrecioProducto.setText("");
+        txtNumeroProductos1.setText("");
+        txtExistenciaMaxima.setText("");
+        txtExistenciaMinima.setText("");
+        txtDescripcion.setText("");
+        txtProveedorID.setText("");
+        CmbCategoria.setSelectedIndex(-1);
+        txtNombreProducto.setEnabled(true);
+        lblImagen.setIcon(null);  // Restablecer la imagen a null
+        lblImagen.setText("No image available"); // Establecer texto por defecto si no hay imagen
+    }
 
     private static String obtenerProximoCodigoProducto(ObjectContainer db) {
         // Consultar todos los productos
@@ -499,32 +485,34 @@ public class CrudProductos extends javax.swing.JPanel {
         return "PRO" + siguienteID;
     }
 
-    public static void guardarProducto(String nombre_Producto, Double precio_Producto, String codigo_categoria_Producto, int numeroProductos_Producto, int existenciaMaxima_Producto, int existenciaMinima_Producto, String descripcion_Producto, String ID_Proveedor_Producto, byte[] imagen, Producto.Estado estado) {
-    // ESTABLECER CONEXION CON LA BASE DE DATOS
-    ObjectContainer baseBD = Conexion_db.ConectarBD();
+    public static void guardarProducto(String nombre_Producto, Double precio_Producto, String codigo_categoria_Producto, int numeroProductos_Producto,
+            int existenciaMaxima_Producto, int existenciaMinima_Producto, String descripcion_Producto,
+            String ID_Proveedor_Producto, byte[] imagen, Producto.Estado estado) {
+        // ESTABLECER CONEXION CON LA BASE DE DATOS
+        ObjectContainer baseBD = Conexion_db.ConectarBD();
 
-    // Obtener el próximo código de producto disponible
-    String codigo_Producto = obtenerProximoCodigoProducto(baseBD);
+        // Obtener el próximo código de producto disponible
+        String codigo_Producto = obtenerProximoCodigoProducto(baseBD);
 
-    // Verificar si el código ya existe (esto no debería suceder, pero es una precaución)
-    if (verificarProducto(baseBD, codigo_Producto) == 0) {
-        // Crear objeto de Producto con los datos proporcionados
-        Producto nuevoProducto = new Producto(codigo_Producto, nombre_Producto, precio_Producto, codigo_categoria_Producto, numeroProductos_Producto, existenciaMaxima_Producto, existenciaMinima_Producto, descripcion_Producto, ID_Proveedor_Producto, imagen, estado);
+        // Verificar si el código ya existe (esto no debería suceder, pero es una precaución)
+        if (verificarProducto(baseBD, codigo_Producto) == 0) {
+            // Crear objeto de Producto con los datos proporcionados
+            Producto nuevoProducto = new Producto(codigo_Producto, nombre_Producto, precio_Producto, codigo_categoria_Producto, numeroProductos_Producto, existenciaMaxima_Producto, existenciaMinima_Producto, descripcion_Producto, ID_Proveedor_Producto, imagen, Producto.Estado.ACTIVO);
 
-        // Guardar el producto en la base de datos
-        baseBD.set(nuevoProducto);
+            // Guardar el producto en la base de datos
+            baseBD.set(nuevoProducto);
 
-    } else {
-        JOptionPane.showMessageDialog(null, " El código de producto ya existe. Intente nuevamente.");
+        } else {
+            JOptionPane.showMessageDialog(null, " El código de producto ya existe. Intente nuevamente.");
+        }
+
+        // Cerrar conexión con la base de datos
+        baseBD.close();
     }
-
-    // Cerrar conexión con la base de datos
-    baseBD.close();
-}
 
     public static int verificarProducto(ObjectContainer baseBD, String codigo_Producto) {
         // Crear objeto para buscar el producto por su código
-        Producto productoBusca = new Producto(codigo_Producto, null, null, null, 0, 0, 0, null, null,null,null);
+        Producto productoBusca = new Producto(codigo_Producto, null, null, null, 0, 0, 0, null, null, null, null);
         ObjectSet<Producto> resultado = baseBD.get(productoBusca);
         return resultado.size();
     }
@@ -541,7 +529,8 @@ public class CrudProductos extends javax.swing.JPanel {
         });
         BaseBD.close();
     }
-private void mostrarDatospro() {
+
+    private void mostrarDatospro() {
         // ESTABLECER CONEXION CON LA BASE DE DATOS
         tblProveedores.setEnabled(true);
         ObjectContainer BaseBD = Conexion_db.ConectarBD();
@@ -568,7 +557,8 @@ private void mostrarDatospro() {
         // Cerrar la conexión con la base de datos
         BaseBD.close();
     }
-private void activarJdialog(JDialog TablaProvedores) {
+
+    private void activarJdialog(JDialog TablaProvedores) {
 
         TablaProvedores.setTitle("Listado Provedores");
         TablaProvedores.setSize(680, 330);
@@ -576,36 +566,36 @@ private void activarJdialog(JDialog TablaProvedores) {
         TablaProvedores.setVisible(true);
     }
 
-private void mostrarNombreProveedor() {
-    // Establecer conexión con la base de datos
-    ObjectContainer BaseBD = Conexion_db.ConectarBD();
+    private void mostrarNombreProveedor() {
+        // Establecer conexión con la base de datos
+        ObjectContainer BaseBD = Conexion_db.ConectarBD();
 
-    // Crear un objeto de consulta para buscar proveedores
-    Query proveedorQuery = BaseBD.query();
-    proveedorQuery.constrain(Proveedor.class);
-    ObjectSet<Proveedor> resultado = proveedorQuery.execute();
+        // Crear un objeto de consulta para buscar proveedores
+        Query proveedorQuery = BaseBD.query();
+        proveedorQuery.constrain(Proveedor.class);
+        ObjectSet<Proveedor> resultado = proveedorQuery.execute();
 
-    boolean encontrado = false;
-    String inputCodigo = txtBuscar.getText().trim();
+        boolean encontrado = false;
+        String inputCodigo = txtBuscar.getText().trim();
 
-    // Iterar sobre los resultados para encontrar y cargar el nombre del proveedor
-    for (Proveedor miProveedor : resultado) {
-        String codigoProveedor = miProveedor.getCodigo_proveedor().trim();
-        
-        if (codigoProveedor.equals(inputCodigo)) {
-            txtProveedorID.setText(miProveedor.getNombre_proveedor());
-            encontrado = true;
-            break;
+        // Iterar sobre los resultados para encontrar y cargar el nombre del proveedor
+        for (Proveedor miProveedor : resultado) {
+            String codigoProveedor = miProveedor.getCodigo_proveedor().trim();
+
+            if (codigoProveedor.equals(inputCodigo)) {
+                txtProveedorID.setText(miProveedor.getNombre_proveedor());
+                encontrado = true;
+                break;
+            }
         }
-    }
 
-    if (!encontrado) {
-        JOptionPane.showMessageDialog(this, "No se encontró Proveedor");
-    }
+        if (!encontrado) {
+            JOptionPane.showMessageDialog(this, "No se encontró Proveedor");
+        }
 
-    // Cerrar la conexión con la base de datos
-    BaseBD.close();
-}
+        // Cerrar la conexión con la base de datos
+        BaseBD.close();
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private rojeru_san.RSButtonRiple BtnBuscar;
     private javax.swing.JComboBox<String> CmbCategoria;
@@ -630,7 +620,6 @@ private void mostrarNombreProveedor() {
     private javax.swing.JLabel lblNumeroProductos;
     private javax.swing.JLabel lblPrecioProducto;
     private javax.swing.JLabel lblProveedorID;
-    private rsbuttongradiente.RSButtonGradiente rSButtonGradiente1;
     private javax.swing.JTable tblProveedores;
     private rojeru_san.RSMTextFull txtBuscar;
     private rojeru_san.RSMTextFull txtDescripcion;

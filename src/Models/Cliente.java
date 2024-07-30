@@ -1,11 +1,12 @@
-
 package Models;
 
 public class Cliente extends Persona {
-    
+
     private int iD_Cliente;
     private Estado estado;
-    
+    private String ciudad;
+    private byte[] imagenCli;
+
     //haremos que tenga solo dos posibles valores
     public enum Estado {
         ACTIVO,
@@ -16,16 +17,14 @@ public class Cliente extends Persona {
         super();
     }
 
-    public Cliente(Estado estado, String cedula, String nombres, String apellidos, String direccion, String correo, String celular,
+    public Cliente(Estado estado, String ciudad, byte[] imagenCli, String cedula, String nombres, String apellidos, String direccion, String correo, String celular,
             String genero, String fechaNacimiento, String estadoCivil, String nombreUsuario, String password, String correoRecuperacion) {
         super(cedula, nombres, apellidos, direccion, correo, celular, genero, fechaNacimiento, estadoCivil, nombreUsuario, password, correoRecuperacion);
         this.estado = Estado.ACTIVO;
+        this.ciudad = ciudad;
+        this.imagenCli = imagenCli;
     }
 
-    
-    
-
-   
     @Override
     public String toString() {
         return "Cliente{" + "iD_Cliente=" + getiD_Cliente() + '}';
@@ -53,14 +52,41 @@ public class Cliente extends Persona {
         this.iD_Cliente = iD_Cliente;
     }
 
-    //METODOS
-    public  void activarCliente() {
-        this.estado = Estado.ACTIVO;
+    /**
+     * @return the ciudad
+     */
+    public String getCiudad() {
+        return ciudad;
     }
 
-    public  void desactivarCliente() {
-        this.estado = Estado.INACTIVO;
-    } 
-    
-    
+    /**
+     * @param ciudad the ciudad to set
+     */
+    public void setCiudad(String ciudad) {
+        this.ciudad = ciudad;
+    }
+
+    /**
+     * @return the imagenCli
+     */
+    public byte[] getImagenCli() {
+        return imagenCli;
+    }
+
+    /**
+     * @param imagenCli the imagenCli to set
+     */
+    public void setImagenCli(byte[] imagenCli) {
+        this.imagenCli = imagenCli;
+    }
+
+    //METODOS
+    public void activarCliente() {
+        this.setEstado(Estado.ACTIVO);
+    }
+
+    public void desactivarCliente() {
+        this.setEstado(Estado.INACTIVO);
+    }
+
 }
