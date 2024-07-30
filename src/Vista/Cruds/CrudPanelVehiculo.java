@@ -90,6 +90,7 @@ public class CrudPanelVehiculo extends javax.swing.JPanel {
         jLabel13.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/burbujas.png"))); // NOI18N
         jLabel13.setText("jLabel12");
 
+        jdlCrearMarca.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jdlCrearMarca.setResizable(false);
 
         pnlCrearMarca.setBackground(new java.awt.Color(255, 255, 255));
@@ -547,6 +548,7 @@ public class CrudPanelVehiculo extends javax.swing.JPanel {
         BaseBD.close();
         return coincidencias;
     }
+    public static Boolean marcaGuardada=false;
     private void btnGuardarMarcaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnGuardarMarcaMouseClicked
         if (txtMarcaVRegistrar.getText().toUpperCase().trim().isBlank() || txtModeloMarcaRegistro.getText().toUpperCase().trim().isBlank()) {
             JOptionPane.showMessageDialog(null, "No dejar campos en blanco");
@@ -563,7 +565,7 @@ public class CrudPanelVehiculo extends javax.swing.JPanel {
                     int k = verificarNumeroMarcas() + 1;
                     guardarMarca("MARCA" + k, txtMarcaVRegistrar.getText().toUpperCase().trim());//el id de la marca sera autoenumerado  y el nombre ira en mayuscula sin espacio al inicio ni final
                     cmbMarcaRegistroVehiculo.setSelectedItem(txtMarcaVRegistrar.getText().toUpperCase().trim());
-                    if (!modeloGuadrado) {
+                    if (!marcaGuardada) {
                         JOptionPane.showMessageDialog(this, "Marca no Guardada");
                     }
                     
@@ -594,7 +596,7 @@ public class CrudPanelVehiculo extends javax.swing.JPanel {
     private void btnAñadirMarcaRegistroVehiculosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAñadirMarcaRegistroVehiculosActionPerformed
                 mostrarDatosMarca();
                 jdlCrearMarca.setModal(true); // hacemos que el dialogo bloquee la interaccion con la pantalla principal
-                jdlCrearMarca.setSize(500, 400); // establecemos un tamaño para el diálogo
+                jdlCrearMarca.setSize(579, 460); // establecemos un tamaño para el diálogo
                 jdlCrearMarca.setLocationRelativeTo(null); // centramos el diálogo en la pantalla
                 jdlCrearMarca.setVisible(true); // llamamos al dialogo        
     }//GEN-LAST:event_btnAñadirMarcaRegistroVehiculosActionPerformed
@@ -821,7 +823,7 @@ public class CrudPanelVehiculo extends javax.swing.JPanel {
     public static void guardarMarca(String id_Marca, String nombre_Marca) {
         // ESTABLECER CONEXION CON LA BASE DE DATOS
         ObjectContainer BaseBD = Conexion_db.ConectarBD();
-        modeloGuadrado=false;
+        marcaGuardada=false;
         MarcaVehiculo Marcavehi1 = new MarcaVehiculo(id_Marca, nombre_Marca);
         //Cerrar BD (antes de  verificar usuario que abre nuevamente la BD)
         BaseBD.close();
@@ -830,9 +832,9 @@ public class CrudPanelVehiculo extends javax.swing.JPanel {
             BaseBD = Conexion_db.ConectarBD();
             BaseBD.set(Marcavehi1);
             BaseBD.close();
+            marcaGuardada=true;
             System.out.println("Marca de Vehiculo Guardado");
         } else {
-            modeloGuadrado=true;
             System.out.println("Marca de Vehiculo ya existe en la BD");
         } 
     }

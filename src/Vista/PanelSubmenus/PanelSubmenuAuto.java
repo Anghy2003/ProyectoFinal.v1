@@ -1,6 +1,11 @@
 
 package Vista.PanelSubmenus;
 
+import Vista.Menu.VistaMenu;
+import Vista.Tables.TablaMarcasVehiculo;
+import java.awt.BorderLayout;
+import javax.swing.JPanel;
+
 public class PanelSubmenuAuto extends javax.swing.JPanel {
 
     /**
@@ -22,6 +27,7 @@ public class PanelSubmenuAuto extends javax.swing.JPanel {
         jPanel1 = new javax.swing.JPanel();
         jSeparator1 = new javax.swing.JSeparator();
         btnGestAuto = new javax.swing.JLabel();
+        btnGestionMarcas = new javax.swing.JLabel();
 
         setLayout(new java.awt.BorderLayout());
 
@@ -35,6 +41,23 @@ public class PanelSubmenuAuto extends javax.swing.JPanel {
         btnGestAuto.setText("Gestión de vehículos");
         btnGestAuto.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         btnGestAuto.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnGestAuto.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnGestAutoMouseClicked(evt);
+            }
+        });
+
+        btnGestionMarcas.setBackground(new java.awt.Color(145, 181, 246));
+        btnGestionMarcas.setFont(new java.awt.Font("Roboto Light", 0, 15)); // NOI18N
+        btnGestionMarcas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/embotellamiento.png"))); // NOI18N
+        btnGestionMarcas.setText("Gestion de Marcas");
+        btnGestionMarcas.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btnGestionMarcas.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnGestionMarcas.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnGestionMarcasMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -42,7 +65,9 @@ public class PanelSubmenuAuto extends javax.swing.JPanel {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.TRAILING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap(650, Short.MAX_VALUE)
+                .addContainerGap(457, Short.MAX_VALUE)
+                .addComponent(btnGestionMarcas, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnGestAuto, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(33, 33, 33))
         );
@@ -52,16 +77,37 @@ public class PanelSubmenuAuto extends javax.swing.JPanel {
                 .addContainerGap()
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnGestAuto, javax.swing.GroupLayout.DEFAULT_SIZE, 42, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnGestAuto, javax.swing.GroupLayout.DEFAULT_SIZE, 52, Short.MAX_VALUE)
+                    .addComponent(btnGestionMarcas, javax.swing.GroupLayout.DEFAULT_SIZE, 52, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
         add(jPanel1, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnGestionMarcasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnGestionMarcasMouseClicked
+        TablaMarcasVehiculo tblMArcas = new TablaMarcasVehiculo();
+        ShowpanelCruds(tblMArcas);
+    }//GEN-LAST:event_btnGestionMarcasMouseClicked
+
+    private void btnGestAutoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnGestAutoMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnGestAutoMouseClicked
+
+    
+    private void ShowpanelCruds(JPanel p) {
+        p.setSize(870, 630);
+        p.setLocation(0, 0);
+        VistaMenu.PanelPrincipal.removeAll();
+        VistaMenu.PanelPrincipal.add(p, BorderLayout.CENTER);
+        VistaMenu.PanelPrincipal.revalidate();
+        VistaMenu.PanelPrincipal.repaint();
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel btnGestAuto;
+    private javax.swing.JLabel btnGestionMarcas;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JSeparator jSeparator1;
     // End of variables declaration//GEN-END:variables

@@ -50,8 +50,8 @@ public class MarcaVehiculo {
     public static int verificarNumeroMarcas() {
         // ESTABLECER CONEXION CON LA BASE DE DATOS
         ObjectContainer BaseBD = Conexion_db.ConectarBD();
-        Proveedor ProveedorBusca = new Proveedor();
-        ObjectSet resultado = BaseBD.get(ProveedorBusca);
+        MarcaVehiculo MarcaBusca = new MarcaVehiculo();
+        ObjectSet resultado = BaseBD.get(MarcaBusca);
         int coincidencias= resultado.size();
         //Cerrar BD
         BaseBD.close();
