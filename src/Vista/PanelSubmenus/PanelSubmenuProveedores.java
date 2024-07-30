@@ -22,7 +22,8 @@ public class PanelSubmenuProveedores extends javax.swing.JPanel {
         panelSubmenuProductos1 = new Vista.PanelSubmenus.PanelSubmenuProductos();
         jPanel1 = new javax.swing.JPanel();
         jSeparator1 = new javax.swing.JSeparator();
-        btnProvedoresMenu = new javax.swing.JToggleButton();
+        btnCiudadesMenu = new javax.swing.JToggleButton();
+        btnProvedoresMenu1 = new javax.swing.JToggleButton();
 
         setLayout(new java.awt.BorderLayout());
 
@@ -30,19 +31,30 @@ public class PanelSubmenuProveedores extends javax.swing.JPanel {
 
         jSeparator1.setForeground(new java.awt.Color(0, 53, 79));
 
-        btnProvedoresMenu.setFont(new java.awt.Font("Roboto Medium", 1, 12)); // NOI18N
-        btnProvedoresMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/entrega.png"))); // NOI18N
-        btnProvedoresMenu.setText("PROVEDORES");
+        btnCiudadesMenu.setFont(new java.awt.Font("Roboto Medium", 1, 12)); // NOI18N
+        btnCiudadesMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/ciudad-inteligente (3).png"))); // NOI18N
+        btnCiudadesMenu.setText("CIUDADES");
+        btnCiudadesMenu.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCiudadesMenuActionPerformed(evt);
+            }
+        });
+
+        btnProvedoresMenu1.setFont(new java.awt.Font("Roboto Medium", 1, 12)); // NOI18N
+        btnProvedoresMenu1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/entrega.png"))); // NOI18N
+        btnProvedoresMenu1.setText("PROVEDORES");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jSeparator1, javax.swing.GroupLayout.DEFAULT_SIZE, 870, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addGap(0, 702, Short.MAX_VALUE)
-                .addComponent(btnProvedoresMenu)
-                .addGap(25, 25, 25))
-            .addComponent(jSeparator1)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnCiudadesMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(btnProvedoresMenu1, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -50,16 +62,23 @@ public class PanelSubmenuProveedores extends javax.swing.JPanel {
                 .addContainerGap()
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnProvedoresMenu)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnCiudadesMenu)
+                    .addComponent(btnProvedoresMenu1))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         add(jPanel1, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnCiudadesMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCiudadesMenuActionPerformed
+        
+    }//GEN-LAST:event_btnCiudadesMenuActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JToggleButton btnProvedoresMenu;
+    private javax.swing.JToggleButton btnCiudadesMenu;
+    private javax.swing.JToggleButton btnProvedoresMenu1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JSeparator jSeparator1;
     private Vista.PanelSubmenus.PanelSubmenuProductos panelSubmenuProductos1;
