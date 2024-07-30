@@ -56,6 +56,8 @@ public class TablaMarcasVehiculo extends javax.swing.JPanel {
         lblBuscar = new javax.swing.JLabel();
         btnAgregar = new rsbuttongradiente.RSButtonGradiente();
         btnBuscar = new rsbuttongradiente.RSButtonGradiente();
+        lblBuscar1 = new javax.swing.JLabel();
+        txtBuscar1 = new rojeru_san.RSMTextFull();
 
         jdlCrearMarcaTabla.getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -223,50 +225,65 @@ public class TablaMarcasVehiculo extends javax.swing.JPanel {
             }
         });
 
+        lblBuscar1.setFont(new java.awt.Font("Roboto Black", 0, 18)); // NOI18N
+        lblBuscar1.setText("Modelo de la marca:");
+
+        txtBuscar1.setFont(new java.awt.Font("Roboto Bold", 2, 14)); // NOI18N
+        txtBuscar1.setPlaceholder("ejm. D-max");
+
         javax.swing.GroupLayout pnlListadoLayout = new javax.swing.GroupLayout(pnlListado);
         pnlListado.setLayout(pnlListadoLayout);
         pnlListadoLayout.setHorizontalGroup(
             pnlListadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlListadoLayout.createSequentialGroup()
-                .addContainerGap(47, Short.MAX_VALUE)
+                .addContainerGap(53, Short.MAX_VALUE)
                 .addGroup(pnlListadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlListadoLayout.createSequentialGroup()
-                        .addComponent(btnAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(44, 44, 44)
-                        .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(156, 156, 156))
+                        .addComponent(lblMarcas)
+                        .addGap(692, 692, 692))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlListadoLayout.createSequentialGroup()
                         .addGroup(pnlListadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblMarcas)
+                            .addComponent(scrlpTablaVehi1, javax.swing.GroupLayout.PREFERRED_SIZE, 799, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(pnlListadoLayout.createSequentialGroup()
-                                .addComponent(lblBuscar)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(472, 472, 472))
-                    .addGroup(pnlListadoLayout.createSequentialGroup()
-                        .addComponent(scrlpTablaVehi1, javax.swing.GroupLayout.PREFERRED_SIZE, 799, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())))
+                                .addGroup(pnlListadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(pnlListadoLayout.createSequentialGroup()
+                                        .addComponent(lblBuscar1)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(txtBuscar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(pnlListadoLayout.createSequentialGroup()
+                                        .addComponent(lblBuscar)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(18, 18, 18)
+                                .addComponent(btnAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(44, 44, 44)
+                                .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(41, 41, 41))))
         );
         pnlListadoLayout.setVerticalGroup(
             pnlListadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlListadoLayout.createSequentialGroup()
                 .addGap(36, 36, 36)
                 .addComponent(lblMarcas)
-                .addGap(18, 18, 18)
                 .addGroup(pnlListadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlListadoLayout.createSequentialGroup()
-                        .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(2, 2, 2))
-                    .addGroup(pnlListadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGap(18, 18, 18)
                         .addGroup(pnlListadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btnAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(pnlListadoLayout.createSequentialGroup()
-                            .addComponent(lblBuscar)
-                            .addGap(8, 8, 8))))
-                .addGap(41, 41, 41)
-                .addComponent(scrlpTablaVehi1, javax.swing.GroupLayout.PREFERRED_SIZE, 391, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(89, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(pnlListadoLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
+                        .addGroup(pnlListadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblBuscar))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(pnlListadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtBuscar1, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblBuscar1))
+                        .addGap(21, 21, 21)))
+                .addComponent(scrlpTablaVehi1, javax.swing.GroupLayout.PREFERRED_SIZE, 316, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(111, 111, 111))
         );
 
         add(pnlListado, java.awt.BorderLayout.CENTER);
@@ -494,6 +511,7 @@ public class TablaMarcasVehiculo extends javax.swing.JPanel {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JDialog jdlCrearMarcaTabla;
     private javax.swing.JLabel lblBuscar;
+    private javax.swing.JLabel lblBuscar1;
     private javax.swing.JLabel lblMarcas;
     private javax.swing.JLabel lblModeloMarcaRegistro;
     private javax.swing.JLabel lblPlaca1;
@@ -503,6 +521,7 @@ public class TablaMarcasVehiculo extends javax.swing.JPanel {
     private javax.swing.JScrollPane scrlpTablaVehi1;
     private javax.swing.JTable tblMarcasLista;
     private rojeru_san.RSMTextFull txtBuscar;
+    private rojeru_san.RSMTextFull txtBuscar1;
     private rojeru_san.RSMTextFull txtMarcaVRegistrar;
     private rojeru_san.RSMTextFull txtModeloMarcaRegistro;
     // End of variables declaration//GEN-END:variables

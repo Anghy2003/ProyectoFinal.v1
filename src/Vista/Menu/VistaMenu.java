@@ -96,6 +96,9 @@ public class VistaMenu extends javax.swing.JFrame {
         btnVehiculos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/embotellamiento.png"))); // NOI18N
         btnVehiculos.setText("Vehículos");
         btnVehiculos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnVehiculosMouseClicked(evt);
+            }
             public void mousePressed(java.awt.event.MouseEvent evt) {
                 btnVehiculosMousePressed(evt);
             }
@@ -407,6 +410,10 @@ public class VistaMenu extends javax.swing.JFrame {
     private void btnReportes1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnReportes1MouseClicked
         // TODO add your handling code here:
     }//GEN-LAST:event_btnReportes1MouseClicked
+
+    private void btnVehiculosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnVehiculosMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnVehiculosMouseClicked
     private void MostrarpanelSubmenu(JPanel p) {
         p.setSize(870, 80);
         p.setLocation(0, 0);
