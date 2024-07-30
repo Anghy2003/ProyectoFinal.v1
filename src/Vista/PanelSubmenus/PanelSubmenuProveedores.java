@@ -19,6 +19,7 @@ public class PanelSubmenuProveedores extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        panelSubmenuProductos1 = new Vista.PanelSubmenus.PanelSubmenuProductos();
         jPanel1 = new javax.swing.JPanel();
         jSeparator1 = new javax.swing.JSeparator();
         btnProvedoresMenu = new javax.swing.JToggleButton();
@@ -61,5 +62,6 @@ public class PanelSubmenuProveedores extends javax.swing.JPanel {
     private javax.swing.JToggleButton btnProvedoresMenu;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JSeparator jSeparator1;
+    private Vista.PanelSubmenus.PanelSubmenuProductos panelSubmenuProductos1;
     // End of variables declaration//GEN-END:variables
 }

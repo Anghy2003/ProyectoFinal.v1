@@ -271,9 +271,10 @@ public class TablaProductos extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(this, "Producto no encontrado");
         }  
     }//GEN-LAST:event_btnEliminarActionPerformed
-  public void inactivarProducto(String codigoProducto) {
+  
+    public void inactivarProducto(String codigo_Producto) {
     ObjectContainer BaseBD = Conexion_db.ConectarBD();
-    ObjectSet<Producto> result = BaseBD.queryByExample(new Producto(codigoProducto, null, null, null, 0, 0, 0, null, null, null, null));
+    ObjectSet<Producto> result = BaseBD.queryByExample(new Producto(codigo_Producto, null, null, null, 0, 0, 0, null, null, null, null));
     if (result.hasNext()) {
         Producto productoAInactivar = result.next();
         int opcion = JOptionPane.showConfirmDialog(null, "¿Está seguro de inactivar este producto?", "Confirmación de inactivación", JOptionPane.YES_NO_OPTION);
@@ -293,7 +294,7 @@ public class TablaProductos extends javax.swing.JPanel {
     BaseBD.close();
 }
 
-  private void mostrarDatosInactivo() {
+ private void mostrarDatosInactivo() {
     ObjectContainer BaseBD = Conexion_db.ConectarBD();
     tblProInactivo.setEnabled(true);
 
@@ -316,36 +317,32 @@ public class TablaProductos extends javax.swing.JPanel {
         matriz[i][8] = producto.getID_Proveedor_Producto();
 
         byte[] imagen = producto.getImagen();
-        if (imagen != null) {
+        if (imagen != null && imagen.length > 0) {
             ImageIcon icono = new ImageIcon(new ImageIcon(imagen).getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH));
             matriz[i][9] = new JLabel(icono);
         } else {
             matriz[i][9] = new JLabel("No image");
         }
 
-        matriz[i][10] = producto.getEstado().toString(); // Asegúrate de convertir el enum a string para mostrar
+        matriz[i][10] = producto.getEstado().toString();
         i++;
     }
-
 
     tblProInactivo.setModel(new javax.swing.table.DefaultTableModel(
         matriz, new String[]{"Código Producto", "Nombre Producto", "Precio", "Código Categoría", "Número de Productos", "Existencia Máxima", "Existencia Mínima", "Descripción", "Proveedor", "Imagen", "Estado"}
     ));
     tblProInactivo.getColumnModel().getColumn(9).setCellRenderer(new ImageRenderer());
-    tblProInactivo.setRowHeight(100);
+    tblProInactivo.setRowHeight(50);
     tblProInactivo.setEnabled(false);
-   
 
     BaseBD.close();
-
 }
   private void mostrarDatosActivos() {
-        
-     ObjectContainer BaseBD = Conexion_db.ConectarBD();
-    Producto producto = new Producto(null, null, null, null, 0, 0, 0, null, null, null, null);
+    ObjectContainer BaseBD = Conexion_db.ConectarBD();
+    Producto producto = new Producto(null, null, null, null, 0, 0, 0, null, null, null, Producto.Estado.ACTIVO);
     ObjectSet<Producto> resul = BaseBD.get(producto);
 
-    Object matriz[][] = new Object[resul.size()][11]; // Cambiar a Object
+    Object matriz[][] = new Object[resul.size()][11];
 
     for (int i = 0; i < resul.size(); i++) {
         Producto prod = resul.next();
@@ -359,34 +356,29 @@ public class TablaProductos extends javax.swing.JPanel {
         matriz[i][6] = String.valueOf(prod.getExistenciaMinima_Producto());
         matriz[i][7] = prod.getDescripcion_Producto();
         matriz[i][8] = prod.getID_Proveedor_Producto();
-
-        // Convertir imagen a un icono para mostrar en la tabla
         byte[] imagen = prod.getImagen();
-        if (imagen != null) {
-            ImageIcon icono = new ImageIcon(new ImageIcon(imagen).getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH));
-            matriz[i][9] = new JLabel(icono); // Agregar imagen a la matriz
+        if (imagen != null && imagen.length > 0) {
+            ImageIcon icono = new ImageIcon(imagen);
+            Image img = icono.getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH);
+            matriz[i][9] = new JLabel(new ImageIcon(img));
         } else {
-            matriz[i][9] = new JLabel("No image"); // Placeholder para productos sin imagen
+            matriz[i][9] = new JLabel("No image");
         }
-
-        matriz[i][10] = String.valueOf(prod.getEstado());
+        matriz[i][10] = prod.getEstado().toString();
     }
 
     TablProductos1.setModel(new javax.swing.table.DefaultTableModel(
-            matriz,
-            new String[]{
-                "Código Producto", "Nombre Producto", "Precio", "Código Categoría", "Número de Productos", "Existencia Máxima", "Existencia Mínima", "Descripción", "Proveedor", "Imagen", "Estado"
-            }
+        matriz,
+        new String[]{
+            "Código Producto", "Nombre Producto", "Precio", "Código Categoría", "Número de Productos", "Existencia Máxima", "Existencia Mínima", "Descripción", "Proveedor", "Imagen", "Estado"
+        }
     ));
 
-    // Usar el ImageRenderer para la columna de imágenes
     TablProductos1.getColumnModel().getColumn(9).setCellRenderer(new ImageRenderer());
-     TablProductos1.setRowHeight(100);
+    TablProductos1.setRowHeight(50);
 
     BaseBD.close();
-    
-    }
-
+}
     public static ObjectSet verificarProductosActivos() {
         ObjectContainer BaseBD = Conexion_db.ConectarBD();
         Producto productoBusca = new Producto(null, null, null, null, 0, 0, 0, null, null, null, Producto.Estado.ACTIVO);

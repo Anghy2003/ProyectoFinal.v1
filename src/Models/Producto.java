@@ -10,7 +10,7 @@ public class Producto {
     private int existenciaMinima_Producto;
     private String descripcion_Producto;
     private String ID_Proveedor_Producto;
-    private byte[] imagen;
+    private byte[] imagenProducto;
     private Estado estado; 
     
     //haremos que tenga solo dos posibles valores
@@ -21,9 +21,15 @@ public class Producto {
     public Producto() {
     }
 
+    public Producto(String codigo_Producto) {
+        this.codigo_Producto = codigo_Producto;
+    }
+    
     
 
-    public Producto(String codigo_Producto, String nombre_Producto, Double precio_Producto, String codigo_categoria_Producto, int numeroProductos_Producto, int existenciaMaxima_Producto, int existenciaMinima_Producto, String descripcion_Producto, String ID_Proveedor_Producto, byte[] imagen, Estado estado) {
+    public Producto(String codigo_Producto, String nombre_Producto, Double precio_Producto, String codigo_categoria_Producto,
+            int numeroProductos_Producto, int existenciaMaxima_Producto, int existenciaMinima_Producto, String descripcion_Producto,
+            String ID_Proveedor_Producto, byte[] imagenProducto, Estado estado) {
         this.codigo_Producto = codigo_Producto;
         this.nombre_Producto = nombre_Producto;
         this.precio_Producto = precio_Producto;
@@ -33,15 +39,15 @@ public class Producto {
         this.existenciaMinima_Producto = existenciaMinima_Producto;
         this.descripcion_Producto = descripcion_Producto;
         this.ID_Proveedor_Producto = ID_Proveedor_Producto;
-        this.imagen = imagen;
+        this.imagenProducto = imagenProducto;
         this.estado = Estado.ACTIVO;
     }
 
     public byte[] getImagen() {
-        return imagen;
+        return imagenProducto;
     }
      public void setImagen(byte[] imagen) {
-        this.imagen = imagen;
+        this.imagenProducto = imagen;
     }
    
 
@@ -133,5 +139,12 @@ public class Producto {
         this.estado = Estado.INACTIVO;
     }
 
-   
+    public int restarCantidad(int cantidad) {
+    if (cantidad <= this.numeroProductos_Producto) {
+        this.numeroProductos_Producto -= cantidad;
+        return this.numeroProductos_Producto;
+    } else {
+        return -1; // Indicador de que no hay suficiente stock
+    }
+}
 }

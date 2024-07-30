@@ -2,16 +2,20 @@
 package Vista.Catálogo;
 
 import Conexion.Conexion_db;
+import Models.CategoriaServicio;
 
 
 import Models.Servicios;
+import static Vista.Catálogo.CrudCategoria.guardarCategoria;
 
 
 import Vista.Menu.VistaMenu;
+import Vista.Tables.TablaCategoriaSer;
 
 import Vista.Tables.TablaServicios;
 import com.db4o.ObjectContainer;
 import com.db4o.ObjectSet;
+import com.db4o.ext.InvalidIDException;
 import com.db4o.query.Query;
 import java.awt.BorderLayout;
 import java.awt.Image;
@@ -22,6 +26,7 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
+import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 
 import javax.swing.JOptionPane;
@@ -38,8 +43,9 @@ public class BuscarServicios extends javax.swing.JPanel {
     public BuscarServicios(String receivedString) {
         initComponents();
         this.BuscarCodigo = receivedString;
+         mostrarCombo();
         buscarServicio();
-        txtCodigo.setEnabled(false);
+                txtCodigo.setEnabled(false);
     }
 
     /**
@@ -67,7 +73,10 @@ public class BuscarServicios extends javax.swing.JPanel {
         txtPrecio = new rojeru_san.RSMTextFull();
         btnSeleccionarImgen = new rojeru_san.RSButtonRiple();
         lblImagen = new javax.swing.JLabel();
+        CmbCategoria = new javax.swing.JComboBox<>();
+        lblCodigoocategoria1 = new javax.swing.JLabel();
         CmbDuracion = new javax.swing.JComboBox<>();
+        rSButtonGradiente1 = new rsbuttongradiente.RSButtonGradiente();
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setFocusTraversalPolicyProvider(true);
@@ -76,7 +85,7 @@ public class BuscarServicios extends javax.swing.JPanel {
         jLabel2.setFont(new java.awt.Font("Roboto Black", 0, 30)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(0, 53, 79));
         jLabel2.setText("Modificación De Servicios");
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 350, 40));
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 390, 40));
 
         txtCodigo.setForeground(new java.awt.Color(0, 53, 79));
         txtCodigo.setColorTransparente(true);
@@ -87,7 +96,7 @@ public class BuscarServicios extends javax.swing.JPanel {
                 txtCodigoActionPerformed(evt);
             }
         });
-        jPanel1.add(txtCodigo, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 50, 180, 40));
+        jPanel1.add(txtCodigo, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 50, 180, 40));
 
         jLabel4.setFont(new java.awt.Font("Roboto Medium", 1, 18)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(0, 53, 79));
@@ -98,7 +107,7 @@ public class BuscarServicios extends javax.swing.JPanel {
         txtNombres.setColorTransparente(true);
         txtNombres.setFont(new java.awt.Font("Roboto Light", 1, 14)); // NOI18N
         txtNombres.setPlaceholder("Escriba el nombre");
-        jPanel1.add(txtNombres, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 110, 180, 40));
+        jPanel1.add(txtNombres, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 110, 180, 40));
 
         btnCancelar.setBackground(new java.awt.Color(255, 51, 51));
         btnCancelar.setText("Cancelar");
@@ -112,7 +121,7 @@ public class BuscarServicios extends javax.swing.JPanel {
                 btnCancelarActionPerformed(evt);
             }
         });
-        jPanel1.add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 540, -1, -1));
+        jPanel1.add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 420, -1, -1));
 
         btnModificar.setText("Modificar");
         btnModificar.addActionListener(new java.awt.event.ActionListener() {
@@ -120,7 +129,7 @@ public class BuscarServicios extends javax.swing.JPanel {
                 btnModificarActionPerformed(evt);
             }
         });
-        jPanel1.add(btnModificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 540, -1, -1));
+        jPanel1.add(btnModificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 440, -1, -1));
 
         lblCodigooProducto.setFont(new java.awt.Font("Roboto Medium", 1, 18)); // NOI18N
         lblCodigooProducto.setForeground(new java.awt.Color(0, 53, 79));
@@ -130,22 +139,27 @@ public class BuscarServicios extends javax.swing.JPanel {
         lblPrecioProducto.setFont(new java.awt.Font("Roboto Medium", 1, 18)); // NOI18N
         lblPrecioProducto.setForeground(new java.awt.Color(0, 53, 79));
         lblPrecioProducto.setText("Precio Total:");
-        jPanel1.add(lblPrecioProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 310, -1, -1));
+        jPanel1.add(lblPrecioProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 330, -1, -1));
 
         lblCodigoocategoria.setFont(new java.awt.Font("Roboto Medium", 1, 18)); // NOI18N
         lblCodigoocategoria.setForeground(new java.awt.Color(0, 53, 79));
-        lblCodigoocategoria.setText("Duración del servicio:");
-        jPanel1.add(lblCodigoocategoria, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 250, -1, -1));
+        lblCodigoocategoria.setText("Categoria:");
+        jPanel1.add(lblCodigoocategoria, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 280, -1, -1));
 
         lblDescripcion.setFont(new java.awt.Font("Roboto Medium", 1, 18)); // NOI18N
         lblDescripcion.setForeground(new java.awt.Color(0, 53, 79));
         lblDescripcion.setText("Descripción:");
-        jPanel1.add(lblDescripcion, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 190, 120, -1));
+        jPanel1.add(lblDescripcion, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 180, 120, -1));
 
         txtDescripcion.setForeground(new java.awt.Color(0, 53, 79));
         txtDescripcion.setColorTransparente(true);
         txtDescripcion.setFont(new java.awt.Font("Roboto Light", 1, 14)); // NOI18N
         txtDescripcion.setPlaceholder("Descripción");
+        txtDescripcion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtDescripcionActionPerformed(evt);
+            }
+        });
         jPanel1.add(txtDescripcion, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 170, 180, 40));
 
         txtPrecio.setForeground(new java.awt.Color(0, 53, 79));
@@ -157,7 +171,7 @@ public class BuscarServicios extends javax.swing.JPanel {
                 txtPrecioActionPerformed(evt);
             }
         });
-        jPanel1.add(txtPrecio, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 300, 200, 40));
+        jPanel1.add(txtPrecio, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 310, 200, 40));
 
         btnSeleccionarImgen.setText("Selecionar Imagen");
         btnSeleccionarImgen.addActionListener(new java.awt.event.ActionListener() {
@@ -170,8 +184,27 @@ public class BuscarServicios extends javax.swing.JPanel {
         lblImagen.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
         jPanel1.add(lblImagen, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 80, 180, 140));
 
+        jPanel1.add(CmbCategoria, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 272, 120, 30));
+
+        lblCodigoocategoria1.setFont(new java.awt.Font("Roboto Medium", 1, 18)); // NOI18N
+        lblCodigoocategoria1.setForeground(new java.awt.Color(0, 53, 79));
+        lblCodigoocategoria1.setText("Duración del servicio:");
+        jPanel1.add(lblCodigoocategoria1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 230, -1, -1));
+
         CmbDuracion.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1 Hora ", "2 Horas ", "3 Horas", "4 Horas", "5 horas" }));
-        jPanel1.add(CmbDuracion, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 250, 140, -1));
+        jPanel1.add(CmbDuracion, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 230, 140, 20));
+
+        rSButtonGradiente1.setText("Añadir");
+        rSButtonGradiente1.setColorPrimario(new java.awt.Color(51, 51, 255));
+        rSButtonGradiente1.setColorSecundario(new java.awt.Color(0, 102, 255));
+        rSButtonGradiente1.setColorSecundarioHover(new java.awt.Color(0, 102, 204));
+        rSButtonGradiente1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        rSButtonGradiente1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rSButtonGradiente1ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(rSButtonGradiente1, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 270, 80, 30));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -184,16 +217,6 @@ public class BuscarServicios extends javax.swing.JPanel {
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 630, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
-
-    private void btnCancelarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCancelarMouseClicked
-       TablaServicios tblser = new TablaServicios();
-        MostrarpaneCruds(tblser);
-    }//GEN-LAST:event_btnCancelarMouseClicked
-
-    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-        TablaServicios tblser = new TablaServicios();
-        MostrarpaneCruds(tblser);
-    }//GEN-LAST:event_btnCancelarActionPerformed
     private void MostrarpaneCruds(JPanel p) {
         p.setSize(870, 630);
         p.setLocation(0, 0);
@@ -202,49 +225,15 @@ public class BuscarServicios extends javax.swing.JPanel {
         VistaMenu.PanelPrincipal.revalidate();
         VistaMenu.PanelPrincipal.repaint();
     }
-    private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
-        if (!txtNombres.getText().trim().isEmpty()) {
-        if (!txtDescripcion.getText().isEmpty()) {
-            boolean valido = false; // Creamos una bandera para validar datos
-
-            // Validar que los campos numéricos contengan valores válidos
-            if (txtPrecio.getText().matches("\\d+(\\.\\d{1,2})?")) {
-                double precioTotalServicio = Double.parseDouble(txtPrecio.getText());
-
-                modificarServicio(
-                    txtCodigo.getText().toUpperCase(),
-                    txtNombres.getText(),
-                    txtDescripcion.getText(),
-                    precioTotalServicio,
-                    CmbDuracion.getSelectedItem().toString(),
-                    imagenServicio, // Incluir la imagen
-                    Servicios.Estado.ACTIVO
-                );
-
-                JOptionPane.showMessageDialog(this, "Servicio Modificado");
-                resetCampos(); // Limpiar campos después de la modificación
-            } else {
-                JOptionPane.showMessageDialog(this, "Ingrese valores numéricos válidos para precio total");
-            }
-        } else {
-            JOptionPane.showMessageDialog(this, "Ingrese una descripción válida");
-        }
-    } else {
-        JOptionPane.showMessageDialog(this, "Ingrese un nombre válido");
-    }                                
-    JOptionPane.showMessageDialog(this, "Servicio modificado y guardado exitosamente");
-       
-    }//GEN-LAST:event_btnModificarActionPerformed
-
- public static void modificarServicio(String codigo_Servicio, String nombre_Servicio, String descripcion_Servicio, double precioTotal_Servicio, String duracion_Servicio, byte[] imagen, Servicios.Estado estado) {
+ public static void modificarServicio(String codigo_Servicio, String nombre_Servicio, String descripcion_Servicio, double precioTotal_Servicio, String duracion_Servicio, byte[] imagen, Servicios.Estado estado,String Categoria) {
     // ESTABLECER CONEXION CON LA BASE DE DATOS
     ObjectContainer BaseBD = Conexion_db.ConectarBD();
 
     // Crear el objeto con los datos nuevos
-    Servicios servicioModificado = new Servicios(codigo_Servicio, nombre_Servicio, descripcion_Servicio, precioTotal_Servicio, duracion_Servicio, imagen, estado);
+    Servicios servicioModificado = new Servicios(codigo_Servicio, nombre_Servicio, descripcion_Servicio, precioTotal_Servicio, duracion_Servicio, imagen, estado,Categoria);
 
     // Buscar el objeto existente en la base de datos
-    Servicios servicioBusca = new Servicios(codigo_Servicio, null, null, 0.0, null, null, null);
+    Servicios servicioBusca = new Servicios(codigo_Servicio, null, null, 0.0, null, null, null,null);
     ObjectSet resultado = BaseBD.get(servicioBusca);
     int coincidencias = resultado.size();
 
@@ -264,7 +253,7 @@ public class BuscarServicios extends javax.swing.JPanel {
   public static int verificarServicioGuardar(String codigo_Servicio) {
     // ESTABLECER CONEXION CON LA BASE DE DATOS
     ObjectContainer BaseBD = Conexion_db.ConectarBD();
-    Servicios servicioBusca = new Servicios(codigo_Servicio, null, null, 0.0, null, null,  null);
+    Servicios servicioBusca = new Servicios(codigo_Servicio, null, null, 0.0, null, null,  null,null);
     ObjectSet resultado = BaseBD.get(servicioBusca);
     int coincidencias = resultado.size();
     // Cerrar la base de datos
@@ -274,71 +263,21 @@ public class BuscarServicios extends javax.swing.JPanel {
  public static int verificarServicio(String codigo_Servicio) {
     // ESTABLECER CONEXION CON LA BASE DE DATOS
     ObjectContainer BaseBD = Conexion_db.ConectarBD();
-    Servicios servicioBusca = new Servicios(codigo_Servicio, null, null, 0.0, null, null, null);
+    Servicios servicioBusca = new Servicios(codigo_Servicio, null, null, 0.0, null, null, null,null);
     ObjectSet resultado = BaseBD.get(servicioBusca);
     int coincidencias = resultado.size();
     // Cerrar la base de datos
     BaseBD.close();
     return coincidencias;
 }
-public final void buscarServicio() {
-    Boolean encontrado = false;
-    // ESTABLECER CONEXIÓN CON LA BASE DE DATOS
-    ObjectContainer BaseBD = Conexion_db.ConectarBD();
-    Query servicioQuery = BaseBD.query(); // método para iniciar una consulta
-    servicioQuery.constrain(Servicios.class); // buscaremos en la clase Servicios
-    servicioQuery.descend("codigo_Servicio").constrain(BuscarCodigo.toUpperCase()); // verificamos las coincidencias en el atributo especificado
-    ObjectSet<Servicios> resultado = servicioQuery.execute(); // Ejecutamos la consulta y almacenamos en "resultado"
 
-    // Iterar sobre los resultados para obtener los atributos
-    if (resultado.hasNext()) {
-        Servicios ser = resultado.next(); // Obtener el primer resultado
-        // Seteamos en los campos recibiendo del objeto
-        txtCodigo.setText(ser.getCodigo_Servicio());
-        txtNombres.setText(ser.getNombre_Servicio());
-        txtDescripcion.setText(ser.getDescripcion_Servicio());
-        txtPrecio.setText(String.format("%.2f", ser.getPrecioTotal_Servicio()));
-        CmbDuracion.setSelectedItem(ser.getDuracion_Servicio()); // Seleccionar la duración en el JComboBox
-
-        // Mostrar la imagen
-        byte[] imagen = ser.getImagen();
-        if (imagen != null) {
-            try {
-                ImageIcon icono = new ImageIcon(imagen);
-                // Asegúrate de que lblImagen tiene un tamaño definido
-                if (lblImagen.getWidth() > 0 && lblImagen.getHeight() > 0) {
-                    Image scaledImage = icono.getImage().getScaledInstance(lblImagen.getWidth(), lblImagen.getHeight(), Image.SCALE_SMOOTH);
-                    lblImagen.setIcon(new ImageIcon(scaledImage));
-                } else {
-                    lblImagen.setIcon(icono); // Configura la imagen original si el tamaño no está definido
-                }
-                imagenServicio = imagen; // Guardar la imagen en el campo de la clase
-            } catch (Exception e) {
-                e.printStackTrace();
-                lblImagen.setIcon(null); // O puedes poner una imagen por defecto
-            }
-        }
-
-        txtNombres.setEnabled(true);
-        encontrado = true;
-        JOptionPane.showMessageDialog(this, "SERVICIO ENCONTRADO");
-    } else {
-        JOptionPane.showMessageDialog(this, "No se encontró el Servicio");
-    }
-
-    BaseBD.close();
-}
- 
-    private void txtCodigoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCodigoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtCodigoActionPerformed
-
-    private void txtPrecioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPrecioActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtPrecioActionPerformed
+    private void rSButtonGradiente1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonGradiente1ActionPerformed
+       CrudCategoriaServicio cate= new CrudCategoriaServicio();
+           MostrarpaneCruds(cate);
+    }//GEN-LAST:event_rSButtonGradiente1ActionPerformed
 
     private void btnSeleccionarImgenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSeleccionarImgenActionPerformed
-         JFileChooser jFileChooser = new JFileChooser();
+        JFileChooser jFileChooser = new JFileChooser();
         FileNameExtensionFilter filtrado = new FileNameExtensionFilter("JPG, PNG & GIF", "jpg", "png", "gif");
         jFileChooser.setFileFilter(filtrado);
 
@@ -349,10 +288,8 @@ public final void buscarServicio() {
             String Ruta = archivoImagen.getPath();
 
             try {
-                // Leer la imagen y convertirla a un array de bytes
                 imagenServicio = leerImagen(archivoImagen);
 
-                // Mostrar la imagen en el label
                 Image mImagen = new ImageIcon(Ruta).getImage();
                 ImageIcon mIcono = new ImageIcon(mImagen.getScaledInstance(lblImagen.getWidth(), lblImagen.getHeight(), Image.SCALE_SMOOTH));
                 lblImagen.setIcon(mIcono);
@@ -360,8 +297,9 @@ public final void buscarServicio() {
                 JOptionPane.showMessageDialog(this, "Error al leer la imagen: " + e.getMessage());
             }
         }
-    }//GEN-LAST:event_btnSeleccionarImgenActionPerformed
- private byte[] leerImagen(File archivoImagen) throws IOException {
+    }
+
+    private byte[] leerImagen(File archivoImagen) throws IOException {
         try (ByteArrayOutputStream baos = new ByteArrayOutputStream(); FileInputStream fis = new FileInputStream(archivoImagen)) {
             byte[] buffer = new byte[1024];
             int bytesRead;
@@ -370,7 +308,66 @@ public final void buscarServicio() {
             }
             return baos.toByteArray();
         }
+    }//GEN-LAST:event_btnSeleccionarImgenActionPerformed
+
+    private void txtPrecioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPrecioActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtPrecioActionPerformed
+
+    private void txtDescripcionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDescripcionActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtDescripcionActionPerformed
+
+    private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
+        if (validarCampos()) {
+            modificarServicio(
+                txtCodigo.getText().toUpperCase(),
+                txtNombres.getText(),
+                txtDescripcion.getText(),
+                Double.parseDouble(txtPrecio.getText()),
+                CmbDuracion.getSelectedItem().toString(),
+                imagenServicio,
+                Servicios.Estado.ACTIVO,
+                CmbCategoria.getSelectedItem().toString()
+            );
+
+            JOptionPane.showMessageDialog(this, "Servicio Modificado");
+            resetCampos();
+        }
     }
+
+    private boolean validarCampos() {
+        if (txtNombres.getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Ingrese un nombre válido");
+            return false;
+        }
+        if (txtDescripcion.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Ingrese una descripción válida");
+            return false;
+        }
+        if (!txtPrecio.getText().matches("\\d+(\\.\\d{1,2})?")) {
+            JOptionPane.showMessageDialog(this, "Ingrese valores numéricos válidos para el precio total");
+            return false;
+        }
+        return true;
+  
+    }//GEN-LAST:event_btnModificarActionPerformed
+
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        TablaServicios tblser = new TablaServicios();
+        MostrarpaneCruds(tblser);
+    }//GEN-LAST:event_btnCancelarActionPerformed
+
+    private void btnCancelarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCancelarMouseClicked
+        TablaServicios tblser = new TablaServicios();
+        MostrarpaneCruds(tblser);
+    }//GEN-LAST:event_btnCancelarMouseClicked
+
+    private void txtCodigoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCodigoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtCodigoActionPerformed
+ 
+   
 private void resetCampos() {
     txtCodigo.setText("");
     txtNombres.setText("");
@@ -378,7 +375,68 @@ private void resetCampos() {
     txtPrecio.setText("");    
     lblImagen.setIcon(null);
 }
+private void mostrarCombo() {
+    // Abrir base
+    ObjectContainer BaseBD = Conexion_db.ConectarBD();
+    try {
+        // Consulta a la base de datos para obtener todos los objetos CategoriaServicio
+        ObjectSet<CategoriaServicio> categorias = BaseBD.query(CategoriaServicio.class);
+        
+        // Itera sobre los resultados y agrega los nombres de categorías al JComboBox
+        for (CategoriaServicio categoria : categorias) {
+            CmbCategoria.addItem(categoria.getNombreCatSer());
+        }
+    } catch (InvalidIDException e) {
+        JOptionPane.showMessageDialog(this, "Error: ID inválido en la base de datos. " + e.getMessage());
+    } finally {
+        // Cerrar la base de datos
+        BaseBD.close();
+    }
+}
+  private void buscarServicio() {
+        Boolean encontrado = false;
+        ObjectContainer BaseBD = Conexion_db.ConectarBD();
+        Query servicioQuery = BaseBD.query();
+        servicioQuery.constrain(Servicios.class);
+        servicioQuery.descend("codigo_Servicio").constrain(BuscarCodigo.toUpperCase());
+        ObjectSet<Servicios> resultado = servicioQuery.execute();
+
+        if (resultado.hasNext()) {
+            Servicios ser = resultado.next();
+            txtCodigo.setText(ser.getCodigo_Servicio());
+            txtNombres.setText(ser.getNombre_Servicio());
+            txtDescripcion.setText(ser.getDescripcion_Servicio());
+            txtPrecio.setText(String.format("%.2f", ser.getPrecioTotal_Servicio()));
+            CmbDuracion.setSelectedItem(ser.getDuracion_Servicio());
+            CmbCategoria.setSelectedItem(ser.getCategoria());
+
+            byte[] imagen = ser.getImagen();
+            if (imagen != null) {
+                ImageIcon icono = new ImageIcon(imagen);
+                int ancho = lblImagen.getWidth();
+                int alto = lblImagen.getHeight();
+                if (ancho > 0 && alto > 0) {
+                    Image imagenEscalada = icono.getImage().getScaledInstance(ancho, alto, Image.SCALE_SMOOTH);
+                    lblImagen.setIcon(new ImageIcon(imagenEscalada));
+                } else {
+                    Image imagenEscalada = icono.getImage().getScaledInstance(180, 140, Image.SCALE_SMOOTH);
+                    lblImagen.setIcon(new ImageIcon(imagenEscalada));
+                }
+                this.imagenServicio = imagen; // Guardar la imagen en el campo de la clase
+            }
+
+            txtNombres.setEnabled(true);
+            encontrado = true;
+            JOptionPane.showMessageDialog(this, "SERVICIO ENCONTRADO");
+        } else {
+            JOptionPane.showMessageDialog(this, "No se encontró el Servicio");
+        }
+
+        BaseBD.close();
+    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox<String> CmbCategoria;
     private javax.swing.JComboBox<String> CmbDuracion;
     private rojeru_san.RSButtonRiple btnCancelar;
     private rojeru_san.RSButtonRiple btnModificar;
@@ -388,9 +446,11 @@ private void resetCampos() {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel lblCodigooProducto;
     private javax.swing.JLabel lblCodigoocategoria;
+    private javax.swing.JLabel lblCodigoocategoria1;
     private javax.swing.JLabel lblDescripcion;
     private javax.swing.JLabel lblImagen;
     private javax.swing.JLabel lblPrecioProducto;
+    private rsbuttongradiente.RSButtonGradiente rSButtonGradiente1;
     private rojeru_san.RSMTextFull txtCodigo;
     private rojeru_san.RSMTextFull txtDescripcion;
     private rojeru_san.RSMTextFull txtNombres;
