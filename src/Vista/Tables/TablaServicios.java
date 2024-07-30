@@ -239,48 +239,49 @@ public class TablaServicios extends javax.swing.JPanel {
     }//GEN-LAST:event_btnAgregarMouseClicked
 
  private void mostrarDatosActivos() {
-        ObjectContainer BaseBD = Conexion_db.ConectarBD();
-        Servicios servicio = new Servicios(null, null, null, 0.0, null, null, Servicios.Estado.ACTIVO);
-        ObjectSet<Servicios> resul = BaseBD.get(servicio);
+    ObjectContainer BaseBD = Conexion_db.ConectarBD();
+    Servicios servicio = new Servicios(null, null, null, 0.0, null, null, Servicios.Estado.ACTIVO, null);
+    ObjectSet<Servicios> resul = BaseBD.get(servicio);
 
-        Object matriz[][] = new Object[resul.size()][7]; 
+    Object matriz[][] = new Object[resul.size()][8]; 
 
-        for (int i = 0; i < resul.size(); i++) {
-            Servicios ser = resul.next();
+    for (int i = 0; i < resul.size(); i++) {
+        Servicios ser = resul.next();
 
-            matriz[i][0] = ser.getCodigo_Servicio();
-            matriz[i][1] = ser.getNombre_Servicio();
-            matriz[i][2] = ser.getDescripcion_Servicio();
-            matriz[i][3] = String.valueOf(ser.getPrecioTotal_Servicio());
-            matriz[i][4] = ser.getDuracion_Servicio();
+        matriz[i][0] = ser.getCodigo_Servicio();
+        matriz[i][1] = ser.getNombre_Servicio();
+        matriz[i][2] = ser.getDescripcion_Servicio();
+        matriz[i][3] = String.valueOf(ser.getPrecioTotal_Servicio());
+        matriz[i][4] = ser.getDuracion_Servicio();
+        matriz[i][5] = ser.getCategoria();
 
-            byte[] imagen = ser.getImagen();
-            if (imagen != null && imagen.length > 0) {
-                ImageIcon originalIcono = new ImageIcon(imagen);
-                Image originalImage = originalIcono.getImage();
-                if (originalImage.getWidth(null) > 0 && originalImage.getHeight(null) > 0) {
-                    ImageIcon icono = new ImageIcon(originalImage.getScaledInstance(50, 50, Image.SCALE_SMOOTH));
-                    matriz[i][5] = new JLabel(icono);
-                } else {
-                    matriz[i][5] = new JLabel("Invalid image");
-                }
+        byte[] imagen = ser.getImagen();
+        if (imagen != null && imagen.length > 0) {
+            ImageIcon originalIcono = new ImageIcon(imagen);
+            Image originalImage = originalIcono.getImage();
+            if (originalImage.getWidth(null) > 0 && originalImage.getHeight(null) > 0) {
+                ImageIcon icono = new ImageIcon(originalImage.getScaledInstance(50, 50, Image.SCALE_SMOOTH));
+                matriz[i][6] = new JLabel(icono);
             } else {
-                matriz[i][5] = new JLabel("No image");
+                matriz[i][6] = new JLabel("Invalid image");
             }
-
-            matriz[i][6] = ser.getEstado().toString();
+        } else {
+            matriz[i][6] = new JLabel("No image");
         }
 
-        tblServicios.setModel(new javax.swing.table.DefaultTableModel(
-            matriz, 
-            new String[]{"Código Servicio", "Nombre Servicio", "Descripción", "Precio Total", "Duración", "Imagen", "Estado"}
-        ));
-
-        tblServicios.getColumnModel().getColumn(5).setCellRenderer(new ImageRenderer());
-        tblServicios.setRowHeight(100);
-
-        BaseBD.close();
+        matriz[i][7] = ser.getEstado().toString();
     }
+
+    tblServicios.setModel(new javax.swing.table.DefaultTableModel(
+        matriz, 
+        new String[]{"Código Servicio", "Nombre Servicio", "Descripción", "Precio Total", "Duración", "Categoría", "Imagen", "Estado"}
+    ));
+
+    tblServicios.getColumnModel().getColumn(6).setCellRenderer(new ImageRenderer());
+    tblServicios.setRowHeight(100);
+
+    BaseBD.close();
+}
 
 
     private void btnBuscarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBuscarMouseClicked
@@ -293,7 +294,8 @@ public class TablaServicios extends javax.swing.JPanel {
     }//GEN-LAST:event_btnEliminarMouseClicked
 
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
-         
+         CrudPanelServicios servcios = new CrudPanelServicios(); 
+         MostarpanelCruds(servcios);
     }//GEN-LAST:event_btnAgregarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
@@ -309,7 +311,7 @@ public class TablaServicios extends javax.swing.JPanel {
     }//GEN-LAST:event_btnEliminarActionPerformed
  private void inactivarServicio(String codigoServicio) {
         ObjectContainer BaseBD = Conexion_db.ConectarBD();
-        ObjectSet<Servicios> result = BaseBD.queryByExample(new Servicios(codigoServicio, null, null, 0.0, null, null, null));
+        ObjectSet<Servicios> result = BaseBD.queryByExample(new Servicios(codigoServicio, null, null, 0.0, null, null, null,null));
         if (result.hasNext()) {
             Servicios servicioAInactivar = result.next();
             int opcion = JOptionPane.showConfirmDialog(null, "¿Está seguro de inactivar este servicio?", "Confirmación de inactivación", JOptionPane.YES_NO_OPTION);
@@ -327,55 +329,52 @@ public class TablaServicios extends javax.swing.JPanel {
         BaseBD.close();
     }
 private void mostrarDatosInactivos() {
-        ObjectContainer BaseBD = Conexion_db.ConectarBD();
-        tblserInactivo.setEnabled(true);
+    ObjectContainer BaseBD = Conexion_db.ConectarBD();
+    tblserInactivo.setEnabled(true);
 
-        Query query = BaseBD.query();
-        query.constrain(Servicios.class);
-        query.descend("estado").constrain(Servicios.Estado.INACTIVO);
-        ObjectSet<Servicios> resultado = query.execute();
+    Query query = BaseBD.query();
+    query.constrain(Servicios.class);
+    query.descend("estado").constrain(Servicios.Estado.INACTIVO);
+    ObjectSet<Servicios> resultado = query.execute();
 
-        System.out.println("Número de servicios inactivos: " + resultado.size());
+    Object matriz[][] = new Object[resultado.size()][8];
+    int i = 0;
+    for (Servicios servicio : resultado) {
+        matriz[i][0] = servicio.getCodigo_Servicio();
+        matriz[i][1] = servicio.getNombre_Servicio();
+        matriz[i][2] = servicio.getDescripcion_Servicio();
+        matriz[i][3] = String.valueOf(servicio.getPrecioTotal_Servicio());
+        matriz[i][4] = servicio.getDuracion_Servicio();
+        matriz[i][5] = servicio.getCategoria();
 
-        Object matriz[][] = new Object[resultado.size()][7];
-        int i = 0;
-        for (Servicios servicio : resultado) {
-            matriz[i][0] = servicio.getCodigo_Servicio();
-            matriz[i][1] = servicio.getNombre_Servicio();
-            matriz[i][2] = servicio.getDescripcion_Servicio();
-            matriz[i][3] = String.valueOf(servicio.getPrecioTotal_Servicio());
-            matriz[i][4] = servicio.getDuracion_Servicio();
-
-            byte[] imagen = servicio.getImagen();
-            if (imagen != null && imagen.length > 0) {
-                ImageIcon originalIcono = new ImageIcon(imagen);
-                Image originalImage = originalIcono.getImage();
-                if (originalImage.getWidth(null) > 0 && originalImage.getHeight(null) > 0) {
-                    ImageIcon icono = new ImageIcon(originalImage.getScaledInstance(50, 50, Image.SCALE_SMOOTH));
-                    matriz[i][5] = new JLabel(icono);
-                } else {
-                    matriz[i][5] = new JLabel("Invalid image");
-                }
+        byte[] imagen = servicio.getImagen();
+        if (imagen != null && imagen.length > 0) {
+            ImageIcon originalIcono = new ImageIcon(imagen);
+            Image originalImage = originalIcono.getImage();
+            if (originalImage.getWidth(null) > 0 && originalImage.getHeight(null) > 0) {
+                ImageIcon icono = new ImageIcon(originalImage.getScaledInstance(50, 50, Image.SCALE_SMOOTH));
+                matriz[i][6] = new JLabel(icono);
             } else {
-                matriz[i][5] = new JLabel("No image");
+                matriz[i][6] = new JLabel("Invalid image");
             }
-
-            matriz[i][6] = servicio.getEstado().toString();
-            i++;
+        } else {
+            matriz[i][6] = new JLabel("No image");
         }
 
-        System.out.println("Datos de servicios inactivos configurados en la matriz.");
-
-        tblserInactivo.setModel(new javax.swing.table.DefaultTableModel(
-            matriz, 
-            new String[]{"Código Servicio", "Nombre Servicio", "Descripción", "Precio Total", "Duración", "Imagen", "Estado"}
-        ));
-        tblserInactivo.getColumnModel().getColumn(5).setCellRenderer(new ImageRenderer());
-        tblserInactivo.setRowHeight(100);
-        tblserInactivo.setEnabled(false);
-
-        BaseBD.close();
+        matriz[i][7] = servicio.getEstado().toString();
+        i++;
     }
+
+    tblserInactivo.setModel(new javax.swing.table.DefaultTableModel(
+        matriz, 
+        new String[]{"Código Servicio", "Nombre Servicio", "Descripción", "Precio Total", "Duración", "Categoría", "Imagen", "Estado"}
+    ));
+    tblserInactivo.getColumnModel().getColumn(6).setCellRenderer(new ImageRenderer());
+    tblserInactivo.setRowHeight(100);
+    tblserInactivo.setEnabled(false);
+
+    BaseBD.close();
+}
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
         if (!txtBuscar.getText().trim().isEmpty()) {

@@ -146,7 +146,6 @@ public class CrudPanelVehiculo extends javax.swing.JPanel {
         });
         pnlCrearMarca.add(btnGuardarMarca, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 280, 130, -1));
 
-        tblMarca_VehiRegistro.setForeground(new java.awt.Color(0, 0, 0));
         tblMarca_VehiRegistro.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -237,7 +236,6 @@ public class CrudPanelVehiculo extends javax.swing.JPanel {
         });
         pnlCrearMarca1.add(btnGuardarModelo, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 280, 130, -1));
 
-        tblModelo_VehiRegistro.setForeground(new java.awt.Color(0, 0, 0));
         tblModelo_VehiRegistro.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
