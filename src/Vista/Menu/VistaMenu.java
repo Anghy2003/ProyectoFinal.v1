@@ -58,6 +58,7 @@ public class VistaMenu extends javax.swing.JFrame {
         btnProvedores = new javax.swing.JLabel();
         btnSalir = new javax.swing.JLabel();
         btnProductos = new javax.swing.JLabel();
+        btnReportes1 = new javax.swing.JLabel();
         PanelHeader = new javax.swing.JPanel();
         PanelPrincipal = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
@@ -113,8 +114,8 @@ public class VistaMenu extends javax.swing.JFrame {
 
         btnReportes.setFont(new java.awt.Font("Roboto Black", 0, 19)); // NOI18N
         btnReportes.setForeground(new java.awt.Color(255, 255, 255));
-        btnReportes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/analitica.png"))); // NOI18N
-        btnReportes.setText("Reportes");
+        btnReportes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/programaCitas35.png"))); // NOI18N
+        btnReportes.setText("Agendar Citas");
         btnReportes.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnReportesMouseClicked(evt);
@@ -181,6 +182,16 @@ public class VistaMenu extends javax.swing.JFrame {
             }
         });
 
+        btnReportes1.setFont(new java.awt.Font("Roboto Black", 0, 19)); // NOI18N
+        btnReportes1.setForeground(new java.awt.Color(255, 255, 255));
+        btnReportes1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/analitica.png"))); // NOI18N
+        btnReportes1.setText("Reportes");
+        btnReportes1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnReportes1MouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
@@ -191,12 +202,13 @@ public class VistaMenu extends javax.swing.JFrame {
                     .addComponent(btnServicios, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnFactura, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnCatalogo, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnVehiculos, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnProductos, javax.swing.GroupLayout.PREFERRED_SIZE, 179, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnProvedores, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnReportes, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnReportes, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnReportes1, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(26, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
@@ -216,11 +228,13 @@ public class VistaMenu extends javax.swing.JFrame {
                 .addComponent(btnProvedores, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnProductos, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE)
+                .addComponent(btnReportes1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btnReportes, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(18, 18, 18)
                 .addComponent(btnSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(97, Short.MAX_VALUE))
+                .addGap(25, 25, 25))
         );
 
         PanelMenu.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 140, -1, 660));
@@ -389,6 +403,10 @@ public class VistaMenu extends javax.swing.JFrame {
      homesito.setVisible(true);
      this.dispose();
     }//GEN-LAST:event_btnSalirMouseClicked
+
+    private void btnReportes1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnReportes1MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnReportes1MouseClicked
     private void MostrarpanelSubmenu(JPanel p) {
         p.setSize(870, 80);
         p.setLocation(0, 0);
@@ -466,6 +484,7 @@ public class VistaMenu extends javax.swing.JFrame {
     private javax.swing.JLabel btnProductos;
     private javax.swing.JLabel btnProvedores;
     private javax.swing.JLabel btnReportes;
+    private javax.swing.JLabel btnReportes1;
     private javax.swing.JLabel btnSalir;
     private javax.swing.JLabel btnServicios;
     private javax.swing.JLabel btnUsuario;

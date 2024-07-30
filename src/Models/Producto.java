@@ -134,6 +134,12 @@ public class Producto {
     public  void desactivarProducto() {
         this.estado = Estado.INACTIVO;
     }
-
-   
+public int restarCantidad(int cantidad) {
+    if (cantidad <= this.numeroProductos_Producto) {
+        this.numeroProductos_Producto -= cantidad;
+        return this.numeroProductos_Producto;
+    } else {
+        return -1; // Indicador de que no hay suficiente stock
+    }
+} 
 }

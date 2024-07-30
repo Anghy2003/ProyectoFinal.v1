@@ -60,27 +60,23 @@ public class PanelSubmenuCatalogo extends javax.swing.JPanel {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(355, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(btnCatalogoPro)
-                .addGap(36, 36, 36)
+                .addGap(38, 38, 38)
                 .addComponent(btnCatser)
-                .addGap(47, 47, 47))
-            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(jSeparator1, javax.swing.GroupLayout.DEFAULT_SIZE, 870, Short.MAX_VALUE))
+                .addGap(46, 46, 46))
+            .addComponent(jSeparator1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 870, Short.MAX_VALUE)
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+            .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnCatalogoPro, javax.swing.GroupLayout.DEFAULT_SIZE, 50, Short.MAX_VALUE)
-                    .addComponent(btnCatser, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addGap(19, 19, 19))
-            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(jPanel1Layout.createSequentialGroup()
-                    .addContainerGap()
-                    .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 34, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(35, Short.MAX_VALUE)))
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 11, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnCatalogoPro, javax.swing.GroupLayout.DEFAULT_SIZE, 58, Short.MAX_VALUE)
+                    .addComponent(btnCatser, javax.swing.GroupLayout.DEFAULT_SIZE, 58, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         add(jPanel1, java.awt.BorderLayout.CENTER);
