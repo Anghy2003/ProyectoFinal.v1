@@ -17,10 +17,9 @@ import Vista.Tables.TablaProveedor;
 
 public class BuscarPanelProveedor extends javax.swing.JPanel {
 
-    /**
-     * Creates new form CrudPanelVehiculo
-     */
+    
     private String BuscarId;
+    
     public BuscarPanelProveedor(String receivedString) {
         this.BuscarId = receivedString;
         initComponents();

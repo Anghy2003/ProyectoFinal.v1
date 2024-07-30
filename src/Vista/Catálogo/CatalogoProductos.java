@@ -8,14 +8,12 @@ package Vista.Catálogo;
 import Conexion.Conexion_db;
 import Conexion.ImageRenderer;
 import Models.Producto;
-import Vista.Menu.VistaMenu;
 import com.db4o.ObjectContainer;
 import com.db4o.ObjectSet;
-import java.awt.BorderLayout;
 import java.awt.Image;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
-import javax.swing.JPanel;
+
 
 /**
  *

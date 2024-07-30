@@ -1,6 +1,11 @@
 
 package Vista.PanelSubmenus;
 
+import Vista.Menu.VistaMenu;
+import Vista.Tables.TablaCategoriaSer;
+import java.awt.BorderLayout;
+import javax.swing.JPanel;
+
 public class PanelSubmenuServicios extends javax.swing.JPanel {
 
     /**
@@ -25,6 +30,7 @@ public class PanelSubmenuServicios extends javax.swing.JPanel {
         btngestionser = new javax.swing.JToggleButton();
         jSeparator1 = new javax.swing.JSeparator();
         btngestionser1 = new javax.swing.JToggleButton();
+        btnCategoria1 = new javax.swing.JToggleButton();
 
         setLayout(new java.awt.BorderLayout());
 
@@ -56,18 +62,29 @@ public class PanelSubmenuServicios extends javax.swing.JPanel {
             }
         });
 
+        btnCategoria1.setFont(new java.awt.Font("Roboto Medium", 1, 12)); // NOI18N
+        btnCategoria1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/aplicacion.png"))); // NOI18N
+        btnCategoria1.setText("CATEGORIA  SERVICIOS");
+        btnCategoria1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCategoria1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap(252, Short.MAX_VALUE)
+                .addGap(57, 57, 57)
                 .addComponent(btngestionser)
-                .addGap(18, 18, 18)
+                .addGap(10, 10, 10)
                 .addComponent(btnAgendarc)
-                .addGap(31, 31, 31)
+                .addGap(18, 18, 18)
                 .addComponent(btngestionser1)
-                .addGap(24, 24, 24))
+                .addGap(18, 18, 18)
+                .addComponent(btnCategoria1)
+                .addContainerGap(25, Short.MAX_VALUE))
             .addComponent(jSeparator1)
         );
         jPanel2Layout.setVerticalGroup(
@@ -76,10 +93,12 @@ public class PanelSubmenuServicios extends javax.swing.JPanel {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 13, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnAgendarc, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btngestionser)
-                    .addComponent(btngestionser1, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(btngestionser, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnAgendarc, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btngestionser1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                        .addComponent(btnCategoria1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap())
         );
 
@@ -96,9 +115,22 @@ public class PanelSubmenuServicios extends javax.swing.JPanel {
        
     }//GEN-LAST:event_btngestionser1ActionPerformed
 
+    private void btnCategoria1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCategoria1ActionPerformed
+        TablaCategoriaSer tblcat = new TablaCategoriaSer();
+        ShowpanelCruds(tblcat);
+    }//GEN-LAST:event_btnCategoria1ActionPerformed
+ private void ShowpanelCruds(JPanel p) {
+        p.setSize(870, 630);
+        p.setLocation(0, 0);
+        VistaMenu.PanelPrincipal.removeAll();
+        VistaMenu.PanelPrincipal.add(p, BorderLayout.CENTER);
+        VistaMenu.PanelPrincipal.revalidate();
+        VistaMenu.PanelPrincipal.repaint();
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JToggleButton btnAgendarc;
+    private javax.swing.JToggleButton btnCategoria1;
     private javax.swing.JToggleButton btngestionser;
     private javax.swing.JToggleButton btngestionser1;
     private javax.swing.JPanel jPanel1;

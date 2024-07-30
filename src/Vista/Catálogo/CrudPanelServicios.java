@@ -1,13 +1,16 @@
 package Vista.Catálogo;
 
 import Conexion.Conexion_db;
+import Models.CategoriaServicio;
 import Models.Mecanico;
 
 import Models.Servicios;
 import Models.Vehiculo;
 import static Models.Vendedor.Estado.ACTIVO;
+import static Vista.Catálogo.CrudCategoria.guardarCategoria;
 
 import Vista.Menu.VistaMenu;
+import Vista.Tables.TablaCategoriaSer;
 
 import Vista.Tables.TablaServicios;
 import com.db4o.ObjectContainer;
@@ -17,12 +20,11 @@ import java.awt.BorderLayout;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileInputStream;
+
 import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
-import javax.swing.JDialog;
+
 import javax.swing.JFileChooser;
 
 import javax.swing.JOptionPane;
@@ -34,7 +36,9 @@ public class CrudPanelServicios extends javax.swing.JPanel {
      private byte[] imagenServicio;
     public CrudPanelServicios() {
         initComponents();
+        mostrarCombo();
       
+        
         
         
        
@@ -49,14 +53,16 @@ public class CrudPanelServicios extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        TablaMeacanicos = new javax.swing.JDialog();
-        jPanel2 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        tablaServicios = new javax.swing.JTable();
-        txtBuscar = new rojeru_san.RSMTextFull();
-        jLabel3 = new javax.swing.JLabel();
-        btnAgregar = new rsbuttongradiente.RSButtonGradiente();
+        RegistrocatSer = new javax.swing.JDialog();
+        jPanel3 = new javax.swing.JPanel();
+        jPanel4 = new javax.swing.JPanel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        txtNombres1 = new rojeru_san.RSMTextFull();
+        btnCancelar1 = new rojeru_san.RSButtonRiple();
+        btnGuardar1 = new rojeru_san.RSButtonRiple();
+        lblDescripcion1 = new javax.swing.JLabel();
+        txtDescripcion1 = new rojeru_san.RSMTextFull();
         jPanel1 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
@@ -71,109 +77,86 @@ public class CrudPanelServicios extends javax.swing.JPanel {
         lblImagen = new javax.swing.JLabel();
         btnSeleccionarImgen = new rojeru_san.RSButtonRiple();
         CbmDuracion = new javax.swing.JComboBox<>();
+        lblCodigoocategoria1 = new javax.swing.JLabel();
+        CmbCategoria = new javax.swing.JComboBox<>();
+        rSButtonGradiente1 = new rsbuttongradiente.RSButtonGradiente();
 
-        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel4.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel4.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jLabel1.setFont(new java.awt.Font("Roboto Black", 0, 22)); // NOI18N
-        jLabel1.setText("Listado Mecánicos");
+        jLabel5.setFont(new java.awt.Font("Roboto Black", 0, 30)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(0, 53, 79));
+        jLabel5.setText("Registro De Categorias De Servicios");
+        jPanel4.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 510, 40));
 
-        jScrollPane1.setBackground(new java.awt.Color(255, 255, 255));
-        jScrollPane1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        jScrollPane1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel6.setFont(new java.awt.Font("Roboto Medium", 1, 18)); // NOI18N
+        jLabel6.setForeground(new java.awt.Color(0, 53, 79));
+        jLabel6.setText("Nombre:");
+        jPanel4.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 110, 100, 20));
 
-        tablaServicios.setFont(new java.awt.Font("Roboto Medium", 0, 14)); // NOI18N
-        tablaServicios.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String [] {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        jScrollPane1.setViewportView(tablaServicios);
+        txtNombres1.setForeground(new java.awt.Color(0, 53, 79));
+        txtNombres1.setColorTransparente(true);
+        txtNombres1.setFont(new java.awt.Font("Roboto Light", 1, 14)); // NOI18N
+        txtNombres1.setPlaceholder("Escriba el nombre");
+        jPanel4.add(txtNombres1, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 90, 200, 40));
 
-        txtBuscar.setFont(new java.awt.Font("Roboto Bold", 2, 14)); // NOI18N
-        txtBuscar.setPlaceholder("ejm. 0106388747");
-
-        jLabel3.setFont(new java.awt.Font("Roboto Black", 0, 18)); // NOI18N
-        jLabel3.setText("Buscar");
-
-        btnAgregar.setText("Agregar");
-        btnAgregar.setColorPrimario(new java.awt.Color(0, 204, 51));
-        btnAgregar.setColorPrimarioHover(new java.awt.Color(0, 204, 51));
-        btnAgregar.setColorSecundario(new java.awt.Color(153, 255, 153));
-        btnAgregar.setColorSecundarioHover(new java.awt.Color(204, 255, 204));
-        btnAgregar.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnAgregarMouseClicked(evt);
-            }
-        });
-        btnAgregar.addActionListener(new java.awt.event.ActionListener() {
+        btnCancelar1.setBackground(new java.awt.Color(255, 51, 51));
+        btnCancelar1.setText("Cancelar");
+        btnCancelar1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAgregarActionPerformed(evt);
+                btnCancelar1ActionPerformed(evt);
             }
         });
+        jPanel4.add(btnCancelar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 240, -1, -1));
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(24, 24, 24)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane1)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel1)
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(jLabel3)
-                                .addGap(39, 39, 39)
-                                .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(btnAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 372, Short.MAX_VALUE)))
-                .addContainerGap())
+        btnGuardar1.setText("Guardar");
+        btnGuardar1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGuardar1ActionPerformed(evt);
+            }
+        });
+        jPanel4.add(btnGuardar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 240, -1, -1));
+
+        lblDescripcion1.setFont(new java.awt.Font("Roboto Medium", 1, 18)); // NOI18N
+        lblDescripcion1.setForeground(new java.awt.Color(0, 53, 79));
+        lblDescripcion1.setText("Descripción:");
+        jPanel4.add(lblDescripcion1, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 150, 120, -1));
+
+        txtDescripcion1.setForeground(new java.awt.Color(0, 53, 79));
+        txtDescripcion1.setColorTransparente(true);
+        txtDescripcion1.setFont(new java.awt.Font("Roboto Light", 1, 14)); // NOI18N
+        txtDescripcion1.setPlaceholder("Descripción");
+        jPanel4.add(txtDescripcion1, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 130, 200, 40));
+
+        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
+        jPanel3.setLayout(jPanel3Layout);
+        jPanel3Layout.setHorizontalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 583, Short.MAX_VALUE)
         );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(38, 38, 38)
-                .addComponent(jLabel1)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(12, 12, 12)
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(26, 26, 26)
-                        .addComponent(jLabel3)))
-                .addGap(44, 44, 44)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 446, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(13, Short.MAX_VALUE))
+        jPanel3Layout.setVerticalGroup(
+            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, 353, Short.MAX_VALUE)
         );
 
-        javax.swing.GroupLayout TablaMeacanicosLayout = new javax.swing.GroupLayout(TablaMeacanicos.getContentPane());
-        TablaMeacanicos.getContentPane().setLayout(TablaMeacanicosLayout);
-        TablaMeacanicosLayout.setHorizontalGroup(
-            TablaMeacanicosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 863, Short.MAX_VALUE)
-            .addGroup(TablaMeacanicosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(TablaMeacanicosLayout.createSequentialGroup()
+        javax.swing.GroupLayout RegistrocatSerLayout = new javax.swing.GroupLayout(RegistrocatSer.getContentPane());
+        RegistrocatSer.getContentPane().setLayout(RegistrocatSerLayout);
+        RegistrocatSerLayout.setHorizontalGroup(
+            RegistrocatSerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 890, Short.MAX_VALUE)
+            .addGroup(RegistrocatSerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(RegistrocatSerLayout.createSequentialGroup()
                     .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGap(0, 0, Short.MAX_VALUE)))
         );
-        TablaMeacanicosLayout.setVerticalGroup(
-            TablaMeacanicosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 622, Short.MAX_VALUE)
-            .addGroup(TablaMeacanicosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(TablaMeacanicosLayout.createSequentialGroup()
+        RegistrocatSerLayout.setVerticalGroup(
+            RegistrocatSerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 642, Short.MAX_VALUE)
+            .addGroup(RegistrocatSerLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(RegistrocatSerLayout.createSequentialGroup()
                     .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGap(0, 0, Short.MAX_VALUE)))
         );
 
@@ -259,6 +242,25 @@ public class CrudPanelServicios extends javax.swing.JPanel {
         CbmDuracion.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1 Hora ", "2 Horas ", "3 Horas", "4 Horas", "5 horas" }));
         jPanel1.add(CbmDuracion, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 190, 120, -1));
 
+        lblCodigoocategoria1.setFont(new java.awt.Font("Roboto Medium", 1, 18)); // NOI18N
+        lblCodigoocategoria1.setForeground(new java.awt.Color(0, 53, 79));
+        lblCodigoocategoria1.setText("Categoria:");
+        jPanel1.add(lblCodigoocategoria1, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 270, -1, -1));
+
+        jPanel1.add(CmbCategoria, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 262, 140, 30));
+
+        rSButtonGradiente1.setText("Añadir");
+        rSButtonGradiente1.setColorPrimario(new java.awt.Color(51, 51, 255));
+        rSButtonGradiente1.setColorSecundario(new java.awt.Color(0, 102, 255));
+        rSButtonGradiente1.setColorSecundarioHover(new java.awt.Color(0, 102, 204));
+        rSButtonGradiente1.setFont(new java.awt.Font("Tahoma", 1, 12)); // NOI18N
+        rSButtonGradiente1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rSButtonGradiente1ActionPerformed(evt);
+            }
+        });
+        jPanel1.add(rSButtonGradiente1, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 260, 80, 30));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -288,6 +290,7 @@ public class CrudPanelServicios extends javax.swing.JPanel {
         VistaMenu.PanelPrincipal.revalidate();
         VistaMenu.PanelPrincipal.repaint();
     }
+   
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
  if (!txtNombres.getText().trim().isBlank()) {
         Boolean valido = false; // creamos una bandera para validar datos
@@ -300,10 +303,10 @@ public class CrudPanelServicios extends javax.swing.JPanel {
                 Double.parseDouble(txtPrecio.getText()),
                 CbmDuracion.getSelectedItem().toString(),
                 imagenServicio,
-                Servicios.Estado.ACTIVO
+                Servicios.Estado.ACTIVO,
+                CmbCategoria.getSelectedItem().toString()  // Obtén la categoría seleccionada
             );
 
-            JOptionPane.showMessageDialog(this, "Servicio Guardado");
             resetCampos();
         } else {
             JOptionPane.showMessageDialog(this, "Ingrese un precio válido (ejemplo: 10.99)");
@@ -311,6 +314,7 @@ public class CrudPanelServicios extends javax.swing.JPanel {
     } else {
         JOptionPane.showMessageDialog(this, "No deje espacios en blanco en el nombre del servicio");
     }
+
     }//GEN-LAST:event_btnGuardarActionPerformed
     private void resetCampos() {
         txtNombres.setText("");
@@ -343,12 +347,12 @@ public class CrudPanelServicios extends javax.swing.JPanel {
 }
 
 // Método para guardar un nuevo servicio
-  public static void guardarServicio(String nombre_Servicio, String descripcion_Servicio, double precioTotal_Servicio, String duracion_Servicio, byte[] imagen, Servicios.Estado estado) {
+  public static void guardarServicio(String nombre_Servicio, String descripcion_Servicio, double precioTotal_Servicio, String duracion_Servicio, byte[] imagen, Servicios.Estado estado, String categoria) {
     ObjectContainer baseBD = Conexion_db.ConectarBD();
     String codigo_Servicio = obtenerProximoCodigoServicio(baseBD);
 
     if (verificarServicio(baseBD, codigo_Servicio) == 0) {
-        Servicios nuevoServicio = new Servicios(codigo_Servicio, nombre_Servicio, descripcion_Servicio, precioTotal_Servicio, duracion_Servicio, imagen, Servicios.Estado.ACTIVO);
+        Servicios nuevoServicio = new Servicios(codigo_Servicio, nombre_Servicio, descripcion_Servicio, precioTotal_Servicio, duracion_Servicio, imagen, Servicios.Estado.ACTIVO, categoria);
         baseBD.set(nuevoServicio);
         JOptionPane.showMessageDialog(null, "Servicio guardado exitosamente.");
     } else {
@@ -359,7 +363,7 @@ public class CrudPanelServicios extends javax.swing.JPanel {
 // Método para verificar si un servicio existe
     public static int verificarServicio(ObjectContainer baseBD, String codigo_Servicio) {
         // Crear objeto para buscar el servicio por su código
-        Servicios servicioBusca = new Servicios(codigo_Servicio, null, null, 0, null, null, null);
+        Servicios servicioBusca = new Servicios(codigo_Servicio, null, null, 0, null, null, null,null);
         ObjectSet<Servicios> resultado = baseBD.get(servicioBusca);
         return resultado.size();
     }
@@ -386,38 +390,69 @@ public class CrudPanelServicios extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_btnSeleccionarImgenActionPerformed
 
-    private void btnAgregarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAgregarMouseClicked
-        
-    }//GEN-LAST:event_btnAgregarMouseClicked
+    private void rSButtonGradiente1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rSButtonGradiente1ActionPerformed
+           CrudCategoriaServicio caty= new CrudCategoriaServicio(); 
+          MostrarpaneCruds(caty);
+    }//GEN-LAST:event_rSButtonGradiente1ActionPerformed
 
-    private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
-        
-    }//GEN-LAST:event_btnAgregarActionPerformed
+    private void btnCancelar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelar1ActionPerformed
+        TablaCategoriaSer tblcat = new TablaCategoriaSer();
+        MostrarpaneCruds(tblcat);
+    }//GEN-LAST:event_btnCancelar1ActionPerformed
+
+    private void btnGuardar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardar1ActionPerformed
+        if (!txtNombres.getText().trim().isBlank()) {
+            // número con dos decimales para el precio
+            guardarCategoria(
+                txtNombres.getText(),
+                txtDescripcion.getText());
+
+            resetCampos();
+        } else {
+            JOptionPane.showMessageDialog(this, "No deje espacios en blanco en el nombre de la Categoria");
+        }
+    }//GEN-LAST:event_btnGuardar1ActionPerformed
     
+  private void mostrarCombo() {
+//abrir base
+        ObjectContainer BaseBD = Conexion_db.ConectarBD();
+// Consulta a la base de datos para obtener todos los objetos Ciudad
+        ObjectSet<CategoriaServicio> categorias = BaseBD.query(CategoriaServicio.class);
 
+// Itera sobre los resultados y agrega los nombres de ciudades al JComboBox
+        categorias.forEach((categoria) -> {
+            CmbCategoria.addItem(categoria.getNombreCatSer());
+        });
+        BaseBD.close();
+    }
  
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> CbmDuracion;
-    private javax.swing.JDialog TablaMeacanicos;
-    private rsbuttongradiente.RSButtonGradiente btnAgregar;
+    private javax.swing.JComboBox<String> CmbCategoria;
+    private javax.swing.JDialog RegistrocatSer;
     private rojeru_san.RSButtonRiple btnCancelar;
+    private rojeru_san.RSButtonRiple btnCancelar1;
     private rojeru_san.RSButtonRiple btnGuardar;
+    private rojeru_san.RSButtonRiple btnGuardar1;
     private rojeru_san.RSButtonRiple btnSeleccionarImgen;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JPanel jPanel3;
+    private javax.swing.JPanel jPanel4;
     private javax.swing.JLabel lblCodigoocategoria;
+    private javax.swing.JLabel lblCodigoocategoria1;
     private javax.swing.JLabel lblDescripcion;
+    private javax.swing.JLabel lblDescripcion1;
     private javax.swing.JLabel lblImagen;
     private javax.swing.JLabel lblPrecioProducto;
-    private javax.swing.JTable tablaServicios;
-    private rojeru_san.RSMTextFull txtBuscar;
+    private rsbuttongradiente.RSButtonGradiente rSButtonGradiente1;
     private rojeru_san.RSMTextFull txtDescripcion;
+    private rojeru_san.RSMTextFull txtDescripcion1;
     private rojeru_san.RSMTextFull txtNombres;
+    private rojeru_san.RSMTextFull txtNombres1;
     private rojeru_san.RSMTextFull txtPrecio;
     // End of variables declaration//GEN-END:variables
 }

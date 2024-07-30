@@ -23,7 +23,9 @@ public class Producto {
 
     
 
-    public Producto(String codigo_Producto, String nombre_Producto, Double precio_Producto, String codigo_categoria_Producto, int numeroProductos_Producto, int existenciaMaxima_Producto, int existenciaMinima_Producto, String descripcion_Producto, String ID_Proveedor_Producto, byte[] imagen, Estado estado) {
+    public Producto(String codigo_Producto, String nombre_Producto, Double precio_Producto, String codigo_categoria_Producto,
+            int numeroProductos_Producto, int existenciaMaxima_Producto, int existenciaMinima_Producto, String descripcion_Producto, 
+            String ID_Proveedor_Producto, byte[] imagen, Estado estado) {
         this.codigo_Producto = codigo_Producto;
         this.nombre_Producto = nombre_Producto;
         this.precio_Producto = precio_Producto;

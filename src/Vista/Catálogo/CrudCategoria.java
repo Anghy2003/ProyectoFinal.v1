@@ -120,7 +120,7 @@ public class CrudCategoria extends javax.swing.JPanel {
         
         resetCampos();
     } else {
-        JOptionPane.showMessageDialog(this, "No deje espacios en blanco en el nombre del servicio");
+        JOptionPane.showMessageDialog(this, "No deje espacios en blanco en el nombre de la Categoria");
     }
     }//GEN-LAST:event_btnGuardarActionPerformed
     public static void guardarCategoria(String nombreCat, String descripcionCat) {
