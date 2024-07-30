@@ -7,6 +7,8 @@ public class Vendedor extends Persona {
     private double comiciones_Vendedor;
     private int numeroVentas_Vendedor;
     private Estado estado;
+     private String ciudad;
+    private byte[] imagenVende;
     
     //haremos que tenga solo dos posibles valores
     public enum Estado {
@@ -18,7 +20,7 @@ public class Vendedor extends Persona {
         super();
     }
 
-    public Vendedor(double sueldoBase_Vendedor, double comiciones_Vendedor, int numeroVentas_Vendedor, Estado estado, String cedula,
+    public Vendedor(double sueldoBase_Vendedor, double comiciones_Vendedor, int numeroVentas_Vendedor, Estado estado,String ciudad,byte [] imagenVende, String cedula,
             String nombres, String apellidos, String direccion, String correo, String celular, String genero,
             String fechaNacimiento, String estadoCivil, String nombreUsuario, String password, String correoRecuperacion) {
         super(cedula, nombres, apellidos, direccion, correo, celular, genero, fechaNacimiento, estadoCivil, nombreUsuario, password, correoRecuperacion);
@@ -26,9 +28,9 @@ public class Vendedor extends Persona {
         this.comiciones_Vendedor = comiciones_Vendedor;
         this.numeroVentas_Vendedor = numeroVentas_Vendedor;
         this.estado = Estado.ACTIVO;
-    }
-
-    
+        this.ciudad = ciudad;
+        this.imagenVende = imagenVende;
+    }   
 
     
 
@@ -102,13 +104,43 @@ public class Vendedor extends Persona {
         this.numeroVentas_Vendedor = numeroVentas_Vendedor;
     }
 
+     /**
+     * @return the ciudad
+     */
+    public String getCiudad() {
+        return ciudad;
+    }
+
+    /**
+     * @param ciudad the ciudad to set
+     */
+    public void setCiudad(String ciudad) {
+        this.ciudad = ciudad;
+    }
+
+    /**
+     * @return the imagenVende
+     */
+    public byte[] getImagenVende() {
+        return imagenVende;
+    }
+
+    /**
+     * @param imagenVende the imagenVende to set
+     */
+    public void setImagenVende(byte[] imagenVende) {
+        this.imagenVende = imagenVende;
+    }
+    
     
    //METODOS
     public  void activarVendedor() {
-        this.estado = Estado.ACTIVO;
+        this.setEstado(Estado.ACTIVO);
     }
 
     public  void desactivarVendedor() {
-        this.estado = Estado.INACTIVO;
+        this.setEstado(Estado.INACTIVO);
     } 
+
+   
 }

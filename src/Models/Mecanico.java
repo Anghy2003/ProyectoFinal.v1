@@ -6,25 +6,31 @@ public class Mecanico extends Persona {
     private String titulo;
     private double Sueldo;
     private Estado estado;
+    private String ciudad;
+    private byte[] imagenMeca;
 
     //haremos que tenga solo dos posibles valores
     public enum Estado {
         ACTIVO,
         INACTIVO
     }
+    
+    public Mecanico() {
+        super();
+    }
 
-    public Mecanico(String titulo, double Sueldo, Estado estado, String cedula, String nombres, String apellidos,
+    public Mecanico(String titulo, double Sueldo, Estado estado, String ciudad, byte[] imagenMeca, String cedula, String nombres, String apellidos,
             String direccion, String correo, String celular, String genero, String fechaNacimiento, String estadoCivil,
             String nombreUsuario, String password, String correoRecuperacion) {
         super(cedula, nombres, apellidos, direccion, correo, celular, genero, fechaNacimiento, estadoCivil, nombreUsuario, password, correoRecuperacion);
         this.titulo = titulo;
         this.Sueldo = Sueldo;
         this.estado = Estado.ACTIVO;
+        this.ciudad = ciudad;
+        this.imagenMeca = imagenMeca;
     }
 
-    public Mecanico() {
-        super();
-    }
+    
 
     public Estado getEstado() {
         return estado;
@@ -81,13 +87,41 @@ public class Mecanico extends Persona {
         this.Sueldo = Sueldo;
     }
 
+    /**
+     * @return the ciudad
+     */
+    public String getCiudad() {
+        return ciudad;
+    }
+
+    /**
+     * @param ciudad the ciudad to set
+     */
+    public void setCiudad(String ciudad) {
+        this.ciudad = ciudad;
+    }
+
+    /**
+     * @return the imagenMeca
+     */
+    public byte[] getImagenMeca() {
+        return imagenMeca;
+    }
+
+    /**
+     * @param imagenMeca the imagenMeca to set
+     */
+    public void setImagenMeca(byte[] imagenMeca) {
+        this.imagenMeca = imagenMeca;
+    }
+
     //METODOS
     public void activarMecanico() {
-        this.estado = Estado.ACTIVO;
+        this.setEstado(Estado.ACTIVO);
     }
 
     public void desactivarMecanico() {
-        this.estado = Estado.INACTIVO;
+        this.setEstado(Estado.INACTIVO);
     }
 
 }

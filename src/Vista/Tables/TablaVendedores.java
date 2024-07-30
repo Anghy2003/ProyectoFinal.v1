@@ -6,6 +6,7 @@
 package Vista.Tables;
 
 import Conexion.Conexion_db;
+import Conexion.ImageRenderer;
 import Models.Vendedor;
 import static Models.Vendedor.Estado.ACTIVO;
 import static Models.Vendedor.Estado.INACTIVO;
@@ -16,6 +17,9 @@ import com.db4o.ObjectContainer;
 import com.db4o.ObjectSet;
 import com.db4o.query.Query;
 import java.awt.BorderLayout;
+import java.awt.Image;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
@@ -109,7 +113,7 @@ public class TablaVendedores extends javax.swing.JPanel {
             }
         });
 
-        btnBuscarVendedor.setText("Buscar");
+        btnBuscarVendedor.setText("Editar");
         btnBuscarVendedor.setColorPrimario(new java.awt.Color(0, 51, 153));
         btnBuscarVendedor.setColorPrimarioHover(new java.awt.Color(51, 0, 255));
         btnBuscarVendedor.setColorSecundario(new java.awt.Color(51, 153, 255));
@@ -150,32 +154,31 @@ public class TablaVendedores extends javax.swing.JPanel {
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(25, 25, 25)
-                .addComponent(btnBuscarVendedor, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(btnEliminarVendedor, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(txtBuscarVendedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(btnAgregarVendedor, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(tableVendedor1, javax.swing.GroupLayout.DEFAULT_SIZE, 880, Short.MAX_VALUE))
+                .addComponent(tableVendedor1))
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(tableVendedor, javax.swing.GroupLayout.DEFAULT_SIZE, 870, Short.MAX_VALUE))
+                        .addComponent(tableVendedor, javax.swing.GroupLayout.DEFAULT_SIZE, 885, Short.MAX_VALUE))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGap(24, 24, 24)
-                                .addComponent(jLabel1))
-                            .addGroup(jPanel2Layout.createSequentialGroup()
                                 .addGap(18, 18, 18)
-                                .addComponent(jLabel2)))
+                                .addComponent(jLabel2))
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addGap(24, 24, 24)
+                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel1)
+                                    .addGroup(jPanel2Layout.createSequentialGroup()
+                                        .addComponent(btnAgregarVendedor, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(btnBuscarVendedor, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(7, 7, 7)
+                                .addComponent(btnEliminarVendedor, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(txtBuscarVendedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -185,14 +188,15 @@ public class TablaVendedores extends javax.swing.JPanel {
                 .addGap(38, 38, 38)
                 .addComponent(jLabel1)
                 .addGap(16, 16, 16)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnBuscarVendedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtBuscarVendedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnAgregarVendedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnEliminarVendedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(txtBuscarVendedor, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btnAgregarVendedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnEliminarVendedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnBuscarVendedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
                 .addComponent(tableVendedor, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 54, Short.MAX_VALUE)
+                .addGap(30, 30, 30)
                 .addComponent(jLabel2)
                 .addGap(27, 27, 27)
                 .addComponent(tableVendedor1, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -249,14 +253,6 @@ public class TablaVendedores extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_btnEliminarVendedorActionPerformed
 
-    private void ShowpanelCruds(JPanel p) {
-        p.setSize(870, 630);
-        p.setLocation(0, 0);
-        VistaMenu.PanelPrincipal.removeAll();
-        VistaMenu.PanelPrincipal.add(p, BorderLayout.CENTER);
-        VistaMenu.PanelPrincipal.revalidate();
-        VistaMenu.PanelPrincipal.repaint();
-    }
 
     private void mostrarDatosInactivos() {
 
@@ -269,7 +265,7 @@ public class TablaVendedores extends javax.swing.JPanel {
 
         ObjectSet<Vendedor> resultado = query.execute();
 
-        String matriz[][] = new String[resultado.size()][17];
+        Object matriz[][] = new String[resultado.size()][19];
         int i = 0;
         for (Vendedor vende : resultado) {
 
@@ -289,14 +285,25 @@ public class TablaVendedores extends javax.swing.JPanel {
             matriz[i][13] = String.valueOf(vende.getSueldoBase_Vendedor());
             matriz[i][14] = String.valueOf(vende.getComiciones_Vendedor());
             matriz[i][15] = String.valueOf(vende.getNumeroVentas_Vendedor());
-            matriz[i][16] = String.valueOf(vende.getEstado());
+            matriz[i][16] = vende.getCiudad();
+
+            byte[] imagen = vende.getImagenVende();
+            if (imagen != null) {
+                ImageIcon icono = new ImageIcon(new ImageIcon(imagen).getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH));
+                matriz[i][17] = new JLabel(icono);
+            } else {
+                matriz[i][17] = new JLabel("No image");
+            }
+            matriz[i][18] = String.valueOf(vende.getEstado());
             i++;
         }
         
         //datos configurados
         tblVendedorInactivo.setModel(new javax.swing.table.DefaultTableModel(matriz, new String[]{"ID Vendedor", "Usuario", "Contraseña", "Cedula", "Nombres", "Apellidos", "Direccion", "Correo Electronico", "Correo recuperacion", "Celular", "Fecha Nacimiento",
-                    "Estado Civil", "Genero", "Sueldo", "Comiciones", "Numero de Ventas", "Estado"}));
+                    "Estado Civil", "Genero", "Sueldo", "Comiciones", "Numero de Ventas","Ciudad","Foto", "Estado"}));
         tblVendedorInactivo.setEnabled(false);
+        tblVendedorInactivo.getColumnModel().getColumn(17).setCellRenderer(new ImageRenderer());
+        tblVendedorInactivo.setRowHeight(100);
         BaseBD.close();
     }
 
@@ -311,7 +318,7 @@ public class TablaVendedores extends javax.swing.JPanel {
 
         ObjectSet<Vendedor> resultado = query.execute();
 
-        String matriz[][] = new String[resultado.size()][17];
+        Object matriz[][] = new String[resultado.size()][19];
         int i = 0;
         for (Vendedor vende : resultado) {
 
@@ -331,13 +338,25 @@ public class TablaVendedores extends javax.swing.JPanel {
             matriz[i][13] = String.valueOf(vende.getSueldoBase_Vendedor());
             matriz[i][14] = String.valueOf(vende.getComiciones_Vendedor());
             matriz[i][15] = String.valueOf(vende.getNumeroVentas_Vendedor());
-            matriz[i][16] = String.valueOf(vende.getEstado());
+            matriz[i][16] = vende.getCiudad();
+
+            byte[] imagen = vende.getImagenVende();
+            if (imagen != null) {
+                ImageIcon icono = new ImageIcon(new ImageIcon(imagen).getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH));
+                matriz[i][17] = new JLabel(icono);
+            } else {
+                matriz[i][17] = new JLabel("No image");
+            }
+            matriz[i][18] = String.valueOf(vende.getEstado());
             i++;
         }
-
+        
+        //datos configurados
         tblVendedor.setModel(new javax.swing.table.DefaultTableModel(matriz, new String[]{"ID Vendedor", "Usuario", "Contraseña", "Cedula", "Nombres", "Apellidos", "Direccion", "Correo Electronico", "Correo recuperacion", "Celular", "Fecha Nacimiento",
-                    "Estado Civil", "Genero", "Sueldo", "Comiciones", "Numero de Ventas", "Estado"}));
+                    "Estado Civil", "Genero", "Sueldo", "Comiciones", "Numero de Ventas","Ciudad","Foto", "Estado"}));
         tblVendedor.setEnabled(false);
+        tblVendedor.getColumnModel().getColumn(17).setCellRenderer(new ImageRenderer());
+        tblVendedor.setRowHeight(100);
         BaseBD.close();
     }
 
@@ -345,7 +364,7 @@ public class TablaVendedores extends javax.swing.JPanel {
 
         ObjectContainer BaseBD = Conexion_db.ConectarBD();
 
-        ObjectSet<Vendedor> result = BaseBD.queryByExample(new Vendedor(0.0, 0.0, 0, null, cedula, null,
+        ObjectSet<Vendedor> result = BaseBD.queryByExample(new Vendedor(0.0, 0.0, 0, null,null,null, cedula, null,
                 null, null, null, null, null, null, null, null,
                 null, null)); // Crear objeto para consultar
 
@@ -370,6 +389,16 @@ public class TablaVendedores extends javax.swing.JPanel {
         BaseBD.close();
     }
 
+    
+    private void ShowpanelCruds(JPanel p) {
+        p.setSize(870, 630);
+        p.setLocation(0, 0);
+        VistaMenu.PanelPrincipal.removeAll();
+        VistaMenu.PanelPrincipal.add(p, BorderLayout.CENTER);
+        VistaMenu.PanelPrincipal.revalidate();
+        VistaMenu.PanelPrincipal.repaint();
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private rsbuttongradiente.RSButtonGradiente btnAgregarVendedor;
     private rsbuttongradiente.RSButtonGradiente btnBuscarVendedor;

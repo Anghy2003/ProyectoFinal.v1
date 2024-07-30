@@ -32,12 +32,13 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 public class CrudProductos extends javax.swing.JPanel {
 
     private byte[] imagenProducto;
+
     public CrudProductos() {
         initComponents();
         mostrarCombo();
         mostrarDatos();
         mostrarDatospro();
-        
+
     }
 
     @SuppressWarnings("unchecked")
@@ -399,11 +400,11 @@ public class CrudProductos extends javax.swing.JPanel {
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-        
+
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnSeleccionarImgenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSeleccionarImgenActionPerformed
-       JFileChooser jFileChooser = new JFileChooser();
+        JFileChooser jFileChooser = new JFileChooser();
         FileNameExtensionFilter filtrado = new FileNameExtensionFilter("JPG, PNG & GIF", "jpg", "png", "gif");
         jFileChooser.setFileFilter(filtrado);
 
@@ -426,12 +427,12 @@ public class CrudProductos extends javax.swing.JPanel {
             }
         }
     }//GEN-LAST:event_btnSeleccionarImgenActionPerformed
-private void mostrarDatos() {
+    private void mostrarDatos() {
         // Método para mostrar datos si es necesario
     }
 
     private byte[] leerImagen(File archivoImagen) throws IOException {
-        try (ByteArrayOutputStream baos = new ByteArrayOutputStream(); FileInputStream fis = new FileInputStream(archivoImagen)) {
+        try ( ByteArrayOutputStream baos = new ByteArrayOutputStream();  FileInputStream fis = new FileInputStream(archivoImagen)) {
             byte[] buffer = new byte[1024];
             int bytesRead;
             while ((bytesRead = fis.read(buffer)) != -1) {
@@ -441,26 +442,26 @@ private void mostrarDatos() {
         }
     }
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
-       mostrarNombreProveedor();
+        mostrarNombreProveedor();
     }//GEN-LAST:event_btnAgregarActionPerformed
 
     private void BtnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnBuscarActionPerformed
-       activarJdialog(TablaProvedores);
+        activarJdialog(TablaProvedores);
     }//GEN-LAST:event_BtnBuscarActionPerformed
-   private void resetCampos() {
-    
-    txtNombreProducto.setText("");
-    txtPrecioProducto.setText("");    
-    txtNumeroProductos1.setText("");
-    txtExistenciaMaxima.setText("");
-    txtExistenciaMinima.setText("");
-    txtDescripcion.setText("");
-    txtProveedorID.setText("");
-    CmbCategoria.setSelectedIndex(-1); 
-    txtNombreProducto.setEnabled(true);
-    lblImagen.setIcon(null);  // Restablecer la imagen a null
-    lblImagen.setText("No image available"); // Establecer texto por defecto si no hay imagen
-}
+    private void resetCampos() {
+
+        txtNombreProducto.setText("");
+        txtPrecioProducto.setText("");
+        txtNumeroProductos1.setText("");
+        txtExistenciaMaxima.setText("");
+        txtExistenciaMinima.setText("");
+        txtDescripcion.setText("");
+        txtProveedorID.setText("");
+        CmbCategoria.setSelectedIndex(-1);
+        txtNombreProducto.setEnabled(true);
+        lblImagen.setIcon(null);  // Restablecer la imagen a null
+        lblImagen.setText("No image available"); // Establecer texto por defecto si no hay imagen
+    }
 
     private static String obtenerProximoCodigoProducto(ObjectContainer db) {
         // Consultar todos los productos
@@ -486,7 +487,7 @@ private void mostrarDatos() {
 
     public static void guardarProducto(String nombre_Producto, Double precio_Producto, String codigo_categoria_Producto, int numeroProductos_Producto,
             int existenciaMaxima_Producto, int existenciaMinima_Producto, String descripcion_Producto,
-            String ID_Proveedor_Producto,byte[] imagen, Producto.Estado estado) {
+            String ID_Proveedor_Producto, byte[] imagen, Producto.Estado estado) {
         // ESTABLECER CONEXION CON LA BASE DE DATOS
         ObjectContainer baseBD = Conexion_db.ConectarBD();
 
@@ -511,7 +512,7 @@ private void mostrarDatos() {
 
     public static int verificarProducto(ObjectContainer baseBD, String codigo_Producto) {
         // Crear objeto para buscar el producto por su código
-        Producto productoBusca = new Producto(codigo_Producto, null, null, null, 0, 0, 0, null, null,null,null);
+        Producto productoBusca = new Producto(codigo_Producto, null, null, null, 0, 0, 0, null, null, null, null);
         ObjectSet<Producto> resultado = baseBD.get(productoBusca);
         return resultado.size();
     }
@@ -528,7 +529,8 @@ private void mostrarDatos() {
         });
         BaseBD.close();
     }
-private void mostrarDatospro() {
+
+    private void mostrarDatospro() {
         // ESTABLECER CONEXION CON LA BASE DE DATOS
         tblProveedores.setEnabled(true);
         ObjectContainer BaseBD = Conexion_db.ConectarBD();
@@ -555,43 +557,45 @@ private void mostrarDatospro() {
         // Cerrar la conexión con la base de datos
         BaseBD.close();
     }
-private void activarJdialog(JDialog TablaProvedores) {
+
+    private void activarJdialog(JDialog TablaProvedores) {
 
         TablaProvedores.setTitle("Listado Provedores");
         TablaProvedores.setSize(680, 330);
         TablaProvedores.setLocationRelativeTo(this);
         TablaProvedores.setVisible(true);
     }
-private void mostrarNombreProveedor() {
-    // Establecer conexión con la base de datos
-    ObjectContainer BaseBD = Conexion_db.ConectarBD();
 
-    // Crear un objeto de consulta para buscar proveedores
-    Query proveedorQuery = BaseBD.query();
-    proveedorQuery.constrain(Proveedor.class);
-    ObjectSet<Proveedor> resultado = proveedorQuery.execute();
+    private void mostrarNombreProveedor() {
+        // Establecer conexión con la base de datos
+        ObjectContainer BaseBD = Conexion_db.ConectarBD();
 
-    boolean encontrado = false;
-    String inputCodigo = txtBuscar.getText().trim();
+        // Crear un objeto de consulta para buscar proveedores
+        Query proveedorQuery = BaseBD.query();
+        proveedorQuery.constrain(Proveedor.class);
+        ObjectSet<Proveedor> resultado = proveedorQuery.execute();
 
-    // Iterar sobre los resultados para encontrar y cargar el nombre del proveedor
-    for (Proveedor miProveedor : resultado) {
-        String codigoProveedor = miProveedor.getCodigo_proveedor().trim();
-        
-        if (codigoProveedor.equals(inputCodigo)) {
-            txtProveedorID.setText(miProveedor.getNombre_proveedor());
-            encontrado = true;
-            break;
+        boolean encontrado = false;
+        String inputCodigo = txtBuscar.getText().trim();
+
+        // Iterar sobre los resultados para encontrar y cargar el nombre del proveedor
+        for (Proveedor miProveedor : resultado) {
+            String codigoProveedor = miProveedor.getCodigo_proveedor().trim();
+
+            if (codigoProveedor.equals(inputCodigo)) {
+                txtProveedorID.setText(miProveedor.getNombre_proveedor());
+                encontrado = true;
+                break;
+            }
         }
-    }
 
-    if (!encontrado) {
-        JOptionPane.showMessageDialog(this, "No se encontró Proveedor");
-    }
+        if (!encontrado) {
+            JOptionPane.showMessageDialog(this, "No se encontró Proveedor");
+        }
 
-    // Cerrar la conexión con la base de datos
-    BaseBD.close();
-}
+        // Cerrar la conexión con la base de datos
+        BaseBD.close();
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private rojeru_san.RSButtonRiple BtnBuscar;
     private javax.swing.JComboBox<String> CmbCategoria;

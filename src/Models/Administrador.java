@@ -6,6 +6,8 @@ public class Administrador extends Persona {
     private int iD_Administrador;
     private String titulo_Administrador;
     private Estado estado;
+    private String ciudad;
+    private byte[] imagenAdmi;
     
     //haremos que tenga solo dos posibles valores
     public enum Estado {
@@ -17,11 +19,13 @@ public class Administrador extends Persona {
         super();
     }
 
-    public Administrador(String titulo_Administrador, Estado estado, String cedula, String nombres, String apellidos, String direccion, String correo, String celular, String genero,
+    public Administrador(String titulo_Administrador, Estado estado,String ciudad,byte [] imagenAdmi, String cedula, String nombres, String apellidos, String direccion, String correo, String celular, String genero,
             String fechaNacimiento, String estadoCivil, String nombreUsuario, String password, String correoRecuperacion) {
         super(cedula, nombres, apellidos, direccion, correo, celular, genero, fechaNacimiento, estadoCivil, nombreUsuario, password, correoRecuperacion);
         this.titulo_Administrador = titulo_Administrador;
         this.estado = Estado.ACTIVO;
+        this.ciudad = ciudad;
+        this.imagenAdmi = imagenAdmi;
     }
 
     
@@ -67,12 +71,41 @@ public class Administrador extends Persona {
         this.estado = estado;
     }
     
-    //METODOS
+
+    /**
+     * @return the ciudad
+     */
+    public String getCiudad() {
+        return ciudad;
+    }
+
+    /**
+     * @param ciudad the ciudad to set
+     */
+    public void setCiudad(String ciudad) {
+        this.ciudad = ciudad;
+    }
+
+    /**
+     * @return the imagenAdmi
+     */
+    public byte[] getImagenAdmi() {
+        return imagenAdmi;
+    }
+
+    /**
+     * @param imagenAdmi the imagenAdmi to set
+     */
+    public void setImagenAdmi(byte[] imagenAdmi) {
+        this.imagenAdmi = imagenAdmi;
+    }
+    
+        //METODOS
     public  void activarAdministrador() {
-        this.estado = Estado.ACTIVO;
+        this.setEstado(Estado.ACTIVO);
     }
 
     public  void desactivarAdministrador() {
-        this.estado = Estado.INACTIVO;
-    } 
+        this.setEstado(Estado.INACTIVO);
+    }
 }

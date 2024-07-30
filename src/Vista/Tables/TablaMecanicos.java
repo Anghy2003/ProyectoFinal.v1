@@ -1,6 +1,7 @@
 package Vista.Tables;
 
 import Conexion.Conexion_db;
+import Conexion.ImageRenderer;
 import static Models.Mecanico.Estado.ACTIVO;
 import Models.Mecanico;
 import static Models.Mecanico.Estado.INACTIVO;
@@ -11,6 +12,9 @@ import com.db4o.ObjectContainer;
 import com.db4o.ObjectSet;
 import com.db4o.query.Query;
 import java.awt.BorderLayout;
+import java.awt.Image;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
@@ -37,7 +41,7 @@ public class TablaMecanicos extends javax.swing.JPanel {
         tblMecanicoInactivo = new javax.swing.JTable();
         txtBuscar = new rojeru_san.RSMTextFull();
         btnAgregar = new rsbuttongradiente.RSButtonGradiente();
-        btnBuscar = new rsbuttongradiente.RSButtonGradiente();
+        btnEditar = new rsbuttongradiente.RSButtonGradiente();
         btnEliminar = new rsbuttongradiente.RSButtonGradiente();
         jLabel3 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
@@ -87,19 +91,19 @@ public class TablaMecanicos extends javax.swing.JPanel {
             }
         });
 
-        btnBuscar.setText("Buscar");
-        btnBuscar.setColorPrimario(new java.awt.Color(0, 51, 153));
-        btnBuscar.setColorPrimarioHover(new java.awt.Color(51, 0, 255));
-        btnBuscar.setColorSecundario(new java.awt.Color(51, 153, 255));
-        btnBuscar.setColorSecundarioHover(new java.awt.Color(153, 204, 255));
-        btnBuscar.addMouseListener(new java.awt.event.MouseAdapter() {
+        btnEditar.setText("Editar");
+        btnEditar.setColorPrimario(new java.awt.Color(0, 51, 153));
+        btnEditar.setColorPrimarioHover(new java.awt.Color(51, 0, 255));
+        btnEditar.setColorSecundario(new java.awt.Color(51, 153, 255));
+        btnEditar.setColorSecundarioHover(new java.awt.Color(153, 204, 255));
+        btnEditar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnBuscarMouseClicked(evt);
+                btnEditarMouseClicked(evt);
             }
         });
-        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
+        btnEditar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnBuscarActionPerformed(evt);
+                btnEditarActionPerformed(evt);
             }
         });
 
@@ -145,49 +149,43 @@ public class TablaMecanicos extends javax.swing.JPanel {
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 870, Short.MAX_VALUE))
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 893, Short.MAX_VALUE)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(14, 14, 14)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 866, Short.MAX_VALUE)))
+                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel3)
+                            .addGroup(jPanel2Layout.createSequentialGroup()
+                                .addComponent(btnAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(14, 14, 14)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel3)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(10, 10, 10)
-                        .addComponent(jLabel1))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(43, 43, 43)
-                        .addComponent(btnAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
+                .addContainerGap(43, Short.MAX_VALUE)
                 .addComponent(jLabel3)
                 .addGap(18, 18, 18)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(24, 24, 24)
+                    .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(35, 35, 35)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(jLabel1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel1)
+                .addGap(28, 28, 28)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 183, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(96, Short.MAX_VALUE))
+                .addGap(41, 41, 41))
         );
 
         add(jPanel2, java.awt.BorderLayout.CENTER);
@@ -197,10 +195,10 @@ public class TablaMecanicos extends javax.swing.JPanel {
 
     }//GEN-LAST:event_btnAgregarMouseClicked
 
-    private void btnBuscarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBuscarMouseClicked
+    private void btnEditarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditarMouseClicked
         // TODO add your handling code here:
         System.out.println("clickmet");
-    }//GEN-LAST:event_btnBuscarMouseClicked
+    }//GEN-LAST:event_btnEditarMouseClicked
 
     private void btnEliminarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEliminarMouseClicked
         // TODO add your handling code here:
@@ -211,7 +209,7 @@ public class TablaMecanicos extends javax.swing.JPanel {
         ShowpanelCruds(agregarVehi);
     }//GEN-LAST:event_btnAgregarActionPerformed
 
-    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+    private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
         if (!txtBuscar.getText().trim().isEmpty()) {
 
             String Buscarmeca = txtBuscar.getText();
@@ -221,7 +219,7 @@ public class TablaMecanicos extends javax.swing.JPanel {
         } else {
             JOptionPane.showMessageDialog(this, "ingrese una cedula ");
         }
-    }//GEN-LAST:event_btnBuscarActionPerformed
+    }//GEN-LAST:event_btnEditarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
          if (!txtBuscar.getText().trim().isEmpty()) {
@@ -248,7 +246,7 @@ public class TablaMecanicos extends javax.swing.JPanel {
 
         ObjectSet<Mecanico> resultado = query.execute();
 
-        String matriz[][] = new String[resultado.size()][16];
+        Object matriz[][] = new Object[resultado.size()][18];
         int i = 0;
         for (Mecanico meca : resultado) {
 
@@ -266,14 +264,27 @@ public class TablaMecanicos extends javax.swing.JPanel {
             matriz[i][11] = meca.getEstadoCivil();
             matriz[i][12] = meca.getGenero();
             matriz[i][13] = meca.getTitulo();
-            matriz[i][14] = String.valueOf(meca.getSueldo());           
-            matriz[i][15] = String.valueOf(meca.getEstado());
+            matriz[i][14] = String.valueOf(meca.getSueldo()); 
+            matriz[i][15] = meca.getCiudad();
+
+            byte[] imagen = meca.getImagenMeca();
+            if (imagen != null) {
+                ImageIcon icono = new ImageIcon(new ImageIcon(imagen).getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH));
+                matriz[i][16] = new JLabel(icono);
+            } else {
+                matriz[i][16] = new JLabel("No image");
+            }
+
+            
+            matriz[i][17] = String.valueOf(meca.getEstado());
             i++;
         }
         
         //datos configurados
         tblMecanicoInactivo.setModel(new javax.swing.table.DefaultTableModel(matriz, new String[]{"ID Mecanico", "Usuario", "Contraseña", "Cedula", "Nombres", "Apellidos", "Direccion", "Correo Electronico", "Correo recuperacion", "Celular", "Fecha Nacimiento",
-                    "Estado Civil", "Genero","Titulo","Sueldo",  "Estado"}));
+                    "Estado Civil", "Genero","Titulo","Sueldo", "Ciudad" , "Foto","Estado"}));
+         tblMecanicoInactivo.getColumnModel().getColumn(16).setCellRenderer(new ImageRenderer());
+        tblMecanicoInactivo.setRowHeight(100);
         tblMecanicoInactivo.setEnabled(false);
         BaseBD.close();
     }
@@ -289,7 +300,7 @@ public class TablaMecanicos extends javax.swing.JPanel {
 
         ObjectSet<Mecanico> resultado = query.execute();
 
-        String matriz[][] = new String[resultado.size()][16];
+        Object matriz[][] = new Object[resultado.size()][18];
         int i = 0;
         for (Mecanico meca : resultado) {
 
@@ -307,13 +318,27 @@ public class TablaMecanicos extends javax.swing.JPanel {
             matriz[i][11] = meca.getEstadoCivil();
             matriz[i][12] = meca.getGenero();
             matriz[i][13] = meca.getTitulo();
-            matriz[i][14] = String.valueOf(meca.getSueldo());           
-            matriz[i][15] = String.valueOf(meca.getEstado());
+            matriz[i][14] = String.valueOf(meca.getSueldo()); 
+            matriz[i][15] = meca.getCiudad();
+
+            byte[] imagen = meca.getImagenMeca();
+            if (imagen != null) {
+                ImageIcon icono = new ImageIcon(new ImageIcon(imagen).getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH));
+                matriz[i][16] = new JLabel(icono);
+            } else {
+                matriz[i][16] = new JLabel("No image");
+            }
+
+            
+            matriz[i][17] = String.valueOf(meca.getEstado());
             i++;
         }
-
+        
+        //datos configurados
         tblMecanico.setModel(new javax.swing.table.DefaultTableModel(matriz, new String[]{"ID Mecanico", "Usuario", "Contraseña", "Cedula", "Nombres", "Apellidos", "Direccion", "Correo Electronico", "Correo recuperacion", "Celular", "Fecha Nacimiento",
-                    "Estado Civil", "Genero"," Titulo", "Sueldo", "Estado"}));
+                    "Estado Civil", "Genero","Titulo","Sueldo", "Ciudad" , "Foto","Estado"}));
+         tblMecanico.getColumnModel().getColumn(16).setCellRenderer(new ImageRenderer());
+        tblMecanico.setRowHeight(100);
         tblMecanico.setEnabled(false);
         BaseBD.close();
     }
@@ -322,7 +347,7 @@ public class TablaMecanicos extends javax.swing.JPanel {
 
         ObjectContainer BaseBD = Conexion_db.ConectarBD();
 
-        ObjectSet<Mecanico> result = BaseBD.queryByExample(new Mecanico(null,0.0,null,cedula, null, null, null, null,
+        ObjectSet<Mecanico> result = BaseBD.queryByExample(new Mecanico(null,0.0,null,null,null,cedula, null, null, null, null,
                 null,  null, null, null, null, null, null)); // Crear objeto para consultar
 
         if (result.hasNext()) {
@@ -356,7 +381,7 @@ public class TablaMecanicos extends javax.swing.JPanel {
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private rsbuttongradiente.RSButtonGradiente btnAgregar;
-    private rsbuttongradiente.RSButtonGradiente btnBuscar;
+    private rsbuttongradiente.RSButtonGradiente btnEditar;
     private rsbuttongradiente.RSButtonGradiente btnEliminar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;

@@ -9,18 +9,37 @@ import com.db4o.ObjectContainer;
 import com.db4o.ObjectSet;
 import com.db4o.query.Query;
 import java.awt.BorderLayout;
+import java.awt.Image;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import javax.swing.ImageIcon;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class CrudPanelMecanico2 extends javax.swing.JPanel {
 
+    private byte [] imagenMeca;
     private String BuscarMecanico;
     
     
-    
+     //tranforma la imagen a bytes
+    private byte[] leerImagen(File archivoImagen) throws IOException {
+        try (ByteArrayOutputStream baos = new ByteArrayOutputStream(); FileInputStream fis = new FileInputStream(archivoImagen)) {
+            byte[] buffer = new byte[1024];
+            int bytesRead;
+            while ((bytesRead = fis.read(buffer)) != -1) {
+                baos.write(buffer, 0, bytesRead);
+            }
+            return baos.toByteArray();
+        }
+    }
 
     public CrudPanelMecanico2(String receivedString) {
         this.BuscarMecanico = receivedString;
@@ -41,32 +60,36 @@ public class CrudPanelMecanico2 extends javax.swing.JPanel {
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
-        Cedula_Meca = new javax.swing.JLabel();
-        lblNombres_Meca = new javax.swing.JLabel();
-        lblApellidos_Meca = new javax.swing.JLabel();
-        lblDireccion_Meca = new javax.swing.JLabel();
-        lblCorreo_Meca = new javax.swing.JLabel();
-        lblTituloMec = new javax.swing.JLabel();
-        lblFEchaNac_Meca = new javax.swing.JLabel();
-        lblGenero_Meca = new javax.swing.JLabel();
-        lblEstadoCivil_Meca = new javax.swing.JLabel();
-        txtCedulaMeca = new rojeru_san.RSMTextFull();
-        txtNombresMeca = new rojeru_san.RSMTextFull();
-        txtApellidosMeca = new rojeru_san.RSMTextFull();
-        txtDireccionMeca = new rojeru_san.RSMTextFull();
-        txtCorreoMeca = new rojeru_san.RSMTextFull();
-        txtTituloMeca = new rojeru_san.RSMTextFull();
         btnCancelar = new rojeru_san.RSButtonRiple();
-        jDateFechaNacMeca = new com.toedter.calendar.JDateChooser();
-        cbxGeneroMeca = new javax.swing.JComboBox<>();
-        cbxEstadoCivilMeca = new javax.swing.JComboBox<>();
         btnModificar = new rojeru_san.RSButtonRiple();
-        lblPassword_Meca = new javax.swing.JLabel();
-        lblSueldoMec = new javax.swing.JLabel();
-        lblCelular_Meca = new javax.swing.JLabel();
-        txtSueldoMeca = new rojeru_san.RSMTextFull();
-        txtCelularMeca = new rojeru_san.RSMTextFull();
+        lblImagenMeca = new javax.swing.JLabel();
+        btnSeleccionarImgen1 = new rojeru_san.RSButtonRiple();
+        CedulaMeca = new javax.swing.JLabel();
+        txtCedulaMeca = new rojeru_san.RSMTextFull();
+        lblPasswordMeca = new javax.swing.JLabel();
         txtPasswordMeca = new rojeru_san.RSMPassView();
+        lblNombresMeca = new javax.swing.JLabel();
+        txtNombresMeca = new rojeru_san.RSMTextFull();
+        lblApellidosMeca = new javax.swing.JLabel();
+        txtApellidosMeca = new rojeru_san.RSMTextFull();
+        lblDireccionMeca = new javax.swing.JLabel();
+        txtDireccionMeca = new rojeru_san.RSMTextFull();
+        lblCorreoMeca = new javax.swing.JLabel();
+        txtCorreoMeca = new rojeru_san.RSMTextFull();
+        lblCelularMeca = new javax.swing.JLabel();
+        txtCelularMeca = new rojeru_san.RSMTextFull();
+        lblCiudadMeca = new javax.swing.JLabel();
+        cbxCiudadMeca = new javax.swing.JComboBox<>();
+        lblFEchaNacMeca = new javax.swing.JLabel();
+        jDateFechaNacMeca = new com.toedter.calendar.JDateChooser();
+        lblEstadoCivilMeca = new javax.swing.JLabel();
+        cbxGeneroMeca = new javax.swing.JComboBox<>();
+        lblGeneroMeca = new javax.swing.JLabel();
+        cbxEstadoCivilMeca = new javax.swing.JComboBox<>();
+        lblTituloMeca = new javax.swing.JLabel();
+        txtTituloMeca = new rojeru_san.RSMTextFull();
+        lblSueldoMeca = new javax.swing.JLabel();
+        txtSueldoMeca = new rojeru_san.RSMTextFull();
 
         jPanel1.setLayout(new java.awt.BorderLayout());
 
@@ -75,89 +98,8 @@ public class CrudPanelMecanico2 extends javax.swing.JPanel {
 
         jLabel2.setFont(new java.awt.Font("Roboto Black", 0, 30)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(0, 53, 79));
-        jLabel2.setText("Registro Mecanico");
-        jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 30, 260, 40));
-
-        Cedula_Meca.setFont(new java.awt.Font("Roboto Medium", 0, 21)); // NOI18N
-        Cedula_Meca.setForeground(new java.awt.Color(0, 53, 79));
-        Cedula_Meca.setText("Cédula/Usuario:");
-        jPanel2.add(Cedula_Meca, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 100, 150, 40));
-
-        lblNombres_Meca.setFont(new java.awt.Font("Roboto Medium", 0, 21)); // NOI18N
-        lblNombres_Meca.setForeground(new java.awt.Color(0, 53, 79));
-        lblNombres_Meca.setText("Nombres:");
-        jPanel2.add(lblNombres_Meca, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 200, 100, 40));
-
-        lblApellidos_Meca.setFont(new java.awt.Font("Roboto Medium", 0, 21)); // NOI18N
-        lblApellidos_Meca.setForeground(new java.awt.Color(0, 53, 79));
-        lblApellidos_Meca.setText("Apellidos:");
-        jPanel2.add(lblApellidos_Meca, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 260, 100, 40));
-
-        lblDireccion_Meca.setFont(new java.awt.Font("Roboto Medium", 0, 21)); // NOI18N
-        lblDireccion_Meca.setForeground(new java.awt.Color(0, 53, 79));
-        lblDireccion_Meca.setText("Dirección");
-        jPanel2.add(lblDireccion_Meca, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 340, 90, 40));
-
-        lblCorreo_Meca.setFont(new java.awt.Font("Roboto Medium", 0, 21)); // NOI18N
-        lblCorreo_Meca.setForeground(new java.awt.Color(0, 53, 79));
-        lblCorreo_Meca.setText("Correo Electrónico:");
-        jPanel2.add(lblCorreo_Meca, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 420, 190, 40));
-
-        lblTituloMec.setFont(new java.awt.Font("Roboto Medium", 0, 21)); // NOI18N
-        lblTituloMec.setForeground(new java.awt.Color(0, 53, 79));
-        lblTituloMec.setText("Titulo:");
-        jPanel2.add(lblTituloMec, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 330, 60, 40));
-
-        lblFEchaNac_Meca.setFont(new java.awt.Font("Roboto Medium", 0, 21)); // NOI18N
-        lblFEchaNac_Meca.setForeground(new java.awt.Color(0, 53, 79));
-        lblFEchaNac_Meca.setText("Fecha Nacimiento:");
-        jPanel2.add(lblFEchaNac_Meca, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 160, 180, 40));
-
-        lblGenero_Meca.setFont(new java.awt.Font("Roboto Medium", 0, 21)); // NOI18N
-        lblGenero_Meca.setForeground(new java.awt.Color(0, 53, 79));
-        lblGenero_Meca.setText("Género:");
-        jPanel2.add(lblGenero_Meca, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 220, 80, 40));
-
-        lblEstadoCivil_Meca.setFont(new java.awt.Font("Roboto Medium", 0, 21)); // NOI18N
-        lblEstadoCivil_Meca.setForeground(new java.awt.Color(0, 53, 79));
-        lblEstadoCivil_Meca.setText("Estado Civil:");
-        jPanel2.add(lblEstadoCivil_Meca, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 270, 120, 40));
-
-        txtCedulaMeca.setForeground(new java.awt.Color(0, 53, 79));
-        txtCedulaMeca.setColorTransparente(true);
-        txtCedulaMeca.setFont(new java.awt.Font("Roboto Light", 1, 14)); // NOI18N
-        txtCedulaMeca.setPlaceholder("0123456789");
-        jPanel2.add(txtCedulaMeca, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 100, 200, 40));
-
-        txtNombresMeca.setForeground(new java.awt.Color(0, 53, 79));
-        txtNombresMeca.setColorTransparente(true);
-        txtNombresMeca.setFont(new java.awt.Font("Roboto Light", 1, 14)); // NOI18N
-        txtNombresMeca.setPlaceholder("Escriba los nombres");
-        jPanel2.add(txtNombresMeca, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 200, 200, 40));
-
-        txtApellidosMeca.setForeground(new java.awt.Color(0, 53, 79));
-        txtApellidosMeca.setColorTransparente(true);
-        txtApellidosMeca.setFont(new java.awt.Font("Roboto Light", 1, 14)); // NOI18N
-        txtApellidosMeca.setPlaceholder("Escriba los apellidos");
-        jPanel2.add(txtApellidosMeca, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 260, 200, 40));
-
-        txtDireccionMeca.setForeground(new java.awt.Color(0, 53, 79));
-        txtDireccionMeca.setColorTransparente(true);
-        txtDireccionMeca.setFont(new java.awt.Font("Roboto Light", 1, 14)); // NOI18N
-        txtDireccionMeca.setPlaceholder("Escriba la dirección");
-        jPanel2.add(txtDireccionMeca, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 340, 200, 40));
-
-        txtCorreoMeca.setForeground(new java.awt.Color(0, 53, 79));
-        txtCorreoMeca.setColorTransparente(true);
-        txtCorreoMeca.setFont(new java.awt.Font("Roboto Light", 1, 14)); // NOI18N
-        txtCorreoMeca.setPlaceholder("Escriba su correo electronico");
-        jPanel2.add(txtCorreoMeca, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 420, 250, 40));
-
-        txtTituloMeca.setForeground(new java.awt.Color(0, 53, 79));
-        txtTituloMeca.setColorTransparente(true);
-        txtTituloMeca.setFont(new java.awt.Font("Roboto Light", 1, 14)); // NOI18N
-        txtTituloMeca.setPlaceholder("Escriba su titulo");
-        jPanel2.add(txtTituloMeca, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 320, 230, 40));
+        jLabel2.setText("Buscar/Modificar Mecanico");
+        jPanel2.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 20, 370, 40));
 
         btnCancelar.setBackground(new java.awt.Color(255, 51, 51));
         btnCancelar.setText("Cancelar");
@@ -171,14 +113,7 @@ public class CrudPanelMecanico2 extends javax.swing.JPanel {
                 btnCancelarActionPerformed(evt);
             }
         });
-        jPanel2.add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 520, -1, -1));
-        jPanel2.add(jDateFechaNacMeca, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 170, 140, 30));
-
-        cbxGeneroMeca.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Masculino\t\t", "Femenino" }));
-        jPanel2.add(cbxGeneroMeca, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 230, 150, 30));
-
-        cbxEstadoCivilMeca.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Soltero", "Casado", "Viudo", "Union Libre" }));
-        jPanel2.add(cbxEstadoCivilMeca, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 280, 150, 30));
+        jPanel2.add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 560, -1, -1));
 
         btnModificar.setText("Modificar");
         btnModificar.addActionListener(new java.awt.event.ActionListener() {
@@ -186,34 +121,36 @@ public class CrudPanelMecanico2 extends javax.swing.JPanel {
                 btnModificarActionPerformed(evt);
             }
         });
-        jPanel2.add(btnModificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 520, -1, -1));
+        jPanel2.add(btnModificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 560, -1, -1));
 
-        lblPassword_Meca.setFont(new java.awt.Font("Roboto Medium", 0, 21)); // NOI18N
-        lblPassword_Meca.setForeground(new java.awt.Color(0, 53, 79));
-        lblPassword_Meca.setText("Contraseña:");
-        jPanel2.add(lblPassword_Meca, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 150, 130, 40));
+        lblImagenMeca.setToolTipText("SOLO JPG");
+        lblImagenMeca.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+        jPanel2.add(lblImagenMeca, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 70, 180, 140));
 
-        lblSueldoMec.setFont(new java.awt.Font("Roboto Medium", 0, 21)); // NOI18N
-        lblSueldoMec.setForeground(new java.awt.Color(0, 53, 79));
-        lblSueldoMec.setText("Sueldo:");
-        jPanel2.add(lblSueldoMec, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 380, 80, 40));
+        btnSeleccionarImgen1.setText("Selecionar Imagen");
+        btnSeleccionarImgen1.setToolTipText("SOLO JPG");
+        btnSeleccionarImgen1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSeleccionarImgen1ActionPerformed(evt);
+            }
+        });
+        jPanel2.add(btnSeleccionarImgen1, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 210, 180, -1));
 
-        lblCelular_Meca.setFont(new java.awt.Font("Roboto Medium", 0, 21)); // NOI18N
-        lblCelular_Meca.setForeground(new java.awt.Color(0, 53, 79));
-        lblCelular_Meca.setText("Celular:");
-        jPanel2.add(lblCelular_Meca, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 100, 80, 40));
+        CedulaMeca.setFont(new java.awt.Font("Roboto Medium", 0, 21)); // NOI18N
+        CedulaMeca.setForeground(new java.awt.Color(0, 53, 79));
+        CedulaMeca.setText("Usuario/Cédula:");
+        jPanel2.add(CedulaMeca, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 260, 150, 40));
 
-        txtSueldoMeca.setForeground(new java.awt.Color(0, 53, 79));
-        txtSueldoMeca.setColorTransparente(true);
-        txtSueldoMeca.setFont(new java.awt.Font("Roboto Light", 1, 14)); // NOI18N
-        txtSueldoMeca.setPlaceholder("Escriba el sueldo");
-        jPanel2.add(txtSueldoMeca, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 380, 230, 40));
+        txtCedulaMeca.setForeground(new java.awt.Color(0, 53, 79));
+        txtCedulaMeca.setColorTransparente(true);
+        txtCedulaMeca.setFont(new java.awt.Font("Roboto Light", 1, 14)); // NOI18N
+        txtCedulaMeca.setPlaceholder("0123456789");
+        jPanel2.add(txtCedulaMeca, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 260, 220, 40));
 
-        txtCelularMeca.setForeground(new java.awt.Color(0, 53, 79));
-        txtCelularMeca.setColorTransparente(true);
-        txtCelularMeca.setFont(new java.awt.Font("Roboto Light", 1, 14)); // NOI18N
-        txtCelularMeca.setPlaceholder("Escriba su número celular");
-        jPanel2.add(txtCelularMeca, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 100, 230, 40));
+        lblPasswordMeca.setFont(new java.awt.Font("Roboto Medium", 0, 21)); // NOI18N
+        lblPasswordMeca.setForeground(new java.awt.Color(0, 53, 79));
+        lblPasswordMeca.setText("Contraseña:");
+        jPanel2.add(lblPasswordMeca, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 300, -1, 40));
 
         txtPasswordMeca.setForeground(new java.awt.Color(0, 53, 79));
         txtPasswordMeca.setOpaque(false);
@@ -223,13 +160,124 @@ public class CrudPanelMecanico2 extends javax.swing.JPanel {
                 txtPasswordMecaActionPerformed(evt);
             }
         });
-        jPanel2.add(txtPasswordMeca, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 150, 210, 40));
+        jPanel2.add(txtPasswordMeca, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 300, 220, 40));
+
+        lblNombresMeca.setFont(new java.awt.Font("Roboto Medium", 0, 21)); // NOI18N
+        lblNombresMeca.setForeground(new java.awt.Color(0, 53, 79));
+        lblNombresMeca.setText("Nombres:");
+        jPanel2.add(lblNombresMeca, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 340, 90, 40));
+
+        txtNombresMeca.setForeground(new java.awt.Color(0, 53, 79));
+        txtNombresMeca.setColorTransparente(true);
+        txtNombresMeca.setFont(new java.awt.Font("Roboto Light", 1, 14)); // NOI18N
+        txtNombresMeca.setPlaceholder("Yins Yan");
+        jPanel2.add(txtNombresMeca, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 340, 220, 40));
+
+        lblApellidosMeca.setFont(new java.awt.Font("Roboto Medium", 0, 21)); // NOI18N
+        lblApellidosMeca.setForeground(new java.awt.Color(0, 53, 79));
+        lblApellidosMeca.setText("Apellidos:");
+        jPanel2.add(lblApellidosMeca, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 380, 90, 40));
+
+        txtApellidosMeca.setForeground(new java.awt.Color(0, 53, 79));
+        txtApellidosMeca.setColorTransparente(true);
+        txtApellidosMeca.setFont(new java.awt.Font("Roboto Light", 1, 14)); // NOI18N
+        txtApellidosMeca.setPlaceholder("Yins Yan");
+        jPanel2.add(txtApellidosMeca, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 380, 220, 40));
+
+        lblDireccionMeca.setFont(new java.awt.Font("Roboto Medium", 0, 21)); // NOI18N
+        lblDireccionMeca.setForeground(new java.awt.Color(0, 53, 79));
+        lblDireccionMeca.setText("Dirección:");
+        jPanel2.add(lblDireccionMeca, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 420, -1, 40));
+
+        txtDireccionMeca.setForeground(new java.awt.Color(0, 53, 79));
+        txtDireccionMeca.setColorTransparente(true);
+        txtDireccionMeca.setFont(new java.awt.Font("Roboto Light", 1, 14)); // NOI18N
+        txtDireccionMeca.setPlaceholder("Octavio Chacon");
+        jPanel2.add(txtDireccionMeca, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 420, 220, 40));
+
+        lblCorreoMeca.setFont(new java.awt.Font("Roboto Medium", 0, 21)); // NOI18N
+        lblCorreoMeca.setForeground(new java.awt.Color(0, 53, 79));
+        lblCorreoMeca.setText("Correo Electrónico:");
+        jPanel2.add(lblCorreoMeca, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 460, 190, 40));
+
+        txtCorreoMeca.setForeground(new java.awt.Color(0, 53, 79));
+        txtCorreoMeca.setColorTransparente(true);
+        txtCorreoMeca.setFont(new java.awt.Font("Roboto Light", 1, 14)); // NOI18N
+        txtCorreoMeca.setPlaceholder("Yins_Yan@tecazuay.com");
+        jPanel2.add(txtCorreoMeca, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 460, 220, 40));
+
+        lblCelularMeca.setFont(new java.awt.Font("Roboto Medium", 0, 21)); // NOI18N
+        lblCelularMeca.setForeground(new java.awt.Color(0, 53, 79));
+        lblCelularMeca.setText("Celular:");
+        jPanel2.add(lblCelularMeca, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 500, -1, 40));
+
+        txtCelularMeca.setForeground(new java.awt.Color(0, 53, 79));
+        txtCelularMeca.setColorTransparente(true);
+        txtCelularMeca.setFont(new java.awt.Font("Roboto Light", 1, 14)); // NOI18N
+        txtCelularMeca.setPlaceholder("0960188019");
+        jPanel2.add(txtCelularMeca, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 500, 220, 40));
+
+        lblCiudadMeca.setFont(new java.awt.Font("Roboto Medium", 0, 21)); // NOI18N
+        lblCiudadMeca.setForeground(new java.awt.Color(0, 53, 79));
+        lblCiudadMeca.setText("Ciudad:");
+        jPanel2.add(lblCiudadMeca, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 270, 80, 30));
+
+        cbxCiudadMeca.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbxCiudadMecaActionPerformed(evt);
+            }
+        });
+        jPanel2.add(cbxCiudadMeca, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 270, 220, 30));
+
+        lblFEchaNacMeca.setFont(new java.awt.Font("Roboto Medium", 0, 21)); // NOI18N
+        lblFEchaNacMeca.setForeground(new java.awt.Color(0, 53, 79));
+        lblFEchaNacMeca.setText("Fecha Nacimiento:");
+        jPanel2.add(lblFEchaNacMeca, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 300, 180, 40));
+        jPanel2.add(jDateFechaNacMeca, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 310, 220, 30));
+
+        lblEstadoCivilMeca.setFont(new java.awt.Font("Roboto Medium", 0, 21)); // NOI18N
+        lblEstadoCivilMeca.setForeground(new java.awt.Color(0, 53, 79));
+        lblEstadoCivilMeca.setText("Estado Civil:");
+        jPanel2.add(lblEstadoCivilMeca, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 340, 120, 40));
+
+        cbxGeneroMeca.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Soltero/a", "Casado/a", "Divorciado/a", "Viudo/a", "Union Libre" }));
+        jPanel2.add(cbxGeneroMeca, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 350, 220, 30));
+
+        lblGeneroMeca.setFont(new java.awt.Font("Roboto Medium", 0, 21)); // NOI18N
+        lblGeneroMeca.setForeground(new java.awt.Color(0, 53, 79));
+        lblGeneroMeca.setText("Género:");
+        jPanel2.add(lblGeneroMeca, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 380, 80, 40));
+
+        cbxEstadoCivilMeca.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Masculino", "Femenino" }));
+        jPanel2.add(cbxEstadoCivilMeca, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 390, 220, 30));
+
+        lblTituloMeca.setFont(new java.awt.Font("Roboto Medium", 0, 21)); // NOI18N
+        lblTituloMeca.setForeground(new java.awt.Color(0, 53, 79));
+        lblTituloMeca.setText("Titulo:");
+        jPanel2.add(lblTituloMeca, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 420, 60, 40));
+
+        txtTituloMeca.setForeground(new java.awt.Color(0, 53, 79));
+        txtTituloMeca.setColorTransparente(true);
+        txtTituloMeca.setFont(new java.awt.Font("Roboto Light", 1, 14)); // NOI18N
+        txtTituloMeca.setPlaceholder("Tglo. Software");
+        jPanel2.add(txtTituloMeca, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 420, 220, 40));
+
+        lblSueldoMeca.setFont(new java.awt.Font("Roboto Medium", 0, 21)); // NOI18N
+        lblSueldoMeca.setForeground(new java.awt.Color(0, 53, 79));
+        lblSueldoMeca.setText("Sueldo:");
+        jPanel2.add(lblSueldoMeca, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 460, 70, 40));
+
+        txtSueldoMeca.setForeground(new java.awt.Color(0, 53, 79));
+        txtSueldoMeca.setColorTransparente(true);
+        txtSueldoMeca.setFont(new java.awt.Font("Roboto Light", 1, 14)); // NOI18N
+        txtSueldoMeca.setPlaceholder("$1000");
+        jPanel2.add(txtSueldoMeca, new org.netbeans.lib.awtextra.AbsoluteConstraints(610, 460, 220, 40));
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
         jPanel6Layout.setHorizontalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 896, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 896, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel6Layout.createSequentialGroup()
                     .addGap(0, 448, Short.MAX_VALUE)
@@ -238,7 +286,7 @@ public class CrudPanelMecanico2 extends javax.swing.JPanel {
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 638, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 638, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel6Layout.createSequentialGroup()
                     .addGap(0, 319, Short.MAX_VALUE)
@@ -259,7 +307,7 @@ public class CrudPanelMecanico2 extends javax.swing.JPanel {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 638, Short.MAX_VALUE)
+            .addGap(0, 640, Short.MAX_VALUE)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addGap(0, 0, Short.MAX_VALUE)
@@ -292,7 +340,7 @@ public class CrudPanelMecanico2 extends javax.swing.JPanel {
                                 if (valido = txtCelularMeca.getText().matches("^09\\d{8}$")) {
 
                                     
-                                    modificarMecanico(txtTituloMeca.getText().toUpperCase(), Double.parseDouble(txtSueldoMeca.getText()), Mecanico.Estado.ACTIVO, txtCedulaMeca.getText(), txtNombresMeca.getText().toUpperCase(),
+                                    modificarMecanico(txtTituloMeca.getText().toUpperCase(), Double.parseDouble(txtSueldoMeca.getText()), Mecanico.Estado.ACTIVO,(String)cbxCiudadMeca.getSelectedItem(),imagenMeca, txtCedulaMeca.getText(), txtNombresMeca.getText().toUpperCase(),
                                         txtApellidosMeca.getText().toUpperCase(), txtDireccionMeca.getText().toUpperCase(), txtCorreoMeca.getText(), txtCelularMeca.getText(),
                                         (String) cbxGeneroMeca.getSelectedItem(), fechaNacimiento, (String) cbxEstadoCivilMeca.getSelectedItem(), txtCedulaMeca.getText(), txtPasswordMeca.getText(),
                                         txtCorreoMeca.getText());
@@ -326,15 +374,45 @@ public class CrudPanelMecanico2 extends javax.swing.JPanel {
 
     }//GEN-LAST:event_btnModificarActionPerformed
 
-    private void txtPasswordMecaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPasswordMecaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtPasswordMecaActionPerformed
-
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
          System.out.println("salir");
         TablaMecanicos tblMeca = new TablaMecanicos();
         ShowpanelCruds(tblMeca);
     }//GEN-LAST:event_btnCancelarActionPerformed
+
+    private void btnSeleccionarImgen1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSeleccionarImgen1ActionPerformed
+
+        JFileChooser jFileChooser = new JFileChooser();
+        FileNameExtensionFilter filtrado = new FileNameExtensionFilter("JPG, PNG & GIF", "jpg", "png", "gif");
+        jFileChooser.setFileFilter(filtrado);
+
+        int respuesta = jFileChooser.showOpenDialog(this);
+
+        if (respuesta == JFileChooser.APPROVE_OPTION) {
+            File archivoImagen = jFileChooser.getSelectedFile();
+            String Ruta = archivoImagen.getPath();
+
+            try {
+                // Leer la imagen y convertirla a un array de bytes
+                imagenMeca = leerImagen(archivoImagen);
+
+                // Mostrar la imagen en el label
+                Image mImagen = new ImageIcon(Ruta).getImage();
+                ImageIcon mIcono = new ImageIcon(mImagen.getScaledInstance(lblImagenMeca.getWidth(), lblImagenMeca.getHeight(), Image.SCALE_SMOOTH));
+                lblImagenMeca.setIcon(mIcono);
+            } catch (IOException e) {
+                JOptionPane.showMessageDialog(this, "Error al leer la imagen: " + e.getMessage());
+            }
+        }
+    }//GEN-LAST:event_btnSeleccionarImgen1ActionPerformed
+
+    private void txtPasswordMecaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPasswordMecaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtPasswordMecaActionPerformed
+
+    private void cbxCiudadMecaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxCiudadMecaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cbxCiudadMecaActionPerformed
 
     public final void Mecanicobuscar() {
 
@@ -357,20 +435,35 @@ public class CrudPanelMecanico2 extends javax.swing.JPanel {
             txtDireccionMeca.setText(meca.getDireccion());
             txtCorreoMeca.setText(meca.getCorreo());
             txtCelularMeca.setText(meca.getCelular());
+            cbxCiudadMeca.setSelectedItem(meca.getCiudad());
             cbxGeneroMeca.setSelectedItem(meca.getGenero());
             cbxEstadoCivilMeca.setSelectedItem(meca.getEstadoCivil());
             txtTituloMeca.setText(meca.getTitulo());            
             txtSueldoMeca.setText(String.valueOf(meca.getSueldo()));
+            jDateFechaNacMeca.setDate(convertirStringADate(meca.getFechaNacimiento()));
+            // Mostrar la imagen
+            byte[] imagen = meca.getImagenMeca();
+            if (imagen != null) {
+                try {
+                    ImageIcon icono = new ImageIcon(imagen);
+                    // Verifica si el tamaño del JLabel está definido
+                    int ancho = lblImagenMeca.getWidth();
+                    int alto = lblImagenMeca.getHeight();
 
-            try {
-                String fechaNacimientoStr = meca.getFechaNacimiento(); // Suponiendo que getFechaNacimiento() devuelve un String en formato "yyyy-MM-dd"
-                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-                Date fechaNacimientoDate = sdf.parse(fechaNacimientoStr);
+                    if (ancho > 0 && alto > 0) {
+                        Image imagenEscalada = icono.getImage().getScaledInstance(ancho, alto, Image.SCALE_SMOOTH);
+                        lblImagenMeca.setIcon(new ImageIcon(imagenEscalada));
+                    } else {
+                        // Puedes definir un tamaño por defecto
+                        Image imagenEscalada = icono.getImage().getScaledInstance(180, 140, Image.SCALE_SMOOTH);
+                        lblImagenMeca.setIcon(new ImageIcon(imagenEscalada));
+                    }
 
-                jDateFechaNacMeca.setDate(fechaNacimientoDate);
-            } catch (ParseException e) {
-                e.printStackTrace();
-                // Manejar la excepción si ocurre algún problema al convertir la fecha
+                    imagenMeca = imagen; // Guardar la imagen en el campo de la clase
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    lblImagenMeca.setIcon(null); // O puedes poner una imagen por defecto
+                }
             }
 
             encontrado = true;
@@ -381,18 +474,28 @@ public class CrudPanelMecanico2 extends javax.swing.JPanel {
         }
         BaseBD.close();
     }
+    
+    public static Date convertirStringADate(String fechaString) {
+        SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
+        try {
+            return formato.parse(fechaString);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
 
-    public void modificarMecanico(String titulo, double Sueldo, Mecanico.Estado estado, String cedula, String nombres, String apellidos,
+    public void modificarMecanico(String titulo, double Sueldo, Mecanico.Estado estado, String ciudad, byte[] imagenMeca, String cedula, String nombres, String apellidos,
             String direccion, String correo, String celular, String genero, String fechaNacimiento, String estadoCivil,
             String nombreUsuario, String password, String correoRecuperacion) {
 
         ObjectContainer BaseBD = Conexion_db.ConectarBD();
 
-        Mecanico modificarMecanico = new Mecanico(titulo, Sueldo, estado, cedula, nombres, apellidos,
-                direccion, correo, celular, genero, fechaNacimiento, estadoCivil,
-                nombreUsuario, password, correoRecuperacion);
+        Mecanico modificarMecanico = new Mecanico(titulo,  Sueldo,  estado,  ciudad,  imagenMeca,  cedula,  nombres,  apellidos,
+             direccion,  correo,  celular,  genero,  fechaNacimiento,  estadoCivil,
+             nombreUsuario,  password,  correoRecuperacion);
 
-        Mecanico mecanicoBusca = new Mecanico(null,0.0,null,cedula, null, null, null, null,
+        Mecanico mecanicoBusca = new Mecanico(null,0.0,null,null,null,cedula, null, null, null, null,
                 null,  null, null, null, null, null, null);
 
         ObjectSet resultado = BaseBD.get(mecanicoBusca);
@@ -427,9 +530,11 @@ public class CrudPanelMecanico2 extends javax.swing.JPanel {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel Cedula_Meca;
+    private javax.swing.JLabel CedulaMeca;
     private rojeru_san.RSButtonRiple btnCancelar;
     private rojeru_san.RSButtonRiple btnModificar;
+    private rojeru_san.RSButtonRiple btnSeleccionarImgen1;
+    private javax.swing.JComboBox<String> cbxCiudadMeca;
     private javax.swing.JComboBox<String> cbxEstadoCivilMeca;
     private javax.swing.JComboBox<String> cbxGeneroMeca;
     private com.toedter.calendar.JDateChooser jDateFechaNacMeca;
@@ -437,17 +542,19 @@ public class CrudPanelMecanico2 extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel6;
-    private javax.swing.JLabel lblApellidos_Meca;
-    private javax.swing.JLabel lblCelular_Meca;
-    private javax.swing.JLabel lblCorreo_Meca;
-    private javax.swing.JLabel lblDireccion_Meca;
-    private javax.swing.JLabel lblEstadoCivil_Meca;
-    private javax.swing.JLabel lblFEchaNac_Meca;
-    private javax.swing.JLabel lblGenero_Meca;
-    private javax.swing.JLabel lblNombres_Meca;
-    private javax.swing.JLabel lblPassword_Meca;
-    private javax.swing.JLabel lblSueldoMec;
-    private javax.swing.JLabel lblTituloMec;
+    private javax.swing.JLabel lblApellidosMeca;
+    private javax.swing.JLabel lblCelularMeca;
+    private javax.swing.JLabel lblCiudadMeca;
+    private javax.swing.JLabel lblCorreoMeca;
+    private javax.swing.JLabel lblDireccionMeca;
+    private javax.swing.JLabel lblEstadoCivilMeca;
+    private javax.swing.JLabel lblFEchaNacMeca;
+    private javax.swing.JLabel lblGeneroMeca;
+    private javax.swing.JLabel lblImagenMeca;
+    private javax.swing.JLabel lblNombresMeca;
+    private javax.swing.JLabel lblPasswordMeca;
+    private javax.swing.JLabel lblSueldoMeca;
+    private javax.swing.JLabel lblTituloMeca;
     private rojeru_san.RSMTextFull txtApellidosMeca;
     private rojeru_san.RSMTextFull txtCedulaMeca;
     private rojeru_san.RSMTextFull txtCelularMeca;
