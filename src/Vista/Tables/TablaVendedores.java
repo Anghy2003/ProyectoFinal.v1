@@ -23,7 +23,6 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
-
 public class TablaVendedores extends javax.swing.JPanel {
 
     public TablaVendedores() {
@@ -43,15 +42,15 @@ public class TablaVendedores extends javax.swing.JPanel {
 
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        tableVendedor = new javax.swing.JScrollPane();
-        tblVendedor = new javax.swing.JTable();
         txtBuscarVendedor = new rojeru_san.RSMTextFull();
         btnAgregarVendedor = new rsbuttongradiente.RSButtonGradiente();
         btnEliminarVendedor = new rsbuttongradiente.RSButtonGradiente();
-        btnBuscarVendedor = new rsbuttongradiente.RSButtonGradiente();
+        btnEditarVendedor = new rsbuttongradiente.RSButtonGradiente();
         tableVendedor1 = new javax.swing.JScrollPane();
-        tblVendedorInactivo = new javax.swing.JTable();
+        tblVendedor = new javax.swing.JTable();
         jLabel2 = new javax.swing.JLabel();
+        tableVendedor2 = new javax.swing.JScrollPane();
+        tblVendedorInactivo = new javax.swing.JTable();
 
         setLayout(new java.awt.BorderLayout());
 
@@ -59,24 +58,6 @@ public class TablaVendedores extends javax.swing.JPanel {
 
         jLabel1.setFont(new java.awt.Font("Roboto Black", 0, 22)); // NOI18N
         jLabel1.setText("Listado Vendedores");
-
-        tableVendedor.setBackground(new java.awt.Color(255, 255, 255));
-        tableVendedor.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
-        tableVendedor.setForeground(new java.awt.Color(255, 255, 255));
-
-        tblVendedor.setFont(new java.awt.Font("Roboto Medium", 0, 14)); // NOI18N
-        tblVendedor.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-                {null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null}
-            },
-            new String [] {
-                "Id Vendedor", "Usuario", "Contraseña", "Cedula", "Nombres", "Apellidos", "Direccion", "Correo Eletronico", "Correo Recuperacion", "Celular", "Fecha Nacimiento", "Estado Civil", "Genero", "Sueldo", "Comiciones", "# Ventas"
-            }
-        ));
-        tableVendedor.setViewportView(tblVendedor);
 
         txtBuscarVendedor.setFont(new java.awt.Font("Roboto Bold", 2, 14)); // NOI18N
         txtBuscarVendedor.setPlaceholder("ejm. 0106388747");
@@ -113,19 +94,19 @@ public class TablaVendedores extends javax.swing.JPanel {
             }
         });
 
-        btnBuscarVendedor.setText("Editar");
-        btnBuscarVendedor.setColorPrimario(new java.awt.Color(0, 51, 153));
-        btnBuscarVendedor.setColorPrimarioHover(new java.awt.Color(51, 0, 255));
-        btnBuscarVendedor.setColorSecundario(new java.awt.Color(51, 153, 255));
-        btnBuscarVendedor.setColorSecundarioHover(new java.awt.Color(153, 204, 255));
-        btnBuscarVendedor.addMouseListener(new java.awt.event.MouseAdapter() {
+        btnEditarVendedor.setText("Editar");
+        btnEditarVendedor.setColorPrimario(new java.awt.Color(0, 51, 153));
+        btnEditarVendedor.setColorPrimarioHover(new java.awt.Color(51, 0, 255));
+        btnEditarVendedor.setColorSecundario(new java.awt.Color(51, 153, 255));
+        btnEditarVendedor.setColorSecundarioHover(new java.awt.Color(153, 204, 255));
+        btnEditarVendedor.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnBuscarVendedorMouseClicked(evt);
+                btnEditarVendedorMouseClicked(evt);
             }
         });
-        btnBuscarVendedor.addActionListener(new java.awt.event.ActionListener() {
+        btnEditarVendedor.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnBuscarVendedorActionPerformed(evt);
+                btnEditarVendedorActionPerformed(evt);
             }
         });
 
@@ -133,54 +114,71 @@ public class TablaVendedores extends javax.swing.JPanel {
         tableVendedor1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         tableVendedor1.setForeground(new java.awt.Color(255, 255, 255));
 
-        tblVendedorInactivo.setFont(new java.awt.Font("Roboto Medium", 0, 14)); // NOI18N
-        tblVendedorInactivo.setModel(new javax.swing.table.DefaultTableModel(
+        tblVendedor.setFont(new java.awt.Font("Roboto Medium", 0, 14)); // NOI18N
+        tblVendedor.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null},
-                {null, null, null, null, null, null, null, null, null, null, null, null, null, null, null, null}
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
             },
             new String [] {
-                "Id Vendedor", "Usuario", "Contraseña", "Cedula", "Nombres", "Apellidos", "Direccion", "Correo Eletronico", "Correo Recuperacion", "Celular", "Fecha Nacimiento", "Estado Civil", "Genero", "Sueldo", "Comiciones", "# Ventas"
+                "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        tableVendedor1.setViewportView(tblVendedorInactivo);
+        tableVendedor1.setViewportView(tblVendedor);
 
         jLabel2.setFont(new java.awt.Font("Roboto Black", 0, 22)); // NOI18N
         jLabel2.setText("Listado Vendedores Inactivados");
+
+        tableVendedor2.setBackground(new java.awt.Color(255, 255, 255));
+        tableVendedor2.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
+        tableVendedor2.setForeground(new java.awt.Color(255, 255, 255));
+
+        tblVendedorInactivo.setFont(new java.awt.Font("Roboto Medium", 0, 14)); // NOI18N
+        tblVendedorInactivo.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        tableVendedor2.setViewportView(tblVendedorInactivo);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(tableVendedor1))
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(tableVendedor, javax.swing.GroupLayout.DEFAULT_SIZE, 885, Short.MAX_VALUE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(24, 24, 24)
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel1)
                             .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGap(18, 18, 18)
-                                .addComponent(jLabel2))
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addGap(24, 24, 24)
-                                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel1)
-                                    .addGroup(jPanel2Layout.createSequentialGroup()
-                                        .addComponent(btnAgregarVendedor, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(btnBuscarVendedor, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addGap(7, 7, 7)
-                                .addComponent(btnEliminarVendedor, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(txtBuscarVendedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                                .addComponent(btnAgregarVendedor, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(btnEditarVendedor, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(7, 7, 7)
+                        .addComponent(btnEliminarVendedor, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(txtBuscarVendedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 280, Short.MAX_VALUE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(tableVendedor2))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(tableVendedor1)))
                 .addContainerGap())
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel2)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -193,14 +191,14 @@ public class TablaVendedores extends javax.swing.JPanel {
                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(btnAgregarVendedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(btnEliminarVendedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(btnBuscarVendedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 35, Short.MAX_VALUE)
-                .addComponent(tableVendedor, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(30, 30, 30)
-                .addComponent(jLabel2)
-                .addGap(27, 27, 27)
+                        .addComponent(btnEditarVendedor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(39, 39, 39)
                 .addComponent(tableVendedor1, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(68, 68, 68))
+                .addGap(41, 41, 41)
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
+                .addComponent(tableVendedor2, javax.swing.GroupLayout.PREFERRED_SIZE, 165, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(35, 35, 35))
         );
 
         add(jPanel2, java.awt.BorderLayout.CENTER);
@@ -215,29 +213,49 @@ public class TablaVendedores extends javax.swing.JPanel {
 
     }//GEN-LAST:event_btnEliminarVendedorMouseClicked
 
-    private void btnBuscarVendedorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBuscarVendedorMouseClicked
+    private void btnEditarVendedorMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditarVendedorMouseClicked
         // TODO add your handling code here:
         System.out.println("clickmet");
-    }//GEN-LAST:event_btnBuscarVendedorMouseClicked
+    }//GEN-LAST:event_btnEditarVendedorMouseClicked
 
     private void btnAgregarVendedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarVendedorActionPerformed
         CrudPanelVendedor vendee = new CrudPanelVendedor();
         ShowpanelCruds(vendee);
 
     }//GEN-LAST:event_btnAgregarVendedorActionPerformed
+    public final int VerificarVendedor(String cedula) {
+        ObjectContainer BaseBD = Conexion_db.ConectarBD();
+        Query admin = BaseBD.query();
+        admin.constrain(Vendedor.class);
+        admin.descend("cedula").constrain(cedula);
+        ObjectSet<Vendedor> resultado = admin.execute();
 
-    private void btnBuscarVendedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarVendedorActionPerformed
+        int coincidencias = resultado.size();
 
+        BaseBD.close();
+        return coincidencias;
+    }
+    private void btnEditarVendedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarVendedorActionPerformed
         if (!txtBuscarVendedor.getText().trim().isEmpty()) {
+            String BuscarVendedor = txtBuscarVendedor.getText().trim();
 
-            String BuscarVendedor = txtBuscarVendedor.getText();
-            CrudPanelVendedor2 mibuscarvendedor = new CrudPanelVendedor2(BuscarVendedor);
-            ShowpanelCruds(mibuscarvendedor);
+            // Llamar al método VerificarVendedor y obtener el número de coincidencias
+            int coincidencias = VerificarVendedor(BuscarVendedor);
 
+            // Verificar si se encontraron coincidencias
+            if (coincidencias > 0) {
+                // Crear una instancia del panel con los datos del Vendedor
+                CrudPanelVendedor2 mibuscarvendedor = new CrudPanelVendedor2(BuscarVendedor);
+                ShowpanelCruds(mibuscarvendedor);
+            } else {
+                // Mostrar mensaje si no se encontraron Vendedor
+                JOptionPane.showMessageDialog(this, "Vendedor no encontrado.");
+            }
         } else {
-            JOptionPane.showMessageDialog(this, "ingrese una cedula ");
+            // Mostrar mensaje si el campo de búsqueda está vacío
+            JOptionPane.showMessageDialog(this, "Ingrese una cédula.");
         }
-    }//GEN-LAST:event_btnBuscarVendedorActionPerformed
+    }//GEN-LAST:event_btnEditarVendedorActionPerformed
 
     private void btnEliminarVendedorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarVendedorActionPerformed
 
@@ -253,7 +271,6 @@ public class TablaVendedores extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_btnEliminarVendedorActionPerformed
 
-
     private void mostrarDatosInactivos() {
 
         ObjectContainer BaseBD = Conexion_db.ConectarBD();
@@ -265,7 +282,7 @@ public class TablaVendedores extends javax.swing.JPanel {
 
         ObjectSet<Vendedor> resultado = query.execute();
 
-        Object matriz[][] = new String[resultado.size()][19];
+        Object matriz[][] = new Object[resultado.size()][19];
         int i = 0;
         for (Vendedor vende : resultado) {
 
@@ -297,13 +314,13 @@ public class TablaVendedores extends javax.swing.JPanel {
             matriz[i][18] = String.valueOf(vende.getEstado());
             i++;
         }
-        
+
         //datos configurados
         tblVendedorInactivo.setModel(new javax.swing.table.DefaultTableModel(matriz, new String[]{"ID Vendedor", "Usuario", "Contraseña", "Cedula", "Nombres", "Apellidos", "Direccion", "Correo Electronico", "Correo recuperacion", "Celular", "Fecha Nacimiento",
-                    "Estado Civil", "Genero", "Sueldo", "Comiciones", "Numero de Ventas","Ciudad","Foto", "Estado"}));
-        tblVendedorInactivo.setEnabled(false);
+            "Estado Civil", "Genero", "Sueldo", "Comiciones", "Numero de Ventas", "Ciudad", "Foto", "Estado"}));
         tblVendedorInactivo.getColumnModel().getColumn(17).setCellRenderer(new ImageRenderer());
         tblVendedorInactivo.setRowHeight(100);
+        tblVendedorInactivo.setEnabled(false);
         BaseBD.close();
     }
 
@@ -318,7 +335,7 @@ public class TablaVendedores extends javax.swing.JPanel {
 
         ObjectSet<Vendedor> resultado = query.execute();
 
-        Object matriz[][] = new String[resultado.size()][19];
+        Object matriz[][] = new Object[resultado.size()][19];
         int i = 0;
         for (Vendedor vende : resultado) {
 
@@ -350,10 +367,10 @@ public class TablaVendedores extends javax.swing.JPanel {
             matriz[i][18] = String.valueOf(vende.getEstado());
             i++;
         }
-        
+
         //datos configurados
         tblVendedor.setModel(new javax.swing.table.DefaultTableModel(matriz, new String[]{"ID Vendedor", "Usuario", "Contraseña", "Cedula", "Nombres", "Apellidos", "Direccion", "Correo Electronico", "Correo recuperacion", "Celular", "Fecha Nacimiento",
-                    "Estado Civil", "Genero", "Sueldo", "Comiciones", "Numero de Ventas","Ciudad","Foto", "Estado"}));
+            "Estado Civil", "Genero", "Sueldo", "Comiciones", "Numero de Ventas", "Ciudad", "Foto", "Estado"}));
         tblVendedor.setEnabled(false);
         tblVendedor.getColumnModel().getColumn(17).setCellRenderer(new ImageRenderer());
         tblVendedor.setRowHeight(100);
@@ -364,7 +381,7 @@ public class TablaVendedores extends javax.swing.JPanel {
 
         ObjectContainer BaseBD = Conexion_db.ConectarBD();
 
-        ObjectSet<Vendedor> result = BaseBD.queryByExample(new Vendedor(0.0, 0.0, 0, null,null,null, cedula, null,
+        ObjectSet<Vendedor> result = BaseBD.queryByExample(new Vendedor(0.0, 0.0, 0, null, null, null, cedula, null,
                 null, null, null, null, null, null, null, null,
                 null, null)); // Crear objeto para consultar
 
@@ -389,7 +406,6 @@ public class TablaVendedores extends javax.swing.JPanel {
         BaseBD.close();
     }
 
-    
     private void ShowpanelCruds(JPanel p) {
         p.setSize(870, 630);
         p.setLocation(0, 0);
@@ -398,16 +414,16 @@ public class TablaVendedores extends javax.swing.JPanel {
         VistaMenu.PanelPrincipal.revalidate();
         VistaMenu.PanelPrincipal.repaint();
     }
-    
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private rsbuttongradiente.RSButtonGradiente btnAgregarVendedor;
-    private rsbuttongradiente.RSButtonGradiente btnBuscarVendedor;
+    private rsbuttongradiente.RSButtonGradiente btnEditarVendedor;
     private rsbuttongradiente.RSButtonGradiente btnEliminarVendedor;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JScrollPane tableVendedor;
     private javax.swing.JScrollPane tableVendedor1;
+    private javax.swing.JScrollPane tableVendedor2;
     private javax.swing.JTable tblVendedor;
     private javax.swing.JTable tblVendedorInactivo;
     private rojeru_san.RSMTextFull txtBuscarVendedor;

@@ -25,6 +25,7 @@ public class TablaAdministradores extends javax.swing.JPanel {
      * Creates new form TablaAdministradores
      */
     public TablaAdministradores() {
+
         initComponents();
         mostrarDatosActivos();
         mostrarDatosInactivos();
@@ -173,27 +174,26 @@ public class TablaAdministradores extends javax.swing.JPanel {
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(24, 24, 24)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
-                                .addComponent(btnAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(jPanel2Layout.createSequentialGroup()
-                                .addComponent(jLabel1)
-                                .addGap(78, 78, 78)))
-                        .addGap(18, 18, 18)
-                        .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(274, Short.MAX_VALUE))
-            .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 870, Short.MAX_VALUE)
                 .addContainerGap())
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addGap(22, 22, 22)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel2)
+                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel2Layout.createSequentialGroup()
+                            .addComponent(btnAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(jPanel2Layout.createSequentialGroup()
+                            .addComponent(jLabel1)
+                            .addGap(78, 78, 78))))
+                .addGap(18, 18, 18)
+                .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(274, Short.MAX_VALUE))
             .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel2Layout.createSequentialGroup()
                     .addGap(14, 14, 14)
@@ -211,9 +211,9 @@ public class TablaAdministradores extends javax.swing.JPanel {
                     .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 238, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 221, Short.MAX_VALUE)
                 .addComponent(jLabel2)
-                .addGap(18, 18, 18)
+                .addGap(35, 35, 35)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 146, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(85, 85, 85))
             .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -245,15 +245,39 @@ public class TablaAdministradores extends javax.swing.JPanel {
         ShowpanelCruds(agregaradmi3);
     }//GEN-LAST:event_btnAgregarActionPerformed
 
+    public final int VerificarAdministrador(String cedula) {
+        ObjectContainer BaseBD = Conexion_db.ConectarBD();
+        Query admin = BaseBD.query();
+        admin.constrain(Administrador.class);
+        admin.descend("cedula").constrain(cedula);
+        ObjectSet<Administrador> resultado = admin.execute();
+
+        int coincidencias = resultado.size();
+
+        BaseBD.close();
+        return coincidencias;
+    }
+
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
+
         if (!txtBuscar.getText().trim().isEmpty()) {
+            String BuscarAdministrador = txtBuscar.getText().trim();
 
-            String BuscarAdministrador = txtBuscar.getText();
-            CrudPanelAdministrador2 mibuscarvendedor = new CrudPanelAdministrador2(BuscarAdministrador);
-            ShowpanelCruds(mibuscarvendedor);
+            // Llamar al método VerificarAdministrador y obtener el número de coincidencias
+            int coincidencias = VerificarAdministrador(BuscarAdministrador);
 
+            // Verificar si se encontraron coincidencias
+            if (coincidencias > 0) {
+                // Crear una instancia del panel con los datos del administrador
+                CrudPanelAdministrador2 mibuscaradmin = new CrudPanelAdministrador2(BuscarAdministrador);
+                ShowpanelCruds(mibuscaradmin);
+            } else {
+                // Mostrar mensaje si no se encontraron administradores
+                JOptionPane.showMessageDialog(this, "Administrador no encontrado.");
+            }
         } else {
-            JOptionPane.showMessageDialog(this, "Ingrese una cedula ");
+            // Mostrar mensaje si el campo de búsqueda está vacío
+            JOptionPane.showMessageDialog(this, "Ingrese una cédula.");
         }
     }//GEN-LAST:event_btnEditarActionPerformed
 
@@ -293,6 +317,7 @@ public class TablaAdministradores extends javax.swing.JPanel {
         ObjectSet<Administrador> resultado = query.execute();
 
         Object matriz[][] = new Object[resultado.size()][17];
+
         int i = 0;
         for (Administrador admin3 : resultado) {
 
@@ -377,7 +402,7 @@ public class TablaAdministradores extends javax.swing.JPanel {
         //datos configurados
         tblAdmi.setModel(new javax.swing.table.DefaultTableModel(matriz, new String[]{"ID Vendedor", "Usuario", "Contraseña", "Cedula", "Nombres", "Apellidos", "Direccion", "Correo Electronico", "Correo recuperacion", "Celular", "Fecha Nacimiento",
             "Estado Civil", "Genero", "Titulo", "Ciudad", "Foto", "Estado"}));
-        
+
         // Usar el ImageRenderer para la columna de imágenes
         tblAdmi.getColumnModel().getColumn(15).setCellRenderer(new ImageRenderer());
         tblAdmi.setRowHeight(100);

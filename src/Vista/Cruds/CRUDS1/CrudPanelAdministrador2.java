@@ -259,6 +259,11 @@ public class CrudPanelAdministrador2 extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+        public void cambiartabla() {
+        TablaAdministradores tbladmi = new TablaAdministradores();
+        ShowpanelCruds(tbladmi);
+    }
+        
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
 
         Boolean valido = false;
@@ -279,6 +284,8 @@ public class CrudPanelAdministrador2 extends javax.swing.JPanel {
                                     txtNombresAdmi.getText().toUpperCase(), txtApellidosAdmi.getText().toUpperCase(), txtDireccionAdmi.getText().toUpperCase(), txtCorreoAdmi.getText(), txtCelularAdmi.getText(),
                                     (String) cbxGeneroAdmi.getSelectedItem(), fechaNacimiento, (String) cbxEstadoCivilAdmi.getSelectedItem(), txtCedulaAdmi.getText(), txtPasswordAdmi.getText(),
                                     txtCorreoAdmi.getText());
+                            JOptionPane.showMessageDialog(null, "Modificacion Correcta");
+                            cambiartabla();
 
                         } else {
                             JOptionPane.showMessageDialog(null, "Ingrese un celular valido");
@@ -303,8 +310,7 @@ public class CrudPanelAdministrador2 extends javax.swing.JPanel {
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         System.out.println("salir");
-        TablaAdministradores admi1 = new TablaAdministradores();
-        ShowpanelCruds(admi1);
+        cambiartabla();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnCancelarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCancelarMouseClicked
@@ -346,10 +352,10 @@ public class CrudPanelAdministrador2 extends javax.swing.JPanel {
 
         ObjectContainer BaseBD = Conexion_db.ConectarBD();
 
-        Query vendedor = BaseBD.query();
-        vendedor.constrain(Administrador.class);
-        vendedor.descend("cedula").constrain(BuscarAdministrador);
-        ObjectSet<Administrador> resultado = vendedor.execute();
+        Query adminis = BaseBD.query();
+        adminis.constrain(Administrador.class);
+        adminis.descend("cedula").constrain(BuscarAdministrador);
+        ObjectSet<Administrador> resultado = adminis.execute();
 
         for (Administrador admi2 : resultado) {
 
