@@ -39,8 +39,8 @@ public class PanelSubmenuServicios extends javax.swing.JPanel {
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
 
         btnAgendarc.setFont(new java.awt.Font("Roboto Medium", 1, 11)); // NOI18N
-        btnAgendarc.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/programaCitas35.png"))); // NOI18N
-        btnAgendarc.setText("AGENDAR CITAS ");
+        btnAgendarc.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/gestion-de-servicios.png"))); // NOI18N
+        btnAgendarc.setText("CITAS AGENDADAS");
 
         btngestionser.setFont(new java.awt.Font("Roboto Medium", 1, 11)); // NOI18N
         btngestionser.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/portapapeles.png"))); // NOI18N
@@ -84,7 +84,7 @@ public class PanelSubmenuServicios extends javax.swing.JPanel {
                 .addComponent(btngestionser1)
                 .addGap(18, 18, 18)
                 .addComponent(btnCategoria1)
-                .addContainerGap(25, Short.MAX_VALUE))
+                .addContainerGap(17, Short.MAX_VALUE))
             .addComponent(jSeparator1)
         );
         jPanel2Layout.setVerticalGroup(
