@@ -1189,7 +1189,7 @@ private double calcularSubtotalTabla() {
 }
  
     private void MostarpanelCruds(JPanel p) {
-        p.setSize(870, 630);
+        p.setSize(890, 630);
         p.setLocation(0, 0);
         PanelPrincipal.removeAll();
         PanelPrincipal.add(p, BorderLayout.CENTER);
@@ -1210,13 +1210,8 @@ private double calcularSubtotalTabla() {
         // Cargar los datos del encabezado de la factura
         txtcodigoFac.setText(miFactura.getCodigo_encabezadoFactura());
         txtfecha.setText(miFactura.getFecha_encabezadoFactura());
-        
         txtcedula.setText(miFactura.getCedulaCliente_encabezadoFactura());
         
-        // Deshabilitar campos para edición
-        txtcodigoFac.setEnabled(false);
-        txtfecha.setEnabled(false);
-        txtcedula.setEnabled(false);
         
         // Consultar los datos del cliente
         Cliente clienteBuscar = new Cliente();
@@ -1229,10 +1224,6 @@ private double calcularSubtotalTabla() {
             txtdireccion.setText(cliente.getDireccion());
             txttelefono.setText(cliente.getCelular());
             
-            // Deshabilitar campos para edición
-            txtNombre1.setEnabled(false);
-            txtdireccion.setEnabled(false);
-            txttelefono.setEnabled(false);
         }
         
         // Consultar los detalles de la factura
@@ -1244,64 +1235,54 @@ private double calcularSubtotalTabla() {
         modeloFactura.setRowCount(0); // Limpiar la tabla
         
         for (DetalleFactura_1 miDetalle : resultadoDetalle) {
-            String codigo = "";
+            String codigo = miDetalle.getCodigoProducto_detalleFactura();
             String nombre = "";
             double precio = 0.0;
-            int cantidad = 0;
-            String tipo = "";
+            int cantidad = miDetalle.getCantidadProdcutos_detalleFactura();
             
-            if (miDetalle.getCodigoProducto_detalleFactura() != null) {
-                
-                if (obtenerNombreProducto(codigo, baseBD).isEmpty()) {
-                    codigo = miDetalle.getCodigoProducto_detalleFactura();
+            if (codigo != null) {
+                if (!obtenerNombreProducto(codigo, baseBD).isEmpty()) {
                     nombre = obtenerNombreProducto(codigo, baseBD);
                     precio = obtenerPrecioProducto(codigo, baseBD);
-                }else{
-                    if (obtenerNombreServicio(codigo, baseBD).isEmpty()) {
-                        codigo = miDetalle.getCodigoProducto_detalleFactura();
-                        nombre = obtenerNombreServicio(codigo, baseBD);
-                        precio = obtenerPrecioServicio(codigo, baseBD);
-                        
-                        
-                    }
+                } else if (!obtenerNombreServicio(codigo, baseBD).isEmpty()) {
+                    nombre = obtenerNombreServicio(codigo, baseBD);
+                    precio = obtenerPrecioServicio(codigo, baseBD);
                 }
                 
-                cantidad = miDetalle.getCantidadProdcutos_detalleFactura();
-           
-            
-            modeloFactura.addRow(new Object[]{codigo, nombre, String.valueOf(precio), String.valueOf(cantidad), tipo});
+                modeloFactura.addRow(new Object[]{codigo, nombre, String.valueOf(precio), String.valueOf(cantidad)});
+            }
         }
         
         // Actualizar los campos de subtotales, descuentos, etc.
         actualizarFactura();
+        
+        // Deshabilitar botones
+        btnAñadirProductos.setEnabled(false);
+        btnAñadirServicos.setEnabled(false);
+        btnEliminar.setEnabled(false);
+        btnFinalizarFac.setEnabled(false);
+        btnBuscarcliente.setEnabled(false);
+    } else {
+        JOptionPane.showMessageDialog(this, "Factura no encontrada.");
     }
-//        else {
-//        JOptionPane.showMessageDialog(this, "Factura no encontrada.");
-//    }
     
     baseBD.close();
 }
-   
- }
-         
 
-
-private String obtenerNombreProducto(String codigoProducto, ObjectContainer baseBD) {
+private String obtenerNombreProducto(String codigo, ObjectContainer baseBD) {
     Producto productoBuscar = new Producto();
-    productoBuscar.setCodigo_Producto(codigoProducto);
+    productoBuscar.setCodigo_Producto(codigo);
     ObjectSet<Producto> resultadoProducto = baseBD.get(productoBuscar);
-
     if (!resultadoProducto.isEmpty()) {
         return resultadoProducto.next().getNombre_Producto();
     }
     return "";
 }
 
-private double obtenerPrecioProducto(String codigoProducto, ObjectContainer baseBD) {
+private double obtenerPrecioProducto(String codigo, ObjectContainer baseBD) {
     Producto productoBuscar = new Producto();
-    productoBuscar.setCodigo_Producto(codigoProducto);
+    productoBuscar.setCodigo_Producto(codigo);
     ObjectSet<Producto> resultadoProducto = baseBD.get(productoBuscar);
-
     if (!resultadoProducto.isEmpty()) {
         return resultadoProducto.next().getPrecio_Producto();
     }

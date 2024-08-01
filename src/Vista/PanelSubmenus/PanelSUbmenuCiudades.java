@@ -35,8 +35,8 @@ public class PanelSUbmenuCiudades extends javax.swing.JPanel {
         jSeparator1.setForeground(new java.awt.Color(0, 53, 79));
 
         btnCatser.setFont(new java.awt.Font("Roboto Medium", 1, 12)); // NOI18N
-        btnCatser.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/servicio.png"))); // NOI18N
-        btnCatser.setText("AGENDAR CITAS");
+        btnCatser.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/ciudad-inteligente (3).png"))); // NOI18N
+        btnCatser.setText("GESTION DE  CIUDADES");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -47,7 +47,7 @@ public class PanelSUbmenuCiudades extends javax.swing.JPanel {
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 870, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnCatser, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnCatser)
                 .addGap(56, 56, 56))
         );
         layout.setVerticalGroup(

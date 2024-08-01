@@ -27,7 +27,7 @@
           </Group>
           <Group type="102" alignment="1" attributes="0">
               <EmptySpace max="32767" attributes="0"/>
-              <Component id="btnCatser" min="-2" pref="177" max="-2" attributes="0"/>
+              <Component id="btnCatser" min="-2" max="-2" attributes="0"/>
               <EmptySpace min="-2" pref="56" max="-2" attributes="0"/>
           </Group>
       </Group>
@@ -58,9 +58,9 @@
           <Font name="Roboto Medium" size="12" style="1"/>
         </Property>
         <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-          <Image iconType="3" name="/Iconos/servicio.png"/>
+          <Image iconType="3" name="/Iconos/ciudad-inteligente (3).png"/>
         </Property>
-        <Property name="text" type="java.lang.String" value="AGENDAR CITAS"/>
+        <Property name="text" type="java.lang.String" value="GESTION DE  CIUDADES"/>
       </Properties>
     </Component>
   </SubComponents>

@@ -102,8 +102,8 @@ public class VistaMenu extends javax.swing.JFrame {
         btnVehiculos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/embotellamiento.png"))); // NOI18N
         btnVehiculos.setText("Vehículos");
         btnVehiculos.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                btnVehiculosMousePressed(evt);
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnVehiculosMouseClicked(evt);
             }
         });
 
@@ -268,14 +268,14 @@ public class VistaMenu extends javax.swing.JFrame {
         PanelHeader.setLayout(PanelHeaderLayout);
         PanelHeaderLayout.setHorizontalGroup(
             PanelHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 890, Short.MAX_VALUE)
+            .addGap(0, 880, Short.MAX_VALUE)
         );
         PanelHeaderLayout.setVerticalGroup(
             PanelHeaderLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 80, Short.MAX_VALUE)
         );
 
-        panelPrincipal.add(PanelHeader, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 20, 890, 80));
+        panelPrincipal.add(PanelHeader, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 20, 880, 80));
 
         PanelPrincipal.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -292,25 +292,26 @@ public class VistaMenu extends javax.swing.JFrame {
         PanelPrincipalLayout.setHorizontalGroup(
             PanelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(PanelPrincipalLayout.createSequentialGroup()
-                .addGap(373, 373, 373)
-                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(374, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelPrincipalLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(jLabel1)
-                .addGap(88, 88, 88))
+                .addContainerGap(107, Short.MAX_VALUE)
+                .addGroup(PanelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelPrincipalLayout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addGap(88, 88, 88))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelPrincipalLayout.createSequentialGroup()
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 143, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(355, 355, 355))))
         );
         PanelPrincipalLayout.setVerticalGroup(
             PanelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(PanelPrincipalLayout.createSequentialGroup()
-                .addGap(150, 150, 150)
+                .addGap(138, 138, 138)
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(18, 18, 18)
                 .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 58, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(262, Short.MAX_VALUE))
+                .addContainerGap(252, Short.MAX_VALUE))
         );
 
-        panelPrincipal.add(PanelPrincipal, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 180, 890, 630));
+        panelPrincipal.add(PanelPrincipal, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 180, 880, 620));
 
         PanelSubmenu.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -318,14 +319,14 @@ public class VistaMenu extends javax.swing.JFrame {
         PanelSubmenu.setLayout(PanelSubmenuLayout);
         PanelSubmenuLayout.setHorizontalGroup(
             PanelSubmenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 890, Short.MAX_VALUE)
+            .addGap(0, 880, Short.MAX_VALUE)
         );
         PanelSubmenuLayout.setVerticalGroup(
             PanelSubmenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 80, Short.MAX_VALUE)
         );
 
-        panelPrincipal.add(PanelSubmenu, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 100, 890, 80));
+        panelPrincipal.add(PanelSubmenu, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 100, 880, 80));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -342,18 +343,6 @@ public class VistaMenu extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void btnVehiculosMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnVehiculosMousePressed
-     //   Conexion.Conexion_db.cerrar_BD(BaseFinal);
-        TablaVehiculos vehiculof = new TablaVehiculos();
-        MostarpanelCruds(vehiculof);
-        PanelSubmenuAuto autopanel = new PanelSubmenuAuto();
-        MostrarpanelSubmenu(autopanel);        
-        PanelTituloVehiculo carrotitulo = new PanelTituloVehiculo();
-        MostrarpanelTitulo(carrotitulo);
-
-
-    }//GEN-LAST:event_btnVehiculosMousePressed
 
 
 //CrudPanelCliente crudCli = new CrudPanelCliente();
@@ -444,6 +433,10 @@ public class VistaMenu extends javax.swing.JFrame {
         MostrarpanelSubmenu(submecitas);
         MostrarpanelTitulo(titcit);
     }//GEN-LAST:event_btnAgendarCitas1MouseClicked
+
+    private void btnVehiculosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnVehiculosMouseClicked
+        
+    }//GEN-LAST:event_btnVehiculosMouseClicked
     private void MostrarpanelSubmenu(JPanel p) {
         p.setSize(870, 80);
         p.setLocation(0, 0);
