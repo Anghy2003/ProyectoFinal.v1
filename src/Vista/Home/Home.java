@@ -55,9 +55,11 @@ public class Home extends javax.swing.JFrame {
         });
 
         txtUsuario.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
-        txtUsuario.setForeground(new java.awt.Color(0, 102, 255));
+        txtUsuario.setForeground(new java.awt.Color(0, 53, 79));
+        txtUsuario.setBordeColorFocus(new java.awt.Color(0, 53, 79));
         txtUsuario.setFont(new java.awt.Font("Roboto Bold", 1, 18)); // NOI18N
         txtUsuario.setPlaceholder("Usuario/Cedula");
+        txtUsuario.setSelectionColor(new java.awt.Color(0, 53, 79));
 
         btnIniciarSesion.setText("Iniciar Sesión");
         btnIniciarSesion.setColorPrimario(new java.awt.Color(8, 101, 254));
@@ -71,7 +73,8 @@ public class Home extends javax.swing.JFrame {
         });
 
         txtpassword.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 255)));
-        txtpassword.setForeground(new java.awt.Color(0, 102, 255));
+        txtpassword.setForeground(new java.awt.Color(0, 53, 79));
+        txtpassword.setBordeColorFocus(new java.awt.Color(0, 53, 79));
         txtpassword.setFont(new java.awt.Font("Roboto Bold", 1, 18)); // NOI18N
         txtpassword.setPlaceholder("Contraseña");
 
@@ -90,8 +93,9 @@ public class Home extends javax.swing.JFrame {
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(39, 39, 39)
                 .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 549, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 167, Short.MAX_VALUE))
+                .addContainerGap(128, Short.MAX_VALUE))
         );
 
         CmbRoles.setFont(new java.awt.Font("Roboto", 0, 18)); // NOI18N
@@ -115,7 +119,7 @@ public class Home extends javax.swing.JFrame {
                     .addGroup(PanelPrinLayout.createSequentialGroup()
                         .addGap(113, 113, 113)
                         .addComponent(btnCrearCuenta, javax.swing.GroupLayout.PREFERRED_SIZE, 262, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(153, Short.MAX_VALUE))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(PanelPrinLayout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGroup(PanelPrinLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -129,7 +133,7 @@ public class Home extends javax.swing.JFrame {
                         .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 485, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(PanelPrinLayout.createSequentialGroup()
-                        .addGap(113, 113, 113)
+                        .addGap(109, 109, 109)
                         .addComponent(btnIniciarSesion, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
@@ -146,9 +150,9 @@ public class Home extends javax.swing.JFrame {
                 .addComponent(CmbRoles, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(27, 27, 27)
                 .addComponent(txtpassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGap(25, 25, 25)
                 .addComponent(btnIniciarSesion, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btnCrearCuenta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -168,7 +172,9 @@ public class Home extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(panelPron, javax.swing.GroupLayout.PREFERRED_SIZE, 706, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(panelPron, javax.swing.GroupLayout.PREFERRED_SIZE, 695, Short.MAX_VALUE)
+                .addGap(1, 1, 1))
         );
 
         pack();

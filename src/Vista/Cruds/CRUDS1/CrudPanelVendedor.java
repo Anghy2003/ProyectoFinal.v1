@@ -189,7 +189,7 @@ public class CrudPanelVendedor extends javax.swing.JPanel {
 
         lblImagenVende.setToolTipText("SOLO JPG");
         lblImagenVende.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
-        jPanel2.add(lblImagenVende, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 80, 180, 140));
+        jPanel2.add(lblImagenVende, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 70, 180, 140));
 
         btnSeleccionarImgen1.setText("Selecionar Imagen");
         btnSeleccionarImgen1.setToolTipText("SOLO JPG");
@@ -351,7 +351,10 @@ public class CrudPanelVendedor extends javax.swing.JPanel {
     private void btnCancelarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCancelarMouseClicked
 
     }//GEN-LAST:event_btnCancelarMouseClicked
-
+    public void cambiartabla() {
+        TablaVendedores tblVen = new TablaVendedores();
+        ShowpanelCruds(tblVen);
+    }
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
 
         boolean usuarioRepetido = false;
@@ -382,7 +385,9 @@ public class CrudPanelVendedor extends javax.swing.JPanel {
                                         (String)cbxCiudadVende.getSelectedItem(),imagenVende,txtCedulaVende.getText(), txtNombresVende.getText().toUpperCase(), txtApellidosVende.getText().toUpperCase(), txtDireccionVende.getText().toUpperCase(),
                                         txtCorreoVende.getText(), txtCelularVende.getText(), (String) cbxGeneroVende.getSelectedItem(), fechaNacimiento, (String) cbxEstadoCivilVende.getSelectedItem(),
                                         txtCedulaVende.getText(), txtPasswordVende.getText(), txtCorreoVende.getText());
-
+                                
+                                        cambiartabla();
+                                        
                             } else {
                                 JOptionPane.showMessageDialog(null, "Ingrese un celular valido");
                             }
@@ -408,9 +413,7 @@ public class CrudPanelVendedor extends javax.swing.JPanel {
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-        System.out.println("salir");
-        TablaVendedores tblCli = new TablaVendedores();
-        ShowpanelCruds(tblCli);
+       cambiartabla();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnSeleccionarImgen1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSeleccionarImgen1ActionPerformed

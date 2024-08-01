@@ -99,7 +99,6 @@ public class Factura extends javax.swing.JPanel {
         btnAñadircliente = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         JtableFactura = new javax.swing.JTable();
-        jPanel5 = new javax.swing.JPanel();
         lblSubtotal = new javax.swing.JLabel();
         lblDescuento = new javax.swing.JLabel();
         lblIva = new javax.swing.JLabel();
@@ -469,6 +468,7 @@ public class Factura extends javax.swing.JPanel {
         setLayout(new java.awt.BorderLayout());
 
         jPanel1.setBackground(new java.awt.Color(0, 53, 79));
+        jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel4.setBackground(new java.awt.Color(0, 53, 79));
@@ -481,7 +481,7 @@ public class Factura extends javax.swing.JPanel {
         lblTituloFac.setBackground(new java.awt.Color(0, 53, 79));
         lblTituloFac.setFont(new java.awt.Font("Yu Gothic UI Light", 1, 14)); // NOI18N
         lblTituloFac.setForeground(new java.awt.Color(255, 255, 255));
-        lblTituloFac.setText("FACTURACION MECANICA YIN AND YANS");
+        lblTituloFac.setText("FACTURACION MECANICA YINGS AND YAN");
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/Logomini1.png"))); // NOI18N
 
@@ -490,11 +490,11 @@ public class Factura extends javax.swing.JPanel {
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(31, 31, 31)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblTituloFac, javax.swing.GroupLayout.PREFERRED_SIZE, 542, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(322, Short.MAX_VALUE))
+                .addContainerGap(301, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -509,20 +509,20 @@ public class Factura extends javax.swing.JPanel {
 
         lblDireccion.setFont(new java.awt.Font("Yu Gothic UI Light", 1, 14)); // NOI18N
         lblDireccion.setText("Direccion:");
-        jPanel3.add(lblDireccion, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 160, -1, -1));
+        jPanel3.add(lblDireccion, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 160, -1, -1));
 
         lblTelefono.setFont(new java.awt.Font("Yu Gothic UI Light", 1, 14)); // NOI18N
         lblTelefono.setText("Telefono:");
-        jPanel3.add(lblTelefono, new org.netbeans.lib.awtextra.AbsoluteConstraints(420, 200, -1, -1));
+        jPanel3.add(lblTelefono, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 200, -1, -1));
 
         lblDatosCli.setText("Datos del Cliente");
-        jPanel3.add(lblDatosCli, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 140, -1, 10));
-        jPanel3.add(txttelefono, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 200, 220, -1));
+        jPanel3.add(lblDatosCli, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 130, -1, 20));
+        jPanel3.add(txttelefono, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 200, 220, -1));
 
         lblFecha.setFont(new java.awt.Font("Yu Gothic UI Light", 1, 14)); // NOI18N
         lblFecha.setText("Fecha:");
-        jPanel3.add(lblFecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(430, 90, -1, -1));
-        jPanel3.add(txtdireccion, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 160, 220, -1));
+        jPanel3.add(lblFecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 90, -1, -1));
+        jPanel3.add(txtdireccion, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 160, 220, -1));
 
         btnEliminar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/boton-x (1).png"))); // NOI18N
         btnEliminar.setText("Eliminar");
@@ -531,7 +531,7 @@ public class Factura extends javax.swing.JPanel {
                 btnEliminarActionPerformed(evt);
             }
         });
-        jPanel3.add(btnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 270, -1, -1));
+        jPanel3.add(btnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 270, -1, -1));
 
         btnAñadircliente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/mas (1).png"))); // NOI18N
         btnAñadircliente.setText("Buscar");
@@ -540,7 +540,7 @@ public class Factura extends javax.swing.JPanel {
                 btnAñadirclienteActionPerformed(evt);
             }
         });
-        jPanel3.add(btnAñadircliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 160, -1, 30));
+        jPanel3.add(btnAñadircliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 160, -1, 30));
 
         JtableFactura.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -560,35 +560,19 @@ public class Factura extends javax.swing.JPanel {
         });
         jScrollPane1.setViewportView(JtableFactura);
 
-        jPanel3.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 330, 710, 90));
-
-        jPanel5.setBackground(new java.awt.Color(0, 53, 79));
-        jPanel5.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-
-        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
-        jPanel5.setLayout(jPanel5Layout);
-        jPanel5Layout.setHorizontalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 888, Short.MAX_VALUE)
-        );
-        jPanel5Layout.setVerticalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 18, Short.MAX_VALUE)
-        );
-
-        jPanel3.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 670, 890, 20));
+        jPanel3.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 330, 710, 90));
 
         lblSubtotal.setText("SubTotal:");
-        jPanel3.add(lblSubtotal, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 450, -1, 20));
+        jPanel3.add(lblSubtotal, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 450, -1, 20));
 
         lblDescuento.setText("%Descuento:");
-        jPanel3.add(lblDescuento, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 470, -1, -1));
+        jPanel3.add(lblDescuento, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 470, -1, -1));
 
         lblIva.setText("IVA 15%:");
-        jPanel3.add(lblIva, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 490, -1, -1));
+        jPanel3.add(lblIva, new org.netbeans.lib.awtextra.AbsoluteConstraints(560, 490, -1, -1));
 
         lblTotalFAc.setText("Total Factura:");
-        jPanel3.add(lblTotalFAc, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 510, -1, -1));
+        jPanel3.add(lblTotalFAc, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 510, -1, -1));
 
         btnNuevo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/registro (1)_1.png"))); // NOI18N
         btnNuevo.addActionListener(new java.awt.event.ActionListener() {
@@ -596,7 +580,7 @@ public class Factura extends javax.swing.JPanel {
                 btnNuevoActionPerformed(evt);
             }
         });
-        jPanel3.add(btnNuevo, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 120, 80, 70));
+        jPanel3.add(btnNuevo, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 120, 80, 70));
 
         btnVentasGeneradas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/dinero.png"))); // NOI18N
         btnVentasGeneradas.addActionListener(new java.awt.event.ActionListener() {
@@ -604,10 +588,10 @@ public class Factura extends javax.swing.JPanel {
                 btnVentasGeneradasActionPerformed(evt);
             }
         });
-        jPanel3.add(btnVentasGeneradas, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 210, 80, 70));
+        jPanel3.add(btnVentasGeneradas, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 210, 80, 70));
 
         btnResibo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/impresion.png"))); // NOI18N
-        jPanel3.add(btnResibo, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 300, 80, 70));
+        jPanel3.add(btnResibo, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 300, 80, 70));
 
         btnCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/rechazar.png"))); // NOI18N
         btnCancelar.addActionListener(new java.awt.event.ActionListener() {
@@ -615,7 +599,7 @@ public class Factura extends javax.swing.JPanel {
                 btnCancelarActionPerformed(evt);
             }
         });
-        jPanel3.add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 390, 80, 70));
+        jPanel3.add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 390, 80, 70));
 
         btnSalir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/cerrar-sesion.png"))); // NOI18N
         btnSalir.addActionListener(new java.awt.event.ActionListener() {
@@ -623,31 +607,31 @@ public class Factura extends javax.swing.JPanel {
                 btnSalirActionPerformed(evt);
             }
         });
-        jPanel3.add(btnSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(750, 480, 80, 70));
+        jPanel3.add(btnSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 480, 80, 70));
 
         lbllineas.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        jPanel3.add(lbllineas, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 430, 710, 110));
+        jPanel3.add(lbllineas, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 430, 710, 110));
 
         lblcedula.setFont(new java.awt.Font("Yu Gothic UI Light", 1, 14)); // NOI18N
         lblcedula.setText("Cedula:");
-        jPanel3.add(lblcedula, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 160, -1, -1));
-        jPanel3.add(txtcedula, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 160, 190, 30));
+        jPanel3.add(lblcedula, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 160, -1, -1));
+        jPanel3.add(txtcedula, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 160, 190, 30));
 
         lblNombre1.setFont(new java.awt.Font("Yu Gothic UI Light", 1, 14)); // NOI18N
         lblNombre1.setText("Cliente:");
-        jPanel3.add(lblNombre1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 200, -1, -1));
-        jPanel3.add(txtNombre1, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 200, 190, -1));
+        jPanel3.add(lblNombre1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 200, -1, -1));
+        jPanel3.add(txtNombre1, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 200, 190, -1));
 
         txtcodigoFac.setToolTipText("AUTOGENERADO");
-        jPanel3.add(txtcodigoFac, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 90, 130, -1));
+        jPanel3.add(txtcodigoFac, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 90, 130, -1));
 
         lblCuadro1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        jPanel3.add(lblCuadro1, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 130, 710, 110));
+        jPanel3.add(lblCuadro1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 130, 710, 110));
 
         lblcodFac1.setFont(new java.awt.Font("Yu Gothic UI Light", 1, 14)); // NOI18N
         lblcodFac1.setText("N° Factura:");
-        jPanel3.add(lblcodFac1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 90, 70, -1));
-        jPanel3.add(txtSubtotal, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 450, 100, -1));
+        jPanel3.add(lblcodFac1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 90, 70, -1));
+        jPanel3.add(txtSubtotal, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 450, 100, -1));
 
         btnFinalizarFac.setBackground(new java.awt.Color(0, 204, 0));
         btnFinalizarFac.setText("Finalizar Factura");
@@ -656,7 +640,7 @@ public class Factura extends javax.swing.JPanel {
                 btnFinalizarFacActionPerformed(evt);
             }
         });
-        jPanel3.add(btnFinalizarFac, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 550, -1, -1));
+        jPanel3.add(btnFinalizarFac, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 550, -1, -1));
 
         btnAñadirProductos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/mas (1).png"))); // NOI18N
         btnAñadirProductos.setText("Añadir Productos");
@@ -665,11 +649,11 @@ public class Factura extends javax.swing.JPanel {
                 btnAñadirProductosActionPerformed(evt);
             }
         });
-        jPanel3.add(btnAñadirProductos, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 270, -1, -1));
-        jPanel3.add(txtfecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 90, 220, -1));
+        jPanel3.add(btnAñadirProductos, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 270, -1, -1));
+        jPanel3.add(txtfecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 90, 220, -1));
 
         lblCuadro.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        jPanel3.add(lblCuadro, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 80, 710, 40));
+        jPanel3.add(lblCuadro, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 80, 710, 40));
 
         btnAñadirServicos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/mas (1).png"))); // NOI18N
         btnAñadirServicos.setText("Añadir Servicios ");
@@ -678,31 +662,32 @@ public class Factura extends javax.swing.JPanel {
                 btnAñadirServicosActionPerformed(evt);
             }
         });
-        jPanel3.add(btnAñadirServicos, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 270, -1, -1));
-        jPanel3.add(txtDescuento, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 470, 100, -1));
-        jPanel3.add(txtTotalfac, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 510, 100, 20));
+        jPanel3.add(btnAñadirServicos, new org.netbeans.lib.awtextra.AbsoluteConstraints(330, 270, -1, -1));
+        jPanel3.add(txtDescuento, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 470, 100, -1));
+        jPanel3.add(txtTotalfac, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 510, 100, 20));
 
         lblverlis.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        jPanel3.add(lblverlis, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 250, 710, 70));
-        jPanel3.add(txtiva, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 490, 100, -1));
+        jPanel3.add(lblverlis, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 250, 710, 70));
+        jPanel3.add(txtiva, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 490, 100, -1));
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 845, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(25, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                .addContainerGap(43, Short.MAX_VALUE)
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 890, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(17, 17, 17))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGap(18, 18, 18)
                 .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 601, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 59, Short.MAX_VALUE))
+                .addContainerGap(41, Short.MAX_VALUE))
         );
 
-        jPanel1.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 0, 880, 660));
+        jPanel1.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 950, 660));
 
         add(jPanel1, java.awt.BorderLayout.LINE_END);
     }// </editor-fold>//GEN-END:initComponents
@@ -749,6 +734,7 @@ public class Factura extends javax.swing.JPanel {
 
     private void btnInsetarServiciosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInsetarServiciosActionPerformed
            seteardatosSer();
+           actualizarSubtotalesFila();
     }//GEN-LAST:event_btnInsetarServiciosActionPerformed
 
     private void btnBuscarclienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarclienteActionPerformed
@@ -1014,7 +1000,8 @@ public class Factura extends javax.swing.JPanel {
                     DefaultTableModel modeloFactura = (DefaultTableModel) JtableFactura.getModel();
                     modeloFactura.addRow(new Object[]{codigoProducto, nombreProducto, String.format("%.2f", precioProducto), cantidadSolicitada, String.format("%.2f", subtotal)});
                     
-                    // Buscar el objeto existente en la base de datos
+                    
+                     // Buscar el objeto existente en la base de datos
                     ObjectContainer baseBD = Conexion_db.ConectarBD();
                     Producto productoBuscar = new Producto(codigoProducto,null, null, null, 0, 0, 0, null, null, null, Producto.Estado.ACTIVO);
                     ObjectSet resultado = baseBD.get(productoBuscar);
@@ -1125,23 +1112,23 @@ public class Factura extends javax.swing.JPanel {
             } else {
                 JOptionPane.showMessageDialog(null, "Por favor ingrese solo dígitos.");
             }
-            
         }
-        
-          DefaultTableModel modeloFactura = (DefaultTableModel) JtableFactura.getModel();
+
+        DefaultTableModel modeloFactura = (DefaultTableModel) JtableFactura.getModel();
         modeloFactura.addRow(new Object[]{codigoServicio, nombreServicio, precioServicio, numerodevehuculos});
         
         // Limpia la selección de la tabla
         tblServicios.clearSelection();
-       
-        
         tblServicios.setVisible(true);
         
+        // Actualizar los campos de la factura
+        actualizarFactura();
         
     } else {
         JOptionPane.showMessageDialog(null, "No se seleccionó ningún producto");
     }
 }
+
 //  
 
  
@@ -1182,8 +1169,8 @@ private double calcularTotal(double subtotal, double descuento, double iva) {
 private void actualizarSubtotalesFila() {
     DefaultTableModel model = (DefaultTableModel) JtableFactura.getModel();
     for (int i = 0; i < model.getRowCount(); i++) {
-        String precioStr = ((String) model.getValueAt(i, 2)).replace(",", ".");
-        String cantidadStr = ((String) model.getValueAt(i, 3)).replace(",", ".");
+        String precioStr = model.getValueAt(i, 2).toString().replace(",", ".");
+        String cantidadStr = model.getValueAt(i, 3).toString().replace(",", ".");
         double precio = Double.parseDouble(precioStr);
         int cantidad = Integer.parseInt(cantidadStr);
         double subtotal = precio * cantidad;
@@ -1209,9 +1196,7 @@ private double calcularSubtotalTabla() {
         PanelPrincipal.revalidate();
         PanelPrincipal.repaint();
     }
- 
-   
-public void cargarDatosFactura(String codigoFactura) {
+ public void cargarDatosFactura(String codigoFactura) {
     ObjectContainer baseBD = Conexion_db.ConectarBD();
     
     // Consultar el encabezado de la factura
@@ -1225,6 +1210,7 @@ public void cargarDatosFactura(String codigoFactura) {
         // Cargar los datos del encabezado de la factura
         txtcodigoFac.setText(miFactura.getCodigo_encabezadoFactura());
         txtfecha.setText(miFactura.getFecha_encabezadoFactura());
+        
         txtcedula.setText(miFactura.getCedulaCliente_encabezadoFactura());
         
         // Deshabilitar campos para edición
@@ -1265,30 +1251,41 @@ public void cargarDatosFactura(String codigoFactura) {
             String tipo = "";
             
             if (miDetalle.getCodigoProducto_detalleFactura() != null) {
-                codigo = miDetalle.getCodigoProducto_detalleFactura();
-                nombre = obtenerNombreProducto(codigo, baseBD);
-                precio = obtenerPrecioProducto(codigo, baseBD);
+                
+                if (obtenerNombreProducto(codigo, baseBD).isEmpty()) {
+                    codigo = miDetalle.getCodigoProducto_detalleFactura();
+                    nombre = obtenerNombreProducto(codigo, baseBD);
+                    precio = obtenerPrecioProducto(codigo, baseBD);
+                }else{
+                    if (obtenerNombreServicio(codigo, baseBD).isEmpty()) {
+                        codigo = miDetalle.getCodigoProducto_detalleFactura();
+                        nombre = obtenerNombreServicio(codigo, baseBD);
+                        precio = obtenerPrecioServicio(codigo, baseBD);
+                        
+                        
+                    }
+                }
+                
                 cantidad = miDetalle.getCantidadProdcutos_detalleFactura();
-                tipo = "Producto";
-            } else if (miDetalle.getCodigoServicio_detalleFactura() != null) {
-                codigo = miDetalle.getCodigoServicio_detalleFactura();
-                nombre = obtenerNombreServicio(codigo, baseBD);
-                precio = obtenerPrecioServicio(codigo, baseBD);
-                cantidad = miDetalle.getCantidadvehiculos_detalleFactura();
-                tipo = "Servicio";
-            }
+           
             
             modeloFactura.addRow(new Object[]{codigo, nombre, String.valueOf(precio), String.valueOf(cantidad), tipo});
         }
         
         // Actualizar los campos de subtotales, descuentos, etc.
         actualizarFactura();
-    } else {
-        JOptionPane.showMessageDialog(this, "Factura no encontrada.");
     }
+//        else {
+//        JOptionPane.showMessageDialog(this, "Factura no encontrada.");
+//    }
     
     baseBD.close();
 }
+   
+ }
+         
+
+
 private String obtenerNombreProducto(String codigoProducto, ObjectContainer baseBD) {
     Producto productoBuscar = new Producto();
     productoBuscar.setCodigo_Producto(codigoProducto);
@@ -1300,7 +1297,6 @@ private String obtenerNombreProducto(String codigoProducto, ObjectContainer base
     return "";
 }
 
-
 private double obtenerPrecioProducto(String codigoProducto, ObjectContainer baseBD) {
     Producto productoBuscar = new Producto();
     productoBuscar.setCodigo_Producto(codigoProducto);
@@ -1311,6 +1307,7 @@ private double obtenerPrecioProducto(String codigoProducto, ObjectContainer base
     }
     return 0.0;
 }
+
 private String obtenerNombreServicio(String codigoServicio, ObjectContainer baseBD) {
     Servicios servicioBuscar = new Servicios();
     servicioBuscar.setCodigo_Servicio(codigoServicio);
@@ -1321,7 +1318,6 @@ private String obtenerNombreServicio(String codigoServicio, ObjectContainer base
     }
     return "";
 }
-
 
 private double obtenerPrecioServicio(String codigoServicio, ObjectContainer baseBD) {
     Servicios servicioBuscar = new Servicios();
@@ -1369,20 +1365,20 @@ private void guardarFactura() {
 
     // Guardar los detalles de la factura
     for (int i = 0; i < model.getRowCount(); i++) {
-        String codigo = (String) model.getValueAt(i, 0);
-        String tipo = (String) model.getValueAt(i, 4);
-        int cantidad = Integer.parseInt((String) model.getValueAt(i, 3));
+        String codigo = model.getValueAt(i, 0).toString();
+        String tipo = model.getValueAt(i, 4).toString();
+        int cantidad = Integer.parseInt(model.getValueAt(i, 3).toString());
 
         DetalleFactura_1 detalle;
         if ("Producto".equals(tipo)) {
-            detalle = new DetalleFactura_1(codigoFactura, codigo, cantidad, null, 0);
+            detalle = new DetalleFactura_1(codigoFactura, codigo, cantidad);
             Producto producto = obtenerProductoPorCodigo(codigo);
             if (producto != null) {
                 producto.restarCantidad(cantidad);
                 baseBD.store(producto);
             }
         } else {
-            detalle = new DetalleFactura_1(codigoFactura, null, 0, codigo, cantidad);
+            detalle = new DetalleFactura_1(codigoFactura, codigo, cantidad);
         }
         baseBD.store(detalle);
     }
@@ -1421,7 +1417,6 @@ private void guardarFactura() {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JPanel jPanel4;
-    private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
     private javax.swing.JPanel jPanel7;
     private javax.swing.JPanel jPanel8;

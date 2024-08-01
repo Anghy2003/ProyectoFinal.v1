@@ -14,7 +14,6 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.swing.ImageIcon;
@@ -298,7 +297,10 @@ public class CrudPanelVendedor2 extends javax.swing.JPanel {
     private void btnCancelarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCancelarMouseClicked
 
     }//GEN-LAST:event_btnCancelarMouseClicked
-
+     public void cambiartabla() {
+        TablaVendedores tblvende = new TablaVendedores();
+        ShowpanelCruds(tblvende);
+    }
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
         
         Boolean valido = false;
@@ -319,6 +321,9 @@ public class CrudPanelVendedor2 extends javax.swing.JPanel {
                                         (String)cbxCiudadVende.getSelectedItem(),imagenVende,txtCedulaVende.getText(), txtNombresVende.getText().toUpperCase(), txtApellidosVende.getText().toUpperCase(), txtDireccionVende.getText().toUpperCase(),
                                         txtCorreoVende.getText(), txtCelularVende.getText(), (String) cbxGeneroVende.getSelectedItem(), fechaNacimiento, (String) cbxEstadoCivilVende.getSelectedItem(),
                                         txtCedulaVende.getText(), txtPasswordVende.getText(), txtCorreoVende.getText());
+                            JOptionPane.showMessageDialog(null, "Modificacion Correcta");
+                            cambiartabla();
+                            
                             
                         } else {
                             JOptionPane.showMessageDialog(null, "Ingrese un celular valido");
@@ -345,8 +350,7 @@ public class CrudPanelVendedor2 extends javax.swing.JPanel {
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         System.out.println("salir");
-        TablaVendedores tblVen = new TablaVendedores();
-        ShowpanelCruds(tblVen);
+       cambiartabla();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnSeleccionarImgen1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSeleccionarImgen1ActionPerformed
