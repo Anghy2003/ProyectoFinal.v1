@@ -6,7 +6,7 @@ import Models.*;
 import Models.Vehiculo.Estado;
 import static Models.Vehiculo.Estado.ACTIVO;
 import static Models.Vehiculo.Estado.INACTIVO;
-import Vista.Cruds.BuscarPanelVehiculo1;
+import Vista.Cruds.BuscarPanelVehiculo;
 import Vista.Menu.VistaMenu;
 import com.db4o.*;
 import com.db4o.query.Query;
@@ -273,17 +273,17 @@ public class TablaVehiculos extends javax.swing.JPanel {
     }//GEN-LAST:event_btnEliminarMouseClicked
 
     private void btnEditarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditarMouseClicked
-        if (!txtBuscar.getText().trim().isEmpty()) {
-            String BuscarPlaca = txtBuscar.getText(); // Obtener el texto de txtBuscar
-            BuscarPanelVehiculo1 miBuscarPanelVehiculo1 = new BuscarPanelVehiculo1(BuscarPlaca);//creo el componente llevando el valor del String
-            ShowpanelCruds(miBuscarPanelVehiculo1);
-        } else {
-            JOptionPane.showMessageDialog(this, "No deje el campo vacio");
-        }
+        
     }//GEN-LAST:event_btnEditarMouseClicked
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
-        // TODO add your handling code here:
+        if (!txtBuscar.getText().trim().isEmpty()) {
+            String BuscarPlaca = txtBuscar.getText(); // Obtener el texto de txtBuscar
+            BuscarPanelVehiculo miBuscarPanelVehiculo = new BuscarPanelVehiculo(BuscarPlaca);//creo el componente llevando el valor del String
+            ShowpanelCruds(miBuscarPanelVehiculo);
+        } else {
+            JOptionPane.showMessageDialog(this, "No deje el campo vacio");
+        }
     }//GEN-LAST:event_btnEditarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed

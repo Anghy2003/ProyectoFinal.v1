@@ -4,6 +4,7 @@ import Vista.Menu.VistaMenu;
 import static Vista.Menu.VistaMenu.PanelHeader;
 import static Vista.Menu.VistaMenu.PanelPrincipal;
 import static Vista.Menu.VistaMenu.PanelSubmenu;
+import Vista.Tables.TablaColores;
 import Vista.Tables.TablaMarcasVehiculo;
 import Vista.Tables.TablaVehiculos;
 import java.awt.BorderLayout;
@@ -125,7 +126,8 @@ public class PanelSubmenuAuto extends javax.swing.JPanel {
     }//GEN-LAST:event_btnGestionVehiculosActionPerformed
 
     private void btnGestionColoresActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGestionColoresActionPerformed
-        // TODO add your handling code here:
+        TablaColores miColor = new TablaColores();
+        ShowpanelCruds(miColor);
     }//GEN-LAST:event_btnGestionColoresActionPerformed
 
     private void MostrarpanelTitulo(JPanel p) {
