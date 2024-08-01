@@ -179,9 +179,10 @@ public class CatalogoProductos extends javax.swing.JPanel {
                 return canEdit [columnIndex];
             }
         });
-        tblCatalgoProductos.setShowHorizontalLines(false);
-        tblCatalgoProductos.setShowVerticalLines(false);
+        tblCatalgoProductos.setVerifyInputWhenFocusTarget(false);
         jScrollPane1.setViewportView(tblCatalgoProductos);
+        tblCatalgoProductos.getAccessibleContext().setAccessibleName("");
+        tblCatalgoProductos.getAccessibleContext().setAccessibleDescription("");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -210,7 +211,6 @@ public class CatalogoProductos extends javax.swing.JPanel {
         txtBuscarProductos.setBotonColor(new java.awt.Color(0, 53, 79));
         txtBuscarProductos.setPlaceholder("Nombre del Producto");
         txtBuscarProductos.setSelectedTextColor(new java.awt.Color(0, 53, 79));
-        txtBuscarProductos.setSelectionColor(new java.awt.Color(0, 53, 79));
         jPanel1.add(txtBuscarProductos, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 80, 310, -1));
 
         btnBuscar.setBackground(new java.awt.Color(0, 51, 255));

@@ -435,7 +435,12 @@ public class VistaMenu extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAgendarCitas1MouseClicked
 
     private void btnVehiculosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnVehiculosMouseClicked
-        
+        TablaVehiculos miVehi = new TablaVehiculos();
+        PanelTituloVehiculo titcit = new PanelTituloVehiculo();
+        PanelSubmenuAuto submecitas = new PanelSubmenuAuto();
+        MostrarpanelSubmenu(submecitas);
+        MostrarpanelTitulo(titcit);
+        MostarpanelCruds(miVehi);
     }//GEN-LAST:event_btnVehiculosMouseClicked
     private void MostrarpanelSubmenu(JPanel p) {
         p.setSize(870, 80);

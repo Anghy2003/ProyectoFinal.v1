@@ -316,7 +316,12 @@
                         <Column editable="false" title="Imagen " type="java.lang.Object"/>
                       </Table>
                     </Property>
+                    <Property name="verifyInputWhenFocusTarget" type="boolean" value="false"/>
                   </Properties>
+                  <AccessibilityProperties>
+                    <Property name="AccessibleContext.accessibleName" type="java.lang.String" value=""/>
+                    <Property name="AccessibleContext.accessibleDescription" type="java.lang.String" value=""/>
+                  </AccessibilityProperties>
                 </Component>
               </SubComponents>
             </Container>

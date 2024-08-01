@@ -23,15 +23,15 @@ public class Home extends javax.swing.JFrame {
         panelPron = new javax.swing.JPanel();
         PanelPrin = new javax.swing.JPanel();
         lblIconoLogo = new javax.swing.JLabel();
-        btnCrearCuenta = new rsbuttongradiente.RSButtonGradiente();
         txtUsuario = new rojeru_san.RSMTextFull();
-        btnIniciarSesion = new rsbuttongradiente.RSButtonGradiente();
         jSeparator1 = new javax.swing.JSeparator();
         txtpassword = new rojeru_san.RSMPassView();
         jPanel1 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         CmbRoles = new javax.swing.JComboBox<>();
         jLabel1 = new javax.swing.JLabel();
+        btnCrearCuenta = new rsbuttongradiente.RSButtonGradiente();
+        btnIniciarSesion = new rsbuttongradiente.RSButtonGradiente();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -42,35 +42,12 @@ public class Home extends javax.swing.JFrame {
 
         lblIconoLogo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/logoazul.png"))); // NOI18N
 
-        btnCrearCuenta.setBackground(new java.awt.Color(65, 185, 36));
-        btnCrearCuenta.setText("Crear cuenta nueva");
-        btnCrearCuenta.setColorPrimario(new java.awt.Color(65, 185, 36));
-        btnCrearCuenta.setColorPrimarioHover(new java.awt.Color(65, 185, 36));
-        btnCrearCuenta.setColorSecundario(new java.awt.Color(65, 185, 36));
-        btnCrearCuenta.setColorSecundarioHover(new java.awt.Color(65, 185, 36));
-        btnCrearCuenta.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCrearCuentaActionPerformed(evt);
-            }
-        });
-
         txtUsuario.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.RAISED));
         txtUsuario.setForeground(new java.awt.Color(0, 53, 79));
         txtUsuario.setBordeColorFocus(new java.awt.Color(0, 53, 79));
         txtUsuario.setFont(new java.awt.Font("Roboto Bold", 1, 18)); // NOI18N
         txtUsuario.setPlaceholder("Usuario/Cedula");
         txtUsuario.setSelectionColor(new java.awt.Color(0, 53, 79));
-
-        btnIniciarSesion.setText("Iniciar Sesión");
-        btnIniciarSesion.setColorPrimario(new java.awt.Color(8, 101, 254));
-        btnIniciarSesion.setColorPrimarioHover(new java.awt.Color(8, 101, 254));
-        btnIniciarSesion.setColorSecundario(new java.awt.Color(8, 101, 254));
-        btnIniciarSesion.setColorSecundarioHover(new java.awt.Color(8, 101, 254));
-        btnIniciarSesion.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnIniciarSesionActionPerformed(evt);
-            }
-        });
 
         txtpassword.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 255)));
         txtpassword.setForeground(new java.awt.Color(0, 53, 79));
@@ -105,6 +82,32 @@ public class Home extends javax.swing.JFrame {
         jLabel1.setForeground(new java.awt.Color(204, 204, 204));
         jLabel1.setText("Seleccione Su Rol*");
 
+        btnCrearCuenta.setBackground(new java.awt.Color(65, 185, 36));
+        btnCrearCuenta.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btnCrearCuenta.setText("Crear cuenta nueva");
+        btnCrearCuenta.setColorPrimario(new java.awt.Color(65, 185, 36));
+        btnCrearCuenta.setColorPrimarioHover(new java.awt.Color(65, 185, 36));
+        btnCrearCuenta.setColorSecundario(new java.awt.Color(51, 204, 0));
+        btnCrearCuenta.setColorSecundarioHover(new java.awt.Color(0, 255, 102));
+        btnCrearCuenta.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCrearCuentaActionPerformed(evt);
+            }
+        });
+
+        btnIniciarSesion.setBackground(new java.awt.Color(8, 101, 254));
+        btnIniciarSesion.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        btnIniciarSesion.setText("Iniciar Sesión");
+        btnIniciarSesion.setColorPrimario(new java.awt.Color(8, 101, 254));
+        btnIniciarSesion.setColorPrimarioHover(new java.awt.Color(8, 101, 254));
+        btnIniciarSesion.setColorSecundario(new java.awt.Color(0, 0, 204));
+        btnIniciarSesion.setColorSecundarioHover(new java.awt.Color(0, 0, 204));
+        btnIniciarSesion.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnIniciarSesionActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout PanelPrinLayout = new javax.swing.GroupLayout(PanelPrin);
         PanelPrin.setLayout(PanelPrinLayout);
         PanelPrinLayout.setHorizontalGroup(
@@ -115,10 +118,6 @@ public class Home extends javax.swing.JFrame {
                     .addGroup(PanelPrinLayout.createSequentialGroup()
                         .addGap(200, 200, 200)
                         .addComponent(lblIconoLogo, javax.swing.GroupLayout.PREFERRED_SIZE, 144, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(PanelPrinLayout.createSequentialGroup()
-                        .addGap(113, 113, 113)
-                        .addComponent(btnCrearCuenta, javax.swing.GroupLayout.PREFERRED_SIZE, 262, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(PanelPrinLayout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -133,8 +132,12 @@ public class Home extends javax.swing.JFrame {
                         .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 485, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(PanelPrinLayout.createSequentialGroup()
-                        .addGap(109, 109, 109)
-                        .addComponent(btnIniciarSesion, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(127, 127, 127)
+                        .addComponent(btnIniciarSesion, javax.swing.GroupLayout.PREFERRED_SIZE, 241, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(PanelPrinLayout.createSequentialGroup()
+                        .addGap(124, 124, 124)
+                        .addComponent(btnCrearCuenta, javax.swing.GroupLayout.PREFERRED_SIZE, 243, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         PanelPrinLayout.setVerticalGroup(
@@ -150,11 +153,11 @@ public class Home extends javax.swing.JFrame {
                 .addComponent(CmbRoles, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(27, 27, 27)
                 .addComponent(txtpassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(25, 25, 25)
-                .addComponent(btnIniciarSesion, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(35, 35, 35)
+                .addComponent(btnIniciarSesion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnCrearCuenta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(PanelPrinLayout.createSequentialGroup()
@@ -180,8 +183,15 @@ public class Home extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnCrearCuentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearCuentaActionPerformed
+        RegistrarClientes clientess = new RegistrarClientes();
+        clientess.setVisible(true);
+        this.dispose();
+        
+    }//GEN-LAST:event_btnCrearCuentaActionPerformed
+
     private void btnIniciarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIniciarSesionActionPerformed
-        if (txtUsuario.getText().equalsIgnoreCase("admin") && txtpassword.getText().equalsIgnoreCase("admin")) {
+      if (txtUsuario.getText().equalsIgnoreCase("admin") && txtpassword.getText().equalsIgnoreCase("admin")) {
             VistaMenu Mimenu = new VistaMenu();
             
             Mimenu.setVisible(true);
@@ -190,15 +200,7 @@ public class Home extends javax.swing.JFrame {
         }else{
             JOptionPane.showMessageDialog(this, "Usuario no registrado");
         }
-        
     }//GEN-LAST:event_btnIniciarSesionActionPerformed
-
-    private void btnCrearCuentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearCuentaActionPerformed
-        RegistrarClientes clientess = new RegistrarClientes();
-        clientess.setVisible(true);
-        this.dispose();
-
-    }//GEN-LAST:event_btnCrearCuentaActionPerformed
 
     /**
      * @param args the command line arguments
