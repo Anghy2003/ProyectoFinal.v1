@@ -125,6 +125,9 @@
                   <Color blue="4f" green="35" red="0" type="rgb"/>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="jPanel4MouseClicked"/>
+              </Events>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
                   <AbsoluteConstraints x="20" y="140" width="-1" height="660"/>
@@ -137,16 +140,23 @@
                       <Group type="102" attributes="0">
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="btnServicios" alignment="0" min="-2" pref="179" max="-2" attributes="0"/>
-                              <Component id="btnFactura" alignment="0" min="-2" pref="179" max="-2" attributes="0"/>
-                              <Component id="btnCatalogo" alignment="0" min="-2" pref="179" max="-2" attributes="0"/>
-                              <Component id="btnVehiculos" alignment="0" min="-2" pref="167" max="-2" attributes="0"/>
-                              <Component id="btnUsuario" alignment="0" min="-2" pref="169" max="-2" attributes="0"/>
-                              <Component id="btnProductos" alignment="0" min="-2" pref="179" max="-2" attributes="0"/>
-                              <Component id="btnProvedores" alignment="0" min="-2" pref="169" max="-2" attributes="0"/>
-                              <Component id="btnReportes" alignment="0" min="-2" pref="181" max="-2" attributes="0"/>
+                              <Component id="btnciudades" alignment="0" min="-2" pref="181" max="-2" attributes="0"/>
                               <Component id="btnReportes1" alignment="0" min="-2" pref="181" max="-2" attributes="0"/>
                               <Component id="btnSalir" alignment="0" min="-2" pref="181" max="-2" attributes="0"/>
+                              <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
+                                  <Component id="btnVehiculos" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="btnUsuario" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="btnServicios" alignment="0" pref="179" max="32767" attributes="0"/>
+                              </Group>
+                              <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
+                                  <Component id="btnProvedores" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="btnProductos" alignment="0" pref="179" max="32767" attributes="0"/>
+                              </Group>
+                              <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
+                                  <Component id="btnCatalogo" alignment="0" max="32767" attributes="0"/>
+                                  <Component id="btnFactura" alignment="0" pref="179" max="32767" attributes="0"/>
+                              </Group>
+                              <Component id="btnAgendarCitas1" alignment="0" min="-2" pref="181" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace pref="26" max="32767" attributes="0"/>
                       </Group>
@@ -156,10 +166,10 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
                           <EmptySpace min="-2" pref="26" max="-2" attributes="0"/>
-                          <Component id="btnUsuario" min="-2" pref="50" max="-2" attributes="0"/>
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Component id="btnVehiculos" min="-2" pref="50" max="-2" attributes="0"/>
+                          <Component id="btnUsuario" min="-2" pref="44" max="-2" attributes="0"/>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <Component id="btnVehiculos" min="-2" pref="44" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
                           <Component id="btnServicios" min="-2" pref="50" max="-2" attributes="0"/>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Component id="btnFactura" min="-2" pref="50" max="-2" attributes="0"/>
@@ -167,15 +177,16 @@
                           <Component id="btnCatalogo" min="-2" pref="50" max="-2" attributes="0"/>
                           <EmptySpace type="unrelated" max="-2" attributes="0"/>
                           <Component id="btnProvedores" min="-2" pref="50" max="-2" attributes="0"/>
-                          <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
                           <Component id="btnProductos" min="-2" pref="47" max="-2" attributes="0"/>
-                          <EmptySpace pref="15" max="32767" attributes="0"/>
+                          <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
                           <Component id="btnReportes1" min="-2" pref="50" max="-2" attributes="0"/>
                           <EmptySpace type="separate" max="-2" attributes="0"/>
-                          <Component id="btnReportes" min="-2" pref="50" max="-2" attributes="0"/>
-                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <Component id="btnAgendarCitas1" min="-2" pref="50" max="-2" attributes="0"/>
+                          <EmptySpace max="32767" attributes="0"/>
+                          <Component id="btnciudades" min="-2" pref="50" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
                           <Component id="btnSalir" min="-2" pref="50" max="-2" attributes="0"/>
-                          <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -218,7 +229,7 @@
                     <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnUsuarioMouseClicked"/>
                   </Events>
                 </Component>
-                <Component class="javax.swing.JLabel" name="btnReportes">
+                <Component class="javax.swing.JLabel" name="btnciudades">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Roboto Black" size="19" style="0"/>
@@ -227,12 +238,12 @@
                       <Color blue="ff" green="ff" red="ff" type="rgb"/>
                     </Property>
                     <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                      <Image iconType="3" name="/Iconos/programaCitas35.png"/>
+                      <Image iconType="3" name="/Iconos/ciudad-inteligente (3).png"/>
                     </Property>
-                    <Property name="text" type="java.lang.String" value="Agendar Citas"/>
+                    <Property name="text" type="java.lang.String" value="Ciudades"/>
                   </Properties>
                   <Events>
-                    <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnReportesMouseClicked"/>
+                    <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnciudadesMouseClicked"/>
                   </Events>
                 </Component>
                 <Component class="javax.swing.JLabel" name="btnServicios">
@@ -352,6 +363,23 @@
                   </Properties>
                   <Events>
                     <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnReportes1MouseClicked"/>
+                  </Events>
+                </Component>
+                <Component class="javax.swing.JLabel" name="btnAgendarCitas1">
+                  <Properties>
+                    <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
+                      <Font name="Roboto Black" size="19" style="0"/>
+                    </Property>
+                    <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+                      <Color blue="ff" green="ff" red="ff" type="rgb"/>
+                    </Property>
+                    <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
+                      <Image iconType="3" name="/Iconos/programaCitas35.png"/>
+                    </Property>
+                    <Property name="text" type="java.lang.String" value="Agendar Citas"/>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnAgendarCitas1MouseClicked"/>
                   </Events>
                 </Component>
               </SubComponents>

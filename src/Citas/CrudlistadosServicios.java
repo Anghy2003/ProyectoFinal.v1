@@ -263,7 +263,7 @@ public class CrudlistadosServicios extends javax.swing.JPanel {
         txtPrecio.setColorTransparente(true);
         txtPrecio.setFont(new java.awt.Font("Roboto Light", 1, 14)); // NOI18N
         txtPrecio.setPlaceholder("Escriba el precio");
-        jPanel1.add(txtPrecio, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 310, 200, 40));
+        jPanel1.add(txtPrecio, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 330, 200, 40));
 
         txtIdMecanico.setForeground(new java.awt.Color(0, 53, 79));
         txtIdMecanico.setColorTransparente(true);
@@ -272,7 +272,7 @@ public class CrudlistadosServicios extends javax.swing.JPanel {
         jPanel1.add(txtIdMecanico, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 210, 200, 40));
 
         CmbPlaca.setBackground(new java.awt.Color(102, 153, 255));
-        jPanel1.add(CmbPlaca, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 280, 200, -1));
+        jPanel1.add(CmbPlaca, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 280, 200, 30));
 
         btnBuscarMecanico.setBackground(new java.awt.Color(0, 204, 0));
         btnBuscarMecanico.setText("Buscar");

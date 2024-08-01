@@ -22,7 +22,6 @@ public class PanelSubmenuProveedores extends javax.swing.JPanel {
         panelSubmenuProductos1 = new Vista.PanelSubmenus.PanelSubmenuProductos();
         jPanel1 = new javax.swing.JPanel();
         jSeparator1 = new javax.swing.JSeparator();
-        btnCiudadesMenu = new javax.swing.JToggleButton();
         btnProvedoresMenu1 = new javax.swing.JToggleButton();
 
         setLayout(new java.awt.BorderLayout());
@@ -30,15 +29,6 @@ public class PanelSubmenuProveedores extends javax.swing.JPanel {
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
         jSeparator1.setForeground(new java.awt.Color(0, 53, 79));
-
-        btnCiudadesMenu.setFont(new java.awt.Font("Roboto Medium", 1, 12)); // NOI18N
-        btnCiudadesMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/ciudad-inteligente (3).png"))); // NOI18N
-        btnCiudadesMenu.setText("CIUDADES");
-        btnCiudadesMenu.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCiudadesMenuActionPerformed(evt);
-            }
-        });
 
         btnProvedoresMenu1.setFont(new java.awt.Font("Roboto Medium", 1, 12)); // NOI18N
         btnProvedoresMenu1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/entrega.png"))); // NOI18N
@@ -51,8 +41,6 @@ public class PanelSubmenuProveedores extends javax.swing.JPanel {
             .addComponent(jSeparator1, javax.swing.GroupLayout.DEFAULT_SIZE, 870, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnCiudadesMenu, javax.swing.GroupLayout.PREFERRED_SIZE, 167, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
                 .addComponent(btnProvedoresMenu1, javax.swing.GroupLayout.PREFERRED_SIZE, 198, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18))
         );
@@ -62,22 +50,15 @@ public class PanelSubmenuProveedores extends javax.swing.JPanel {
                 .addContainerGap()
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnCiudadesMenu)
-                    .addComponent(btnProvedoresMenu1))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(btnProvedoresMenu1)
+                .addContainerGap(19, Short.MAX_VALUE))
         );
 
         add(jPanel1, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnCiudadesMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCiudadesMenuActionPerformed
-        
-    }//GEN-LAST:event_btnCiudadesMenuActionPerformed
-
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JToggleButton btnCiudadesMenu;
     private javax.swing.JToggleButton btnProvedoresMenu1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JSeparator jSeparator1;

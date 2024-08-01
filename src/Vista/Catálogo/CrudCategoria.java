@@ -107,8 +107,8 @@ public class CrudCategoria extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-        TablaCategoria tblcat = new TablaCategoria();
-        MostrarpaneCruds(tblcat);
+        CrudPanelServicios ser = new CrudPanelServicios();
+        MostrarpaneCruds(ser);
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed

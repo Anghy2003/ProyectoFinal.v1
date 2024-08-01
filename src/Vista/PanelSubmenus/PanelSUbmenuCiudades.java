@@ -9,12 +9,12 @@ package Vista.PanelSubmenus;
  *
  * @author 59399
  */
-public class PanelSubmenuAuto extends javax.swing.JPanel {
+public class PanelSUbmenuCiudades extends javax.swing.JPanel {
 
     /**
-     * Creates new form PanelSubmenuAuto
+     * Creates new form PanelSUbmenuCitas
      */
-    public PanelSubmenuAuto() {
+    public PanelSUbmenuCiudades() {
         initComponents();
     }
 
@@ -27,54 +27,42 @@ public class PanelSubmenuAuto extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        btnCatalogoPro = new javax.swing.JToggleButton();
-        btnCatser = new javax.swing.JToggleButton();
         jSeparator1 = new javax.swing.JSeparator();
+        btnCatser = new javax.swing.JToggleButton();
 
         setBackground(new java.awt.Color(255, 255, 255));
 
-        btnCatalogoPro.setFont(new java.awt.Font("Roboto Medium", 1, 12)); // NOI18N
-        btnCatalogoPro.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/carretilla.png"))); // NOI18N
-        btnCatalogoPro.setText("GESTION MARCAS");
+        jSeparator1.setForeground(new java.awt.Color(0, 53, 79));
 
         btnCatser.setFont(new java.awt.Font("Roboto Medium", 1, 12)); // NOI18N
         btnCatser.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/servicio.png"))); // NOI18N
-        btnCatser.setText("GESTION SERVCIOS");
-
-        jSeparator1.setForeground(new java.awt.Color(0, 53, 79));
+        btnCatser.setText("AGENDAR CITAS");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(455, Short.MAX_VALUE)
-                .addComponent(btnCatser)
-                .addGap(27, 27, 27)
-                .addComponent(btnCatalogoPro)
-                .addGap(42, 42, 42))
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(jSeparator1, javax.swing.GroupLayout.DEFAULT_SIZE, 870, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 870, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnCatser, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(56, 56, 56))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(28, 28, 28)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnCatalogoPro)
-                    .addComponent(btnCatser))
-                .addContainerGap(28, Short.MAX_VALUE))
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addContainerGap()
-                    .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addContainerGap(68, Short.MAX_VALUE)))
+                .addContainerGap()
+                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnCatser)
+                .addContainerGap(21, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JToggleButton btnCatalogoPro;
     private javax.swing.JToggleButton btnCatser;
     private javax.swing.JSeparator jSeparator1;
     // End of variables declaration//GEN-END:variables
