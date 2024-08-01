@@ -56,6 +56,10 @@ public class TablaMarcasVehiculo extends javax.swing.JPanel {
         lblBuscar = new javax.swing.JLabel();
         btnAgregar = new rsbuttongradiente.RSButtonGradiente();
         btnBuscar = new rsbuttongradiente.RSButtonGradiente();
+        lblBuscar1 = new javax.swing.JLabel();
+        txtBuscar1 = new rojeru_san.RSMTextFull();
+        btnAgregarModelo = new rsbuttongradiente.RSButtonGradiente();
+        btnBuscarModelo = new rsbuttongradiente.RSButtonGradiente();
 
         jdlCrearMarcaTabla.getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -223,29 +227,83 @@ public class TablaMarcasVehiculo extends javax.swing.JPanel {
             }
         });
 
+        lblBuscar1.setFont(new java.awt.Font("Roboto Black", 0, 18)); // NOI18N
+        lblBuscar1.setText("Modelo de la marca:");
+
+        txtBuscar1.setFont(new java.awt.Font("Roboto Bold", 2, 14)); // NOI18N
+        txtBuscar1.setPlaceholder("ejm. D-max");
+
+        btnAgregarModelo.setText("Agregar");
+        btnAgregarModelo.setToolTipText("Ingresar un nuevo vehiculo");
+        btnAgregarModelo.setColorPrimario(new java.awt.Color(0, 204, 51));
+        btnAgregarModelo.setColorPrimarioHover(new java.awt.Color(0, 204, 51));
+        btnAgregarModelo.setColorSecundario(new java.awt.Color(153, 255, 153));
+        btnAgregarModelo.setColorSecundarioHover(new java.awt.Color(204, 255, 204));
+        btnAgregarModelo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnAgregarModeloMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnAgregarModeloMouseEntered(evt);
+            }
+        });
+        btnAgregarModelo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAgregarModeloActionPerformed(evt);
+            }
+        });
+
+        btnBuscarModelo.setText("Buscar");
+        btnBuscarModelo.setToolTipText("Previamente ingrese una placa");
+        btnBuscarModelo.setColorPrimario(new java.awt.Color(0, 51, 153));
+        btnBuscarModelo.setColorPrimarioHover(new java.awt.Color(51, 0, 255));
+        btnBuscarModelo.setColorSecundario(new java.awt.Color(51, 153, 255));
+        btnBuscarModelo.setColorSecundarioHover(new java.awt.Color(153, 204, 255));
+        btnBuscarModelo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnBuscarModeloMouseClicked(evt);
+            }
+        });
+        btnBuscarModelo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarModeloActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout pnlListadoLayout = new javax.swing.GroupLayout(pnlListado);
         pnlListado.setLayout(pnlListadoLayout);
         pnlListadoLayout.setHorizontalGroup(
             pnlListadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlListadoLayout.createSequentialGroup()
-                .addContainerGap(47, Short.MAX_VALUE)
+                .addContainerGap(53, Short.MAX_VALUE)
                 .addGroup(pnlListadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlListadoLayout.createSequentialGroup()
-                        .addComponent(btnAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(44, 44, 44)
-                        .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(156, 156, 156))
+                        .addComponent(lblMarcas)
+                        .addGap(692, 692, 692))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlListadoLayout.createSequentialGroup()
                         .addGroup(pnlListadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblMarcas)
+                            .addComponent(scrlpTablaVehi1, javax.swing.GroupLayout.PREFERRED_SIZE, 799, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addGroup(pnlListadoLayout.createSequentialGroup()
-                                .addComponent(lblBuscar)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(472, 472, 472))
-                    .addGroup(pnlListadoLayout.createSequentialGroup()
-                        .addComponent(scrlpTablaVehi1, javax.swing.GroupLayout.PREFERRED_SIZE, 799, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap())))
+                                .addGroup(pnlListadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(pnlListadoLayout.createSequentialGroup()
+                                        .addComponent(lblBuscar1)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(txtBuscar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(pnlListadoLayout.createSequentialGroup()
+                                        .addComponent(lblBuscar)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(18, 18, 18)
+                                .addGroup(pnlListadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(pnlListadoLayout.createSequentialGroup()
+                                        .addComponent(btnAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(44, 44, 44)
+                                        .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(pnlListadoLayout.createSequentialGroup()
+                                        .addComponent(btnAgregarModelo, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(44, 44, 44)
+                                        .addComponent(btnBuscarModelo, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                        .addGap(41, 41, 41))))
         );
         pnlListadoLayout.setVerticalGroup(
             pnlListadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -254,19 +312,24 @@ public class TablaMarcasVehiculo extends javax.swing.JPanel {
                 .addComponent(lblMarcas)
                 .addGap(18, 18, 18)
                 .addGroup(pnlListadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnlListadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(pnlListadoLayout.createSequentialGroup()
-                        .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(2, 2, 2))
-                    .addGroup(pnlListadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                        .addGroup(pnlListadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(pnlListadoLayout.createSequentialGroup()
-                            .addComponent(lblBuscar)
-                            .addGap(8, 8, 8))))
-                .addGap(41, 41, 41)
-                .addComponent(scrlpTablaVehi1, javax.swing.GroupLayout.PREFERRED_SIZE, 391, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(89, Short.MAX_VALUE))
+                        .addGroup(pnlListadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lblBuscar))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(pnlListadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(pnlListadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(txtBuscar1, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(pnlListadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(btnBuscarModelo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(btnAgregarModelo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(lblBuscar1))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 31, Short.MAX_VALUE)
+                .addComponent(scrlpTablaVehi1, javax.swing.GroupLayout.PREFERRED_SIZE, 316, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(111, 111, 111))
         );
 
         add(pnlListado, java.awt.BorderLayout.CENTER);
@@ -399,6 +462,26 @@ public class TablaMarcasVehiculo extends javax.swing.JPanel {
     private void txtModeloMarcaRegistroKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtModeloMarcaRegistroKeyTyped
         // TODO add your handling code here:
     }//GEN-LAST:event_txtModeloMarcaRegistroKeyTyped
+
+    private void btnAgregarModeloMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAgregarModeloMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnAgregarModeloMouseClicked
+
+    private void btnAgregarModeloMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAgregarModeloMouseEntered
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnAgregarModeloMouseEntered
+
+    private void btnAgregarModeloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarModeloActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnAgregarModeloActionPerformed
+
+    private void btnBuscarModeloMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBuscarModeloMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnBuscarModeloMouseClicked
+
+    private void btnBuscarModeloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarModeloActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnBuscarModeloActionPerformed
     private void mostrarDatosMarca() {
         // ESTABLECER CONEXION CON LA BASE DE DATOS
         ObjectContainer BaseBD = Conexion_db.ConectarBD();
@@ -487,13 +570,16 @@ public class TablaMarcasVehiculo extends javax.swing.JPanel {
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private rsbuttongradiente.RSButtonGradiente btnAgregar;
+    private rsbuttongradiente.RSButtonGradiente btnAgregarModelo;
     private rsbuttongradiente.RSButtonGradiente btnBuscar;
+    private rsbuttongradiente.RSButtonGradiente btnBuscarModelo;
     private rojeru_san.RSButtonRiple btnCancelar1;
     private rojeru_san.RSButtonRiple btnGuardarMarca;
     private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JDialog jdlCrearMarcaTabla;
     private javax.swing.JLabel lblBuscar;
+    private javax.swing.JLabel lblBuscar1;
     private javax.swing.JLabel lblMarcas;
     private javax.swing.JLabel lblModeloMarcaRegistro;
     private javax.swing.JLabel lblPlaca1;
@@ -503,6 +589,7 @@ public class TablaMarcasVehiculo extends javax.swing.JPanel {
     private javax.swing.JScrollPane scrlpTablaVehi1;
     private javax.swing.JTable tblMarcasLista;
     private rojeru_san.RSMTextFull txtBuscar;
+    private rojeru_san.RSMTextFull txtBuscar1;
     private rojeru_san.RSMTextFull txtMarcaVRegistrar;
     private rojeru_san.RSMTextFull txtModeloMarcaRegistro;
     // End of variables declaration//GEN-END:variables

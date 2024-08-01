@@ -271,7 +271,10 @@ public class CrudPanelCliente2 extends javax.swing.JPanel {
     private void btnCancelarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCancelarMouseClicked
 
     }//GEN-LAST:event_btnCancelarMouseClicked
-
+    public void cambiartabla() {
+        TablaClientes tblCli = new TablaClientes();
+        ShowpanelCruds(tblCli);
+    }
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
 
         Boolean valido = false;
@@ -291,6 +294,9 @@ public class CrudPanelCliente2 extends javax.swing.JPanel {
                             modificarCliente(Cliente.Estado.ACTIVO,(String)cbxCiudadCli.getSelectedItem(),imagenCli,txtCedulaCli.getText(), txtNombresCli.getText().toUpperCase().toUpperCase(), txtApellidosCli.getText().toUpperCase(),
                                     txtDireccionCli.getText().toUpperCase(), txtCorreoCli.getText(),txtCelularCli.getText(), (String) cbxGeneroCli.getSelectedItem(), fechaNacimiento, (String) cbxEstadoCivilCli.getSelectedItem(),
                                     txtCedulaCli.getText(), txtPasswordCli.getText(), fechaNacimiento);
+                            
+                            JOptionPane.showMessageDialog(null, "Modificacion Correcta");
+                            cambiartabla();
 
                         } else {
                             JOptionPane.showMessageDialog(null, "Ingrese un celular valido");
@@ -316,8 +322,7 @@ public class CrudPanelCliente2 extends javax.swing.JPanel {
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         System.out.println("salir");
-        TablaClientes tblCli = new TablaClientes();
-        ShowpanelCruds(tblCli);
+        cambiartabla();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnSeleccionarImgen1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSeleccionarImgen1ActionPerformed

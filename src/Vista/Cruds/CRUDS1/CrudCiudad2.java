@@ -172,10 +172,13 @@ public class CrudCiudad2 extends javax.swing.JPanel {
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         System.out.println("salir");
-        TablaCiudad tblCli = new TablaCiudad();
-        ShowpanelCruds(tblCli);
+       cambiartabla();
     }//GEN-LAST:event_btnCancelarActionPerformed
-
+        
+      public void cambiartabla() {
+        TablaCiudad tblcd = new TablaCiudad();
+        ShowpanelCruds(tblcd);
+    }
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
 
        Boolean valido = false;
@@ -187,6 +190,9 @@ public class CrudCiudad2 extends javax.swing.JPanel {
                         modificarCiudad( txtNombreCiudad.getText().toUpperCase(),
                                 Integer.parseInt(txtPoblacionCiudad.getText()),
                                 txtRegion.getText().toUpperCase(), imagenCiudad);
+                        JOptionPane.showMessageDialog(null, "Modificacion Correcta");
+                        cambiartabla();
+                        
 
                     } else {
                         JOptionPane.showMessageDialog(null, "Ingrese una Ciudad Correcta");

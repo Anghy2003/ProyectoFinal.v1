@@ -328,7 +328,10 @@ public class CrudPanelMecanico extends javax.swing.JPanel {
     private void btnCancelarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCancelarMouseClicked
 
     }//GEN-LAST:event_btnCancelarMouseClicked
-
+    public void cambiartabla() {
+        TablaMecanicos tblMeca = new TablaMecanicos();
+        ShowpanelCruds(tblMeca);
+    }
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         boolean usuarioRepetido = false;
 
@@ -357,6 +360,8 @@ public class CrudPanelMecanico extends javax.swing.JPanel {
                                         txtApellidosMeca.getText().toUpperCase(), txtDireccionMeca.getText().toUpperCase(), txtCorreoMeca.getText(), txtCelularMeca.getText(),
                                         (String) cbxGeneroMeca.getSelectedItem(), fechaNacimiento, (String) cbxEstadoCivilMeca.getSelectedItem(), txtCedulaMeca.getText(), txtPasswordMeca.getText(),
                                         txtCorreoMeca.getText());
+                                        JOptionPane.showMessageDialog(null, "Mecanico Guadado");
+                                        cambiartabla();
 
                             } else {
                                 JOptionPane.showMessageDialog(null, "Ingrese un celular valido");
@@ -384,8 +389,7 @@ public class CrudPanelMecanico extends javax.swing.JPanel {
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         System.out.println("salir");
-        TablaMecanicos tblCli = new TablaMecanicos();
-        ShowpanelCruds(tblCli);
+        cambiartabla();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void txtPasswordMecaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPasswordMecaActionPerformed

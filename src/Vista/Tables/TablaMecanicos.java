@@ -209,15 +209,37 @@ public class TablaMecanicos extends javax.swing.JPanel {
         ShowpanelCruds(agregarVehi);
     }//GEN-LAST:event_btnAgregarActionPerformed
 
+        public final int VerificarMecanico(String cedula) {
+        ObjectContainer BaseBD = Conexion_db.ConectarBD();
+        Query meca = BaseBD.query();
+        meca.constrain(Mecanico.class);
+        meca.descend("cedula").constrain(cedula);
+        ObjectSet<Mecanico> resultado = meca.execute();
+
+        int coincidencias = resultado.size();
+
+        BaseBD.close();
+        return coincidencias;
+    }
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
-        if (!txtBuscar.getText().trim().isEmpty()) {
+         if (!txtBuscar.getText().trim().isEmpty()) {
+            String BuscarMeca = txtBuscar.getText().trim();
 
-            String Buscarmeca = txtBuscar.getText();
-            CrudPanelMecanico2 mibuscarmeca = new CrudPanelMecanico2(Buscarmeca);
-            ShowpanelCruds(mibuscarmeca);
+            // Llamar al método VerificarMecanico y obtener el número de coincidencias
+            int coincidencias = VerificarMecanico(BuscarMeca);
 
+            // Verificar si se encontraron coincidencias
+            if (coincidencias > 0) {
+                // Crear una instancia del panel con los datos del mecanico
+                CrudPanelMecanico2 mibuscarmeca = new CrudPanelMecanico2(BuscarMeca);
+                ShowpanelCruds(mibuscarmeca);
+            } else {
+                // Mostrar mensaje si no se encontraron mecanico
+                JOptionPane.showMessageDialog(this, "Mecanico no encontrado.");
+            }
         } else {
-            JOptionPane.showMessageDialog(this, "ingrese una cedula ");
+            // Mostrar mensaje si el campo de búsqueda está vacío
+            JOptionPane.showMessageDialog(this, "Ingrese una cédula.");
         }
     }//GEN-LAST:event_btnEditarActionPerformed
 

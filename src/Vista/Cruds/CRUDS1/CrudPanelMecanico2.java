@@ -317,9 +317,12 @@ public class CrudPanelMecanico2 extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCancelarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCancelarMouseClicked
-
+        
     }//GEN-LAST:event_btnCancelarMouseClicked
-
+     public void cambiartabla() {
+         TablaMecanicos tblmeca = new TablaMecanicos();
+        ShowpanelCruds(tblmeca);
+    }
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
  
             
@@ -344,6 +347,8 @@ public class CrudPanelMecanico2 extends javax.swing.JPanel {
                                         txtApellidosMeca.getText().toUpperCase(), txtDireccionMeca.getText().toUpperCase(), txtCorreoMeca.getText(), txtCelularMeca.getText(),
                                         (String) cbxGeneroMeca.getSelectedItem(), fechaNacimiento, (String) cbxEstadoCivilMeca.getSelectedItem(), txtCedulaMeca.getText(), txtPasswordMeca.getText(),
                                         txtCorreoMeca.getText());
+                                    JOptionPane.showMessageDialog(null, "Modificacion Correcta");
+                                    cambiartabla();
                                     
 
                                 } else {
@@ -376,8 +381,7 @@ public class CrudPanelMecanico2 extends javax.swing.JPanel {
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
          System.out.println("salir");
-        TablaMecanicos tblMeca = new TablaMecanicos();
-        ShowpanelCruds(tblMeca);
+        cambiartabla();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnSeleccionarImgen1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSeleccionarImgen1ActionPerformed

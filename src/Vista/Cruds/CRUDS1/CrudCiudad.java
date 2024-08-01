@@ -217,11 +217,13 @@ public class CrudCiudad extends javax.swing.JPanel {
     }//GEN-LAST:event_btnCancelarMouseClicked
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-        System.out.println("salir");
-        TablaCiudad tblCli = new TablaCiudad();
-        ShowpanelCruds(tblCli);
+        cambiartabla();
     }//GEN-LAST:event_btnCancelarActionPerformed
-
+     public void cambiartabla() {
+        TablaCiudad tblCiu = new TablaCiudad();
+        ShowpanelCruds(tblCiu);
+    }
+    
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
 
         boolean usuarioRepetido = false;
@@ -244,6 +246,7 @@ public class CrudCiudad extends javax.swing.JPanel {
                                 txtRegion.getText().toUpperCase(), imagenCiudad);
                         
                         JOptionPane.showMessageDialog(null, "Ciudad Guardada");
+                        cambiartabla();
                         
 
                     } else {

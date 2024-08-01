@@ -348,6 +348,11 @@ public class CrudPanelCliente extends javax.swing.JPanel {
         
     }//GEN-LAST:event_btnGuardarCliMouseClicked
 
+    public void cambiartabla() {
+        TablaClientes tblCli = new TablaClientes();
+        ShowpanelCruds(tblCli);
+    }
+    
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         boolean usuarioRepetido = false;
 
@@ -375,6 +380,9 @@ public class CrudPanelCliente extends javax.swing.JPanel {
                                 GuardarCliente(Estado.ACTIVO,(String)cbxCiudadCli.getSelectedItem(),imagenCli,txtCedulaCli.getText(), txtNombresCli.getText().toUpperCase().toUpperCase(), txtApellidosCli.getText().toUpperCase(),
                                     txtDireccionCli.getText().toUpperCase(), txtCorreoCli.getText(),txtCelularCli.getText(), (String) cbxGeneroCli.getSelectedItem(), fechaNacimiento, (String) cbxEstadoCivilCli.getSelectedItem(),
                                     txtCedulaCli.getText(), txtPasswordCli.getText(), fechaNacimiento);
+                                    JOptionPane.showMessageDialog(null, "Cliente Guardado");
+                                    cambiartabla();
+                                
 
                             } else {
                                 JOptionPane.showMessageDialog(null, "Ingrese un celular valido");
@@ -404,8 +412,7 @@ public class CrudPanelCliente extends javax.swing.JPanel {
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         System.out.println("salir");
-        TablaClientes tblCli = new TablaClientes();
-        ShowpanelCruds(tblCli);
+        cambiartabla();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnCancelarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCancelarMouseClicked

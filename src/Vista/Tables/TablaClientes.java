@@ -4,8 +4,8 @@ import Conexion.Conexion_db;
 import Conexion.ImageRenderer;
 import Models.Cliente;
 import static Models.Cliente.Estado.ACTIVO;
-import static Models.Vendedor.Estado.INACTIVO;
-
+import static Models.Cliente.Estado.INACTIVO;
+import Vista.Cruds.CRUDS1.CrudPanelAdministrador2;
 import Vista.Cruds.CRUDS1.CrudPanelCliente;
 import Vista.Cruds.CRUDS1.CrudPanelCliente2;
 import Vista.Menu.VistaMenu;
@@ -232,16 +232,37 @@ public class TablaClientes extends javax.swing.JPanel {
     private void btnEditarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditarMouseClicked
         // TODO add your handling code here:
     }//GEN-LAST:event_btnEditarMouseClicked
+    public final int VerificarCliente(String cedula) {
+        ObjectContainer BaseBD = Conexion_db.ConectarBD();
+        Query admin = BaseBD.query();
+        admin.constrain(Cliente.class);
+        admin.descend("cedula").constrain(cedula);
+        ObjectSet<Cliente> resultado = admin.execute();
 
+        int coincidencias = resultado.size();
+
+        BaseBD.close();
+        return coincidencias;
+    }
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
-        if (!txtBuscar.getText().trim().isEmpty()) {
+         if (!txtBuscar.getText().trim().isEmpty()) {
+            String BuscarCliente = txtBuscar.getText().trim();
 
-            String BuscarCliente = txtBuscar.getText();
-            CrudPanelCliente2 mibuscarcliente = new CrudPanelCliente2(BuscarCliente);
-            ShowpanelCruds(mibuscarcliente);
+            // Llamar al método VerificarCliente y obtener el número de coincidencias
+            int coincidencias = VerificarCliente(BuscarCliente);
 
+            // Verificar si se encontraron coincidencias
+            if (coincidencias > 0) {
+                // Crear una instancia del panel con los datos del Cliente
+                CrudPanelCliente2 mibuscarcli = new CrudPanelCliente2(BuscarCliente);
+                ShowpanelCruds(mibuscarcli);
+            } else {
+                // Mostrar mensaje si no se encontraron Cliente
+                JOptionPane.showMessageDialog(this, "Cliente no encontrado.");
+            }
         } else {
-            JOptionPane.showMessageDialog(this, "ingrese una cedula ");
+            // Mostrar mensaje si el campo de búsqueda está vacío
+            JOptionPane.showMessageDialog(this, "Ingrese una cédula.");
         }
     }//GEN-LAST:event_btnEditarActionPerformed
 
@@ -344,7 +365,7 @@ public class TablaClientes extends javax.swing.JPanel {
         //datos configurados
         tblClientesInactivos.setModel(new javax.swing.table.DefaultTableModel(matriz, new String[]{"ID Vendedor", "Usuario", "Contraseña", "Cedula", "Nombres", "Apellidos", "Direccion", "Correo Electronico", "Correo recuperacion", "Celular", "Fecha Nacimiento",
             "Estado Civil", "Genero", "Ciudad", "Foto", "Estado"}));
-        tblClientesInactivos.getColumnModel().getColumn(15).setCellRenderer(new ImageRenderer());
+        tblClientesInactivos.getColumnModel().getColumn(14).setCellRenderer(new ImageRenderer());
         tblClientesInactivos.setRowHeight(100);
         tblClientesInactivos.setEnabled(false);
         BaseBD.close();
@@ -394,7 +415,7 @@ public class TablaClientes extends javax.swing.JPanel {
         //datos configurados
         tblCliente.setModel(new javax.swing.table.DefaultTableModel(matriz, new String[]{"ID Vendedor", "Usuario", "Contraseña", "Cedula", "Nombres", "Apellidos", "Direccion", "Correo Electronico", "Correo recuperacion", "Celular", "Fecha Nacimiento",
             "Estado Civil", "Genero", "Ciudad", "Foto", "Estado"}));
-        tblCliente.getColumnModel().getColumn(15).setCellRenderer(new ImageRenderer());
+        tblCliente.getColumnModel().getColumn(14).setCellRenderer(new ImageRenderer());
         tblCliente.setRowHeight(100);
         tblCliente.setEnabled(false);
         BaseBD.close();
