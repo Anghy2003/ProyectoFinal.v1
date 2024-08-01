@@ -31,7 +31,7 @@ public class PanelTituloCitas extends javax.swing.JPanel {
         lbltituloFacturacion.setFont(new java.awt.Font("Roboto Black", 0, 30)); // NOI18N
         lbltituloFacturacion.setForeground(new java.awt.Color(0, 53, 79));
         lbltituloFacturacion.setText("Citas");
-        jPanel1.add(lbltituloFacturacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 20, 322, 30));
+        jPanel1.add(lbltituloFacturacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 50, 322, 30));
 
         add(jPanel1, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents

@@ -234,12 +234,12 @@ public class TablaFactura extends javax.swing.JPanel {
     }//GEN-LAST:event_btnbuscarActionPerformed
 
     private void btnVizualizar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVizualizar1ActionPerformed
-      // Obtener la fila seleccionada en la tabla de facturas después del filtrado
+      // Obtiene la linea despues de la filtracion
     int selectedRow = tblFacturas.getSelectedRow();
     if (selectedRow != -1) {
         String codigoFactura = tblFacturas.getValueAt(selectedRow, 0).toString();
         
-        // Llamar al método para abrir la interfaz de la factura con los datos cargados
+        //abrir la interfaz con los datos cargados
         abrirFacturaConDatos(codigoFactura);
     } else {
         JOptionPane.showMessageDialog(this, "No se encontró ninguna factura con ese código.");

@@ -345,7 +345,7 @@ private void mostrarTablaProductos() {
         ));
 
         tblCatalgoProductos.getColumnModel().getColumn(2).setCellRenderer(new ImageRenderer());
-        tblCatalgoProductos.setRowHeight(100);
+        tblCatalgoProductos.setRowHeight(80);
     } else {
         JOptionPane.showMessageDialog(this, "Producto no encontrado.");
     }
