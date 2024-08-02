@@ -1,19 +1,40 @@
 package Models;
+
+import Conexion.Conexion_db;
+import com.db4o.ObjectContainer;
+import com.db4o.ObjectSet;
+
 /**
  *
  * @author aberr
  */
 public class ModeloVehiculo {
 
+    private String codigoModelo;
     private String Nombre_modelo;
     private String id_Marca;
 
     public ModeloVehiculo() {
     }
 
-    public ModeloVehiculo(String Nombre_modelo, String id_Marca) {
+    public ModeloVehiculo(String codigoModelo, String Nombre_modelo, String id_Marca) {
+        this.codigoModelo = codigoModelo;
         this.Nombre_modelo = Nombre_modelo;
         this.id_Marca = id_Marca;
+    }
+
+    /**
+     * @return the codigoModelo
+     */
+    public String getCodigoModelo() {
+        return codigoModelo;
+    }
+
+    /**
+     * @param codigoModelo the codigoModelo to set
+     */
+    public void setCodigoModelo(String codigoModelo) {
+        this.codigoModelo = codigoModelo;
     }
 
     /**
@@ -42,6 +63,18 @@ public class ModeloVehiculo {
      */
     public void setId_Marca(String id_Marca) {
         this.id_Marca = id_Marca;
+    }
+    
+    //verificar Modelos
+    public static int verificarNumeroModelos() {
+        // ESTABLECER CONEXION CON LA BASE DE DATOS
+        ObjectContainer BaseBD = Conexion_db.ConectarBD();
+        ModeloVehiculo ModeloBusca = new ModeloVehiculo();
+        ObjectSet resultado = BaseBD.get(ModeloBusca);
+        int coincidencias= resultado.size();
+        //Cerrar BD
+        BaseBD.close();
+        return coincidencias;
     }
     
     
