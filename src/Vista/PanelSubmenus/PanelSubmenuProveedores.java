@@ -1,6 +1,11 @@
 
 package Vista.PanelSubmenus;
 
+import Vista.Menu.VistaMenu;
+import Vista.Tables.TablaCiudad;
+import java.awt.BorderLayout;
+import javax.swing.JPanel;
+
 public class PanelSubmenuProveedores extends javax.swing.JPanel {
 
     /**
@@ -34,6 +39,11 @@ public class PanelSubmenuProveedores extends javax.swing.JPanel {
         btnCiudadesMenu.setFont(new java.awt.Font("Roboto Medium", 1, 12)); // NOI18N
         btnCiudadesMenu.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/ciudad-inteligente (3).png"))); // NOI18N
         btnCiudadesMenu.setText("CIUDADES");
+        btnCiudadesMenu.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnCiudadesMenuMouseClicked(evt);
+            }
+        });
         btnCiudadesMenu.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCiudadesMenuActionPerformed(evt);
@@ -74,6 +84,19 @@ public class PanelSubmenuProveedores extends javax.swing.JPanel {
     private void btnCiudadesMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCiudadesMenuActionPerformed
         
     }//GEN-LAST:event_btnCiudadesMenuActionPerformed
+
+    private void ShowpanelCruds(JPanel p) {
+        p.setSize(870, 630);
+        p.setLocation(0, 0);
+        VistaMenu.PanelPrincipal.removeAll();
+        VistaMenu.PanelPrincipal.add(p, BorderLayout.CENTER);
+        VistaMenu.PanelPrincipal.revalidate();
+        VistaMenu.PanelPrincipal.repaint();
+    }
+    private void btnCiudadesMenuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCiudadesMenuMouseClicked
+        TablaCiudad city = new TablaCiudad();
+        ShowpanelCruds(city);
+    }//GEN-LAST:event_btnCiudadesMenuMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

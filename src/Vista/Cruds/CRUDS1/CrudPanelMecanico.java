@@ -355,6 +355,15 @@ public class CrudPanelMecanico extends javax.swing.JPanel {
                     if (valido = txtApellidosMeca.getText().toUpperCase().matches("^[a-zA-Z]+(?:\\s[a-zA-Z]+)?$")) {
                         if (valido = txtCorreoMeca.getText().matches("^[\\w.-]+@[\\w.-]+\\.[a-zA-Z]{2,6}$")) {
                             if (valido = txtCelularMeca.getText().matches("^09\\d{8}$")) {
+                                
+                                if (imagenMeca == null) {
+                                try {
+                                    File imagenPredeterminada = new File("C:\\BasedeDatos\\defectousuario\\imagenDefecto.jpg");
+                                    imagenMeca = leerImagen(imagenPredeterminada);
+                                } catch (IOException e) {
+                                    JOptionPane.showMessageDialog(null, "Error al cargar la imagen predeterminada: " + e.getMessage());
+                                }
+                            }
 
                                 GuardarMecanico(txtTituloMeca.getText().toUpperCase(), Double.parseDouble(txtSueldoMeca.getText()), Mecanico.Estado.ACTIVO,(String)cbxCiudadMeca.getSelectedItem(),imagenMeca, txtCedulaMeca.getText(), txtNombresMeca.getText().toUpperCase(),
                                         txtApellidosMeca.getText().toUpperCase(), txtDireccionMeca.getText().toUpperCase(), txtCorreoMeca.getText(), txtCelularMeca.getText(),

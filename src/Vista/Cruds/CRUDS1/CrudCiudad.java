@@ -33,38 +33,38 @@ public class CrudCiudad extends javax.swing.JPanel {
         txtIdCiudad.setEnabled(false);
     }
 
-    //guardar la ciudad
-    public void guardarCiudad( String ciudad, int poblacion, String region, byte[] imagen) {
+    // Guardar la ciudad
+    public void guardarCiudad(String ciudad, int poblacion, String region, byte[] imagen) {
 
         ObjectContainer BaseBD = Conexion_db.ConectarBD();
 
         String siguienteID = obtenerProximoIdCiudad(BaseBD);
 
-        Ciudad city = new Ciudad(  ciudad, poblacion, region, imagen);
-
+        Ciudad city = new Ciudad(ciudad, poblacion, region, imagen);
         city.setIdCiudad(siguienteID);
 
-        BaseBD.close();
-
+        // Verificar si la ciudad ya existe
         if (VerificarCiudadRepetida(ciudad) == 0) {
-            //crear el objeto
 
-            BaseBD = Conexion_db.ConectarBD();
+// Crear el objeto
             BaseBD.set(city);
-            BaseBD.close();
+            JOptionPane.showMessageDialog(this, "Ciudad guardada exitosamente");
+
         } else {
             JOptionPane.showMessageDialog(this, "Ciudad ya ingresada, agregue otra ciudad");
         }
+
+        BaseBD.close();
     }
 
-    //Verificar si existe una ciudad
+    // Verificar si existe una ciudad
     public final int VerificarCiudadRepetida(String ciudad) {
 
         ObjectContainer BaseBD = Conexion_db.ConectarBD();
-        Query admin = BaseBD.query();
-        admin.constrain(Ciudad.class);
-        admin.descend("ciudad").constrain(txtNombreCiudad.getText());
-        ObjectSet<Ciudad> resultado = admin.execute();
+        Query query = BaseBD.query();
+        query.constrain(Ciudad.class);
+        query.descend("ciudad").constrain(ciudad);
+        ObjectSet<Ciudad> resultado = query.execute();
 
         int coincidencias = resultado.size();
 
@@ -219,16 +219,17 @@ public class CrudCiudad extends javax.swing.JPanel {
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         cambiartabla();
     }//GEN-LAST:event_btnCancelarActionPerformed
-     public void cambiartabla() {
+    public void cambiartabla() {
         TablaCiudad tblCiu = new TablaCiudad();
         ShowpanelCruds(tblCiu);
     }
-    
+
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
 
         boolean usuarioRepetido = false;
+        
 
-        if (VerificarCiudadRepetida("ciudad") == 0) {
+        if (VerificarCiudadRepetida("ciudad") != 0) {
             JOptionPane.showMessageDialog(null, "Ciudad ya registrada");
             usuarioRepetido = true;
         }
@@ -241,13 +242,12 @@ public class CrudCiudad extends javax.swing.JPanel {
                 if (valido = txtPoblacionCiudad.getText().toUpperCase().matches("\\d+")) {
                     if (valido = txtRegion.getText().matches("^[a-zA-Z]+(?:\\s[a-zA-Z]+)?$")) {
 
-                        guardarCiudad( txtNombreCiudad.getText().toUpperCase(),
+                        guardarCiudad(txtNombreCiudad.getText().toUpperCase(),
                                 Integer.parseInt(txtPoblacionCiudad.getText()),
                                 txtRegion.getText().toUpperCase(), imagenCiudad);
-                        
+
                         JOptionPane.showMessageDialog(null, "Ciudad Guardada");
                         cambiartabla();
-                        
 
                     } else {
                         JOptionPane.showMessageDialog(null, "Ingrese una Region Correcta");
@@ -260,7 +260,7 @@ public class CrudCiudad extends javax.swing.JPanel {
                 JOptionPane.showMessageDialog(null, "Ingrese una Ciudad Correcta");
             }
         }
-
+       
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void btnSeleccionarImgenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSeleccionarImgenActionPerformed
@@ -299,7 +299,7 @@ public class CrudCiudad extends javax.swing.JPanel {
             return baos.toByteArray();
         }
     }
-    
+
     private void ShowpanelCruds(JPanel p) {
         p.setSize(870, 630);
         p.setLocation(0, 0);

@@ -380,6 +380,15 @@ public class CrudPanelVendedor extends javax.swing.JPanel {
 
                         if (valido = txtCorreoVende.getText().matches("^[\\w.-]+@[\\w.-]+\\.[a-zA-Z]{2,6}$")) {
                             if (valido = txtCelularVende.getText().matches("^09\\d{8}$")) {
+                                
+                                if (imagenVende == null) {
+                                try {
+                                    File imagenPredeterminada = new File("C:\\BasedeDatos\\defectousuario\\imagenDefecto.jpg");
+                                    imagenVende = leerImagen(imagenPredeterminada);
+                                } catch (IOException e) {
+                                    JOptionPane.showMessageDialog(null, "Error al cargar la imagen predeterminada: " + e.getMessage());
+                                }
+                            }
 
                                 GuardarVendedor(Double.parseDouble(txtSueldoVende.getText()), Double.parseDouble(txtComicionesVende.getText()), Integer.parseInt(txtNumeroVentasVende.getText()), Estado.ACTIVO,
                                         (String)cbxCiudadVende.getSelectedItem(),imagenVende,txtCedulaVende.getText(), txtNombresVende.getText().toUpperCase(), txtApellidosVende.getText().toUpperCase(), txtDireccionVende.getText().toUpperCase(),
