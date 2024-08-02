@@ -376,7 +376,7 @@ public class TablaProductos extends javax.swing.JPanel {
 
     TablProductos1.getColumnModel().getColumn(9).setCellRenderer(new ImageRenderer());
     TablProductos1.setRowHeight(50);
-
+    TablProductos1.setEnabled(false);
     BaseBD.close();
 }
     public static ObjectSet verificarProductosActivos() {
