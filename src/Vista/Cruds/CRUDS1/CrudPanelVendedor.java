@@ -1,6 +1,7 @@
 package Vista.Cruds.CRUDS1;
 
 import Conexion.Conexion_db;
+import Models.Ciudad;
 import Models.Vendedor;
 import Models.Vendedor.Estado;
 import Vista.Menu.VistaMenu;
@@ -83,9 +84,24 @@ public class CrudPanelVendedor extends javax.swing.JPanel {
         // El próximo ID es el máximo + 1
         return maxID + 1;
     }
+    
+    private void mostrarComboCiudad() {
+    ObjectContainer BaseBD = Conexion_db.ConectarBD();
+    
+    Query ciudadbox = BaseBD.query();
+    ciudadbox.constrain(Ciudad.class);
+    ObjectSet<Ciudad> resultado = ciudadbox.execute();
+    
+    for (Ciudad ciudad : resultado) {
+        cbxCiudadVende.addItem(ciudad.getCiudad());
+    }
+    
+    BaseBD.close();
+}
 
     public CrudPanelVendedor() {
         initComponents();
+        mostrarComboCiudad();
     }
 
     /**

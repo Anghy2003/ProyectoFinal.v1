@@ -1,6 +1,7 @@
 package Vista.Cruds.CRUDS1;
 
 import Conexion.Conexion_db;
+import Models.Ciudad;
 import Models.Mecanico;
 import Models.Mecanico.Estado;
 import Vista.Menu.VistaMenu;
@@ -84,8 +85,22 @@ public class CrudPanelMecanico extends javax.swing.JPanel {
         return maxID + 1;
     }
 
+    private void mostrarComboCiudad() {
+    ObjectContainer BaseBD = Conexion_db.ConectarBD();
+    
+    Query ciudadbox = BaseBD.query();
+    ciudadbox.constrain(Ciudad.class);
+    ObjectSet<Ciudad> resultado = ciudadbox.execute();
+    
+    for (Ciudad ciudad : resultado) {
+        cbxCiudadMeca.addItem(ciudad.getCiudad());
+    }
+    
+    BaseBD.close();
+}
     public CrudPanelMecanico() {
         initComponents();
+        mostrarComboCiudad();
 
     }
 

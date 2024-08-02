@@ -2,6 +2,7 @@ package Vista.Cruds.CRUDS1;
 
 import Conexion.Conexion_db;
 import Models.Administrador;
+import Models.Ciudad;
 import Vista.Menu.VistaMenu;
 import Vista.Tables.TablaAdministradores;
 import com.db4o.ObjectContainer;
@@ -80,9 +81,25 @@ public class CrudPanelAdministrador extends javax.swing.JPanel {
         // El próximo ID es el máximo + 1
         return maxID + 1;
     }
+    
+    private void mostrarComboCiudad() {
+    ObjectContainer BaseBD = Conexion_db.ConectarBD();
+    
+    Query ciudadbox = BaseBD.query();
+    ciudadbox.constrain(Ciudad.class);
+    ObjectSet<Ciudad> resultado = ciudadbox.execute();
+    
+    for (Ciudad ciudad : resultado) {
+        cbxCiudadAdmi.addItem(ciudad.getCiudad());
+    }
+    
+    BaseBD.close();
+}
 
     public CrudPanelAdministrador() {
         initComponents();
+        
+         mostrarComboCiudad(); 
     }
 
     /**

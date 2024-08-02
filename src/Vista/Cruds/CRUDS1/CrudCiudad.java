@@ -41,20 +41,22 @@ public class CrudCiudad extends javax.swing.JPanel {
         String siguienteID = obtenerProximoIdCiudad(BaseBD);
 
         Ciudad city = new Ciudad(ciudad, poblacion, region, imagen);
+        
         city.setIdCiudad(siguienteID);
-
+        
+        BaseBD.close();
         // Verificar si la ciudad ya existe
         if (VerificarCiudadRepetida(ciudad) == 0) {
 
 // Crear el objeto
+            BaseBD = Conexion_db.ConectarBD();
             BaseBD.set(city);
+            BaseBD.close();
             JOptionPane.showMessageDialog(this, "Ciudad guardada exitosamente");
 
         } else {
             JOptionPane.showMessageDialog(this, "Ciudad ya ingresada, agregue otra ciudad");
         }
-
-        BaseBD.close();
     }
 
     // Verificar si existe una ciudad
@@ -81,7 +83,7 @@ public class CrudCiudad extends javax.swing.JPanel {
         while (result.hasNext()) {
             Ciudad producto = result.next();
             String codigocity = producto.getIdCiudad();
-            if (codigocity != null && codigocity.startsWith("City")) {
+            if (codigocity != null && codigocity.startsWith("CITY")) {
                 int id = Integer.parseInt(codigocity.substring(4)); // Extraer la parte numérica del código
                 if (id > auto) {
                     auto = id;
@@ -91,7 +93,7 @@ public class CrudCiudad extends javax.swing.JPanel {
         // El próximo ID es el máximo + 1
         int siguienteID = auto + 1;
         // Retornar el nuevo código concatenado con "PRO"
-        return "City" + siguienteID;
+        return "CITY" + siguienteID;
     }
 
     @SuppressWarnings("unchecked")
@@ -227,7 +229,6 @@ public class CrudCiudad extends javax.swing.JPanel {
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
 
         boolean usuarioRepetido = false;
-        
 
         if (VerificarCiudadRepetida("ciudad") != 0) {
             JOptionPane.showMessageDialog(null, "Ciudad ya registrada");
@@ -246,7 +247,7 @@ public class CrudCiudad extends javax.swing.JPanel {
                                 Integer.parseInt(txtPoblacionCiudad.getText()),
                                 txtRegion.getText().toUpperCase(), imagenCiudad);
 
-                        JOptionPane.showMessageDialog(null, "Ciudad Guardada");
+                        
                         cambiartabla();
 
                     } else {
@@ -260,7 +261,7 @@ public class CrudCiudad extends javax.swing.JPanel {
                 JOptionPane.showMessageDialog(null, "Ingrese una Ciudad Correcta");
             }
         }
-       
+
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void btnSeleccionarImgenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSeleccionarImgenActionPerformed

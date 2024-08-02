@@ -2,6 +2,7 @@
 package Vista.Cruds.CRUDS1;
 
 import Conexion.Conexion_db;
+import Models.Ciudad;
 import Models.Mecanico;
 import Vista.Menu.VistaMenu;
 import Vista.Tables.TablaMecanicos;
@@ -40,11 +41,25 @@ public class CrudPanelMecanico2 extends javax.swing.JPanel {
             return baos.toByteArray();
         }
     }
-
+    
+     private void mostrarComboCiudad() {
+    ObjectContainer BaseBD = Conexion_db.ConectarBD();
+    
+    Query ciudadbox = BaseBD.query();
+    ciudadbox.constrain(Ciudad.class);
+    ObjectSet<Ciudad> resultado = ciudadbox.execute();
+    
+    for (Ciudad ciudad : resultado) {
+        cbxCiudadMeca.addItem(ciudad.getCiudad());
+    }
+    
+    BaseBD.close();
+}
     public CrudPanelMecanico2(String receivedString) {
         this.BuscarMecanico = receivedString;
         initComponents();
         Mecanicobuscar();
+        mostrarComboCiudad();
     }
 
     /**
