@@ -621,10 +621,14 @@ public class TablaMarcasVehiculo extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(null, "No dejar campos en blanco");
         } else {
             guardarModelo(txtModeloRegistrar.getText().toUpperCase().trim(), (String) cmbMarcas.getSelectedItem());
-            if (!modeloGuadrado) {
+            if (modeloGuadrado) {
                 mostrarDatosMarca();
-                JOptionPane.showMessageDialog(this, "Modelo Guardado");
+                mostrarDatosModelo();
                 jdlCrearModelo.dispose();
+                JOptionPane.showMessageDialog(this, "Modelo Guardado");
+            }else{
+                jdlCrearModelo.dispose();
+                JOptionPane.showMessageDialog(this, "No guardado, ya existe en la BD");
             }
 
         }
@@ -670,15 +674,16 @@ public class TablaMarcasVehiculo extends javax.swing.JPanel {
         query.constrain(ModeloVehiculo.class);
         ObjectSet<ModeloVehiculo> resultado = query.execute();
         //Creo una matriz
-        String matriz[][] = new String[resultado.size()][2];
+        String matriz[][] = new String[resultado.size()][3];
         int i = 0;
         for (ModeloVehiculo miModelo : resultado) {//iteramos en cada elemento de "resultado"
-            matriz[i][0] = miModelo.getId_Marca();
-            matriz[i][1] = miModelo.getNombre_modelo();
+            matriz[i][0] = miModelo.getCodigoModelo();
+            matriz[i][1] = miModelo.getId_Marca();
+            matriz[i][2] = miModelo.getNombre_modelo();
             i++;
         }
         // datos configurados
-        tblModelosLista.setModel(new javax.swing.table.DefaultTableModel(matriz, new String[]{"MARCA:", "MODELO"}));
+        tblModelosLista.setModel(new javax.swing.table.DefaultTableModel(matriz, new String[]{"CODIGO","MARCA:", "MODELO"}));
 
         // Centrar contenido de celdas
         DefaultTableCellRenderer centrar = new DefaultTableCellRenderer();

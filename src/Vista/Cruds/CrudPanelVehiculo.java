@@ -623,14 +623,15 @@ public class CrudPanelVehiculo extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(null, "No dejar campos en blanco");
         } else {    
             guardarModelo(txtModeloRegistrar.getText().toUpperCase().trim(), (String) cmbMarcas.getSelectedItem());
-            if (!modeloGuadrado) {
+            if (modeloGuadrado) {
                 JOptionPane.showMessageDialog(this, "Modelo Guardado");
             cmbMarcaRegistroVehiculo.setSelectedItem((String)cmbMarcas.getSelectedItem());
             cmbModeloRegistroVehiculo1.setSelectedItem(txtModeloRegistrar.getText().toUpperCase().trim());
             jdlCrearModelo.dispose();
             }
-            
         }
+            
+         
     }//GEN-LAST:event_btnGuardarModeloMouseClicked
 
     private void btnGuardarModeloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarModeloActionPerformed
@@ -847,19 +848,21 @@ public class CrudPanelVehiculo extends javax.swing.JPanel {
         BaseBD.close();
         return coincidencias;
     }
+    
     public static Boolean modeloGuadrado=false;
     //guardar modelo
     public static void guardarModelo(String Nombre_modelo, String Nombre_Marca) {
         modeloGuadrado=false;
+        int K=ModeloVehiculo.verificarNumeroModelos()+1;//verificamos el numero de modelos para autoenumerar al guardar
         // ESTABLECER CONEXION CON LA BASE DE DATOS
         ObjectContainer BaseBD = Conexion_db.ConectarBD();
 
-        ModeloVehiculo Modelovehi1 = new ModeloVehiculo(Nombre_modelo, Nombre_Marca);
+        ModeloVehiculo Modelovehi1 = new ModeloVehiculo("MODELO"+K,Nombre_modelo, Nombre_Marca);
         //Cerrar BD (antes de  verificar usuario que abre nuevamente la BD)
         BaseBD.close();
         
         if (verificarMarcaGuardar(Nombre_Marca) != 0) {//debe existir una coincidencia de marca 
-            if (verificarModeloGuardar(Nombre_modelo) == 0) {//no debe existir el modelo
+            if (verificarModeloGuardar(Nombre_modelo,Nombre_Marca) == 0) {//no debe existir el modelo para esa marca
                 //volvemos a abrir para guardar 
                 BaseBD = Conexion_db.ConectarBD();
                 BaseBD.set(Modelovehi1);
@@ -870,14 +873,14 @@ public class CrudPanelVehiculo extends javax.swing.JPanel {
                 System.out.println("Modelo de Vehiculo ya existe en la BD");
             }
         } else {
-            System.out.println("Marca de Vehiculo ya existe en la BD");
+            System.out.println("Marca de Vehiculo con esa marca ya existe en la BD");
         }
     }
     //verificar Modelo
-    public static int verificarModeloGuardar(String Nombre_modelo) {
+    public static int verificarModeloGuardar(String Nombre_modelo, String Nombre_Marca) {
         // ESTABLECER CONEXION CON LA BASE DE DATOS
         ObjectContainer BaseBD = Conexion_db.ConectarBD();
-        ModeloVehiculo ModelVehiculoBusca = new ModeloVehiculo(Nombre_modelo,null);
+        ModeloVehiculo ModelVehiculoBusca = new ModeloVehiculo(null,Nombre_modelo,Nombre_Marca);
         ObjectSet resultado = BaseBD.get(ModelVehiculoBusca);
         int coincidencias= resultado.size();
         //Cerrar BD

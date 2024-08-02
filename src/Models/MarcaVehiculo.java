@@ -57,5 +57,4 @@ public class MarcaVehiculo {
         BaseBD.close();
         return coincidencias;
     }
-    
 }

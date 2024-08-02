@@ -73,7 +73,10 @@ public class CatalogoProductos extends javax.swing.JPanel {
         txtBuscarProductos = new rojeru_san.RSMTextFull();
         btnBuscar = new rsbuttongradiente.RSButtonGradiente();
 
+        DiaPro.setUndecorated(true);
+
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel3.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.blue, java.awt.Color.blue, java.awt.Color.blue, java.awt.Color.blue));
         jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel2.setFont(new java.awt.Font("Roboto Black", 0, 30)); // NOI18N
@@ -242,7 +245,7 @@ public class CatalogoProductos extends javax.swing.JPanel {
         String nombre = txtBuscarProductos.getText().trim();
         buscarProductoPorNombre(nombre);
     }//GEN-LAST:event_btnBuscarActionPerformed
-private void mostrarTablaProductos() {
+    private void mostrarTablaProductos() {
     ObjectContainer BaseBD = Conexion_db.ConectarBD();
     Producto producto = new Producto(null, null, null, null, 0, 0, 0, null, null, null, null);
     ObjectSet<Producto> resul = BaseBD.get(producto);
@@ -271,7 +274,10 @@ private void mostrarTablaProductos() {
             matriz,
             new String[]{
                 "Código Producto", "Nombre Producto", "Descripción", "Precio", "Imagen"
+            
             }
+            
+            
     ));
 
     // Columna de imagenes

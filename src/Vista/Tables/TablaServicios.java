@@ -279,7 +279,7 @@ public class TablaServicios extends javax.swing.JPanel {
 
     tblServicios.getColumnModel().getColumn(6).setCellRenderer(new ImageRenderer());
     tblServicios.setRowHeight(100);
-
+    tblServicios.setEnabled(false);
     BaseBD.close();
 }
 
@@ -363,6 +363,7 @@ private void mostrarDatosInactivos() {
 
         matriz[i][7] = servicio.getEstado().toString();
         i++;
+        
     }
 
     tblserInactivo.setModel(new javax.swing.table.DefaultTableModel(
