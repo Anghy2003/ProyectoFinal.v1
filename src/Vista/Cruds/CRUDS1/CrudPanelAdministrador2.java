@@ -2,6 +2,7 @@ package Vista.Cruds.CRUDS1;
 
 import Conexion.Conexion_db;
 import Models.Administrador;
+import Models.Ciudad;
 import Vista.Menu.VistaMenu;
 import Vista.Tables.TablaAdministradores;
 import com.db4o.ObjectContainer;
@@ -30,6 +31,7 @@ public class CrudPanelAdministrador2 extends javax.swing.JPanel {
         this.BuscarAdministrador = receivedString;
         initComponents();
         Administradorbuscar();
+        mostrarComboCiudad(); 
     }
 
     //tranforma la imagen a bytes
@@ -263,6 +265,20 @@ public class CrudPanelAdministrador2 extends javax.swing.JPanel {
         TablaAdministradores tbladmi = new TablaAdministradores();
         ShowpanelCruds(tbladmi);
     }
+        
+         private void mostrarComboCiudad() {
+    ObjectContainer BaseBD = Conexion_db.ConectarBD();
+    
+    Query ciudadbox = BaseBD.query();
+    ciudadbox.constrain(Ciudad.class);
+    ObjectSet<Ciudad> resultado = ciudadbox.execute();
+    
+    for (Ciudad ciudad : resultado) {
+        cbxCiudadAdmi.addItem(ciudad.getCiudad());
+    }
+    
+    BaseBD.close();
+}
         
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
 

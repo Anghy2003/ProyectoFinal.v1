@@ -843,12 +843,12 @@ public class BuscarPanelVehiculo extends javax.swing.JPanel {
         // ESTABLECER CONEXION CON LA BASE DE DATOS
         ObjectContainer BaseBD = Conexion_db.ConectarBD();
 
-        ModeloVehiculo Modelovehi1 = new ModeloVehiculo(Nombre_modelo, Nombre_Marca);
+        ModeloVehiculo Modelovehi1 = new ModeloVehiculo(null,Nombre_modelo, Nombre_Marca);//buscamos coincidencia de marca modelo
         //Cerrar BD (antes de  verificar usuario que abre nuevamente la BD)
         BaseBD.close();
         
         if (verificarMarcaGuardar(Nombre_Marca) != 0) {//debe existir una coincidencia de marca 
-            if (verificarModeloGuardar(Nombre_modelo) == 0) {//no debe existir el modelo
+            if (verificarModeloGuardar(Nombre_modelo,Nombre_Marca) == 0) {//no debe existir el modelo para esa marca
                 //volvemos a abrir para guardar 
                 BaseBD = Conexion_db.ConectarBD();
                 BaseBD.set(Modelovehi1);
@@ -863,10 +863,10 @@ public class BuscarPanelVehiculo extends javax.swing.JPanel {
         }
     }
     //verificar Modelo
-    public static int verificarModeloGuardar(String Nombre_modelo) {
+    public static int verificarModeloGuardar(String Nombre_modelo, String Nombre_Marca) {
         // ESTABLECER CONEXION CON LA BASE DE DATOS
         ObjectContainer BaseBD = Conexion_db.ConectarBD();
-        ModeloVehiculo ModelVehiculoBusca = new ModeloVehiculo(Nombre_modelo,null);
+        ModeloVehiculo ModelVehiculoBusca = new ModeloVehiculo(null,Nombre_modelo,Nombre_Marca);
         ObjectSet resultado = BaseBD.get(ModelVehiculoBusca);
         int coincidencias= resultado.size();
         //Cerrar BD
