@@ -82,7 +82,7 @@ public class PanelSubmenuProveedores extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCiudadesMenuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCiudadesMenuActionPerformed
-        
+
     }//GEN-LAST:event_btnCiudadesMenuActionPerformed
 
     private void ShowpanelCruds(JPanel p) {

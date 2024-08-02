@@ -1,6 +1,8 @@
 
 package Vista.PanelSubmenus;
 
+import Citas.CrudlistadosServicios;
+import Vista.Catálogo.CrudPanelServicios;
 import Vista.Menu.VistaMenu;
 import Vista.Tables.TablaCategoriaSer;
 import java.awt.BorderLayout;
@@ -108,11 +110,13 @@ public class PanelSubmenuServicios extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btngestionserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btngestionserActionPerformed
-       
+        CrudlistadosServicios serv = new CrudlistadosServicios();
+       ShowpanelCruds(serv);
     }//GEN-LAST:event_btngestionserActionPerformed
 
     private void btngestionser1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btngestionser1ActionPerformed
-       
+       CrudPanelServicios servcito = new CrudPanelServicios();
+       ShowpanelCruds(servcito);
     }//GEN-LAST:event_btngestionser1ActionPerformed
 
     private void btnCategoria1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCategoria1ActionPerformed

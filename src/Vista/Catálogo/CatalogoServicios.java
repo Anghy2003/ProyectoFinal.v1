@@ -33,6 +33,10 @@ public class CatalogoServicios extends javax.swing.JPanel {
         txtNombres.setEnabled(false);
         txtDescripcion.setEnabled(false);
         txtPrecio.setEnabled(false);
+        txtCodigoServicios.setEnabled(false);
+        txtNombres.setEnabled(false);
+        txtDescripcion.setEnabled(false);
+        txtPrecio.setEnabled(false);
 
          tblServicios.addMouseListener(new MouseAdapter() {
         public void mouseClicked(MouseEvent evt) {
@@ -56,13 +60,15 @@ public class CatalogoServicios extends javax.swing.JPanel {
         txtDescripcion = new rojeru_san.RSMTextFull();
         txtPrecio = new rojeru_san.RSMTextFull();
         lblImagen = new javax.swing.JLabel();
+        lblCodigooProducto = new javax.swing.JLabel();
+        txtCodigoServicios = new rojeru_san.RSMTextFull();
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblServicios = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
-        txtBuscarServicios = new rojeru_san.RSMTextFull();
         btnBuscar = new rsbuttongradiente.RSButtonGradiente();
+        txtBuscarServicios = new rojeru_san.RSMTextFull();
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
         jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -70,59 +76,82 @@ public class CatalogoServicios extends javax.swing.JPanel {
         jLabel2.setFont(new java.awt.Font("Roboto Black", 0, 30)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(0, 53, 79));
         jLabel2.setText("Servicio:");
-        jPanel3.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 330, 40));
+        jPanel3.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 0, 330, 40));
 
         jLabel4.setFont(new java.awt.Font("Roboto Medium", 1, 18)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(0, 53, 79));
         jLabel4.setText("Nombre:");
-        jPanel3.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 260, 100, 20));
+        jPanel3.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 90, 100, 20));
 
         txtNombres.setForeground(new java.awt.Color(0, 53, 79));
+        txtNombres.setBordeColorFocus(new java.awt.Color(255, 255, 255));
         txtNombres.setColorTransparente(true);
         txtNombres.setFont(new java.awt.Font("Roboto Light", 1, 14)); // NOI18N
         txtNombres.setPlaceholder("Escriba el nombre");
-        jPanel3.add(txtNombres, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 250, 280, 40));
+        jPanel3.add(txtNombres, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 80, 190, 40));
 
         lblPrecioProducto.setFont(new java.awt.Font("Roboto Medium", 1, 18)); // NOI18N
         lblPrecioProducto.setForeground(new java.awt.Color(0, 53, 79));
         lblPrecioProducto.setText("Precio Total:");
-        jPanel3.add(lblPrecioProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 350, -1, -1));
+        jPanel3.add(lblPrecioProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 170, -1, -1));
 
         lblDescripcion.setFont(new java.awt.Font("Roboto Medium", 1, 18)); // NOI18N
         lblDescripcion.setForeground(new java.awt.Color(0, 53, 79));
         lblDescripcion.setText("Descripción:");
-        jPanel3.add(lblDescripcion, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 310, 120, -1));
+        jPanel3.add(lblDescripcion, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 130, 120, -1));
 
         txtDescripcion.setForeground(new java.awt.Color(0, 53, 79));
+        txtDescripcion.setBordeColorFocus(new java.awt.Color(255, 255, 255));
         txtDescripcion.setColorTransparente(true);
         txtDescripcion.setFont(new java.awt.Font("Roboto Light", 1, 14)); // NOI18N
         txtDescripcion.setPlaceholder("Descripción");
-        jPanel3.add(txtDescripcion, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 290, 280, 40));
+        jPanel3.add(txtDescripcion, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 120, 190, 40));
 
         txtPrecio.setForeground(new java.awt.Color(0, 53, 79));
+        txtPrecio.setBordeColorFocus(new java.awt.Color(255, 255, 255));
         txtPrecio.setColorTransparente(true);
         txtPrecio.setFont(new java.awt.Font("Roboto Light", 1, 14)); // NOI18N
         txtPrecio.setPlaceholder("Escriba el precio");
-        jPanel3.add(txtPrecio, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 330, 280, 40));
+        txtPrecio.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtPrecioActionPerformed(evt);
+            }
+        });
+        jPanel3.add(txtPrecio, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 160, 190, 40));
 
         lblImagen.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
-        jPanel3.add(lblImagen, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 70, 180, 140));
+        jPanel3.add(lblImagen, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 50, 180, 140));
+
+        lblCodigooProducto.setFont(new java.awt.Font("Roboto Medium", 1, 18)); // NOI18N
+        lblCodigooProducto.setForeground(new java.awt.Color(0, 53, 79));
+        lblCodigooProducto.setText("Código:");
+        jPanel3.add(lblCodigooProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 60, -1, -1));
+
+        txtCodigoServicios.setForeground(new java.awt.Color(0, 0, 0));
+        txtCodigoServicios.setBordeColorFocus(new java.awt.Color(255, 255, 255));
+        txtCodigoServicios.setBotonColor(new java.awt.Color(0, 0, 0));
+        txtCodigoServicios.setColorTransparente(true);
+        txtCodigoServicios.setFont(new java.awt.Font("Roboto Light", 1, 14)); // NOI18N
+        txtCodigoServicios.setPlaceholder("Código");
+        jPanel3.add(txtCodigoServicios, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 50, 140, 40));
 
         javax.swing.GroupLayout jDialog1Layout = new javax.swing.GroupLayout(jDialog1.getContentPane());
         jDialog1.getContentPane().setLayout(jDialog1Layout);
         jDialog1Layout.setHorizontalGroup(
             jDialog1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 890, Short.MAX_VALUE)
+            .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 625, Short.MAX_VALUE)
         );
         jDialog1Layout.setVerticalGroup(
             jDialog1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, 642, Short.MAX_VALUE)
+            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, 457, Short.MAX_VALUE)
         );
 
-        jPanel1.setBackground(new java.awt.Color(0, 53, 79));
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        jPanel2.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel2.setBackground(new java.awt.Color(0, 53, 79));
+        jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         tblServicios.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -149,29 +178,25 @@ public class CatalogoServicios extends javax.swing.JPanel {
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(20, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 810, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 848, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 470, Short.MAX_VALUE)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 487, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(35, Short.MAX_VALUE))
         );
 
-        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 150, 840, 470));
+        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 150, 870, 530));
 
         jLabel1.setFont(new java.awt.Font("Roboto Medium", 1, 36)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setForeground(new java.awt.Color(0, 53, 79));
         jLabel1.setText("SERVICIOS DE LA  MECANICA ");
-        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 30, 570, 30));
-
-        txtBuscarServicios.setBackground(new java.awt.Color(0, 53, 79));
-        txtBuscarServicios.setForeground(new java.awt.Color(255, 255, 255));
-        txtBuscarServicios.setBordeColorFocus(new java.awt.Color(255, 255, 255));
-        txtBuscarServicios.setBotonColor(new java.awt.Color(255, 255, 255));
-        txtBuscarServicios.setPlaceholder("Nombre del Servicio");
-        jPanel1.add(txtBuscarServicios, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 80, 370, -1));
+        jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 20, 570, 30));
 
         btnBuscar.setBackground(new java.awt.Color(0, 51, 255));
         btnBuscar.setText("Buscar");
@@ -184,17 +209,26 @@ public class CatalogoServicios extends javax.swing.JPanel {
                 btnBuscarActionPerformed(evt);
             }
         });
-        jPanel1.add(btnBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 80, 80, -1));
+        jPanel1.add(btnBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 90, 120, -1));
+
+        txtBuscarServicios.setForeground(new java.awt.Color(0, 53, 79));
+        txtBuscarServicios.setBordeColorFocus(new java.awt.Color(109, 109, 109));
+        txtBuscarServicios.setBotonColor(new java.awt.Color(0, 53, 79));
+        txtBuscarServicios.setPlaceholder("Nombre del Servicio");
+        txtBuscarServicios.setSelectedTextColor(new java.awt.Color(0, 53, 79));
+        jPanel1.add(txtBuscarServicios, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 90, 310, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 890, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 658, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -202,6 +236,10 @@ public class CatalogoServicios extends javax.swing.JPanel {
      String nombre = txtBuscarServicios.getText().trim();
         buscarServicioPorNombre(nombre);
     }//GEN-LAST:event_btnBuscarActionPerformed
+
+    private void txtPrecioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPrecioActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtPrecioActionPerformed
 private void mostrarTablaServicios() {
     ObjectContainer BaseBD = Conexion_db.ConectarBD();
     Servicios servicio = new Servicios(null, null, null, 0.0, null, null, null, null);
@@ -295,15 +333,23 @@ private void tblServiciosMouseClicked(MouseEvent evt) {
         String nombre = tblServicios.getModel().getValueAt(selectedRow, 1).toString();
         String descripcion = tblServicios.getModel().getValueAt(selectedRow, 2).toString();
         String precio = tblServicios.getModel().getValueAt(selectedRow, 3).toString();
-        JLabel imageLabel = (JLabel) tblServicios.getModel().getValueAt(selectedRow, 4);
-
+        
+        // Verificar si el valor en la columna de imagen es un JLabel
+        Object imagenObj = tblServicios.getModel().getValueAt(selectedRow, 4);
+        if (imagenObj instanceof JLabel) {
+            JLabel imageLabel = (JLabel) imagenObj;
+            lblImagen.setIcon(imageLabel.getIcon());
+        } else {
+            lblImagen.setIcon(null); // En caso de que no haya imagen
+        }
+        txtCodigoServicios.setText(codigo);
         txtNombres.setText(nombre);
         txtDescripcion.setText(descripcion);
         txtPrecio.setText(precio);
 
-        lblImagen.setIcon(imageLabel.getIcon());
-
-        jDialog1.setVisible(true);
+        jDialog1.setVisible(true);        
+        jDialog1.setSize(543, 230);
+        jDialog1.setLocationRelativeTo(null); // centramos el diálogo en la pantalla
     }
 }
     
@@ -318,11 +364,13 @@ private void tblServiciosMouseClicked(MouseEvent evt) {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lblCodigooProducto;
     private javax.swing.JLabel lblDescripcion;
     private javax.swing.JLabel lblImagen;
     private javax.swing.JLabel lblPrecioProducto;
     private javax.swing.JTable tblServicios;
     private rojeru_san.RSMTextFull txtBuscarServicios;
+    private rojeru_san.RSMTextFull txtCodigoServicios;
     private rojeru_san.RSMTextFull txtDescripcion;
     private rojeru_san.RSMTextFull txtNombres;
     private rojeru_san.RSMTextFull txtPrecio;

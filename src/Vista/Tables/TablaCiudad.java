@@ -101,7 +101,7 @@ public class TablaCiudad extends javax.swing.JPanel {
         ));
         tblCity.setViewportView(tblCiudad);
 
-        jPanel2.add(tblCity, new org.netbeans.lib.awtextra.AbsoluteConstraints(6, 153, 890, 257));
+        jPanel2.add(tblCity, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 140, 890, 257));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);

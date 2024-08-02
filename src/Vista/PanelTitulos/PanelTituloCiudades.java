@@ -1,12 +1,13 @@
 
 package Vista.PanelTitulos;
 
-public class PanelTituloCatalogo extends javax.swing.JPanel {
+
+public class PanelTituloCiudades extends javax.swing.JPanel {
 
     /**
      * Creates new form PanelTituloVehiculo
      */
-    public PanelTituloCatalogo() {
+    public PanelTituloCiudades() {
         initComponents();
     }
 
@@ -20,17 +21,17 @@ public class PanelTituloCatalogo extends javax.swing.JPanel {
     private void initComponents() {
 
         jPanel1 = new javax.swing.JPanel();
-        lbltituloCatalgo = new javax.swing.JLabel();
+        lbltituloFacturacion = new javax.swing.JLabel();
 
         setLayout(new java.awt.BorderLayout());
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
-        lbltituloCatalgo.setFont(new java.awt.Font("Roboto Black", 0, 30)); // NOI18N
-        lbltituloCatalgo.setForeground(new java.awt.Color(0, 53, 79));
-        lbltituloCatalgo.setText("Catalogos");
-        jPanel1.add(lbltituloCatalgo, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, 322, 40));
+        lbltituloFacturacion.setFont(new java.awt.Font("Roboto Black", 0, 30)); // NOI18N
+        lbltituloFacturacion.setForeground(new java.awt.Color(0, 53, 79));
+        lbltituloFacturacion.setText("Ciudades");
+        jPanel1.add(lbltituloFacturacion, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 40, 322, 30));
 
         add(jPanel1, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
@@ -38,6 +39,6 @@ public class PanelTituloCatalogo extends javax.swing.JPanel {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JLabel lbltituloCatalgo;
+    private javax.swing.JLabel lbltituloFacturacion;
     // End of variables declaration//GEN-END:variables
 }

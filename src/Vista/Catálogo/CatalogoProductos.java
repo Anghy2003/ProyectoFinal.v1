@@ -10,9 +10,15 @@ import Conexion.ImageRenderer;
 import Models.Producto;
 import com.db4o.ObjectContainer;
 import com.db4o.ObjectSet;
+import com.db4o.query.Query;
 import java.awt.Image;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.TableColumn;
 
 
 /**
@@ -27,6 +33,15 @@ public class CatalogoProductos extends javax.swing.JPanel {
     public CatalogoProductos() {
         initComponents();
         mostrarTablaProductos();
+        txtCodigoProducto.setEnabled(false);
+        txtNombreProducto.setEnabled(false);
+        txtDescripcion.setEnabled(false);
+        txtPrecioProducto.setEnabled(false);
+         tblCatalgoProductos.addMouseListener(new MouseAdapter() {
+        public void mouseClicked(MouseEvent evt) {
+            tblCatalgoProductosMouseClicked(evt);
+        }
+    });
     }
 
     /**
@@ -38,19 +53,113 @@ public class CatalogoProductos extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        DiaPro = new javax.swing.JDialog();
+        jPanel3 = new javax.swing.JPanel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        txtNombreProducto = new rojeru_san.RSMTextFull();
+        lblPrecioProducto = new javax.swing.JLabel();
+        lblDescripcion = new javax.swing.JLabel();
+        txtDescripcion = new rojeru_san.RSMTextFull();
+        txtPrecioProducto = new rojeru_san.RSMTextFull();
+        lblImagen = new javax.swing.JLabel();
+        lblCodigooProducto = new javax.swing.JLabel();
+        txtCodigoProducto = new rojeru_san.RSMTextFull();
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblCatalgoProductos = new javax.swing.JTable();
         jLabel1 = new javax.swing.JLabel();
-        txtNombreProducto = new rojeru_san.RSMTextFull();
-        btnBuscarProducto = new rojeru_san.RSButtonRiple();
+        txtBuscarProductos = new rojeru_san.RSMTextFull();
+        btnBuscar = new rsbuttongradiente.RSButtonGradiente();
 
-        jPanel1.setBackground(new java.awt.Color(0, 53, 79));
+        jPanel3.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel2.setFont(new java.awt.Font("Roboto Black", 0, 30)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(0, 53, 79));
+        jLabel2.setText("Producto:");
+        jPanel3.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 10, 150, 40));
+
+        jLabel4.setFont(new java.awt.Font("Roboto Medium", 1, 18)); // NOI18N
+        jLabel4.setForeground(new java.awt.Color(0, 53, 79));
+        jLabel4.setText("Nombre:");
+        jPanel3.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 80, 100, 30));
+
+        txtNombreProducto.setForeground(new java.awt.Color(0, 53, 79));
+        txtNombreProducto.setBordeColorFocus(new java.awt.Color(255, 255, 255));
+        txtNombreProducto.setColorTransparente(true);
+        txtNombreProducto.setFont(new java.awt.Font("Roboto Light", 1, 14)); // NOI18N
+        txtNombreProducto.setPlaceholder("Escriba el nombre");
+        jPanel3.add(txtNombreProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 70, 130, 40));
+
+        lblPrecioProducto.setFont(new java.awt.Font("Roboto Medium", 1, 18)); // NOI18N
+        lblPrecioProducto.setForeground(new java.awt.Color(0, 53, 79));
+        lblPrecioProducto.setText("Precio:");
+        jPanel3.add(lblPrecioProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 110, -1, 40));
+
+        lblDescripcion.setFont(new java.awt.Font("Roboto Medium", 1, 18)); // NOI18N
+        lblDescripcion.setForeground(new java.awt.Color(0, 53, 79));
+        lblDescripcion.setText("Descripción:");
+        jPanel3.add(lblDescripcion, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 150, -1, 40));
+
+        txtDescripcion.setForeground(new java.awt.Color(0, 53, 79));
+        txtDescripcion.setBordeColorFocus(new java.awt.Color(255, 255, 255));
+        txtDescripcion.setColorTransparente(true);
+        txtDescripcion.setFont(new java.awt.Font("Roboto Light", 1, 14)); // NOI18N
+        txtDescripcion.setPlaceholder("Descripción");
+        jPanel3.add(txtDescripcion, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 150, 130, 40));
+
+        txtPrecioProducto.setForeground(new java.awt.Color(0, 53, 79));
+        txtPrecioProducto.setBordeColorFocus(new java.awt.Color(255, 255, 255));
+        txtPrecioProducto.setColorTransparente(true);
+        txtPrecioProducto.setFont(new java.awt.Font("Roboto Light", 1, 14)); // NOI18N
+        txtPrecioProducto.setPlaceholder("Escriba el precio");
+        jPanel3.add(txtPrecioProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 110, 130, 40));
+
+        lblImagen.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
+        jPanel3.add(lblImagen, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 40, 180, 140));
+
+        lblCodigooProducto.setFont(new java.awt.Font("Roboto Medium", 1, 18)); // NOI18N
+        lblCodigooProducto.setForeground(new java.awt.Color(0, 53, 79));
+        lblCodigooProducto.setText("Código:");
+        jPanel3.add(lblCodigooProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 50, -1, -1));
+
+        txtCodigoProducto.setForeground(new java.awt.Color(0, 0, 0));
+        txtCodigoProducto.setBordeColorFocus(new java.awt.Color(255, 255, 255));
+        txtCodigoProducto.setBotonColor(new java.awt.Color(0, 0, 0));
+        txtCodigoProducto.setColorTransparente(true);
+        txtCodigoProducto.setFont(new java.awt.Font("Roboto Light", 1, 14)); // NOI18N
+        txtCodigoProducto.setPlaceholder("Código");
+        jPanel3.add(txtCodigoProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 40, 120, 40));
+
+        javax.swing.GroupLayout DiaProLayout = new javax.swing.GroupLayout(DiaPro.getContentPane());
+        DiaPro.getContentPane().setLayout(DiaProLayout);
+        DiaProLayout.setHorizontalGroup(
+            DiaProLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 543, Short.MAX_VALUE)
+            .addGroup(DiaProLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(DiaProLayout.createSequentialGroup()
+                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 543, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 0, Short.MAX_VALUE)))
+        );
+        DiaProLayout.setVerticalGroup(
+            DiaProLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 230, Short.MAX_VALUE)
+            .addGroup(DiaProLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(DiaProLayout.createSequentialGroup()
+                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 0, Short.MAX_VALUE)))
+        );
+
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
 
+        tblCatalgoProductos.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        tblCatalgoProductos.setFont(new java.awt.Font("Roboto Black", 1, 18)); // NOI18N
         tblCatalgoProductos.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null},
@@ -61,94 +170,235 @@ public class CatalogoProductos extends javax.swing.JPanel {
             new String [] {
                 "Codigo ", "Nombre", "Imagen "
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        tblCatalgoProductos.setVerifyInputWhenFocusTarget(false);
         jScrollPane1.setViewportView(tblCatalgoProductos);
+        tblCatalgoProductos.getAccessibleContext().setAccessibleName("");
+        tblCatalgoProductos.getAccessibleContext().setAccessibleDescription("");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 760, Short.MAX_VALUE)
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 810, Short.MAX_VALUE)
+                .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 374, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 6, Short.MAX_VALUE))
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 460, Short.MAX_VALUE)
         );
 
-        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 140, 760, 380));
+        jPanel1.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 140, 830, 460));
 
+        jLabel1.setBackground(new java.awt.Color(255, 255, 255));
         jLabel1.setFont(new java.awt.Font("Roboto Medium", 1, 36)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(255, 255, 255));
+        jLabel1.setForeground(new java.awt.Color(0, 53, 79));
         jLabel1.setText("PRODUCTOS DE LA  MECANICA ");
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 20, 570, 30));
-        jPanel1.add(txtNombreProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 70, 360, -1));
 
-        btnBuscarProducto.setText("Buscar");
-        jPanel1.add(btnBuscarProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(590, 70, 80, -1));
+        txtBuscarProductos.setForeground(new java.awt.Color(0, 53, 79));
+        txtBuscarProductos.setBordeColorFocus(new java.awt.Color(109, 109, 109));
+        txtBuscarProductos.setBotonColor(new java.awt.Color(0, 53, 79));
+        txtBuscarProductos.setPlaceholder("Nombre del Producto");
+        txtBuscarProductos.setSelectedTextColor(new java.awt.Color(0, 53, 79));
+        jPanel1.add(txtBuscarProductos, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 80, 310, -1));
+
+        btnBuscar.setBackground(new java.awt.Color(0, 51, 255));
+        btnBuscar.setText("Buscar");
+        btnBuscar.setColorPrimario(new java.awt.Color(0, 102, 255));
+        btnBuscar.setColorPrimarioHover(new java.awt.Color(0, 51, 204));
+        btnBuscar.setColorSecundario(new java.awt.Color(0, 51, 204));
+        btnBuscar.setColorSecundarioHover(new java.awt.Color(0, 51, 204));
+        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarActionPerformed(evt);
+            }
+        });
+        jPanel1.add(btnBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 80, 130, -1));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 890, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 630, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+        String nombre = txtBuscarProductos.getText().trim();
+        buscarProductoPorNombre(nombre);
+    }//GEN-LAST:event_btnBuscarActionPerformed
 private void mostrarTablaProductos() {
-        ObjectContainer BaseBD = Conexion_db.ConectarBD();
-        Producto producto = new Producto(null, null, null, null, 0, 0, 0, null, null, null, null);
-        ObjectSet<Producto> resul = BaseBD.get(producto);
+    ObjectContainer BaseBD = Conexion_db.ConectarBD();
+    Producto producto = new Producto(null, null, null, null, 0, 0, 0, null, null, null, null);
+    ObjectSet<Producto> resul = BaseBD.get(producto);
 
-        Object matriz[][] = new Object[resul.size()][3]; // Cambiar a Object
+    Object matriz[][] = new Object[resul.size()][5]; // Cambiar a Object y añadir columnas para descripción y precio
 
-        for (int i = 0; i < resul.size(); i++) {
+    for (int i = 0; i < resul.size(); i++) {
+        Producto prod = resul.next();
+
+        matriz[i][0] = prod.getCodigo_Producto();
+        matriz[i][1] = prod.getNombre_Producto();
+        matriz[i][2] = prod.getDescripcion_Producto();
+        matriz[i][3] = prod.getPrecio_Producto();
+        
+        // Convertir imagen a un icono para mostrar en la tabla
+        byte[] imagen = prod.getImagen();
+        if (imagen != null) {
+            ImageIcon icono = new ImageIcon(new ImageIcon(imagen).getImage().getScaledInstance(180, 140, Image.SCALE_SMOOTH)); // Tamaño más grande
+            matriz[i][4] = new JLabel(icono); // Agregar imagen a la matriz
+        } else {
+            matriz[i][4] = new JLabel("No image"); // Placeholder para productos sin imagen
+        }
+    }
+
+    tblCatalgoProductos.setModel(new javax.swing.table.DefaultTableModel(
+            matriz,
+            new String[]{
+                "Código Producto", "Nombre Producto", "Descripción", "Precio", "Imagen"
+            }
+    ));
+
+    // Columna de imagenes
+    if (tblCatalgoProductos.getColumnModel().getColumnCount() > 4) {
+        tblCatalgoProductos.getColumnModel().getColumn(4).setCellRenderer(new ImageRenderer());
+    } else {
+        System.out.println("No hay suficientes columnas en la tabla para renderizar imágenes.");
+    }
+
+    // Ajusta el tamaño de las filas para mostrar imágenes más grandes
+    tblCatalgoProductos.setRowHeight(100);
+
+     // Crear un renderizador de celdas que centre el contenido
+     DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+     centerRenderer.setHorizontalAlignment(JLabel.CENTER);
+
+     // Aplicar el renderizador a cada columna menos la última
+     for (int i = 0; i < tblCatalgoProductos.getColumnCount() - 1; i++) {
+         TableColumn column = tblCatalgoProductos.getColumnModel().getColumn(i);
+         column.setCellRenderer(centerRenderer);
+     }
+
+    // Ocultar columnas de descripción y precio
+    tblCatalgoProductos.getColumnModel().getColumn(2).setMinWidth(0);
+    tblCatalgoProductos.getColumnModel().getColumn(2).setMaxWidth(0);
+    tblCatalgoProductos.getColumnModel().getColumn(2).setWidth(0);
+
+    tblCatalgoProductos.getColumnModel().getColumn(3).setMinWidth(0);
+    tblCatalgoProductos.getColumnModel().getColumn(3).setMaxWidth(0);
+    tblCatalgoProductos.getColumnModel().getColumn(3).setWidth(0);
+
+    BaseBD.close();
+}
+  private void buscarProductoPorNombre(String nombre) {
+    if (nombre.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Por favor, ingrese el nombre del producto.");
+        return;
+    } 
+    ObjectContainer BaseBD = Conexion_db.ConectarBD();
+    Query query = BaseBD.query();
+    query.constrain(Producto.class);
+    query.descend("nombre_Producto").constrain(nombre).like();
+    ObjectSet<Producto> resultados = query.execute();
+
+    ObjectSet<Producto> resul = BaseBD.get(new Producto(null, null, null, null, 0, 0, 0, null, null, null, null));
+
+    if (resultados.size() > 0) {
+        Producto productoEncontrado = resultados.get(0);
+        Object[][] matriz = new Object[resul.size()][3];
+        
+        matriz[0][0] = productoEncontrado.getCodigo_Producto();
+        matriz[0][1] = productoEncontrado.getNombre_Producto();
+        byte[] imagen = productoEncontrado.getImagen();
+        matriz[0][2] = (imagen != null) ? new JLabel(new ImageIcon(new ImageIcon(imagen).getImage().getScaledInstance(100, 80, Image.SCALE_SMOOTH))) : new JLabel("No image");
+
+        int i = 1;
+        while (resul.hasNext()) {
             Producto prod = resul.next();
-
-            matriz[i][0] = prod.getCodigo_Producto();
-            matriz[i][1] = prod.getNombre_Producto();
-            
-            // Convertir imagen a un icono para mostrar en la tabla
-            byte[] imagen = prod.getImagen();
-            if (imagen != null) {
-                ImageIcon icono = new ImageIcon(new ImageIcon(imagen).getImage().getScaledInstance(100, 100, Image.SCALE_SMOOTH)); // Tamaño más grande
-                matriz[i][2] = new JLabel(icono); // Agregar imagen a la matriz
-            } else {
-                matriz[i][2] = new JLabel("No image"); // Placeholder para productos sin imagen
+            if (!prod.getCodigo_Producto().equals(productoEncontrado.getCodigo_Producto())) {
+                matriz[i][0] = prod.getCodigo_Producto();
+                matriz[i][1] = prod.getNombre_Producto();
+                byte[] img = prod.getImagen();
+                matriz[i][2] = (img != null) ? new JLabel(new ImageIcon(new ImageIcon(img).getImage().getScaledInstance(100, 80, Image.SCALE_SMOOTH))) : new JLabel("No image");
+                i++;
             }
         }
 
         tblCatalgoProductos.setModel(new javax.swing.table.DefaultTableModel(
-                matriz,
-                new String[]{
-                    "Código Producto", "Nombre Producto", "Imagen"
-                }
+            matriz,
+            new String[]{"Código Producto", "Nombre Producto", "Imagen"}
         ));
 
-       
-        if (tblCatalgoProductos.getColumnModel().getColumnCount() > 2) {
-            tblCatalgoProductos.getColumnModel().getColumn(2).setCellRenderer(new ImageRenderer());
+        tblCatalgoProductos.getColumnModel().getColumn(2).setCellRenderer(new ImageRenderer());
+        tblCatalgoProductos.setRowHeight(80);
+    } else {
+        JOptionPane.showMessageDialog(this, "Producto no encontrado.");
+    }
+
+    BaseBD.close();
+}
+  private void tblCatalgoProductosMouseClicked(MouseEvent evt) {
+    int selectedRow = tblCatalgoProductos.getSelectedRow();
+    if (selectedRow != -1) {
+        String codigo = (String) tblCatalgoProductos.getValueAt(selectedRow, 0);
+        String nombre = (String) tblCatalgoProductos.getValueAt(selectedRow, 1);
+        String descripcion = (String) tblCatalgoProductos.getValueAt(selectedRow, 2);
+        String precio = tblCatalgoProductos.getValueAt(selectedRow, 3).toString(); // Convertir a string
+
+        // Verificar si el valor en la columna de imagen es un JLabel
+        Object imagenObj = tblCatalgoProductos.getValueAt(selectedRow, 4);
+        if (imagenObj instanceof JLabel) {
+            JLabel imageLabel = (JLabel) imagenObj;
+            lblImagen.setIcon(imageLabel.getIcon());
         } else {
-            System.out.println("No hay suficientes columnas en la tabla para renderizar imágenes.");
+            lblImagen.setIcon(null); // En caso de que no haya imagen
         }
 
-        // Ajustar el tamaño de las filas para mostrar imágenes más grandes
-        tblCatalgoProductos.setRowHeight(100);
+        txtCodigoProducto.setText(codigo);
+        txtNombreProducto.setText(nombre);
+        txtDescripcion.setText(descripcion);
+        txtPrecioProducto.setText(precio);
 
-        BaseBD.close();
+        DiaPro.setVisible(true);
+        DiaPro.setSize(543, 230);
+        DiaPro.setLocationRelativeTo(null); // centramos el diálogo en la pantalla
     }
-     
+
+}
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private rojeru_san.RSButtonRiple btnBuscarProducto;
+    private javax.swing.JDialog DiaPro;
+    private rsbuttongradiente.RSButtonGradiente btnBuscar;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lblCodigooProducto;
+    private javax.swing.JLabel lblDescripcion;
+    private javax.swing.JLabel lblImagen;
+    private javax.swing.JLabel lblPrecioProducto;
     private javax.swing.JTable tblCatalgoProductos;
+    private rojeru_san.RSMTextFull txtBuscarProductos;
+    private rojeru_san.RSMTextFull txtCodigoProducto;
+    private rojeru_san.RSMTextFull txtDescripcion;
     private rojeru_san.RSMTextFull txtNombreProducto;
+    private rojeru_san.RSMTextFull txtPrecioProducto;
     // End of variables declaration//GEN-END:variables
 }

@@ -1,6 +1,7 @@
 
 package Vista.PanelSubmenus;
 
+import Vista.Catálogo.CrudProductos;
 import Vista.Menu.VistaMenu;
 import Vista.Tables.TablaCategoria;
 import java.awt.BorderLayout;
@@ -81,7 +82,8 @@ public class PanelSubmenuProductos extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btngestionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btngestionActionPerformed
-     
+        CrudProductos pro= new CrudProductos();
+        MostrarpaneCruds(pro);
     }//GEN-LAST:event_btngestionActionPerformed
 
     private void btnCategoria1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCategoria1ActionPerformed
