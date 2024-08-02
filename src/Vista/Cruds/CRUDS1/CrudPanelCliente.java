@@ -2,6 +2,7 @@
 package Vista.Cruds.CRUDS1;
 
 import Conexion.Conexion_db;
+import Models.Ciudad;
 import Models.Cliente;
 import Models.Cliente.Estado;
 
@@ -90,11 +91,24 @@ public class CrudPanelCliente extends javax.swing.JPanel {
     // El próximo ID es el máximo + 1
     return maxID + 1;
 }
+    private void mostrarComboCiudad() {
+    ObjectContainer BaseBD = Conexion_db.ConectarBD();
     
+    Query ciudadbox = BaseBD.query();
+    ciudadbox.constrain(Ciudad.class);
+    ObjectSet<Ciudad> resultado = ciudadbox.execute();
+    
+    for (Ciudad ciudad : resultado) {
+        cbxCiudadCli.addItem(ciudad.getCiudad());
+    }
+    
+    BaseBD.close();
+}
     
     
     public CrudPanelCliente() {
         initComponents();
+        mostrarComboCiudad(); 
     }
 
 //    @SuppressWarnings("unchecked")
@@ -376,6 +390,15 @@ public class CrudPanelCliente extends javax.swing.JPanel {
                     if (valido = txtApellidosCli.getText().toUpperCase().matches("^[a-zA-Z]+(?:\\s[a-zA-Z]+)?$")) {
                         if (valido = txtCorreoCli.getText().matches("^[\\w.-]+@[\\w.-]+\\.[a-zA-Z]{2,6}$")) {
                             if (valido = txtCelularCli.getText().matches("^09\\d{8}$")) {
+                                
+                                if (imagenCli == null) {
+                                try {
+                                    File imagenPredeterminada = new File("C:\\BasedeDatos\\defectousuario\\imagenDefecto.jpg");
+                                    imagenCli = leerImagen(imagenPredeterminada);
+                                } catch (IOException e) {
+                                    JOptionPane.showMessageDialog(null, "Error al cargar la imagen predeterminada: " + e.getMessage());
+                                }
+                            }
 
                                 GuardarCliente(Estado.ACTIVO,(String)cbxCiudadCli.getSelectedItem(),imagenCli,txtCedulaCli.getText(), txtNombresCli.getText().toUpperCase().toUpperCase(), txtApellidosCli.getText().toUpperCase(),
                                     txtDireccionCli.getText().toUpperCase(), txtCorreoCli.getText(),txtCelularCli.getText(), (String) cbxGeneroCli.getSelectedItem(), fechaNacimiento, (String) cbxEstadoCivilCli.getSelectedItem(),

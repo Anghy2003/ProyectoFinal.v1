@@ -240,10 +240,10 @@ public final void Ciudadbuscar() {
 
         ObjectContainer BaseBD = Conexion_db.ConectarBD();
 
-        Query vendedor = BaseBD.query();
-        vendedor.constrain(Ciudad.class);
-        vendedor.descend("idCiudad").constrain(BuscarCiudad);
-        ObjectSet<Ciudad> resultado = vendedor.execute();
+        Query ciudades = BaseBD.query();
+        ciudades.constrain(Ciudad.class);
+        ciudades.descend("ciudad").constrain(BuscarCiudad.toUpperCase());
+        ObjectSet<Ciudad> resultado = ciudades.execute();
 
         for (Ciudad city1 : resultado) {
 

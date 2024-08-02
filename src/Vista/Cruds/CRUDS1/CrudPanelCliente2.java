@@ -1,6 +1,7 @@
 package Vista.Cruds.CRUDS1;
 
 import Conexion.Conexion_db;
+import Models.Ciudad;
 import Models.Cliente;
 import Vista.Menu.VistaMenu;
 import Vista.Tables.TablaClientes;
@@ -32,9 +33,23 @@ public class CrudPanelCliente2 extends javax.swing.JPanel {
         this.BuscarCliente = receivedString;
         initComponents();
         Clientebuscar();
+        mostrarComboCiudad();
 
     }
     
+    private void mostrarComboCiudad() {
+    ObjectContainer BaseBD = Conexion_db.ConectarBD();
+    
+    Query ciudadbox = BaseBD.query();
+    ciudadbox.constrain(Ciudad.class);
+    ObjectSet<Ciudad> resultado = ciudadbox.execute();
+    
+    for (Ciudad ciudad : resultado) {
+        cbxCiudadCli.addItem(ciudad.getCiudad());
+    }
+    
+    BaseBD.close();
+}
      //tranforma la imagen a bytes
     private byte[] leerImagen(File archivoImagen) throws IOException {
         try (ByteArrayOutputStream baos = new ByteArrayOutputStream(); FileInputStream fis = new FileInputStream(archivoImagen)) {

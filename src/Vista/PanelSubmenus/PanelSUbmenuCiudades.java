@@ -5,6 +5,11 @@
  */
 package Vista.PanelSubmenus;
 
+import Vista.Menu.VistaMenu;
+import Vista.Tables.TablaCiudad;
+import java.awt.BorderLayout;
+import javax.swing.JPanel;
+
 /**
  *
  * @author 59399
@@ -37,6 +42,11 @@ public class PanelSUbmenuCiudades extends javax.swing.JPanel {
         btnCatser.setFont(new java.awt.Font("Roboto Medium", 1, 12)); // NOI18N
         btnCatser.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/ciudad-inteligente (3).png"))); // NOI18N
         btnCatser.setText("GESTION DE  CIUDADES");
+        btnCatser.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCatserActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -61,6 +71,18 @@ public class PanelSUbmenuCiudades extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnCatserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCatserActionPerformed
+         TablaCiudad city = new TablaCiudad();
+        ShowpanelCruds(city);
+    }//GEN-LAST:event_btnCatserActionPerformed
+private void ShowpanelCruds(JPanel p) {
+        p.setSize(870, 630);
+        p.setLocation(0, 0);
+        VistaMenu.PanelPrincipal.removeAll();
+        VistaMenu.PanelPrincipal.add(p, BorderLayout.CENTER);
+        VistaMenu.PanelPrincipal.revalidate();
+        VistaMenu.PanelPrincipal.repaint();
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JToggleButton btnCatser;

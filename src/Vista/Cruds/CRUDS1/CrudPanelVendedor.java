@@ -1,6 +1,7 @@
 package Vista.Cruds.CRUDS1;
 
 import Conexion.Conexion_db;
+import Models.Ciudad;
 import Models.Vendedor;
 import Models.Vendedor.Estado;
 import Vista.Menu.VistaMenu;
@@ -83,9 +84,24 @@ public class CrudPanelVendedor extends javax.swing.JPanel {
         // El próximo ID es el máximo + 1
         return maxID + 1;
     }
+    
+    private void mostrarComboCiudad() {
+    ObjectContainer BaseBD = Conexion_db.ConectarBD();
+    
+    Query ciudadbox = BaseBD.query();
+    ciudadbox.constrain(Ciudad.class);
+    ObjectSet<Ciudad> resultado = ciudadbox.execute();
+    
+    for (Ciudad ciudad : resultado) {
+        cbxCiudadVende.addItem(ciudad.getCiudad());
+    }
+    
+    BaseBD.close();
+}
 
     public CrudPanelVendedor() {
         initComponents();
+        mostrarComboCiudad();
     }
 
     /**
@@ -380,6 +396,15 @@ public class CrudPanelVendedor extends javax.swing.JPanel {
 
                         if (valido = txtCorreoVende.getText().matches("^[\\w.-]+@[\\w.-]+\\.[a-zA-Z]{2,6}$")) {
                             if (valido = txtCelularVende.getText().matches("^09\\d{8}$")) {
+                                
+                                if (imagenVende == null) {
+                                try {
+                                    File imagenPredeterminada = new File("C:\\BasedeDatos\\defectousuario\\imagenDefecto.jpg");
+                                    imagenVende = leerImagen(imagenPredeterminada);
+                                } catch (IOException e) {
+                                    JOptionPane.showMessageDialog(null, "Error al cargar la imagen predeterminada: " + e.getMessage());
+                                }
+                            }
 
                                 GuardarVendedor(Double.parseDouble(txtSueldoVende.getText()), Double.parseDouble(txtComicionesVende.getText()), Integer.parseInt(txtNumeroVentasVende.getText()), Estado.ACTIVO,
                                         (String)cbxCiudadVende.getSelectedItem(),imagenVende,txtCedulaVende.getText(), txtNombresVende.getText().toUpperCase(), txtApellidosVende.getText().toUpperCase(), txtDireccionVende.getText().toUpperCase(),

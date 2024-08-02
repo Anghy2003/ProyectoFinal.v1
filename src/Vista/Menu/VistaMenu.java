@@ -395,10 +395,10 @@ public class VistaMenu extends javax.swing.JFrame {
     }//GEN-LAST:event_btnProvedoresMouseClicked
 
     private void btnciudadesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnciudadesMouseClicked
-       PanelTituloCitas titcit = new PanelTituloCitas();
-        PanelSUbmenuCitas submecitas = new PanelSUbmenuCitas();
-        MostrarpanelSubmenu(submecitas);
-        MostrarpanelTitulo(titcit);  
+       PanelTituloCiudades titciu = new PanelTituloCiudades();
+        PanelSUbmenuCiudades submeciu = new PanelSUbmenuCiudades();
+        MostrarpanelSubmenu(submeciu);
+        MostrarpanelTitulo(titciu);  
     }//GEN-LAST:event_btnciudadesMouseClicked
 
     private void btnProductosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnProductosMouseClicked

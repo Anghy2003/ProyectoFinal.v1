@@ -2,6 +2,7 @@ package Vista.Cruds.CRUDS1;
 
 import Conexion.Conexion_db;
 import Models.Administrador;
+import Models.Ciudad;
 import Vista.Menu.VistaMenu;
 import Vista.Tables.TablaAdministradores;
 import com.db4o.ObjectContainer;
@@ -80,9 +81,25 @@ public class CrudPanelAdministrador extends javax.swing.JPanel {
         // El próximo ID es el máximo + 1
         return maxID + 1;
     }
+    
+    private void mostrarComboCiudad() {
+    ObjectContainer BaseBD = Conexion_db.ConectarBD();
+    
+    Query ciudadbox = BaseBD.query();
+    ciudadbox.constrain(Ciudad.class);
+    ObjectSet<Ciudad> resultado = ciudadbox.execute();
+    
+    for (Ciudad ciudad : resultado) {
+        cbxCiudadAdmi.addItem(ciudad.getCiudad());
+    }
+    
+    BaseBD.close();
+}
 
     public CrudPanelAdministrador() {
         initComponents();
+        
+         mostrarComboCiudad(); 
     }
 
     /**
@@ -375,6 +392,15 @@ public class CrudPanelAdministrador extends javax.swing.JPanel {
 
                         if (valido = txtCorreoAdmi.getText().matches("^[\\w.-]+@[\\w.-]+\\.[a-zA-Z]{2,6}$")) {
                             if (valido = txtCelularAdmi.getText().matches("^09\\d{8}$")) {
+                                
+                                if (imagenAdmi == null) {
+                                try {
+                                    File imagenPredeterminada = new File("C:\\BasedeDatos\\defectousuario\\imagenDefecto.jpg");
+                                    imagenAdmi = leerImagen(imagenPredeterminada);
+                                } catch (IOException e) {
+                                    JOptionPane.showMessageDialog(null, "Error al cargar la imagen predeterminada: " + e.getMessage());
+                                }
+                            }
 
                                 GuardarAdministrador(txtTituloAdmi.getText(), Administrador.Estado.ACTIVO, (String) cbxCiudadAdmi.getSelectedItem(), imagenAdmi, txtCedulaAdmi.getText(),
                                         txtNombresAdmi.getText().toUpperCase(), txtApellidosAdmi.getText().toUpperCase(), txtDireccionAdmi.getText().toUpperCase(), txtCorreoAdmi.getText(), txtCelularAdmi.getText(),
@@ -406,28 +432,50 @@ public class CrudPanelAdministrador extends javax.swing.JPanel {
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void btnSeleccionarImgenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSeleccionarImgenActionPerformed
-        JFileChooser jFileChooser = new JFileChooser();
-        FileNameExtensionFilter filtrado = new FileNameExtensionFilter("JPG, PNG & GIF", "jpg", "png", "gif");
-        jFileChooser.setFileFilter(filtrado);
+//        JFileChooser jFileChooser = new JFileChooser();
+//        FileNameExtensionFilter filtrado = new FileNameExtensionFilter("JPG, PNG & GIF", "jpg", "png", "gif");
+//        jFileChooser.setFileFilter(filtrado);
+//
+//        int respuesta = jFileChooser.showOpenDialog(this);
+//
+//        if (respuesta == JFileChooser.APPROVE_OPTION) {
+//            File archivoImagen = jFileChooser.getSelectedFile();
+//            String Ruta = archivoImagen.getPath();
+//
+//            try {
+//                // Leer la imagen y convertirla a un array de bytes
+//                imagenAdmi = leerImagen(archivoImagen);
+//
+//                // Mostrar la imagen en el label
+//                Image mImagen = new ImageIcon(Ruta).getImage();
+//                ImageIcon mIcono = new ImageIcon(mImagen.getScaledInstance(lblImagenAdmi.getWidth(), lblImagenAdmi.getHeight(), Image.SCALE_SMOOTH));
+//                lblImagenAdmi.setIcon(mIcono);
+//            } catch (IOException e) {
+//                JOptionPane.showMessageDialog(this, "Error al leer la imagen: " + e.getMessage());
+//            }
+//        }
+JFileChooser jFileChooser = new JFileChooser();
+    FileNameExtensionFilter filtrado = new FileNameExtensionFilter("JPG, PNG & GIF", "jpg", "png", "gif");
+    jFileChooser.setFileFilter(filtrado);
 
-        int respuesta = jFileChooser.showOpenDialog(this);
+    int respuesta = jFileChooser.showOpenDialog(this);
 
-        if (respuesta == JFileChooser.APPROVE_OPTION) {
-            File archivoImagen = jFileChooser.getSelectedFile();
-            String Ruta = archivoImagen.getPath();
+    if (respuesta == JFileChooser.APPROVE_OPTION) {
+        File archivoImagen = jFileChooser.getSelectedFile();
+        String Ruta = archivoImagen.getPath();
 
-            try {
-                // Leer la imagen y convertirla a un array de bytes
-                imagenAdmi = leerImagen(archivoImagen);
+        try {
+            // Leer la imagen y convertirla a un array de bytes
+            imagenAdmi = leerImagen(archivoImagen);
 
-                // Mostrar la imagen en el label
-                Image mImagen = new ImageIcon(Ruta).getImage();
-                ImageIcon mIcono = new ImageIcon(mImagen.getScaledInstance(lblImagenAdmi.getWidth(), lblImagenAdmi.getHeight(), Image.SCALE_SMOOTH));
-                lblImagenAdmi.setIcon(mIcono);
-            } catch (IOException e) {
-                JOptionPane.showMessageDialog(this, "Error al leer la imagen: " + e.getMessage());
-            }
+            // Mostrar la imagen en el label
+            Image mImagen = new ImageIcon(Ruta).getImage();
+            ImageIcon mIcono = new ImageIcon(mImagen.getScaledInstance(lblImagenAdmi.getWidth(), lblImagenAdmi.getHeight(), Image.SCALE_SMOOTH));
+            lblImagenAdmi.setIcon(mIcono);
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(this, "Error al leer la imagen: " + e.getMessage());
         }
+    }
     }//GEN-LAST:event_btnSeleccionarImgenActionPerformed
 
     private void txtPasswordAdmiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPasswordAdmiActionPerformed
