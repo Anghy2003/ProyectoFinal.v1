@@ -2,6 +2,8 @@ package Vista.Cruds.CRUDS1;
 
 import Conexion.Conexion_db;
 import Models.Ciudad;
+import Models.Persona;
+import Models.Persona.Rol;
 import Models.Vendedor;
 import Models.Vendedor.Estado;
 import Vista.Menu.VistaMenu;
@@ -29,7 +31,7 @@ public class CrudPanelVendedor extends javax.swing.JPanel {
     
     public void GuardarVendedor(double sueldoBase_Vendedor, double comiciones_Vendedor, int numeroVentas_Vendedor, Vendedor.Estado estado,String ciudad,byte [] imagenVende, String cedula,
             String nombres, String apellidos, String direccion, String correo, String celular, String genero,
-            String fechaNacimiento, String estadoCivil, String nombreUsuario, String password, String correoRecuperacion) {
+            String fechaNacimiento, String estadoCivil, String nombreUsuario, String password, String correoRecuperacion, Rol rol) {
 
         ObjectContainer BaseBD = Conexion_db.ConectarBD();
 
@@ -37,7 +39,7 @@ public class CrudPanelVendedor extends javax.swing.JPanel {
 
         Vendedor vendedor1 = new Vendedor( sueldoBase_Vendedor,  comiciones_Vendedor,  numeroVentas_Vendedor,  estado, ciudad, imagenVende,  cedula,
              nombres,  apellidos,  direccion,  correo,  celular,  genero,
-             fechaNacimiento,  estadoCivil,  nombreUsuario,  password,  correoRecuperacion);
+             fechaNacimiento,  estadoCivil,  nombreUsuario,  password,  correoRecuperacion, rol);
 
         vendedor1.setiD_Vendedor(siguienteID);
         BaseBD.close();
@@ -182,7 +184,7 @@ public class CrudPanelVendedor extends javax.swing.JPanel {
                 btnCancelarActionPerformed(evt);
             }
         });
-        jPanel2.add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 580, -1, -1));
+        jPanel2.add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 570, -1, -1));
 
         btnGuardar.setText("Guardar");
         btnGuardar.addActionListener(new java.awt.event.ActionListener() {
@@ -190,7 +192,7 @@ public class CrudPanelVendedor extends javax.swing.JPanel {
                 btnGuardarActionPerformed(evt);
             }
         });
-        jPanel2.add(btnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 580, -1, -1));
+        jPanel2.add(btnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(530, 570, -1, -1));
 
         lblNumeroVentasVende.setFont(new java.awt.Font("Roboto Medium", 0, 21)); // NOI18N
         lblNumeroVentasVende.setForeground(new java.awt.Color(0, 53, 79));
@@ -409,7 +411,7 @@ public class CrudPanelVendedor extends javax.swing.JPanel {
                                 GuardarVendedor(Double.parseDouble(txtSueldoVende.getText()), Double.parseDouble(txtComicionesVende.getText()), Integer.parseInt(txtNumeroVentasVende.getText()), Estado.ACTIVO,
                                         (String)cbxCiudadVende.getSelectedItem(),imagenVende,txtCedulaVende.getText(), txtNombresVende.getText().toUpperCase(), txtApellidosVende.getText().toUpperCase(), txtDireccionVende.getText().toUpperCase(),
                                         txtCorreoVende.getText(), txtCelularVende.getText(), (String) cbxGeneroVende.getSelectedItem(), fechaNacimiento, (String) cbxEstadoCivilVende.getSelectedItem(),
-                                        txtCedulaVende.getText(), txtPasswordVende.getText(), txtCorreoVende.getText());
+                                        txtCedulaVende.getText(), txtPasswordVende.getText(), txtCorreoVende.getText(), Rol.VENDEDOR);
                                 
                                         cambiartabla();
                                         
@@ -444,7 +446,7 @@ public class CrudPanelVendedor extends javax.swing.JPanel {
     private void btnSeleccionarImgen1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSeleccionarImgen1ActionPerformed
 
         JFileChooser jFileChooser = new JFileChooser();
-        FileNameExtensionFilter filtrado = new FileNameExtensionFilter("JPG, PNG & GIF", "jpg", "png", "gif");
+        FileNameExtensionFilter filtrado = new FileNameExtensionFilter("JPG", "jpg");
         jFileChooser.setFileFilter(filtrado);
 
         int respuesta = jFileChooser.showOpenDialog(this);

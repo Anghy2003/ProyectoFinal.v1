@@ -3,6 +3,8 @@ package Vista.Cruds.CRUDS1;
 import Conexion.Conexion_db;
 import Models.Administrador;
 import Models.Ciudad;
+import Models.Persona;
+import Models.Persona.Rol;
 import Vista.Menu.VistaMenu;
 import Vista.Tables.TablaAdministradores;
 import com.db4o.ObjectContainer;
@@ -90,7 +92,7 @@ public class CrudPanelAdministrador2 extends javax.swing.JPanel {
                 btnModificarActionPerformed(evt);
             }
         });
-        jPanel2.add(btnModificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 550, -1, -1));
+        jPanel2.add(btnModificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 530, -1, -1));
 
         Cedula_Admi.setFont(new java.awt.Font("Roboto Medium", 0, 21)); // NOI18N
         Cedula_Admi.setForeground(new java.awt.Color(0, 53, 79));
@@ -243,7 +245,7 @@ public class CrudPanelAdministrador2 extends javax.swing.JPanel {
                 btnCancelarActionPerformed(evt);
             }
         });
-        jPanel2.add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 550, -1, 40));
+        jPanel2.add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 530, -1, 40));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -299,7 +301,7 @@ public class CrudPanelAdministrador2 extends javax.swing.JPanel {
                             modificarAdministrador(txtTituloAdmi.getText(), Administrador.Estado.ACTIVO, (String) cbxCiudadAdmi.getSelectedItem(), imagenAdmi, txtCedulaAdmi.getText(),
                                     txtNombresAdmi.getText().toUpperCase(), txtApellidosAdmi.getText().toUpperCase(), txtDireccionAdmi.getText().toUpperCase(), txtCorreoAdmi.getText(), txtCelularAdmi.getText(),
                                     (String) cbxGeneroAdmi.getSelectedItem(), fechaNacimiento, (String) cbxEstadoCivilAdmi.getSelectedItem(), txtCedulaAdmi.getText(), txtPasswordAdmi.getText(),
-                                    txtCorreoAdmi.getText());
+                                    txtCorreoAdmi.getText(), Rol.ADMINISTRADOR);
                             JOptionPane.showMessageDialog(null, "Modificacion Correcta");
                             cambiartabla();
 
@@ -433,17 +435,18 @@ public class CrudPanelAdministrador2 extends javax.swing.JPanel {
         }
     }
 
-    public void modificarAdministrador(String titulo_Administrador, Administrador.Estado estado, String ciudad, byte[] imagenAdmi, String cedula, String nombres, String apellidos, String direccion, String correo, String celular, String genero,
-            String fechaNacimiento, String estadoCivil, String nombreUsuario, String password, String correoRecuperacion) {
+    public void modificarAdministrador(String titulo_Administrador, Administrador.Estado estado, String ciudad, byte[] imagenAdmi,
+            String cedula, String nombres, String apellidos, String direccion, String correo, String celular, String genero,
+            String fechaNacimiento, String estadoCivil, String nombreUsuario, String password, String correoRecuperacion, Rol rol) {
 
         ObjectContainer BaseBD = Conexion_db.ConectarBD();
 
         Administrador modificarAdministrador = new Administrador(titulo_Administrador, estado, ciudad, imagenAdmi, cedula, nombres, apellidos, direccion, correo, celular, genero,
-                fechaNacimiento, estadoCivil, nombreUsuario, password, correoRecuperacion);
+                fechaNacimiento, estadoCivil, nombreUsuario, password, correoRecuperacion,rol);
 
         Administrador administradorBusca = new Administrador(null, null, null, null, cedula, null,
                 null, null, null, null, null, null, null, null,
-                null, null);
+                null, null,null);
 
         ObjectSet resultado = BaseBD.get(administradorBusca);
 

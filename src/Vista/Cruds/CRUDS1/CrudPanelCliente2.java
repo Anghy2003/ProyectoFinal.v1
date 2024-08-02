@@ -3,6 +3,7 @@ package Vista.Cruds.CRUDS1;
 import Conexion.Conexion_db;
 import Models.Ciudad;
 import Models.Cliente;
+import Models.Persona.Rol;
 import Vista.Menu.VistaMenu;
 import Vista.Tables.TablaClientes;
 import com.db4o.ObjectContainer;
@@ -123,7 +124,7 @@ public class CrudPanelCliente2 extends javax.swing.JPanel {
                 btnCancelarActionPerformed(evt);
             }
         });
-        jPanel2.add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 540, -1, -1));
+        jPanel2.add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 550, -1, -1));
 
         btnModificar.setText("Modificar");
         btnModificar.addActionListener(new java.awt.event.ActionListener() {
@@ -131,7 +132,7 @@ public class CrudPanelCliente2 extends javax.swing.JPanel {
                 btnModificarActionPerformed(evt);
             }
         });
-        jPanel2.add(btnModificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 540, -1, -1));
+        jPanel2.add(btnModificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 550, -1, -1));
 
         lblImagenCli.setToolTipText("SOLO JPG");
         lblImagenCli.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
@@ -308,7 +309,7 @@ public class CrudPanelCliente2 extends javax.swing.JPanel {
 
                             modificarCliente(Cliente.Estado.ACTIVO,(String)cbxCiudadCli.getSelectedItem(),imagenCli,txtCedulaCli.getText(), txtNombresCli.getText().toUpperCase().toUpperCase(), txtApellidosCli.getText().toUpperCase(),
                                     txtDireccionCli.getText().toUpperCase(), txtCorreoCli.getText(),txtCelularCli.getText(), (String) cbxGeneroCli.getSelectedItem(), fechaNacimiento, (String) cbxEstadoCivilCli.getSelectedItem(),
-                                    txtCedulaCli.getText(), txtPasswordCli.getText(), fechaNacimiento);
+                                    txtCedulaCli.getText(), txtPasswordCli.getText(), fechaNacimiento, Rol.CLIENTE);
                             
                             JOptionPane.showMessageDialog(null, "Modificacion Correcta");
                             cambiartabla();
@@ -343,7 +344,7 @@ public class CrudPanelCliente2 extends javax.swing.JPanel {
     private void btnSeleccionarImgen1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSeleccionarImgen1ActionPerformed
 
         JFileChooser jFileChooser = new JFileChooser();
-        FileNameExtensionFilter filtrado = new FileNameExtensionFilter("JPG, PNG & GIF", "jpg", "png", "gif");
+        FileNameExtensionFilter filtrado = new FileNameExtensionFilter("JPG", "jpg");
         jFileChooser.setFileFilter(filtrado);
 
         int respuesta = jFileChooser.showOpenDialog(this);
@@ -447,16 +448,16 @@ public class CrudPanelCliente2 extends javax.swing.JPanel {
     }
 
     public void modificarCliente(Cliente.Estado estado, String ciudad, byte[] imagenCli, String cedula, String nombres, String apellidos, String direccion, String correo, String celular,
-            String genero, String fechaNacimiento, String estadoCivil, String nombreUsuario, String password, String correoRecuperacion) {
+            String genero, String fechaNacimiento, String estadoCivil, String nombreUsuario, String password, String correoRecuperacion, Rol rol) {
 
         ObjectContainer BaseBD = Conexion_db.ConectarBD();
 
         Cliente modificarCliente = new Cliente(estado,ciudad,imagenCli, cedula, nombres, apellidos, direccion, correo, celular,
-                genero, fechaNacimiento, estadoCivil, nombreUsuario, password, correoRecuperacion);
+                genero, fechaNacimiento, estadoCivil, nombreUsuario, password, correoRecuperacion, rol);
 
         Cliente clienteBusca = new Cliente(null,null,null, cedula, null,
                 null, null, null, null, null, null, null, null,
-                null, null);
+                null, null,null);
 
         ObjectSet resultado = BaseBD.get(clienteBusca);
 

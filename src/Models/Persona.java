@@ -13,13 +13,22 @@ public abstract class  Persona {
    private String fechaNacimiento;
    private String estadoCivil;
    private String nombreUsuario;
-   private String password;
-   private String correoRecuperacion;
+   private String password;   
+   private String correoRecuperacion;   
+   private Rol rol;
+   
+   public enum Rol {
+        ADMINISTRADOR,
+        CLIENTE,
+        VENDEDOR,
+        MECANICO
+    }
 
     public Persona() {
     }
 
-    public Persona(String cedula, String nombres, String apellidos, String direccion, String correo, String celular, String genero, String fechaNacimiento, String estadoCivil, String nombreUsuario, String password, String correoRecuperacion) {
+    public Persona(String cedula, String nombres, String apellidos, String direccion, String correo, String celular, String genero,
+            String fechaNacimiento, String estadoCivil, String nombreUsuario, String password, String correoRecuperacion ,Rol rol) {
         this.cedula = cedula;
         this.nombres = nombres;
         this.apellidos = apellidos;
@@ -31,7 +40,8 @@ public abstract class  Persona {
         this.estadoCivil = estadoCivil;
         this.nombreUsuario = nombreUsuario;
         this.password = password;
-        this.correoRecuperacion = correoRecuperacion;
+        this.correoRecuperacion = correoRecuperacion;        
+        this.rol = rol;
     }
 
     @Override
@@ -210,6 +220,20 @@ public abstract class  Persona {
     }
 
    
+
+    /**
+     * @return the rol
+     */
+    public Rol getRol() {
+        return rol;
+    }
+
+    /**
+     * @param rol the rol to set
+     */
+    public void setRol(Rol rol) {
+        this.rol = rol;
+    }
    
-   
+    
 }

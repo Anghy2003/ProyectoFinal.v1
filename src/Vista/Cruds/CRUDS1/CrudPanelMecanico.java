@@ -4,6 +4,7 @@ import Conexion.Conexion_db;
 import Models.Ciudad;
 import Models.Mecanico;
 import Models.Mecanico.Estado;
+import Models.Persona.Rol;
 import Vista.Menu.VistaMenu;
 import Vista.Tables.TablaMecanicos;
 import com.db4o.ObjectContainer;
@@ -29,7 +30,7 @@ public class CrudPanelMecanico extends javax.swing.JPanel {
     
     public void GuardarMecanico(String titulo, double Sueldo, Mecanico.Estado estado, String ciudad, byte[] imagenMeca, String cedula, String nombres, String apellidos,
             String direccion, String correo, String celular, String genero, String fechaNacimiento, String estadoCivil,
-            String nombreUsuario, String password, String correoRecuperacion) {
+            String nombreUsuario, String password, String correoRecuperacion, Rol rol) {
 
         ObjectContainer BaseBD = Conexion_db.ConectarBD();
 
@@ -37,7 +38,7 @@ public class CrudPanelMecanico extends javax.swing.JPanel {
 
         Mecanico mecanico1 = new Mecanico( titulo,  Sueldo,  estado,  ciudad,  imagenMeca,  cedula,  nombres,  apellidos,
              direccion,  correo,  celular,  genero,  fechaNacimiento,  estadoCivil,
-             nombreUsuario,  password,  correoRecuperacion);
+             nombreUsuario,  password,  correoRecuperacion, rol);
 
         mecanico1.setiD_Mecanico(siguienteID);
         BaseBD.close();
@@ -166,7 +167,7 @@ public class CrudPanelMecanico extends javax.swing.JPanel {
                 btnCancelarActionPerformed(evt);
             }
         });
-        jPanel2.add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 560, -1, -1));
+        jPanel2.add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 580, -1, -1));
 
         btnGuardar.setText("Guardar");
         btnGuardar.addActionListener(new java.awt.event.ActionListener() {
@@ -174,7 +175,7 @@ public class CrudPanelMecanico extends javax.swing.JPanel {
                 btnGuardarActionPerformed(evt);
             }
         });
-        jPanel2.add(btnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 560, -1, -1));
+        jPanel2.add(btnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 580, -1, -1));
 
         lblImagenMeca.setToolTipText("SOLO JPG");
         lblImagenMeca.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
@@ -383,8 +384,8 @@ public class CrudPanelMecanico extends javax.swing.JPanel {
                                 GuardarMecanico(txtTituloMeca.getText().toUpperCase(), Double.parseDouble(txtSueldoMeca.getText()), Mecanico.Estado.ACTIVO,(String)cbxCiudadMeca.getSelectedItem(),imagenMeca, txtCedulaMeca.getText(), txtNombresMeca.getText().toUpperCase(),
                                         txtApellidosMeca.getText().toUpperCase(), txtDireccionMeca.getText().toUpperCase(), txtCorreoMeca.getText(), txtCelularMeca.getText(),
                                         (String) cbxGeneroMeca.getSelectedItem(), fechaNacimiento, (String) cbxEstadoCivilMeca.getSelectedItem(), txtCedulaMeca.getText(), txtPasswordMeca.getText(),
-                                        txtCorreoMeca.getText());
-                                        JOptionPane.showMessageDialog(null, "Mecanico Guadado");
+                                        txtCorreoMeca.getText(),Rol.MECANICO);
+                                     
                                         cambiartabla();
 
                             } else {
@@ -423,7 +424,7 @@ public class CrudPanelMecanico extends javax.swing.JPanel {
     private void btnSeleccionarImgen1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSeleccionarImgen1ActionPerformed
 
         JFileChooser jFileChooser = new JFileChooser();
-        FileNameExtensionFilter filtrado = new FileNameExtensionFilter("JPG, PNG & GIF", "jpg", "png", "gif");
+        FileNameExtensionFilter filtrado = new FileNameExtensionFilter("JPG", "jpg" );
         jFileChooser.setFileFilter(filtrado);
 
         int respuesta = jFileChooser.showOpenDialog(this);

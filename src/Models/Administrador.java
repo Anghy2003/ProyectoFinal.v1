@@ -8,6 +8,7 @@ public class Administrador extends Persona {
     private Estado estado;
     private String ciudad;
     private byte[] imagenAdmi;
+ 
     
     //haremos que tenga solo dos posibles valores
     public enum Estado {
@@ -19,21 +20,23 @@ public class Administrador extends Persona {
         super();
     }
 
-    public Administrador(String titulo_Administrador, Estado estado,String ciudad,byte [] imagenAdmi, String cedula, String nombres, String apellidos, String direccion, String correo, String celular, String genero,
-            String fechaNacimiento, String estadoCivil, String nombreUsuario, String password, String correoRecuperacion) {
-        super(cedula, nombres, apellidos, direccion, correo, celular, genero, fechaNacimiento, estadoCivil, nombreUsuario, password, correoRecuperacion);
+
+    public Administrador(String titulo_Administrador, Estado estado, String ciudad, byte[] imagenAdmi, String cedula, String nombres, String apellidos, String direccion, String correo, String celular, String genero, String fechaNacimiento, String estadoCivil, String nombreUsuario, String password, String correoRecuperacion, Rol rol) {
+        super(cedula, nombres, apellidos, direccion, correo, celular, genero, fechaNacimiento, estadoCivil, nombreUsuario, password, correoRecuperacion, rol);
+        
         this.titulo_Administrador = titulo_Administrador;
         this.estado = Estado.ACTIVO;
         this.ciudad = ciudad;
         this.imagenAdmi = imagenAdmi;
     }
 
-    
-
     @Override
     public String toString() {
-        return "Administrador{" + "iD_Administrador=" + getiD_Administrador() + ", titulo_Administrador=" + getTitulo_Administrador() + '}';
+        return "Administrador{" + "iD_Administrador=" + iD_Administrador + ", titulo_Administrador=" + titulo_Administrador + ", estado=" + estado + ", ciudad=" + ciudad + ", imagenAdmi=" + imagenAdmi + '}';
     }
+ 
+
+    
 
     /**
      * @return the iD_Administrador

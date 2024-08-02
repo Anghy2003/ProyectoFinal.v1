@@ -19,16 +19,17 @@ public class Mecanico extends Persona {
         super();
     }
 
-    public Mecanico(String titulo, double Sueldo, Estado estado, String ciudad, byte[] imagenMeca, String cedula, String nombres, String apellidos,
-            String direccion, String correo, String celular, String genero, String fechaNacimiento, String estadoCivil,
-            String nombreUsuario, String password, String correoRecuperacion) {
-        super(cedula, nombres, apellidos, direccion, correo, celular, genero, fechaNacimiento, estadoCivil, nombreUsuario, password, correoRecuperacion);
+    public Mecanico(String titulo, double Sueldo, Estado estado, String ciudad, byte[] imagenMeca, String cedula, String nombres, String apellidos, String direccion, String correo, String celular, String genero, String fechaNacimiento, String estadoCivil, String nombreUsuario, String password, String correoRecuperacion, Rol rol) {
+        super(cedula, nombres, apellidos, direccion, correo, celular, genero, fechaNacimiento, estadoCivil, nombreUsuario, password, correoRecuperacion,  rol);
+        
         this.titulo = titulo;
         this.Sueldo = Sueldo;
         this.estado = Estado.ACTIVO;
         this.ciudad = ciudad;
         this.imagenMeca = imagenMeca;
     }
+
+    
 
     
 
