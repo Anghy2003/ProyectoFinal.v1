@@ -286,7 +286,7 @@ public class TablaVendedores extends javax.swing.JPanel {
 
         ObjectSet<Vendedor> resultado = query.execute();
 
-        Object matriz[][] = new Object[resultado.size()][19];
+        Object matriz[][] = new Object[resultado.size()][20];
         int i = 0;
         for (Vendedor vende : resultado) {
 
@@ -316,12 +316,13 @@ public class TablaVendedores extends javax.swing.JPanel {
                 matriz[i][17] = new JLabel("No image");
             }
             matriz[i][18] = String.valueOf(vende.getEstado());
+            matriz[i][19] = String.valueOf(vende.getRol());
             i++;
         }
 
         //datos configurados
         tblVendedorInactivo.setModel(new javax.swing.table.DefaultTableModel(matriz, new String[]{"ID Vendedor", "Usuario", "Contraseña", "Cedula", "Nombres", "Apellidos", "Direccion", "Correo Electronico", "Correo recuperacion", "Celular", "Fecha Nacimiento",
-            "Estado Civil", "Genero", "Sueldo", "Comiciones", "Numero de Ventas", "Ciudad", "Foto", "Estado"}));
+            "Estado Civil", "Genero", "Sueldo", "Comiciones", "Numero de Ventas", "Ciudad", "Foto", "Estado","Rol"}));
         tblVendedorInactivo.getColumnModel().getColumn(17).setCellRenderer(new ImageRenderer());
         tblVendedorInactivo.setRowHeight(100);
         tblVendedorInactivo.setEnabled(false);
@@ -339,7 +340,7 @@ public class TablaVendedores extends javax.swing.JPanel {
 
         ObjectSet<Vendedor> resultado = query.execute();
 
-        Object matriz[][] = new Object[resultado.size()][19];
+        Object matriz[][] = new Object[resultado.size()][20];
         int i = 0;
         for (Vendedor vende : resultado) {
 
@@ -369,12 +370,13 @@ public class TablaVendedores extends javax.swing.JPanel {
                 matriz[i][17] = new JLabel("No image");
             }
             matriz[i][18] = String.valueOf(vende.getEstado());
+            matriz[i][19] = String.valueOf(vende.getRol());
             i++;
         }
 
         //datos configurados
         tblVendedor.setModel(new javax.swing.table.DefaultTableModel(matriz, new String[]{"ID Vendedor", "Usuario", "Contraseña", "Cedula", "Nombres", "Apellidos", "Direccion", "Correo Electronico", "Correo recuperacion", "Celular", "Fecha Nacimiento",
-            "Estado Civil", "Genero", "Sueldo", "Comiciones", "Numero de Ventas", "Ciudad", "Foto", "Estado"}));
+            "Estado Civil", "Genero", "Sueldo", "Comiciones", "Numero de Ventas", "Ciudad", "Foto", "Estado","Rol"}));
         tblVendedor.setEnabled(false);
         tblVendedor.getColumnModel().getColumn(17).setCellRenderer(new ImageRenderer());
         tblVendedor.setRowHeight(100);
@@ -387,7 +389,7 @@ public class TablaVendedores extends javax.swing.JPanel {
 
         ObjectSet<Vendedor> result = BaseBD.queryByExample(new Vendedor(0.0, 0.0, 0, null, null, null, cedula, null,
                 null, null, null, null, null, null, null, null,
-                null, null)); // Crear objeto para consultar
+                null, null,null)); // Crear objeto para consultar
 
         if (result.hasNext()) {
             Vendedor VendedorAEliminar = result.next();

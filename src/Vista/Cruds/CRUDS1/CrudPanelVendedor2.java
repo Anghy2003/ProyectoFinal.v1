@@ -2,6 +2,7 @@ package Vista.Cruds.CRUDS1;
 
 import Conexion.Conexion_db;
 import Models.Ciudad;
+import Models.Persona.Rol;
 import Models.Vendedor;
 import Models.Vendedor.Estado;
 import Vista.Menu.VistaMenu;
@@ -110,7 +111,7 @@ private void mostrarComboCiudad() {
                 btnCancelarActionPerformed(evt);
             }
         });
-        jPanel2.add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 570, -1, -1));
+        jPanel2.add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 570, -1, -1));
 
         btnModificar.setText("Modificar");
         btnModificar.addActionListener(new java.awt.event.ActionListener() {
@@ -118,7 +119,7 @@ private void mostrarComboCiudad() {
                 btnModificarActionPerformed(evt);
             }
         });
-        jPanel2.add(btnModificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 570, -1, -1));
+        jPanel2.add(btnModificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 570, -1, -1));
 
         lblImagenVende.setToolTipText("SOLO JPG");
         lblImagenVende.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
@@ -285,7 +286,7 @@ private void mostrarComboCiudad() {
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 896, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 896, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
                     .addGap(0, 448, Short.MAX_VALUE)
@@ -294,12 +295,15 @@ private void mostrarComboCiudad() {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 638, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 638, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(layout.createSequentialGroup()
-                    .addGap(0, 319, Short.MAX_VALUE)
+                    .addGap(0, 325, Short.MAX_VALUE)
                     .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 319, Short.MAX_VALUE)))
+                    .addGap(0, 325, Short.MAX_VALUE)))
         );
     }// </editor-fold>//GEN-END:initComponents
 
@@ -329,7 +333,7 @@ private void mostrarComboCiudad() {
                             modificarVendedor(Double.parseDouble(txtSueldoVende.getText()), Double.parseDouble(txtComicionesVende.getText()), Integer.parseInt(txtNumeroVentasVende.getText()), Estado.ACTIVO,
                                         (String)cbxCiudadVende.getSelectedItem(),imagenVende,txtCedulaVende.getText(), txtNombresVende.getText().toUpperCase(), txtApellidosVende.getText().toUpperCase(), txtDireccionVende.getText().toUpperCase(),
                                         txtCorreoVende.getText(), txtCelularVende.getText(), (String) cbxGeneroVende.getSelectedItem(), fechaNacimiento, (String) cbxEstadoCivilVende.getSelectedItem(),
-                                        txtCedulaVende.getText(), txtPasswordVende.getText(), txtCorreoVende.getText());
+                                        txtCedulaVende.getText(), txtPasswordVende.getText(), txtCorreoVende.getText(),Rol.VENDEDOR);
                             JOptionPane.showMessageDialog(null, "Modificacion Correcta");
                             cambiartabla();
                             
@@ -365,7 +369,7 @@ private void mostrarComboCiudad() {
     private void btnSeleccionarImgen1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSeleccionarImgen1ActionPerformed
 
         JFileChooser jFileChooser = new JFileChooser();
-        FileNameExtensionFilter filtrado = new FileNameExtensionFilter("JPG, PNG & GIF", "jpg", "png", "gif");
+        FileNameExtensionFilter filtrado = new FileNameExtensionFilter("JPG", "jpg");
         jFileChooser.setFileFilter(filtrado);
 
         int respuesta = jFileChooser.showOpenDialog(this);
@@ -482,17 +486,17 @@ private void mostrarComboCiudad() {
     
     public void modificarVendedor(double sueldoBase_Vendedor, double comiciones_Vendedor, int numeroVentas_Vendedor, Vendedor.Estado estado,String ciudad,byte [] imagenVende, String cedula,
             String nombres, String apellidos, String direccion, String correo, String celular, String genero,
-            String fechaNacimiento, String estadoCivil, String nombreUsuario, String password, String correoRecuperacion) {
+            String fechaNacimiento, String estadoCivil, String nombreUsuario, String password, String correoRecuperacion, Rol rol) {
         
         ObjectContainer BaseBD = Conexion_db.ConectarBD();
         
         Vendedor modificarVendedor = new Vendedor(sueldoBase_Vendedor,  comiciones_Vendedor,  numeroVentas_Vendedor,  estado, ciudad, imagenVende,  cedula,
              nombres,  apellidos,  direccion,  correo,  celular,  genero,
-             fechaNacimiento,  estadoCivil,  nombreUsuario,  password,  correoRecuperacion);
+             fechaNacimiento,  estadoCivil,  nombreUsuario,  password,  correoRecuperacion,rol);
         
         Vendedor vendedorBusca = new Vendedor(0.0, 0.0, 0, null,null,null,cedula, null,
                 null, null, null, null, null, null, null, null,
-                null, null);
+                null, null,null);
         
         ObjectSet resultado = BaseBD.get(vendedorBusca);
         

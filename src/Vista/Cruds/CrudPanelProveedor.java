@@ -39,7 +39,6 @@ public class CrudPanelProveedor extends javax.swing.JPanel {
         txtDireccion = new rojeru_san.RSMTextFull();
         txtCorreo = new rojeru_san.RSMTextFull();
         txtCelular = new rojeru_san.RSMTextFull();
-        lblFondo = new javax.swing.JLabel();
 
         setLayout(new java.awt.BorderLayout());
 
@@ -51,41 +50,51 @@ public class CrudPanelProveedor extends javax.swing.JPanel {
         lblRegistroPRov.setFont(new java.awt.Font("Roboto Black", 0, 30)); // NOI18N
         lblRegistroPRov.setForeground(new java.awt.Color(0, 53, 79));
         lblRegistroPRov.setText("Registro Proveedores");
-        jPanel2.add(lblRegistroPRov, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 30, 300, 40));
+        jPanel2.add(lblRegistroPRov, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 40, 300, 40));
 
         lblCodigo.setFont(new java.awt.Font("Roboto Medium", 0, 21)); // NOI18N
         lblCodigo.setForeground(new java.awt.Color(0, 53, 79));
-        lblCodigo.setText("Código");
-        jPanel2.add(lblCodigo, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 110, 70, 40));
+        lblCodigo.setText("Código:");
+        jPanel2.add(lblCodigo, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 110, 80, 40));
 
         lblNombre.setFont(new java.awt.Font("Roboto Medium", 0, 21)); // NOI18N
         lblNombre.setForeground(new java.awt.Color(0, 53, 79));
         lblNombre.setText("Nombre:");
-        jPanel2.add(lblNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 180, 100, 40));
+        jPanel2.add(lblNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 160, 90, 30));
 
         lblTipo.setFont(new java.awt.Font("Roboto Medium", 0, 21)); // NOI18N
         lblTipo.setForeground(new java.awt.Color(0, 53, 79));
         lblTipo.setText("Tipo:");
-        jPanel2.add(lblTipo, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 250, 100, 40));
+        jPanel2.add(lblTipo, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 220, 50, 30));
 
         txtCodigo.setForeground(new java.awt.Color(0, 53, 79));
         txtCodigo.setColorTransparente(true);
         txtCodigo.setEnabled(false);
         txtCodigo.setFont(new java.awt.Font("Roboto Light", 1, 14)); // NOI18N
         txtCodigo.setPlaceholder("AUTOGENERADO");
-        jPanel2.add(txtCodigo, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 110, 230, 40));
+        jPanel2.add(txtCodigo, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 100, 230, 40));
 
         txtNombre.setForeground(new java.awt.Color(0, 53, 79));
         txtNombre.setColorTransparente(true);
         txtNombre.setFont(new java.awt.Font("Roboto Light", 1, 14)); // NOI18N
         txtNombre.setPlaceholder("Ejm: Mega");
-        jPanel2.add(txtNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 180, 230, 40));
+        txtNombre.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtNombreKeyTyped(evt);
+            }
+        });
+        jPanel2.add(txtNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 150, 230, 40));
 
         txtTipo.setForeground(new java.awt.Color(0, 53, 79));
         txtTipo.setColorTransparente(true);
         txtTipo.setFont(new java.awt.Font("Roboto Light", 1, 14)); // NOI18N
         txtTipo.setPlaceholder("Ejm:Empresa");
-        jPanel2.add(txtTipo, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 240, 230, 40));
+        txtTipo.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtTipoKeyTyped(evt);
+            }
+        });
+        jPanel2.add(txtTipo, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 210, 230, 40));
 
         btnCancelar.setBackground(new java.awt.Color(255, 51, 51));
         btnCancelar.setText("Cancelar");
@@ -94,7 +103,7 @@ public class CrudPanelProveedor extends javax.swing.JPanel {
                 btnCancelarMouseClicked(evt);
             }
         });
-        jPanel2.add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 520, -1, -1));
+        jPanel2.add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 480, -1, -1));
 
         btnGuardar.setText("Guardar");
         btnGuardar.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -102,44 +111,45 @@ public class CrudPanelProveedor extends javax.swing.JPanel {
                 btnGuardarMouseClicked(evt);
             }
         });
-        jPanel2.add(btnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(540, 520, -1, -1));
+        jPanel2.add(btnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 480, -1, -1));
 
         lblDireccion.setFont(new java.awt.Font("Roboto Medium", 0, 21)); // NOI18N
         lblDireccion.setForeground(new java.awt.Color(0, 53, 79));
         lblDireccion.setText("Dirección:");
-        jPanel2.add(lblDireccion, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 300, 120, 40));
+        jPanel2.add(lblDireccion, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 270, 100, 40));
 
         lblCorreo.setFont(new java.awt.Font("Roboto Medium", 0, 21)); // NOI18N
         lblCorreo.setForeground(new java.awt.Color(0, 53, 79));
         lblCorreo.setText("Email:");
-        jPanel2.add(lblCorreo, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 370, 100, 40));
+        jPanel2.add(lblCorreo, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 330, 60, 40));
 
         lblCelular.setFont(new java.awt.Font("Roboto Medium", 0, 21)); // NOI18N
         lblCelular.setForeground(new java.awt.Color(0, 53, 79));
         lblCelular.setText("Celular:");
-        jPanel2.add(lblCelular, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 440, 100, 40));
+        jPanel2.add(lblCelular, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 400, 80, 30));
 
         txtDireccion.setForeground(new java.awt.Color(0, 53, 79));
         txtDireccion.setColorTransparente(true);
         txtDireccion.setFont(new java.awt.Font("Roboto Light", 1, 14)); // NOI18N
         txtDireccion.setPlaceholder("Ejm: Av.Americas");
-        jPanel2.add(txtDireccion, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 300, 230, 40));
+        txtDireccion.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtDireccionKeyTyped(evt);
+            }
+        });
+        jPanel2.add(txtDireccion, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 270, 230, 40));
 
         txtCorreo.setForeground(new java.awt.Color(0, 53, 79));
         txtCorreo.setColorTransparente(true);
         txtCorreo.setFont(new java.awt.Font("Roboto Light", 1, 14)); // NOI18N
         txtCorreo.setPlaceholder("Ejm: usuario@gmail.com");
-        jPanel2.add(txtCorreo, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 370, 230, 40));
+        jPanel2.add(txtCorreo, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 330, 230, 40));
 
         txtCelular.setForeground(new java.awt.Color(0, 53, 79));
         txtCelular.setColorTransparente(true);
         txtCelular.setFont(new java.awt.Font("Roboto Light", 1, 14)); // NOI18N
         txtCelular.setPlaceholder("Ejm: 0911111111");
-        jPanel2.add(txtCelular, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 430, 230, 40));
-
-        lblFondo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/burbujas.png"))); // NOI18N
-        lblFondo.setText("jLabel12");
-        jPanel2.add(lblFondo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 890, 650));
+        jPanel2.add(txtCelular, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 390, 230, 40));
 
         jPanel1.add(jPanel2, java.awt.BorderLayout.CENTER);
 
@@ -253,6 +263,35 @@ public class CrudPanelProveedor extends javax.swing.JPanel {
         } 
         }
     }//GEN-LAST:event_btnGuardarMouseClicked
+
+    private void txtNombreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreKeyTyped
+        char x= evt.getKeyChar();
+        if (Character.isLowerCase(x)) {
+            evt.setKeyChar(Character.toUpperCase(x));
+        }
+        if (Character.isDigit(x)) {
+            JOptionPane.showMessageDialog(this, "Ingrese solo letras");
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtNombreKeyTyped
+
+    private void txtTipoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTipoKeyTyped
+        char x= evt.getKeyChar();
+        if (Character.isLowerCase(x)) {
+            evt.setKeyChar(Character.toUpperCase(x));
+        }
+        if (Character.isDigit(x)) {
+            JOptionPane.showMessageDialog(this, "Ingrese solo letras");
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtTipoKeyTyped
+
+    private void txtDireccionKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDireccionKeyTyped
+        char x= evt.getKeyChar();
+        if (Character.isLowerCase(x)) {
+            evt.setKeyChar(Character.toUpperCase(x));
+        }
+    }//GEN-LAST:event_txtDireccionKeyTyped
     private void ShowpanelCruds(JPanel p) {
         p.setSize(870, 630);
         p.setLocation(0, 0);
@@ -272,7 +311,6 @@ public class CrudPanelProveedor extends javax.swing.JPanel {
     private javax.swing.JLabel lblCodigo;
     private javax.swing.JLabel lblCorreo;
     private javax.swing.JLabel lblDireccion;
-    private javax.swing.JLabel lblFondo;
     private javax.swing.JLabel lblNombre;
     private javax.swing.JLabel lblRegistroPRov;
     private javax.swing.JLabel lblTipo;

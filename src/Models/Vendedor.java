@@ -20,17 +20,18 @@ public class Vendedor extends Persona {
         super();
     }
 
-    public Vendedor(double sueldoBase_Vendedor, double comiciones_Vendedor, int numeroVentas_Vendedor, Estado estado,String ciudad,byte [] imagenVende, String cedula,
-            String nombres, String apellidos, String direccion, String correo, String celular, String genero,
-            String fechaNacimiento, String estadoCivil, String nombreUsuario, String password, String correoRecuperacion) {
-        super(cedula, nombres, apellidos, direccion, correo, celular, genero, fechaNacimiento, estadoCivil, nombreUsuario, password, correoRecuperacion);
+    public Vendedor(double sueldoBase_Vendedor, double comiciones_Vendedor, int numeroVentas_Vendedor, Estado estado, String ciudad, byte[] imagenVende, String cedula, String nombres, String apellidos, String direccion, String correo, String celular, String genero, String fechaNacimiento, String estadoCivil, String nombreUsuario, String password, String correoRecuperacion, Rol rol) {
+        super(cedula, nombres, apellidos, direccion, correo, celular, genero, fechaNacimiento, estadoCivil, nombreUsuario, password, correoRecuperacion, rol);
+        this.iD_Vendedor = iD_Vendedor;
         this.sueldoBase_Vendedor = sueldoBase_Vendedor;
         this.comiciones_Vendedor = comiciones_Vendedor;
         this.numeroVentas_Vendedor = numeroVentas_Vendedor;
         this.estado = Estado.ACTIVO;
         this.ciudad = ciudad;
         this.imagenVende = imagenVende;
-    }   
+    }
+
+       
 
     
 

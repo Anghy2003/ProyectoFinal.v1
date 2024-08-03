@@ -52,7 +52,6 @@ public class CrudPanelVehiculo extends javax.swing.JPanel {
         tblMarca_VehiRegistro = new javax.swing.JTable();
         txtModeloMarcaRegistro = new rojeru_san.RSMTextFull();
         lblModeloMarcaRegistro = new javax.swing.JLabel();
-        jLabel14 = new javax.swing.JLabel();
         jdlCrearModelo = new javax.swing.JDialog();
         pnlCrearMarca1 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
@@ -64,8 +63,6 @@ public class CrudPanelVehiculo extends javax.swing.JPanel {
         txtModeloRegistrar = new rojeru_san.RSMTextFull();
         lblModeloMarcaRegistro1 = new javax.swing.JLabel();
         cmbMarcas = new javax.swing.JComboBox<>();
-        jLabel15 = new javax.swing.JLabel();
-        jdlCrearCliente = new javax.swing.JDialog();
         jPanel1 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         lblPlaca = new javax.swing.JLabel();
@@ -85,7 +82,6 @@ public class CrudPanelVehiculo extends javax.swing.JPanel {
         btnAñadirModeloREgistroVehiculos = new rojeru_san.RSButtonRiple();
         btnBuscarClienteRegistroVehiculos1 = new rojeru_san.RSButtonRiple();
         lblMarca1 = new javax.swing.JLabel();
-        jLabel12 = new javax.swing.JLabel();
 
         jLabel13.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/burbujas.png"))); // NOI18N
         jLabel13.setText("jLabel12");
@@ -187,10 +183,6 @@ public class CrudPanelVehiculo extends javax.swing.JPanel {
         lblModeloMarcaRegistro.setText("Modelo:");
         pnlCrearMarca.add(lblModeloMarcaRegistro, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 120, 80, 40));
 
-        jLabel14.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/burbujas.png"))); // NOI18N
-        jLabel14.setText("jLabel12");
-        pnlCrearMarca.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 800, 540));
-
         jdlCrearMarca.getContentPane().add(pnlCrearMarca, java.awt.BorderLayout.CENTER);
 
         jdlCrearModelo.setResizable(false);
@@ -277,10 +269,6 @@ public class CrudPanelVehiculo extends javax.swing.JPanel {
         cmbMarcas.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Elegir marca" }));
         pnlCrearMarca1.add(cmbMarcas, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 120, 230, 30));
 
-        jLabel15.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/burbujas.png"))); // NOI18N
-        jLabel15.setText("jLabel12");
-        pnlCrearMarca1.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 800, 540));
-
         jdlCrearModelo.getContentPane().add(pnlCrearMarca1, java.awt.BorderLayout.CENTER);
 
         setLayout(new java.awt.BorderLayout());
@@ -317,6 +305,11 @@ public class CrudPanelVehiculo extends javax.swing.JPanel {
         txtPlaca.setColorTransparente(true);
         txtPlaca.setFont(new java.awt.Font("Roboto Light", 1, 14)); // NOI18N
         txtPlaca.setPlaceholder("Ejm: AAA-9999");
+        txtPlaca.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtPlacaKeyTyped(evt);
+            }
+        });
         jPanel1.add(txtPlaca, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 90, 270, 40));
 
         btnCancelar.setBackground(new java.awt.Color(255, 51, 51));
@@ -445,10 +438,6 @@ public class CrudPanelVehiculo extends javax.swing.JPanel {
         lblMarca1.setForeground(new java.awt.Color(0, 53, 79));
         lblMarca1.setText("Marca:");
         jPanel1.add(lblMarca1, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 200, 80, 40));
-
-        jLabel12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/burbujas.png"))); // NOI18N
-        jLabel12.setText("jLabel12");
-        jPanel1.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 890, 650));
 
         add(jPanel1, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
@@ -762,6 +751,13 @@ public class CrudPanelVehiculo extends javax.swing.JPanel {
     private void cmbModeloRegistroVehiculo1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cmbModeloRegistroVehiculo1MouseEntered
         mostrarComboModelos();// TODO add your handling code here:
     }//GEN-LAST:event_cmbModeloRegistroVehiculo1MouseEntered
+
+    private void txtPlacaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPlacaKeyTyped
+        char x= evt.getKeyChar();
+        if (Character.isLowerCase(x)) {
+            evt.setKeyChar(Character.toUpperCase(x));
+        }
+    }//GEN-LAST:event_txtPlacaKeyTyped
     
     
     private void ShowpanelCruds(JPanel p) {
@@ -936,17 +932,13 @@ public class CrudPanelVehiculo extends javax.swing.JPanel {
     private javax.swing.JComboBox<String> cmbMarcaRegistroVehiculo;
     private javax.swing.JComboBox<String> cmbMarcas;
     private javax.swing.JComboBox<String> cmbModeloRegistroVehiculo1;
-    private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
-    private javax.swing.JLabel jLabel14;
-    private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JDialog jdlCrearCliente;
     private javax.swing.JDialog jdlCrearMarca;
     private javax.swing.JDialog jdlCrearModelo;
     private javax.swing.JLabel lblAño;

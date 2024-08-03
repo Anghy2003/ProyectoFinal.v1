@@ -17,13 +17,16 @@ public class Cliente extends Persona {
         super();
     }
 
-    public Cliente(Estado estado, String ciudad, byte[] imagenCli, String cedula, String nombres, String apellidos, String direccion, String correo, String celular,
-            String genero, String fechaNacimiento, String estadoCivil, String nombreUsuario, String password, String correoRecuperacion) {
-        super(cedula, nombres, apellidos, direccion, correo, celular, genero, fechaNacimiento, estadoCivil, nombreUsuario, password, correoRecuperacion);
+    public Cliente( Estado estado, String ciudad, byte[] imagenCli, String cedula, String nombres, String apellidos, String direccion,
+            String correo, String celular, String genero, String fechaNacimiento, String estadoCivil, String nombreUsuario, String password, String correoRecuperacion,  Rol rol) {
+        super(cedula, nombres, apellidos, direccion, correo, celular, genero, fechaNacimiento, estadoCivil, nombreUsuario, password, correoRecuperacion,  rol);
+        
         this.estado = Estado.ACTIVO;
         this.ciudad = ciudad;
         this.imagenCli = imagenCli;
     }
+
+    
 
     @Override
     public String toString() {

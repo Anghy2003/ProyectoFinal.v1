@@ -5,6 +5,7 @@ import Conexion.Conexion_db;
 import Models.Ciudad;
 import Models.Cliente;
 import Models.Cliente.Estado;
+import Models.Persona.Rol;
 
 
 
@@ -35,15 +36,15 @@ public class CrudPanelCliente extends javax.swing.JPanel {
     
     private byte [] imagenCli;
 
-     public void GuardarCliente( Cliente.Estado estado, String ciudad, byte[] imagenCli, String cedula, String nombres, String apellidos, String direccion, String correo, String celular,
-            String genero, String fechaNacimiento, String estadoCivil, String nombreUsuario, String password, String correoRecuperacion) {
+     public void GuardarCliente(  Estado estado, String ciudad, byte[] imagenCli, String cedula, String nombres, String apellidos, String direccion,
+            String correo, String celular, String genero, String fechaNacimiento, String estadoCivil, String nombreUsuario, String password, String correoRecuperacion,  Rol rol) {
 
         ObjectContainer BaseBD = Conexion_db.ConectarBD();
         
         int siguienteID = obtenerProximoIDCliente(BaseBD);
         
         Cliente cliente1 = new Cliente(estado,  ciudad,  imagenCli,  cedula,  nombres,  apellidos,  direccion,  correo,  celular,
-             genero,  fechaNacimiento,  estadoCivil,  nombreUsuario,  password,  correoRecuperacion );
+             genero,  fechaNacimiento,  estadoCivil,  nombreUsuario,  password,  correoRecuperacion, rol );
       
         cliente1.setiD_Cliente(siguienteID);
         BaseBD.close();
@@ -211,7 +212,7 @@ public class CrudPanelCliente extends javax.swing.JPanel {
                 btnCancelarActionPerformed(evt);
             }
         });
-        jPanel1.add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 550, -1, -1));
+        jPanel1.add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 550, -1, -1));
 
         btnGuardar.setText("Guardar");
         btnGuardar.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -224,7 +225,7 @@ public class CrudPanelCliente extends javax.swing.JPanel {
                 btnGuardarActionPerformed(evt);
             }
         });
-        jPanel1.add(btnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 550, -1, -1));
+        jPanel1.add(btnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 550, -1, -1));
 
         Cedula_Cli.setFont(new java.awt.Font("Roboto Medium", 0, 21)); // NOI18N
         Cedula_Cli.setForeground(new java.awt.Color(0, 53, 79));
@@ -402,7 +403,7 @@ public class CrudPanelCliente extends javax.swing.JPanel {
 
                                 GuardarCliente(Estado.ACTIVO,(String)cbxCiudadCli.getSelectedItem(),imagenCli,txtCedulaCli.getText(), txtNombresCli.getText().toUpperCase().toUpperCase(), txtApellidosCli.getText().toUpperCase(),
                                     txtDireccionCli.getText().toUpperCase(), txtCorreoCli.getText(),txtCelularCli.getText(), (String) cbxGeneroCli.getSelectedItem(), fechaNacimiento, (String) cbxEstadoCivilCli.getSelectedItem(),
-                                    txtCedulaCli.getText(), txtPasswordCli.getText(), fechaNacimiento);
+                                    txtCedulaCli.getText(), txtPasswordCli.getText(), fechaNacimiento, Rol.CLIENTE);
                                     JOptionPane.showMessageDialog(null, "Cliente Guardado");
                                     cambiartabla();
                                 
@@ -449,7 +450,7 @@ public class CrudPanelCliente extends javax.swing.JPanel {
     private void btnSeleccionarImgen1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSeleccionarImgen1ActionPerformed
         
         JFileChooser jFileChooser = new JFileChooser();
-        FileNameExtensionFilter filtrado = new FileNameExtensionFilter("JPG, PNG & GIF", "jpg", "png", "gif");
+        FileNameExtensionFilter filtrado = new FileNameExtensionFilter("JPG", "jpg");
         jFileChooser.setFileFilter(filtrado);
         
         int respuesta = jFileChooser.showOpenDialog(this);

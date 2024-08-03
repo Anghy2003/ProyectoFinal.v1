@@ -302,7 +302,7 @@ public class TablaClientes extends javax.swing.JPanel {
         ObjectContainer BaseBD = Conexion_db.ConectarBD();
 
         ObjectSet<Cliente> result = BaseBD.queryByExample(new Cliente(null,null,null,cedula, null, null, null, null,
-                null,  null, null, null, null, null, null)); // Crear objeto para consultar
+                null,  null, null, null, null, null, null,null)); // Crear objeto para consultar
 
         if (result.hasNext()) {
             Cliente MecanicoAEliminar = result.next();
@@ -336,7 +336,7 @@ public class TablaClientes extends javax.swing.JPanel {
         
         ObjectSet<Cliente> resultado = query.execute();
 
-        Object matriz[][] = new Object[resultado.size()][16];
+        Object matriz[][] = new Object[resultado.size()][17];
         int i = 0;
         for (Cliente cli3 : resultado) {
 
@@ -364,11 +364,12 @@ public class TablaClientes extends javax.swing.JPanel {
             }
 
             matriz[i][15] = String.valueOf(cli3.getEstado());
+            matriz[i][16] = String.valueOf(cli3.getRol());
             i++;
         }
         //datos configurados
         tblClientesInactivos.setModel(new javax.swing.table.DefaultTableModel(matriz, new String[]{"ID Vendedor", "Usuario", "Contraseña", "Cedula", "Nombres", "Apellidos", "Direccion", "Correo Electronico", "Correo recuperacion", "Celular", "Fecha Nacimiento",
-            "Estado Civil", "Genero", "Ciudad", "Foto", "Estado"}));
+            "Estado Civil", "Genero", "Ciudad", "Foto", "Estado","Rol"}));
         tblClientesInactivos.getColumnModel().getColumn(14).setCellRenderer(new ImageRenderer());
         tblClientesInactivos.setRowHeight(100);
         tblClientesInactivos.setEnabled(false);
@@ -386,7 +387,7 @@ public class TablaClientes extends javax.swing.JPanel {
         
          ObjectSet<Cliente> resultado = query.execute();
 
-        Object matriz[][] = new Object[resultado.size()][16];
+        Object matriz[][] = new Object[resultado.size()][17];
         int i = 0;
         for (Cliente cli3 : resultado) {
 
@@ -414,11 +415,12 @@ public class TablaClientes extends javax.swing.JPanel {
             }
 
             matriz[i][15] = String.valueOf(cli3.getEstado());
+            matriz[i][16] = String.valueOf(cli3.getRol());
             i++;
         }
         //datos configurados
         tblCliente.setModel(new javax.swing.table.DefaultTableModel(matriz, new String[]{"ID Vendedor", "Usuario", "Contraseña", "Cedula", "Nombres", "Apellidos", "Direccion", "Correo Electronico", "Correo recuperacion", "Celular", "Fecha Nacimiento",
-            "Estado Civil", "Genero", "Ciudad", "Foto", "Estado"}));
+            "Estado Civil", "Genero", "Ciudad", "Foto", "Estado","Rol"}));
         tblCliente.getColumnModel().getColumn(14).setCellRenderer(new ImageRenderer());
         tblCliente.setRowHeight(100);
         tblCliente.setEnabled(false);

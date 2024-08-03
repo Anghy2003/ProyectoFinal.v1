@@ -282,7 +282,7 @@ public class TablaMecanicos extends javax.swing.JPanel {
 
         ObjectSet<Mecanico> resultado = query.execute();
 
-        Object matriz[][] = new Object[resultado.size()][18];
+        Object matriz[][] = new Object[resultado.size()][19];
         int i = 0;
         for (Mecanico meca : resultado) {
 
@@ -313,12 +313,13 @@ public class TablaMecanicos extends javax.swing.JPanel {
 
             
             matriz[i][17] = String.valueOf(meca.getEstado());
+            matriz[i][18] = String.valueOf(meca.getRol());
             i++;
         }
         
         //datos configurados
         tblMecanicoInactivo.setModel(new javax.swing.table.DefaultTableModel(matriz, new String[]{"ID Mecanico", "Usuario", "Contraseña", "Cedula", "Nombres", "Apellidos", "Direccion", "Correo Electronico", "Correo recuperacion", "Celular", "Fecha Nacimiento",
-                    "Estado Civil", "Genero","Titulo","Sueldo", "Ciudad" , "Foto","Estado"}));
+                    "Estado Civil", "Genero","Titulo","Sueldo", "Ciudad" , "Foto","Estado","Rol"}));
          tblMecanicoInactivo.getColumnModel().getColumn(16).setCellRenderer(new ImageRenderer());
         tblMecanicoInactivo.setRowHeight(100);
         tblMecanicoInactivo.setEnabled(false);
@@ -336,7 +337,7 @@ public class TablaMecanicos extends javax.swing.JPanel {
 
         ObjectSet<Mecanico> resultado = query.execute();
 
-        Object matriz[][] = new Object[resultado.size()][18];
+        Object matriz[][] = new Object[resultado.size()][19];
         int i = 0;
         for (Mecanico meca : resultado) {
 
@@ -367,12 +368,13 @@ public class TablaMecanicos extends javax.swing.JPanel {
 
             
             matriz[i][17] = String.valueOf(meca.getEstado());
+            matriz[i][18] = String.valueOf(meca.getRol());
             i++;
         }
         
         //datos configurados
         tblMecanico.setModel(new javax.swing.table.DefaultTableModel(matriz, new String[]{"ID Mecanico", "Usuario", "Contraseña", "Cedula", "Nombres", "Apellidos", "Direccion", "Correo Electronico", "Correo recuperacion", "Celular", "Fecha Nacimiento",
-                    "Estado Civil", "Genero","Titulo","Sueldo", "Ciudad" , "Foto","Estado"}));
+                    "Estado Civil", "Genero","Titulo","Sueldo", "Ciudad" , "Foto","Estado","Rol"}));
          tblMecanico.getColumnModel().getColumn(16).setCellRenderer(new ImageRenderer());
         tblMecanico.setRowHeight(100);
         tblMecanico.setEnabled(false);
@@ -384,7 +386,7 @@ public class TablaMecanicos extends javax.swing.JPanel {
         ObjectContainer BaseBD = Conexion_db.ConectarBD();
 
         ObjectSet<Mecanico> result = BaseBD.queryByExample(new Mecanico(null,0.0,null,null,null,cedula, null, null, null, null,
-                null,  null, null, null, null, null, null)); // Crear objeto para consultar
+                null,  null, null, null, null, null, null,null)); // Crear objeto para consultar
 
         if (result.hasNext()) {
             Mecanico MecanicoAEliminar = result.next();

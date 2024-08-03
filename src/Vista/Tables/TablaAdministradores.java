@@ -5,7 +5,7 @@ import Conexion.ImageRenderer;
 import Models.Administrador;
 import static Models.Administrador.Estado.ACTIVO;
 import static Models.Administrador.Estado.INACTIVO;
-import Vista.Cruds.CRUDS1.CrudCiudad;
+
 import Vista.Cruds.CRUDS1.CrudPanelAdministrador;
 import Vista.Cruds.CRUDS1.CrudPanelAdministrador2;
 import Vista.Menu.VistaMenu;
@@ -320,7 +320,7 @@ public class TablaAdministradores extends javax.swing.JPanel {
 
         ObjectSet<Administrador> resultado = query.execute();
 
-        Object matriz[][] = new Object[resultado.size()][17];
+        Object matriz[][] = new Object[resultado.size()][18];
 
         int i = 0;
         for (Administrador admin3 : resultado) {
@@ -350,11 +350,12 @@ public class TablaAdministradores extends javax.swing.JPanel {
             }
 
             matriz[i][16] = String.valueOf(admin3.getEstado());
+            matriz[i][17] = String.valueOf(admin3.getRol());
             i++;
         }
         //datos configurados
         tblAdmiInactivos.setModel(new javax.swing.table.DefaultTableModel(matriz, new String[]{"ID Vendedor", "Usuario", "Contraseña", "Cedula", "Nombres", "Apellidos", "Direccion", "Correo Electronico", "Correo recuperacion", "Celular", "Fecha Nacimiento",
-            "Estado Civil", "Genero", "Titulo", "Ciudad", "Foto", "Estado"}));
+            "Estado Civil", "Genero", "Titulo", "Ciudad", "Foto", "Estado","Rol"}));
         tblAdmiInactivos.getColumnModel().getColumn(15).setCellRenderer(new ImageRenderer());
         tblAdmiInactivos.setRowHeight(100);
         tblAdmiInactivos.setEnabled(false);
@@ -372,7 +373,7 @@ public class TablaAdministradores extends javax.swing.JPanel {
 
         ObjectSet<Administrador> resultado = query.execute();
 
-        Object matriz[][] = new Object[resultado.size()][17];
+        Object matriz[][] = new Object[resultado.size()][18];
         int i = 0;
         for (Administrador admin3 : resultado) {
 
@@ -401,11 +402,12 @@ public class TablaAdministradores extends javax.swing.JPanel {
             }
 
             matriz[i][16] = String.valueOf(admin3.getEstado());
-            i++;
+            matriz[i][17] = String.valueOf(admin3.getRol());
+                    i++;
         }
         //datos configurados
         tblAdmi.setModel(new javax.swing.table.DefaultTableModel(matriz, new String[]{"ID Vendedor", "Usuario", "Contraseña", "Cedula", "Nombres", "Apellidos", "Direccion", "Correo Electronico", "Correo recuperacion", "Celular", "Fecha Nacimiento",
-            "Estado Civil", "Genero", "Titulo", "Ciudad", "Foto", "Estado"}));
+            "Estado Civil", "Genero", "Titulo", "Ciudad", "Foto", "Estado","Rol"}));
 
         // Usar el ImageRenderer para la columna de imágenes
         tblAdmi.getColumnModel().getColumn(15).setCellRenderer(new ImageRenderer());
@@ -420,7 +422,7 @@ public class TablaAdministradores extends javax.swing.JPanel {
 
         ObjectSet<Administrador> result = BaseBD.queryByExample(new Administrador(null, null, null, null, cedula, null,
                 null, null, null, null, null, null, null, null,
-                null, null)); // Crear objeto para consultar
+                null, null,null)); // Crear objeto para consultar
 
         if (result.hasNext()) {
             Administrador VendedorAEliminar = result.next();

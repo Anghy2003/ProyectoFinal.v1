@@ -3,6 +3,8 @@ package Vista.Cruds.CRUDS1;
 import Conexion.Conexion_db;
 import Models.Administrador;
 import Models.Ciudad;
+import Models.Persona;
+import Models.Persona.Rol;
 import Vista.Menu.VistaMenu;
 import Vista.Tables.TablaAdministradores;
 import com.db4o.ObjectContainer;
@@ -26,15 +28,17 @@ public class CrudPanelAdministrador extends javax.swing.JPanel {
 
     private byte[] imagenAdmi;
 
-    public void GuardarAdministrador(String titulo_Administrador, Administrador.Estado estado, String ciudad, byte[] imagenAdmi, String cedula, String nombres, String apellidos, String direccion, String correo, String celular, String genero,
-            String fechaNacimiento, String estadoCivil, String nombreUsuario, String password, String correoRecuperacion) {
+    public void GuardarAdministrador(String titulo_Administrador, Administrador.Estado estado, String ciudad, byte[] imagenAdmi,
+            String cedula, String nombres, String apellidos, String direccion, String correo, String celular, String genero,
+            String fechaNacimiento, String estadoCivil, String nombreUsuario, String password, String correoRecuperacion, Rol rol) {
 
         ObjectContainer BaseBD = Conexion_db.ConectarBD();
 
         int siguienteID = obtenerProximoIDAdministrador(BaseBD);
 
-        Administrador administrador1 = new Administrador(titulo_Administrador, estado, ciudad, imagenAdmi, cedula, nombres, apellidos, direccion, correo, celular, genero,
-                fechaNacimiento, estadoCivil, nombreUsuario, password, correoRecuperacion);
+        Administrador administrador1 = new Administrador( titulo_Administrador, estado,  ciudad,imagenAdmi,  cedula,
+         nombres,  apellidos,  direccion,  correo,  celular,  genero,  fechaNacimiento,
+                 estadoCivil,  nombreUsuario,  password,  correoRecuperacion, rol);
 
         administrador1.setiD_Administrador(siguienteID);
         BaseBD.close();
@@ -247,7 +251,7 @@ public class CrudPanelAdministrador extends javax.swing.JPanel {
                 btnCancelarActionPerformed(evt);
             }
         });
-        jPanel2.add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 560, -1, -1));
+        jPanel2.add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 550, -1, -1));
         jPanel2.add(jDateFechaNacAdmi, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 420, 190, 30));
 
         jPanel2.add(cbxCiudadAdmi, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 380, 190, 30));
@@ -285,7 +289,7 @@ public class CrudPanelAdministrador extends javax.swing.JPanel {
                 btnGuardarActionPerformed(evt);
             }
         });
-        jPanel2.add(btnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 560, -1, 40));
+        jPanel2.add(btnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 550, -1, 40));
 
         btnSeleccionarImgen.setText("Selecionar Imagen");
         btnSeleccionarImgen.setToolTipText("SOLO JPG");
@@ -405,7 +409,7 @@ public class CrudPanelAdministrador extends javax.swing.JPanel {
                                 GuardarAdministrador(txtTituloAdmi.getText(), Administrador.Estado.ACTIVO, (String) cbxCiudadAdmi.getSelectedItem(), imagenAdmi, txtCedulaAdmi.getText(),
                                         txtNombresAdmi.getText().toUpperCase(), txtApellidosAdmi.getText().toUpperCase(), txtDireccionAdmi.getText().toUpperCase(), txtCorreoAdmi.getText(), txtCelularAdmi.getText(),
                                         (String) cbxGeneroAdmi.getSelectedItem(), fechaNacimiento, (String) cbxEstadoCivilAdmi.getSelectedItem(), txtCedulaAdmi.getText(), txtPasswordAdmi.getText(),
-                                        txtCorreoAdmi.getText());
+                                        txtCorreoAdmi.getText(), Rol.CLIENTE);
 
                                 cambiartabla();
                                 limpiar();

@@ -4,6 +4,7 @@ package Vista.Cruds.CRUDS1;
 import Conexion.Conexion_db;
 import Models.Ciudad;
 import Models.Mecanico;
+import Models.Persona.Rol;
 import Vista.Menu.VistaMenu;
 import Vista.Tables.TablaMecanicos;
 import com.db4o.ObjectContainer;
@@ -128,7 +129,7 @@ public class CrudPanelMecanico2 extends javax.swing.JPanel {
                 btnCancelarActionPerformed(evt);
             }
         });
-        jPanel2.add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 560, -1, -1));
+        jPanel2.add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 570, -1, -1));
 
         btnModificar.setText("Modificar");
         btnModificar.addActionListener(new java.awt.event.ActionListener() {
@@ -136,7 +137,7 @@ public class CrudPanelMecanico2 extends javax.swing.JPanel {
                 btnModificarActionPerformed(evt);
             }
         });
-        jPanel2.add(btnModificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(220, 560, -1, -1));
+        jPanel2.add(btnModificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 570, -1, -1));
 
         lblImagenMeca.setToolTipText("SOLO JPG");
         lblImagenMeca.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
@@ -361,7 +362,7 @@ public class CrudPanelMecanico2 extends javax.swing.JPanel {
                                     modificarMecanico(txtTituloMeca.getText().toUpperCase(), Double.parseDouble(txtSueldoMeca.getText()), Mecanico.Estado.ACTIVO,(String)cbxCiudadMeca.getSelectedItem(),imagenMeca, txtCedulaMeca.getText(), txtNombresMeca.getText().toUpperCase(),
                                         txtApellidosMeca.getText().toUpperCase(), txtDireccionMeca.getText().toUpperCase(), txtCorreoMeca.getText(), txtCelularMeca.getText(),
                                         (String) cbxGeneroMeca.getSelectedItem(), fechaNacimiento, (String) cbxEstadoCivilMeca.getSelectedItem(), txtCedulaMeca.getText(), txtPasswordMeca.getText(),
-                                        txtCorreoMeca.getText());
+                                        txtCorreoMeca.getText(), Rol.MECANICO);
                                     JOptionPane.showMessageDialog(null, "Modificacion Correcta");
                                     cambiartabla();
                                     
@@ -402,7 +403,7 @@ public class CrudPanelMecanico2 extends javax.swing.JPanel {
     private void btnSeleccionarImgen1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSeleccionarImgen1ActionPerformed
 
         JFileChooser jFileChooser = new JFileChooser();
-        FileNameExtensionFilter filtrado = new FileNameExtensionFilter("JPG, PNG & GIF", "jpg", "png", "gif");
+        FileNameExtensionFilter filtrado = new FileNameExtensionFilter("JPG", "jpg");
         jFileChooser.setFileFilter(filtrado);
 
         int respuesta = jFileChooser.showOpenDialog(this);
@@ -506,16 +507,16 @@ public class CrudPanelMecanico2 extends javax.swing.JPanel {
 
     public void modificarMecanico(String titulo, double Sueldo, Mecanico.Estado estado, String ciudad, byte[] imagenMeca, String cedula, String nombres, String apellidos,
             String direccion, String correo, String celular, String genero, String fechaNacimiento, String estadoCivil,
-            String nombreUsuario, String password, String correoRecuperacion) {
+            String nombreUsuario, String password, String correoRecuperacion, Rol rol) {
 
         ObjectContainer BaseBD = Conexion_db.ConectarBD();
 
         Mecanico modificarMecanico = new Mecanico(titulo,  Sueldo,  estado,  ciudad,  imagenMeca,  cedula,  nombres,  apellidos,
              direccion,  correo,  celular,  genero,  fechaNacimiento,  estadoCivil,
-             nombreUsuario,  password,  correoRecuperacion);
+             nombreUsuario,  password,  correoRecuperacion,rol);
 
         Mecanico mecanicoBusca = new Mecanico(null,0.0,null,null,null,cedula, null, null, null, null,
-                null,  null, null, null, null, null, null);
+                null,  null, null, null, null, null, null,null);
 
         ObjectSet resultado = BaseBD.get(mecanicoBusca);
 
