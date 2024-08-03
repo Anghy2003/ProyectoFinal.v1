@@ -74,6 +74,11 @@ public class TablaVehiculos extends javax.swing.JPanel {
 
         txtBuscar.setFont(new java.awt.Font("Roboto Bold", 2, 14)); // NOI18N
         txtBuscar.setPlaceholder("ejm. ABG-0023");
+        txtBuscar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtBuscarKeyTyped(evt);
+            }
+        });
 
         jLabel2.setFont(new java.awt.Font("Roboto Black", 0, 18)); // NOI18N
         jLabel2.setText("Buscar");
@@ -157,34 +162,33 @@ public class TablaVehiculos extends javax.swing.JPanel {
         pnlListadoLayout.setHorizontalGroup(
             pnlListadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlListadoLayout.createSequentialGroup()
-                .addGap(24, 24, 24)
-                .addGroup(pnlListadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(pnlListadoLayout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(pnlListadoLayout.createSequentialGroup()
-                        .addComponent(jLabel2)
-                        .addGap(39, 39, 39)
-                        .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 117, Short.MAX_VALUE)
-                        .addComponent(btnAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(44, 44, 44)
-                        .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(37, 37, 37)
-                        .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(17, 17, 17))))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlListadoLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(scrlpTablaVehi1, javax.swing.GroupLayout.PREFERRED_SIZE, 826, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(17, 17, 17))
-            .addGroup(pnlListadoLayout.createSequentialGroup()
                 .addGap(14, 14, 14)
                 .addGroup(pnlListadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlListadoLayout.createSequentialGroup()
                         .addGap(6, 6, 6)
                         .addComponent(scrlpTablaVehi2, javax.swing.GroupLayout.PREFERRED_SIZE, 826, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(lbl_Inactivos))
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addGap(0, 44, Short.MAX_VALUE))
+            .addGroup(pnlListadoLayout.createSequentialGroup()
+                .addGap(24, 24, 24)
+                .addGroup(pnlListadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnlListadoLayout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(pnlListadoLayout.createSequentialGroup()
+                        .addGroup(pnlListadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(pnlListadoLayout.createSequentialGroup()
+                                .addComponent(jLabel2)
+                                .addGap(39, 39, 39)
+                                .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(91, 91, 91)
+                                .addComponent(btnAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(44, 44, 44)
+                                .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(37, 37, 37)
+                                .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(scrlpTablaVehi1, javax.swing.GroupLayout.PREFERRED_SIZE, 822, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
         pnlListadoLayout.setVerticalGroup(
             pnlListadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -205,9 +209,9 @@ public class TablaVehiculos extends javax.swing.JPanel {
                         .addGroup(pnlListadoLayout.createSequentialGroup()
                             .addGap(26, 26, 26)
                             .addComponent(jLabel2))))
-                .addGap(41, 41, 41)
+                .addGap(53, 53, 53)
                 .addComponent(scrlpTablaVehi1, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(24, 24, 24)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(lbl_Inactivos)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(scrlpTablaVehi2, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -297,6 +301,13 @@ public class TablaVehiculos extends javax.swing.JPanel {
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnAgregarActionPerformed
+
+    private void txtBuscarKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarKeyTyped
+        char x= evt.getKeyChar();
+        if (Character.isLowerCase(x)) {
+            evt.setKeyChar(Character.toUpperCase(x));
+        }
+    }//GEN-LAST:event_txtBuscarKeyTyped
 
     private void mostrarDatosInactivo() {
         // ESTABLECER CONEXION CON LA BASE DE DATOS

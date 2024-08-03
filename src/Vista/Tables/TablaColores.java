@@ -71,6 +71,11 @@ public class TablaColores extends javax.swing.JPanel {
 
         txtBuscar.setFont(new java.awt.Font("Roboto Bold", 2, 14)); // NOI18N
         txtBuscar.setPlaceholder("ejm. Col1");
+        txtBuscar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtBuscarKeyTyped(evt);
+            }
+        });
         pnlListado.add(txtBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 81, -1, 38));
 
         lblBuscar.setFont(new java.awt.Font("Roboto Black", 0, 18)); // NOI18N
@@ -158,6 +163,13 @@ public class TablaColores extends javax.swing.JPanel {
             }
             txtBuscar.setText("");}
     }//GEN-LAST:event_btnAgregarActionPerformed
+
+    private void txtBuscarKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarKeyTyped
+        char x= evt.getKeyChar();
+        if (Character.isLowerCase(x)) {
+            evt.setKeyChar(Character.toUpperCase(x));
+        }
+    }//GEN-LAST:event_txtBuscarKeyTyped
  
     
        

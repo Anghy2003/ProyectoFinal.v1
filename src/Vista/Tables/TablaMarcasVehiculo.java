@@ -38,7 +38,6 @@ public class TablaMarcasVehiculo extends javax.swing.JPanel {
     private void initComponents() {
 
         jdlCrearMarcaTabla = new javax.swing.JDialog();
-        pnlFondoRegistroMarca = new javax.swing.JPanel();
         pnlCrearMarca = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         lblPlaca1 = new javax.swing.JLabel();
@@ -47,19 +46,17 @@ public class TablaMarcasVehiculo extends javax.swing.JPanel {
         btnGuardarMarca = new rojeru_san.RSButtonRiple();
         txtModeloMarcaRegistro = new rojeru_san.RSMTextFull();
         lblModeloMarcaRegistro = new javax.swing.JLabel();
-        jLabel14 = new javax.swing.JLabel();
         jdlCrearModelo = new javax.swing.JDialog();
         pnlCrearMarca1 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         lblPlaca2 = new javax.swing.JLabel();
         btnCancelarModelo = new rojeru_san.RSButtonRiple();
         btnGuardarModelo = new rojeru_san.RSButtonRiple();
-        jScrollPane2 = new javax.swing.JScrollPane();
-        tblModelo_VehiRegistro = new javax.swing.JTable();
         txtModeloRegistrar = new rojeru_san.RSMTextFull();
         lblModeloMarcaRegistro1 = new javax.swing.JLabel();
         cmbMarcas = new javax.swing.JComboBox<>();
-        jLabel15 = new javax.swing.JLabel();
+        tblModelosDialogo2 = new javax.swing.JScrollPane();
+        tblModelosDialogo2t = new javax.swing.JTable();
         pnlListado = new javax.swing.JPanel();
         lblMarcas = new javax.swing.JLabel();
         scrlpTablaVehi1 = new javax.swing.JScrollPane();
@@ -75,35 +72,36 @@ public class TablaMarcasVehiculo extends javax.swing.JPanel {
         scrlpTablaVehi2 = new javax.swing.JScrollPane();
         tblModelosLista = new javax.swing.JTable();
 
-        jdlCrearMarcaTabla.getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        pnlFondoRegistroMarca.setBackground(new java.awt.Color(0, 53, 79));
-        pnlFondoRegistroMarca.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        jdlCrearMarcaTabla.setMinimumSize(new java.awt.Dimension(519, 420));
+        jdlCrearMarcaTabla.setUndecorated(true);
 
         pnlCrearMarca.setBackground(new java.awt.Color(255, 255, 255));
+        pnlCrearMarca.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.blue, java.awt.Color.blue, java.awt.Color.blue, java.awt.Color.blue));
+        pnlCrearMarca.setMinimumSize(new java.awt.Dimension(519, 420));
+        pnlCrearMarca.setPreferredSize(new java.awt.Dimension(519, 420));
         pnlCrearMarca.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel3.setFont(new java.awt.Font("Roboto Black", 0, 30)); // NOI18N
         jLabel3.setForeground(new java.awt.Color(0, 53, 79));
         jLabel3.setText("Registrar Marca Vehículo");
-        pnlCrearMarca.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 90, 350, 40));
+        pnlCrearMarca.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 90, 350, 40));
 
         lblPlaca1.setFont(new java.awt.Font("Roboto Medium", 0, 21)); // NOI18N
         lblPlaca1.setForeground(new java.awt.Color(0, 53, 79));
         lblPlaca1.setText("Marca:");
-        pnlCrearMarca.add(lblPlaca1, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 140, 70, 40));
+        pnlCrearMarca.add(lblPlaca1, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 150, 70, 40));
 
         txtMarcaVRegistrar.setForeground(new java.awt.Color(0, 53, 79));
         txtMarcaVRegistrar.setToolTipText("INGRESE NUEVA MARCA");
         txtMarcaVRegistrar.setColorTransparente(true);
         txtMarcaVRegistrar.setFont(new java.awt.Font("Roboto Light", 1, 14)); // NOI18N
-        txtMarcaVRegistrar.setPlaceholder("Ejm: Chevrolet");
+        txtMarcaVRegistrar.setPlaceholder("Ejm: CHEVROLET");
         txtMarcaVRegistrar.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 txtMarcaVRegistrarKeyTyped(evt);
             }
         });
-        pnlCrearMarca.add(txtMarcaVRegistrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 140, 230, 40));
+        pnlCrearMarca.add(txtMarcaVRegistrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 150, 230, 40));
 
         btnCancelar1.setBackground(new java.awt.Color(255, 51, 51));
         btnCancelar1.setText("Cancelar");
@@ -118,7 +116,7 @@ public class TablaMarcasVehiculo extends javax.swing.JPanel {
                 btnCancelar1ActionPerformed(evt);
             }
         });
-        pnlCrearMarca.add(btnCancelar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 260, 130, -1));
+        pnlCrearMarca.add(btnCancelar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 280, 130, -1));
 
         btnGuardarMarca.setText("Guardar");
         btnGuardarMarca.setToolTipText("Se guardaran cambios realizados");
@@ -132,63 +130,45 @@ public class TablaMarcasVehiculo extends javax.swing.JPanel {
                 btnGuardarMarcaActionPerformed(evt);
             }
         });
-        pnlCrearMarca.add(btnGuardarMarca, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 260, 130, -1));
+        pnlCrearMarca.add(btnGuardarMarca, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 280, 130, -1));
 
         txtModeloMarcaRegistro.setForeground(new java.awt.Color(0, 53, 79));
         txtModeloMarcaRegistro.setToolTipText("INGRESE NUEVO MODELO DE LA MARCA");
         txtModeloMarcaRegistro.setColorTransparente(true);
         txtModeloMarcaRegistro.setFont(new java.awt.Font("Roboto Light", 1, 14)); // NOI18N
-        txtModeloMarcaRegistro.setPlaceholder("Ejm: D-Max");
+        txtModeloMarcaRegistro.setPlaceholder("Ejm: D-MAX");
         txtModeloMarcaRegistro.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 txtModeloMarcaRegistroKeyTyped(evt);
             }
         });
-        pnlCrearMarca.add(txtModeloMarcaRegistro, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 190, 230, 40));
+        pnlCrearMarca.add(txtModeloMarcaRegistro, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 200, 230, 40));
 
         lblModeloMarcaRegistro.setFont(new java.awt.Font("Roboto Medium", 0, 21)); // NOI18N
         lblModeloMarcaRegistro.setForeground(new java.awt.Color(0, 53, 79));
         lblModeloMarcaRegistro.setText("Modelo:");
-        pnlCrearMarca.add(lblModeloMarcaRegistro, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 190, 80, 40));
+        pnlCrearMarca.add(lblModeloMarcaRegistro, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 200, 80, 40));
 
-        jLabel14.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/burbujas.png"))); // NOI18N
-        jLabel14.setText("jLabel12");
-        pnlCrearMarca.add(jLabel14, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, 490, 390));
+        jdlCrearMarcaTabla.getContentPane().add(pnlCrearMarca, java.awt.BorderLayout.CENTER);
 
-        javax.swing.GroupLayout pnlFondoRegistroMarcaLayout = new javax.swing.GroupLayout(pnlFondoRegistroMarca);
-        pnlFondoRegistroMarca.setLayout(pnlFondoRegistroMarcaLayout);
-        pnlFondoRegistroMarcaLayout.setHorizontalGroup(
-            pnlFondoRegistroMarcaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlFondoRegistroMarcaLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(pnlCrearMarca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(8, Short.MAX_VALUE))
-        );
-        pnlFondoRegistroMarcaLayout.setVerticalGroup(
-            pnlFondoRegistroMarcaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlFondoRegistroMarcaLayout.createSequentialGroup()
-                .addGap(14, 14, 14)
-                .addComponent(pnlCrearMarca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(10, Short.MAX_VALUE))
-        );
-
-        jdlCrearMarcaTabla.getContentPane().add(pnlFondoRegistroMarca, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 520, 420));
-
+        jdlCrearModelo.setMinimumSize(new java.awt.Dimension(519, 420));
+        jdlCrearModelo.setUndecorated(true);
         jdlCrearModelo.setResizable(false);
 
         pnlCrearMarca1.setBackground(new java.awt.Color(255, 255, 255));
-        pnlCrearMarca1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
+        pnlCrearMarca1.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.blue, java.awt.Color.blue, java.awt.Color.blue, java.awt.Color.blue));
+        pnlCrearMarca1.setMinimumSize(new java.awt.Dimension(519, 420));
         pnlCrearMarca1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel4.setFont(new java.awt.Font("Roboto Black", 0, 30)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(0, 53, 79));
         jLabel4.setText("Registrar Modelo Vehículo");
-        pnlCrearMarca1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 20, 380, 40));
+        pnlCrearMarca1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 30, 380, 40));
 
         lblPlaca2.setFont(new java.awt.Font("Roboto Medium", 0, 21)); // NOI18N
         lblPlaca2.setForeground(new java.awt.Color(0, 53, 79));
         lblPlaca2.setText("Marca:");
-        pnlCrearMarca1.add(lblPlaca2, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 110, 70, 40));
+        pnlCrearMarca1.add(lblPlaca2, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 110, 70, 40));
 
         btnCancelarModelo.setBackground(new java.awt.Color(255, 51, 51));
         btnCancelarModelo.setText("Cancelar");
@@ -203,7 +183,7 @@ public class TablaMarcasVehiculo extends javax.swing.JPanel {
                 btnCancelarModeloActionPerformed(evt);
             }
         });
-        pnlCrearMarca1.add(btnCancelarModelo, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 280, 130, -1));
+        pnlCrearMarca1.add(btnCancelarModelo, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 330, 130, -1));
 
         btnGuardarModelo.setText("Guardar");
         btnGuardarModelo.setToolTipText("Se guardaran cambios realizados");
@@ -217,9 +197,36 @@ public class TablaMarcasVehiculo extends javax.swing.JPanel {
                 btnGuardarModeloActionPerformed(evt);
             }
         });
-        pnlCrearMarca1.add(btnGuardarModelo, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 280, 130, -1));
+        pnlCrearMarca1.add(btnGuardarModelo, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 330, 130, -1));
 
-        tblModelo_VehiRegistro.setModel(new javax.swing.table.DefaultTableModel(
+        txtModeloRegistrar.setForeground(new java.awt.Color(0, 53, 79));
+        txtModeloRegistrar.setToolTipText("INGRESE EL NUEVO MODELO");
+        txtModeloRegistrar.setColorTransparente(true);
+        txtModeloRegistrar.setFont(new java.awt.Font("Roboto Light", 1, 14)); // NOI18N
+        txtModeloRegistrar.setPlaceholder("Ejm: D-MAX");
+        txtModeloRegistrar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtModeloRegistrarActionPerformed(evt);
+            }
+        });
+        txtModeloRegistrar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtModeloRegistrarKeyTyped(evt);
+            }
+        });
+        pnlCrearMarca1.add(txtModeloRegistrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 70, 230, 40));
+
+        lblModeloMarcaRegistro1.setFont(new java.awt.Font("Roboto Medium", 0, 21)); // NOI18N
+        lblModeloMarcaRegistro1.setForeground(new java.awt.Color(0, 53, 79));
+        lblModeloMarcaRegistro1.setText("Modelo:");
+        pnlCrearMarca1.add(lblModeloMarcaRegistro1, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 70, 80, 40));
+
+        cmbMarcas.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Elegir marca" }));
+        pnlCrearMarca1.add(cmbMarcas, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 120, 230, 30));
+
+        tblModelosDialogo2.setHorizontalScrollBar(null);
+
+        tblModelosDialogo2t.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -230,38 +237,9 @@ public class TablaMarcasVehiculo extends javax.swing.JPanel {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        tblModelo_VehiRegistro.setGridColor(new java.awt.Color(0, 0, 0));
-        tblModelo_VehiRegistro.setShowGrid(false);
-        tblModelo_VehiRegistro.setShowHorizontalLines(true);
-        tblModelo_VehiRegistro.getTableHeader().setResizingAllowed(false);
-        tblModelo_VehiRegistro.getTableHeader().setReorderingAllowed(false);
-        jScrollPane2.setViewportView(tblModelo_VehiRegistro);
+        tblModelosDialogo2.setViewportView(tblModelosDialogo2t);
 
-        pnlCrearMarca1.add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 170, 320, 90));
-
-        txtModeloRegistrar.setForeground(new java.awt.Color(0, 53, 79));
-        txtModeloRegistrar.setToolTipText("INGRESE EL NUEVO MODELO");
-        txtModeloRegistrar.setColorTransparente(true);
-        txtModeloRegistrar.setFont(new java.awt.Font("Roboto Light", 1, 14)); // NOI18N
-        txtModeloRegistrar.setPlaceholder("Ejm: D-Max");
-        txtModeloRegistrar.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtModeloRegistrarKeyTyped(evt);
-            }
-        });
-        pnlCrearMarca1.add(txtModeloRegistrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 70, 230, 40));
-
-        lblModeloMarcaRegistro1.setFont(new java.awt.Font("Roboto Medium", 0, 21)); // NOI18N
-        lblModeloMarcaRegistro1.setForeground(new java.awt.Color(0, 53, 79));
-        lblModeloMarcaRegistro1.setText("Modelo:");
-        pnlCrearMarca1.add(lblModeloMarcaRegistro1, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 70, 80, 40));
-
-        cmbMarcas.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Elegir marca" }));
-        pnlCrearMarca1.add(cmbMarcas, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 120, 230, 30));
-
-        jLabel15.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/burbujas.png"))); // NOI18N
-        jLabel15.setText("jLabel12");
-        pnlCrearMarca1.add(jLabel15, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 470, 350));
+        pnlCrearMarca1.add(tblModelosDialogo2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 170, 420, 130));
 
         jdlCrearModelo.getContentPane().add(pnlCrearMarca1, java.awt.BorderLayout.CENTER);
 
@@ -295,7 +273,20 @@ public class TablaMarcasVehiculo extends javax.swing.JPanel {
         pnlListado.add(scrlpTablaVehi1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 190, 799, 200));
 
         txtBuscar.setFont(new java.awt.Font("Roboto Bold", 2, 14)); // NOI18N
-        txtBuscar.setPlaceholder("ejm. Chevrolet");
+        txtBuscar.setPlaceholder("ejm. CHEVROLET");
+        txtBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtBuscarActionPerformed(evt);
+            }
+        });
+        txtBuscar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtBuscarKeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtBuscarKeyTyped(evt);
+            }
+        });
         pnlListado.add(txtBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 81, -1, 38));
 
         lblBuscar.setFont(new java.awt.Font("Roboto Black", 0, 18)); // NOI18N
@@ -303,7 +294,7 @@ public class TablaMarcasVehiculo extends javax.swing.JPanel {
         pnlListado.add(lblBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(103, 97, -1, -1));
 
         btnAgregar.setText("Agregar");
-        btnAgregar.setToolTipText("Ingresar un nuevo vehiculo");
+        btnAgregar.setToolTipText("Ingresar una nueva marca de  vehiculo");
         btnAgregar.setColorPrimario(new java.awt.Color(0, 204, 51));
         btnAgregar.setColorPrimarioHover(new java.awt.Color(0, 204, 51));
         btnAgregar.setColorSecundario(new java.awt.Color(153, 255, 153));
@@ -324,7 +315,7 @@ public class TablaMarcasVehiculo extends javax.swing.JPanel {
         pnlListado.add(btnAgregar, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 80, 102, -1));
 
         btnBuscarMarca.setText("Buscar");
-        btnBuscarMarca.setToolTipText("Previamente ingrese una placa");
+        btnBuscarMarca.setToolTipText("Previamente ingrese la marca");
         btnBuscarMarca.setColorPrimario(new java.awt.Color(0, 51, 153));
         btnBuscarMarca.setColorPrimarioHover(new java.awt.Color(51, 0, 255));
         btnBuscarMarca.setColorSecundario(new java.awt.Color(51, 153, 255));
@@ -346,11 +337,24 @@ public class TablaMarcasVehiculo extends javax.swing.JPanel {
         pnlListado.add(lblBuscar1, new org.netbeans.lib.awtextra.AbsoluteConstraints(56, 147, -1, -1));
 
         txtBuscarModelo.setFont(new java.awt.Font("Roboto Bold", 2, 14)); // NOI18N
-        txtBuscarModelo.setPlaceholder("ejm. D-max");
+        txtBuscarModelo.setPlaceholder("ejm. D-MAX");
+        txtBuscarModelo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtBuscarModeloActionPerformed(evt);
+            }
+        });
+        txtBuscarModelo.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtBuscarModeloKeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtBuscarModeloKeyTyped(evt);
+            }
+        });
         pnlListado.add(txtBuscarModelo, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 131, -1, 38));
 
         btnAgregarModelo.setText("Agregar");
-        btnAgregarModelo.setToolTipText("Ingresar un nuevo vehiculo");
+        btnAgregarModelo.setToolTipText("Registrar modelo");
         btnAgregarModelo.setColorPrimario(new java.awt.Color(0, 204, 51));
         btnAgregarModelo.setColorPrimarioHover(new java.awt.Color(0, 204, 51));
         btnAgregarModelo.setColorSecundario(new java.awt.Color(153, 255, 153));
@@ -371,7 +375,7 @@ public class TablaMarcasVehiculo extends javax.swing.JPanel {
         pnlListado.add(btnAgregarModelo, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 130, 102, -1));
 
         btnBuscarModelo.setText("Buscar");
-        btnBuscarModelo.setToolTipText("Previamente ingrese una placa");
+        btnBuscarModelo.setToolTipText("Previamente ingrese un modelo");
         btnBuscarModelo.setColorPrimario(new java.awt.Color(0, 51, 153));
         btnBuscarModelo.setColorPrimarioHover(new java.awt.Color(51, 0, 255));
         btnBuscarModelo.setColorSecundario(new java.awt.Color(51, 153, 255));
@@ -478,6 +482,8 @@ public class TablaMarcasVehiculo extends javax.swing.JPanel {
                     System.out.println("Ha seleccionado 'No'");
                 }
             } else {//sino vamos a dejar la cedula en el  textfield
+                filtrarDatosMarcaenMarca();
+                filtrarDatosModeloenMarca();
                 JOptionPane.showMessageDialog(this, "Marca Verificada");
             }
         }
@@ -503,6 +509,9 @@ public class TablaMarcasVehiculo extends javax.swing.JPanel {
         if (Character.isDigit(x)) {
             evt.consume();
             JOptionPane.showMessageDialog(this, "Ingrese solo letras");
+        }
+        if (Character.isLowerCase(x)) {
+            evt.setKeyChar(Character.toUpperCase(x));
         }
     }//GEN-LAST:event_txtMarcaVRegistrarKeyTyped
 
@@ -560,7 +569,10 @@ public class TablaMarcasVehiculo extends javax.swing.JPanel {
     
     
     private void txtModeloMarcaRegistroKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtModeloMarcaRegistroKeyTyped
-        // TODO add your handling code here:
+        char x= evt.getKeyChar();
+        if (Character.isLowerCase(x)) {
+            evt.setKeyChar(Character.toUpperCase(x));
+        }
     }//GEN-LAST:event_txtModeloMarcaRegistroKeyTyped
 
     private void btnAgregarModeloMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAgregarModeloMouseClicked
@@ -576,7 +588,8 @@ public class TablaMarcasVehiculo extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(this, "INGRESE UN MODELO");
         }else{
         mostrarComboMarcas();
-        txtModeloRegistrar.setText(txtBuscarModelo.getText().toUpperCase().trim());//pasamos el modleo al dialogo de registro de modelo
+        mostrarDatosModeloDialogo();
+        txtModeloRegistrar.setText(txtBuscarModelo.getText().trim());//pasamos el modleo al dialogo de registro de modelo
         jdlCrearModelo.setModal(true); // hacemos que el dialogo bloquee la interaccion con la pantalla principal
         jdlCrearModelo.setSize(500, 400); // establecemos un tamaño para el diálogo
         jdlCrearModelo.setLocationRelativeTo(null); // centramos el diálogo en la pantalla
@@ -596,7 +609,7 @@ public class TablaMarcasVehiculo extends javax.swing.JPanel {
                 JOptionPane.showMessageDialog(this, "INGRESE UN MODELO");
             } else {
                 if (verificarExistenciaModelo() != 0) {//si es diferente de cero si existe ese modelo
-                    //sino vamos a dejar la cedula en el  textfield
+                    filtrarDatosModeloenModelo();
                     JOptionPane.showMessageDialog(this, "Modelo encontrado");
                 }
             }
@@ -608,7 +621,7 @@ public class TablaMarcasVehiculo extends javax.swing.JPanel {
     }//GEN-LAST:event_btnCancelarModeloMouseClicked
 
     private void btnCancelarModeloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarModeloActionPerformed
-        // TODO add your handling code here:
+        jdlCrearModelo.dispose();
     }//GEN-LAST:event_btnCancelarModeloActionPerformed
 
     private void btnGuardarModeloMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnGuardarModeloMouseClicked
@@ -635,8 +648,53 @@ public class TablaMarcasVehiculo extends javax.swing.JPanel {
     }//GEN-LAST:event_btnGuardarModeloActionPerformed
 
     private void txtModeloRegistrarKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtModeloRegistrarKeyTyped
-        // TODO add your handling code here:
+        char x= evt.getKeyChar();
+        if (Character.isLowerCase(x)) {
+            evt.setKeyChar(Character.toUpperCase(x));
+        }
     }//GEN-LAST:event_txtModeloRegistrarKeyTyped
+
+    private void txtBuscarKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarKeyTyped
+        char x= evt.getKeyChar();
+        if (Character.isLowerCase(x)) {
+            evt.setKeyChar(Character.toUpperCase(x));
+        }
+    }//GEN-LAST:event_txtBuscarKeyTyped
+
+    private void txtBuscarModeloKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarModeloKeyTyped
+        char x= evt.getKeyChar();
+        if (Character.isLowerCase(x)) {
+            evt.setKeyChar(Character.toUpperCase(x));
+        }
+    }//GEN-LAST:event_txtBuscarModeloKeyTyped
+
+    private void txtModeloRegistrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtModeloRegistrarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtModeloRegistrarActionPerformed
+
+    private void txtBuscarModeloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtBuscarModeloActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtBuscarModeloActionPerformed
+
+    private void txtBuscarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarKeyReleased
+        if (txtBuscar.getText().isEmpty()) {
+        mostrarDatosMarca();
+        mostrarDatosModelo();
+        txtBuscarModelo.setText("");
+    }
+    }//GEN-LAST:event_txtBuscarKeyReleased
+
+    private void txtBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtBuscarActionPerformed
+
+    }//GEN-LAST:event_txtBuscarActionPerformed
+
+    private void txtBuscarModeloKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarModeloKeyReleased
+        if (txtBuscarModelo.getText().isEmpty()) {
+        mostrarDatosMarca();
+        mostrarDatosModelo();
+        txtBuscar.setText("");
+    }
+    }//GEN-LAST:event_txtBuscarModeloKeyReleased
     private void mostrarDatosMarca() {
         // ESTABLECER CONEXION CON LA BASE DE DATOS
         ObjectContainer BaseBD = Conexion_db.ConectarBD();
@@ -694,7 +752,35 @@ public class TablaMarcasVehiculo extends javax.swing.JPanel {
         tblModelosLista.setEnabled(false);
         BaseBD.close();
     }
-    
+    private void mostrarDatosModeloDialogo() {
+        // ESTABLECER CONEXION CON LA BASE DE DATOS
+        ObjectContainer BaseBD = Conexion_db.ConectarBD();
+        tblModelosDialogo2t.setEnabled(true);
+        // Consulta 
+        Query query = BaseBD.query();
+        query.constrain(ModeloVehiculo.class);
+        ObjectSet<ModeloVehiculo> resultado = query.execute();
+        //Creo una matriz
+        String matriz[][] = new String[resultado.size()][3];
+        int i = 0;
+        for (ModeloVehiculo miModelo : resultado) {//iteramos en cada elemento de "resultado"
+            matriz[i][0] = miModelo.getCodigoModelo();
+            matriz[i][1] = miModelo.getId_Marca();
+            matriz[i][2] = miModelo.getNombre_modelo();
+            i++;
+        }
+        // datos configurados
+        tblModelosDialogo2t.setModel(new javax.swing.table.DefaultTableModel(matriz, new String[]{"CODIGO","MARCA:", "MODELO"}));
+
+        // Centrar contenido de celdas
+        DefaultTableCellRenderer centrar = new DefaultTableCellRenderer();
+        centrar.setHorizontalAlignment(JLabel.CENTER);
+        tblModelosDialogo2t.getColumnModel().getColumn(0).setCellRenderer(centrar);
+        tblModelosDialogo2t.getColumnModel().getColumn(1).setCellRenderer(centrar);
+
+        tblModelosDialogo2t.setEnabled(false);
+        BaseBD.close();
+    }
     private void ShowpanelCruds(JPanel p) {
     p.setSize(870, 630);
     p.setLocation(0, 0);
@@ -771,8 +857,8 @@ public class TablaMarcasVehiculo extends javax.swing.JPanel {
     modelo.constrain(ModeloVehiculo.class);//buscaremos en la clase 
 
     // Primera consulta: buscar coincidencia en ambos campos
-    modelo.descend("id_Marca").constrain(txtBuscar.getText().toUpperCase()); 
-    modelo.descend("Nombre_modelo").constrain(txtBuscarModelo.getText().toUpperCase()); 
+    modelo.descend("id_Marca").constrain(txtBuscar.getText().toUpperCase().trim()); 
+    modelo.descend("Nombre_modelo").constrain(txtBuscarModelo.getText().toUpperCase().trim()); 
     ObjectSet<ModeloVehiculo> resultado1 = modelo.execute();
     coincidencias=resultado1.size();
     BaseBD.close();
@@ -833,7 +919,7 @@ public class TablaMarcasVehiculo extends javax.swing.JPanel {
                 }
             }
         }
-    }else{ coincidencias=resultado1.size();}
+    }
     return coincidencias;
     }
   
@@ -852,6 +938,128 @@ public class TablaMarcasVehiculo extends javax.swing.JPanel {
         BaseBD.close();
     }
     
+    private void filtrarDatosMarcaenMarca() {
+    // ESTABLECER CONEXION CON LA BASE DE DATOS
+    ObjectContainer BaseBD = Conexion_db.ConectarBD();
+    tblMarcasLista.setEnabled(true);
+    // Consulta 
+    Query query = BaseBD.query();
+    query.constrain(MarcaVehiculo.class);
+    // Agrego la condición de búsqueda
+    query.descend("nombre_Marca").constrain(txtBuscar.getText());
+    ObjectSet<MarcaVehiculo> resultado = query.execute();
+    //Creo una matriz
+    String matriz[][] = new String[resultado.size()][2];
+    int i = 0;
+    for (MarcaVehiculo miMarca : resultado) {//iteramos en cada elemento de "resultado"
+        matriz[i][0] = miMarca.getId_Marca();
+        matriz[i][1] = miMarca.getNombre_Marca();
+        i++;
+    }
+    // datos configurados
+    tblMarcasLista.setModel(new javax.swing.table.DefaultTableModel(matriz, new String[]{"CÓDIGO:", "MARCA"}));
+
+    // Centrar contenido de celdas
+    DefaultTableCellRenderer centrar = new DefaultTableCellRenderer();
+    centrar.setHorizontalAlignment(JLabel.CENTER);
+    tblMarcasLista.getColumnModel().getColumn(0).setCellRenderer(centrar);
+    tblMarcasLista.getColumnModel().getColumn(1).setCellRenderer(centrar);
+
+    tblMarcasLista.setEnabled(false);
+    BaseBD.close();
+}
+    private void filtrarDatosModeloenMarca() {
+    // ESTABLECER CONEXION CON LA BASE DE DATOS
+    ObjectContainer BaseBD = Conexion_db.ConectarBD();
+    tblModelosLista.setEnabled(true);
+    // Consulta 
+    Query query = BaseBD.query();
+    query.constrain(ModeloVehiculo.class);
+    // Agrego la condición de búsqueda
+    query.descend("id_Marca").constrain(txtBuscar.getText());
+    ObjectSet<ModeloVehiculo> resultado = query.execute();
+    //Creo una matriz
+    String matriz[][] = new String[resultado.size()][3];
+    int i = 0;
+    for (ModeloVehiculo miModelo : resultado) {//iteramos en cada elemento de "resultado"
+        matriz[i][0] = miModelo.getCodigoModelo();
+        matriz[i][1] = miModelo.getId_Marca();
+        matriz[i][2] = miModelo.getNombre_modelo();
+        i++;
+    }
+    // datos configurados
+    tblModelosLista.setModel(new javax.swing.table.DefaultTableModel(matriz, new String[]{"CÓDIGO:", "MARCA","MODELO"}));
+
+    // Centrar contenido de celdas
+    DefaultTableCellRenderer centrar = new DefaultTableCellRenderer();
+    centrar.setHorizontalAlignment(JLabel.CENTER);
+    tblModelosLista.getColumnModel().getColumn(0).setCellRenderer(centrar);
+    tblModelosLista.getColumnModel().getColumn(1).setCellRenderer(centrar);
+    tblModelosLista.getColumnModel().getColumn(2).setCellRenderer(centrar);
+
+    tblMarcasLista.setEnabled(false);
+    BaseBD.close();
+}
+    private void filtrarDatosModeloenModelo() {
+        // ESTABLECER CONEXION CON LA BASE DE DATOS
+        ObjectContainer BaseBD = Conexion_db.ConectarBD();
+        //          MODELO
+        tblModelosLista.setEnabled(true);
+        // Consulta 
+        Query query = BaseBD.query();
+        query.constrain(ModeloVehiculo.class);
+        // Agrego la condición de búsqueda
+        query.descend("Nombre_modelo").constrain(txtBuscarModelo.getText().toUpperCase().trim());
+        ObjectSet<ModeloVehiculo> resultado = query.execute();
+        //Creo una matriz
+        String matriz[][] = new String[resultado.size()][3];
+        int i = 0;
+        for (ModeloVehiculo miModelo : resultado) {//iteramos en cada elemento de "resultado"
+            matriz[i][0] = miModelo.getCodigoModelo();
+            matriz[i][1] = miModelo.getId_Marca();
+            matriz[i][2] = miModelo.getNombre_modelo();
+            i++;
+        }
+        // datos configurados
+        tblModelosLista.setModel(new javax.swing.table.DefaultTableModel(matriz, new String[]{"CÓDIGO:", "MARCA", "MODELO"}));
+
+        // Centrar contenido de celdas
+        DefaultTableCellRenderer centrar = new DefaultTableCellRenderer();
+        centrar.setHorizontalAlignment(JLabel.CENTER);
+        tblModelosLista.getColumnModel().getColumn(0).setCellRenderer(centrar);
+        tblModelosLista.getColumnModel().getColumn(1).setCellRenderer(centrar);
+        tblModelosLista.getColumnModel().getColumn(2).setCellRenderer(centrar);
+
+        tblMarcasLista.setEnabled(false);
+        //              MARCAS  
+        tblMarcasLista.setEnabled(true);
+// Consulta 
+        Query query2 = BaseBD.query();
+        query2.constrain(MarcaVehiculo.class);
+// Agrego la condición de búsqueda
+        query2.descend("nombre_Marca").constrain(txtBuscar.getText().toUpperCase().trim());
+        ObjectSet<MarcaVehiculo> resultado2 = query2.execute();
+//Creo una matriz
+        String matriz2[][] = new String[resultado2.size()][2];
+        int i2 = 0;
+        for (MarcaVehiculo miMarca2 : resultado2) {//iteramos en cada elemento de "resultado"
+            matriz2[i2][0] = miMarca2.getId_Marca();
+            matriz2[i2][1] = miMarca2.getNombre_Marca();;
+            i2++;
+        }
+// datos configurados
+        tblMarcasLista.setModel(new javax.swing.table.DefaultTableModel(matriz2, new String[]{"CÓDIGO:", "MARCA"}));
+
+// Centrar contenido de celdas
+        DefaultTableCellRenderer centrar2 = new DefaultTableCellRenderer();
+        centrar2.setHorizontalAlignment(JLabel.CENTER);
+        tblMarcasLista.getColumnModel().getColumn(0).setCellRenderer(centrar2);
+        tblMarcasLista.getColumnModel().getColumn(1).setCellRenderer(centrar2);
+        tblMarcasLista.setEnabled(false);
+
+        BaseBD.close();
+    }
+    
     
     
     
@@ -865,11 +1073,8 @@ public class TablaMarcasVehiculo extends javax.swing.JPanel {
     private rojeru_san.RSButtonRiple btnGuardarMarca;
     private rojeru_san.RSButtonRiple btnGuardarModelo;
     private javax.swing.JComboBox<String> cmbMarcas;
-    private javax.swing.JLabel jLabel14;
-    private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JDialog jdlCrearMarcaTabla;
     private javax.swing.JDialog jdlCrearModelo;
     private javax.swing.JLabel lblBuscar;
@@ -881,12 +1086,12 @@ public class TablaMarcasVehiculo extends javax.swing.JPanel {
     private javax.swing.JLabel lblPlaca2;
     private javax.swing.JPanel pnlCrearMarca;
     private javax.swing.JPanel pnlCrearMarca1;
-    private javax.swing.JPanel pnlFondoRegistroMarca;
     private javax.swing.JPanel pnlListado;
     private javax.swing.JScrollPane scrlpTablaVehi1;
     private javax.swing.JScrollPane scrlpTablaVehi2;
     private javax.swing.JTable tblMarcasLista;
-    private javax.swing.JTable tblModelo_VehiRegistro;
+    private javax.swing.JScrollPane tblModelosDialogo2;
+    private javax.swing.JTable tblModelosDialogo2t;
     private javax.swing.JTable tblModelosLista;
     private rojeru_san.RSMTextFull txtBuscar;
     private rojeru_san.RSMTextFull txtBuscarModelo;

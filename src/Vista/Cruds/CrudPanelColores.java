@@ -37,7 +37,6 @@ public class CrudPanelColores extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jLabel13 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         lblPlaca = new javax.swing.JLabel();
@@ -46,10 +45,6 @@ public class CrudPanelColores extends javax.swing.JPanel {
         btnGuardar = new rojeru_san.RSButtonRiple();
         cmbTipoColorRegistrar = new javax.swing.JComboBox<>();
         lblPropietario = new javax.swing.JLabel();
-        jLabel12 = new javax.swing.JLabel();
-
-        jLabel13.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/burbujas.png"))); // NOI18N
-        jLabel13.setText("jLabel12");
 
         setLayout(new java.awt.BorderLayout());
 
@@ -70,6 +65,11 @@ public class CrudPanelColores extends javax.swing.JPanel {
         txtColor.setColorTransparente(true);
         txtColor.setFont(new java.awt.Font("Roboto Light", 1, 14)); // NOI18N
         txtColor.setPlaceholder("Ejm: Rojo");
+        txtColor.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtColorKeyTyped(evt);
+            }
+        });
         jPanel1.add(txtColor, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 200, 290, 40));
 
         btnCancelar.setBackground(new java.awt.Color(255, 51, 51));
@@ -108,10 +108,6 @@ public class CrudPanelColores extends javax.swing.JPanel {
         lblPropietario.setForeground(new java.awt.Color(0, 53, 79));
         lblPropietario.setText("Tipo Color:");
         jPanel1.add(lblPropietario, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 260, 120, 30));
-
-        jLabel12.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/burbujas.png"))); // NOI18N
-        jLabel12.setText("jLabel12");
-        jPanel1.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 890, 650));
 
         add(jPanel1, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
@@ -161,6 +157,13 @@ public class CrudPanelColores extends javax.swing.JPanel {
         }
         System.out.println("Numero de colores guardados: "+verificarNumeroColores());
     }//GEN-LAST:event_btnGuardarActionPerformed
+
+    private void txtColorKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtColorKeyTyped
+        char x= evt.getKeyChar();
+        if (Character.isLowerCase(x)) {
+            evt.setKeyChar(Character.toUpperCase(x));
+        }
+    }//GEN-LAST:event_txtColorKeyTyped
 
         
     
@@ -224,8 +227,6 @@ public class CrudPanelColores extends javax.swing.JPanel {
     private rojeru_san.RSButtonRiple btnCancelar;
     private rojeru_san.RSButtonRiple btnGuardar;
     private javax.swing.JComboBox<String> cmbTipoColorRegistrar;
-    private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel lblPlaca;

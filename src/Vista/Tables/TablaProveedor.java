@@ -168,6 +168,11 @@ public class TablaProveedor extends javax.swing.JPanel {
 
         txtBuscar.setFont(new java.awt.Font("Roboto Bold", 2, 14)); // NOI18N
         txtBuscar.setPlaceholder("ejm: PROV12");
+        txtBuscar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtBuscarKeyTyped(evt);
+            }
+        });
 
         jLabel2.setFont(new java.awt.Font("Roboto Black", 0, 18)); // NOI18N
         jLabel2.setText("Buscar:");
@@ -347,6 +352,13 @@ public class TablaProveedor extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(this, "Ingrese un codigo");
         }
     }//GEN-LAST:event_btnEditarMouseClicked
+
+    private void txtBuscarKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarKeyTyped
+        char x= evt.getKeyChar();
+        if (Character.isLowerCase(x)) {
+            evt.setKeyChar(Character.toUpperCase(x));
+        }
+    }//GEN-LAST:event_txtBuscarKeyTyped
     private void ShowpanelCruds(JPanel p) {
         p.setSize(870, 630);
         p.setLocation(0, 0);
