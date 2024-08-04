@@ -141,7 +141,7 @@
                           <EmptySpace max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Component id="btnciudades" alignment="0" min="-2" pref="181" max="-2" attributes="0"/>
-                              <Component id="btnReportes1" alignment="0" min="-2" pref="181" max="-2" attributes="0"/>
+                              <Component id="btnReportes" alignment="0" min="-2" pref="181" max="-2" attributes="0"/>
                               <Component id="btnSalir" alignment="0" min="-2" pref="181" max="-2" attributes="0"/>
                               <Group type="103" alignment="0" groupAlignment="1" max="-2" attributes="0">
                                   <Component id="btnVehiculos" alignment="0" max="32767" attributes="0"/>
@@ -156,7 +156,7 @@
                                   <Component id="btnCatalogo" alignment="0" max="32767" attributes="0"/>
                                   <Component id="btnFactura" alignment="0" pref="179" max="32767" attributes="0"/>
                               </Group>
-                              <Component id="btnAgendarCitas1" alignment="0" min="-2" pref="181" max="-2" attributes="0"/>
+                              <Component id="btnAgendarCitas" alignment="0" min="-2" pref="181" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace pref="26" max="32767" attributes="0"/>
                       </Group>
@@ -180,9 +180,9 @@
                           <EmptySpace min="-2" pref="12" max="-2" attributes="0"/>
                           <Component id="btnProductos" min="-2" pref="47" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="btnReportes1" min="-2" pref="50" max="-2" attributes="0"/>
+                          <Component id="btnReportes" min="-2" pref="50" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
-                          <Component id="btnAgendarCitas1" min="-2" pref="50" max="-2" attributes="0"/>
+                          <Component id="btnAgendarCitas" min="-2" pref="50" max="-2" attributes="0"/>
                           <EmptySpace pref="9" max="32767" attributes="0"/>
                           <Component id="btnciudades" min="-2" pref="50" max="-2" attributes="0"/>
                           <EmptySpace max="-2" attributes="0"/>
@@ -349,7 +349,7 @@
                     <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnProductosMouseClicked"/>
                   </Events>
                 </Component>
-                <Component class="javax.swing.JLabel" name="btnReportes1">
+                <Component class="javax.swing.JLabel" name="btnReportes">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Roboto Black" size="19" style="0"/>
@@ -363,10 +363,10 @@
                     <Property name="text" type="java.lang.String" value="Reportes"/>
                   </Properties>
                   <Events>
-                    <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnReportes1MouseClicked"/>
+                    <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnReportesMouseClicked"/>
                   </Events>
                 </Component>
-                <Component class="javax.swing.JLabel" name="btnAgendarCitas1">
+                <Component class="javax.swing.JLabel" name="btnAgendarCitas">
                   <Properties>
                     <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
                       <Font name="Roboto Black" size="19" style="0"/>
@@ -380,7 +380,7 @@
                     <Property name="text" type="java.lang.String" value="Agendar Citas"/>
                   </Properties>
                   <Events>
-                    <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnAgendarCitas1MouseClicked"/>
+                    <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btnAgendarCitasMouseClicked"/>
                   </Events>
                 </Component>
               </SubComponents>

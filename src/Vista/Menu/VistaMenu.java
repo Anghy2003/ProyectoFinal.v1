@@ -1,14 +1,13 @@
-
 package Vista.Menu;
 
-
 import Conexion.Conexion_db;
+
+import Models.Persona;
 import Vista.Catálogo.CatalogoProductos;
 
-import Vista.Catálogo.CrudPanelServicios;
-import Vista.Cruds.*;
 import Vista.Factura.Factura;
 import Vista.Home.Home;
+
 import Vista.PanelSubmenus.*;
 import Vista.PanelTitulos.*;
 import Vista.Tables.TablaFactura;
@@ -17,21 +16,20 @@ import Vista.Tables.TablaProveedor;
 import Vista.Tables.TablaServicios;
 import Vista.Tables.TablaUsuarios;
 import Vista.Tables.TablaVehiculos;
-import com.db4o.ObjectContainer;
 import java.awt.BorderLayout;
-import javax.swing.JDialog;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import utils.Global;
 
 public class VistaMenu extends javax.swing.JFrame {
-   
-    /**
-     * Creates new form VistaMenu
-     */
+
+private String rolUsuario;
     public VistaMenu() {
+         this.rolUsuario = Global.rolUsuario;
         initComponents();
         this.setLocationRelativeTo(this);
-        
-        
+        accesosRol();
+
     }
 
     /**
@@ -58,8 +56,8 @@ public class VistaMenu extends javax.swing.JFrame {
         btnProvedores = new javax.swing.JLabel();
         btnSalir = new javax.swing.JLabel();
         btnProductos = new javax.swing.JLabel();
-        btnReportes1 = new javax.swing.JLabel();
-        btnAgendarCitas1 = new javax.swing.JLabel();
+        btnReportes = new javax.swing.JLabel();
+        btnAgendarCitas = new javax.swing.JLabel();
         PanelHeader = new javax.swing.JPanel();
         PanelPrincipal = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
@@ -188,23 +186,23 @@ public class VistaMenu extends javax.swing.JFrame {
             }
         });
 
-        btnReportes1.setFont(new java.awt.Font("Roboto Black", 0, 19)); // NOI18N
-        btnReportes1.setForeground(new java.awt.Color(255, 255, 255));
-        btnReportes1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/analitica.png"))); // NOI18N
-        btnReportes1.setText("Reportes");
-        btnReportes1.addMouseListener(new java.awt.event.MouseAdapter() {
+        btnReportes.setFont(new java.awt.Font("Roboto Black", 0, 19)); // NOI18N
+        btnReportes.setForeground(new java.awt.Color(255, 255, 255));
+        btnReportes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/analitica.png"))); // NOI18N
+        btnReportes.setText("Reportes");
+        btnReportes.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnReportes1MouseClicked(evt);
+                btnReportesMouseClicked(evt);
             }
         });
 
-        btnAgendarCitas1.setFont(new java.awt.Font("Roboto Black", 0, 19)); // NOI18N
-        btnAgendarCitas1.setForeground(new java.awt.Color(255, 255, 255));
-        btnAgendarCitas1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/programaCitas35.png"))); // NOI18N
-        btnAgendarCitas1.setText("Agendar Citas");
-        btnAgendarCitas1.addMouseListener(new java.awt.event.MouseAdapter() {
+        btnAgendarCitas.setFont(new java.awt.Font("Roboto Black", 0, 19)); // NOI18N
+        btnAgendarCitas.setForeground(new java.awt.Color(255, 255, 255));
+        btnAgendarCitas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/programaCitas35.png"))); // NOI18N
+        btnAgendarCitas.setText("Agendar Citas");
+        btnAgendarCitas.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnAgendarCitas1MouseClicked(evt);
+                btnAgendarCitasMouseClicked(evt);
             }
         });
 
@@ -216,7 +214,7 @@ public class VistaMenu extends javax.swing.JFrame {
                 .addContainerGap()
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnciudades, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnReportes1, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnReportes, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                         .addComponent(btnVehiculos, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -228,7 +226,7 @@ public class VistaMenu extends javax.swing.JFrame {
                     .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                         .addComponent(btnCatalogo, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnFactura, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 179, Short.MAX_VALUE))
-                    .addComponent(btnAgendarCitas1, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnAgendarCitas, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(26, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
@@ -249,9 +247,9 @@ public class VistaMenu extends javax.swing.JFrame {
                 .addGap(12, 12, 12)
                 .addComponent(btnProductos, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnReportes1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnReportes, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnAgendarCitas1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnAgendarCitas, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 9, Short.MAX_VALUE)
                 .addComponent(btnciudades, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -344,7 +342,6 @@ public class VistaMenu extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-
 //CrudPanelCliente crudCli = new CrudPanelCliente();
     private void btnUsuarioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnUsuarioMouseClicked
         PanelTituloUsuario titUsu = new PanelTituloUsuario();
@@ -357,32 +354,33 @@ public class VistaMenu extends javax.swing.JFrame {
 
     private void btnServiciosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnServiciosMouseClicked
         TablaServicios tablaPro = new TablaServicios();
-        PanelTituloServicios titSer = new PanelTituloServicios(); 
-        PanelSubmenuServicios Submenuserv = new PanelSubmenuServicios();         
+        PanelTituloServicios titSer = new PanelTituloServicios();
+        PanelSubmenuServicios Submenuserv = new PanelSubmenuServicios();
         MostrarpanelTitulo(titSer);
         MostrarpanelSubmenu(Submenuserv);
         MostarpanelCruds(tablaPro);
     }//GEN-LAST:event_btnServiciosMouseClicked
 
     private void btnFacturaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnFacturaMouseClicked
-       
+
         PanelTituloFacturacion titufac = new PanelTituloFacturacion();
         PanelSubmenuFacturacion SubmenuFac = new PanelSubmenuFacturacion();
-        Factura fac =new Factura();
+        Factura fac = new Factura();
         MostrarpanelTitulo(titufac);
         MostrarpanelSubmenu(SubmenuFac);
         MostarpanelCruds(fac);
+
     }//GEN-LAST:event_btnFacturaMouseClicked
 
     private void btnCatalogoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCatalogoMouseClicked
-      PanelTituloCatalogo tituCat = new PanelTituloCatalogo();
-        PanelSubmenuCatalogo SubmenuCat = new PanelSubmenuCatalogo(); 
-        CatalogoProductos catpro =new CatalogoProductos();
+        PanelTituloCatalogo tituCat = new PanelTituloCatalogo();
+        PanelSubmenuCatalogo SubmenuCat = new PanelSubmenuCatalogo();
+        CatalogoProductos catpro = new CatalogoProductos();
         MostrarpanelTitulo(tituCat);
         MostrarpanelSubmenu(SubmenuCat);
         MostarpanelCruds(catpro);
-        
-        
+
+
     }//GEN-LAST:event_btnCatalogoMouseClicked
 
     private void btnProvedoresMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnProvedoresMouseClicked
@@ -395,14 +393,14 @@ public class VistaMenu extends javax.swing.JFrame {
     }//GEN-LAST:event_btnProvedoresMouseClicked
 
     private void btnciudadesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnciudadesMouseClicked
-       PanelTituloCiudades titciu = new PanelTituloCiudades();
+        PanelTituloCiudades titciu = new PanelTituloCiudades();
         PanelSUbmenuCiudades submeciu = new PanelSUbmenuCiudades();
         MostrarpanelSubmenu(submeciu);
-        MostrarpanelTitulo(titciu);  
+        MostrarpanelTitulo(titciu);
     }//GEN-LAST:event_btnciudadesMouseClicked
 
     private void btnProductosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnProductosMouseClicked
-         TablaProductos prod = new TablaProductos();
+        TablaProductos prod = new TablaProductos();
         PanelTituloProducto titProd = new PanelTituloProducto();
         PanelSubmenuProductos submenProd = new PanelSubmenuProductos();
         MostrarpanelSubmenu(submenProd);
@@ -411,28 +409,28 @@ public class VistaMenu extends javax.swing.JFrame {
     }//GEN-LAST:event_btnProductosMouseClicked
 
     private void btnSalirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSalirMouseClicked
-       Home homesito=new Home();
-     homesito.setVisible(true);
-     this.dispose();
+        Home homesito = new Home();
+        homesito.setVisible(true);
+        this.dispose();
     }//GEN-LAST:event_btnSalirMouseClicked
 
-    private void btnReportes1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnReportes1MouseClicked
+    private void btnReportesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnReportesMouseClicked
         PanelTituloReporte titreo = new PanelTituloReporte();
         PanelSubmenuReportes submenrep = new PanelSubmenuReportes();
         MostrarpanelSubmenu(submenrep);
         MostrarpanelTitulo(titreo);
-    }//GEN-LAST:event_btnReportes1MouseClicked
+    }//GEN-LAST:event_btnReportesMouseClicked
 
     private void jPanel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel4MouseClicked
         // TODO add your handling code here:
     }//GEN-LAST:event_jPanel4MouseClicked
 
-    private void btnAgendarCitas1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAgendarCitas1MouseClicked
-       PanelTituloCitas titcit = new PanelTituloCitas();
+    private void btnAgendarCitasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAgendarCitasMouseClicked
+        PanelTituloCitas titcit = new PanelTituloCitas();
         PanelSUbmenuCitas submecitas = new PanelSUbmenuCitas();
         MostrarpanelSubmenu(submecitas);
         MostrarpanelTitulo(titcit);
-    }//GEN-LAST:event_btnAgendarCitas1MouseClicked
+    }//GEN-LAST:event_btnAgendarCitasMouseClicked
 
     private void btnVehiculosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnVehiculosMouseClicked
         TablaVehiculos miVehi = new TablaVehiculos();
@@ -470,8 +468,59 @@ public class VistaMenu extends javax.swing.JFrame {
         PanelPrincipal.repaint();
     }
 
-    
+     
+     private void accesosRol() {
+        System.out.println("Rol del usuario: " + rolUsuario);
 
+        switch (rolUsuario) {
+            case "CLIENTE":
+                deshabilitarComponentesCliente();
+                break;
+            case "ADMINISTRADOR":
+                deshabilitarComponentesAdministrador();
+                break;
+            case "VENDEDOR":
+                deshabilitarComponentesVendedor();
+                break;
+            case "MECANICO":
+                deshabilitarComponentesMecanico();
+                break;
+            default:
+                JOptionPane.showMessageDialog(null, "Rol no reconocido");
+                break;
+        }
+    }
+ private void deshabilitarComponentesAdministrador() {
+        // Administrador tiene acceso a todo,no se deshabilita nada
+    }
+ private void deshabilitarComponentesCliente() {
+        btnFactura.setVisible(false);
+        btnServicios.setVisible(false);
+        btnProductos.setVisible(false);
+        btnProvedores.setVisible(false);
+        btnciudades.setVisible(false);
+        btnUsuario.setVisible(false);
+        btnReportes.setVisible(false);
+    }
+ private void deshabilitarComponentesVendedor() {
+        btnReportes.setVisible(false);
+        btnAgendarCitas.setVisible(false);
+        btnVehiculos.setVisible(false);
+        btnCatalogo.setVisible(false);
+    }
+
+      private void deshabilitarComponentesMecanico() {
+        btnUsuario.setVisible(false);
+        btnProductos.setVisible(false);
+        btnProvedores.setVisible(false);
+        btnciudades.setVisible(false);
+        btnReportes.setVisible(false);
+        btnAgendarCitas.setVisible(false);
+        btnCatalogo.setVisible(false);
+        btnFactura.setVisible(false);
+       
+    }
+    
 
     /**
      * @param args the command line arguments
@@ -514,12 +563,12 @@ public class VistaMenu extends javax.swing.JFrame {
     private javax.swing.JPanel PanelMenu;
     public static javax.swing.JPanel PanelPrincipal;
     public static javax.swing.JPanel PanelSubmenu;
-    private javax.swing.JLabel btnAgendarCitas1;
+    private javax.swing.JLabel btnAgendarCitas;
     private javax.swing.JLabel btnCatalogo;
     private javax.swing.JLabel btnFactura;
     private javax.swing.JLabel btnProductos;
     private javax.swing.JLabel btnProvedores;
-    private javax.swing.JLabel btnReportes1;
+    private javax.swing.JLabel btnReportes;
     private javax.swing.JLabel btnSalir;
     private javax.swing.JLabel btnServicios;
     private javax.swing.JLabel btnUsuario;
