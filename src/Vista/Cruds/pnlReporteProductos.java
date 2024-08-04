@@ -8,28 +8,35 @@ package Vista.Cruds;
 import Conexion.Conexion_db;
 import Models.Administrador;
 import Models.Cliente;
-import Models.Mecanico;
+import Models.DetalleFactura_1;
+import Models.Producto;
 import Models.Vendedor;
 import Vista.Menu.VistaMenu;
 import com.db4o.ObjectContainer;
 import com.db4o.ObjectSet;
+import com.db4o.query.Query;
 import java.awt.BorderLayout;
-import java.awt.Dimension;
+import java.awt.Font;
 import javax.swing.JPanel;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartPanel;
 import org.jfree.chart.JFreeChart;
-import org.jfree.data.general.DefaultPieDataset;
+import org.jfree.chart.axis.CategoryAxis;
+import org.jfree.chart.axis.CategoryLabelPositions;
+import org.jfree.chart.plot.CategoryPlot;
+import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.chart.renderer.category.BarRenderer3D;
+import org.jfree.data.category.DefaultCategoryDataset;
 
 /**
  *
  * @author aberr
  */
-public class pnlReporteVehiculos extends javax.swing.JPanel {
+public final class pnlReporteProductos extends javax.swing.JPanel {
 
-    public pnlReporteVehiculos() {
+    public pnlReporteProductos() {
         initComponents();
-        mostrarGraficoPastel3D();
+        generarGraficoDeBarras3D(pnlPastel);
     }
 
     @SuppressWarnings("unchecked")
@@ -37,7 +44,6 @@ public class pnlReporteVehiculos extends javax.swing.JPanel {
     private void initComponents() {
 
         btnRegresar = new javax.swing.JLabel();
-        jPanel1 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         pnlReporteUsuarios = new javax.swing.JPanel();
         pnlPastel = new javax.swing.JPanel();
@@ -52,10 +58,6 @@ public class pnlReporteVehiculos extends javax.swing.JPanel {
             }
         });
         add(btnRegresar, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, -1, 50));
-
-        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
-        jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-        add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         jScrollPane1.setBorder(null);
 
@@ -129,51 +131,59 @@ public class pnlReporteVehiculos extends javax.swing.JPanel {
         return vendedores;
     }
 
-    public static int numeroMecanicos() {
+    public void generarGraficoDeBarras3D(JPanel pnlPastel) {
         ObjectContainer BaseBD = Conexion_db.ConectarBD();
-        // Crear un nuevo objeto  para usar como plantilla de búsqueda
-        Mecanico MecanicoBusca = new Mecanico();
+        DefaultCategoryDataset dataset = new DefaultCategoryDataset();
 
-        // Obtener todos los objetos que coincidan con la plantilla de búsqueda
-        ObjectSet resultado = BaseBD.get(MecanicoBusca);
+        ObjectSet<DetalleFactura_1> detalles = BaseBD.query(DetalleFactura_1.class);
+        if (!detalles.isEmpty()) {
+            for (DetalleFactura_1 detalle : detalles) {
+                Query query = BaseBD.query();
+                query.constrain(Producto.class);
+                query.descend("codigo_Producto").constrain(detalle.getCodigoProducto_detalleFactura());
+                ObjectSet<Producto> productos = query.execute();
+                if (!productos.isEmpty()) {
+                    Producto producto = productos.get(0);
+                    dataset.addValue(detalle.getCantidadProdcutos_detalleFactura(), "Ventas", producto.getNombre_Producto());
+                }
+            }
+        }
 
-        // Imprimir el número de clientes encontrados
-        int mecanico = resultado.size();
-        BaseBD.close();
-        return mecanico;
-    }
+        System.out.println("Dataset size: " + dataset.getRowCount()); // Verificar tamaño del dataset
 
-    private void mostrarGraficoPastel3D() {
-        // Crear un conjunto de datos para el gráfico
-        DefaultPieDataset datos = new DefaultPieDataset();
-        datos.setValue("Admins", 10);
-        datos.setValue("Vendedores", 20);
-        datos.setValue("Clientes", 30);
-        datos.setValue("Mecanicos", 40);
-
-        // Crear un gráfico de pastel 3D
-        JFreeChart grafico_pastel_3d = ChartFactory.createPieChart3D(
-                "Proporción usuarios", // título
-                datos, // conjunto de datos
-                true, // mostrar leyenda
-                true, // mostrar tooltips
-                false // mostrar urls
+        JFreeChart chart = ChartFactory.createBarChart3D(
+                "Los 5 Productos mas Vendidos",
+                "Producto",
+                "Cantidad",
+                dataset,
+                PlotOrientation.VERTICAL,
+                true,
+                true,
+                false
         );
 
-        // Crear un ChartPanel para mostrar el gráfico
-        ChartPanel panelGrafico = new ChartPanel(grafico_pastel_3d);
-        panelGrafico.setVisible(true);
-        panelGrafico.setPreferredSize(new Dimension(300, 100)); // ajusta el tamaño del panel
+        CategoryPlot plot = chart.getCategoryPlot();
+        BarRenderer3D renderer = (BarRenderer3D) plot.getRenderer();
 
-        // Agregar el panelGrafico al panel
+        // Personalizar eje de categorías (x-axis)
+        CategoryAxis axis = plot.getDomainAxis();
+        axis.setCategoryLabelPositions(CategoryLabelPositions.createUpRotationLabelPositions(Math.PI / 4.0));
+        axis.setTickLabelFont(new Font("Arial", Font.BOLD, 12)); // Opcional: cambiar fuente y tamaño de la etiqueta
+
+        ChartPanel chartPanel = new ChartPanel(chart);
+        chartPanel.setPreferredSize(new java.awt.Dimension(800, 600));
+        pnlPastel.removeAll();
         pnlPastel.setLayout(new BorderLayout());
-        pnlPastel.add(panelGrafico, BorderLayout.CENTER);
+        pnlPastel.add(chartPanel, BorderLayout.CENTER);
+        pnlPastel.setPreferredSize(new java.awt.Dimension(800, 600));
+        pnlPastel.setVisible(true);
+
         pnlPastel.revalidate();
         pnlPastel.repaint();
 
-        pnlReporteUsuarios.add(pnlPastel);
-        pnlReporteUsuarios.setVisible(true);
-        pnlPastel.setVisible(true);
+        System.out.println("Chart added to panel: " + pnlPastel.getComponentCount()); // Verificar si el gráfico se agrega al panel
+
+        BaseBD.close();
     }
     private void ShowpanelCruds(JPanel p) {
     p.setSize(870, 630);
@@ -183,10 +193,15 @@ public class pnlReporteVehiculos extends javax.swing.JPanel {
     VistaMenu.PanelPrincipal.revalidate();
     VistaMenu.PanelPrincipal.repaint();
 }
+    
+    
+    
+    
+
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel btnRegresar;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JPanel pnlPastel;
     private javax.swing.JPanel pnlReporteUsuarios;

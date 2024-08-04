@@ -1,6 +1,11 @@
 
 package Vista.PanelSubmenus;
 
+import Vista.Cruds.pnlReporteProductos;
+import Vista.Menu.VistaMenu;
+import java.awt.BorderLayout;
+import javax.swing.JPanel;
+
 public class PanelSubmenuReportes extends javax.swing.JPanel {
 
     /**
@@ -41,7 +46,7 @@ public class PanelSubmenuReportes extends javax.swing.JPanel {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(431, Short.MAX_VALUE)
+                .addContainerGap(428, Short.MAX_VALUE)
                 .addComponent(jToggleButton1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnreportetablas, javax.swing.GroupLayout.PREFERRED_SIZE, 199, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -51,7 +56,7 @@ public class PanelSubmenuReportes extends javax.swing.JPanel {
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(24, Short.MAX_VALUE)
+                .addContainerGap(14, Short.MAX_VALUE)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -62,7 +67,14 @@ public class PanelSubmenuReportes extends javax.swing.JPanel {
 
         add(jPanel1, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
-
+private void ShowpanelCruds(JPanel p) {
+    p.setSize(870, 630);
+    p.setLocation(0, 0);
+    VistaMenu.PanelPrincipal.removeAll();
+    VistaMenu.PanelPrincipal.add(p, BorderLayout.CENTER);
+    VistaMenu.PanelPrincipal.revalidate();
+    VistaMenu.PanelPrincipal.repaint();
+}
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JToggleButton btnreportetablas;
