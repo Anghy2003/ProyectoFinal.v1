@@ -38,6 +38,7 @@ public class PanelSubmenuAuto extends javax.swing.JPanel {
         btnGestionMarcas.setFont(new java.awt.Font("Roboto Medium", 1, 12)); // NOI18N
         btnGestionMarcas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/marca32x32.png"))); // NOI18N
         btnGestionMarcas.setText("Gestion de marcas");
+        btnGestionMarcas.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnGestionMarcas.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnGestionMarcasActionPerformed(evt);
@@ -47,6 +48,7 @@ public class PanelSubmenuAuto extends javax.swing.JPanel {
         btnGestionVehiculos.setFont(new java.awt.Font("Roboto Medium", 1, 12)); // NOI18N
         btnGestionVehiculos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/embotellamiento.png"))); // NOI18N
         btnGestionVehiculos.setText("Gestion de vehículos");
+        btnGestionVehiculos.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnGestionVehiculos.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnGestionVehiculosActionPerformed(evt);
@@ -56,6 +58,7 @@ public class PanelSubmenuAuto extends javax.swing.JPanel {
         btnGestionColores.setFont(new java.awt.Font("Roboto Medium", 1, 12)); // NOI18N
         btnGestionColores.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/paletaColores32x32.png"))); // NOI18N
         btnGestionColores.setText("Gestion de colores");
+        btnGestionColores.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnGestionColores.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnGestionColoresActionPerformed(evt);

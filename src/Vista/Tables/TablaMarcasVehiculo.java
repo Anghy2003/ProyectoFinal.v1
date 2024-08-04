@@ -15,7 +15,6 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.table.DefaultTableModel;
 
 public class TablaMarcasVehiculo extends javax.swing.JPanel {
 
@@ -57,6 +56,17 @@ public class TablaMarcasVehiculo extends javax.swing.JPanel {
         cmbMarcas = new javax.swing.JComboBox<>();
         tblModelosDialogo2 = new javax.swing.JScrollPane();
         tblModelosDialogo2t = new javax.swing.JTable();
+        jdlModificarModelo = new javax.swing.JDialog();
+        pnlCrearMarca2 = new javax.swing.JPanel();
+        jLabel5 = new javax.swing.JLabel();
+        lblPlaca3 = new javax.swing.JLabel();
+        btnCancelarModelo1 = new rojeru_san.RSButtonRiple();
+        btnGuardarModelo1 = new rojeru_san.RSButtonRiple();
+        txtModeloModificar = new rojeru_san.RSMTextFull();
+        lblModeloMarcaRegistro2 = new javax.swing.JLabel();
+        cmbModificarMarca = new javax.swing.JComboBox<>();
+        txtCodigoModeloMod = new rojeru_san.RSMTextFull();
+        lblCodigomodeloMod = new javax.swing.JLabel();
         pnlListado = new javax.swing.JPanel();
         lblMarcas = new javax.swing.JLabel();
         scrlpTablaVehi1 = new javax.swing.JScrollPane();
@@ -71,6 +81,7 @@ public class TablaMarcasVehiculo extends javax.swing.JPanel {
         btnBuscarModelo = new rsbuttongradiente.RSButtonGradiente();
         scrlpTablaVehi2 = new javax.swing.JScrollPane();
         tblModelosLista = new javax.swing.JTable();
+        btnModificar = new rsbuttongradiente.RSButtonGradiente();
 
         jdlCrearMarcaTabla.setMinimumSize(new java.awt.Dimension(519, 420));
         jdlCrearMarcaTabla.setUndecorated(true);
@@ -243,6 +254,102 @@ public class TablaMarcasVehiculo extends javax.swing.JPanel {
 
         jdlCrearModelo.getContentPane().add(pnlCrearMarca1, java.awt.BorderLayout.CENTER);
 
+        jdlModificarModelo.setUndecorated(true);
+        jdlModificarModelo.setResizable(false);
+
+        pnlCrearMarca2.setBackground(new java.awt.Color(255, 255, 255));
+        pnlCrearMarca2.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.blue, java.awt.Color.blue, java.awt.Color.blue, java.awt.Color.blue));
+        pnlCrearMarca2.setMinimumSize(new java.awt.Dimension(519, 420));
+        pnlCrearMarca2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel5.setFont(new java.awt.Font("Roboto Black", 0, 30)); // NOI18N
+        jLabel5.setForeground(new java.awt.Color(0, 53, 79));
+        jLabel5.setText("Modificar Modelo Vehículo");
+        pnlCrearMarca2.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 50, 380, 40));
+
+        lblPlaca3.setFont(new java.awt.Font("Roboto Medium", 0, 21)); // NOI18N
+        lblPlaca3.setForeground(new java.awt.Color(0, 53, 79));
+        lblPlaca3.setText("Marca:");
+        pnlCrearMarca2.add(lblPlaca3, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 200, 70, 40));
+
+        btnCancelarModelo1.setBackground(new java.awt.Color(255, 51, 51));
+        btnCancelarModelo1.setText("Cancelar");
+        btnCancelarModelo1.setToolTipText("Regresar a la lista de Vehiculos");
+        btnCancelarModelo1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnCancelarModelo1MouseClicked(evt);
+            }
+        });
+        btnCancelarModelo1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarModelo1ActionPerformed(evt);
+            }
+        });
+        pnlCrearMarca2.add(btnCancelarModelo1, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 280, 130, -1));
+
+        btnGuardarModelo1.setText("Guardar");
+        btnGuardarModelo1.setToolTipText("Se guardaran cambios realizados");
+        btnGuardarModelo1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnGuardarModelo1MouseClicked(evt);
+            }
+        });
+        btnGuardarModelo1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGuardarModelo1ActionPerformed(evt);
+            }
+        });
+        pnlCrearMarca2.add(btnGuardarModelo1, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 280, 130, -1));
+
+        txtModeloModificar.setForeground(new java.awt.Color(0, 53, 79));
+        txtModeloModificar.setToolTipText("INGRESE EL NUEVO MODELO");
+        txtModeloModificar.setColorTransparente(true);
+        txtModeloModificar.setFont(new java.awt.Font("Roboto Light", 1, 14)); // NOI18N
+        txtModeloModificar.setPlaceholder("Ejm: D-MAX");
+        txtModeloModificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtModeloModificarActionPerformed(evt);
+            }
+        });
+        txtModeloModificar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtModeloModificarKeyTyped(evt);
+            }
+        });
+        pnlCrearMarca2.add(txtModeloModificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 160, 230, 40));
+
+        lblModeloMarcaRegistro2.setFont(new java.awt.Font("Roboto Medium", 0, 21)); // NOI18N
+        lblModeloMarcaRegistro2.setForeground(new java.awt.Color(0, 53, 79));
+        lblModeloMarcaRegistro2.setText("Modelo:");
+        pnlCrearMarca2.add(lblModeloMarcaRegistro2, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 160, 80, 40));
+
+        cmbModificarMarca.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Elegir marca" }));
+        pnlCrearMarca2.add(cmbModificarMarca, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 210, 230, 30));
+
+        txtCodigoModeloMod.setForeground(new java.awt.Color(0, 53, 79));
+        txtCodigoModeloMod.setToolTipText("IMPOSIBLE MODIFICAR EL CODIGO");
+        txtCodigoModeloMod.setColorTransparente(true);
+        txtCodigoModeloMod.setFont(new java.awt.Font("Roboto Light", 1, 14)); // NOI18N
+        txtCodigoModeloMod.setPlaceholder("CODIGO");
+        txtCodigoModeloMod.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtCodigoModeloModActionPerformed(evt);
+            }
+        });
+        txtCodigoModeloMod.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtCodigoModeloModKeyTyped(evt);
+            }
+        });
+        pnlCrearMarca2.add(txtCodigoModeloMod, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 110, 230, 40));
+
+        lblCodigomodeloMod.setFont(new java.awt.Font("Roboto Medium", 0, 21)); // NOI18N
+        lblCodigomodeloMod.setForeground(new java.awt.Color(0, 53, 79));
+        lblCodigomodeloMod.setText("Codigo modelo:");
+        pnlCrearMarca2.add(lblCodigomodeloMod, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 110, 150, 40));
+
+        jdlModificarModelo.getContentPane().add(pnlCrearMarca2, java.awt.BorderLayout.CENTER);
+
         setLayout(new java.awt.BorderLayout());
 
         pnlListado.setBackground(new java.awt.Color(255, 255, 255));
@@ -412,6 +519,23 @@ public class TablaMarcasVehiculo extends javax.swing.JPanel {
 
         pnlListado.add(scrlpTablaVehi2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 400, 799, 200));
 
+        btnModificar.setText("Modificar");
+        btnModificar.setColorPrimario(new java.awt.Color(204, 0, 0));
+        btnModificar.setColorPrimarioHover(new java.awt.Color(255, 51, 51));
+        btnModificar.setColorSecundario(new java.awt.Color(255, 153, 153));
+        btnModificar.setColorSecundarioHover(new java.awt.Color(255, 204, 204));
+        btnModificar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnModificarMouseClicked(evt);
+            }
+        });
+        btnModificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnModificarActionPerformed(evt);
+            }
+        });
+        pnlListado.add(btnModificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(710, 130, 100, -1));
+
         add(pnlListado, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
 
@@ -466,12 +590,15 @@ public class TablaMarcasVehiculo extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(this, "INGRESE UNA MARCA");
         } else {
             if (verificarExistenciaMarca() == 0) {//si es cero, no existe esa marca, mandamos a registro
-                txtBuscar.setText("");
+                
                 int opcion = JOptionPane.showConfirmDialog(null, "Marca no registrada ¿Desea registrarse?", "Confirmación", JOptionPane.YES_NO_OPTION);
 
                 if (opcion == JOptionPane.YES_OPTION) {
                     System.out.println("Ha seleccionado 'Sí'");
                     //registrar
+                    //txtBuscar   txtBuscarModelo
+                    txtMarcaVRegistrar.setText(txtBuscar.getText().trim());
+                    txtModeloMarcaRegistro.setText(txtBuscarModelo.getText().trim());
                     mostrarDatosMarca();
                     jdlCrearMarcaTabla.setModal(true); // hacemos que el dialogo bloquee la interaccion con la pantalla principal
                     jdlCrearMarcaTabla.setSize(519, 420); // establecemos un tamaño para el diálogo
@@ -537,23 +664,37 @@ public class TablaMarcasVehiculo extends javax.swing.JPanel {
             }
             if (!txtMarcaVRegistrar.getText().trim().isBlank()) {//procedemos siempre que no este en blanco
                 if (!encontrado) {
-                    int k = verificarNumeroMarcas() + 1;
-                    guardarMarca("MARCA" + k, txtMarcaVRegistrar.getText().toUpperCase().trim());//el id de la marca sera autoenumerado  y el nombre ira en mayuscula sin espacio al inicio ni final
-                    if (!marcaGuardada) {
-                        JOptionPane.showMessageDialog(this, "Marca no Guardada");
+                    
+                    int opcion = JOptionPane.showConfirmDialog(null,
+                            "¿Está seguro de guardar la marca " + txtMarcaVRegistrar.getText().trim().toUpperCase() + "?\nLuego no será posible modificarla debido vínculo con uno o varios modelos.",
+                            "Confirmación",
+                            JOptionPane.YES_NO_OPTION);
+
+                    if (opcion == JOptionPane.YES_OPTION) {
+                        //guardamos marca
+                        int k = verificarNumeroMarcas() + 1;
+                        guardarMarca("MARCA" + k, txtMarcaVRegistrar.getText().toUpperCase().trim());//el id de la marca sera autoenumerado  y el nombre ira en mayuscula sin espacio al inicio ni final
+                        if (!marcaGuardada) {
+                            JOptionPane.showMessageDialog(this, "Marca no Guardada");
+                        }
+                        //Guardamos el modelo
+                        guardarModelo(txtModeloMarcaRegistro.getText().trim().toUpperCase(), txtMarcaVRegistrar.getText().trim().toUpperCase());
+                        if (modeloGuadrado) {
+                            jdlCrearMarcaTabla.dispose();
+                            JOptionPane.showMessageDialog(this, "Modelo Guardado");
+                        } else {
+                            jdlCrearMarcaTabla.dispose();
+                            JOptionPane.showMessageDialog(this, "Modelo NO Guardado");
+                        }
+                    } else {
+                        jdlCrearMarcaTabla.dispose();
+                        JOptionPane.showMessageDialog(this, "Acción cancelada");
+                        System.out.println("Acción cancelada");
                     }
 
-                    //Guardamos el modelo
-                    guardarModelo(txtModeloMarcaRegistro.getText().trim().toUpperCase(), txtMarcaVRegistrar.getText().trim().toUpperCase());
-                    if (modeloGuadrado) {
-                        JOptionPane.showMessageDialog(this, "Modelo Guardado");
-                    } else {
-                        JOptionPane.showMessageDialog(this, "Modelo NO Guardado");
-                    }
                     txtModeloMarcaRegistro.setText("");
                     txtMarcaVRegistrar.setText("");
                     mostrarDatosMarca();
-                    jdlCrearMarcaTabla.dispose();
                 }
             } else {
                 JOptionPane.showMessageDialog(this, "No deje Marca en blanco");
@@ -678,10 +819,10 @@ public class TablaMarcasVehiculo extends javax.swing.JPanel {
 
     private void txtBuscarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarKeyReleased
         if (txtBuscar.getText().isEmpty()) {
-        mostrarDatosMarca();
-        mostrarDatosModelo();
-        txtBuscarModelo.setText("");
-    }
+            mostrarDatosMarca();
+            mostrarDatosModelo();
+            txtBuscarModelo.setText("");
+        }
     }//GEN-LAST:event_txtBuscarKeyReleased
 
     private void txtBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtBuscarActionPerformed
@@ -695,6 +836,103 @@ public class TablaMarcasVehiculo extends javax.swing.JPanel {
         txtBuscar.setText("");
     }
     }//GEN-LAST:event_txtBuscarModeloKeyReleased
+
+    private void btnModificarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnModificarMouseClicked
+        
+    }//GEN-LAST:event_btnModificarMouseClicked
+
+    private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
+        if (txtBuscar.getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "INGRESE LA MARCA QUE LE CORRESPONDE AL MODELO");
+        } else {
+            if (txtBuscarModelo.getText().trim().isEmpty()) {
+                JOptionPane.showMessageDialog(this, "INGRESE UN MODELO");
+            } else {
+                if (verificarExistenciaModelo() != 0) {//si es diferente de cero si existe ese modelo
+                    filtrarDatosModeloenModelo();
+                    JOptionPane.showMessageDialog(this, "Modelo encontrado");
+                    
+                    String CodigoModelo = (String) tblModelosLista.getValueAt(0, 0);
+                    txtCodigoModeloMod.setText(CodigoModelo);
+                    txtCodigoModeloMod.setEnabled(false);
+                    txtModeloModificar.setText(txtBuscarModelo.getText().trim());
+                    mostrarComboMarcasModificar();
+                    cmbModificarMarca.setSelectedItem(txtBuscar.getText().trim());
+                    jdlModificarModelo.setModal(true); // hacemos que el dialogo bloquee la interaccion con la pantalla principal
+                    jdlModificarModelo.setSize(519, 420); // establecemos un tamaño para el diálogo
+                    jdlModificarModelo.setLocationRelativeTo(null); // centramos el diálogo en la pantalla
+                    jdlModificarModelo.setUndecorated(true);//no tendra los botones de windows
+                    jdlModificarModelo.setVisible(true); // llamamos al dialogo 
+                }
+            }
+        }
+    }//GEN-LAST:event_btnModificarActionPerformed
+
+    private void btnCancelarModelo1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCancelarModelo1MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnCancelarModelo1MouseClicked
+
+    private void btnCancelarModelo1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarModelo1ActionPerformed
+        jdlModificarModelo.dispose();
+    }//GEN-LAST:event_btnCancelarModelo1ActionPerformed
+
+    private void btnGuardarModelo1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnGuardarModelo1MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnGuardarModelo1MouseClicked
+
+    private void btnGuardarModelo1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarModelo1ActionPerformed
+            if (!txtModeloModificar.getText().trim().isBlank()) {
+            if (cmbModificarMarca.getSelectedItem().equals("Elegir marca")) {
+                JOptionPane.showMessageDialog(this, "Escoja el valor de una marca");
+            } else {
+                Boolean valido = false;//creamos una bandera para validar datos
+                
+                
+                    modificarModelo(txtCodigoModeloMod.getText().toUpperCase().trim(),txtModeloModificar.getText().toUpperCase().trim(),(String)cmbModificarMarca.getSelectedItem());
+                if (BmodleoModificado) {
+                    
+                    txtBuscar.setText((String)cmbModificarMarca.getSelectedItem().toString().toUpperCase().trim());
+                    txtBuscarModelo.setText(txtModeloModificar.getText().toUpperCase().trim());
+                    txtCodigoModeloMod.setText("");
+                    txtModeloModificar.setText("");
+                    cmbModificarMarca.setSelectedItem(null);
+                    jdlModificarModelo.dispose();
+                    JOptionPane.showMessageDialog(this, "Modelo Modificado");
+                    mostrarDatosMarca();
+                    mostrarDatosModelo();
+                } else {
+                    txtCodigoModeloMod.setText("");
+                    txtModeloModificar.setText("");
+                    cmbModificarMarca.setSelectedItem(null);
+                    jdlModificarModelo.dispose();
+                    JOptionPane.showMessageDialog(this, "Modelo con esa marca ya existe en la BD");
+                }
+                
+                
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "No encontrado el modelo");
+        }
+    }//GEN-LAST:event_btnGuardarModelo1ActionPerformed
+
+    private void txtModeloModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtModeloModificarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtModeloModificarActionPerformed
+
+    private void txtModeloModificarKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtModeloModificarKeyTyped
+        char x= evt.getKeyChar();
+        if (Character.isLowerCase(x)) {
+            evt.setKeyChar(Character.toUpperCase(x));
+        }
+    }//GEN-LAST:event_txtModeloModificarKeyTyped
+
+    private void txtCodigoModeloModActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCodigoModeloModActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtCodigoModeloModActionPerformed
+
+    private void txtCodigoModeloModKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCodigoModeloModKeyTyped
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtCodigoModeloModKeyTyped
     private void mostrarDatosMarca() {
         // ESTABLECER CONEXION CON LA BASE DE DATOS
         ObjectContainer BaseBD = Conexion_db.ConectarBD();
@@ -937,6 +1175,20 @@ public class TablaMarcasVehiculo extends javax.swing.JPanel {
         });
         BaseBD.close();
     }
+    //mostrar Marcas
+    private void mostrarComboMarcasModificar() {
+        ObjectContainer BaseBD=Conexion_db.ConectarBD();
+        // Consulta a la base de datos para obtener todos los objetos de marca
+        ObjectSet<MarcaVehiculo> marcas = BaseBD.query(MarcaVehiculo.class);
+        //primero limpiamos combobox para luego agregar
+        cmbModificarMarca.removeAllItems();
+        // Itera sobre los resultados y agrega los nombres de ciudades al JComboBox
+        marcas.forEach((MArca) -> {
+            
+            cmbModificarMarca.addItem(MArca.getNombre_Marca());
+        });
+        BaseBD.close();
+    }
     
     private void filtrarDatosMarcaenMarca() {
     // ESTABLECER CONEXION CON LA BASE DE DATOS
@@ -998,6 +1250,7 @@ public class TablaMarcasVehiculo extends javax.swing.JPanel {
     tblModelosLista.getColumnModel().getColumn(2).setCellRenderer(centrar);
 
     tblMarcasLista.setEnabled(false);
+    tblModelosLista.setEnabled(false);
     BaseBD.close();
 }
     private void filtrarDatosModeloenModelo() {
@@ -1056,10 +1309,59 @@ public class TablaMarcasVehiculo extends javax.swing.JPanel {
         tblMarcasLista.getColumnModel().getColumn(0).setCellRenderer(centrar2);
         tblMarcasLista.getColumnModel().getColumn(1).setCellRenderer(centrar2);
         tblMarcasLista.setEnabled(false);
+        tblModelosLista.setEnabled(false);
 
         BaseBD.close();
     }
-    
+    private static Boolean BmodleoModificado=false;
+    public static void modificarModelo(String codigoModelo, String Nombre_modelo, String id_Marca) {
+        BmodleoModificado=false;
+        //para verificar que el color no este vinculado al nuevo tipo
+        int modeloMarca=verificarModeloyMarcaModificar(Nombre_modelo, id_Marca);
+        // ESTABLECER CONEXION CON LA BASE DE DATOS
+        ObjectContainer BaseBD = Conexion_db.ConectarBD();
+        // Crear el objeto con los datos nuevos
+        ModeloVehiculo modeloModificado = new ModeloVehiculo( codigoModelo,  Nombre_modelo, id_Marca);
+
+        // Buscar el objeto anterior existente en la base de datos
+        ModeloVehiculo modeloBusca = new ModeloVehiculo(codigoModelo, null, null);
+        ObjectSet resultado = BaseBD.get(modeloBusca);
+        int coincidencias = resultado.size();
+        ModeloVehiculo modeloAEliminar;
+
+        if (coincidencias > 0) {//debe existir el color
+            
+            if (modeloMarca== 0) {//No debe existir una coincidencia de Modelo y Marca
+            
+            //Eliminar el objeto existente
+            modeloAEliminar = (ModeloVehiculo) resultado.next();
+            BaseBD.delete(modeloAEliminar);
+            // Guardar el nuevo objeto con los datos modificados
+            BaseBD.set(modeloModificado);
+            BmodleoModificado=true;
+            //cierro base
+            BaseBD.close();
+            System.out.println("Modelo modificado y guardado exitosamente."); 
+        } else {
+            System.out.println("Modelo con esa marca ya existe en la BD");
+        }
+        } else {
+            System.out.println("No se encontró ningún Modelo con el codigo especificado.");
+        }
+
+        // Cerrar la base de datos
+        BaseBD.close();
+    }
+    public static int verificarModeloyMarcaModificar(String Nombre_modelo, String id_Marca) {
+        // ESTABLECER CONEXION CON LA BASE DE DATOS
+        ObjectContainer BaseBD = Conexion_db.ConectarBD();
+        ModeloVehiculo ModleoBusca = new ModeloVehiculo(null,Nombre_modelo, id_Marca);
+        ObjectSet resultado = BaseBD.get(ModleoBusca);
+        int coincidencias= resultado.size();
+        //Cerrar BD
+        BaseBD.close();
+        return coincidencias;
+    }
     
     
     
@@ -1070,22 +1372,32 @@ public class TablaMarcasVehiculo extends javax.swing.JPanel {
     private rsbuttongradiente.RSButtonGradiente btnBuscarModelo;
     private rojeru_san.RSButtonRiple btnCancelar1;
     private rojeru_san.RSButtonRiple btnCancelarModelo;
+    private rojeru_san.RSButtonRiple btnCancelarModelo1;
     private rojeru_san.RSButtonRiple btnGuardarMarca;
     private rojeru_san.RSButtonRiple btnGuardarModelo;
+    private rojeru_san.RSButtonRiple btnGuardarModelo1;
+    private rsbuttongradiente.RSButtonGradiente btnModificar;
     private javax.swing.JComboBox<String> cmbMarcas;
+    private javax.swing.JComboBox<String> cmbModificarMarca;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
     private javax.swing.JDialog jdlCrearMarcaTabla;
     private javax.swing.JDialog jdlCrearModelo;
+    private javax.swing.JDialog jdlModificarModelo;
     private javax.swing.JLabel lblBuscar;
     private javax.swing.JLabel lblBuscar1;
+    private javax.swing.JLabel lblCodigomodeloMod;
     private javax.swing.JLabel lblMarcas;
     private javax.swing.JLabel lblModeloMarcaRegistro;
     private javax.swing.JLabel lblModeloMarcaRegistro1;
+    private javax.swing.JLabel lblModeloMarcaRegistro2;
     private javax.swing.JLabel lblPlaca1;
     private javax.swing.JLabel lblPlaca2;
+    private javax.swing.JLabel lblPlaca3;
     private javax.swing.JPanel pnlCrearMarca;
     private javax.swing.JPanel pnlCrearMarca1;
+    private javax.swing.JPanel pnlCrearMarca2;
     private javax.swing.JPanel pnlListado;
     private javax.swing.JScrollPane scrlpTablaVehi1;
     private javax.swing.JScrollPane scrlpTablaVehi2;
@@ -1095,8 +1407,10 @@ public class TablaMarcasVehiculo extends javax.swing.JPanel {
     private javax.swing.JTable tblModelosLista;
     private rojeru_san.RSMTextFull txtBuscar;
     private rojeru_san.RSMTextFull txtBuscarModelo;
+    private rojeru_san.RSMTextFull txtCodigoModeloMod;
     private rojeru_san.RSMTextFull txtMarcaVRegistrar;
     private rojeru_san.RSMTextFull txtModeloMarcaRegistro;
+    private rojeru_san.RSMTextFull txtModeloModificar;
     private rojeru_san.RSMTextFull txtModeloRegistrar;
     // End of variables declaration//GEN-END:variables
 }

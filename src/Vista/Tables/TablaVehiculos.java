@@ -70,6 +70,11 @@ public class TablaVehiculos extends javax.swing.JPanel {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        tblVehiculo.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblVehiculoMouseClicked(evt);
+            }
+        });
         scrlpTablaVehi1.setViewportView(tblVehiculo);
 
         txtBuscar.setFont(new java.awt.Font("Roboto Bold", 2, 14)); // NOI18N
@@ -152,6 +157,7 @@ public class TablaVehiculos extends javax.swing.JPanel {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        tblVehiculoInactivo.setEnabled(false);
         scrlpTablaVehi2.setViewportView(tblVehiculoInactivo);
 
         lbl_Inactivos.setFont(new java.awt.Font("Roboto Black", 0, 18)); // NOI18N
@@ -185,8 +191,9 @@ public class TablaVehiculos extends javax.swing.JPanel {
                                 .addComponent(btnAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(44, 44, 44)
                                 .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(37, 37, 37)
-                                .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(26, 26, 26)
+                                .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(11, 11, 11))
                             .addComponent(scrlpTablaVehi1, javax.swing.GroupLayout.PREFERRED_SIZE, 822, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addGap(0, 0, Short.MAX_VALUE))))
         );
@@ -286,7 +293,7 @@ public class TablaVehiculos extends javax.swing.JPanel {
             BuscarPanelVehiculo miBuscarPanelVehiculo = new BuscarPanelVehiculo(BuscarPlaca);//creo el componente llevando el valor del String
             ShowpanelCruds(miBuscarPanelVehiculo);
         } else {
-            JOptionPane.showMessageDialog(this, "No deje el campo vacio");
+            JOptionPane.showMessageDialog(this, "Ingrese la placa del vehiculo  ");
         }
     }//GEN-LAST:event_btnEditarActionPerformed
 
@@ -308,6 +315,10 @@ public class TablaVehiculos extends javax.swing.JPanel {
             evt.setKeyChar(Character.toUpperCase(x));
         }
     }//GEN-LAST:event_txtBuscarKeyTyped
+
+    private void tblVehiculoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblVehiculoMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tblVehiculoMouseClicked
 
     private void mostrarDatosInactivo() {
         // ESTABLECER CONEXION CON LA BASE DE DATOS
