@@ -12,6 +12,8 @@ import static Vista.Menu.VistaMenu.PanelPrincipal;
 import com.db4o.ObjectContainer;
 import com.db4o.ObjectSet;
 import com.db4o.query.Query;
+import com.itextpdf.io.image.ImageDataFactory;
+import com.itextpdf.kernel.colors.ColorConstants;
 import java.awt.BorderLayout;
 import java.time.LocalDate;
 import javax.swing.JDialog;
@@ -26,23 +28,27 @@ import com.itextpdf.layout.Document;
 import com.itextpdf.layout.element.Paragraph;
 import com.itextpdf.layout.element.Table;
 import com.itextpdf.layout.element.Cell;
+import com.itextpdf.layout.element.Image;
+import com.itextpdf.layout.property.TextAlignment;
+import com.itextpdf.layout.property.UnitValue;
 import java.awt.Desktop;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 
 
-
 public class Factura extends javax.swing.JPanel {
+
+
+    private String pdfPath = "factura.pdf";
 
     /**
      * Creates new form Factura
      */
-    
-    public Factura(   ) {
-        
+    public Factura() {
+
         initComponents();
-         
+
         setearcabe();
         txtNombre1.setEnabled(false);
         txtdireccion.setEnabled(false);
@@ -54,7 +60,7 @@ public class Factura extends javax.swing.JPanel {
         txtSubtotal.setEnabled(false);
         txtTotalfac.setEnabled(false);
         txtiva.setEnabled(false);
-        
+
     }
 
     /**
@@ -714,67 +720,71 @@ public class Factura extends javax.swing.JPanel {
     private void btnAñadirProductosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAñadirProductosActionPerformed
         if (txtcedula.getText().trim().isEmpty()) {
             JOptionPane.showMessageDialog(this, "AGREGUE LOS DATOS DEL CLIENTE");
-        }else{activarJdialog(tablaproductos);}        
+        } else {
+            activarJdialog(tablaproductos);
+        }
     }//GEN-LAST:event_btnAñadirProductosActionPerformed
 
     private void btnInsertarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInsertarClienteActionPerformed
         tablaClientes.dispose();
-        CrudPanelCliente registrocli =new CrudPanelCliente();
-           MostarpanelCruds(registrocli);
+        CrudPanelCliente registrocli = new CrudPanelCliente();
+        MostarpanelCruds(registrocli);
     }//GEN-LAST:event_btnInsertarClienteActionPerformed
 
     private void btnAñadirclienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAñadirclienteActionPerformed
-        activarJadialog( tablaClientes);
+        activarJadialog(tablaClientes);
     }//GEN-LAST:event_btnAñadirclienteActionPerformed
 
     private void btnAñadirServicosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAñadirServicosActionPerformed
-       if (txtcedula.getText().trim().isEmpty()) {
+        if (txtcedula.getText().trim().isEmpty()) {
             JOptionPane.showMessageDialog(this, "AGREGUE LOS DATOS DEL CLIENTE");
-        }else{activarJadialogser(TablaServicios);}    
-           
+        } else {
+            activarJadialogser(TablaServicios);
+        }
+
     }//GEN-LAST:event_btnAñadirServicosActionPerformed
 
     private void btnFinalizarFacActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFinalizarFacActionPerformed
-       actualizarFactura();
-       guardarFactura();
+        actualizarFactura();
+        guardarFactura();
     }//GEN-LAST:event_btnFinalizarFacActionPerformed
 
     private void btnbuscarproductosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnbuscarproductosActionPerformed
-        
+
         String textoBusqueda = txtBuscarProducto.getText();
         filtrarTabla(textoBusqueda);
-    
+
     }//GEN-LAST:event_btnbuscarproductosActionPerformed
 
     private void btnInsetarServiciosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInsetarServiciosActionPerformed
-           seteardatosSer();
-           actualizarSubtotalesFila();
+        seteardatosSer();
+        actualizarSubtotalesFila();
     }//GEN-LAST:event_btnInsetarServiciosActionPerformed
 
     private void btnBuscarclienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarclienteActionPerformed
-     CargarCliente();
-     
-     
+        CargarCliente();
+
+
     }//GEN-LAST:event_btnBuscarclienteActionPerformed
 
     private void btnBuscarServicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarServicioActionPerformed
-       String textoBusqueda = txtBuscarServicio.getText();
+        String textoBusqueda = txtBuscarServicio.getText();
         filtrarTablaServicios(textoBusqueda);
     }//GEN-LAST:event_btnBuscarServicioActionPerformed
 
     private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
-       Factura nuevo =new Factura();
-           MostarpanelCruds(nuevo);
+        Factura nuevo = new Factura();
+        MostarpanelCruds(nuevo);
     }//GEN-LAST:event_btnNuevoActionPerformed
 
     private void btnVentasGeneradasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVentasGeneradasActionPerformed
-       JOptionPane.showMessageDialog(this, "SERVICIO DE INVENTARIO AUN NO DISPONIBLE");
+        JOptionPane.showMessageDialog(this, "SERVICIO DE INVENTARIO AUN NO DISPONIBLE");
     }//GEN-LAST:event_btnVentasGeneradasActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-       VistaMenu cancelar = new VistaMenu();
+        VistaMenu cancelar = new VistaMenu();
         cancelar.setEnabled(true);
-        
+
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
@@ -787,7 +797,7 @@ public class Factura extends javax.swing.JPanel {
     }//GEN-LAST:event_btnInsertarProductosMouseClicked
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-         eliminarFilaSeleccionada();
+        eliminarFilaSeleccionada();
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnResiboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnResiboActionPerformed
@@ -806,41 +816,41 @@ public class Factura extends javax.swing.JPanel {
     }
 
     private static String obtenerProximoCodigoFactura(ObjectContainer db) {
-    // Consultar todos los encabezados de factura
-    ObjectSet<EncabezadoFactura_1> result = db.queryByExample(EncabezadoFactura_1.class);
+        // Consultar todos los encabezados de factura
+        ObjectSet<EncabezadoFactura_1> result = db.queryByExample(EncabezadoFactura_1.class);
 
-    // Determinar el máximo ID numérico existente
-    int maxID = 0;
-    while (result.hasNext()) {
-        EncabezadoFactura_1 facturacion = result.next();
-        String codigo = facturacion.getCodigo_encabezadoFactura();
-        if (codigo != null && codigo.startsWith("FAC-")) {
-            try {
-                int id = Integer.parseInt(codigo.substring(4)); // Extraer la parte numérica del código
-                if (id > maxID) {
-                    maxID = id;
+        // Determinar el máximo ID numérico existente
+        int maxID = 0;
+        while (result.hasNext()) {
+            EncabezadoFactura_1 facturacion = result.next();
+            String codigo = facturacion.getCodigo_encabezadoFactura();
+            if (codigo != null && codigo.startsWith("FAC-")) {
+                try {
+                    int id = Integer.parseInt(codigo.substring(4)); // Extraer la parte numérica del código
+                    if (id > maxID) {
+                        maxID = id;
+                    }
+                } catch (NumberFormatException e) {
+                    // Manejar el caso en que el substring no sea un número válido
+                    System.err.println("Error al parsear el código de factura: " + codigo);
                 }
-            } catch (NumberFormatException e) {
-                // Manejar el caso en que el substring no sea un número válido
-                System.err.println("Error al parsear el código de factura: " + codigo);
             }
         }
+
+        // El próximo ID es el máximo + 1
+        int siguienteID = maxID + 1;
+        // Retornar el nuevo código concatenado con "FAC-"
+        return String.format("FAC-%04d", siguienteID); // Asegura 4 dígitos con ceros a la izquierda
     }
 
-    // El próximo ID es el máximo + 1
-    int siguienteID = maxID + 1;
-    // Retornar el nuevo código concatenado con "FAC-"
-    return String.format("FAC-%04d", siguienteID); // Asegura 4 dígitos con ceros a la izquierda
-}
-
     public void setearcabe() {
-    ObjectContainer baseBD = Conexion_db.ConectarBD();
-    String fac = obtenerProximoCodigoFactura(baseBD);
-    txtcodigoFac.setText(fac);
-    txtcodigoFac.setEnabled(false);
-    txtfecha.setText(obtenerFechaActual());
-    txtfecha.setEnabled(false);
-    baseBD.close();
+        ObjectContainer baseBD = Conexion_db.ConectarBD();
+        String fac = obtenerProximoCodigoFactura(baseBD);
+        txtcodigoFac.setText(fac);
+        txtcodigoFac.setEnabled(false);
+        txtfecha.setText(obtenerFechaActual());
+        txtfecha.setEnabled(false);
+        baseBD.close();
     }
 
     public static String obtenerFechaActual() {
@@ -859,7 +869,7 @@ public class Factura extends javax.swing.JPanel {
 
     private void mostrarTablaProductos() {
         ObjectContainer BaseBD = Conexion_db.ConectarBD();
-        Producto producto = new Producto(null, null, null, null, 0, 0, 0, null, null,null,null);
+        Producto producto = new Producto(null, null, null, null, 0, 0, 0, null, null, null, null);
         ObjectSet<Producto> resul = BaseBD.get(producto);
 
         String matriz[][] = new String[resul.size()][4];
@@ -882,29 +892,24 @@ public class Factura extends javax.swing.JPanel {
         BaseBD.close();
     }
 
- private void filtrarTabla(String consulta) {
-    DefaultTableModel modelo = (DefaultTableModel) Tablproductos1.getModel();
-    TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(modelo);
-    Tablproductos1.setRowSorter(sorter);
+    private void filtrarTabla(String consulta) {
+        DefaultTableModel modelo = (DefaultTableModel) Tablproductos1.getModel();
+        TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(modelo);
+        Tablproductos1.setRowSorter(sorter);
 
-    if (consulta.trim().length() == 0) {
-        sorter.setRowFilter(null);
-    } else {
-        sorter.setRowFilter(RowFilter.regexFilter("(?i)" + consulta));
+        if (consulta.trim().length() == 0) {
+            sorter.setRowFilter(null);
+        } else {
+            sorter.setRowFilter(RowFilter.regexFilter("(?i)" + consulta));
+        }
+
+        // Selecciona automáticamente la primera fila filtrada
+        if (Tablproductos1.getRowCount() > 0) {
+            Tablproductos1.setRowSelectionInterval(0, 0);
+        }
     }
 
-    // Selecciona automáticamente la primera fila filtrada
-    if (Tablproductos1.getRowCount() > 0) {
-        Tablproductos1.setRowSelectionInterval(0, 0);
-    }
-}
-
- 
-        
-                   
-    
 //clientes
-
     private void activarJadialog(JDialog tablaClientes) {
 
         tablaClientes.setTitle("Listado Clientes");
@@ -924,300 +929,296 @@ public class Factura extends javax.swing.JPanel {
         int i = 0;
         for (Cliente cli : resultado) {
 
-                             
             matriz[i][0] = cli.getCedula();
             matriz[i][1] = cli.getNombres();
             matriz[i][2] = cli.getApellidos();
-           
-            
+
             i++;
         }
 
         tblClientes.setModel(new javax.swing.table.DefaultTableModel(
                 matriz,
-                new String[]{ "Cedula", "Nombres", "Apellidos"} ));
+                new String[]{"Cedula", "Nombres", "Apellidos"}));
         BaseBD.close();
     }
 
-    
-   public final void CargarCliente() {
-   Boolean encontrado = false;
-    
-    // Verifica que el campo de búsqueda no esté vacío
-    String cedulaBuscar = txtBuscar1.getText().trim();
-    if (cedulaBuscar.isEmpty()) {
-        JOptionPane.showMessageDialog(this, "Por favor, ingrese una cédula para buscar.");
-        return;
-    }
+    public final void CargarCliente() {
+        Boolean encontrado = false;
 
-    // ESTABLECER CONEXION CON LA BASE DE DATOS
-    ObjectContainer BaseBD = null;
-    try {
-        BaseBD = Conexion_db.ConectarBD();
-        Query clienteQuery = BaseBD.query(); // Método para iniciar una consulta
-        clienteQuery.constrain(Cliente.class); // Buscaremos en la clase Cliente
-        clienteQuery.descend("cedula").constrain(cedulaBuscar); // Verificamos las coincidencias en el atributo especificado
-        ObjectSet<Cliente> resultado = clienteQuery.execute(); // Ejecutamos la consulta y almacenamos en "resultado"
+        // Verifica que el campo de búsqueda no esté vacío
+        String cedulaBuscar = txtBuscar1.getText().trim();
+        if (cedulaBuscar.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Por favor, ingrese una cédula para buscar.");
+            return;
+        }
 
-        // si s los resultados
-        if (!resultado.isEmpty()) {
-            for (Cliente cliente : resultado) {
-                // Seteamos en los campos recibiendo del objeto
-                txtcedula.setText(cliente.getCedula());
-                txtcedula.setEnabled(false); // Para que el usuario no edite la cédula
-                txtNombre1.setText(cliente.getNombres());
-                txtdireccion.setText(cliente.getDireccion());
-                txttelefono.setText(cliente.getCelular());
-                tablaClientes.dispose();
-                encontrado = true;
-                JOptionPane.showMessageDialog(this, "Cliente encontrado");
-                break; // Salimos del bucle una vez encontrado el cliente
-            }
-        } else {
-            JOptionPane.showMessageDialog(this, "No se encontró Cliente");
-        }
-    } catch (Exception e) {
-        JOptionPane.showMessageDialog(this, "Error al buscar el cliente: " + e.getMessage());
-    } finally {
-        if (BaseBD != null) {
-            BaseBD.close();
-        }
-    }
-}
-   public void seteardatosPro() {
-    int filaSeleccionada = Tablproductos1.getSelectedRow();
-    if (filaSeleccionada != -1) {
-        int filaModelo = Tablproductos1.convertRowIndexToModel(filaSeleccionada);
-        String codigoProducto = (String) Tablproductos1.getModel().getValueAt(filaModelo, 0);
-        String nombreProducto = (String) Tablproductos1.getModel().getValueAt(filaModelo, 1);
-        String precioProductoStr = (String) Tablproductos1.getModel().getValueAt(filaModelo, 2); // Precio como String
-        String cantidadDisponibleStr = (String) Tablproductos1.getModel().getValueAt(filaModelo, 3); // Cantidad disponible como String
-        
-        double precioProducto;
-        int cantidadDisponible;
-        
+        // ESTABLECER CONEXION CON LA BASE DE DATOS
+        ObjectContainer BaseBD = null;
         try {
-            precioProducto = Double.parseDouble(precioProductoStr.replace(",", "."));
-            cantidadDisponible = Integer.parseInt(cantidadDisponibleStr);
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(null, "Error al convertir precio o cantidad: " + e.getMessage());
-            return;
-        }
-        
-        Producto productoSeleccionado = obtenerProductoPorCodigo(codigoProducto); // Obtener el producto por su código
-        
-        if (productoSeleccionado == null) {
-            JOptionPane.showMessageDialog(null, "Producto no encontrado.");
-            return;
-        }
-        
-        String numeroProductos = "";
-        boolean esValido = false;
-        
-        while (!esValido) {
-            numeroProductos = JOptionPane.showInputDialog("Ingrese la cantidad de productos");
-            if (numeroProductos != null && numeroProductos.matches("\\d+")) {
-                int cantidadSolicitada = Integer.parseInt(numeroProductos);
-                int nuevaCantidad = productoSeleccionado.restarCantidad(cantidadSolicitada);
-                if (nuevaCantidad != -1) {
-                    esValido = true;
-                    // Actualizar la cantidad en el modelo de la tabla
-                    Tablproductos1.getModel().setValueAt(String.valueOf(nuevaCantidad), filaModelo, 3);
-                    
-                    // Calcular el subtotal y agregarlo a la tabla de facturas
-                    double subtotal = precioProducto * cantidadSolicitada;
-                    
-                    DefaultTableModel modeloFactura = (DefaultTableModel) JtableFactura.getModel();
-                    modeloFactura.addRow(new Object[]{codigoProducto, nombreProducto, String.format("%.2f", precioProducto), cantidadSolicitada, String.format("%.2f", subtotal)});
-                    
-                    
-                     // Buscar el objeto existente en la base de datos
-                    ObjectContainer baseBD = Conexion_db.ConectarBD();
-                    Producto productoBuscar = new Producto(codigoProducto,null, null, null, 0, 0, 0, null, null, null, Producto.Estado.ACTIVO);
-                    ObjectSet resultado = baseBD.get(productoBuscar);
-                    int coincidencias = resultado.size();
+            BaseBD = Conexion_db.ConectarBD();
+            Query clienteQuery = BaseBD.query(); // Método para iniciar una consulta
+            clienteQuery.constrain(Cliente.class); // Buscaremos en la clase Cliente
+            clienteQuery.descend("cedula").constrain(cedulaBuscar); // Verificamos las coincidencias en el atributo especificado
+            ObjectSet<Cliente> resultado = clienteQuery.execute(); // Ejecutamos la consulta y almacenamos en "resultado"
 
-                    if (coincidencias > 0) {
-                        // Eliminar el objeto existente
-                        Producto productoAEliminar = (Producto) resultado.next();
-                        baseBD.delete(productoAEliminar);
-
-                        // Guardar el nuevo objeto con los datos modificados
-                        baseBD.store(productoSeleccionado);
-                        System.out.println("Producto modificado y guardado exitosamente.");
-                    } else {
-                        System.out.println("No se encontró ningún producto con el código especificado.");
-                    }
-
-                    // Cerrar la base de datos
-                    baseBD.close();
-
-                    tablaproductos.dispose();
-                    // Actualizar los campos de la factura
-                    actualizarFactura();
-                } else {
-                    JOptionPane.showMessageDialog(null, "No hay suficiente cantidad disponible");
+            // si s los resultados
+            if (!resultado.isEmpty()) {
+                for (Cliente cliente : resultado) {
+                    // Seteamos en los campos recibiendo del objeto
+                    txtcedula.setText(cliente.getCedula());
+                    txtcedula.setEnabled(false); // Para que el usuario no edite la cédula
+                    txtNombre1.setText(cliente.getNombres());
+                    txtdireccion.setText(cliente.getDireccion());
+                    txttelefono.setText(cliente.getCelular());
+                    tablaClientes.dispose();
+                    encontrado = true;
+                    JOptionPane.showMessageDialog(this, "Cliente encontrado");
+                    break; // Salimos del bucle una vez encontrado el cliente
                 }
             } else {
-                JOptionPane.showMessageDialog(null, "Por favor ingrese solo dígitos");
+                JOptionPane.showMessageDialog(this, "No se encontró Cliente");
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error al buscar el cliente: " + e.getMessage());
+        } finally {
+            if (BaseBD != null) {
+                BaseBD.close();
             }
         }
-
-        // Limpia la selección de la tabla
-        Tablproductos1.clearSelection();
-        
-        tablaproductos.setVisible(true);
-        
-    } else {
-        JOptionPane.showMessageDialog(null, "No se seleccionó ningún producto");
     }
-}
+
+    public void seteardatosPro() {
+        int filaSeleccionada = Tablproductos1.getSelectedRow();
+        if (filaSeleccionada != -1) {
+            int filaModelo = Tablproductos1.convertRowIndexToModel(filaSeleccionada);
+            String codigoProducto = (String) Tablproductos1.getModel().getValueAt(filaModelo, 0);
+            String nombreProducto = (String) Tablproductos1.getModel().getValueAt(filaModelo, 1);
+            String precioProductoStr = (String) Tablproductos1.getModel().getValueAt(filaModelo, 2); // Precio como String
+            String cantidadDisponibleStr = (String) Tablproductos1.getModel().getValueAt(filaModelo, 3); // Cantidad disponible como String
+
+            double precioProducto;
+            int cantidadDisponible;
+
+            try {
+                precioProducto = Double.parseDouble(precioProductoStr.replace(",", "."));
+                cantidadDisponible = Integer.parseInt(cantidadDisponibleStr);
+            } catch (NumberFormatException e) {
+                JOptionPane.showMessageDialog(null, "Error al convertir precio o cantidad: " + e.getMessage());
+                return;
+            }
+
+            Producto productoSeleccionado = obtenerProductoPorCodigo(codigoProducto); // Obtener el producto por su código
+
+            if (productoSeleccionado == null) {
+                JOptionPane.showMessageDialog(null, "Producto no encontrado.");
+                return;
+            }
+
+            String numeroProductos = "";
+            boolean esValido = false;
+
+            while (!esValido) {
+                numeroProductos = JOptionPane.showInputDialog("Ingrese la cantidad de productos");
+                if (numeroProductos != null && numeroProductos.matches("\\d+")) {
+                    int cantidadSolicitada = Integer.parseInt(numeroProductos);
+                    int nuevaCantidad = productoSeleccionado.restarCantidad(cantidadSolicitada);
+                    if (nuevaCantidad != -1) {
+                        esValido = true;
+                        // Actualizar la cantidad en el modelo de la tabla
+                        Tablproductos1.getModel().setValueAt(String.valueOf(nuevaCantidad), filaModelo, 3);
+
+                        // Calcular el subtotal y agregarlo a la tabla de facturas
+                        double subtotal = precioProducto * cantidadSolicitada;
+
+                        DefaultTableModel modeloFactura = (DefaultTableModel) JtableFactura.getModel();
+                        modeloFactura.addRow(new Object[]{codigoProducto, nombreProducto, String.format("%.2f", precioProducto), cantidadSolicitada, String.format("%.2f", subtotal)});
+
+                        // Buscar el objeto existente en la base de datos
+                        ObjectContainer baseBD = Conexion_db.ConectarBD();
+                        Producto productoBuscar = new Producto(codigoProducto, null, null, null, 0, 0, 0, null, null, null, Producto.Estado.ACTIVO);
+                        ObjectSet resultado = baseBD.get(productoBuscar);
+                        int coincidencias = resultado.size();
+
+                        if (coincidencias > 0) {
+                            // Eliminar el objeto existente
+                            Producto productoAEliminar = (Producto) resultado.next();
+                            baseBD.delete(productoAEliminar);
+
+                            // Guardar el nuevo objeto con los datos modificados
+                            baseBD.store(productoSeleccionado);
+                            System.out.println("Producto modificado y guardado exitosamente.");
+                        } else {
+                            System.out.println("No se encontró ningún producto con el código especificado.");
+                        }
+
+                        // Cerrar la base de datos
+                        baseBD.close();
+
+                        tablaproductos.dispose();
+                        // Actualizar los campos de la factura
+                        actualizarFactura();
+                    } else {
+                        JOptionPane.showMessageDialog(null, "No hay suficiente cantidad disponible");
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(null, "Por favor ingrese solo dígitos");
+                }
+            }
+
+            // Limpia la selección de la tabla
+            Tablproductos1.clearSelection();
+
+            tablaproductos.setVisible(true);
+
+        } else {
+            JOptionPane.showMessageDialog(null, "No se seleccionó ningún producto");
+        }
+    }
+
     //Servicios 
     private void mostrarTablaServicios() {
-    ObjectContainer BaseBD = Conexion_db.ConectarBD();
-    Servicios servicio = new Servicios();
-    ObjectSet<Servicios> resul = BaseBD.get(servicio);
+        ObjectContainer BaseBD = Conexion_db.ConectarBD();
+        Servicios servicio = new Servicios();
+        ObjectSet<Servicios> resul = BaseBD.get(servicio);
 
-    String[][] matriz = new String[resul.size()][8];
+        String[][] matriz = new String[resul.size()][8];
 
-    int i = 0;
-    while (resul.hasNext()) {
-        Servicios serv = resul.next();
+        int i = 0;
+        while (resul.hasNext()) {
+            Servicios serv = resul.next();
 
-        matriz[i][0] = serv.getCodigo_Servicio();
-        matriz[i][1] = serv.getNombre_Servicio();        
-        matriz[i][2] = String.valueOf(serv.getPrecioTotal_Servicio());
-        
-       
+            matriz[i][0] = serv.getCodigo_Servicio();
+            matriz[i][1] = serv.getNombre_Servicio();
+            matriz[i][2] = String.valueOf(serv.getPrecioTotal_Servicio());
 
-        i++;
+            i++;
+        }
+
+        tblServicios.setModel(new javax.swing.table.DefaultTableModel(
+                matriz,
+                new String[]{
+                    "Código Servicio", "Nombre Servicio", "Precio Total"}));
+        BaseBD.close();
     }
 
-    tblServicios.setModel(new javax.swing.table.DefaultTableModel(
-            matriz,
-            new String[]{
-                "Código Servicio", "Nombre Servicio", "Precio Total"} ));
-    BaseBD.close();
-}
-  private void activarJadialogser(JDialog TablaServicios) {
+    private void activarJadialogser(JDialog TablaServicios) {
 
         TablaServicios.setTitle("Listado Servicios");
         TablaServicios.setSize(680, 330);
         TablaServicios.setLocationRelativeTo(this);
         TablaServicios.setVisible(true);
-    } 
-  private void filtrarTablaServicios(String consulta) {
-    DefaultTableModel modelo = (DefaultTableModel) tblServicios.getModel();
-    TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(modelo);
-    tblServicios.setRowSorter(sorter);
-
-    if (consulta.trim().length() == 0) {
-        sorter.setRowFilter(null);
-    } else {
-        sorter.setRowFilter(RowFilter.regexFilter("(?i)" + consulta));
     }
 
-    // Selecciona automáticamente la primera fila filtrada
-    if (tblServicios.getRowCount() > 0) {
-        tblServicios.setRowSelectionInterval(0, 0);
-    }
-}
+    private void filtrarTablaServicios(String consulta) {
+        DefaultTableModel modelo = (DefaultTableModel) tblServicios.getModel();
+        TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(modelo);
+        tblServicios.setRowSorter(sorter);
 
-  public void seteardatosSer() {
-    int filaSeleccionada = tblServicios.getSelectedRow();
-    if (filaSeleccionada != -1) {
-        int filaModelo = tblServicios.convertRowIndexToModel(filaSeleccionada);
-        String codigoServicio = (String) tblServicios.getModel().getValueAt(filaModelo, 0);
-        String nombreServicio = (String) tblServicios.getModel().getValueAt(filaModelo, 1);
-        String precioServicio = (String) tblServicios.getModel().getValueAt(filaModelo, 2);
-
-        String numerodevehuculos = "";
-        boolean esValido = false;
-        
-        while (!esValido) {
-            numerodevehuculos = JOptionPane.showInputDialog("Ingrese el número de vehículos a los que se les realizó el servicio");
-            if (numerodevehuculos != null && numerodevehuculos.matches("\\d+")) {
-                esValido = true;
-                TablaServicios.dispose();
-            } else {
-                JOptionPane.showMessageDialog(null, "Por favor ingrese solo dígitos.");
-            }
+        if (consulta.trim().length() == 0) {
+            sorter.setRowFilter(null);
+        } else {
+            sorter.setRowFilter(RowFilter.regexFilter("(?i)" + consulta));
         }
 
-        DefaultTableModel modeloFactura = (DefaultTableModel) JtableFactura.getModel();
-        modeloFactura.addRow(new Object[]{codigoServicio, nombreServicio, precioServicio, numerodevehuculos});
-        
-        // Limpia la selección de la tabla
-        tblServicios.clearSelection();
-        tblServicios.setVisible(true);
-        
-        // Actualizar los campos de la factura
-        actualizarFactura();
-        
-    } else {
-        JOptionPane.showMessageDialog(null, "No se seleccionó ningún producto");
+        // Selecciona automáticamente la primera fila filtrada
+        if (tblServicios.getRowCount() > 0) {
+            tblServicios.setRowSelectionInterval(0, 0);
+        }
     }
-}
+
+    public void seteardatosSer() {
+        int filaSeleccionada = tblServicios.getSelectedRow();
+        if (filaSeleccionada != -1) {
+            int filaModelo = tblServicios.convertRowIndexToModel(filaSeleccionada);
+            String codigoServicio = (String) tblServicios.getModel().getValueAt(filaModelo, 0);
+            String nombreServicio = (String) tblServicios.getModel().getValueAt(filaModelo, 1);
+            String precioServicio = (String) tblServicios.getModel().getValueAt(filaModelo, 2);
+
+            String numerodevehuculos = "";
+            boolean esValido = false;
+
+            while (!esValido) {
+                numerodevehuculos = JOptionPane.showInputDialog("Ingrese el número de vehículos a los que se les realizó el servicio");
+                if (numerodevehuculos != null && numerodevehuculos.matches("\\d+")) {
+                    esValido = true;
+                    TablaServicios.dispose();
+                } else {
+                    JOptionPane.showMessageDialog(null, "Por favor ingrese solo dígitos.");
+                }
+            }
+
+            DefaultTableModel modeloFactura = (DefaultTableModel) JtableFactura.getModel();
+            modeloFactura.addRow(new Object[]{codigoServicio, nombreServicio, precioServicio, numerodevehuculos});
+
+            // Limpia la selección de la tabla
+            tblServicios.clearSelection();
+            tblServicios.setVisible(true);
+
+            // Actualizar los campos de la factura
+            actualizarFactura();
+
+        } else {
+            JOptionPane.showMessageDialog(null, "No se seleccionó ningún producto");
+        }
+    }
 
 //  
+    private void actualizarFactura() {
+        actualizarSubtotalesFila(); // Primero actualizar los subtotales por fila
+        double subtotal = calcularSubtotalTabla();
+        double porcentajeDescuento = 0.0;
+        if (!txtDescuento.getText().isEmpty()) {
+            String descuentoStr = txtDescuento.getText().replace(",", ".");
+            porcentajeDescuento = Double.parseDouble(descuentoStr);
+        }
+        double porcentajeIVA = 15.0; // IVA del 15%
+        double descuento = calcularDescuento(subtotal, porcentajeDescuento);
+        double iva = calcularIVA(subtotal, porcentajeIVA);
+        double total = calcularTotal(subtotal, descuento, iva);
 
- 
-private void actualizarFactura() {
-    actualizarSubtotalesFila(); // Primero actualizar los subtotales por fila
-    double subtotal = calcularSubtotalTabla();
-    double porcentajeDescuento = 0.0;
-    if (!txtDescuento.getText().isEmpty()) {
-        String descuentoStr = txtDescuento.getText().replace(",", ".");
-        porcentajeDescuento = Double.parseDouble(descuentoStr);
+        txtSubtotal.setText(String.format("%.2f", subtotal));
+        txtDescuento.setText(String.format("%.2f", descuento));
+        txtiva.setText(String.format("%.2f", iva));
+        txtTotalfac.setText(String.format("%.2f", total));
     }
-    double porcentajeIVA = 15.0; // IVA del 15%
-    double descuento = calcularDescuento(subtotal, porcentajeDescuento);
-    double iva = calcularIVA(subtotal, porcentajeIVA);
-    double total = calcularTotal(subtotal, descuento, iva);
-
-    txtSubtotal.setText(String.format("%.2f", subtotal));
-    txtDescuento.setText(String.format("%.2f", descuento));
-    txtiva.setText(String.format("%.2f", iva));
-    txtTotalfac.setText(String.format("%.2f", total));
-}
 
 // Método para calcular el descuento
-private double calcularDescuento(double subtotal, double porcentajeDescuento) {
-    return subtotal * (porcentajeDescuento / 100.0);
-}
+    private double calcularDescuento(double subtotal, double porcentajeDescuento) {
+        return subtotal * (porcentajeDescuento / 100.0);
+    }
 
 // Método para calcular el IVA
-private double calcularIVA(double subtotal, double porcentajeIVA) {
-    return subtotal * (porcentajeIVA / 100.0);
-}
+    private double calcularIVA(double subtotal, double porcentajeIVA) {
+        return subtotal * (porcentajeIVA / 100.0);
+    }
 
 // Método para calcular el total
-private double calcularTotal(double subtotal, double descuento, double iva) {
-    return subtotal - descuento + iva;
-}
-
-private void actualizarSubtotalesFila() {
-    DefaultTableModel model = (DefaultTableModel) JtableFactura.getModel();
-    for (int i = 0; i < model.getRowCount(); i++) {
-        String precioStr = model.getValueAt(i, 2).toString().replace(",", ".");
-        String cantidadStr = model.getValueAt(i, 3).toString().replace(",", ".");
-        double precio = Double.parseDouble(precioStr);
-        int cantidad = Integer.parseInt(cantidadStr);
-        double subtotal = precio * cantidad;
-        model.setValueAt(String.format("%.2f", subtotal), i, 4); 
+    private double calcularTotal(double subtotal, double descuento, double iva) {
+        return subtotal - descuento + iva;
     }
-}
 
-private double calcularSubtotalTabla() {
-    double subtotal = 0.0;
-    DefaultTableModel model = (DefaultTableModel) JtableFactura.getModel();
-    for (int i = 0; i < model.getRowCount(); i++) {
-        String subtotalStr = ((String) model.getValueAt(i, 4)).replace(",", ".");
-        subtotal += Double.parseDouble(subtotalStr);
+    private void actualizarSubtotalesFila() {
+        DefaultTableModel model = (DefaultTableModel) JtableFactura.getModel();
+        for (int i = 0; i < model.getRowCount(); i++) {
+            String precioStr = model.getValueAt(i, 2).toString().replace(",", ".");
+            String cantidadStr = model.getValueAt(i, 3).toString().replace(",", ".");
+            double precio = Double.parseDouble(precioStr);
+            int cantidad = Integer.parseInt(cantidadStr);
+            double subtotal = precio * cantidad;
+            model.setValueAt(String.format("%.2f", subtotal), i, 4);
+        }
     }
-    return subtotal;
-}
- 
+
+    private double calcularSubtotalTabla() {
+        double subtotal = 0.0;
+        DefaultTableModel model = (DefaultTableModel) JtableFactura.getModel();
+        for (int i = 0; i < model.getRowCount(); i++) {
+            String subtotalStr = ((String) model.getValueAt(i, 4)).replace(",", ".");
+            subtotal += Double.parseDouble(subtotalStr);
+        }
+        return subtotal;
+    }
+
     private void MostarpanelCruds(JPanel p) {
         p.setSize(890, 630);
         p.setLocation(0, 0);
@@ -1226,258 +1227,284 @@ private double calcularSubtotalTabla() {
         PanelPrincipal.revalidate();
         PanelPrincipal.repaint();
     }
- public void cargarDatosFactura(String codigoFactura) {
-    ObjectContainer baseBD = Conexion_db.ConectarBD();
-    
-    // Consultar el encabezado de la factura
-    EncabezadoFactura_1 facturaBuscar = new EncabezadoFactura_1();
-    facturaBuscar.setCodigo_encabezadoFactura(codigoFactura);
-    ObjectSet<EncabezadoFactura_1> resultadoFactura = baseBD.get(facturaBuscar);
-    
-    if (!resultadoFactura.isEmpty()) {
-        EncabezadoFactura_1 miFactura = resultadoFactura.next();
-        
-        // Cargar los datos del encabezado de la factura
-        txtcodigoFac.setText(miFactura.getCodigo_encabezadoFactura());
-        txtfecha.setText(miFactura.getFecha_encabezadoFactura());
-        txtcedula.setText(miFactura.getCedulaCliente_encabezadoFactura());
-        
-        
-        // Consultar los datos del cliente
-        Cliente clienteBuscar = new Cliente();
-        clienteBuscar.setCedula(miFactura.getCedulaCliente_encabezadoFactura());
-        ObjectSet<Cliente> resultadoCliente = baseBD.get(clienteBuscar);
-        
-        if (!resultadoCliente.isEmpty()) {
-            Cliente cliente = resultadoCliente.next();
-            txtNombre1.setText(cliente.getNombres());
-            txtdireccion.setText(cliente.getDireccion());
-            txttelefono.setText(cliente.getCelular());
-            
-        }
-        
-        // Consultar los detalles de la factura
-        DetalleFactura_1 detalleBuscar = new DetalleFactura_1();
-        detalleBuscar.setCodigo_encabezadoFactura(codigoFactura);
-        ObjectSet<DetalleFactura_1> resultadoDetalle = baseBD.get(detalleBuscar);
-        
-        DefaultTableModel modeloFactura = (DefaultTableModel) JtableFactura.getModel();
-        modeloFactura.setRowCount(0); // Limpiar la tabla
-        
-        for (DetalleFactura_1 miDetalle : resultadoDetalle) {
-            String codigo = miDetalle.getCodigoProducto_detalleFactura();
-            String nombre = "";
-            double precio = 0.0;
-            int cantidad = miDetalle.getCantidadProdcutos_detalleFactura();
-            
-            if (codigo != null) {
-                if (!obtenerNombreProducto(codigo, baseBD).isEmpty()) {
-                    nombre = obtenerNombreProducto(codigo, baseBD);
-                    precio = obtenerPrecioProducto(codigo, baseBD);
-                } else if (!obtenerNombreServicio(codigo, baseBD).isEmpty()) {
-                    nombre = obtenerNombreServicio(codigo, baseBD);
-                    precio = obtenerPrecioServicio(codigo, baseBD);
+
+    public void cargarDatosFactura(String codigoFactura) {
+        ObjectContainer baseBD = Conexion_db.ConectarBD();
+
+        // Consultar el encabezado de la factura
+        EncabezadoFactura_1 facturaBuscar = new EncabezadoFactura_1();
+        facturaBuscar.setCodigo_encabezadoFactura(codigoFactura);
+        ObjectSet<EncabezadoFactura_1> resultadoFactura = baseBD.get(facturaBuscar);
+
+        if (!resultadoFactura.isEmpty()) {
+            EncabezadoFactura_1 miFactura = resultadoFactura.next();
+
+            // Cargar los datos del encabezado de la factura
+            txtcodigoFac.setText(miFactura.getCodigo_encabezadoFactura());
+            txtfecha.setText(miFactura.getFecha_encabezadoFactura());
+            txtcedula.setText(miFactura.getCedulaCliente_encabezadoFactura());
+
+            // Consultar los datos del cliente
+            Cliente clienteBuscar = new Cliente();
+            clienteBuscar.setCedula(miFactura.getCedulaCliente_encabezadoFactura());
+            ObjectSet<Cliente> resultadoCliente = baseBD.get(clienteBuscar);
+
+            if (!resultadoCliente.isEmpty()) {
+                Cliente cliente = resultadoCliente.next();
+                txtNombre1.setText(cliente.getNombres());
+                txtdireccion.setText(cliente.getDireccion());
+                txttelefono.setText(cliente.getCelular());
+
+            }
+
+            // Consultar los detalles de la factura
+            DetalleFactura_1 detalleBuscar = new DetalleFactura_1();
+            detalleBuscar.setCodigo_encabezadoFactura(codigoFactura);
+            ObjectSet<DetalleFactura_1> resultadoDetalle = baseBD.get(detalleBuscar);
+
+            DefaultTableModel modeloFactura = (DefaultTableModel) JtableFactura.getModel();
+            modeloFactura.setRowCount(0); // Limpiar la tabla
+
+            for (DetalleFactura_1 miDetalle : resultadoDetalle) {
+                String codigo = miDetalle.getCodigoProducto_detalleFactura();
+                String nombre = "";
+                double precio = 0.0;
+                int cantidad = miDetalle.getCantidadProdcutos_detalleFactura();
+
+                if (codigo != null) {
+                    if (!obtenerNombreProducto(codigo, baseBD).isEmpty()) {
+                        nombre = obtenerNombreProducto(codigo, baseBD);
+                        precio = obtenerPrecioProducto(codigo, baseBD);
+                    } else if (!obtenerNombreServicio(codigo, baseBD).isEmpty()) {
+                        nombre = obtenerNombreServicio(codigo, baseBD);
+                        precio = obtenerPrecioServicio(codigo, baseBD);
+                    }
+
+                    modeloFactura.addRow(new Object[]{codigo, nombre, String.valueOf(precio), String.valueOf(cantidad)});
                 }
-                
-                modeloFactura.addRow(new Object[]{codigo, nombre, String.valueOf(precio), String.valueOf(cantidad)});
             }
-        }
-        
-        // Actualizar los campos de subtotales, descuentos, etc.
-        actualizarFactura();
-        
-        // Deshabilitar botones
-        btnAñadirProductos.setEnabled(false);
-        btnAñadirServicos.setEnabled(false);
-        btnEliminar.setEnabled(false);
-        btnFinalizarFac.setEnabled(false);
-        btnBuscarcliente.setEnabled(false);
-    } else {
-        JOptionPane.showMessageDialog(this, "Factura no encontrada.");
-    }
-    
-    baseBD.close();
-}
 
-private String obtenerNombreProducto(String codigo, ObjectContainer baseBD) {
-    Producto productoBuscar = new Producto();
-    productoBuscar.setCodigo_Producto(codigo);
-    ObjectSet<Producto> resultadoProducto = baseBD.get(productoBuscar);
-    if (!resultadoProducto.isEmpty()) {
-        return resultadoProducto.next().getNombre_Producto();
-    }
-    return "";
-}
+            // Actualizar los campos de subtotales, descuentos, etc.
+            actualizarFactura();
 
-private double obtenerPrecioProducto(String codigo, ObjectContainer baseBD) {
-    Producto productoBuscar = new Producto();
-    productoBuscar.setCodigo_Producto(codigo);
-    ObjectSet<Producto> resultadoProducto = baseBD.get(productoBuscar);
-    if (!resultadoProducto.isEmpty()) {
-        return resultadoProducto.next().getPrecio_Producto();
-    }
-    return 0.0;
-}
-
-private String obtenerNombreServicio(String codigoServicio, ObjectContainer baseBD) {
-    Servicios servicioBuscar = new Servicios();
-    servicioBuscar.setCodigo_Servicio(codigoServicio);
-    ObjectSet<Servicios> resultadoServicio = baseBD.get(servicioBuscar);
-
-    if (!resultadoServicio.isEmpty()) {
-        return resultadoServicio.next().getNombre_Servicio();
-    }
-    return "";
-}
-
-private double obtenerPrecioServicio(String codigoServicio, ObjectContainer baseBD) {
-    Servicios servicioBuscar = new Servicios();
-    servicioBuscar.setCodigo_Servicio(codigoServicio);
-    ObjectSet<Servicios> resultadoServicio = baseBD.get(servicioBuscar);
-
-    if (!resultadoServicio.isEmpty()) {
-        return resultadoServicio.next().getPrecioTotal_Servicio();
-    }
-    return 0.0;
-}
-
-
-private Producto obtenerProductoPorCodigo(String codigoProducto) {
-    ObjectContainer baseBD = Conexion_db.ConectarBD();
-    Producto productoBuscar = new Producto();
-    productoBuscar.setCodigo_Producto(codigoProducto);
-    ObjectSet<Producto> resultadoProducto = baseBD.get(productoBuscar);
-
-    Producto producto = null;
-    if (!resultadoProducto.isEmpty()) {
-        producto = resultadoProducto.next();
-    }
-    
-    baseBD.close();
-    return producto;
-}
-private void generarReciboPDF() {
-    String pdfPath = "recibo.pdf";
-    try {
-        // Crear un escritor de PDF
-        PdfWriter writer = new PdfWriter(pdfPath);
-
-        // Inicializar el documento PDF
-        PdfDocument pdfDoc = new PdfDocument(writer);
-        Document document = new Document(pdfDoc);
-
-        // Añadir el título del recibo
-        document.add(new Paragraph("Recibo de Factura").setFontSize(18).setBold());
-
-        // Añadir información del cliente
-        document.add(new Paragraph("Cliente: " + txtNombre1.getText()));
-        document.add(new Paragraph("Cédula: " + txtcedula.getText()));
-        document.add(new Paragraph("Dirección: " + txtdireccion.getText()));
-        document.add(new Paragraph("Teléfono: " + txttelefono.getText()));
-        document.add(new Paragraph("Fecha: " + txtfecha.getText()));
-        document.add(new Paragraph(" "));
-
-        // Crear una tabla con las columnas correspondientes
-        float[] columnWidths = {2, 4, 2, 2, 2};
-        Table table = new Table(columnWidths);
-        table.addCell(new Cell().add(new Paragraph("Código").setBold()));
-        table.addCell(new Cell().add(new Paragraph("Descripción").setBold()));
-        table.addCell(new Cell().add(new Paragraph("Precio Unitario").setBold()));
-        table.addCell(new Cell().add(new Paragraph("Cantidad").setBold()));
-        table.addCell(new Cell().add(new Paragraph("Subtotal").setBold()));
-
-        // Agregar las filas con los datos de la factura
-        DefaultTableModel model = (DefaultTableModel) JtableFactura.getModel();
-        for (int i = 0; i < model.getRowCount(); i++) {
-            table.addCell(new Cell().add(new Paragraph(model.getValueAt(i, 0).toString())));
-            table.addCell(new Cell().add(new Paragraph(model.getValueAt(i, 1).toString())));
-            table.addCell(new Cell().add(new Paragraph(model.getValueAt(i, 2).toString())));
-            table.addCell(new Cell().add(new Paragraph(model.getValueAt(i, 3).toString())));
-            table.addCell(new Cell().add(new Paragraph(model.getValueAt(i, 4).toString())));
+            // Deshabilitar botones
+            btnAñadirProductos.setEnabled(false);
+            btnAñadirServicos.setEnabled(false);
+            btnEliminar.setEnabled(false);
+            btnFinalizarFac.setEnabled(false);
+            btnBuscarcliente.setEnabled(false);
+        } else {
+            JOptionPane.showMessageDialog(this, "Factura no encontrada.");
         }
 
-        // Añadir la tabla al documento
-        document.add(table);
+        baseBD.close();
+    }
 
-        // Añadir los totales al final del documento
-        document.add(new Paragraph(" "));
-        document.add(new Paragraph("Subtotal: " + txtSubtotal.getText()).setBold());
-        document.add(new Paragraph("Descuento: " + txtDescuento.getText()).setBold());
-        document.add(new Paragraph("IVA: " + txtiva.getText()).setBold());
-        document.add(new Paragraph("Total: " + txtTotalfac.getText()).setBold());
+    private String obtenerNombreProducto(String codigo, ObjectContainer baseBD) {
+        Producto productoBuscar = new Producto();
+        productoBuscar.setCodigo_Producto(codigo);
+        ObjectSet<Producto> resultadoProducto = baseBD.get(productoBuscar);
+        if (!resultadoProducto.isEmpty()) {
+            return resultadoProducto.next().getNombre_Producto();
+        }
+        return "";
+    }
 
-        // Cerrar el documento
-        document.close();
+    private double obtenerPrecioProducto(String codigo, ObjectContainer baseBD) {
+        Producto productoBuscar = new Producto();
+        productoBuscar.setCodigo_Producto(codigo);
+        ObjectSet<Producto> resultadoProducto = baseBD.get(productoBuscar);
+        if (!resultadoProducto.isEmpty()) {
+            return resultadoProducto.next().getPrecio_Producto();
+        }
+        return 0.0;
+    }
 
-        JOptionPane.showMessageDialog(null, "Recibo PDF generado con éxito!");
+    private String obtenerNombreServicio(String codigoServicio, ObjectContainer baseBD) {
+        Servicios servicioBuscar = new Servicios();
+        servicioBuscar.setCodigo_Servicio(codigoServicio);
+        ObjectSet<Servicios> resultadoServicio = baseBD.get(servicioBuscar);
 
-        // Abrir el archivo PDF
-        File pdfFile = new File(pdfPath);
-        if (pdfFile.exists()) {
-            if (Desktop.isDesktopSupported()) {
-                Desktop.getDesktop().open(pdfFile);
+        if (!resultadoServicio.isEmpty()) {
+            return resultadoServicio.next().getNombre_Servicio();
+        }
+        return "";
+    }
+
+    private double obtenerPrecioServicio(String codigoServicio, ObjectContainer baseBD) {
+        Servicios servicioBuscar = new Servicios();
+        servicioBuscar.setCodigo_Servicio(codigoServicio);
+        ObjectSet<Servicios> resultadoServicio = baseBD.get(servicioBuscar);
+
+        if (!resultadoServicio.isEmpty()) {
+            return resultadoServicio.next().getPrecioTotal_Servicio();
+        }
+        return 0.0;
+    }
+
+    private Producto obtenerProductoPorCodigo(String codigoProducto) {
+        ObjectContainer baseBD = Conexion_db.ConectarBD();
+        Producto productoBuscar = new Producto();
+        productoBuscar.setCodigo_Producto(codigoProducto);
+        ObjectSet<Producto> resultadoProducto = baseBD.get(productoBuscar);
+
+        Producto producto = null;
+        if (!resultadoProducto.isEmpty()) {
+            producto = resultadoProducto.next();
+        }
+
+        baseBD.close();
+        return producto;
+    }
+
+    public void generarReciboPDF() {
+        try {
+            PdfWriter writer = new PdfWriter(pdfPath);
+            PdfDocument pdfDoc = new PdfDocument(writer);
+            Document document = new Document(pdfDoc);
+
+            // Añadir logotipo
+            String logoPath = "src\\Images\\logote_resized.png";
+            File logoFile = new File(logoPath);
+            if (logoFile.exists()) {
+                Image img = new Image(ImageDataFactory.create(logoPath));
+                img.setWidth(100);
+                img.setHeight(50);
+                document.add(img);
             } else {
-                JOptionPane.showMessageDialog(null, "La funcionalidad de abrir el archivo no está soportada en su sistema.");
+                JOptionPane.showMessageDialog(null, "Logotipo no encontrado en: " + logoPath);
             }
-        } else {
-            JOptionPane.showMessageDialog(null, "El archivo PDF no se encontró.");
+
+            // Añadir el título de la factura
+            Paragraph title = new Paragraph("Factura de Venta")
+                    .setTextAlignment(TextAlignment.CENTER)
+                    .setFontSize(18)
+                    .setBold();
+            document.add(title);
+
+            document.add(new Paragraph(" "));
+
+            // Información del cliente
+            document.add(new Paragraph("Cliente: " + txtNombre1.getText()));
+            document.add(new Paragraph("Cédula: " + txtcedula.getText()));
+            document.add(new Paragraph("Dirección: " + txtdireccion.getText()));
+            document.add(new Paragraph("Teléfono: " + txttelefono.getText()));
+            document.add(new Paragraph("Fecha: " + txtfecha.getText()));
+            document.add(new Paragraph(" "));
+
+            // Crear una tabla con columnas
+            float[] columnWidths = {2, 4, 2, 2, 2};
+            Table table = new Table(UnitValue.createPercentArray(columnWidths));
+            table.setWidth(UnitValue.createPercentValue(100));
+
+            table.addHeaderCell(new Cell().add(new Paragraph("Código").setBold().setBackgroundColor(ColorConstants.GRAY)));
+            table.addHeaderCell(new Cell().add(new Paragraph("Descripción").setBold().setBackgroundColor(ColorConstants.GRAY)));
+            table.addHeaderCell(new Cell().add(new Paragraph("Precio Unitario").setBold().setBackgroundColor(ColorConstants.GRAY)));
+            table.addHeaderCell(new Cell().add(new Paragraph("Cantidad").setBold().setBackgroundColor(ColorConstants.GRAY)));
+            table.addHeaderCell(new Cell().add(new Paragraph("Subtotal").setBold().setBackgroundColor(ColorConstants.GRAY)));
+
+            // Agregar filas con datos de la factura
+            DefaultTableModel model = (DefaultTableModel) JtableFactura.getModel();
+            for (int i = 0; i < model.getRowCount(); i++) {
+                table.addCell(new Cell().add(new Paragraph(model.getValueAt(i, 0).toString())));
+                table.addCell(new Cell().add(new Paragraph(model.getValueAt(i, 1).toString())));
+                table.addCell(new Cell().add(new Paragraph(model.getValueAt(i, 2).toString())));
+                table.addCell(new Cell().add(new Paragraph(model.getValueAt(i, 3).toString())));
+                table.addCell(new Cell().add(new Paragraph(model.getValueAt(i, 4).toString())));
+            }
+
+            // Añadir la tabla al documento
+            document.add(table);
+
+            // Añadir los totales al final del documento
+            document.add(new Paragraph(" "));
+            document.add(new Paragraph("Subtotal: " + txtSubtotal.getText()).setBold());
+            document.add(new Paragraph("Descuento: " + txtDescuento.getText()).setBold());
+            document.add(new Paragraph("IVA: " + txtiva.getText()).setBold());
+            document.add(new Paragraph("Total: " + txtTotalfac.getText()).setBold());
+
+            // Añadir pie de página con información de la empresa
+            document.add(new Paragraph(" "));
+            Paragraph footer = new Paragraph("Gracias por su compra\nEmpresa XYZ\nDirección de la Empresa\nTeléfono: 123-456-789")
+                    .setTextAlignment(TextAlignment.CENTER)
+                    .setFontSize(10);
+            document.add(footer);
+
+            // Cerrar el documento
+            document.close();
+
+            JOptionPane.showMessageDialog(null, "Factura PDF generada con éxito!");
+
+            // Abrir el archivo PDF
+            File pdfFile = new File(pdfPath);
+            if (pdfFile.exists()) {
+                if (Desktop.isDesktopSupported()) {
+                    Desktop.getDesktop().open(pdfFile);
+                } else {
+                    JOptionPane.showMessageDialog(null, "La funcionalidad de abrir el archivo no está soportada en su sistema.");
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "El archivo PDF no se encontró.");
+            }
+        } catch (FileNotFoundException e) {
+            JOptionPane.showMessageDialog(null, "Error al generar el PDF: " + e.getMessage());
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(null, "Error al abrir el PDF: " + e.getMessage());
         }
-    } catch (FileNotFoundException e) {
-        JOptionPane.showMessageDialog(null, "Error al generar el PDF: " + e.getMessage());
-    } catch (IOException e) {
-        JOptionPane.showMessageDialog(null, "Error al abrir el PDF: " + e.getMessage());
     }
-}
-private void guardarFactura() {
-    DefaultTableModel model = (DefaultTableModel) JtableFactura.getModel();
-    String codigoFactura = txtcodigoFac.getText();
-    String fecha = txtfecha.getText();
-    String cedula = txtcedula.getText();
-    double total = Double.parseDouble(txtTotalfac.getText().replace(",", "."));
 
-    EncabezadoFactura_1 factura = new EncabezadoFactura_1(codigoFactura, fecha, cedula, total);
-    // Guardar el encabezado y los detalles en la base de datos
-    ObjectContainer baseBD = Conexion_db.ConectarBD();
-    baseBD.store(factura);
-    // Guardar los detalles de la factura
-    for (int i = 0; i < model.getRowCount(); i++) {
-        String codigo = model.getValueAt(i, 0).toString();
-        String tipo = model.getValueAt(i, 4).toString();
-        int cantidad = Integer.parseInt(model.getValueAt(i, 3).toString());
-        DetalleFactura_1 detalle;
-        if ("Producto".equals(tipo)) {
-            detalle = new DetalleFactura_1(codigoFactura, codigo, cantidad);
-            Producto producto = obtenerProductoPorCodigo(codigo);
-            if (producto != null) {
-                producto.restarCantidad(cantidad);
-                baseBD.store(producto);            }
-        } else {
-            detalle = new DetalleFactura_1(codigoFactura, codigo, cantidad);
+    private void guardarFactura() {
+        DefaultTableModel model = (DefaultTableModel) JtableFactura.getModel();
+        String codigoFactura = txtcodigoFac.getText();
+        String fecha = txtfecha.getText();
+        String cedula = txtcedula.getText();
+        double total = Double.parseDouble(txtTotalfac.getText().replace(",", "."));
+
+        EncabezadoFactura_1 factura = new EncabezadoFactura_1(codigoFactura, fecha, cedula, total);
+        // Guardar el encabezado y los detalles en la base de datos
+        ObjectContainer baseBD = Conexion_db.ConectarBD();
+        baseBD.store(factura);
+        // Guardar los detalles de la factura
+        for (int i = 0; i < model.getRowCount(); i++) {
+            String codigo = model.getValueAt(i, 0).toString();
+            String tipo = model.getValueAt(i, 4).toString();
+            int cantidad = Integer.parseInt(model.getValueAt(i, 3).toString());
+            DetalleFactura_1 detalle;
+            if ("Producto".equals(tipo)) {
+                detalle = new DetalleFactura_1(codigoFactura, codigo, cantidad);
+                Producto producto = obtenerProductoPorCodigo(codigo);
+                if (producto != null) {
+                    producto.restarCantidad(cantidad);
+                    baseBD.store(producto);
+                }
+            } else {
+                detalle = new DetalleFactura_1(codigoFactura, codigo, cantidad);
+            }
+            baseBD.store(detalle);
         }
-        baseBD.store(detalle);    }
 
-    baseBD.close();
-    JOptionPane.showMessageDialog(this, "Factura guardada exitosamente!");
+        baseBD.close();
+        JOptionPane.showMessageDialog(this, "Factura guardada exitosamente!");
 
-    // Reiniciar y generar un nueva factura
-    resetearFormulario();
-}
-private void resetearFormulario() {
-    txtcedula.setText("");
-    txtNombre1.setText("");
-    txtdireccion.setText("");
-    txttelefono.setText("");
-    txtSubtotal.setText("");
-    txtDescuento.setText("");
-    txtiva.setText("");
-    txtTotalfac.setText("");
+        // Reiniciar y generar un nueva factura
+        resetearFormulario();
+    }
 
-    DefaultTableModel model = (DefaultTableModel) JtableFactura.getModel();
-    model.setRowCount(0);
+    private void resetearFormulario() {
+        txtcedula.setText("");
+        txtNombre1.setText("");
+        txtdireccion.setText("");
+        txttelefono.setText("");
+        txtSubtotal.setText("");
+        txtDescuento.setText("");
+        txtiva.setText("");
+        txtTotalfac.setText("");
 
-    setearcabe();
-}
+        DefaultTableModel model = (DefaultTableModel) JtableFactura.getModel();
+        model.setRowCount(0);
 
+        setearcabe();
+    }
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
