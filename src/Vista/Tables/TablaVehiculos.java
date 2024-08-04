@@ -7,6 +7,7 @@ import Models.Vehiculo.Estado;
 import static Models.Vehiculo.Estado.ACTIVO;
 import static Models.Vehiculo.Estado.INACTIVO;
 import Vista.Cruds.BuscarPanelVehiculo;
+import Vista.Cruds.pnlReporteVehiculos;
 import Vista.Menu.VistaMenu;
 import com.db4o.*;
 import com.db4o.query.Query;
@@ -46,10 +47,16 @@ public class TablaVehiculos extends javax.swing.JPanel {
         scrlpTablaVehi2 = new javax.swing.JScrollPane();
         tblVehiculoInactivo = new javax.swing.JTable();
         lbl_Inactivos = new javax.swing.JLabel();
+        btnGraficas = new javax.swing.JButton();
 
         setLayout(new java.awt.BorderLayout());
 
         pnlListado.setBackground(new java.awt.Color(255, 255, 255));
+        pnlListado.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                pnlListadoMouseClicked(evt);
+            }
+        });
 
         jLabel1.setFont(new java.awt.Font("Roboto Black", 0, 22)); // NOI18N
         jLabel1.setText("Listado Vehículo");
@@ -163,6 +170,13 @@ public class TablaVehiculos extends javax.swing.JPanel {
         lbl_Inactivos.setFont(new java.awt.Font("Roboto Black", 0, 18)); // NOI18N
         lbl_Inactivos.setText("Vehiculos Eliminados:");
 
+        btnGraficas.setText("graficas");
+        btnGraficas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGraficasActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout pnlListadoLayout = new javax.swing.GroupLayout(pnlListado);
         pnlListado.setLayout(pnlListadoLayout);
         pnlListadoLayout.setHorizontalGroup(
@@ -179,9 +193,6 @@ public class TablaVehiculos extends javax.swing.JPanel {
                 .addGap(24, 24, 24)
                 .addGroup(pnlListadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlListadoLayout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(pnlListadoLayout.createSequentialGroup()
                         .addGroup(pnlListadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(pnlListadoLayout.createSequentialGroup()
                                 .addComponent(jLabel2)
@@ -195,13 +206,20 @@ public class TablaVehiculos extends javax.swing.JPanel {
                                 .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(11, 11, 11))
                             .addComponent(scrlpTablaVehi1, javax.swing.GroupLayout.PREFERRED_SIZE, 822, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 0, Short.MAX_VALUE))))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(pnlListadoLayout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnGraficas)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         pnlListadoLayout.setVerticalGroup(
             pnlListadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlListadoLayout.createSequentialGroup()
-                .addGap(38, 38, 38)
-                .addComponent(jLabel1)
+                .addGap(33, 33, 33)
+                .addGroup(pnlListadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel1)
+                    .addComponent(btnGraficas))
                 .addGroup(pnlListadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(pnlListadoLayout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -320,6 +338,15 @@ public class TablaVehiculos extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_tblVehiculoMouseClicked
 
+    private void pnlListadoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_pnlListadoMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_pnlListadoMouseClicked
+
+    private void btnGraficasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGraficasActionPerformed
+        pnlReporteVehiculos misReportes = new pnlReporteVehiculos();
+        ShowpanelCruds(misReportes);
+    }//GEN-LAST:event_btnGraficasActionPerformed
+
     private void mostrarDatosInactivo() {
         // ESTABLECER CONEXION CON LA BASE DE DATOS
         ObjectContainer BaseBD = Conexion_db.ConectarBD();
@@ -406,6 +433,7 @@ public class TablaVehiculos extends javax.swing.JPanel {
     private rsbuttongradiente.RSButtonGradiente btnAgregar;
     private rsbuttongradiente.RSButtonGradiente btnEditar;
     private rsbuttongradiente.RSButtonGradiente btnEliminar;
+    private javax.swing.JButton btnGraficas;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel lbl_Inactivos;

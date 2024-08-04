@@ -28,7 +28,7 @@ public class BuscarPanelVehiculo extends javax.swing.JPanel {
         mostrarDatosMarca();
         mostrarDatosModelo();
         buscarVehiculo();
-        
+        mostrarComboColores();
     }
     private String BuscarPlaca;
 
@@ -976,6 +976,17 @@ public class BuscarPanelVehiculo extends javax.swing.JPanel {
         }
         BaseBD.close();
         return rol;
+    }
+    private void mostrarComboColores() {
+        ObjectContainer BaseBD = Conexion_db.ConectarBD();
+        // Consulta a la base de datos para obtener todos los objetos Ciudad
+        ObjectSet<Color> colores = BaseBD.query(Color.class);
+        cmbColorVehiculo.removeAllItems();
+        // Itera sobre los resultados y agrega los nombres de ciudades al JComboBox
+        colores.forEach((color) -> {
+            cmbColorVehiculo.addItem(color.getNomnbre_color()+" "+color.getTipoColor());
+        });
+        BaseBD.close();
     }
     
 

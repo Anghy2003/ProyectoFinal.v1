@@ -120,10 +120,12 @@
         <Component class="javax.swing.JComboBox" name="cmbTipoColorRegistrar">
           <Properties>
             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-              <StringArray count="3">
+              <StringArray count="5">
                 <StringItem index="0" value="BRILLANTE"/>
                 <StringItem index="1" value="METALIZADO"/>
                 <StringItem index="2" value="MATE"/>
+                <StringItem index="3" value="PERLADO"/>
+                <StringItem index="4" value=" "/>
               </StringArray>
             </Property>
           </Properties>

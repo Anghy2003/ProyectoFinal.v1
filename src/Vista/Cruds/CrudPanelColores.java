@@ -101,7 +101,7 @@ public class CrudPanelColores extends javax.swing.JPanel {
         });
         jPanel1.add(btnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 330, -1, -1));
 
-        cmbTipoColorRegistrar.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "BRILLANTE", "METALIZADO", "MATE" }));
+        cmbTipoColorRegistrar.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "BRILLANTE", "METALIZADO", "MATE", "PERLADO", " " }));
         jPanel1.add(cmbTipoColorRegistrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 250, 290, 40));
 
         lblPropietario.setFont(new java.awt.Font("Roboto Medium", 0, 21)); // NOI18N
