@@ -25,10 +25,12 @@ import utils.Global;
 public class VistaMenu extends javax.swing.JFrame {
 
 private String rolUsuario;
+ private PanelSubmenuUsuarioss panelSubmenuUsuarios;
+ private PanelSubmenuServicios panelSubmenuServicios;
     public VistaMenu() {
-         this.rolUsuario = Global.rolUsuario;
+       this.rolUsuario = Global.rolUsuario;
         initComponents();
-        this.setLocationRelativeTo(this);
+         this.setLocationRelativeTo(this);
         accesosRol();
 
     }
@@ -450,6 +452,14 @@ private String rolUsuario;
         PanelSubmenu.add(p, BorderLayout.CENTER);
         PanelSubmenu.revalidate();
         PanelSubmenu.repaint();
+       if (p instanceof PanelSubmenuUsuarioss) {
+            this.panelSubmenuUsuarios = (PanelSubmenuUsuarioss) p;
+            actualizarVisibilidadSubmenuUsuarios();
+        }
+       if (p instanceof PanelSubmenuServicios) {
+            this.panelSubmenuServicios = (PanelSubmenuServicios) p;
+            actualizarVisibilidadSubmenuServicios();
+        }
 
     }
 
@@ -494,7 +504,7 @@ private String rolUsuario;
         }
     }
  private void deshabilitarComponentesAdministrador() {
-        // Administrador tiene acceso a todo,no se deshabilita nada
+        // Administrador tiene acceso a todo
     }
  private void deshabilitarComponentesCliente() {
         btnFactura.setVisible(false);
@@ -506,10 +516,9 @@ private String rolUsuario;
         btnReportes.setVisible(false);
     }
  private void deshabilitarComponentesVendedor() {
-        btnReportes.setVisible(false);
         btnAgendarCitas.setVisible(false);
         btnVehiculos.setVisible(false);
-        btnCatalogo.setVisible(false);
+       
     }
 
       private void deshabilitarComponentesMecanico() {
@@ -523,8 +532,43 @@ private String rolUsuario;
         btnFactura.setVisible(false);
        
     }
-    
+    private void actualizarVisibilidadSubmenuUsuarios() {
+        if (panelSubmenuUsuarios != null) {
 
+            switch (rolUsuario) {
+                case "VENDEDOR":
+                    panelSubmenuUsuarios.getBtnAdministrador().setVisible(false);
+                    panelSubmenuUsuarios.getBtnMecanico().setVisible(false);
+                    panelSubmenuUsuarios.getBtnVendedor().setVisible(false);
+                    System.out.println("Botones del submenu de usuarios deshabilitados para el rol VENDEDOR");
+                    break;
+                case "CLIENTE":
+                    panelSubmenuUsuarios.getBtnAdministrador().setVisible(false);
+                    panelSubmenuUsuarios.getBtnMecanico().setVisible(false);
+                    panelSubmenuUsuarios.getBtnVendedor().setVisible(false);
+                    System.out.println("Botones del submenu de usuarios deshabilitados para el rol Cliente");
+                    break;  
+            }
+        }
+    }
+ private void actualizarVisibilidadSubmenuServicios() {
+        if (panelSubmenuServicios != null) {
+           
+            switch (rolUsuario) {
+                case "VENDEDOR":
+                    panelSubmenuServicios.getBtnordenesTrabajo().setVisible(false);
+                    
+                    
+                    break;
+                case "MECANICO":
+                    panelSubmenuServicios.getBtnCategoria1().setVisible(false);
+                    panelSubmenuServicios.getBtngestionser1().setVisible(false);
+                    
+                    break;
+                
+            }
+        } 
+    }
     /**
      * @param args the command line arguments
      */
@@ -567,6 +611,7 @@ private String rolUsuario;
     VistaMenu.PanelPrincipal.add(p, BorderLayout.CENTER);
     VistaMenu.PanelPrincipal.revalidate();
     VistaMenu.PanelPrincipal.repaint();
+     
 }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
