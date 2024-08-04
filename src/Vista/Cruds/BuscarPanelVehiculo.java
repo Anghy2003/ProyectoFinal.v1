@@ -957,6 +957,27 @@ public class BuscarPanelVehiculo extends javax.swing.JPanel {
         BaseBD.close();
     }
     
+    public static String buscarRol(String usuario){
+        String rol="";
+        Boolean encontrado = false;
+        // ESTABLECER CONEXION CON LA BASE DE DATOS
+        ObjectContainer BaseBD = Conexion_db.ConectarBD();
+        Query persona = BaseBD.query();//metodo para iniciar una consulta
+        persona.constrain(Persona.class);//buscaremos en la clase Vehiculo
+        persona.descend("nombreUsuario").constrain(usuario); // verificamos las coincidencias en el atributo especificado
+        ObjectSet<Persona> resultado = persona.execute();//Ejecutamos la consulta y almacenamos en "resultado"
+        // Verifica si hay resultados
+        if (resultado.hasNext()) {
+            // Obtiene el primer objeto del conjunto de resultados
+            Persona personaEncontrada = (Persona) resultado.next();
+            rol=personaEncontrada.getRol().toString();
+        } else {
+            System.out.println("No se encontro a la persona");
+        }
+        BaseBD.close();
+        return rol;
+    }
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.toedter.calendar.JYearChooser YEARAño;
