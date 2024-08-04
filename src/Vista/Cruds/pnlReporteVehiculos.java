@@ -32,7 +32,8 @@ public class pnlReporteVehiculos extends javax.swing.JPanel {
 
     public pnlReporteVehiculos() {
         initComponents();
-        mostrarGraficoPastel();
+        //mostrarGraficoPastel();
+        mostrarGraficoPastel3D();
     }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -127,39 +128,71 @@ public class pnlReporteVehiculos extends javax.swing.JPanel {
         BaseBD.close();
         return mecanico;
     }
-    private void mostrarGraficoPastel() {
-    // Crear un conjunto de datos para el gráfico
-    DefaultPieDataset datos = new DefaultPieDataset();
-    datos.setValue("Admins", 10);
-    datos.setValue("Vendedores", 20);
-    datos.setValue("Clientes", 30);
-    datos.setValue("Mecanicos", 40);
+            private void mostrarGraficoPastel() {
+                // Crear un conjunto de datos para el gráfico
+                DefaultPieDataset datos = new DefaultPieDataset();
+                datos.setValue("Admins", 10);
+                datos.setValue("Vendedores", 20);
+                datos.setValue("Clientes", 30);
+                datos.setValue("Mecanicos", 40);
 
-    // Crear un gráfico de pastel
-    JFreeChart grafico_pastel = ChartFactory.createPieChart(
-            "Proporción usuarios", // título
-            datos, // conjunto de datos
-            true, // mostrar leyenda
-            true, // mostrar tooltips
-            false // mostrar urls
-    );
+                // Crear un gráfico de pastel
+                JFreeChart grafico_pastel = ChartFactory.createPieChart(
+                        "Proporción usuarios", // título
+                        datos, // conjunto de datos
+                        true, // mostrar leyenda
+                        true, // mostrar tooltips
+                        false // mostrar urls
+                );
 
-    // Crear un ChartPanel para mostrar el gráfico
-    ChartPanel panelGrafico = new ChartPanel(grafico_pastel);
-    panelGrafico.setVisible(true);
-    panelGrafico.setPreferredSize(new Dimension(300, 100)); // ajusta el tamaño del panel
+                // Crear un ChartPanel para mostrar el gráfico
+                ChartPanel panelGrafico = new ChartPanel(grafico_pastel);
+                panelGrafico.setVisible(true);
+                panelGrafico.setPreferredSize(new Dimension(300, 100)); // ajusta el tamaño del panel
 
-    // Agregar el panelGrafico al panel
-    pnlPastel.setLayout(new BorderLayout());
-    pnlPastel.add(panelGrafico, BorderLayout.CENTER);
-    pnlPastel.revalidate();
-    pnlPastel.repaint();
+                // Agregar el panelGrafico al panel
+                pnlPastel.setLayout(new BorderLayout());
+                pnlPastel.add(panelGrafico, BorderLayout.CENTER);
+                pnlPastel.revalidate();
+                pnlPastel.repaint();
 
-    pnlReporteUsuarios.add(pnlPastel);
-    pnlReporteUsuarios.setVisible(true);
-    pnlPastel.setVisible(true);
-}
-    
+                pnlReporteUsuarios.add(pnlPastel);
+                pnlReporteUsuarios.setVisible(true);
+                pnlPastel.setVisible(true);
+            }
+    private void mostrarGraficoPastel3D() {
+        // Crear un conjunto de datos para el gráfico
+        DefaultPieDataset datos = new DefaultPieDataset();
+        datos.setValue("Admins", 10);
+        datos.setValue("Vendedores", 20);
+        datos.setValue("Clientes", 30);
+        datos.setValue("Mecanicos", 40);
+
+        // Crear un gráfico de pastel 3D
+        JFreeChart grafico_pastel_3d = ChartFactory.createPieChart3D(
+                "Proporción usuarios", // título
+                datos, // conjunto de datos
+                true, // mostrar leyenda
+                true, // mostrar tooltips
+                false // mostrar urls
+        );
+
+        // Crear un ChartPanel para mostrar el gráfico
+        ChartPanel panelGrafico = new ChartPanel(grafico_pastel_3d);
+        panelGrafico.setVisible(true);
+        panelGrafico.setPreferredSize(new Dimension(300, 100)); // ajusta el tamaño del panel
+
+        // Agregar el panelGrafico al panel
+        pnlPastel.setLayout(new BorderLayout());
+        pnlPastel.add(panelGrafico, BorderLayout.CENTER);
+        pnlPastel.revalidate();
+        pnlPastel.repaint();
+
+        pnlReporteUsuarios.add(pnlPastel);
+        pnlReporteUsuarios.setVisible(true);
+        pnlPastel.setVisible(true);
+    }
+
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

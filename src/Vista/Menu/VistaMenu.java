@@ -4,6 +4,7 @@ import Conexion.Conexion_db;
 
 import Models.Persona;
 import Vista.Catálogo.CatalogoProductos;
+import Vista.Cruds.pnlReporteVehiculos;
 
 import Vista.Factura.Factura;
 import Vista.Home.Home;
@@ -419,6 +420,8 @@ private String rolUsuario;
         PanelSubmenuReportes submenrep = new PanelSubmenuReportes();
         MostrarpanelSubmenu(submenrep);
         MostrarpanelTitulo(titreo);
+        pnlReporteVehiculos misReportes = new pnlReporteVehiculos();
+        ShowpanelCruds(misReportes);
     }//GEN-LAST:event_btnReportesMouseClicked
 
     private void jPanel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel4MouseClicked
@@ -557,6 +560,14 @@ private String rolUsuario;
             }
         });
     }
+    private void ShowpanelCruds(JPanel p) {
+    p.setSize(870, 630);
+    p.setLocation(0, 0);
+    VistaMenu.PanelPrincipal.removeAll();
+    VistaMenu.PanelPrincipal.add(p, BorderLayout.CENTER);
+    VistaMenu.PanelPrincipal.revalidate();
+    VistaMenu.PanelPrincipal.repaint();
+}
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public static javax.swing.JPanel PanelHeader;
