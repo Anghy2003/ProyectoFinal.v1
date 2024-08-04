@@ -14,15 +14,24 @@ import com.db4o.ObjectSet;
 import com.db4o.query.Query;
 import java.awt.BorderLayout;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 import javax.swing.JDialog;
-
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
+import com.itextpdf.kernel.pdf.PdfWriter;
+import com.itextpdf.kernel.pdf.PdfDocument;
+import com.itextpdf.layout.Document;
+import com.itextpdf.layout.element.Paragraph;
+import com.itextpdf.layout.element.Table;
+import com.itextpdf.layout.element.Cell;
+import java.awt.Desktop;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+
+
 
 public class Factura extends javax.swing.JPanel {
 
@@ -591,6 +600,11 @@ public class Factura extends javax.swing.JPanel {
         jPanel3.add(btnVentasGeneradas, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 210, 80, 70));
 
         btnResibo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/impresion.png"))); // NOI18N
+        btnResibo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnResiboActionPerformed(evt);
+            }
+        });
         jPanel3.add(btnResibo, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 300, 80, 70));
 
         btnCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/rechazar.png"))); // NOI18N
@@ -773,8 +787,24 @@ public class Factura extends javax.swing.JPanel {
     }//GEN-LAST:event_btnInsertarProductosMouseClicked
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-        // TODO add your handling code here:
+         eliminarFilaSeleccionada();
     }//GEN-LAST:event_btnEliminarActionPerformed
+
+    private void btnResiboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnResiboActionPerformed
+        generarReciboPDF();
+
+    }//GEN-LAST:event_btnResiboActionPerformed
+    private void eliminarFilaSeleccionada() {
+        DefaultTableModel model = (DefaultTableModel) JtableFactura.getModel();
+        int selectedRow = JtableFactura.getSelectedRow();
+        if (selectedRow != -1) {
+            model.removeRow(selectedRow);
+            actualizarFactura();
+        } else {
+            JOptionPane.showMessageDialog(this, "Seleccione una fila para eliminar.");
+        }
+    }
+
     private static String obtenerProximoCodigoFactura(ObjectContainer db) {
     // Consultar todos los encabezados de factura
     ObjectSet<EncabezadoFactura_1> result = db.queryByExample(EncabezadoFactura_1.class);
@@ -1326,48 +1356,130 @@ private Producto obtenerProductoPorCodigo(String codigoProducto) {
     baseBD.close();
     return producto;
 }
+private void generarReciboPDF() {
+    String pdfPath = "recibo.pdf";
+    try {
+        // Crear un escritor de PDF
+        PdfWriter writer = new PdfWriter(pdfPath);
 
+        // Inicializar el documento PDF
+        PdfDocument pdfDoc = new PdfDocument(writer);
+        Document document = new Document(pdfDoc);
 
+        // Añadir el título del recibo
+        document.add(new Paragraph("Recibo de Factura").setFontSize(18).setBold());
+
+        // Añadir información del cliente
+        document.add(new Paragraph("Cliente: " + txtNombre1.getText()));
+        document.add(new Paragraph("Cédula: " + txtcedula.getText()));
+        document.add(new Paragraph("Dirección: " + txtdireccion.getText()));
+        document.add(new Paragraph("Teléfono: " + txttelefono.getText()));
+        document.add(new Paragraph("Fecha: " + txtfecha.getText()));
+        document.add(new Paragraph(" "));
+
+        // Crear una tabla con las columnas correspondientes
+        float[] columnWidths = {2, 4, 2, 2, 2};
+        Table table = new Table(columnWidths);
+        table.addCell(new Cell().add(new Paragraph("Código").setBold()));
+        table.addCell(new Cell().add(new Paragraph("Descripción").setBold()));
+        table.addCell(new Cell().add(new Paragraph("Precio Unitario").setBold()));
+        table.addCell(new Cell().add(new Paragraph("Cantidad").setBold()));
+        table.addCell(new Cell().add(new Paragraph("Subtotal").setBold()));
+
+        // Agregar las filas con los datos de la factura
+        DefaultTableModel model = (DefaultTableModel) JtableFactura.getModel();
+        for (int i = 0; i < model.getRowCount(); i++) {
+            table.addCell(new Cell().add(new Paragraph(model.getValueAt(i, 0).toString())));
+            table.addCell(new Cell().add(new Paragraph(model.getValueAt(i, 1).toString())));
+            table.addCell(new Cell().add(new Paragraph(model.getValueAt(i, 2).toString())));
+            table.addCell(new Cell().add(new Paragraph(model.getValueAt(i, 3).toString())));
+            table.addCell(new Cell().add(new Paragraph(model.getValueAt(i, 4).toString())));
+        }
+
+        // Añadir la tabla al documento
+        document.add(table);
+
+        // Añadir los totales al final del documento
+        document.add(new Paragraph(" "));
+        document.add(new Paragraph("Subtotal: " + txtSubtotal.getText()).setBold());
+        document.add(new Paragraph("Descuento: " + txtDescuento.getText()).setBold());
+        document.add(new Paragraph("IVA: " + txtiva.getText()).setBold());
+        document.add(new Paragraph("Total: " + txtTotalfac.getText()).setBold());
+
+        // Cerrar el documento
+        document.close();
+
+        JOptionPane.showMessageDialog(null, "Recibo PDF generado con éxito!");
+
+        // Abrir el archivo PDF
+        File pdfFile = new File(pdfPath);
+        if (pdfFile.exists()) {
+            if (Desktop.isDesktopSupported()) {
+                Desktop.getDesktop().open(pdfFile);
+            } else {
+                JOptionPane.showMessageDialog(null, "La funcionalidad de abrir el archivo no está soportada en su sistema.");
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "El archivo PDF no se encontró.");
+        }
+    } catch (FileNotFoundException e) {
+        JOptionPane.showMessageDialog(null, "Error al generar el PDF: " + e.getMessage());
+    } catch (IOException e) {
+        JOptionPane.showMessageDialog(null, "Error al abrir el PDF: " + e.getMessage());
+    }
+}
 private void guardarFactura() {
     DefaultTableModel model = (DefaultTableModel) JtableFactura.getModel();
-
-    // Obtener los datos del encabezado de la factura
     String codigoFactura = txtcodigoFac.getText();
     String fecha = txtfecha.getText();
     String cedula = txtcedula.getText();
     double total = Double.parseDouble(txtTotalfac.getText().replace(",", "."));
 
-    // Crear el encabezado de la factura
     EncabezadoFactura_1 factura = new EncabezadoFactura_1(codigoFactura, fecha, cedula, total);
-
     // Guardar el encabezado y los detalles en la base de datos
     ObjectContainer baseBD = Conexion_db.ConectarBD();
     baseBD.store(factura);
-
     // Guardar los detalles de la factura
     for (int i = 0; i < model.getRowCount(); i++) {
         String codigo = model.getValueAt(i, 0).toString();
         String tipo = model.getValueAt(i, 4).toString();
         int cantidad = Integer.parseInt(model.getValueAt(i, 3).toString());
-
         DetalleFactura_1 detalle;
         if ("Producto".equals(tipo)) {
             detalle = new DetalleFactura_1(codigoFactura, codigo, cantidad);
             Producto producto = obtenerProductoPorCodigo(codigo);
             if (producto != null) {
                 producto.restarCantidad(cantidad);
-                baseBD.store(producto);
-            }
+                baseBD.store(producto);            }
         } else {
             detalle = new DetalleFactura_1(codigoFactura, codigo, cantidad);
         }
-        baseBD.store(detalle);
-    }
+        baseBD.store(detalle);    }
 
     baseBD.close();
-
     JOptionPane.showMessageDialog(this, "Factura guardada exitosamente!");
+
+    // Reiniciar y generar un nueva factura
+    resetearFormulario();
 }
+private void resetearFormulario() {
+    txtcedula.setText("");
+    txtNombre1.setText("");
+    txtdireccion.setText("");
+    txttelefono.setText("");
+    txtSubtotal.setText("");
+    txtDescuento.setText("");
+    txtiva.setText("");
+    txtTotalfac.setText("");
+
+    DefaultTableModel model = (DefaultTableModel) JtableFactura.getModel();
+    model.setRowCount(0);
+
+    setearcabe();
+}
+
+
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable JtableFactura;
     private javax.swing.JDialog TablaServicios;
