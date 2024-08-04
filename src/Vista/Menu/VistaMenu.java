@@ -4,6 +4,7 @@ import Conexion.Conexion_db;
 
 import Models.Persona;
 import Vista.Catálogo.CatalogoProductos;
+import Vista.Cruds.pnlListaReportes;
 import Vista.Cruds.pnlReporteVehiculos;
 
 import Vista.Factura.Factura;
@@ -422,7 +423,7 @@ private String rolUsuario;
         PanelSubmenuReportes submenrep = new PanelSubmenuReportes();
         MostrarpanelSubmenu(submenrep);
         MostrarpanelTitulo(titreo);
-        pnlReporteVehiculos misReportes = new pnlReporteVehiculos();
+        pnlListaReportes misReportes = new pnlListaReportes();
         ShowpanelCruds(misReportes);
     }//GEN-LAST:event_btnReportesMouseClicked
 
