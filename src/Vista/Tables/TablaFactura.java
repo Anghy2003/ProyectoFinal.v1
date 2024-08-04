@@ -26,7 +26,7 @@ public class TablaFactura extends javax.swing.JPanel {
      */
     public TablaFactura() {
         initComponents();
-        mostrarDetallesFactura();  
+        
         mostrarDatosFacturas();
     }
 
@@ -241,9 +241,8 @@ public class TablaFactura extends javax.swing.JPanel {
         
         //abrir la interfaz con los datos cargados
         abrirFacturaConDatos(codigoFactura);
-    } else {
-        JOptionPane.showMessageDialog(this, "No se encontró ninguna factura con ese código.");
-    }
+    } 
+    
     }//GEN-LAST:event_btnVizualizar1ActionPerformed
 private void abrirFacturaConDatos(String codigoFactura) {
     // Crear una instancia de la interfaz de Factura
@@ -368,6 +367,7 @@ private void filtrarTablaFacturas(String consulta) {
     // Selecciona automáticamente la primera fila filtrada
     if (tblFacturas.getRowCount() > 0) {
         tblFacturas.setRowSelectionInterval(0, 0);
+        mostrarDetallesFactura();  
     }
 
 }
