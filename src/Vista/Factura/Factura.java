@@ -35,10 +35,17 @@ import java.awt.Desktop;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-
+import java.util.Properties;
+import javax.mail.Message;
+import javax.mail.Multipart;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeBodyPart;
+import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMultipart;
 
 public class Factura extends javax.swing.JPanel {
-
 
     private String pdfPath = "factura.pdf";
 
@@ -120,7 +127,7 @@ public class Factura extends javax.swing.JPanel {
         lblTotalFAc = new javax.swing.JLabel();
         btnNuevo = new javax.swing.JButton();
         btnVentasGeneradas = new javax.swing.JButton();
-        btnResibo = new javax.swing.JButton();
+        btnImprimir = new javax.swing.JButton();
         btnCancelar = new javax.swing.JButton();
         btnSalir = new javax.swing.JButton();
         lbllineas = new javax.swing.JLabel();
@@ -605,13 +612,13 @@ public class Factura extends javax.swing.JPanel {
         });
         jPanel3.add(btnVentasGeneradas, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 210, 80, 70));
 
-        btnResibo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/impresion.png"))); // NOI18N
-        btnResibo.addActionListener(new java.awt.event.ActionListener() {
+        btnImprimir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/impresion.png"))); // NOI18N
+        btnImprimir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnResiboActionPerformed(evt);
+                btnImprimirActionPerformed(evt);
             }
         });
-        jPanel3.add(btnResibo, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 300, 80, 70));
+        jPanel3.add(btnImprimir, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 300, 80, 70));
 
         btnCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/rechazar.png"))); // NOI18N
         btnCancelar.addActionListener(new java.awt.event.ActionListener() {
@@ -747,6 +754,8 @@ public class Factura extends javax.swing.JPanel {
     private void btnFinalizarFacActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFinalizarFacActionPerformed
         actualizarFactura();
         guardarFactura();
+
+
     }//GEN-LAST:event_btnFinalizarFacActionPerformed
 
     private void btnbuscarproductosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnbuscarproductosActionPerformed
@@ -800,10 +809,52 @@ public class Factura extends javax.swing.JPanel {
         eliminarFilaSeleccionada();
     }//GEN-LAST:event_btnEliminarActionPerformed
 
-    private void btnResiboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnResiboActionPerformed
+    private void btnImprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImprimirActionPerformed
+        // Obtener la cédula del cliente seleccionado
         generarReciboPDF();
+        String cedula = txtcedula.getText().trim();
+        if (!cedula.isEmpty()) {
+            String correoCliente = obtenerCorreoCliente(cedula);
+            if (correoCliente != null) {
+                transfer_to_email(correoCliente, pdfPath);
+            } else {
+                JOptionPane.showMessageDialog(this, "No se pudo obtener el correo del cliente.");
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Por favor, seleccione un cliente.");
+        }
 
-    }//GEN-LAST:event_btnResiboActionPerformed
+    }//GEN-LAST:event_btnImprimirActionPerformed
+
+    public String obtenerCorreoCliente(String cedula) {
+        ObjectContainer baseBD = Conexion_db.ConectarBD();
+        String correoCliente = null;
+
+        try {
+            // Crear consulta para buscar cliente por cédula
+            Query clienteQuery = baseBD.query();
+            clienteQuery.constrain(Cliente.class);
+            clienteQuery.descend("cedula").constrain(cedula);
+            ObjectSet<Cliente> resultado = clienteQuery.execute();
+
+            // Si se encuentra el cliente, obtener el correo
+            if (!resultado.isEmpty()) {
+                Cliente cliente = resultado.next();
+                correoCliente = cliente.getCorreo();
+            } else {
+                JOptionPane.showMessageDialog(this, "Cliente no encontrado.");
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error al buscar el cliente: " + e.getMessage());
+        } finally {
+            if (baseBD != null) {
+                baseBD.close();
+            }
+        }
+
+        return correoCliente;
+    }
+
     private void eliminarFilaSeleccionada() {
         DefaultTableModel model = (DefaultTableModel) JtableFactura.getModel();
         int selectedRow = JtableFactura.getSelectedRow();
@@ -1425,7 +1476,7 @@ public class Factura extends javax.swing.JPanel {
 
             // Añadir pie de página con información de la empresa
             document.add(new Paragraph(" "));
-            Paragraph footer = new Paragraph("Gracias por su compra\nEmpresa XYZ\nDirección de la Empresa\nTeléfono: 123-456-789")
+            Paragraph footer = new Paragraph("Gracias por su compra\n MECANICA YINGS AND YANG\n Octavio Chacon \nTeléfono: 123-456-789")
                     .setTextAlignment(TextAlignment.CENTER)
                     .setFontSize(10);
             document.add(footer);
@@ -1450,6 +1501,51 @@ public class Factura extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(null, "Error al generar el PDF: " + e.getMessage());
         } catch (IOException e) {
             JOptionPane.showMessageDialog(null, "Error al abrir el PDF: " + e.getMessage());
+        }
+    }
+
+    public static void transfer_to_email(String correo, String pdfPath) {
+        String correoEnvia = "yingsyyangmecanica@gmail.com";
+        String contrasena = "ghsd axnw dxtk fxei";
+        String mensaje = "Adjunto encontrará la factura generada.";
+        String asunto = "Factura de Compra";
+        Properties objetoPEC = new Properties();
+        objetoPEC.put("mail.smtp.host", "smtp.gmail.com");
+        objetoPEC.setProperty("mail.smtp.starttls.enable", "true");
+        objetoPEC.setProperty("mail.smtp.port", "587");
+        objetoPEC.setProperty("mail.smtp.user", correoEnvia);
+        objetoPEC.setProperty("mail.smtp.auth", "true");
+        Session sesion = Session.getDefaultInstance(objetoPEC);
+        MimeMessage mail = new MimeMessage(sesion);
+        try {
+            mail.setFrom(new InternetAddress(correoEnvia));
+            mail.addRecipient(Message.RecipientType.TO, new InternetAddress(correo));
+            mail.setSubject(asunto);
+
+            // Crear la parte del mensaje
+            MimeBodyPart messageBodyPart = new MimeBodyPart();
+            messageBodyPart.setText(mensaje);
+
+            // Crear la parte del archivo adjunto
+            MimeBodyPart attachPart = new MimeBodyPart();
+            attachPart.attachFile(pdfPath);
+
+            // Crear multipart para combinar el mensaje y el adjunto
+            Multipart multipart = new MimeMultipart();
+            multipart.addBodyPart(messageBodyPart);
+            multipart.addBodyPart(attachPart);
+
+            // Configurar el contenido del correo
+            mail.setContent(multipart);
+
+            // Enviar el correo
+            Transport trasporte = sesion.getTransport("smtp");
+            trasporte.connect(correoEnvia, contrasena);
+            trasporte.sendMessage(mail, mail.getRecipients(Message.RecipientType.TO));
+            trasporte.close();
+            JOptionPane.showMessageDialog(null, "El correo se envió correctamente");
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Error al enviar el correo: " + ex.getMessage());
         }
     }
 
@@ -1519,11 +1615,11 @@ public class Factura extends javax.swing.JPanel {
     private javax.swing.JButton btnCancelar;
     private javax.swing.JButton btnEliminar;
     private rojeru_san.RSButton btnFinalizarFac;
+    private javax.swing.JButton btnImprimir;
     private rsbuttongradiente.RSButtonGradiente btnInsertarCliente;
     private rsbuttongradiente.RSButtonGradiente btnInsertarProductos;
     private rsbuttongradiente.RSButtonGradiente btnInsetarServicios;
     private javax.swing.JButton btnNuevo;
-    private javax.swing.JButton btnResibo;
     private javax.swing.JButton btnSalir;
     private javax.swing.JButton btnVentasGeneradas;
     private rsbuttongradiente.RSButtonGradiente btnbuscarproductos;
