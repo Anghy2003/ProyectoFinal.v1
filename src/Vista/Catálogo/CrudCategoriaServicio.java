@@ -134,12 +134,11 @@ public class CrudCategoriaServicio extends javax.swing.JPanel {
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-       if (!txtNombres.getText().trim().isBlank()) {
-        // número con dos decimales para el precio
+      if (!txtNombres.getText().trim().isBlank()) {
         guardarCategoria(
-                txtNombres.getText(),
-                txtDescripcion.getText());
-        
+            txtNombres.getText(),
+            txtDescripcion.getText()
+        );
         resetCampos();
     } else {
         JOptionPane.showMessageDialog(this, "No deje espacios en blanco en el nombre de la Categoria");
@@ -150,30 +149,30 @@ public static void guardarCategoria(String nombreCat, String descripcionCat) {
     // Establecer conexión con la base de datos
     ObjectContainer baseBD = Conexion_db.ConectarBD();
 
-    // Obtener el próximo código de categoría disponible
+    // Obtener el código de categoría disponible
     String codigoCat = obtenerProximoCodigoCategoria(baseBD);
 
     // Crear objeto de Categoria
     CategoriaServicio nuevaCategoria = new CategoriaServicio(codigoCat, nombreCat, descripcionCat);
 
-    // Guardar la categoría en la base de datos
+    // Guardar la categoria en la base de datos
     baseBD.set(nuevaCategoria);
     JOptionPane.showMessageDialog(null, "Categoria guardada exitosamente.");
 
-    // Cerrar conexión con la base de datos
+    // Cerrar conexion con la base de datos
     baseBD.close();
 }
 // Método para verificar si una nueva categoria existe
 
-    public static int verificarCategoria(ObjectContainer baseBD, String codigoCat) {
-        // Crear objeto para buscar el servicio por su código
-        CategoriaServicio servicioBusca = new CategoriaServicio(codigoCat, null, null);
-        ObjectSet<CategoriaServicio> resultado = baseBD.get(servicioBusca);
-        return resultado.size();
-    }
+   public static int verificarCategoria(ObjectContainer baseBD, String codigoCat) {
+    // Crear objeto para buscar el servicio por su código
+    CategoriaServicio servicioBusca = new CategoriaServicio(codigoCat, null, null);
+    ObjectSet<CategoriaServicio> resultado = baseBD.get(servicioBusca);
+    return resultado.size();
+}
     // Método para obtener el próximo código de servicio disponible
 
-   private static String obtenerProximoCodigoCategoria(ObjectContainer db) {
+  private static String obtenerProximoCodigoCategoria(ObjectContainer db) {
     // Consultar todas las categorías
     ObjectSet<CategoriaServicio> result = db.query(CategoriaServicio.class);
 
@@ -181,8 +180,8 @@ public static void guardarCategoria(String nombreCat, String descripcionCat) {
     int maxID = 0;
     for (CategoriaServicio categoria : result) {
         String codigo = categoria.getCodigoCatSer();
-        if (codigo != null && codigo.startsWith("CAT-")) {
-            int id = Integer.parseInt(codigo.substring(4)); // Extraer la parte numérica del código
+        if (codigo != null && codigo.startsWith("CATS-")) { // Asegúrate de que el prefijo sea "CATS-"
+            int id = Integer.parseInt(codigo.substring(5)); // Extraer la parte numérica del código
             if (id > maxID) {
                 maxID = id;
             }
@@ -190,7 +189,7 @@ public static void guardarCategoria(String nombreCat, String descripcionCat) {
     }
     // El próximo ID es el máximo + 1
     int siguienteID = maxID + 1;
-    // Retornar el nuevo código concatenado con "CAT-"
+    // Retornar el nuevo código concatenado con "CATS-"
     return "CATS-" + siguienteID;
 }
    private void resetCampos() {

@@ -1,14 +1,35 @@
 package Vista.Home;
 
+import Conexion.Conexion_db;
+
+import Models.Administrador;
+import Models.Cliente;
+import Models.Mecanico;
+import Models.Vendedor;
 import Vista.Menu.VistaMenu;
+import com.db4o.ObjectContainer;
+import com.db4o.ObjectSet;
+import javax.swing.*;
 import javax.swing.JOptionPane;
+import utils.Global;
+import java.awt.BorderLayout;
+import Vista.Cruds.CRUDS1.CrudPanelCliente.JPanel1;//panel de crear cliente
 
 public class Home extends javax.swing.JFrame {
-    
+
+    private String rolUsuario;
+
+    public String getRolUsuario() {
+        return rolUsuario;
+    }
+
+    public void setRolUsuario(String rolUsuario) {
+        this.rolUsuario = rolUsuario;
+    }
+
     public Home() {
         initComponents();
         this.setLocationRelativeTo(this);
-        
     }
 
     /**
@@ -24,17 +45,17 @@ public class Home extends javax.swing.JFrame {
         panelPron = new javax.swing.JPanel();
         PanelPrin = new javax.swing.JPanel();
         lblIconoLogo = new javax.swing.JLabel();
-        txtUsuario = new rojeru_san.RSMTextFull();
+        txtRolUsuario = new rojeru_san.RSMTextFull();
         jSeparator1 = new javax.swing.JSeparator();
         txtpassword = new rojeru_san.RSMPassView();
-        CmbRoles = new javax.swing.JComboBox<>();
-        jLabel1 = new javax.swing.JLabel();
         btnCrearCuenta = new rsbuttongradiente.RSButtonGradiente();
         btnIniciarSesion = new rsbuttongradiente.RSButtonGradiente();
         jPanel2 = new javax.swing.JPanel();
+        lblCerrarHome = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setUndecorated(true);
         getContentPane().setLayout(new java.awt.GridBagLayout());
 
         panelPron.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -44,24 +65,16 @@ public class Home extends javax.swing.JFrame {
 
         lblIconoLogo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/LOGOMECANICA3.1.png"))); // NOI18N
 
-        txtUsuario.setForeground(new java.awt.Color(0, 53, 79));
-        txtUsuario.setBordeColorFocus(new java.awt.Color(0, 53, 79));
-        txtUsuario.setFont(new java.awt.Font("Roboto Bold", 1, 18)); // NOI18N
-        txtUsuario.setPlaceholder("Usuario/Cedula");
-        txtUsuario.setSelectionColor(new java.awt.Color(0, 53, 79));
+        txtRolUsuario.setForeground(new java.awt.Color(0, 53, 79));
+        txtRolUsuario.setBordeColorFocus(new java.awt.Color(0, 53, 79));
+        txtRolUsuario.setFont(new java.awt.Font("Roboto Bold", 1, 18)); // NOI18N
+        txtRolUsuario.setPlaceholder("Usuario/Cedula");
+        txtRolUsuario.setSelectionColor(new java.awt.Color(0, 53, 79));
 
         txtpassword.setForeground(new java.awt.Color(0, 53, 79));
         txtpassword.setBordeColorFocus(new java.awt.Color(0, 53, 79));
         txtpassword.setFont(new java.awt.Font("Roboto Bold", 1, 18)); // NOI18N
         txtpassword.setPlaceholder("Contraseña");
-
-        CmbRoles.setFont(new java.awt.Font("Roboto", 1, 18)); // NOI18N
-        CmbRoles.setForeground(new java.awt.Color(153, 153, 153));
-        CmbRoles.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "ADMINISTRADOR", "CLIENTE", "MECANICO ", "VENDEDOR", " ", " " }));
-
-        jLabel1.setFont(new java.awt.Font("Roboto Light", 1, 14)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(153, 153, 153));
-        jLabel1.setText("Seleccione Su Rol*");
 
         btnCrearCuenta.setBackground(new java.awt.Color(65, 185, 36));
         btnCrearCuenta.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED));
@@ -92,6 +105,25 @@ public class Home extends javax.swing.JFrame {
         jPanel2.setBackground(new java.awt.Color(0, 53, 74));
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        lblCerrarHome.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/cerrarHOME.png"))); // NOI18N
+        lblCerrarHome.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        lblCerrarHome.setEnabled(false);
+        lblCerrarHome.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblCerrarHomeMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                lblCerrarHomeMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                lblCerrarHomeMouseExited(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                lblCerrarHomeMouseReleased(evt);
+            }
+        });
+        jPanel2.add(lblCerrarHome, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 0, -1, -1));
+
         jLabel3.setBackground(new java.awt.Color(1, 53, 74));
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/imagenhome.png"))); // NOI18N
         jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 20, 501, 753));
@@ -102,10 +134,6 @@ public class Home extends javax.swing.JFrame {
             PanelPrinLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(PanelPrinLayout.createSequentialGroup()
                 .addGroup(PanelPrinLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(PanelPrinLayout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(lblIconoLogo, javax.swing.GroupLayout.PREFERRED_SIZE, 208, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(158, 158, 158))
                     .addGroup(PanelPrinLayout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(PanelPrinLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -119,10 +147,13 @@ public class Home extends javax.swing.JFrame {
                     .addGroup(PanelPrinLayout.createSequentialGroup()
                         .addGap(64, 64, 64)
                         .addGroup(PanelPrinLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(CmbRoles, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(txtUsuario, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(txtpassword, javax.swing.GroupLayout.PREFERRED_SIZE, 353, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(txtRolUsuario, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(txtpassword, javax.swing.GroupLayout.PREFERRED_SIZE, 353, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelPrinLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(lblIconoLogo, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(146, 146, 146)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 542, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -131,22 +162,18 @@ public class Home extends javax.swing.JFrame {
             .addGroup(PanelPrinLayout.createSequentialGroup()
                 .addGap(31, 31, 31)
                 .addComponent(lblIconoLogo, javax.swing.GroupLayout.PREFERRED_SIZE, 208, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(68, 68, 68)
-                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(CmbRoles, javax.swing.GroupLayout.PREFERRED_SIZE, 42, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGap(98, 98, 98)
+                .addComponent(txtRolUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(31, 31, 31)
                 .addComponent(txtpassword, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(39, 39, 39)
+                .addGap(76, 76, 76)
                 .addComponent(btnIniciarSesion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnCrearCuenta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 776, Short.MAX_VALUE)
         );
 
         panelPron.add(PanelPrin, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 1020, 780));
@@ -161,23 +188,135 @@ public class Home extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCrearCuentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearCuentaActionPerformed
-        RegistrarClientes clientess = new RegistrarClientes();
-        clientess.setVisible(true);
-        this.dispose();
+        CrudClientesForm miCrud=new CrudClientesForm();
+        miCrud.setLocationRelativeTo(null); // Centra la ventana en la pantalla
+        miCrud.setVisible(true);
         
     }//GEN-LAST:event_btnCrearCuentaActionPerformed
 
     private void btnIniciarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIniciarSesionActionPerformed
-      if (txtUsuario.getText().equalsIgnoreCase("admin") && txtpassword.getText().equalsIgnoreCase("admin")) {
-            VistaMenu Mimenu = new VistaMenu();
-            
-            Mimenu.setVisible(true);
-            
-            this.dispose();
-        }else{
-            JOptionPane.showMessageDialog(this, "Usuario no registrado");
-        }
+        String cedula = obtenerUsuario();
+        String password = obtenercontraseñaUsu();
+        iniciarSesion(cedula, password);
     }//GEN-LAST:event_btnIniciarSesionActionPerformed
+
+    private void lblCerrarHomeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblCerrarHomeMouseClicked
+        System.exit(0);
+    }//GEN-LAST:event_lblCerrarHomeMouseClicked
+
+    private void lblCerrarHomeMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblCerrarHomeMouseEntered
+        lblCerrarHome.setEnabled(true);
+    }//GEN-LAST:event_lblCerrarHomeMouseEntered
+
+    private void lblCerrarHomeMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblCerrarHomeMouseReleased
+        lblCerrarHome.setEnabled(false);
+    }//GEN-LAST:event_lblCerrarHomeMouseReleased
+
+    private void lblCerrarHomeMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblCerrarHomeMouseExited
+        lblCerrarHome.setEnabled(false);
+    }//GEN-LAST:event_lblCerrarHomeMouseExited
+public void iniciarSesion(String cedula, String password) {
+    ObjectContainer BaseBD = Conexion_db.ConectarBD();
+
+    // Buscar  de clientes
+    Cliente buscli = new Cliente();
+    buscli.setCedula(cedula);
+    ObjectSet<Cliente> resultadoCliente = BaseBD.queryByExample(buscli);
+    if (resultadoCliente.hasNext()) {
+        Cliente cliente = resultadoCliente.next();
+        if (cliente.getPassword().equals(password)) {
+            JOptionPane.showMessageDialog(this, "Inicio de sesión exitoso");
+            Global.rolUsuario = cliente.getRol().name();
+            VistaMenu menucli = new VistaMenu();
+            menucli.setVisible(true);
+            this.dispose();
+            BaseBD.close();
+            return;
+        } else {
+            JOptionPane.showMessageDialog(this, "Contraseña Incorrecta");
+            BaseBD.close();
+            return;
+        }
+    }
+
+    // Buscar de vendedores
+    Vendedor busven = new Vendedor();
+    busven.setCedula(cedula);
+    ObjectSet<Vendedor> resultadoVendedor = BaseBD.queryByExample(busven);
+    if (resultadoVendedor.hasNext()) {
+        Vendedor vendedor = resultadoVendedor.next();
+        if (vendedor.getPassword().equals(password)) {
+            JOptionPane.showMessageDialog(this, "Inicio de sesión exitoso");
+            Global.rolUsuario = vendedor.getRol().name();
+            VistaMenu menuven = new VistaMenu();
+            menuven.setVisible(true);
+            this.dispose();
+            BaseBD.close();
+            return;
+        } else {
+            JOptionPane.showMessageDialog(this, "Contraseña Incorrecta");
+            BaseBD.close();
+            return;
+        }
+    }
+
+    // Buscar de mecanicos
+    Mecanico busmec = new Mecanico();
+    busmec.setCedula(cedula);
+    ObjectSet<Mecanico> resultadoMecanico = BaseBD.queryByExample(busmec);
+    if (resultadoMecanico.hasNext()) {
+        Mecanico mecanico = resultadoMecanico.next();
+        if (mecanico.getPassword().equals(password)) {
+            JOptionPane.showMessageDialog(this, "Inicio de sesión exitoso");
+            Global.rolUsuario = mecanico.getRol().name();
+            VistaMenu menumec = new VistaMenu();
+            menumec.setVisible(true);
+            this.dispose();
+            BaseBD.close();
+            return;
+        } else {
+            JOptionPane.showMessageDialog(this, "Contraseña Incorrecta");
+            BaseBD.close();
+            return;
+        }
+    }
+
+    // Buscar de administradores
+    Administrador busadm = new Administrador();
+    busadm.setCedula(cedula);
+    ObjectSet<Administrador> resultadoAdministrador = BaseBD.queryByExample(busadm);
+    if (resultadoAdministrador.hasNext()) {
+        Administrador administrador = resultadoAdministrador.next();
+        if (administrador.getPassword().equals(password)) {
+            JOptionPane.showMessageDialog(this, "Inicio de sesión exitoso");
+            Global.rolUsuario = administrador.getRol().name();
+            VistaMenu menuadm = new VistaMenu();
+            menuadm.setVisible(true);
+            this.dispose();
+            BaseBD.close();
+            return;
+        } else {
+            JOptionPane.showMessageDialog(this, "Contraseña Incorrecta");
+            BaseBD.close();
+            return;
+        }
+    }
+
+    // Si no se encontro
+    JOptionPane.showMessageDialog(this, "Usuario No Encontrado");
+    BaseBD.close();
+}
+
+
+
+
+    private String obtenerUsuario() {
+        return txtRolUsuario.getText();
+    }
+
+    private String obtenercontraseñaUsu() {
+        return new String(txtpassword.getPassword());
+    }
 
     /**
      * @param args the command line arguments
@@ -212,19 +351,26 @@ public class Home extends javax.swing.JFrame {
         });
     }
 
+    private void ShowpanelCruds(JPanel p) {
+    p.setSize(870, 630);
+    p.setLocation(0, 0);
+    VistaMenu.PanelPrincipal.removeAll();
+    VistaMenu.PanelPrincipal.add(p, BorderLayout.CENTER);
+    VistaMenu.PanelPrincipal.revalidate();
+    VistaMenu.PanelPrincipal.repaint();
+}
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JComboBox<String> CmbRoles;
     private javax.swing.JPanel PanelPrin;
     private rsbuttongradiente.RSButtonGradiente btnCrearCuenta;
     private rsbuttongradiente.RSButtonGradiente btnIniciarSesion;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JLabel lblCerrarHome;
     private javax.swing.JLabel lblIconoLogo;
     private javax.swing.JPanel panelPron;
-    private rojeru_san.RSMTextFull txtUsuario;
+    private rojeru_san.RSMTextFull txtRolUsuario;
     private rojeru_san.RSMPassView txtpassword;
     // End of variables declaration//GEN-END:variables
 }

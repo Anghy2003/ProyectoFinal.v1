@@ -2,6 +2,7 @@ package Vista.Tables;
 
 import Conexion.Conexion_db;
 import Models.*;
+import Models.Persona.Rol;
 import Vista.Cruds.CrudPanelColores;
 import Vista.Menu.VistaMenu;
 import com.db4o.*;
@@ -31,6 +32,18 @@ public class TablaColores extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jdlModColor = new javax.swing.JDialog();
+        pnlModificarColor = new javax.swing.JPanel();
+        pnlModColor = new javax.swing.JPanel();
+        jLabel2 = new javax.swing.JLabel();
+        lblColor = new javax.swing.JLabel();
+        txtColor = new rojeru_san.RSMTextFull();
+        btnCancelar = new rojeru_san.RSButtonRiple();
+        btnGuardar = new rojeru_san.RSButtonRiple();
+        cmbTipoColorRegistrar = new javax.swing.JComboBox<>();
+        lblPropietario = new javax.swing.JLabel();
+        txtCodigo = new rojeru_san.RSMTextFull();
+        lblCodigo = new javax.swing.JLabel();
         pnlListado = new javax.swing.JPanel();
         lblMarcas = new javax.swing.JLabel();
         scrlpTablaVehi1 = new javax.swing.JScrollPane();
@@ -39,6 +52,95 @@ public class TablaColores extends javax.swing.JPanel {
         lblBuscar = new javax.swing.JLabel();
         btnAgregar = new rsbuttongradiente.RSButtonGradiente();
         btnBuscaColor = new rsbuttongradiente.RSButtonGradiente();
+        btnEditar = new rsbuttongradiente.RSButtonGradiente();
+
+        pnlModificarColor.setLayout(new java.awt.BorderLayout());
+
+        pnlModColor.setBackground(new java.awt.Color(255, 255, 255));
+        pnlModColor.setBorder(new javax.swing.border.SoftBevelBorder(javax.swing.border.BevelBorder.RAISED, java.awt.Color.blue, java.awt.Color.blue, java.awt.Color.blue, java.awt.Color.blue));
+        pnlModColor.setMinimumSize(new java.awt.Dimension(519, 420));
+        pnlModColor.setPreferredSize(new java.awt.Dimension(519, 420));
+        pnlModColor.setRequestFocusEnabled(false);
+        pnlModColor.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel2.setFont(new java.awt.Font("Roboto Black", 0, 30)); // NOI18N
+        jLabel2.setForeground(new java.awt.Color(0, 53, 79));
+        jLabel2.setText("Modificar Color");
+        pnlModColor.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 50, 220, 40));
+
+        lblColor.setFont(new java.awt.Font("Roboto Medium", 0, 21)); // NOI18N
+        lblColor.setForeground(new java.awt.Color(0, 53, 79));
+        lblColor.setText("Color:");
+        pnlModColor.add(lblColor, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 160, 70, 40));
+
+        txtColor.setForeground(new java.awt.Color(0, 53, 79));
+        txtColor.setColorTransparente(true);
+        txtColor.setFont(new java.awt.Font("Roboto Light", 1, 14)); // NOI18N
+        txtColor.setPlaceholder("Ejm: Rojo");
+        txtColor.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtColorKeyTyped(evt);
+            }
+        });
+        pnlModColor.add(txtColor, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 150, 290, 40));
+
+        btnCancelar.setBackground(new java.awt.Color(255, 51, 51));
+        btnCancelar.setText("Cancelar");
+        btnCancelar.setToolTipText("Regresar a la lista de Vehiculos");
+        btnCancelar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnCancelarMouseClicked(evt);
+            }
+        });
+        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarActionPerformed(evt);
+            }
+        });
+        pnlModColor.add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 280, -1, -1));
+
+        btnGuardar.setText("Guardar");
+        btnGuardar.setToolTipText("Verificar y rellenar todos los campos");
+        btnGuardar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnGuardarMouseClicked(evt);
+            }
+        });
+        btnGuardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnGuardarActionPerformed(evt);
+            }
+        });
+        pnlModColor.add(btnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 280, -1, -1));
+
+        cmbTipoColorRegistrar.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "BRILLANTE", "METALIZADO", "MATE" }));
+        pnlModColor.add(cmbTipoColorRegistrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 200, 290, 40));
+
+        lblPropietario.setFont(new java.awt.Font("Roboto Medium", 0, 21)); // NOI18N
+        lblPropietario.setForeground(new java.awt.Color(0, 53, 79));
+        lblPropietario.setText("Tipo Color:");
+        pnlModColor.add(lblPropietario, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 210, 120, 30));
+
+        txtCodigo.setForeground(new java.awt.Color(0, 53, 79));
+        txtCodigo.setColorTransparente(true);
+        txtCodigo.setEnabled(false);
+        txtCodigo.setFont(new java.awt.Font("Roboto Light", 1, 14)); // NOI18N
+        txtCodigo.setPlaceholder("CODIGO");
+        txtCodigo.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtCodigoKeyTyped(evt);
+            }
+        });
+        pnlModColor.add(txtCodigo, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 110, 290, 40));
+
+        lblCodigo.setFont(new java.awt.Font("Roboto Medium", 0, 21)); // NOI18N
+        lblCodigo.setForeground(new java.awt.Color(0, 53, 79));
+        lblCodigo.setText("Código:");
+        pnlModColor.add(lblCodigo, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 120, 80, 40));
+
+        pnlModificarColor.add(pnlModColor, java.awt.BorderLayout.CENTER);
+
+        jdlModColor.getContentPane().add(pnlModificarColor, java.awt.BorderLayout.CENTER);
 
         setLayout(new java.awt.BorderLayout());
 
@@ -65,22 +167,30 @@ public class TablaColores extends javax.swing.JPanel {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        tblColoresLista.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblColoresListaMouseClicked(evt);
+            }
+        });
         scrlpTablaVehi1.setViewportView(tblColoresLista);
 
         pnlListado.add(scrlpTablaVehi1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 140, 799, 360));
 
         txtBuscar.setFont(new java.awt.Font("Roboto Bold", 2, 14)); // NOI18N
-        txtBuscar.setPlaceholder("ejm. Col1");
+        txtBuscar.setPlaceholder("ejm. ROJO");
         txtBuscar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtBuscarKeyReleased(evt);
+            }
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 txtBuscarKeyTyped(evt);
             }
         });
-        pnlListado.add(txtBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 81, -1, 38));
+        pnlListado.add(txtBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 80, -1, 38));
 
         lblBuscar.setFont(new java.awt.Font("Roboto Black", 0, 18)); // NOI18N
         lblBuscar.setText("Buscar color:");
-        pnlListado.add(lblBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(103, 97, -1, -1));
+        pnlListado.add(lblBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 90, -1, -1));
 
         btnAgregar.setText("Agregar");
         btnAgregar.setToolTipText("Ingresar un nuevo vehiculo");
@@ -101,7 +211,7 @@ public class TablaColores extends javax.swing.JPanel {
                 btnAgregarActionPerformed(evt);
             }
         });
-        pnlListado.add(btnAgregar, new org.netbeans.lib.awtextra.AbsoluteConstraints(490, 80, 102, -1));
+        pnlListado.add(btnAgregar, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 80, 102, -1));
 
         btnBuscaColor.setText("Buscar");
         btnBuscaColor.setToolTipText("Previamente ingrese una placa");
@@ -119,7 +229,24 @@ public class TablaColores extends javax.swing.JPanel {
                 btnBuscaColorActionPerformed(evt);
             }
         });
-        pnlListado.add(btnBuscaColor, new org.netbeans.lib.awtextra.AbsoluteConstraints(600, 80, 102, -1));
+        pnlListado.add(btnBuscaColor, new org.netbeans.lib.awtextra.AbsoluteConstraints(580, 80, 102, -1));
+
+        btnEditar.setText("Editar");
+        btnEditar.setColorPrimario(new java.awt.Color(204, 0, 0));
+        btnEditar.setColorPrimarioHover(new java.awt.Color(255, 51, 51));
+        btnEditar.setColorSecundario(new java.awt.Color(255, 153, 153));
+        btnEditar.setColorSecundarioHover(new java.awt.Color(255, 204, 204));
+        btnEditar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnEditarMouseClicked(evt);
+            }
+        });
+        btnEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditarActionPerformed(evt);
+            }
+        });
+        pnlListado.add(btnEditar, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 80, 100, -1));
 
         add(pnlListado, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
@@ -134,7 +261,7 @@ public class TablaColores extends javax.swing.JPanel {
     }//GEN-LAST:event_btnBuscaColorMouseClicked
 
     private void btnBuscaColorActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscaColorActionPerformed
-        
+    filtrarDatosColor();
     }//GEN-LAST:event_btnBuscaColorActionPerformed
 
     private void btnAgregarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAgregarMouseEntered
@@ -170,6 +297,103 @@ public class TablaColores extends javax.swing.JPanel {
             evt.setKeyChar(Character.toUpperCase(x));
         }
     }//GEN-LAST:event_txtBuscarKeyTyped
+
+    private void btnEditarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditarMouseClicked
+        
+    }//GEN-LAST:event_btnEditarMouseClicked
+
+    private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
+        // Verificar si hay una fila seleccionada
+        int filaSeleccionada = tblColoresLista.getSelectedRow();
+        if (filaSeleccionada != -1) {
+            // Obtener el valor de la primera columna
+            String CodigoColor = (String) tblColoresLista.getValueAt(filaSeleccionada, 0);
+            // Consulta 
+            ObjectContainer BaseBD = Conexion_db.ConectarBD();
+            Query query = BaseBD.query();
+            query.constrain(Color.class);
+            query.descend("codigoColor").constrain(CodigoColor);
+            ObjectSet<Color> resultado = query.execute();
+            // Verifica si el conjunto de resultados no está vacío
+            if (resultado.hasNext()) {
+                // Obtiene el primer objeto Color del conjunto de resultados
+                Color colorAEditar = resultado.next();
+                txtColor.setText(colorAEditar.getNomnbre_color());
+                cmbTipoColorRegistrar.setSelectedItem(colorAEditar.getTipoColor());
+                txtCodigo.setText(colorAEditar.getCodigoColor());
+                BaseBD.close();
+                jdlModColor.setModal(true); // hacemos que el dialogo bloquee la interaccion con la pantalla principal
+                jdlModColor.setSize(519, 420); // establecemos un tamaño para el diálogo
+                jdlModColor.setLocationRelativeTo(null); // centramos el diálogo en la pantalla
+                jdlModColor.setUndecorated(true);//no tendra los botones de windows
+                jdlModColor.setVisible(true); // llamamos al dialogo 
+            }else{
+            BaseBD.close();
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "SELECCIONE UN COLOR EN ESPECIFICO EN LA TABLA");
+            System.out.println("No hay fila seleccionada");
+            
+        }
+        
+    }//GEN-LAST:event_btnEditarActionPerformed
+
+    private void tblColoresListaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblColoresListaMouseClicked
+        int fila = tblColoresLista.rowAtPoint(evt.getPoint());
+        tblColoresLista.setRowSelectionInterval(fila, fila);
+    }//GEN-LAST:event_tblColoresListaMouseClicked
+
+    private void txtColorKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtColorKeyTyped
+        char x= evt.getKeyChar();
+        if (Character.isLowerCase(x)) {
+            evt.setKeyChar(Character.toUpperCase(x));
+        }
+    }//GEN-LAST:event_txtColorKeyTyped
+
+    private void btnCancelarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCancelarMouseClicked
+
+    }//GEN-LAST:event_btnCancelarMouseClicked
+
+    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+        System.out.println("salir");
+        jdlModColor.dispose();
+    }//GEN-LAST:event_btnCancelarActionPerformed
+
+    private void btnGuardarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnGuardarMouseClicked
+
+    }//GEN-LAST:event_btnGuardarMouseClicked
+ //bandera para verificar que se haya modificado
+    private static Boolean BcolorModificado=false;
+    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
+        if (!txtColor.getText().trim().isBlank()) {
+            Boolean valido = false;//creamos una bandera para validar datos
+            modificarColor(txtCodigo.getText(), txtColor.getText().toUpperCase().trim(), (String) cmbTipoColorRegistrar.getSelectedItem());
+            if (BcolorModificado) {
+                txtCodigo.setText("");
+                txtColor.setText("");
+                jdlModColor.dispose();
+                JOptionPane.showMessageDialog(this, "Color Modificado");
+                mostrarDatosColor();
+            } else {
+                txtCodigo.setText("");
+                txtColor.setText("");
+                jdlModColor.dispose();
+                JOptionPane.showMessageDialog(this, "Color con ese tipo ya existe en la BD");
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "No encontrado el color");
+        }
+    }//GEN-LAST:event_btnGuardarActionPerformed
+
+    private void txtCodigoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCodigoKeyTyped
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtCodigoKeyTyped
+
+    private void txtBuscarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarKeyReleased
+        if (txtBuscar.getText().isEmpty()) {
+            mostrarDatosColor();
+        }
+    }//GEN-LAST:event_txtBuscarKeyReleased
  
     
        
@@ -224,14 +448,111 @@ public class TablaColores extends javax.swing.JPanel {
         tblColoresLista.setEnabled(false);
         BaseBD.close();
     }
+    private void filtrarDatosColor() {
+        // ESTABLECER CONEXION CON LA BASE DE DATOS
+        ObjectContainer BaseBD = Conexion_db.ConectarBD();
+        tblColoresLista.setEnabled(true);
+        // Consulta 
+        Query query = BaseBD.query();
+        query.constrain(Color.class);
+        query.descend("Nomnbre_color").constrain(txtBuscar.getText());
+        ObjectSet<Color> resultado = query.execute();
+        //Creo una matriz
+        String matriz[][] = new String[resultado.size()][3];
+        int i = 0;
+        for (Color miColor : resultado) {//iteramos en cada elemento de "resultado"
+            matriz[i][0] = miColor.getCodigoColor();
+            matriz[i][1] = miColor.getNomnbre_color();
+            String tipo= (String)miColor.getTipoColor();
+            matriz[i][2] = tipo;
+            i++;
+        }
+        // datos configurados
+        tblColoresLista.setModel(new javax.swing.table.DefaultTableModel(matriz, new String[]{"CÓDIGO:", "COLOR","TIPO"}));
+
+        // Centrar contenido de celdas
+        DefaultTableCellRenderer centrar = new DefaultTableCellRenderer();
+        centrar.setHorizontalAlignment(JLabel.CENTER);
+        tblColoresLista.getColumnModel().getColumn(0).setCellRenderer(centrar);
+        tblColoresLista.getColumnModel().getColumn(1).setCellRenderer(centrar);
+        tblColoresLista.getColumnModel().getColumn(2).setCellRenderer(centrar);
+
+        tblColoresLista.setEnabled(false);
+        BaseBD.close();
+    }
+    public static void modificarColor(String codigoColor, String Nomnbre_color, String tipoColor) {
+        BcolorModificado=false;
+        //para verificar que el color no este vinculado al nuevo tipo
+        int colorTipo=verificarNombreyTipoColorModificar(Nomnbre_color, tipoColor);
+        // ESTABLECER CONEXION CON LA BASE DE DATOS
+        ObjectContainer BaseBD = Conexion_db.ConectarBD();
+        // Crear el objeto con los datos nuevos
+        Color colorModificado = new Color(codigoColor, Nomnbre_color, tipoColor);
+
+        // Buscar el objeto existente en la base de datos
+        Color colorBusca = new Color(codigoColor, null, null);
+        ObjectSet resultado = BaseBD.get(colorBusca);
+        int coincidencias = resultado.size();
+        Color colorAEliminar;
+
+        if (coincidencias > 0) {//debe existir el color
+            
+            if (colorTipo== 0) {//No debe existir una coincidencia de Color y tipo
+            
+            //Eliminar el objeto existente
+            colorAEliminar = (Color) resultado.next();
+            BaseBD.delete(colorAEliminar);
+            // Guardar el nuevo objeto con los datos modificados
+            BaseBD.set(colorModificado);
+            BcolorModificado=true;
+            //cierro base
+            BaseBD.close();
+            System.out.println("Color modificado y guardado exitosamente."); 
+        } else {
+            System.out.println("Color con ese tipo ya existe en la BD");
+        }
+        } else {
+            System.out.println("No se encontró ningún Color con el codigo especificado.");
+        }
+
+        // Cerrar la base de datos
+        BaseBD.close();
+    }
+    
+    //verificar MARCA
+    public static int verificarNombreyTipoColorModificar(String Nomnbre_color, String tipoColor) {
+        // ESTABLECER CONEXION CON LA BASE DE DATOS
+        ObjectContainer BaseBD = Conexion_db.ConectarBD();
+        Color ColorBusca = new Color(null,Nomnbre_color, tipoColor);
+        ObjectSet resultado = BaseBD.get(ColorBusca);
+        int coincidencias= resultado.size();
+        //Cerrar BD
+        BaseBD.close();
+        return coincidencias;
+    }
+    
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private rsbuttongradiente.RSButtonGradiente btnAgregar;
     private rsbuttongradiente.RSButtonGradiente btnBuscaColor;
+    private rojeru_san.RSButtonRiple btnCancelar;
+    private rsbuttongradiente.RSButtonGradiente btnEditar;
+    private rojeru_san.RSButtonRiple btnGuardar;
+    private javax.swing.JComboBox<String> cmbTipoColorRegistrar;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JDialog jdlModColor;
     private javax.swing.JLabel lblBuscar;
+    private javax.swing.JLabel lblCodigo;
+    private javax.swing.JLabel lblColor;
     private javax.swing.JLabel lblMarcas;
+    private javax.swing.JLabel lblPropietario;
     private javax.swing.JPanel pnlListado;
+    private javax.swing.JPanel pnlModColor;
+    private javax.swing.JPanel pnlModificarColor;
     private javax.swing.JScrollPane scrlpTablaVehi1;
     private javax.swing.JTable tblColoresLista;
     private rojeru_san.RSMTextFull txtBuscar;
+    private rojeru_san.RSMTextFull txtCodigo;
+    private rojeru_san.RSMTextFull txtColor;
     // End of variables declaration//GEN-END:variables
 }

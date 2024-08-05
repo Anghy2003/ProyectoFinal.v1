@@ -9,6 +9,7 @@ import Vista.Tables.TablaVendedores;
 import java.awt.BorderLayout;
 import java.awt.Color;
 import javax.swing.JPanel;
+import javax.swing.JToggleButton;
 import javax.swing.text.TabableView;
 
 
@@ -141,7 +142,7 @@ public class PanelSubmenuUsuarioss extends javax.swing.JPanel {
         ShowpanelCruds(tblMecan);
     }//GEN-LAST:event_btnMecanicoMouseClicked
 
-
+     
     private void ShowpanelTitulo(JPanel p) {
         p.setSize(870, 80);
         p.setLocation(0, 0);
@@ -158,6 +159,38 @@ public class PanelSubmenuUsuarioss extends javax.swing.JPanel {
         VistaMenu.PanelPrincipal.add(p, BorderLayout.CENTER);
         VistaMenu.PanelPrincipal.revalidate();
         VistaMenu.PanelPrincipal.repaint();
+    }
+
+    public JToggleButton getBtnAdministrador() {
+        return btnAdministrador;
+    }
+
+    public void setBtnAdministrador(JToggleButton btnAdministrador) {
+        this.btnAdministrador = btnAdministrador;
+    }
+
+    public JToggleButton getBtnCliente() {
+        return btnCliente;
+    }
+
+    public void setBtnCliente(JToggleButton btnCliente) {
+        this.btnCliente = btnCliente;
+    }
+
+    public JToggleButton getBtnMecanico() {
+        return btnMecanico;
+    }
+
+    public void setBtnMecanico(JToggleButton btnMecanico) {
+        this.btnMecanico = btnMecanico;
+    }
+
+    public JToggleButton getBtnVendedor() {
+        return btnVendedor;
+    }
+
+    public void setBtnVendedor(JToggleButton btnVendedor) {
+        this.btnVendedor = btnVendedor;
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

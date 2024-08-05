@@ -134,5 +134,11 @@ public class Vehiculo {
 
     public  void desactivarVehiculo() {
         this.estado = Estado.INACTIVO;
-    }    
+    }
+
+    @Override
+    public String toString() {
+        return "Vehiculo{" + "placa_Vehiculo=" + placa_Vehiculo + ", modelo_Vehiculo=" + modelo_Vehiculo + ", marca_Vehiculo=" + marca_Vehiculo + ", color_Vehiculo=" + color_Vehiculo + ", anioFabricacion_Vehiculo=" + anioFabricacion_Vehiculo + ", id_Cliente=" + id_Cliente + ", estado=" + estado + '}';
+    }
+    
 }

@@ -54,7 +54,7 @@ public class CrudPanelColores extends javax.swing.JPanel {
         jLabel2.setFont(new java.awt.Font("Roboto Black", 0, 30)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(0, 53, 79));
         jLabel2.setText("Registrar Color");
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 30, 270, 40));
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 130, 220, 40));
 
         lblPlaca.setFont(new java.awt.Font("Roboto Medium", 0, 21)); // NOI18N
         lblPlaca.setForeground(new java.awt.Color(0, 53, 79));
@@ -85,7 +85,7 @@ public class CrudPanelColores extends javax.swing.JPanel {
                 btnCancelarActionPerformed(evt);
             }
         });
-        jPanel1.add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 310, -1, -1));
+        jPanel1.add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 330, -1, -1));
 
         btnGuardar.setText("Guardar");
         btnGuardar.setToolTipText("Verificar y rellenar todos los campos");
@@ -99,9 +99,9 @@ public class CrudPanelColores extends javax.swing.JPanel {
                 btnGuardarActionPerformed(evt);
             }
         });
-        jPanel1.add(btnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 310, -1, -1));
+        jPanel1.add(btnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 330, -1, -1));
 
-        cmbTipoColorRegistrar.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "BRILLANTE", "METALIZADO", "MATE" }));
+        cmbTipoColorRegistrar.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "BRILLANTE", "METALIZADO", "MATE", "PERLADO", " " }));
         jPanel1.add(cmbTipoColorRegistrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 250, 290, 40));
 
         lblPropietario.setFont(new java.awt.Font("Roboto Medium", 0, 21)); // NOI18N

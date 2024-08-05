@@ -38,7 +38,7 @@ public class CrudPanelMecanico extends javax.swing.JPanel {
 
         Mecanico mecanico1 = new Mecanico( titulo,  Sueldo,  estado,  ciudad,  imagenMeca,  cedula,  nombres,  apellidos,
              direccion,  correo,  celular,  genero,  fechaNacimiento,  estadoCivil,
-             nombreUsuario,  password,  correoRecuperacion, rol);
+             nombreUsuario,  password,  correoRecuperacion, rol.MECANICO);
 
         mecanico1.setiD_Mecanico(siguienteID);
         BaseBD.close();

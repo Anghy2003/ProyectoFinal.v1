@@ -3,7 +3,6 @@ package Vista.Cruds.CRUDS1;
 import Conexion.Conexion_db;
 import Models.Administrador;
 import Models.Ciudad;
-import Models.Persona;
 import Models.Persona.Rol;
 import Vista.Menu.VistaMenu;
 import Vista.Tables.TablaAdministradores;

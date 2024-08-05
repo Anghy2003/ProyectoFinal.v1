@@ -18,6 +18,10 @@ public class DetalleFactura_1 {
     
     
 
+    public DetalleFactura_1(String codigoProducto_detalleFactura) {
+        this.codigoProducto_detalleFactura = codigoProducto_detalleFactura;
+    }
+
     public String getCodigo_encabezadoFactura() {
         return codigo_encabezadoFactura;
     }

@@ -209,6 +209,11 @@ public class TablaProveedor extends javax.swing.JPanel {
                 btnEditarMouseClicked(evt);
             }
         });
+        btnEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditarActionPerformed(evt);
+            }
+        });
 
         jScrollPane2.setBackground(new java.awt.Color(255, 255, 255));
         jScrollPane2.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
@@ -359,6 +364,10 @@ public class TablaProveedor extends javax.swing.JPanel {
             evt.setKeyChar(Character.toUpperCase(x));
         }
     }//GEN-LAST:event_txtBuscarKeyTyped
+
+    private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnEditarActionPerformed
     private void ShowpanelCruds(JPanel p) {
         p.setSize(870, 630);
         p.setLocation(0, 0);

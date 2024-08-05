@@ -13,6 +13,8 @@ import Models.Vehiculo.Estado;
 import static Models.Vehiculo.Estado.ACTIVO;
 import Vista.Cruds.CRUDS1.CrudPanelCliente;
 import com.db4o.query.Query;
+import java.util.HashMap;
+import java.util.Map;
 import javax.swing.JOptionPane;
 
 public class BuscarPanelVehiculo extends javax.swing.JPanel {
@@ -28,7 +30,7 @@ public class BuscarPanelVehiculo extends javax.swing.JPanel {
         mostrarDatosMarca();
         mostrarDatosModelo();
         buscarVehiculo();
-        
+        mostrarComboColores();
     }
     private String BuscarPlaca;
 
@@ -666,7 +668,9 @@ public class BuscarPanelVehiculo extends javax.swing.JPanel {
             if (!txtCliente.getText().isBlank()) {
                 Boolean valido = false;//creamos una bandera para validar datos
 
-                    modificarVehiculo(txtPlaca.getText().toUpperCase(),(String) cmbModeloRegistroVehiculo1.getSelectedItem(),(String)cmbMarcaRegistroVehiculo.getSelectedItem(), (String)cmbColorVehiculo.getSelectedItem(),  YEARAño.getYear(),txtCliente.getText().toUpperCase().trim(),Estado.ACTIVO );
+                    String selectedItem = (String) cmbColorVehiculo.getSelectedItem();
+                    String codigoColor = mapaColores.get(selectedItem.trim().toUpperCase());
+                    modificarVehiculo(txtPlaca.getText().toUpperCase(),(String) cmbModeloRegistroVehiculo1.getSelectedItem(),(String)cmbMarcaRegistroVehiculo.getSelectedItem(),codigoColor,  YEARAño.getYear(),txtCliente.getText().toUpperCase().trim(),Estado.ACTIVO );
                     JOptionPane.showMessageDialog(this, "Vehiculo Modificado");
                 
                 resetCampos();
@@ -675,9 +679,65 @@ public class BuscarPanelVehiculo extends javax.swing.JPanel {
             }else{JOptionPane.showMessageDialog(this, "No deje espacios en blanco");}
 
         }else{JOptionPane.showMessageDialog(this, "No deje espacios en blanco");}
-        
+        buscarMarca();
+        buscarModelo();
+        buscarVehiculoConsola();
     }//GEN-LAST:event_btnGuardarActionPerformed
 
+    public static void buscarMarca() {
+        ObjectContainer base=Conexion_db.ConectarBD();
+        // Crear un nuevo objeto Clientes para usar como plantilla de búsqueda
+        MarcaVehiculo CBusca = new MarcaVehiculo();
+
+        // Obtener todos los objetos que coincidan con la plantilla de búsqueda
+        ObjectSet resultado = base.get(CBusca);
+
+        // Imprimir el número de clientes encontrados
+        System.out.println("Número de marcas encontrados es: " + resultado.size());
+
+        // Iterar sobre los resultados encontrados
+        while (resultado.hasNext()) {
+            // Imprimir cada cliente encontrado
+            System.out.println(resultado.next());
+        }
+        base.close();
+    }
+    public static void buscarModelo() {
+        ObjectContainer base=Conexion_db.ConectarBD();
+        // Crear un nuevo objeto Clientes para usar como plantilla de búsqueda
+        MarcaVehiculo CBusca = new MarcaVehiculo();
+
+        // Obtener todos los objetos que coincidan con la plantilla de búsqueda
+        ObjectSet resultado = base.get(CBusca);
+
+        // Imprimir el número de clientes encontrados
+        System.out.println("Número de modelos encontrados es: " + resultado.size());
+
+        // Iterar sobre los resultados encontrados
+        while (resultado.hasNext()) {
+            // Imprimir cada cliente encontrado
+            System.out.println(resultado.next());
+        }
+        base.close();
+    }
+    public static void buscarVehiculoConsola() {
+        ObjectContainer base=Conexion_db.ConectarBD();
+        // Crear un nuevo objeto Clientes para usar como plantilla de búsqueda
+        Vehiculo CBusca = new Vehiculo();
+
+        // Obtener todos los objetos que coincidan con la plantilla de búsqueda
+        ObjectSet resultado = base.get(CBusca);
+
+        // Imprimir el número de clientes encontrados
+        System.out.println("Número de vehiculos encontrados es: " + resultado.size());
+
+        // Iterar sobre los resultados encontrados
+        while (resultado.hasNext()) {
+            // Imprimir cada cliente encontrado
+            System.out.println(resultado.next());
+        }
+        base.close();
+    }
     private void btnBuscarClienteRegistroVehiculos1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBuscarClienteRegistroVehiculos1MouseClicked
         // TODO add your handling code here:
     }//GEN-LAST:event_btnBuscarClienteRegistroVehiculos1MouseClicked
@@ -956,6 +1016,42 @@ public class BuscarPanelVehiculo extends javax.swing.JPanel {
         
         BaseBD.close();
     }
+    
+    public static String buscarRol(String usuario){
+        String rol="";
+        Boolean encontrado = false;
+        // ESTABLECER CONEXION CON LA BASE DE DATOS
+        ObjectContainer BaseBD = Conexion_db.ConectarBD();
+        Query persona = BaseBD.query();//metodo para iniciar una consulta
+        persona.constrain(Persona.class);//buscaremos en la clase Vehiculo
+        persona.descend("nombreUsuario").constrain(usuario); // verificamos las coincidencias en el atributo especificado
+        ObjectSet<Persona> resultado = persona.execute();//Ejecutamos la consulta y almacenamos en "resultado"
+        // Verifica si hay resultados
+        if (resultado.hasNext()) {
+            // Obtiene el primer objeto del conjunto de resultados
+            Persona personaEncontrada = (Persona) resultado.next();
+            rol=personaEncontrada.getRol().toString();
+        } else {
+            System.out.println("No se encontro a la persona");
+        }
+        BaseBD.close();
+        return rol;
+    }
+    private Map<String, String> mapaColores = new HashMap<>();
+    
+    private void mostrarComboColores() {
+    ObjectContainer BaseBD = Conexion_db.ConectarBD();
+    // Consulta a la base de datos para obtener todos los objetos Ciudad
+    ObjectSet<Color> colores = BaseBD.query(Color.class);
+    cmbColorVehiculo.removeAllItems();
+    // Itera sobre los resultados y agrega los nombres de ciudades al JComboBox
+    colores.forEach((color) -> {
+        String texto = color.getNomnbre_color()+ " " + color.getTipoColor();
+        mapaColores.put(texto, color.getCodigoColor());
+        cmbColorVehiculo.addItem(texto);
+    });
+    BaseBD.close();
+}
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
