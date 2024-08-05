@@ -8,7 +8,8 @@ package Vista.Tables;
 import Conexion.Conexion_db;
 import Models.Categoria;
 import Models.CategoriaServicio;
-import Vista.Catálogo.CrudCategoria;
+import Models.Servicios;
+
 import Vista.Menu.VistaMenu;
 import com.db4o.ObjectContainer;
 import com.db4o.ObjectSet;
@@ -107,6 +108,11 @@ public class TablaCategoriaSer extends javax.swing.JPanel {
         btnEliminar.setColorPrimarioHover(new java.awt.Color(255, 51, 51));
         btnEliminar.setColorSecundario(new java.awt.Color(255, 153, 153));
         btnEliminar.setColorSecundarioHover(new java.awt.Color(255, 204, 204));
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -185,6 +191,32 @@ public class TablaCategoriaSer extends javax.swing.JPanel {
         JOptionPane.showMessageDialog(this, "Ingrese un código de la categoría de servicios");
     }
     }//GEN-LAST:event_btnBuscarActionPerformed
+
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+      int selectedRow = tblCategoriaSer.getSelectedRow();
+        if (selectedRow != -1) {
+            String codigoCatSer = tblCategoriaSer.getValueAt(selectedRow, 0).toString();
+            ObjectContainer BaseBD = Conexion_db.ConectarBD();
+            try {
+                if (verificarServiciosCategoria(BaseBD, codigoCatSer) > 0) {
+                    JOptionPane.showMessageDialog(this, "No se puede eliminar la categoría porque tiene servicios asociados.");
+                } else {
+                    CategoriaServicio cat = new CategoriaServicio();
+                    cat.setCodigoCatSer(codigoCatSer);
+                    ObjectSet<CategoriaServicio> result = BaseBD.get(cat);
+                    if (!result.isEmpty()) {
+                        BaseBD.delete(result.get(0));
+                        JOptionPane.showMessageDialog(this, "Categoría eliminada exitosamente.");
+                        mostrarTablaServicios();
+                    }
+                }
+            } finally {
+                BaseBD.close();
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Seleccione una categoría para eliminar.");
+        }
+    }//GEN-LAST:event_btnEliminarActionPerformed
 private void mostrarTablaServicios() {
     ObjectContainer BaseBD = Conexion_db.ConectarBD();
     CategoriaServicio Categorias = new CategoriaServicio();
@@ -219,7 +251,12 @@ private void mostrarTablaServicios() {
         VistaMenu.PanelPrincipal.revalidate();
         VistaMenu.PanelPrincipal.repaint();
     }
-
+ private int verificarServiciosCategoria(ObjectContainer baseBD, String codigoCatSer) {
+        Servicios servicioBusca = new Servicios();
+        servicioBusca.setCategoria(codigoCatSer);
+        ObjectSet<Servicios> result = baseBD.get(servicioBusca);
+        return result.size();
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private rsbuttongradiente.RSButtonGradiente btnAgregar;
     private rsbuttongradiente.RSButtonGradiente btnBuscar;

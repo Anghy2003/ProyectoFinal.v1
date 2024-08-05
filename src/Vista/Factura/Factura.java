@@ -273,13 +273,21 @@ public class Factura extends javax.swing.JPanel {
             new String [] {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jScrollPane2.setViewportView(tblClientes);
 
         txtBuscar1.setFont(new java.awt.Font("Roboto Bold", 2, 14)); // NOI18N
         txtBuscar1.setPlaceholder("ejm. 0106388747");
 
-        btnInsertarCliente.setText("Insertar");
+        btnInsertarCliente.setText("Registrar Cliente");
         btnInsertarCliente.setColorPrimario(new java.awt.Color(0, 204, 51));
         btnInsertarCliente.setColorPrimarioHover(new java.awt.Color(0, 255, 51));
         btnInsertarCliente.setColorSecundario(new java.awt.Color(0, 153, 51));
@@ -314,12 +322,12 @@ public class Factura extends javax.swing.JPanel {
                 .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel7Layout.createSequentialGroup()
                         .addComponent(txtBuscar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnBuscarcliente, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnInsertarCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(12, 12, 12)
+                        .addComponent(btnBuscarcliente, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnInsertarCliente, javax.swing.GroupLayout.PREFERRED_SIZE, 154, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jLabel4))
-                .addContainerGap(368, Short.MAX_VALUE))
+                .addContainerGap(277, Short.MAX_VALUE))
         );
         jPanel7Layout.setVerticalGroup(
             jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1550,41 +1558,55 @@ public class Factura extends javax.swing.JPanel {
     }
 
     private void guardarFactura() {
-        DefaultTableModel model = (DefaultTableModel) JtableFactura.getModel();
-        String codigoFactura = txtcodigoFac.getText();
-        String fecha = txtfecha.getText();
-        String cedula = txtcedula.getText();
-        double total = Double.parseDouble(txtTotalfac.getText().replace(",", "."));
+    DefaultTableModel model = (DefaultTableModel) JtableFactura.getModel();
+    String codigoFactura = txtcodigoFac.getText();
+    String fecha = txtfecha.getText();
+    String cedula = txtcedula.getText();
+    String totalText = txtTotalfac.getText().replace(",", ".");
 
-        EncabezadoFactura_1 factura = new EncabezadoFactura_1(codigoFactura, fecha, cedula, total);
-        // Guardar el encabezado y los detalles en la base de datos
-        ObjectContainer baseBD = Conexion_db.ConectarBD();
-        baseBD.store(factura);
-        // Guardar los detalles de la factura
-        for (int i = 0; i < model.getRowCount(); i++) {
-            String codigo = model.getValueAt(i, 0).toString();
-            String tipo = model.getValueAt(i, 4).toString();
-            int cantidad = Integer.parseInt(model.getValueAt(i, 3).toString());
-            DetalleFactura_1 detalle;
-            if ("Producto".equals(tipo)) {
-                detalle = new DetalleFactura_1(codigoFactura, codigo, cantidad);
-                Producto producto = obtenerProductoPorCodigo(codigo);
-                if (producto != null) {
-                    producto.restarCantidad(cantidad);
-                    baseBD.store(producto);
-                }
-            } else {
-                detalle = new DetalleFactura_1(codigoFactura, codigo, cantidad);
-            }
-            baseBD.store(detalle);
-        }
-
-        baseBD.close();
-        JOptionPane.showMessageDialog(this, "Factura guardada exitosamente!");
-
-        // Reiniciar y generar un nueva factura
-        resetearFormulario();
+    // Validar que los datos del cliente estén completos
+    if (codigoFactura.isEmpty() || fecha.isEmpty() || cedula.isEmpty() || totalText.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Por favor, complete todos los datos del cliente.");
+        return;
     }
+
+    // Validar que la tabla de detalles no esté vacía
+    if (model.getRowCount() == 0) {
+        JOptionPane.showMessageDialog(this, "No se puede guardar una factura vacía.");
+        return;
+    }
+
+    double total = Double.parseDouble(totalText);
+
+    EncabezadoFactura_1 factura = new EncabezadoFactura_1(codigoFactura, fecha, cedula, total);
+    // Guardar el encabezado y los detalles en la base de datos
+    ObjectContainer baseBD = Conexion_db.ConectarBD();
+    baseBD.store(factura);
+    // Guardar los detalles de la factura
+    for (int i = 0; i < model.getRowCount(); i++) {
+        String codigo = model.getValueAt(i, 0).toString();
+        String tipo = model.getValueAt(i, 4).toString();
+        int cantidad = Integer.parseInt(model.getValueAt(i, 3).toString());
+        DetalleFactura_1 detalle;
+        if ("Producto".equals(tipo)) {
+            detalle = new DetalleFactura_1(codigoFactura, codigo, cantidad);
+            Producto producto = obtenerProductoPorCodigo(codigo);
+            if (producto != null) {
+                producto.restarCantidad(cantidad);
+                baseBD.store(producto);
+            }
+        } else {
+            detalle = new DetalleFactura_1(codigoFactura, codigo, cantidad);
+        }
+        baseBD.store(detalle);
+    }
+
+    baseBD.close();
+    JOptionPane.showMessageDialog(this, "Factura guardada exitosamente!");
+
+    // Reiniciar y generar una nueva factura
+    resetearFormulario();
+}
 
     private void resetearFormulario() {
         txtcedula.setText("");
