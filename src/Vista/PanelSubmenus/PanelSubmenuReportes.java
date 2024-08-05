@@ -1,6 +1,7 @@
 
 package Vista.PanelSubmenus;
 
+import Vista.Cruds.pnlListaReportes;
 import Vista.Cruds.pnlReporteProductos;
 import Vista.Menu.VistaMenu;
 import java.awt.BorderLayout;
@@ -36,6 +37,11 @@ public class PanelSubmenuReportes extends javax.swing.JPanel {
         jToggleButton1.setFont(new java.awt.Font("Roboto Medium", 1, 12)); // NOI18N
         jToggleButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/grafico.png"))); // NOI18N
         jToggleButton1.setText("REPORTE EN GRAFICOS ");
+        jToggleButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jToggleButton1ActionPerformed(evt);
+            }
+        });
 
         btnreportetablas.setFont(new java.awt.Font("Roboto Medium", 1, 12)); // NOI18N
         btnreportetablas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/relacional.png"))); // NOI18N
@@ -67,6 +73,11 @@ public class PanelSubmenuReportes extends javax.swing.JPanel {
 
         add(jPanel1, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jToggleButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton1ActionPerformed
+        pnlListaReportes misReportes = new pnlListaReportes();
+        ShowpanelCruds(misReportes);
+    }//GEN-LAST:event_jToggleButton1ActionPerformed
 private void ShowpanelCruds(JPanel p) {
     p.setSize(870, 630);
     p.setLocation(0, 0);

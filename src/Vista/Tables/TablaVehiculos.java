@@ -47,7 +47,6 @@ public class TablaVehiculos extends javax.swing.JPanel {
         scrlpTablaVehi2 = new javax.swing.JScrollPane();
         tblVehiculoInactivo = new javax.swing.JTable();
         lbl_Inactivos = new javax.swing.JLabel();
-        btnGraficas = new javax.swing.JButton();
 
         setLayout(new java.awt.BorderLayout());
 
@@ -170,13 +169,6 @@ public class TablaVehiculos extends javax.swing.JPanel {
         lbl_Inactivos.setFont(new java.awt.Font("Roboto Black", 0, 18)); // NOI18N
         lbl_Inactivos.setText("Vehiculos Eliminados:");
 
-        btnGraficas.setText("graficas");
-        btnGraficas.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnGraficasActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout pnlListadoLayout = new javax.swing.GroupLayout(pnlListado);
         pnlListado.setLayout(pnlListadoLayout);
         pnlListadoLayout.setHorizontalGroup(
@@ -209,17 +201,13 @@ public class TablaVehiculos extends javax.swing.JPanel {
                         .addGap(0, 0, Short.MAX_VALUE))
                     .addGroup(pnlListadoLayout.createSequentialGroup()
                         .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(btnGraficas)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         pnlListadoLayout.setVerticalGroup(
             pnlListadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlListadoLayout.createSequentialGroup()
-                .addGap(33, 33, 33)
-                .addGroup(pnlListadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(jLabel1)
-                    .addComponent(btnGraficas))
+                .addGap(38, 38, 38)
+                .addComponent(jLabel1)
                 .addGroup(pnlListadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(pnlListadoLayout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -342,11 +330,6 @@ public class TablaVehiculos extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_pnlListadoMouseClicked
 
-    private void btnGraficasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGraficasActionPerformed
-        pnlReporteVehiculos misReportes = new pnlReporteVehiculos();
-        ShowpanelCruds(misReportes);
-    }//GEN-LAST:event_btnGraficasActionPerformed
-
     private void mostrarDatosInactivo() {
         // ESTABLECER CONEXION CON LA BASE DE DATOS
         ObjectContainer BaseBD = Conexion_db.ConectarBD();
@@ -433,7 +416,6 @@ public class TablaVehiculos extends javax.swing.JPanel {
     private rsbuttongradiente.RSButtonGradiente btnAgregar;
     private rsbuttongradiente.RSButtonGradiente btnEditar;
     private rsbuttongradiente.RSButtonGradiente btnEliminar;
-    private javax.swing.JButton btnGraficas;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel lbl_Inactivos;

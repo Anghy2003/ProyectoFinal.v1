@@ -28,9 +28,9 @@ import org.jfree.data.general.DefaultPieDataset;
  *
  * @author aberr
  */
-public class pnlReporteVehiculos extends javax.swing.JPanel {
+public class pnlReporteUsuarios extends javax.swing.JPanel {
 
-    public pnlReporteVehiculos() {
+    public pnlReporteUsuarios() {
         initComponents();
         mostrarGraficoPastel3D();
     }

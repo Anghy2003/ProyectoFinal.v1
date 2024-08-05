@@ -39,6 +39,11 @@ public class Producto {
         this.estado = Estado.ACTIVO;
     }
 
+    public Producto(String codigo_Producto) {
+        this.codigo_Producto = codigo_Producto;
+    }
+    
+
     public byte[] getImagen() {
         return imagen;
     }

@@ -34,7 +34,7 @@ public class pnlListaReportes extends javax.swing.JPanel {
         pnlGrande = new javax.swing.JPanel();
         lbl5masvend = new javax.swing.JLabel();
         lblUSUARIOS = new javax.swing.JLabel();
-        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
 
         pnlGrande.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -52,36 +52,35 @@ public class pnlListaReportes extends javax.swing.JPanel {
             }
         });
 
-        jLabel1.setFont(new java.awt.Font("Roboto", 0, 24)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(0, 0, 0));
-        jLabel1.setText("ESCOJA LA GRÀFICA");
+        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/CLIvsCIUDAD.png"))); // NOI18N
+        jLabel2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel2MouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout pnlGrandeLayout = new javax.swing.GroupLayout(pnlGrande);
         pnlGrande.setLayout(pnlGrandeLayout);
         pnlGrandeLayout.setHorizontalGroup(
             pnlGrandeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlGrandeLayout.createSequentialGroup()
-                .addGroup(pnlGrandeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(pnlGrandeLayout.createSequentialGroup()
-                        .addGap(110, 110, 110)
-                        .addComponent(lbl5masvend)
-                        .addGap(18, 18, 18)
-                        .addComponent(lblUSUARIOS))
-                    .addGroup(pnlGrandeLayout.createSequentialGroup()
-                        .addGap(347, 347, 347)
-                        .addComponent(jLabel1)))
-                .addContainerGap(402, Short.MAX_VALUE))
+                .addGap(89, 89, 89)
+                .addComponent(lblUSUARIOS)
+                .addGap(75, 75, 75)
+                .addComponent(lbl5masvend)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 154, Short.MAX_VALUE)
+                .addComponent(jLabel2)
+                .addGap(114, 114, 114))
         );
         pnlGrandeLayout.setVerticalGroup(
             pnlGrandeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlGrandeLayout.createSequentialGroup()
-                .addGap(140, 140, 140)
-                .addComponent(jLabel1)
-                .addGap(42, 42, 42)
-                .addGroup(pnlGrandeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblUSUARIOS)
-                    .addComponent(lbl5masvend))
-                .addContainerGap(374, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlGrandeLayout.createSequentialGroup()
+                .addContainerGap(273, Short.MAX_VALUE)
+                .addGroup(pnlGrandeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jLabel2)
+                    .addComponent(lbl5masvend)
+                    .addComponent(lblUSUARIOS))
+                .addGap(262, 262, 262))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -97,7 +96,7 @@ public class pnlListaReportes extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void lblUSUARIOSMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblUSUARIOSMouseClicked
-        pnlReporteVehiculos misReportes = new pnlReporteVehiculos();
+        pnlReporteUsuarios misReportes = new pnlReporteUsuarios();
         ShowpanelCruds(misReportes);
     }//GEN-LAST:event_lblUSUARIOSMouseClicked
 
@@ -105,6 +104,12 @@ public class pnlListaReportes extends javax.swing.JPanel {
         pnlReporteProductos misProductos = new pnlReporteProductos();
         ShowpanelCruds(misProductos);
     }//GEN-LAST:event_lbl5masvendMouseClicked
+
+    private void jLabel2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel2MouseClicked
+        pnlReporteClientesCiudades miReporteCiu= new pnlReporteClientesCiudades();
+        ShowpanelCruds(miReporteCiu);
+        JPanel pnlPastel = new JPanel();
+    }//GEN-LAST:event_jLabel2MouseClicked
 
     private void ShowpanelCruds(JPanel p) {
     p.setSize(870, 630);
@@ -116,7 +121,7 @@ public class pnlListaReportes extends javax.swing.JPanel {
 }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel lbl5masvend;
     private javax.swing.JLabel lblUSUARIOS;
     private javax.swing.JPanel pnlGrande;
