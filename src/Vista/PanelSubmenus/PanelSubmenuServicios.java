@@ -7,6 +7,7 @@ import Vista.Menu.VistaMenu;
 import Vista.Tables.TablaCategoriaSer;
 import java.awt.BorderLayout;
 import javax.swing.JPanel;
+import javax.swing.JToggleButton;
 
 public class PanelSubmenuServicios extends javax.swing.JPanel {
 
@@ -28,8 +29,8 @@ public class PanelSubmenuServicios extends javax.swing.JPanel {
 
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
-        btnAgendarc = new javax.swing.JToggleButton();
-        btngestionser = new javax.swing.JToggleButton();
+        btnCitasAgendadas = new javax.swing.JToggleButton();
+        btnordenesTrabajo = new javax.swing.JToggleButton();
         jSeparator1 = new javax.swing.JSeparator();
         btngestionser1 = new javax.swing.JToggleButton();
         btnCategoria1 = new javax.swing.JToggleButton();
@@ -40,16 +41,16 @@ public class PanelSubmenuServicios extends javax.swing.JPanel {
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
 
-        btnAgendarc.setFont(new java.awt.Font("Roboto Medium", 1, 11)); // NOI18N
-        btnAgendarc.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/gestion-de-servicios.png"))); // NOI18N
-        btnAgendarc.setText("CITAS AGENDADAS");
+        btnCitasAgendadas.setFont(new java.awt.Font("Roboto Medium", 1, 11)); // NOI18N
+        btnCitasAgendadas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/gestion-de-servicios.png"))); // NOI18N
+        btnCitasAgendadas.setText("CITAS AGENDADAS");
 
-        btngestionser.setFont(new java.awt.Font("Roboto Medium", 1, 11)); // NOI18N
-        btngestionser.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/portapapeles.png"))); // NOI18N
-        btngestionser.setText("ORDENES DE TRABAJO");
-        btngestionser.addActionListener(new java.awt.event.ActionListener() {
+        btnordenesTrabajo.setFont(new java.awt.Font("Roboto Medium", 1, 11)); // NOI18N
+        btnordenesTrabajo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/portapapeles.png"))); // NOI18N
+        btnordenesTrabajo.setText("ORDENES DE TRABAJO");
+        btnordenesTrabajo.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btngestionserActionPerformed(evt);
+                btnordenesTrabajoActionPerformed(evt);
             }
         });
 
@@ -79,9 +80,9 @@ public class PanelSubmenuServicios extends javax.swing.JPanel {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(57, 57, 57)
-                .addComponent(btngestionser)
+                .addComponent(btnordenesTrabajo)
                 .addGap(10, 10, 10)
-                .addComponent(btnAgendarc)
+                .addComponent(btnCitasAgendadas)
                 .addGap(18, 18, 18)
                 .addComponent(btngestionser1)
                 .addGap(18, 18, 18)
@@ -96,8 +97,8 @@ public class PanelSubmenuServicios extends javax.swing.JPanel {
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 13, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(btngestionser, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnAgendarc, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                    .addComponent(btnordenesTrabajo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnCitasAgendadas, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                     .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                         .addComponent(btngestionser1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
                         .addComponent(btnCategoria1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
@@ -109,10 +110,10 @@ public class PanelSubmenuServicios extends javax.swing.JPanel {
         add(jPanel1, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btngestionserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btngestionserActionPerformed
+    private void btnordenesTrabajoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnordenesTrabajoActionPerformed
         CrudlistadosServicios serv = new CrudlistadosServicios();
        ShowpanelCruds(serv);
-    }//GEN-LAST:event_btngestionserActionPerformed
+    }//GEN-LAST:event_btnordenesTrabajoActionPerformed
 
     private void btngestionser1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btngestionser1ActionPerformed
        CrudPanelServicios servcito = new CrudPanelServicios();
@@ -132,11 +133,45 @@ public class PanelSubmenuServicios extends javax.swing.JPanel {
         VistaMenu.PanelPrincipal.repaint();
     }
 
+    public JToggleButton getBtnCategoria1() {
+        return btnCategoria1;
+    }
+
+    public void setBtnCategoria1(JToggleButton btnCategoria1) {
+        this.btnCategoria1 = btnCategoria1;
+    }
+
+    public JToggleButton getBtnCitasAgendadas() {
+        return btnCitasAgendadas;
+    }
+
+    public void setBtnCitasAgendadas(JToggleButton btnCitasAgendadas) {
+        this.btnCitasAgendadas = btnCitasAgendadas;
+    }
+
+    public JToggleButton getBtngestionser1() {
+        return btngestionser1;
+    }
+
+    public void setBtngestionser1(JToggleButton btngestionser1) {
+        this.btngestionser1 = btngestionser1;
+    }
+
+    public JToggleButton getBtnordenesTrabajo() {
+        return btnordenesTrabajo;
+    }
+
+    public void setBtnordenesTrabajo(JToggleButton btnordenesTrabajo) {
+        this.btnordenesTrabajo = btnordenesTrabajo;
+    }
+
+    
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JToggleButton btnAgendarc;
     private javax.swing.JToggleButton btnCategoria1;
-    private javax.swing.JToggleButton btngestionser;
+    private javax.swing.JToggleButton btnCitasAgendadas;
     private javax.swing.JToggleButton btngestionser1;
+    private javax.swing.JToggleButton btnordenesTrabajo;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JSeparator jSeparator1;
