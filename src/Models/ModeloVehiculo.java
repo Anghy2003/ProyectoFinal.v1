@@ -76,6 +76,11 @@ public class ModeloVehiculo {
         BaseBD.close();
         return coincidencias;
     }
+
+    @Override
+    public String toString() {
+        return "ModeloVehiculo{" + "codigoModelo=" + codigoModelo + ", Nombre_modelo=" + Nombre_modelo + ", id_Marca=" + id_Marca + '}';
+    }
     
     
 }

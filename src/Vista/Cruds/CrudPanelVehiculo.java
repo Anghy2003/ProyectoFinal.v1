@@ -13,6 +13,8 @@ import Models.Vehiculo.Estado;
 import static Models.Vehiculo.Estado.ACTIVO;
 import Vista.Cruds.CRUDS1.CrudPanelCliente;
 import com.db4o.query.Query;
+import java.util.HashMap;
+import java.util.Map;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -678,11 +680,17 @@ public class CrudPanelVehiculo extends javax.swing.JPanel {
             Boolean valido = false;//creamos una bandera para validar datos
             if (valido = txtPlaca.getText().toUpperCase().matches("^[A-Z]{3}-\\d{3,4}$")) {//aceptamos 3 letras, un guion y luego 3 a 4 numeros
                
-                    guardarVehiculos(txtPlaca.getText().toUpperCase(),(String) cmbModeloRegistroVehiculo1.getSelectedItem(),(String)cmbMarcaRegistroVehiculo.getSelectedItem(), (String)cmbColorVehiculo.getSelectedItem(), YEARAño.getYear(),txtCliente.getText().toUpperCase().trim(), Estado.ACTIVO);
-                    JOptionPane.showMessageDialog(this, "Vehiculo Guardado");
-                    TablaVehiculos tablaVehi = new TablaVehiculos();
-                    ShowpanelCruds(tablaVehi);
-               
+                // LUEGO, CUANDO NECESITES OBTENER EL codigoColor DEL ITEM SELECCIONADO, PUEDES HACERLO DE LA SIGUIENTE MANERA:
+                String selectedItem = (String) cmbColorVehiculo.getSelectedItem();
+                String codigoColor = mapaColores.get(selectedItem.trim().toUpperCase());
+                guardarVehiculos(txtPlaca.getText().toUpperCase(), (String) cmbModeloRegistroVehiculo1.getSelectedItem(), (String) cmbMarcaRegistroVehiculo.getSelectedItem(), codigoColor, YEARAño.getYear(), txtCliente.getText().toUpperCase().trim(), Estado.ACTIVO);
+                buscarMarca();
+                buscarModelo();
+                buscarVehiculoConsola();
+                JOptionPane.showMessageDialog(this, "Vehiculo Guardado");
+                TablaVehiculos tablaVehi = new TablaVehiculos();
+                ShowpanelCruds(tablaVehi);
+
             } else {
                 JOptionPane.showMessageDialog(this, "Ingrese una placa Válida");
             }
@@ -916,18 +924,91 @@ public class CrudPanelVehiculo extends javax.swing.JPanel {
         });
         BaseBD.close();
     }
+    private Map<String, String> mapaColores = new HashMap<>();
+    
     private void mostrarComboColores() {
-        ObjectContainer BaseBD = Conexion_db.ConectarBD();
-        // Consulta a la base de datos para obtener todos los objetos Ciudad
-        ObjectSet<Color> colores = BaseBD.query(Color.class);
-        cmbColorVehiculo.removeAllItems();
-        // Itera sobre los resultados y agrega los nombres de ciudades al JComboBox
-        colores.forEach((color) -> {
-            cmbColorVehiculo.addItem(color.getNomnbre_color()+" "+color.getTipoColor());
-        });
-        BaseBD.close();
-    }
+    ObjectContainer BaseBD = Conexion_db.ConectarBD();
+    // Consulta a la base de datos para obtener todos los objetos Ciudad
+    ObjectSet<Color> colores = BaseBD.query(Color.class);
+    cmbColorVehiculo.removeAllItems();
+    // Itera sobre los resultados y agrega los nombres de ciudades al JComboBox
+    colores.forEach((color) -> {
+        String texto = color.getNomnbre_color()+ " " + color.getTipoColor();
+        mapaColores.put(texto, color.getCodigoColor());
+        cmbColorVehiculo.addItem(texto);
+    });
+    BaseBD.close();
+}
 
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    public static void buscarMarca() {
+        ObjectContainer base=Conexion_db.ConectarBD();
+        // Crear un nuevo objeto Clientes para usar como plantilla de búsqueda
+        MarcaVehiculo CBusca = new MarcaVehiculo();
+
+        // Obtener todos los objetos que coincidan con la plantilla de búsqueda
+        ObjectSet resultado = base.get(CBusca);
+
+        // Imprimir el número de clientes encontrados
+        System.out.println("Número de marcas encontrados es: " + resultado.size());
+
+        // Iterar sobre los resultados encontrados
+        while (resultado.hasNext()) {
+            // Imprimir cada cliente encontrado
+            System.out.println(resultado.next());
+        }
+        base.close();
+    }
+    public static void buscarModelo() {
+        ObjectContainer base=Conexion_db.ConectarBD();
+        // Crear un nuevo objeto Clientes para usar como plantilla de búsqueda
+        MarcaVehiculo CBusca = new MarcaVehiculo();
+
+        // Obtener todos los objetos que coincidan con la plantilla de búsqueda
+        ObjectSet resultado = base.get(CBusca);
+
+        // Imprimir el número de clientes encontrados
+        System.out.println("Número de modelos encontrados es: " + resultado.size());
+
+        // Iterar sobre los resultados encontrados
+        while (resultado.hasNext()) {
+            // Imprimir cada cliente encontrado
+            System.out.println(resultado.next());
+        }
+        base.close();
+    }
+    public static void buscarVehiculoConsola() {
+        ObjectContainer base=Conexion_db.ConectarBD();
+        // Crear un nuevo objeto Clientes para usar como plantilla de búsqueda
+        Vehiculo CBusca = new Vehiculo();
+
+        // Obtener todos los objetos que coincidan con la plantilla de búsqueda
+        ObjectSet resultado = base.get(CBusca);
+
+        // Imprimir el número de clientes encontrados
+        System.out.println("Número de vehiculos encontrados es: " + resultado.size());
+
+        // Iterar sobre los resultados encontrados
+        while (resultado.hasNext()) {
+            // Imprimir cada cliente encontrado
+            System.out.println(resultado.next());
+        }
+        base.close();
+    }
+    
+    
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.toedter.calendar.JYearChooser YEARAño;
     private rojeru_san.RSButtonRiple btnAñadirMarcaRegistroVehiculos;
