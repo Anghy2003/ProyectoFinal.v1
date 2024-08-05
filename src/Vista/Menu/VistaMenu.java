@@ -50,7 +50,7 @@ private String rolUsuario;
         jPanel2 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         lbliconologo = new javax.swing.JLabel();
-        jPanel4 = new javax.swing.JPanel();
+        PanelBotonesMenu = new javax.swing.JPanel();
         btnVehiculos = new javax.swing.JLabel();
         btnUsuario = new javax.swing.JLabel();
         btnciudades = new javax.swing.JLabel();
@@ -92,10 +92,10 @@ private String rolUsuario;
 
         PanelMenu.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 10, 180, 150));
 
-        jPanel4.setBackground(new java.awt.Color(0, 53, 79));
-        jPanel4.addMouseListener(new java.awt.event.MouseAdapter() {
+        PanelBotonesMenu.setBackground(new java.awt.Color(0, 53, 79));
+        PanelBotonesMenu.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jPanel4MouseClicked(evt);
+                PanelBotonesMenuMouseClicked(evt);
             }
         });
 
@@ -210,32 +210,32 @@ private String rolUsuario;
             }
         });
 
-        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
-        jPanel4.setLayout(jPanel4Layout);
-        jPanel4Layout.setHorizontalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
+        javax.swing.GroupLayout PanelBotonesMenuLayout = new javax.swing.GroupLayout(PanelBotonesMenu);
+        PanelBotonesMenu.setLayout(PanelBotonesMenuLayout);
+        PanelBotonesMenuLayout.setHorizontalGroup(
+            PanelBotonesMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(PanelBotonesMenuLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(PanelBotonesMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnciudades, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnReportes, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addGroup(PanelBotonesMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                         .addComponent(btnVehiculos, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnUsuario, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnServicios, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 179, Short.MAX_VALUE))
-                    .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addGroup(PanelBotonesMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                         .addComponent(btnProvedores, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnProductos, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 179, Short.MAX_VALUE))
-                    .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addGroup(PanelBotonesMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                         .addComponent(btnCatalogo, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnFactura, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 179, Short.MAX_VALUE))
                     .addComponent(btnAgendarCitas, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(26, Short.MAX_VALUE))
         );
-        jPanel4Layout.setVerticalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel4Layout.createSequentialGroup()
+        PanelBotonesMenuLayout.setVerticalGroup(
+            PanelBotonesMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(PanelBotonesMenuLayout.createSequentialGroup()
                 .addGap(26, 26, 26)
                 .addComponent(btnUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -261,7 +261,7 @@ private String rolUsuario;
                 .addGap(12, 12, 12))
         );
 
-        PanelMenu.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 140, -1, 660));
+        PanelMenu.add(PanelBotonesMenu, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 140, -1, 660));
 
         panelPrincipal.add(PanelMenu, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
@@ -363,6 +363,7 @@ private String rolUsuario;
         MostrarpanelTitulo(titSer);
         MostrarpanelSubmenu(Submenuserv);
         MostarpanelCruds(tablaPro);
+       
     }//GEN-LAST:event_btnServiciosMouseClicked
 
     private void btnFacturaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnFacturaMouseClicked
@@ -427,9 +428,9 @@ private String rolUsuario;
         ShowpanelCruds(misReportes);
     }//GEN-LAST:event_btnReportesMouseClicked
 
-    private void jPanel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel4MouseClicked
+    private void PanelBotonesMenuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_PanelBotonesMenuMouseClicked
         // TODO add your handling code here:
-    }//GEN-LAST:event_jPanel4MouseClicked
+    }//GEN-LAST:event_PanelBotonesMenuMouseClicked
 
     private void btnAgendarCitasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAgendarCitasMouseClicked
         PanelTituloCitas titcit = new PanelTituloCitas();
@@ -616,6 +617,7 @@ private String rolUsuario;
 }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JPanel PanelBotonesMenu;
     public static javax.swing.JPanel PanelHeader;
     private javax.swing.JPanel PanelMenu;
     public static javax.swing.JPanel PanelPrincipal;
@@ -635,7 +637,6 @@ private String rolUsuario;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel4;
     private javax.swing.JLabel lbliconologo;
     public javax.swing.JPanel panelPrincipal;
     // End of variables declaration//GEN-END:variables

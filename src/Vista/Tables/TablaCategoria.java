@@ -7,6 +7,7 @@ package Vista.Tables;
 
 import Conexion.Conexion_db;
 import Models.Categoria;
+import Models.Producto;
 import Vista.Catálogo.CrudCategoria;
 import Vista.Menu.VistaMenu;
 import com.db4o.ObjectContainer;
@@ -26,7 +27,7 @@ public class TablaCategoria extends javax.swing.JPanel {
      */
     public TablaCategoria() {
         initComponents();
-        mostrarTablaServicios();
+        mostrarTablapro();
     }
 
     /**
@@ -104,6 +105,11 @@ public class TablaCategoria extends javax.swing.JPanel {
         btnEliminar.setColorPrimarioHover(new java.awt.Color(255, 51, 51));
         btnEliminar.setColorSecundario(new java.awt.Color(255, 153, 153));
         btnEliminar.setColorSecundarioHover(new java.awt.Color(255, 204, 204));
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -182,30 +188,63 @@ public class TablaCategoria extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(this, "Ingrese un código de producto");
         }
     }//GEN-LAST:event_btnBuscarActionPerformed
-private void mostrarTablaServicios() {
-    ObjectContainer BaseBD = Conexion_db.ConectarBD();
-    Categoria Categorias = new Categoria();
-    ObjectSet<Categoria> resul = BaseBD.get(Categorias);
 
-    String[][] matriz = new String[resul.size()][8];
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+     int selectedRow = tblCategoria.getSelectedRow();
+        if (selectedRow != -1) {
+            String codigoCat = tblCategoria.getValueAt(selectedRow, 0).toString();
+            ObjectContainer BaseBD = Conexion_db.ConectarBD();
+            try {
+                if (verificarProductosCategoria(BaseBD, codigoCat) > 0) {
+                    JOptionPane.showMessageDialog(this, "No se puede eliminar la categoría porque tiene productos registrados con esta categoría.");
+                } else {
+                    Categoria cat = new Categoria();
+                    cat.setCodigoCat(codigoCat);
+                    ObjectSet<Categoria> result = BaseBD.get(cat);
+                    if (!result.isEmpty()) {
+                        BaseBD.delete(result.get(0));
+                        JOptionPane.showMessageDialog(this, "Categoría eliminada exitosamente.");
+                        mostrarTablapro();
+                    }
+                }
+            } finally {
+                BaseBD.close();
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Seleccione una categoría para eliminar.");
+        }
+        
+    }//GEN-LAST:event_btnEliminarActionPerformed
+  private void mostrarTablapro() {
+        ObjectContainer BaseBD = Conexion_db.ConectarBD();
+        Categoria Categorias = new Categoria();
+        ObjectSet<Categoria> resul = BaseBD.get(Categorias);
 
-    int i = 0;
-    while (resul.hasNext()) {
-        Categoria cat = resul.next();
+        String[][] matriz = new String[resul.size()][3];
 
-        matriz[i][0] = cat.getCodigoCat();
-        matriz[i][1] = cat.getNombreCat();
-        matriz[i][2] = cat.getDescripcionCat();
-        i++;
-    }
-    tblCategoria.setModel(new javax.swing.table.DefaultTableModel(
+        int i = 0;
+        while (resul.hasNext()) {
+            Categoria cat = resul.next();
+            matriz[i][0] = cat.getCodigoCat();
+            matriz[i][1] = cat.getNombreCat();
+            matriz[i][2] = cat.getDescripcionCat();
+            i++;
+        }
+        tblCategoria.setModel(new javax.swing.table.DefaultTableModel(
             matriz,
             new String[]{
-                "Código Categoria", "Nombre Categoria", "Descripción"} ));
-    BaseBD.close();
-}
+                "Código Categoria", "Nombre Categoria", "Descripción"
+            }
+        ));
+        BaseBD.close();
+    }
     
-    
+    private int verificarProductosCategoria(ObjectContainer baseBD, String codigoCat) {
+        Producto productoBusca = new Producto();
+        productoBusca.setCodigo_categoria_Producto(codigoCat);
+        ObjectSet<Producto> result = baseBD.get(productoBusca);
+        return result.size();
+    }
     
     
     private void MostrarpaneCruds(JPanel p) {
