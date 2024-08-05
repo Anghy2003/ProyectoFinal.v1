@@ -14,6 +14,9 @@ public class DetalleFactura_1 {
         this.codigoProducto_detalleFactura = codigoProducto_detalleFactura;
         this.cantidadProdcutos_detalleFactura = cantidadProdcutos_detalleFactura;
     }
+    
+    
+    
 
     public String getCodigo_encabezadoFactura() {
         return codigo_encabezadoFactura;

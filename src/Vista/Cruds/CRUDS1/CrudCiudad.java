@@ -81,8 +81,8 @@ public class CrudCiudad extends javax.swing.JPanel {
         // Determinar el máximo ID numérico existente
         int auto = 0;
         while (result.hasNext()) {
-            Ciudad producto = result.next();
-            String codigocity = producto.getIdCiudad();
+            Ciudad city = result.next();
+            String codigocity = city.getIdCiudad();
             if (codigocity != null && codigocity.startsWith("CITY")) {
                 int id = Integer.parseInt(codigocity.substring(4)); // Extraer la parte numérica del código
                 if (id > auto) {

@@ -2,6 +2,7 @@
 package Vista.Menu;
 
 
+import Citas.Citas;
 import Conexion.Conexion_db;
 import Vista.Catálogo.CatalogoProductos;
 
@@ -430,8 +431,10 @@ public class VistaMenu extends javax.swing.JFrame {
     private void btnAgendarCitas1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAgendarCitas1MouseClicked
        PanelTituloCitas titcit = new PanelTituloCitas();
         PanelSUbmenuCitas submecitas = new PanelSUbmenuCitas();
+        Citas cit = new Citas();
         MostrarpanelSubmenu(submecitas);
         MostrarpanelTitulo(titcit);
+        MostarpanelCruds(cit);
     }//GEN-LAST:event_btnAgendarCitas1MouseClicked
 
     private void btnVehiculosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnVehiculosMouseClicked

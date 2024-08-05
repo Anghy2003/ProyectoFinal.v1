@@ -409,7 +409,7 @@ public class CrudPanelAdministrador extends javax.swing.JPanel {
                                 GuardarAdministrador(txtTituloAdmi.getText(), Administrador.Estado.ACTIVO, (String) cbxCiudadAdmi.getSelectedItem(), imagenAdmi, txtCedulaAdmi.getText(),
                                         txtNombresAdmi.getText().toUpperCase(), txtApellidosAdmi.getText().toUpperCase(), txtDireccionAdmi.getText().toUpperCase(), txtCorreoAdmi.getText(), txtCelularAdmi.getText(),
                                         (String) cbxGeneroAdmi.getSelectedItem(), fechaNacimiento, (String) cbxEstadoCivilAdmi.getSelectedItem(), txtCedulaAdmi.getText(), txtPasswordAdmi.getText(),
-                                        txtCorreoAdmi.getText(), Rol.CLIENTE);
+                                        txtCorreoAdmi.getText(), Rol.ADMINISTRADOR);
 
                                 cambiartabla();
                                 limpiar();
