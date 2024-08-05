@@ -70,6 +70,11 @@ public class Home extends javax.swing.JFrame {
         txtRolUsuario.setFont(new java.awt.Font("Roboto Bold", 1, 18)); // NOI18N
         txtRolUsuario.setPlaceholder("Usuario/Cedula");
         txtRolUsuario.setSelectionColor(new java.awt.Color(0, 53, 79));
+        txtRolUsuario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtRolUsuarioActionPerformed(evt);
+            }
+        });
 
         txtpassword.setForeground(new java.awt.Color(0, 53, 79));
         txtpassword.setBordeColorFocus(new java.awt.Color(0, 53, 79));
@@ -215,6 +220,10 @@ public class Home extends javax.swing.JFrame {
     private void lblCerrarHomeMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblCerrarHomeMouseExited
         lblCerrarHome.setEnabled(false);
     }//GEN-LAST:event_lblCerrarHomeMouseExited
+
+    private void txtRolUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtRolUsuarioActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtRolUsuarioActionPerformed
 public void iniciarSesion(String cedula, String password) {
     ObjectContainer BaseBD = Conexion_db.ConectarBD();
 

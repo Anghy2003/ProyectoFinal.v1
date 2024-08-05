@@ -18,6 +18,7 @@ import javax.swing.JPanel;
 import Vista.Catálogo.BuscarCategoria;
 import Vista.Catálogo.BuscarCategoriaSer;
 import Vista.Catálogo.CrudCategoriaServicio;
+import com.db4o.ext.DatabaseFileLockedException;
 import javax.swing.JOptionPane;
 /**
  *
@@ -193,13 +194,46 @@ public class TablaCategoriaSer extends javax.swing.JPanel {
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-      int selectedRow = tblCategoriaSer.getSelectedRow();
+   int selectedRow = tblCategoriaSer.getSelectedRow();
         if (selectedRow != -1) {
             String codigoCatSer = tblCategoriaSer.getValueAt(selectedRow, 0).toString();
-            ObjectContainer BaseBD = Conexion_db.ConectarBD();
+            eliminarCategoriaServicio(codigoCatSer);
+        } else {
+            JOptionPane.showMessageDialog(this, "Seleccione una categoría para eliminar.");
+        }
+    }//GEN-LAST:event_btnEliminarActionPerformed
+private void mostrarTablaServicios() {
+        ObjectContainer BaseBD = Conexion_db.ConectarBD();
+        CategoriaServicio Categorias = new CategoriaServicio();
+        ObjectSet<CategoriaServicio> resul = BaseBD.get(Categorias);
+
+        String[][] matriz = new String[resul.size()][3];
+
+        int i = 0;
+        while (resul.hasNext()) {
+            CategoriaServicio cat = resul.next();
+
+            matriz[i][0] = cat.getCodigoCatSer();
+            matriz[i][1] = cat.getNombreCatSer();
+            matriz[i][2] = cat.getDescripcionCatSer();
+            i++;
+        }
+        tblCategoriaSer.setModel(new javax.swing.table.DefaultTableModel(
+                matriz,
+                new String[]{
+                    "Código Categoria", "Nombre Categoria", "Descripción"
+                }));
+        BaseBD.close();
+    }
+    
+   private void eliminarCategoriaServicio(String codigoCatSer) {
+        for (int i = 0; i < 3; i++) { // Reintenta 3 veces
+            ObjectContainer BaseBD = null;
             try {
+                BaseBD = Conexion_db.ConectarBD();
                 if (verificarServiciosCategoria(BaseBD, codigoCatSer) > 0) {
                     JOptionPane.showMessageDialog(this, "No se puede eliminar la categoría porque tiene servicios asociados.");
+                    return;
                 } else {
                     CategoriaServicio cat = new CategoriaServicio();
                     cat.setCodigoCatSer(codigoCatSer);
@@ -208,39 +242,24 @@ public class TablaCategoriaSer extends javax.swing.JPanel {
                         BaseBD.delete(result.get(0));
                         JOptionPane.showMessageDialog(this, "Categoría eliminada exitosamente.");
                         mostrarTablaServicios();
+                        return;
                     }
                 }
+            } catch (DatabaseFileLockedException e) {
+                // Esperar un poco antes de reintentar
+                try {
+                    Thread.sleep(1000);
+                } catch (InterruptedException ie) {
+                    Thread.currentThread().interrupt();
+                }
             } finally {
-                BaseBD.close();
+                if (BaseBD != null) {
+                    BaseBD.close();
+                }
             }
-        } else {
-            JOptionPane.showMessageDialog(this, "Seleccione una categoría para eliminar.");
         }
-    }//GEN-LAST:event_btnEliminarActionPerformed
-private void mostrarTablaServicios() {
-    ObjectContainer BaseBD = Conexion_db.ConectarBD();
-    CategoriaServicio Categorias = new CategoriaServicio();
-    ObjectSet<CategoriaServicio> resul = BaseBD.get(Categorias);
-
-    String[][] matriz = new String[resul.size()][3]; 
-
-    int i = 0;
-    while (resul.hasNext()) {
-        CategoriaServicio cat = resul.next();
-
-        matriz[i][0] = cat.getCodigoCatSer();
-        matriz[i][1] = cat.getNombreCatSer();
-        matriz[i][2] = cat.getDescripcionCatSer(); 
-        i++;
-    }
-    tblCategoriaSer.setModel(new javax.swing.table.DefaultTableModel(
-            matriz,
-            new String[]{
-                "Código Categoria", "Nombre Categoria", "Descripción"} ));
-    BaseBD.close();
-}
-    
-    
+        JOptionPane.showMessageDialog(this, "No se pudo eliminar la categoría debido a un bloqueo en el archivo de base de datos.");
+    } 
     
     
     private void MostrarpaneCruds(JPanel p) {
@@ -251,7 +270,7 @@ private void mostrarTablaServicios() {
         VistaMenu.PanelPrincipal.revalidate();
         VistaMenu.PanelPrincipal.repaint();
     }
- private int verificarServiciosCategoria(ObjectContainer baseBD, String codigoCatSer) {
+   private int verificarServiciosCategoria(ObjectContainer baseBD, String codigoCatSer) {
         Servicios servicioBusca = new Servicios();
         servicioBusca.setCategoria(codigoCatSer);
         ObjectSet<Servicios> result = baseBD.get(servicioBusca);

@@ -65,6 +65,7 @@ public class CatalogoProductos extends javax.swing.JPanel {
         lblImagen = new javax.swing.JLabel();
         lblCodigooProducto = new javax.swing.JLabel();
         txtCodigoProducto = new rojeru_san.RSMTextFull();
+        lblcerrar = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -82,7 +83,7 @@ public class CatalogoProductos extends javax.swing.JPanel {
         jLabel2.setFont(new java.awt.Font("Roboto Black", 0, 30)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(0, 53, 79));
         jLabel2.setText("Producto:");
-        jPanel3.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 10, 150, 40));
+        jPanel3.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 10, 150, 40));
 
         jLabel4.setFont(new java.awt.Font("Roboto Medium", 1, 18)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(0, 53, 79));
@@ -121,7 +122,7 @@ public class CatalogoProductos extends javax.swing.JPanel {
         jPanel3.add(txtPrecioProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 110, 130, 40));
 
         lblImagen.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
-        jPanel3.add(lblImagen, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 40, 180, 140));
+        jPanel3.add(lblImagen, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 50, 180, 140));
 
         lblCodigooProducto.setFont(new java.awt.Font("Roboto Medium", 1, 18)); // NOI18N
         lblCodigooProducto.setForeground(new java.awt.Color(0, 53, 79));
@@ -136,23 +137,27 @@ public class CatalogoProductos extends javax.swing.JPanel {
         txtCodigoProducto.setPlaceholder("Código");
         jPanel3.add(txtCodigoProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 40, 120, 40));
 
+        lblcerrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/cruz.png"))); // NOI18N
+        lblcerrar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblcerrarMouseClicked(evt);
+            }
+        });
+        jPanel3.add(lblcerrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 0, 50, 40));
+
         javax.swing.GroupLayout DiaProLayout = new javax.swing.GroupLayout(DiaPro.getContentPane());
         DiaPro.getContentPane().setLayout(DiaProLayout);
         DiaProLayout.setHorizontalGroup(
             DiaProLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 543, Short.MAX_VALUE)
-            .addGroup(DiaProLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(DiaProLayout.createSequentialGroup()
-                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 543, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 0, Short.MAX_VALUE)))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, DiaProLayout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 543, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         DiaProLayout.setVerticalGroup(
             DiaProLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 230, Short.MAX_VALUE)
-            .addGroup(DiaProLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(DiaProLayout.createSequentialGroup()
-                    .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 0, Short.MAX_VALUE)))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, DiaProLayout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
@@ -245,6 +250,10 @@ public class CatalogoProductos extends javax.swing.JPanel {
         String nombre = txtBuscarProductos.getText().trim();
         buscarProductoPorNombre(nombre);
     }//GEN-LAST:event_btnBuscarActionPerformed
+
+    private void lblcerrarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblcerrarMouseClicked
+        DiaPro.dispose();
+    }//GEN-LAST:event_lblcerrarMouseClicked
     private void mostrarTablaProductos() {
     ObjectContainer BaseBD = Conexion_db.ConectarBD();
     Producto producto = new Producto(null, null, null, null, 0, 0, 0, null, null, null, null);
@@ -400,6 +409,7 @@ public class CatalogoProductos extends javax.swing.JPanel {
     private javax.swing.JLabel lblDescripcion;
     private javax.swing.JLabel lblImagen;
     private javax.swing.JLabel lblPrecioProducto;
+    private javax.swing.JLabel lblcerrar;
     private javax.swing.JTable tblCatalgoProductos;
     private rojeru_san.RSMTextFull txtBuscarProductos;
     private rojeru_san.RSMTextFull txtCodigoProducto;
