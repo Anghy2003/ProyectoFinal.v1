@@ -1,15 +1,15 @@
+
 package Vista.Menu;
 
+
+import Citas.Citas;
 import Conexion.Conexion_db;
-
-import Models.Persona;
 import Vista.Catálogo.CatalogoProductos;
-import Vista.Cruds.pnlListaReportes;
-import Vista.Cruds.pnlReporteVehiculos;
 
+import Vista.Catálogo.CrudPanelServicios;
+import Vista.Cruds.*;
 import Vista.Factura.Factura;
 import Vista.Home.Home;
-
 import Vista.PanelSubmenus.*;
 import Vista.PanelTitulos.*;
 import Vista.Tables.TablaFactura;
@@ -18,22 +18,21 @@ import Vista.Tables.TablaProveedor;
 import Vista.Tables.TablaServicios;
 import Vista.Tables.TablaUsuarios;
 import Vista.Tables.TablaVehiculos;
+import com.db4o.ObjectContainer;
 import java.awt.BorderLayout;
-import javax.swing.JOptionPane;
+import javax.swing.JDialog;
 import javax.swing.JPanel;
-import utils.Global;
 
 public class VistaMenu extends javax.swing.JFrame {
-
-private String rolUsuario;
- private PanelSubmenuUsuarioss panelSubmenuUsuarios;
- private PanelSubmenuServicios panelSubmenuServicios;
+   
+    /**
+     * Creates new form VistaMenu
+     */
     public VistaMenu() {
-       this.rolUsuario = Global.rolUsuario;
         initComponents();
-         this.setLocationRelativeTo(this);
-        accesosRol();
-
+        this.setLocationRelativeTo(this);
+        
+        
     }
 
     /**
@@ -50,7 +49,7 @@ private String rolUsuario;
         jPanel2 = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         lbliconologo = new javax.swing.JLabel();
-        PanelBotonesMenu = new javax.swing.JPanel();
+        jPanel4 = new javax.swing.JPanel();
         btnVehiculos = new javax.swing.JLabel();
         btnUsuario = new javax.swing.JLabel();
         btnciudades = new javax.swing.JLabel();
@@ -60,8 +59,8 @@ private String rolUsuario;
         btnProvedores = new javax.swing.JLabel();
         btnSalir = new javax.swing.JLabel();
         btnProductos = new javax.swing.JLabel();
-        btnReportes = new javax.swing.JLabel();
-        btnAgendarCitas = new javax.swing.JLabel();
+        btnReportes1 = new javax.swing.JLabel();
+        btnAgendarCitas1 = new javax.swing.JLabel();
         PanelHeader = new javax.swing.JPanel();
         PanelPrincipal = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
@@ -92,10 +91,10 @@ private String rolUsuario;
 
         PanelMenu.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 10, 180, 150));
 
-        PanelBotonesMenu.setBackground(new java.awt.Color(0, 53, 79));
-        PanelBotonesMenu.addMouseListener(new java.awt.event.MouseAdapter() {
+        jPanel4.setBackground(new java.awt.Color(0, 53, 79));
+        jPanel4.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                PanelBotonesMenuMouseClicked(evt);
+                jPanel4MouseClicked(evt);
             }
         });
 
@@ -190,52 +189,52 @@ private String rolUsuario;
             }
         });
 
-        btnReportes.setFont(new java.awt.Font("Roboto Black", 0, 19)); // NOI18N
-        btnReportes.setForeground(new java.awt.Color(255, 255, 255));
-        btnReportes.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/analitica.png"))); // NOI18N
-        btnReportes.setText("Reportes");
-        btnReportes.addMouseListener(new java.awt.event.MouseAdapter() {
+        btnReportes1.setFont(new java.awt.Font("Roboto Black", 0, 19)); // NOI18N
+        btnReportes1.setForeground(new java.awt.Color(255, 255, 255));
+        btnReportes1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/analitica.png"))); // NOI18N
+        btnReportes1.setText("Reportes");
+        btnReportes1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnReportesMouseClicked(evt);
+                btnReportes1MouseClicked(evt);
             }
         });
 
-        btnAgendarCitas.setFont(new java.awt.Font("Roboto Black", 0, 19)); // NOI18N
-        btnAgendarCitas.setForeground(new java.awt.Color(255, 255, 255));
-        btnAgendarCitas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/programaCitas35.png"))); // NOI18N
-        btnAgendarCitas.setText("Agendar Citas");
-        btnAgendarCitas.addMouseListener(new java.awt.event.MouseAdapter() {
+        btnAgendarCitas1.setFont(new java.awt.Font("Roboto Black", 0, 19)); // NOI18N
+        btnAgendarCitas1.setForeground(new java.awt.Color(255, 255, 255));
+        btnAgendarCitas1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/programaCitas35.png"))); // NOI18N
+        btnAgendarCitas1.setText("Agendar Citas");
+        btnAgendarCitas1.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnAgendarCitasMouseClicked(evt);
+                btnAgendarCitas1MouseClicked(evt);
             }
         });
 
-        javax.swing.GroupLayout PanelBotonesMenuLayout = new javax.swing.GroupLayout(PanelBotonesMenu);
-        PanelBotonesMenu.setLayout(PanelBotonesMenuLayout);
-        PanelBotonesMenuLayout.setHorizontalGroup(
-            PanelBotonesMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(PanelBotonesMenuLayout.createSequentialGroup()
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(PanelBotonesMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnciudades, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnReportes, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnReportes1, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(PanelBotonesMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                         .addComponent(btnVehiculos, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnUsuario, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnServicios, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 179, Short.MAX_VALUE))
-                    .addGroup(PanelBotonesMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                         .addComponent(btnProvedores, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnProductos, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 179, Short.MAX_VALUE))
-                    .addGroup(PanelBotonesMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                    .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                         .addComponent(btnCatalogo, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnFactura, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 179, Short.MAX_VALUE))
-                    .addComponent(btnAgendarCitas, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnAgendarCitas1, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(26, Short.MAX_VALUE))
         );
-        PanelBotonesMenuLayout.setVerticalGroup(
-            PanelBotonesMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(PanelBotonesMenuLayout.createSequentialGroup()
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
                 .addGap(26, 26, 26)
                 .addComponent(btnUsuario, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -251,9 +250,9 @@ private String rolUsuario;
                 .addGap(12, 12, 12)
                 .addComponent(btnProductos, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnReportes, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnReportes1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnAgendarCitas, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnAgendarCitas1, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 9, Short.MAX_VALUE)
                 .addComponent(btnciudades, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -261,7 +260,7 @@ private String rolUsuario;
                 .addGap(12, 12, 12))
         );
 
-        PanelMenu.add(PanelBotonesMenu, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 140, -1, 660));
+        PanelMenu.add(jPanel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 140, -1, 660));
 
         panelPrincipal.add(PanelMenu, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
@@ -346,6 +345,7 @@ private String rolUsuario;
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+
 //CrudPanelCliente crudCli = new CrudPanelCliente();
     private void btnUsuarioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnUsuarioMouseClicked
         PanelTituloUsuario titUsu = new PanelTituloUsuario();
@@ -358,34 +358,32 @@ private String rolUsuario;
 
     private void btnServiciosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnServiciosMouseClicked
         TablaServicios tablaPro = new TablaServicios();
-        PanelTituloServicios titSer = new PanelTituloServicios();
-        PanelSubmenuServicios Submenuserv = new PanelSubmenuServicios();
+        PanelTituloServicios titSer = new PanelTituloServicios(); 
+        PanelSubmenuServicios Submenuserv = new PanelSubmenuServicios();         
         MostrarpanelTitulo(titSer);
         MostrarpanelSubmenu(Submenuserv);
         MostarpanelCruds(tablaPro);
-       
     }//GEN-LAST:event_btnServiciosMouseClicked
 
     private void btnFacturaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnFacturaMouseClicked
-
+       
         PanelTituloFacturacion titufac = new PanelTituloFacturacion();
         PanelSubmenuFacturacion SubmenuFac = new PanelSubmenuFacturacion();
-        Factura fac = new Factura();
+        Factura fac =new Factura();
         MostrarpanelTitulo(titufac);
         MostrarpanelSubmenu(SubmenuFac);
         MostarpanelCruds(fac);
-
     }//GEN-LAST:event_btnFacturaMouseClicked
 
     private void btnCatalogoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCatalogoMouseClicked
-        PanelTituloCatalogo tituCat = new PanelTituloCatalogo();
-        PanelSubmenuCatalogo SubmenuCat = new PanelSubmenuCatalogo();
-        CatalogoProductos catpro = new CatalogoProductos();
+      PanelTituloCatalogo tituCat = new PanelTituloCatalogo();
+        PanelSubmenuCatalogo SubmenuCat = new PanelSubmenuCatalogo(); 
+        CatalogoProductos catpro =new CatalogoProductos();
         MostrarpanelTitulo(tituCat);
         MostrarpanelSubmenu(SubmenuCat);
         MostarpanelCruds(catpro);
-
-
+        
+        
     }//GEN-LAST:event_btnCatalogoMouseClicked
 
     private void btnProvedoresMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnProvedoresMouseClicked
@@ -398,14 +396,14 @@ private String rolUsuario;
     }//GEN-LAST:event_btnProvedoresMouseClicked
 
     private void btnciudadesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnciudadesMouseClicked
-        PanelTituloCiudades titciu = new PanelTituloCiudades();
+       PanelTituloCiudades titciu = new PanelTituloCiudades();
         PanelSUbmenuCiudades submeciu = new PanelSUbmenuCiudades();
         MostrarpanelSubmenu(submeciu);
-        MostrarpanelTitulo(titciu);
+        MostrarpanelTitulo(titciu);  
     }//GEN-LAST:event_btnciudadesMouseClicked
 
     private void btnProductosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnProductosMouseClicked
-        TablaProductos prod = new TablaProductos();
+         TablaProductos prod = new TablaProductos();
         PanelTituloProducto titProd = new PanelTituloProducto();
         PanelSubmenuProductos submenProd = new PanelSubmenuProductos();
         MostrarpanelSubmenu(submenProd);
@@ -414,30 +412,30 @@ private String rolUsuario;
     }//GEN-LAST:event_btnProductosMouseClicked
 
     private void btnSalirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSalirMouseClicked
-        Home homesito = new Home();
-        homesito.setVisible(true);
-        this.dispose();
+       Home homesito=new Home();
+     homesito.setVisible(true);
+     this.dispose();
     }//GEN-LAST:event_btnSalirMouseClicked
 
-    private void btnReportesMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnReportesMouseClicked
+    private void btnReportes1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnReportes1MouseClicked
         PanelTituloReporte titreo = new PanelTituloReporte();
         PanelSubmenuReportes submenrep = new PanelSubmenuReportes();
         MostrarpanelSubmenu(submenrep);
         MostrarpanelTitulo(titreo);
-        pnlListaReportes misReportes = new pnlListaReportes();
-        ShowpanelCruds(misReportes);
-    }//GEN-LAST:event_btnReportesMouseClicked
+    }//GEN-LAST:event_btnReportes1MouseClicked
 
-    private void PanelBotonesMenuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_PanelBotonesMenuMouseClicked
+    private void jPanel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jPanel4MouseClicked
         // TODO add your handling code here:
-    }//GEN-LAST:event_PanelBotonesMenuMouseClicked
+    }//GEN-LAST:event_jPanel4MouseClicked
 
-    private void btnAgendarCitasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAgendarCitasMouseClicked
-        PanelTituloCitas titcit = new PanelTituloCitas();
+    private void btnAgendarCitas1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAgendarCitas1MouseClicked
+       PanelTituloCitas titcit = new PanelTituloCitas();
         PanelSUbmenuCitas submecitas = new PanelSUbmenuCitas();
+        Citas cit = new Citas();
         MostrarpanelSubmenu(submecitas);
         MostrarpanelTitulo(titcit);
-    }//GEN-LAST:event_btnAgendarCitasMouseClicked
+        MostarpanelCruds(cit);
+    }//GEN-LAST:event_btnAgendarCitas1MouseClicked
 
     private void btnVehiculosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnVehiculosMouseClicked
         TablaVehiculos miVehi = new TablaVehiculos();
@@ -454,14 +452,6 @@ private String rolUsuario;
         PanelSubmenu.add(p, BorderLayout.CENTER);
         PanelSubmenu.revalidate();
         PanelSubmenu.repaint();
-       if (p instanceof PanelSubmenuUsuarioss) {
-            this.panelSubmenuUsuarios = (PanelSubmenuUsuarioss) p;
-            actualizarVisibilidadSubmenuUsuarios();
-        }
-       if (p instanceof PanelSubmenuServicios) {
-            this.panelSubmenuServicios = (PanelSubmenuServicios) p;
-            actualizarVisibilidadSubmenuServicios();
-        }
 
     }
 
@@ -483,94 +473,9 @@ private String rolUsuario;
         PanelPrincipal.repaint();
     }
 
-     
-     private void accesosRol() {
-        System.out.println("Rol del usuario: " + rolUsuario);
+    
 
-        switch (rolUsuario) {
-            case "CLIENTE":
-                deshabilitarComponentesCliente();
-                break;
-            case "ADMINISTRADOR":
-                deshabilitarComponentesAdministrador();
-                break;
-            case "VENDEDOR":
-                deshabilitarComponentesVendedor();
-                break;
-            case "MECANICO":
-                deshabilitarComponentesMecanico();
-                break;
-            default:
-                JOptionPane.showMessageDialog(null, "Rol no reconocido");
-                break;
-        }
-    }
- private void deshabilitarComponentesAdministrador() {
-        // Administrador tiene acceso a todo
-    }
- private void deshabilitarComponentesCliente() {
-        btnFactura.setVisible(false);
-        btnServicios.setVisible(false);
-        btnProductos.setVisible(false);
-        btnProvedores.setVisible(false);
-        btnciudades.setVisible(false);
-        btnUsuario.setVisible(false);
-        btnReportes.setVisible(false);
-    }
- private void deshabilitarComponentesVendedor() {
-        btnAgendarCitas.setVisible(false);
-        btnVehiculos.setVisible(false);
-       
-    }
 
-      private void deshabilitarComponentesMecanico() {
-        btnUsuario.setVisible(false);
-        btnProductos.setVisible(false);
-        btnProvedores.setVisible(false);
-        btnciudades.setVisible(false);
-        btnReportes.setVisible(false);
-        btnAgendarCitas.setVisible(false);
-        btnCatalogo.setVisible(false);
-        btnFactura.setVisible(false);
-       
-    }
-    private void actualizarVisibilidadSubmenuUsuarios() {
-        if (panelSubmenuUsuarios != null) {
-
-            switch (rolUsuario) {
-                case "VENDEDOR":
-                    panelSubmenuUsuarios.getBtnAdministrador().setVisible(false);
-                    panelSubmenuUsuarios.getBtnMecanico().setVisible(false);
-                    panelSubmenuUsuarios.getBtnVendedor().setVisible(false);
-                    System.out.println("Botones del submenu de usuarios deshabilitados para el rol VENDEDOR");
-                    break;
-                case "CLIENTE":
-                    panelSubmenuUsuarios.getBtnAdministrador().setVisible(false);
-                    panelSubmenuUsuarios.getBtnMecanico().setVisible(false);
-                    panelSubmenuUsuarios.getBtnVendedor().setVisible(false);
-                    System.out.println("Botones del submenu de usuarios deshabilitados para el rol Cliente");
-                    break;  
-            }
-        }
-    }
- private void actualizarVisibilidadSubmenuServicios() {
-        if (panelSubmenuServicios != null) {
-           
-            switch (rolUsuario) {
-                case "VENDEDOR":
-                    panelSubmenuServicios.getBtnordenesTrabajo().setVisible(false);
-                    
-                    
-                    break;
-                case "MECANICO":
-                    panelSubmenuServicios.getBtnCategoria1().setVisible(false);
-                    panelSubmenuServicios.getBtngestionser1().setVisible(false);
-                    
-                    break;
-                
-            }
-        } 
-    }
     /**
      * @param args the command line arguments
      */
@@ -606,28 +511,18 @@ private String rolUsuario;
             }
         });
     }
-    private void ShowpanelCruds(JPanel p) {
-    p.setSize(870, 630);
-    p.setLocation(0, 0);
-    VistaMenu.PanelPrincipal.removeAll();
-    VistaMenu.PanelPrincipal.add(p, BorderLayout.CENTER);
-    VistaMenu.PanelPrincipal.revalidate();
-    VistaMenu.PanelPrincipal.repaint();
-     
-}
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPanel PanelBotonesMenu;
     public static javax.swing.JPanel PanelHeader;
     private javax.swing.JPanel PanelMenu;
     public static javax.swing.JPanel PanelPrincipal;
     public static javax.swing.JPanel PanelSubmenu;
-    private javax.swing.JLabel btnAgendarCitas;
+    private javax.swing.JLabel btnAgendarCitas1;
     private javax.swing.JLabel btnCatalogo;
     private javax.swing.JLabel btnFactura;
     private javax.swing.JLabel btnProductos;
     private javax.swing.JLabel btnProvedores;
-    private javax.swing.JLabel btnReportes;
+    private javax.swing.JLabel btnReportes1;
     private javax.swing.JLabel btnSalir;
     private javax.swing.JLabel btnServicios;
     private javax.swing.JLabel btnUsuario;
@@ -637,6 +532,7 @@ private String rolUsuario;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel4;
     private javax.swing.JLabel lbliconologo;
     public javax.swing.JPanel panelPrincipal;
     // End of variables declaration//GEN-END:variables

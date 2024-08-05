@@ -337,7 +337,7 @@ public class CrudPanelCliente extends javax.swing.JPanel {
         lblFEchaNac_Cli.setForeground(new java.awt.Color(0, 53, 79));
         lblFEchaNac_Cli.setText("Fecha Nacimiento:");
         jPanel1.add(lblFEchaNac_Cli, new org.netbeans.lib.awtextra.AbsoluteConstraints(440, 350, 180, 40));
-        jPanel1.add(jDateFechaNacCli, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 360, 190, 30));
+        jPanel1.add(jDateFechaNacCli, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 360, 190, 30));
 
         lblEstadoCivil_Cli.setFont(new java.awt.Font("Roboto Medium", 0, 21)); // NOI18N
         lblEstadoCivil_Cli.setForeground(new java.awt.Color(0, 53, 79));
@@ -403,7 +403,7 @@ public class CrudPanelCliente extends javax.swing.JPanel {
 
                                 GuardarCliente(Estado.ACTIVO,(String)cbxCiudadCli.getSelectedItem(),imagenCli,txtCedulaCli.getText(), txtNombresCli.getText().toUpperCase().toUpperCase(), txtApellidosCli.getText().toUpperCase(),
                                     txtDireccionCli.getText().toUpperCase(), txtCorreoCli.getText(),txtCelularCli.getText(), (String) cbxGeneroCli.getSelectedItem(), fechaNacimiento, (String) cbxEstadoCivilCli.getSelectedItem(),
-                                    txtCedulaCli.getText(), txtPasswordCli.getText(), fechaNacimiento, Rol.CLIENTE);
+                                    txtCedulaCli.getText(), txtPasswordCli.getText(), txtCorreoCli.getText(), Rol.CLIENTE);
                                     JOptionPane.showMessageDialog(null, "Cliente Guardado");
                                     cambiartabla();
                                 
