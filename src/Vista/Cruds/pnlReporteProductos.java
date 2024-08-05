@@ -43,21 +43,12 @@ public final class pnlReporteProductos extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        btnRegresar = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         pnlReporteUsuarios = new javax.swing.JPanel();
         pnlPastel = new javax.swing.JPanel();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        btnRegresar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/REGRESAR45X45.png"))); // NOI18N
-        btnRegresar.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnRegresarMouseClicked(evt);
-            }
-        });
-        add(btnRegresar, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 0, -1, 50));
 
         jScrollPane1.setBorder(null);
 
@@ -84,52 +75,6 @@ public final class pnlReporteProductos extends javax.swing.JPanel {
         add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 30, 820, 520));
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnRegresarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRegresarMouseClicked
-        pnlListaReportes misReportes = new pnlListaReportes();
-        ShowpanelCruds(misReportes);
-    }//GEN-LAST:event_btnRegresarMouseClicked
-
-    public static int numeroAdministradores() {
-        ObjectContainer BaseBD = Conexion_db.ConectarBD();
-        // Crear un nuevo objeto  para usar como plantilla de búsqueda
-        Administrador AdminBusca = new Administrador();
-
-        // Obtener todos los objetos que coincidan con la plantilla de búsqueda
-        ObjectSet resultado = BaseBD.get(AdminBusca);
-
-        // Imprimir el número de clientes encontrados
-        int Admins = resultado.size();
-        BaseBD.close();
-        return Admins;
-    }
-
-    public static int numeroClientes() {
-        ObjectContainer BaseBD = Conexion_db.ConectarBD();
-        // Crear un nuevo objeto  para usar como plantilla de búsqueda
-        Cliente CliBusca = new Cliente();
-
-        // Obtener todos los objetos que coincidan con la plantilla de búsqueda
-        ObjectSet resultado = BaseBD.get(CliBusca);
-
-        // Imprimir el número de clientes encontrados
-        int clientes = resultado.size();
-        BaseBD.close();
-        return clientes;
-    }
-
-    public static int numeroVendedores() {
-        ObjectContainer BaseBD = Conexion_db.ConectarBD();
-        // Crear un nuevo objeto  para usar como plantilla de búsqueda
-        Vendedor VendedorBusca = new Vendedor();
-
-        // Obtener todos los objetos que coincidan con la plantilla de búsqueda
-        ObjectSet resultado = BaseBD.get(VendedorBusca);
-
-        // Imprimir el número de clientes encontrados
-        int vendedores = resultado.size();
-        BaseBD.close();
-        return vendedores;
-    }
 
     public void generarGraficoDeBarras3D(JPanel pnlPastel) {
         ObjectContainer BaseBD = Conexion_db.ConectarBD();
@@ -201,7 +146,6 @@ public final class pnlReporteProductos extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JLabel btnRegresar;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JPanel pnlPastel;
     private javax.swing.JPanel pnlReporteUsuarios;

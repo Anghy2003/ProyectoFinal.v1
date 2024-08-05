@@ -9,9 +9,11 @@ import Models.Vendedor;
 import Vista.Menu.VistaMenu;
 import com.db4o.ObjectContainer;
 import com.db4o.ObjectSet;
-
+import javax.swing.*;
 import javax.swing.JOptionPane;
 import utils.Global;
+import java.awt.BorderLayout;
+import Vista.Cruds.CRUDS1.CrudPanelCliente.JPanel1;//panel de crear cliente
 
 public class Home extends javax.swing.JFrame {
 
@@ -28,7 +30,6 @@ public class Home extends javax.swing.JFrame {
     public Home() {
         initComponents();
         this.setLocationRelativeTo(this);
-
     }
 
     /**
@@ -50,9 +51,11 @@ public class Home extends javax.swing.JFrame {
         btnCrearCuenta = new rsbuttongradiente.RSButtonGradiente();
         btnIniciarSesion = new rsbuttongradiente.RSButtonGradiente();
         jPanel2 = new javax.swing.JPanel();
+        lblCerrarHome = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setUndecorated(true);
         getContentPane().setLayout(new java.awt.GridBagLayout());
 
         panelPron.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -102,6 +105,25 @@ public class Home extends javax.swing.JFrame {
         jPanel2.setBackground(new java.awt.Color(0, 53, 74));
         jPanel2.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        lblCerrarHome.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/cerrarHOME.png"))); // NOI18N
+        lblCerrarHome.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        lblCerrarHome.setEnabled(false);
+        lblCerrarHome.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblCerrarHomeMouseClicked(evt);
+            }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                lblCerrarHomeMouseEntered(evt);
+            }
+            public void mouseExited(java.awt.event.MouseEvent evt) {
+                lblCerrarHomeMouseExited(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                lblCerrarHomeMouseReleased(evt);
+            }
+        });
+        jPanel2.add(lblCerrarHome, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 0, -1, -1));
+
         jLabel3.setBackground(new java.awt.Color(1, 53, 74));
         jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/imagenhome.png"))); // NOI18N
         jPanel2.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 20, 501, 753));
@@ -112,10 +134,6 @@ public class Home extends javax.swing.JFrame {
             PanelPrinLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(PanelPrinLayout.createSequentialGroup()
                 .addGroup(PanelPrinLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(PanelPrinLayout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(lblIconoLogo, javax.swing.GroupLayout.PREFERRED_SIZE, 208, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(158, 158, 158))
                     .addGroup(PanelPrinLayout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(PanelPrinLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -130,7 +148,12 @@ public class Home extends javax.swing.JFrame {
                         .addGap(64, 64, 64)
                         .addGroup(PanelPrinLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                             .addComponent(txtRolUsuario, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(txtpassword, javax.swing.GroupLayout.PREFERRED_SIZE, 353, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(txtpassword, javax.swing.GroupLayout.PREFERRED_SIZE, 353, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelPrinLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(lblIconoLogo, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(146, 146, 146)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, 542, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -165,7 +188,10 @@ public class Home extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCrearCuentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCrearCuentaActionPerformed
-
+        CrudClientesForm miCrud=new CrudClientesForm();
+        miCrud.setLocationRelativeTo(null); // Centra la ventana en la pantalla
+        miCrud.setVisible(true);
+        
     }//GEN-LAST:event_btnCrearCuentaActionPerformed
 
     private void btnIniciarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIniciarSesionActionPerformed
@@ -173,6 +199,22 @@ public class Home extends javax.swing.JFrame {
         String password = obtenercontraseñaUsu();
         iniciarSesion(cedula, password);
     }//GEN-LAST:event_btnIniciarSesionActionPerformed
+
+    private void lblCerrarHomeMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblCerrarHomeMouseClicked
+        System.exit(0);
+    }//GEN-LAST:event_lblCerrarHomeMouseClicked
+
+    private void lblCerrarHomeMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblCerrarHomeMouseEntered
+        lblCerrarHome.setEnabled(true);
+    }//GEN-LAST:event_lblCerrarHomeMouseEntered
+
+    private void lblCerrarHomeMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblCerrarHomeMouseReleased
+        lblCerrarHome.setEnabled(false);
+    }//GEN-LAST:event_lblCerrarHomeMouseReleased
+
+    private void lblCerrarHomeMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblCerrarHomeMouseExited
+        lblCerrarHome.setEnabled(false);
+    }//GEN-LAST:event_lblCerrarHomeMouseExited
 public void iniciarSesion(String cedula, String password) {
     ObjectContainer BaseBD = Conexion_db.ConectarBD();
 
@@ -309,6 +351,14 @@ public void iniciarSesion(String cedula, String password) {
         });
     }
 
+    private void ShowpanelCruds(JPanel p) {
+    p.setSize(870, 630);
+    p.setLocation(0, 0);
+    VistaMenu.PanelPrincipal.removeAll();
+    VistaMenu.PanelPrincipal.add(p, BorderLayout.CENTER);
+    VistaMenu.PanelPrincipal.revalidate();
+    VistaMenu.PanelPrincipal.repaint();
+}
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel PanelPrin;
@@ -317,6 +367,7 @@ public void iniciarSesion(String cedula, String password) {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JSeparator jSeparator1;
+    private javax.swing.JLabel lblCerrarHome;
     private javax.swing.JLabel lblIconoLogo;
     private javax.swing.JPanel panelPron;
     private rojeru_san.RSMTextFull txtRolUsuario;
