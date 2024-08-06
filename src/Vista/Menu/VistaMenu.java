@@ -3,35 +3,40 @@ package Vista.Menu;
 
 
 import Citas.Citas;
-import Conexion.Conexion_db;
+
 import Vista.Catálogo.CatalogoProductos;
 
-import Vista.Catálogo.CrudPanelServicios;
-import Vista.Cruds.*;
+
 import Vista.Factura.Factura;
 import Vista.Home.Home;
 import Vista.PanelSubmenus.*;
 import Vista.PanelTitulos.*;
-import Vista.Tables.TablaFactura;
+
 import Vista.Tables.TablaProductos;
 import Vista.Tables.TablaProveedor;
 import Vista.Tables.TablaServicios;
-import Vista.Tables.TablaUsuarios;
+
 import Vista.Tables.TablaVehiculos;
-import com.db4o.ObjectContainer;
+
 import java.awt.BorderLayout;
-import javax.swing.JDialog;
+import javax.swing.JOptionPane;
+
 import javax.swing.JPanel;
+import utils.Global;
+
 
 public class VistaMenu extends javax.swing.JFrame {
    
-    /**
-     * Creates new form VistaMenu
-     */
+   private String rolUsuario;
+ private PanelSubmenuUsuarioss panelSubmenuUsuarios;
+ private PanelSubmenuServicios panelSubmenuServicios;
+
     public VistaMenu() {
+         this.rolUsuario = Global.rolUsuario;
         initComponents();
         this.setLocationRelativeTo(this);
-        
+        accesosRol();
+
         
     }
 
@@ -350,10 +355,10 @@ public class VistaMenu extends javax.swing.JFrame {
     private void btnUsuarioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnUsuarioMouseClicked
         PanelTituloUsuario titUsu = new PanelTituloUsuario();
         PanelSubmenuUsuarioss SubmenuUsu = new PanelSubmenuUsuarioss();
-        TablaUsuarios tablaUsu = new TablaUsuarios();
+//        TablaUsuarios tablaUsu = new TablaUsuarios();
         MostrarpanelTitulo(titUsu);
         MostrarpanelSubmenu(SubmenuUsu);
-        MostarpanelCruds(tablaUsu);
+//        MostarpanelCruds(tablaUsu);
     }//GEN-LAST:event_btnUsuarioMouseClicked
 
     private void btnServiciosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnServiciosMouseClicked
@@ -445,6 +450,94 @@ public class VistaMenu extends javax.swing.JFrame {
         MostrarpanelTitulo(titcit);
         MostarpanelCruds(miVehi);
     }//GEN-LAST:event_btnVehiculosMouseClicked
+     private void accesosRol() {
+        System.out.println("Rol del usuario: " + rolUsuario);
+
+        switch (rolUsuario) {
+            case "CLIENTE":
+                deshabilitarComponentesCliente();
+                break;
+            case "ADMINISTRADOR":
+                deshabilitarComponentesAdministrador();
+                break;
+            case "VENDEDOR":
+                deshabilitarComponentesVendedor();
+                break;
+            case "MECANICO":
+                deshabilitarComponentesMecanico();
+                break;
+            default:
+                JOptionPane.showMessageDialog(null, "Rol no reconocido");
+                break;
+        }
+    }
+ private void deshabilitarComponentesAdministrador() {
+        // Administrador tiene acceso a todo
+    }
+ private void deshabilitarComponentesCliente() {
+        btnFactura.setVisible(false);
+        btnServicios.setVisible(false);
+        btnProductos.setVisible(false);
+        btnProvedores.setVisible(false);
+        btnciudades.setVisible(false);
+        btnUsuario.setVisible(false);
+        btnReportes1.setVisible(false);
+    }
+ private void deshabilitarComponentesVendedor() {
+        btnReportes1.setVisible(false);
+        btnVehiculos.setVisible(false);
+       
+    }
+
+      private void deshabilitarComponentesMecanico() {
+        btnUsuario.setVisible(false);
+        btnProductos.setVisible(false);
+        btnProvedores.setVisible(false);
+        btnciudades.setVisible(false);
+        btnReportes1.setVisible(false);
+        btnReportes1.setVisible(false);
+        btnCatalogo.setVisible(false);
+        btnFactura.setVisible(false);
+       
+    }
+    private void actualizarVisibilidadSubmenuUsuarios() {
+        if (panelSubmenuUsuarios != null) {
+
+            switch (rolUsuario) {
+                case "VENDEDOR":
+                    panelSubmenuUsuarios.getBtnAdministrador().setVisible(false);
+                    panelSubmenuUsuarios.getBtnMecanico().setVisible(false);
+                    panelSubmenuUsuarios.getBtnVendedor().setVisible(false);
+                    System.out.println("Botones del submenu de usuarios deshabilitados para el rol VENDEDOR");
+                    break;
+                case "CLIENTE":
+                    panelSubmenuUsuarios.getBtnAdministrador().setVisible(false);
+                    panelSubmenuUsuarios.getBtnMecanico().setVisible(false);
+                    panelSubmenuUsuarios.getBtnVendedor().setVisible(false);
+                    System.out.println("Botones del submenu de usuarios deshabilitados para el rol Cliente");
+                    break;  
+            }
+        }
+    }
+ private void actualizarVisibilidadSubmenuServicios() {
+        if (panelSubmenuServicios != null) {
+           
+            switch (rolUsuario) {
+                case "VENDEDOR":
+                    panelSubmenuServicios.getBtnordenesTrabajo().setVisible(false);
+                    
+                    
+                    break;
+                case "MECANICO":
+                    panelSubmenuServicios.getBtnCategoria1().setVisible(false);
+                    panelSubmenuServicios.getBtngestionser1().setVisible(false);
+                    
+                    break;
+                
+            }
+        } 
+    }
+
     private void MostrarpanelSubmenu(JPanel p) {
         p.setSize(870, 80);
         p.setLocation(0, 0);
@@ -452,6 +545,14 @@ public class VistaMenu extends javax.swing.JFrame {
         PanelSubmenu.add(p, BorderLayout.CENTER);
         PanelSubmenu.revalidate();
         PanelSubmenu.repaint();
+if (p instanceof PanelSubmenuUsuarioss) {
+            this.panelSubmenuUsuarios = (PanelSubmenuUsuarioss) p;
+            actualizarVisibilidadSubmenuUsuarios();
+        }
+       if (p instanceof PanelSubmenuServicios) {
+            this.panelSubmenuServicios = (PanelSubmenuServicios) p;
+            actualizarVisibilidadSubmenuServicios();
+        }
 
     }
 

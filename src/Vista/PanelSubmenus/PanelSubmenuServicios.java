@@ -5,6 +5,7 @@ import Citas.CrudlistadosServicios;
 import Vista.Catálogo.CrudPanelServicios;
 import Vista.Menu.VistaMenu;
 import Vista.Tables.TablaCategoriaSer;
+import Vista.Tables.TablaServicios;
 import java.awt.BorderLayout;
 import javax.swing.JPanel;
 import javax.swing.JToggleButton;
@@ -111,7 +112,7 @@ public class PanelSubmenuServicios extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnordenesTrabajoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnordenesTrabajoActionPerformed
-        CrudlistadosServicios serv = new CrudlistadosServicios();
+        TablaServicios serv = new TablaServicios();
        ShowpanelCruds(serv);
     }//GEN-LAST:event_btnordenesTrabajoActionPerformed
 

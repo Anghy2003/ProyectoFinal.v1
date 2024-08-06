@@ -15,6 +15,7 @@ import com.db4o.ObjectSet;
 import java.awt.BorderLayout;
 import javax.swing.JPanel;
 import Vista.Catálogo.BuscarCategoria;
+import com.db4o.ext.DatabaseFileLockedException;
 import javax.swing.JOptionPane;
 /**
  *
@@ -191,31 +192,49 @@ public class TablaCategoria extends javax.swing.JPanel {
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
      int selectedRow = tblCategoria.getSelectedRow();
-        if (selectedRow != -1) {
-            String codigoCat = tblCategoria.getValueAt(selectedRow, 0).toString();
-            ObjectContainer BaseBD = Conexion_db.ConectarBD();
-            try {
-                if (verificarProductosCategoria(BaseBD, codigoCat) > 0) {
-                    JOptionPane.showMessageDialog(this, "No se puede eliminar la categoría porque tiene productos registrados con esta categoría.");
-                } else {
-                    Categoria cat = new Categoria();
-                    cat.setCodigoCat(codigoCat);
-                    ObjectSet<Categoria> result = BaseBD.get(cat);
-                    if (!result.isEmpty()) {
-                        BaseBD.delete(result.get(0));
-                        JOptionPane.showMessageDialog(this, "Categoría eliminada exitosamente.");
-                        mostrarTablapro();
-                    }
-                }
-            } finally {
-                BaseBD.close();
-            }
-        } else {
-            JOptionPane.showMessageDialog(this, "Seleccione una categoría para eliminar.");
-        }
+    if (selectedRow != -1) {
+        String codigoCat = tblCategoria.getValueAt(selectedRow, 0).toString();
+        eliminarCategoria(codigoCat);
+    } else {
+        JOptionPane.showMessageDialog(this, "Seleccione una categoría para eliminar.");
+    }
         
     }//GEN-LAST:event_btnEliminarActionPerformed
-  private void mostrarTablapro() {
+   public void eliminarCategoria(String codigoCat) {
+    for (int i = 0; i < 3; i++) { // Reintenta 3 veces
+        ObjectContainer BaseBD = null;
+        try {
+            BaseBD = Conexion_db.ConectarBD();
+            if (verificarProductosCategoria(BaseBD, codigoCat) > 0) {
+                JOptionPane.showMessageDialog(this, "No se puede eliminar la categoría porque tiene productos registrados con esta categoría.");
+                return;
+            } else {
+                Categoria cat = new Categoria();
+                cat.setCodigoCat(codigoCat);
+                ObjectSet<Categoria> result = BaseBD.get(cat);
+                if (!result.isEmpty()) {
+                    BaseBD.delete(result.get(0));
+                    JOptionPane.showMessageDialog(this, "Categoría eliminada exitosamente.");
+                    mostrarTablapro();
+                    return;
+                }
+            }
+        } catch (DatabaseFileLockedException e) {
+            // Esperar un poco antes de reintentar
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException ie) {
+                Thread.currentThread().interrupt();
+            }
+        } finally {
+            if (BaseBD != null) {
+                BaseBD.close();
+            }
+        }
+    }
+    JOptionPane.showMessageDialog(this, "No se pudo eliminar la categoría debido a un bloqueo en el archivo de base de datos.");
+   }
+    private void mostrarTablapro() {
         ObjectContainer BaseBD = Conexion_db.ConectarBD();
         Categoria Categorias = new Categoria();
         ObjectSet<Categoria> resul = BaseBD.get(Categorias);

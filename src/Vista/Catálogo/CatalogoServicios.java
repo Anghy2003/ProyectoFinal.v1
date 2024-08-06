@@ -62,6 +62,7 @@ public class CatalogoServicios extends javax.swing.JPanel {
         lblImagen = new javax.swing.JLabel();
         lblCodigooProducto = new javax.swing.JLabel();
         txtCodigoServicios = new rojeru_san.RSMTextFull();
+        lblcerrar = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -69,6 +70,8 @@ public class CatalogoServicios extends javax.swing.JPanel {
         jLabel1 = new javax.swing.JLabel();
         btnBuscar = new rsbuttongradiente.RSButtonGradiente();
         txtBuscarServicios = new rojeru_san.RSMTextFull();
+
+        jDialog1.setUndecorated(true);
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
         jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -135,15 +138,23 @@ public class CatalogoServicios extends javax.swing.JPanel {
         txtCodigoServicios.setPlaceholder("Código");
         jPanel3.add(txtCodigoServicios, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 50, 140, 40));
 
+        lblcerrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/cruz.png"))); // NOI18N
+        lblcerrar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                lblcerrarMouseClicked(evt);
+            }
+        });
+        jPanel3.add(lblcerrar, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 0, 50, 40));
+
         javax.swing.GroupLayout jDialog1Layout = new javax.swing.GroupLayout(jDialog1.getContentPane());
         jDialog1.getContentPane().setLayout(jDialog1Layout);
         jDialog1Layout.setHorizontalGroup(
             jDialog1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 625, Short.MAX_VALUE)
+            .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jDialog1Layout.setVerticalGroup(
             jDialog1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, 457, Short.MAX_VALUE)
+            .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 224, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
@@ -153,6 +164,7 @@ public class CatalogoServicios extends javax.swing.JPanel {
         jPanel2.setBackground(new java.awt.Color(0, 53, 79));
         jPanel2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
+        tblServicios.setFont(new java.awt.Font("Roboto Black", 1, 18)); // NOI18N
         tblServicios.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
@@ -240,6 +252,10 @@ public class CatalogoServicios extends javax.swing.JPanel {
     private void txtPrecioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPrecioActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtPrecioActionPerformed
+
+    private void lblcerrarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblcerrarMouseClicked
+      jDialog1.dispose();
+    }//GEN-LAST:event_lblcerrarMouseClicked
 private void mostrarTablaServicios() {
     ObjectContainer BaseBD = Conexion_db.ConectarBD();
     Servicios servicio = new Servicios(null, null, null, 0.0, null, null, null, null);
@@ -368,6 +384,7 @@ private void tblServiciosMouseClicked(MouseEvent evt) {
     private javax.swing.JLabel lblDescripcion;
     private javax.swing.JLabel lblImagen;
     private javax.swing.JLabel lblPrecioProducto;
+    private javax.swing.JLabel lblcerrar;
     private javax.swing.JTable tblServicios;
     private rojeru_san.RSMTextFull txtBuscarServicios;
     private rojeru_san.RSMTextFull txtCodigoServicios;

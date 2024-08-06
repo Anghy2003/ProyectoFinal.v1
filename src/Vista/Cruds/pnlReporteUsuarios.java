@@ -135,10 +135,10 @@ public class pnlReporteUsuarios extends javax.swing.JPanel {
     private void mostrarGraficoPastel3D() {
     // Crear un conjunto de datos para el gráfico
     DefaultPieDataset datos = new DefaultPieDataset();
-    datos.setValue("Admins", 10);
-    datos.setValue("Vendedores", 20);
-    datos.setValue("Clientes", 30);
-    datos.setValue("Mecanicos", 40);
+    datos.setValue("Admins", numeroAdministradores());
+    datos.setValue("Vendedores", numeroVendedores());
+    datos.setValue("Clientes", numeroClientes());
+    datos.setValue("Mecanicos", numeroMecanicos());
 
     // Crear un gráfico de pastel 3D
     JFreeChart grafico_pastel_3d = ChartFactory.createPieChart3D(

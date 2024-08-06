@@ -5,6 +5,7 @@ import Conexion.Conexion_db;
 import Models.Administrador;
 import Models.Cliente;
 import Models.Mecanico;
+import Models.Persona;
 import Models.Vendedor;
 import Vista.Menu.VistaMenu;
 import com.db4o.ObjectContainer;
@@ -30,6 +31,7 @@ public class Home extends javax.swing.JFrame {
     public Home() {
         initComponents();
         this.setLocationRelativeTo(this);
+         verificarYCrearAdminPorDefecto(); // Verifica y crea el administrador por defecto
     }
 
     /**
@@ -70,6 +72,16 @@ public class Home extends javax.swing.JFrame {
         txtRolUsuario.setFont(new java.awt.Font("Roboto Bold", 1, 18)); // NOI18N
         txtRolUsuario.setPlaceholder("Usuario/Cedula");
         txtRolUsuario.setSelectionColor(new java.awt.Color(0, 53, 79));
+        txtRolUsuario.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtRolUsuarioActionPerformed(evt);
+            }
+        });
+        txtRolUsuario.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtRolUsuarioKeyTyped(evt);
+            }
+        });
 
         txtpassword.setForeground(new java.awt.Color(0, 53, 79));
         txtpassword.setBordeColorFocus(new java.awt.Color(0, 53, 79));
@@ -215,6 +227,14 @@ public class Home extends javax.swing.JFrame {
     private void lblCerrarHomeMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_lblCerrarHomeMouseExited
         lblCerrarHome.setEnabled(false);
     }//GEN-LAST:event_lblCerrarHomeMouseExited
+
+    private void txtRolUsuarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtRolUsuarioActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtRolUsuarioActionPerformed
+
+    private void txtRolUsuarioKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtRolUsuarioKeyTyped
+        
+    }//GEN-LAST:event_txtRolUsuarioKeyTyped
 public void iniciarSesion(String cedula, String password) {
     ObjectContainer BaseBD = Conexion_db.ConectarBD();
 
@@ -307,6 +327,25 @@ public void iniciarSesion(String cedula, String password) {
     BaseBD.close();
 }
 
+private void verificarYCrearAdminPorDefecto() {
+    ObjectContainer BaseBD = Conexion_db.ConectarBD();
+    Administrador exampleAdmin = new Administrador();
+    ObjectSet<Administrador> result = BaseBD.queryByExample(exampleAdmin);
+
+    if (result.isEmpty()) {
+        Administrador defaultAdmin = new Administrador();
+        defaultAdmin.setCedula("1234");
+        defaultAdmin.setPassword("admin");
+        defaultAdmin.setNombreUsuario("Default Admin");
+        defaultAdmin.setRol(Persona.Rol.ADMINISTRADOR); // Usa el enum de Persona
+
+        BaseBD.store(defaultAdmin);
+        JOptionPane.showMessageDialog(this, "Administrador por defecto creado. Usuario: admin, Contraseña: admin");
+    }
+
+    BaseBD.close();
+}
+
 
 
 
@@ -322,11 +361,6 @@ public void iniciarSesion(String cedula, String password) {
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
         try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
                 if ("Nimbus".equals(info.getName())) {
@@ -343,9 +377,6 @@ public void iniciarSesion(String cedula, String password) {
         } catch (javax.swing.UnsupportedLookAndFeelException ex) {
             java.util.logging.Logger.getLogger(Home.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         }
-        //</editor-fold>
-
-        /* Create and display the form */
         java.awt.EventQueue.invokeLater(() -> {
             new Home().setVisible(true);
         });
