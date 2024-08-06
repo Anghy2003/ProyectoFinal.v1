@@ -6,11 +6,8 @@
 package Vista.Cruds;
 
 import Conexion.Conexion_db;
-import Models.Administrador;
-import Models.Cliente;
 import Models.DetalleFactura_1;
 import Models.Producto;
-import Models.Vendedor;
 import Vista.Menu.VistaMenu;
 import com.db4o.ObjectContainer;
 import com.db4o.ObjectSet;
@@ -97,7 +94,7 @@ public final class pnlReporteProductos extends javax.swing.JPanel {
         System.out.println("Dataset size: " + dataset.getRowCount()); // Verificar tamaño del dataset
 
         JFreeChart chart = ChartFactory.createBarChart3D(
-                "Los 5 Productos mas Vendidos",
+                "Productos mas Vendidos",
                 "Producto",
                 "Cantidad",
                 dataset,
