@@ -8,6 +8,10 @@ public class Administrador extends Persona {
     private Estado estado;
     private String ciudad;
     private byte[] imagenAdmi;
+
+    public void setRol(String administrador) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
  
     
     //haremos que tenga solo dos posibles valores
