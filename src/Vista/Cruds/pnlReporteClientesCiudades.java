@@ -115,6 +115,7 @@ public final class pnlReporteClientesCiudades extends javax.swing.JPanel {
     // Actualizar el panel
     pnlPastel.revalidate();
     pnlPastel.repaint();
+    BaseBD.close();
 }
     
     
