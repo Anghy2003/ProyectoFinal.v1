@@ -387,41 +387,43 @@ public class TablaClientes extends javax.swing.JPanel {
         
          ObjectSet<Cliente> resultado = query.execute();
 
-        Object matriz[][] = new Object[resultado.size()][17];
+        Object matriz[][] = new Object[resultado.size()][7];
         int i = 0;
         for (Cliente cli3 : resultado) {
 
-            matriz[i][0] = String.valueOf(cli3.getiD_Cliente());
-            matriz[i][1] = cli3.getNombreUsuario();
-            matriz[i][2] = cli3.getPassword();
-            matriz[i][3] = cli3.getCedula();
-            matriz[i][4] = cli3.getNombres();
-            matriz[i][5] = cli3.getApellidos();
-            matriz[i][6] = cli3.getDireccion();
-            matriz[i][7] = cli3.getCorreo();
-            matriz[i][8] = cli3.getCorreoRecuperacion();
-            matriz[i][9] = cli3.getCelular();
-            matriz[i][10] = cli3.getFechaNacimiento();
-            matriz[i][11] = cli3.getEstadoCivil();
-            matriz[i][12] = cli3.getGenero();            
-            matriz[i][13] = cli3.getCiudad();
+          //  matriz[i][0] = String.valueOf(cli3.getiD_Cliente());
+           // matriz[i][1] = cli3.getNombreUsuario();
+          //  matriz[i][2] = cli3.getPassword();
+            matriz[i][0] = cli3.getCedula();
+            matriz[i][1] = cli3.getNombres();
+            matriz[i][2] = cli3.getApellidos();
+           // matriz[i][6] = cli3.getDireccion();
+            matriz[i][3] = cli3.getCorreo();
+           // matriz[i][8] = cli3.getCorreoRecuperacion();
+            //matriz[i][9] = cli3.getCelular();
+            //matriz[i][10] = cli3.getFechaNacimiento();
+           // matriz[i][11] = cli3.getEstadoCivil();
+            //matriz[i][12] = cli3.getGenero();            
+            //matriz[i][13] = cli3.getCiudad();
 
             byte[] imagen = cli3.getImagenCli();
             if (imagen != null) {
                 ImageIcon icono = new ImageIcon(new ImageIcon(imagen).getImage().getScaledInstance(50, 50, Image.SCALE_SMOOTH));
-                matriz[i][14] = new JLabel(icono);
+                matriz[i][4] = new JLabel(icono);
             } else {
-                matriz[i][14] = new JLabel("No image");
+                matriz[i][4] = new JLabel("No image");
             }
 
-            matriz[i][15] = String.valueOf(cli3.getEstado());
-            matriz[i][16] = String.valueOf(cli3.getRol());
+            matriz[i][5] = String.valueOf(cli3.getEstado());
+            matriz[i][6] = String.valueOf(cli3.getRol());
             i++;
         }
         //datos configurados
-        tblCliente.setModel(new javax.swing.table.DefaultTableModel(matriz, new String[]{"ID Vendedor", "Usuario", "Contraseña", "Cedula", "Nombres", "Apellidos", "Direccion", "Correo Electronico", "Correo recuperacion", "Celular", "Fecha Nacimiento",
-            "Estado Civil", "Genero", "Ciudad", "Foto", "Estado","Rol"}));
-        tblCliente.getColumnModel().getColumn(14).setCellRenderer(new ImageRenderer());
+//        tblCliente.setModel(new javax.swing.table.DefaultTableModel(matriz, new String[]{"ID Vendedor", "Usuario", "Contraseña", "Cedula", "Nombres", "Apellidos", "Direccion", "Correo Electronico", "Correo recuperacion", "Celular", "Fecha Nacimiento",
+//            "Estado Civil", "Genero", "Ciudad", "Foto", "Estado","Rol"}));
+tblCliente.setModel(new javax.swing.table.DefaultTableModel(matriz, new String[]{  "Cedula", "Nombres", "Apellidos",  "Correo Electronico", 
+            "Foto", "Estado","Rol"}));
+        tblCliente.getColumnModel().getColumn(4).setCellRenderer(new ImageRenderer());
         tblCliente.setRowHeight(100);
         tblCliente.setEnabled(false);
         BaseBD.close();

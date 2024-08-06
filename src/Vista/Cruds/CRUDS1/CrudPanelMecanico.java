@@ -4,6 +4,7 @@ import Conexion.Conexion_db;
 import Models.Ciudad;
 import Models.Mecanico;
 import Models.Mecanico.Estado;
+import Models.Persona;
 import Models.Persona.Rol;
 import Vista.Menu.VistaMenu;
 import Vista.Tables.TablaMecanicos;
@@ -17,6 +18,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
@@ -26,8 +28,8 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class CrudPanelMecanico extends javax.swing.JPanel {
 
-    private byte [] imagenMeca;
-    
+    private byte[] imagenMeca;
+
     public void GuardarMecanico(String titulo, double Sueldo, Mecanico.Estado estado, String ciudad, byte[] imagenMeca, String cedula, String nombres, String apellidos,
             String direccion, String correo, String celular, String genero, String fechaNacimiento, String estadoCivil,
             String nombreUsuario, String password, String correoRecuperacion, Rol rol) {
@@ -36,9 +38,9 @@ public class CrudPanelMecanico extends javax.swing.JPanel {
 
         int siguienteID = obtenerProximoIDMecanico(BaseBD);
 
-        Mecanico mecanico1 = new Mecanico( titulo,  Sueldo,  estado,  ciudad,  imagenMeca,  cedula,  nombres,  apellidos,
-             direccion,  correo,  celular,  genero,  fechaNacimiento,  estadoCivil,
-             nombreUsuario,  password,  correoRecuperacion, rol.MECANICO);
+        Mecanico mecanico1 = new Mecanico(titulo, Sueldo, estado, ciudad, imagenMeca, cedula, nombres, apellidos,
+                direccion, correo, celular, genero, fechaNacimiento, estadoCivil,
+                nombreUsuario, password, correoRecuperacion, rol.MECANICO);
 
         mecanico1.setiD_Mecanico(siguienteID);
         BaseBD.close();
@@ -87,21 +89,23 @@ public class CrudPanelMecanico extends javax.swing.JPanel {
     }
 
     private void mostrarComboCiudad() {
-    ObjectContainer BaseBD = Conexion_db.ConectarBD();
-    
-    Query ciudadbox = BaseBD.query();
-    ciudadbox.constrain(Ciudad.class);
-    ObjectSet<Ciudad> resultado = ciudadbox.execute();
-    
-    for (Ciudad ciudad : resultado) {
-        cbxCiudadMeca.addItem(ciudad.getCiudad());
+        ObjectContainer BaseBD = Conexion_db.ConectarBD();
+
+        Query ciudadbox = BaseBD.query();
+        ciudadbox.constrain(Ciudad.class);
+        ObjectSet<Ciudad> resultado = ciudadbox.execute();
+
+        for (Ciudad ciudad : resultado) {
+            cbxCiudadMeca.addItem(ciudad.getCiudad());
+        }
+
+        BaseBD.close();
     }
-    
-    BaseBD.close();
-}
+
     public CrudPanelMecanico() {
         initComponents();
         mostrarComboCiudad();
+        configurarFechaNacimiento();
 
     }
 
@@ -358,58 +362,79 @@ public class CrudPanelMecanico extends javax.swing.JPanel {
 
         if (!usuarioRepetido) {
 
-            Boolean valido = false;
+            Boolean valido = true;
+            // Verificar que todos los campos no estén vacíos
+            if (txtCedulaMeca.getText().isEmpty()
+                    || txtNombresMeca.getText().isEmpty()
+                    || txtApellidosMeca.getText().isEmpty()
+                    || txtCorreoMeca.getText().isEmpty()
+                    || txtCelularMeca.getText().isEmpty()
+                    || txtTituloMeca.getText().isEmpty()
+                    || txtSueldoMeca.getText().isEmpty()
+                    || txtDireccionMeca.getText().isEmpty()
+                    || txtPasswordMeca.getText().isEmpty()
+                    || jDateFechaNacMeca.getDate() == null) {
+                valido = false;
+                JOptionPane.showMessageDialog(null, "Por favor, complete todos los campos.");
 
-            Date fechaNacimientoDate = jDateFechaNacMeca.getDate(); // Obtener la fecha de nacimiento del JDateChooser
+            }
 
-            // Formatear la fecha como String en el formato deseado (por ejemplo, "dd/MM/yyyy")
-            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-            String fechaNacimiento = sdf.format(fechaNacimientoDate);
+            if (valido) {
 
-            if (valido = txtCedulaMeca.getText().matches("\\d{10}")) {
-                if (valido = txtNombresMeca.getText().toUpperCase().matches("^[a-zA-Z]+(?:\\s[a-zA-Z]+)?$")) {
-                    if (valido = txtApellidosMeca.getText().toUpperCase().matches("^[a-zA-Z]+(?:\\s[a-zA-Z]+)?$")) {
-                        if (valido = txtCorreoMeca.getText().matches("^[\\w.-]+@[\\w.-]+\\.[a-zA-Z]{2,6}$")) {
-                            if (valido = txtCelularMeca.getText().matches("^09\\d{8}$")) {
-                                
-                                if (imagenMeca == null) {
-                                try {
-                                    File imagenPredeterminada = new File("C:\\BasedeDatos\\defectousuario\\imagenDefecto.jpg");
-                                    imagenMeca = leerImagen(imagenPredeterminada);
-                                } catch (IOException e) {
-                                    JOptionPane.showMessageDialog(null, "Error al cargar la imagen predeterminada: " + e.getMessage());
-                                }
-                            }
+                Date fechaNacimientoDate = jDateFechaNacMeca.getDate(); // Obtener la fecha de nacimiento del JDateChooser
 
-                                GuardarMecanico(txtTituloMeca.getText().toUpperCase(), Double.parseDouble(txtSueldoMeca.getText()), Mecanico.Estado.ACTIVO,(String)cbxCiudadMeca.getSelectedItem(),imagenMeca, txtCedulaMeca.getText(), txtNombresMeca.getText().toUpperCase(),
-                                        txtApellidosMeca.getText().toUpperCase(), txtDireccionMeca.getText().toUpperCase(), txtCorreoMeca.getText(), txtCelularMeca.getText(),
-                                        (String) cbxGeneroMeca.getSelectedItem(), fechaNacimiento, (String) cbxEstadoCivilMeca.getSelectedItem(), txtCedulaMeca.getText(), txtPasswordMeca.getText(),
-                                        txtCorreoMeca.getText(),Rol.MECANICO);
-                                     
+                // Formatear la fecha como String en el formato deseado (por ejemplo, "dd/MM/yyyy")
+                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+                String fechaNacimiento = sdf.format(fechaNacimientoDate);
+
+                if (Persona.validarCedula(txtCedulaMeca.getText())) {
+                    if (valido = txtNombresMeca.getText().toUpperCase().matches("^[a-zA-Z]+(?:\\s[a-zA-Z]+)?$")) {
+                        if (valido = txtApellidosMeca.getText().toUpperCase().matches("^[a-zA-Z]+(?:\\s[a-zA-Z]+)?$")) {
+                            if (valido = txtCorreoMeca.getText().matches("^[\\w.-]+@[\\w.-]+\\.[a-zA-Z]{2,6}$")) {
+                                if (valido = txtCelularMeca.getText().matches("^09\\d{8}$")) {
+                                    if (valido = txtSueldoMeca.getText().matches("^\\d+(\\.\\d{1,2})?$")) {
+
+                                        if (imagenMeca == null) {
+                                            try {
+                                                File imagenPredeterminada = new File("C:\\BasedeDatos\\defectousuario\\imagenDefecto.jpg");
+                                                imagenMeca = leerImagen(imagenPredeterminada);
+                                            } catch (IOException e) {
+                                                JOptionPane.showMessageDialog(null, "Error al cargar la imagen predeterminada: " + e.getMessage());
+                                            }
+                                        }
+
+                                        GuardarMecanico(txtTituloMeca.getText().toUpperCase(), Double.parseDouble(txtSueldoMeca.getText()), Mecanico.Estado.ACTIVO, (String) cbxCiudadMeca.getSelectedItem(), imagenMeca, txtCedulaMeca.getText(), txtNombresMeca.getText().toUpperCase(),
+                                                txtApellidosMeca.getText().toUpperCase(), txtDireccionMeca.getText().toUpperCase(), txtCorreoMeca.getText(), txtCelularMeca.getText(),
+                                                (String) cbxGeneroMeca.getSelectedItem(), fechaNacimiento, (String) cbxEstadoCivilMeca.getSelectedItem(), txtCedulaMeca.getText(), txtPasswordMeca.getText(),
+                                                txtCorreoMeca.getText(), Rol.MECANICO);
+
                                         cambiartabla();
 
-                            } else {
-                                JOptionPane.showMessageDialog(null, "Ingrese un celular valido");
-                            }
+                                    } else {
+                                        JOptionPane.showMessageDialog(null, "Ingrese un sueldo valido");
+                                    }
 
+                                } else {
+                                    JOptionPane.showMessageDialog(null, "Ingrese un celular valido");
+                                }
+
+                            } else {
+                                JOptionPane.showMessageDialog(null, "Ingrese un correo valido");
+                            }
                         } else {
-                            JOptionPane.showMessageDialog(null, "Ingrese un correo valida");
+                            JOptionPane.showMessageDialog(null, "Ingrese un apellido valido");
                         }
+
                     } else {
-                        JOptionPane.showMessageDialog(null, "Ingrese un apellido valido");
+                        JOptionPane.showMessageDialog(null, "Ingrese un nombre valido");
                     }
 
                 } else {
-                    JOptionPane.showMessageDialog(null, "Ingrese un nombre valido");
+                    JOptionPane.showMessageDialog(null, "Ingrese una cedula valida");
                 }
-
-            } else {
-                JOptionPane.showMessageDialog(null, "Ingrese una cedula valida");
             }
-
         }
 
-       
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
@@ -424,7 +449,7 @@ public class CrudPanelMecanico extends javax.swing.JPanel {
     private void btnSeleccionarImgen1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSeleccionarImgen1ActionPerformed
 
         JFileChooser jFileChooser = new JFileChooser();
-        FileNameExtensionFilter filtrado = new FileNameExtensionFilter("JPG", "jpg" );
+        FileNameExtensionFilter filtrado = new FileNameExtensionFilter("JPG", "jpg");
         jFileChooser.setFileFilter(filtrado);
 
         int respuesta = jFileChooser.showOpenDialog(this);
@@ -462,7 +487,7 @@ public class CrudPanelMecanico extends javax.swing.JPanel {
             return baos.toByteArray();
         }
     }
-    
+
     private void ShowpanelCruds(JPanel p) {
         p.setSize(870, 630);
         p.setLocation(0, 0);
@@ -470,6 +495,20 @@ public class CrudPanelMecanico extends javax.swing.JPanel {
         VistaMenu.PanelPrincipal.add(p, BorderLayout.CENTER);
         VistaMenu.PanelPrincipal.revalidate();
         VistaMenu.PanelPrincipal.repaint();
+    }
+
+    private void configurarFechaNacimiento() {
+        Calendar calendar = Calendar.getInstance();
+        // Obtener la fecha actual
+        Date fechaActual = calendar.getTime();
+
+        // Calcular la fecha máxima permitida (fecha actual menos 18 años)
+        calendar.add(Calendar.YEAR, -18);
+        Date fechaMaxima = calendar.getTime();
+
+        // Establecer el rango de fechas permitido en el JDateChooser
+        jDateFechaNacMeca.setMaxSelectableDate(fechaMaxima);
+        jDateFechaNacMeca.setMinSelectableDate(null); // Si no deseas establecer una fecha mínima, puedes dejar esto como null
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

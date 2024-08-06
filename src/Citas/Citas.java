@@ -26,12 +26,16 @@ import java.util.Date;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
 
 public class Citas extends javax.swing.JPanel {
 
     public Citas() {
         initComponents();
+        mostrarTablaServicios();
+        txtcodigoCita.setEnabled(false);
         txtdireccionCli.setEnabled(false);
         txtNombreCli.setEnabled(false);
         txtCelularCli.setEnabled(false);
@@ -62,6 +66,7 @@ public class Citas extends javax.swing.JPanel {
         txtBuscarServicio = new rojeru_san.RSMTextFull();
         jLabel8 = new javax.swing.JLabel();
         btnBuscarServicio = new rsbuttongradiente.RSButtonGradiente();
+        btnInsetarServicios = new rsbuttongradiente.RSButtonGradiente();
         jPanel4 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         lblDireccion = new javax.swing.JLabel();
@@ -127,23 +132,15 @@ public class Citas extends javax.swing.JPanel {
         tblServicios.setFont(new java.awt.Font("Roboto Medium", 0, 14)); // NOI18N
         tblServicios.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null},
-                {null, null, null, null, null}
+                {},
+                {},
+                {},
+                {}
             },
             new String [] {
-                "Cedula", "Nombre ", "Apellido", "Direccion", "Telefono"
-            }
-        ) {
-            boolean[] canEdit = new boolean [] {
-                false, false, false, false, false
-            };
 
-            public boolean isCellEditable(int rowIndex, int columnIndex) {
-                return canEdit [columnIndex];
             }
-        });
+        ));
         jScrollPane5.setViewportView(tblServicios);
 
         txtBuscarServicio.setFont(new java.awt.Font("Roboto Bold", 2, 14)); // NOI18N
@@ -163,6 +160,17 @@ public class Citas extends javax.swing.JPanel {
             }
         });
 
+        btnInsetarServicios.setText("Insertar");
+        btnInsetarServicios.setColorPrimario(new java.awt.Color(0, 153, 51));
+        btnInsetarServicios.setColorPrimarioHover(new java.awt.Color(0, 204, 102));
+        btnInsetarServicios.setColorSecundario(new java.awt.Color(0, 255, 51));
+        btnInsetarServicios.setColorSecundarioHover(new java.awt.Color(153, 204, 255));
+        btnInsetarServicios.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnInsetarServiciosActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel10Layout = new javax.swing.GroupLayout(jPanel10);
         jPanel10.setLayout(jPanel10Layout);
         jPanel10Layout.setHorizontalGroup(
@@ -179,8 +187,10 @@ public class Citas extends javax.swing.JPanel {
                                 .addGap(39, 39, 39)
                                 .addComponent(txtBuscarServicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(btnBuscarServicio, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 374, Short.MAX_VALUE)))
+                                .addComponent(btnBuscarServicio, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnInsetarServicios, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 254, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel10Layout.setVerticalGroup(
@@ -193,7 +203,9 @@ public class Citas extends javax.swing.JPanel {
                         .addGap(12, 12, 12)
                         .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(txtBuscarServicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnBuscarServicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(jPanel10Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(btnBuscarServicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(btnInsetarServicios, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(jPanel10Layout.createSequentialGroup()
                         .addGap(26, 26, 26)
                         .addComponent(jLabel8)))
@@ -266,7 +278,7 @@ public class Citas extends javax.swing.JPanel {
         });
         jScrollPane1.setViewportView(JtableCita);
 
-        jPanel3.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 400, 570, 80));
+        jPanel3.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 400, 720, 80));
 
         btnNuevo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/registro (1)_1.png"))); // NOI18N
         btnNuevo.addActionListener(new java.awt.event.ActionListener() {
@@ -523,7 +535,11 @@ public class Citas extends javax.swing.JPanel {
     }//GEN-LAST:event_btnFinalizarCitaActionPerformed
 
     private void btnAñadirServicosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAñadirServicosActionPerformed
-
+if (txtCelularCli.getText().trim().isEmpty()) {
+    JOptionPane.showMessageDialog(this, "AGREGUE LOS DATOS DEL CLIENTE");
+} else {
+    activarJadialogser(TablaServicios);
+}
 
     }//GEN-LAST:event_btnAñadirServicosActionPerformed
 
@@ -569,8 +585,13 @@ public class Citas extends javax.swing.JPanel {
     }//GEN-LAST:event_btnBuscarServicioActionPerformed
 
     private void btnFinalizarCita1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFinalizarCita1ActionPerformed
-        // TODO add your handling code here:
+        guardarCita();
     }//GEN-LAST:event_btnFinalizarCita1ActionPerformed
+
+    private void btnInsetarServiciosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInsetarServiciosActionPerformed
+        seteardatosSer();
+        
+    }//GEN-LAST:event_btnInsetarServiciosActionPerformed
 
     public final int verificarExistenciaCliente() {
         Boolean encontrado = false;
@@ -839,7 +860,7 @@ public class Citas extends javax.swing.JPanel {
         String cedulaMec = txtcedulaMeca.getText();
         String placa = txtPlacaVehi.getText();
 
-        // Crear el encabezado de la factura
+        // Crear el encabezado de la cita
         EncabezadoCita cita1 = new EncabezadoCita(codigoCita, fecha, cedulaCli, cedulaMec, placa);
 
         // Guardar el encabezado y los detalles en la base de datos
@@ -849,6 +870,7 @@ public class Citas extends javax.swing.JPanel {
         // Guardar los detalles de la cita
         for (int i = 0; i < model.getRowCount(); i++) {
             String codigo = model.getValueAt(i, 0).toString();
+            
             double precio = Double.parseDouble(model.getValueAt(i, 1).toString());
 
             // Crear el detalle de la cita con nombre del servicio y precio
@@ -864,7 +886,89 @@ public class Citas extends javax.swing.JPanel {
 
     }
 
+//Servicios 
+    private void mostrarTablaServicios() {
+        ObjectContainer BaseBD = Conexion_db.ConectarBD();
+        Servicios servicio = new Servicios();
+        ObjectSet<Servicios> resul = BaseBD.get(servicio);
 
+        String[][] matriz = new String[resul.size()][8];
+
+        int i = 0;
+        while (resul.hasNext()) {
+            Servicios serv = resul.next();
+
+            matriz[i][0] = serv.getCodigo_Servicio();
+            matriz[i][1] = serv.getNombre_Servicio();
+            matriz[i][2] = String.valueOf(serv.getPrecioTotal_Servicio());
+
+            i++;
+        }
+
+        tblServicios.setModel(new javax.swing.table.DefaultTableModel(
+                matriz,
+                new String[]{
+                    "Código Servicio", "Nombre Servicio", "Precio Total"}));
+        BaseBD.close();
+    }
+
+    private void activarJadialogser(JDialog TablaServicios) {
+
+        TablaServicios.setTitle("Listado Servicios");
+        TablaServicios.setSize(680, 330);
+        TablaServicios.setLocationRelativeTo(this);
+        TablaServicios.setVisible(true);
+}
+    
+    
+    private void filtrarTablaServicios(String consulta) {
+    DefaultTableModel modelo = (DefaultTableModel) tblServicios.getModel();
+    TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(modelo);
+    tblServicios.setRowSorter(sorter);
+
+    if (consulta.trim().isEmpty()) {
+        sorter.setRowFilter(null);
+    } else {
+        sorter.setRowFilter(RowFilter.regexFilter("(?i)" + consulta));
+    }
+
+    // Selecciona automáticamente la primera fila filtrada
+    if (tblServicios.getRowCount() > 0) {
+        tblServicios.setRowSelectionInterval(0, 0);
+    }
+}
+   public void seteardatosSer() {
+    int filaSeleccionada = tblServicios.getSelectedRow();
+    if (filaSeleccionada != -1) {
+        int filaModelo = tblServicios.convertRowIndexToModel(filaSeleccionada);
+        String codigoServicio = (String) tblServicios.getModel().getValueAt(filaModelo, 0);
+        String nombreServicio = (String) tblServicios.getModel().getValueAt(filaModelo, 1);
+        String precioServicio = (String) tblServicios.getModel().getValueAt(filaModelo, 2);
+
+        String numerodevehiculos = "";
+        boolean esValido = false;
+
+        while (!esValido) {
+            numerodevehiculos = JOptionPane.showInputDialog("Ingrese el número de vehículos a los que se les realizó el servicio");
+            if (numerodevehiculos != null && numerodevehiculos.matches("\\d+")) {
+                esValido = true;
+                TablaServicios.dispose();
+            } else {
+                JOptionPane.showMessageDialog(null, "Por favor ingrese solo dígitos.");
+            }
+        }
+
+        DefaultTableModel modeloCita = (DefaultTableModel) JtableCita.getModel();
+        modeloCita.addRow(new Object[]{codigoServicio, nombreServicio, precioServicio, numerodevehiculos});
+
+        // Limpia la selección de la tabla
+        tblServicios.clearSelection();
+        tblServicios.setVisible(true);
+
+    } else {
+        JOptionPane.showMessageDialog(null, "No se seleccionó ningún producto");
+    }
+}
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable JtableCita;
     private javax.swing.JDialog TablaServicios;
@@ -876,6 +980,7 @@ public class Citas extends javax.swing.JPanel {
     private javax.swing.JButton btnCancelar;
     private rojeru_san.RSButton btnFinalizarCita;
     private rojeru_san.RSButton btnFinalizarCita1;
+    private rsbuttongradiente.RSButtonGradiente btnInsetarServicios;
     private javax.swing.JButton btnNuevo;
     private javax.swing.JButton btnResibo;
     private javax.swing.JButton btnSalir;

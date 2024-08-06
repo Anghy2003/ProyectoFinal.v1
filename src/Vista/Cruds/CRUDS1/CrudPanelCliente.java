@@ -1,13 +1,11 @@
-
 package Vista.Cruds.CRUDS1;
 
 import Conexion.Conexion_db;
 import Models.Ciudad;
 import Models.Cliente;
 import Models.Cliente.Estado;
+import Models.Persona;
 import Models.Persona.Rol;
-
-
 
 import Vista.Menu.VistaMenu;
 import Vista.Tables.TablaClientes;
@@ -29,23 +27,20 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
-
-
 public class CrudPanelCliente extends javax.swing.JPanel {
-    
-    
-    private byte [] imagenCli;
 
-     public void GuardarCliente(  Estado estado, String ciudad, byte[] imagenCli, String cedula, String nombres, String apellidos, String direccion,
-            String correo, String celular, String genero, String fechaNacimiento, String estadoCivil, String nombreUsuario, String password, String correoRecuperacion,  Rol rol) {
+    private byte[] imagenCli;
+
+    public void GuardarCliente(Estado estado, String ciudad, byte[] imagenCli, String cedula, String nombres, String apellidos, String direccion,
+            String correo, String celular, String genero, String fechaNacimiento, String estadoCivil, String nombreUsuario, String password, String correoRecuperacion, Rol rol) {
 
         ObjectContainer BaseBD = Conexion_db.ConectarBD();
-        
+
         int siguienteID = obtenerProximoIDCliente(BaseBD);
-        
-        Cliente cliente1 = new Cliente(estado,  ciudad,  imagenCli,  cedula,  nombres,  apellidos,  direccion,  correo,  celular,
-             genero,  fechaNacimiento,  estadoCivil,  nombreUsuario,  password,  correoRecuperacion, rol );
-      
+
+        Cliente cliente1 = new Cliente(estado, ciudad, imagenCli, cedula, nombres, apellidos, direccion, correo, celular,
+                genero, fechaNacimiento, estadoCivil, nombreUsuario, password, correoRecuperacion, rol);
+
         cliente1.setiD_Cliente(siguienteID);
         BaseBD.close();
 
@@ -53,7 +48,7 @@ public class CrudPanelCliente extends javax.swing.JPanel {
 
             BaseBD = Conexion_db.ConectarBD();
             BaseBD.set(cliente1);
-           BaseBD.close();
+            BaseBD.close();
 
             JOptionPane.showMessageDialog(this, "Cliente Guardado");
 
@@ -65,51 +60,51 @@ public class CrudPanelCliente extends javax.swing.JPanel {
 
     public final int VerificarClienteRepetidos() {
 
-        ObjectContainer BaseBD = Conexion_db.ConectarBD();        
+        ObjectContainer BaseBD = Conexion_db.ConectarBD();
         Query cliente = BaseBD.query();
         cliente.constrain(Cliente.class);
         cliente.descend("cedula").constrain(txtCedulaCli.getText());
         ObjectSet<Cliente> resultado = cliente.execute();
-        
+
         int coincidencias = resultado.size();
-        
+
         BaseBD.close();
         return coincidencias;
-        
+
     }
 
     // Método para obtener el próximo ID_Vendedor disponible
     private int obtenerProximoIDCliente(ObjectContainer db) {
-    // Consultar el máximo ID_Vendedor almacenado en la base de datos
-    ObjectSet<Cliente> result = db.queryByExample(Cliente.class);
-    int maxID = 0;
-    while (result.hasNext()) {
-        Cliente cliente = result.next();
-        if (cliente.getiD_Cliente() > maxID) {
-            maxID = cliente.getiD_Cliente();
+        // Consultar el máximo ID_Vendedor almacenado en la base de datos
+        ObjectSet<Cliente> result = db.queryByExample(Cliente.class);
+        int maxID = 0;
+        while (result.hasNext()) {
+            Cliente cliente = result.next();
+            if (cliente.getiD_Cliente() > maxID) {
+                maxID = cliente.getiD_Cliente();
+            }
         }
+        // El próximo ID es el máximo + 1
+        return maxID + 1;
     }
-    // El próximo ID es el máximo + 1
-    return maxID + 1;
-}
+
     private void mostrarComboCiudad() {
-    ObjectContainer BaseBD = Conexion_db.ConectarBD();
-    
-    Query ciudadbox = BaseBD.query();
-    ciudadbox.constrain(Ciudad.class);
-    ObjectSet<Ciudad> resultado = ciudadbox.execute();
-    
-    for (Ciudad ciudad : resultado) {
-        cbxCiudadCli.addItem(ciudad.getCiudad());
+        ObjectContainer BaseBD = Conexion_db.ConectarBD();
+
+        Query ciudadbox = BaseBD.query();
+        ciudadbox.constrain(Ciudad.class);
+        ObjectSet<Ciudad> resultado = ciudadbox.execute();
+
+        for (Ciudad ciudad : resultado) {
+            cbxCiudadCli.addItem(ciudad.getCiudad());
+        }
+
+        BaseBD.close();
     }
-    
-    BaseBD.close();
-}
-    
-    
+
     public CrudPanelCliente() {
         initComponents();
-        mostrarComboCiudad(); 
+        mostrarComboCiudad();
     }
 
 //    @SuppressWarnings("unchecked")
@@ -360,14 +355,14 @@ public class CrudPanelCliente extends javax.swing.JPanel {
 
 
     private void btnGuardarCliMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnGuardarCliMouseClicked
-        
+
     }//GEN-LAST:event_btnGuardarCliMouseClicked
 
     public void cambiartabla() {
         TablaClientes tblCli = new TablaClientes();
         ShowpanelCruds(tblCli);
     }
-    
+
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         boolean usuarioRepetido = false;
 
@@ -378,55 +373,65 @@ public class CrudPanelCliente extends javax.swing.JPanel {
 
         if (!usuarioRepetido) {
 
-            Boolean valido = false;
+            Boolean valido = true;
 
-            Date fechaNacimientoDate = jDateFechaNacCli.getDate(); // Obtener la fecha de nacimiento del JDateChooser
+            // Verificar si algún campo está vacío
+            if (txtCedulaCli.getText().trim().isEmpty()
+                    || txtNombresCli.getText().trim().isEmpty()
+                    || txtApellidosCli.getText().trim().isEmpty()
+                    || txtCorreoCli.getText().trim().isEmpty()
+                    || txtCelularCli.getText().trim().isEmpty()
+                    || txtDireccionCli.getText().trim().isEmpty()
+                    || txtPasswordCli.getText().trim().isEmpty()
+                    || jDateFechaNacCli.getDate() == null) {
 
-            // Formatear la fecha como String en el formato deseado (por ejemplo, "dd/MM/yyyy")
-            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-            String fechaNacimiento = sdf.format(fechaNacimientoDate);
-
-            if (valido = txtCedulaCli.getText().matches("\\d{10}")) {
-                if (valido = txtNombresCli.getText().toUpperCase().matches("^[a-zA-Z]+(?:\\s[a-zA-Z]+)?$")) {
-                    if (valido = txtApellidosCli.getText().toUpperCase().matches("^[a-zA-Z]+(?:\\s[a-zA-Z]+)?$")) {
-                        if (valido = txtCorreoCli.getText().matches("^[\\w.-]+@[\\w.-]+\\.[a-zA-Z]{2,6}$")) {
-                            if (valido = txtCelularCli.getText().matches("^09\\d{8}$")) {
-                                
-                                if (imagenCli == null) {
-                                try {
-                                    File imagenPredeterminada = new File("C:\\BasedeDatos\\defectousuario\\imagenDefecto.jpg");
-                                    imagenCli = leerImagen(imagenPredeterminada);
-                                } catch (IOException e) {
-                                    JOptionPane.showMessageDialog(null, "Error al cargar la imagen predeterminada: " + e.getMessage());
-                                }
-                            }
-
-                                GuardarCliente(Estado.ACTIVO,(String)cbxCiudadCli.getSelectedItem(),imagenCli,txtCedulaCli.getText(), txtNombresCli.getText().toUpperCase().toUpperCase(), txtApellidosCli.getText().toUpperCase(),
-                                    txtDireccionCli.getText().toUpperCase(), txtCorreoCli.getText(),txtCelularCli.getText(), (String) cbxGeneroCli.getSelectedItem(), fechaNacimiento, (String) cbxEstadoCivilCli.getSelectedItem(),
-                                    txtCedulaCli.getText(), txtPasswordCli.getText(), txtCorreoCli.getText(), Rol.CLIENTE);
-                                    JOptionPane.showMessageDialog(null, "Cliente Guardado");
-                                    cambiartabla();
-                                
-
-                            } else {
-                                JOptionPane.showMessageDialog(null, "Ingrese un celular valido");
-                            }
-
-                        } else {
-                            JOptionPane.showMessageDialog(null, "Ingrese un correo valida");
-                        }
-                    } else {
-                        JOptionPane.showMessageDialog(null, "Ingrese un apellido valido");
-                    }
-
-                } else {
-                    JOptionPane.showMessageDialog(null, "Ingrese un nombre valido");
-                }
-
-            } else {
-                JOptionPane.showMessageDialog(null, "Ingrese una cedula valida");
+                JOptionPane.showMessageDialog(null, "Todos los campos deben ser llenados");
+                valido = false;
             }
 
+            if (valido) {
+                Date fechaNacimientoDate = jDateFechaNacCli.getDate(); // Obtener la fecha de nacimiento del JDateChooser
+
+                // Formatear la fecha como String en el formato deseado (por ejemplo, "dd/MM/yyyy")
+                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+                String fechaNacimiento = sdf.format(fechaNacimientoDate);
+
+                if (Persona.validarCedula(txtCedulaCli.getText())) {
+                    if (valido = txtNombresCli.getText().toUpperCase().matches("^[a-zA-Z]+(?:\\s[a-zA-Z]+)?$")) {
+                        if (valido = txtApellidosCli.getText().toUpperCase().matches("^[a-zA-Z]+(?:\\s[a-zA-Z]+)?$")) {
+                            if (valido = txtCorreoCli.getText().matches("^[\\w.-]+@[\\w.-]+\\.[a-zA-Z]{2,6}$")) {
+                                if (valido = txtCelularCli.getText().matches("^09\\d{8}$")) {
+
+                                    if (imagenCli == null) {
+                                        try {
+                                            File imagenPredeterminada = new File("C:\\BasedeDatos\\defectousuario\\imagenDefecto.jpg");
+                                            imagenCli = leerImagen(imagenPredeterminada);
+                                        } catch (IOException e) {
+                                            JOptionPane.showMessageDialog(null, "Error al cargar la imagen predeterminada: " + e.getMessage());
+                                        }
+                                    }
+
+                                    GuardarCliente(Estado.ACTIVO, (String) cbxCiudadCli.getSelectedItem(), imagenCli, txtCedulaCli.getText(), txtNombresCli.getText().toUpperCase().toUpperCase(), txtApellidosCli.getText().toUpperCase(),
+                                            txtDireccionCli.getText().toUpperCase(), txtCorreoCli.getText(), txtCelularCli.getText(), (String) cbxGeneroCli.getSelectedItem(), fechaNacimiento, (String) cbxEstadoCivilCli.getSelectedItem(),
+                                            txtCedulaCli.getText(), txtPasswordCli.getText(), txtCorreoCli.getText(), Rol.CLIENTE);
+
+                                    cambiartabla();
+                                } else {
+                                    JOptionPane.showMessageDialog(null, "Ingrese un celular valido");
+                                }
+                            } else {
+                                JOptionPane.showMessageDialog(null, "Ingrese un correo valido");
+                            }
+                        } else {
+                            JOptionPane.showMessageDialog(null, "Ingrese un apellido valido");
+                        }
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Ingrese un nombre valido");
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(null, "Ingrese una cedula valida");
+                }
+            }
         }
     }//GEN-LAST:event_btnGuardarActionPerformed
 
@@ -448,17 +453,17 @@ public class CrudPanelCliente extends javax.swing.JPanel {
     }//GEN-LAST:event_txtPasswordCliActionPerformed
 
     private void btnSeleccionarImgen1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSeleccionarImgen1ActionPerformed
-        
+
         JFileChooser jFileChooser = new JFileChooser();
         FileNameExtensionFilter filtrado = new FileNameExtensionFilter("JPG", "jpg");
         jFileChooser.setFileFilter(filtrado);
-        
+
         int respuesta = jFileChooser.showOpenDialog(this);
-        
+
         if (respuesta == JFileChooser.APPROVE_OPTION) {
             File archivoImagen = jFileChooser.getSelectedFile();
             String Ruta = archivoImagen.getPath();
-            
+
             try {
                 // Leer la imagen y convertirla a un array de bytes
                 imagenCli = leerImagen(archivoImagen);
@@ -476,7 +481,7 @@ public class CrudPanelCliente extends javax.swing.JPanel {
     private void cbxCiudadCliActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxCiudadCliActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_cbxCiudadCliActionPerformed
-   
+
     //transforma la imagen en bytes
     private byte[] leerImagen(File archivoImagen) throws IOException {
         try ( ByteArrayOutputStream baos = new ByteArrayOutputStream();  FileInputStream fis = new FileInputStream(archivoImagen)) {
@@ -488,7 +493,7 @@ public class CrudPanelCliente extends javax.swing.JPanel {
             return baos.toByteArray();
         }
     }
-    
+
     private void ShowpanelCruds(JPanel p) {
         p.setSize(870, 630);
         p.setLocation(0, 0);
@@ -497,6 +502,7 @@ public class CrudPanelCliente extends javax.swing.JPanel {
         VistaMenu.PanelPrincipal.revalidate();
         VistaMenu.PanelPrincipal.repaint();
     }
+
     public static class JPanel1 extends JPanel {
         //...
     }
@@ -505,7 +511,6 @@ public class CrudPanelCliente extends javax.swing.JPanel {
         return new JPanel1();
     }
 
-    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel Cedula_Cli;

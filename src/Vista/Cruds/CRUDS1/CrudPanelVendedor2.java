@@ -2,6 +2,7 @@ package Vista.Cruds.CRUDS1;
 
 import Conexion.Conexion_db;
 import Models.Ciudad;
+import Models.Persona;
 import Models.Persona.Rol;
 import Models.Vendedor;
 import Models.Vendedor.Estado;
@@ -17,6 +18,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
@@ -25,30 +27,46 @@ import javax.swing.JPanel;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class CrudPanelVendedor2 extends javax.swing.JPanel {
-    
-    private byte [] imagenVende;
+
+    private byte[] imagenVende;
     private String BuscarVendedor;
-    
+
     public CrudPanelVendedor2(String receivedString) {
         this.BuscarVendedor = receivedString;
         initComponents();
         Vendedorbuscar();
         mostrarComboCiudad();
+        configurarFechaNacimiento();
     }
-private void mostrarComboCiudad() {
-    ObjectContainer BaseBD = Conexion_db.ConectarBD();
-    
-    Query ciudadbox = BaseBD.query();
-    ciudadbox.constrain(Ciudad.class);
-    ObjectSet<Ciudad> resultado = ciudadbox.execute();
-    
-    for (Ciudad ciudad : resultado) {
-        cbxCiudadVende.addItem(ciudad.getCiudad());
+
+    private void configurarFechaNacimiento() {
+        Calendar calendar = Calendar.getInstance();
+        // Obtener la fecha actual
+        Date fechaActual = calendar.getTime();
+
+        // Calcular la fecha máxima permitida (fecha actual menos 18 años)
+        calendar.add(Calendar.YEAR, -18);
+        Date fechaMaxima = calendar.getTime();
+
+        // Establecer el rango de fechas permitido en el JDateChooser
+        jDateFechaNacVende.setMaxSelectableDate(fechaMaxima);
+        jDateFechaNacVende.setMinSelectableDate(null); // Si no deseas establecer una fecha mínima, puedes dejar esto como null
     }
-    
-    BaseBD.close();
-}
-    
+
+    private void mostrarComboCiudad() {
+        ObjectContainer BaseBD = Conexion_db.ConectarBD();
+
+        Query ciudadbox = BaseBD.query();
+        ciudadbox.constrain(Ciudad.class);
+        ObjectSet<Ciudad> resultado = ciudadbox.execute();
+
+        for (Ciudad ciudad : resultado) {
+            cbxCiudadVende.addItem(ciudad.getCiudad());
+        }
+
+        BaseBD.close();
+    }
+
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -310,60 +328,82 @@ private void mostrarComboCiudad() {
     private void btnCancelarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCancelarMouseClicked
 
     }//GEN-LAST:event_btnCancelarMouseClicked
-     public void cambiartabla() {
+    public void cambiartabla() {
         TablaVendedores tblvende = new TablaVendedores();
         ShowpanelCruds(tblvende);
     }
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
-        
-        Boolean valido = false;
-        
-        Date fechaNacimientoDate = jDateFechaNacVende.getDate(); // Obtener la fecha de nacimiento del JDateChooser
 
-        // Formatear la fecha como String en el formato deseado (por ejemplo, "dd/MM/yyyy")
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-        String fechaNacimiento = sdf.format(fechaNacimientoDate);
-        
-        if (valido = txtCedulaVende.getText().matches("\\d{10}")) {
-            if (valido = txtNombresVende.getText().toUpperCase().matches("^[a-zA-Z]+(?:\\s[a-zA-Z]+)?$")) {
-                if (valido = txtApellidosVende.getText().toUpperCase().matches("^[a-zA-Z]+(?:\\s[a-zA-Z]+)?$")) {
-                    if (valido = txtCorreoVende.getText().matches("^[\\w.-]+@[\\w.-]+\\.[a-zA-Z]{2,6}$")) {
-                        if (valido = txtCelularVende.getText().matches("^09\\d{8}$")) {
-                            
-                            modificarVendedor(Double.parseDouble(txtSueldoVende.getText()), Double.parseDouble(txtComicionesVende.getText()), Integer.parseInt(txtNumeroVentasVende.getText()), Estado.ACTIVO,
-                                        (String)cbxCiudadVende.getSelectedItem(),imagenVende,txtCedulaVende.getText(), txtNombresVende.getText().toUpperCase(), txtApellidosVende.getText().toUpperCase(), txtDireccionVende.getText().toUpperCase(),
-                                        txtCorreoVende.getText(), txtCelularVende.getText(), (String) cbxGeneroVende.getSelectedItem(), fechaNacimiento, (String) cbxEstadoCivilVende.getSelectedItem(),
-                                        txtCedulaVende.getText(), txtPasswordVende.getText(), txtCorreoVende.getText(),Rol.VENDEDOR);
-                            JOptionPane.showMessageDialog(null, "Modificacion Correcta");
-                            cambiartabla();
-                            
-                            
-                        } else {
-                            JOptionPane.showMessageDialog(null, "Ingrese un celular valido");
-                        }
-                        
-                    } else {
-                        JOptionPane.showMessageDialog(null, "Ingrese un correo valida");
-                    }
-                    
-                } else {
-                    JOptionPane.showMessageDialog(null, "Ingrese un apellido valido");
-                }
-                
-            } else {
-                JOptionPane.showMessageDialog(null, "Ingrese un nombre valido");
-            }
-            
-        } else {
-            JOptionPane.showMessageDialog(null, "Ingrese una cedula valida");
+        if (txtCedulaVende.getText().isEmpty()
+                || txtNombresVende.getText().isEmpty()
+                || txtApellidosVende.getText().isEmpty()
+                || txtCorreoVende.getText().isEmpty()
+                || txtCelularVende.getText().isEmpty()
+                || txtSueldoVende.getText().isEmpty()
+                || txtComicionesVende.getText().isEmpty()
+                || txtNumeroVentasVende.getText().isEmpty()
+                || txtDireccionVende.getText().isEmpty()
+                || txtPasswordVende.getText().isEmpty()
+                || jDateFechaNacVende.getDate() == null) {
+
+            JOptionPane.showMessageDialog(null, "Por favor, complete todos los campos.");
+            return; // Detener la ejecución si algún campo está vacío
         }
-        
 
+        Boolean valido = true;
+
+            Date fechaNacimientoDate = jDateFechaNacVende.getDate(); // Obtener la fecha de nacimiento del JDateChooser
+
+            // Formatear la fecha como String en el formato deseado (por ejemplo, "dd/MM/yyyy")
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+            String fechaNacimiento = sdf.format(fechaNacimientoDate);
+
+            if (Persona.validarCedula(txtCedulaVende.getText())) {
+                if (valido = txtNombresVende.getText().toUpperCase().matches("^[a-zA-Z]+(?:\\s[a-zA-Z]+)?$")) {
+                    if (valido = txtApellidosVende.getText().toUpperCase().matches("^[a-zA-Z]+(?:\\s[a-zA-Z]+)?$")) {
+
+                        if (valido = txtCorreoVende.getText().matches("^[\\w.-]+@[\\w.-]+\\.[a-zA-Z]{2,6}$")) {
+                            if (valido = txtCelularVende.getText().matches("^09\\d{8}$")) {
+
+                                if (imagenVende == null) {
+                                    try {
+                                        File imagenPredeterminada = new File("C:\\BasedeDatos\\defectousuario\\imagenDefecto.jpg");
+                                        imagenVende = leerImagen(imagenPredeterminada);
+                                    } catch (IOException e) {
+                                        JOptionPane.showMessageDialog(null, "Error al cargar la imagen predeterminada: " + e.getMessage());
+                                    }
+                                }
+
+                                modificarVendedor(Double.parseDouble(txtSueldoVende.getText()), Double.parseDouble(txtComicionesVende.getText()), Integer.parseInt(txtNumeroVentasVende.getText()), Estado.ACTIVO,
+                                        (String) cbxCiudadVende.getSelectedItem(), imagenVende, txtCedulaVende.getText(), txtNombresVende.getText().toUpperCase(), txtApellidosVende.getText().toUpperCase(), txtDireccionVende.getText().toUpperCase(),
+                                        txtCorreoVende.getText(), txtCelularVende.getText(), (String) cbxGeneroVende.getSelectedItem(), fechaNacimiento, (String) cbxEstadoCivilVende.getSelectedItem(),
+                                        txtCedulaVende.getText(), txtPasswordVende.getText(), txtCorreoVende.getText(), Rol.VENDEDOR);
+
+                                cambiartabla();
+
+                            } else {
+                                JOptionPane.showMessageDialog(null, "Ingrese un celular valido");
+                            }
+
+                        } else {
+                            JOptionPane.showMessageDialog(null, "Ingrese un correo valida");
+                        }
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Ingrese un apellido valido");
+                    }
+
+                } else {
+                    JOptionPane.showMessageDialog(null, "Ingrese un nombre valido");
+                }
+
+            } else {
+                JOptionPane.showMessageDialog(null, "Ingrese una cedula valida");
+            }
     }//GEN-LAST:event_btnModificarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
         System.out.println("salir");
-       cambiartabla();
+        cambiartabla();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnSeleccionarImgen1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSeleccionarImgen1ActionPerformed
@@ -399,7 +439,7 @@ private void mostrarComboCiudad() {
     private void cbxCiudadVendeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxCiudadVendeActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_cbxCiudadVendeActionPerformed
-    
+
     ////transforma la imagen en bytes
     private byte[] leerImagen(File archivoImagen) throws IOException {
         try ( ByteArrayOutputStream baos = new ByteArrayOutputStream();  FileInputStream fis = new FileInputStream(archivoImagen)) {
@@ -411,20 +451,20 @@ private void mostrarComboCiudad() {
             return baos.toByteArray();
         }
     }
-    
+
     public final void Vendedorbuscar() {
-        
+
         Boolean encontrado = true;
-        
+
         ObjectContainer BaseBD = Conexion_db.ConectarBD();
-        
+
         Query vendedor = BaseBD.query();
         vendedor.constrain(Vendedor.class);
         vendedor.descend("cedula").constrain(BuscarVendedor);
         ObjectSet<Vendedor> resultado = vendedor.execute();
-        
+
         for (Vendedor vende : resultado) {
-            
+
             txtCedulaVende.setText(vende.getCedula());
             txtCedulaVende.setEnabled(false); // porque es el atributo principal
             txtPasswordVende.setText(vende.getPassword());
@@ -464,7 +504,7 @@ private void mostrarComboCiudad() {
                     lblImagenVende.setIcon(null); // O puedes poner una imagen por defecto
                 }
             }
-            
+
             encontrado = true;
             JOptionPane.showMessageDialog(this, "Encontrado");
         }
@@ -473,7 +513,7 @@ private void mostrarComboCiudad() {
         }
         BaseBD.close();
     }
-    
+
     public static Date convertirStringADate(String fechaString) {
         SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
         try {
@@ -483,43 +523,43 @@ private void mostrarComboCiudad() {
             return null;
         }
     }
-    
-    public void modificarVendedor(double sueldoBase_Vendedor, double comiciones_Vendedor, int numeroVentas_Vendedor, Vendedor.Estado estado,String ciudad,byte [] imagenVende, String cedula,
+
+    public void modificarVendedor(double sueldoBase_Vendedor, double comiciones_Vendedor, int numeroVentas_Vendedor, Vendedor.Estado estado, String ciudad, byte[] imagenVende, String cedula,
             String nombres, String apellidos, String direccion, String correo, String celular, String genero,
             String fechaNacimiento, String estadoCivil, String nombreUsuario, String password, String correoRecuperacion, Rol rol) {
-        
+
         ObjectContainer BaseBD = Conexion_db.ConectarBD();
-        
-        Vendedor modificarVendedor = new Vendedor(sueldoBase_Vendedor,  comiciones_Vendedor,  numeroVentas_Vendedor,  estado, ciudad, imagenVende,  cedula,
-             nombres,  apellidos,  direccion,  correo,  celular,  genero,
-             fechaNacimiento,  estadoCivil,  nombreUsuario,  password,  correoRecuperacion,rol);
-        
-        Vendedor vendedorBusca = new Vendedor(0.0, 0.0, 0, null,null,null,cedula, null,
+
+        Vendedor modificarVendedor = new Vendedor(sueldoBase_Vendedor, comiciones_Vendedor, numeroVentas_Vendedor, estado, ciudad, imagenVende, cedula,
+                nombres, apellidos, direccion, correo, celular, genero,
+                fechaNacimiento, estadoCivil, nombreUsuario, password, correoRecuperacion, rol);
+
+        Vendedor vendedorBusca = new Vendedor(0.0, 0.0, 0, null, null, null, cedula, null,
                 null, null, null, null, null, null, null, null,
-                null, null,null);
-        
+                null, null, null);
+
         ObjectSet resultado = BaseBD.get(vendedorBusca);
-        
+
         int coincidencias = resultado.size();
-        
+
         if (coincidencias > 0) {
-            
+
             Vendedor vendedorVEliminar = (Vendedor) resultado.next();
             BaseBD.delete(vendedorVEliminar);
-            
+
             BaseBD.set(modificarVendedor);
             JOptionPane.showMessageDialog(this, "Vendedor Modificado");
-            
+
             TablaVendedores miTablaVendedored = new TablaVendedores();
             ShowpanelCruds(miTablaVendedored);
-            
+
         } else {
-            JOptionPane.showMessageDialog(this, "No se encontro ningun vehiculo");
+            JOptionPane.showMessageDialog(this, "No se encontro ningun Vendedor");
         }
-        
+
         BaseBD.close();
     }
-    
+
     private void ShowpanelCruds(JPanel p) {
         p.setSize(870, 630);
         p.setLocation(0, 0);

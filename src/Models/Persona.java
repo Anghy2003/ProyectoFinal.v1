@@ -236,4 +236,57 @@ public abstract class  Persona {
     }
    
     
+   
+
+    public static boolean validarCedula(String cedula) {
+        // Verificar que la cédula tenga 10 dígitos
+        if (cedula == null || cedula.length() != 10) {
+            return false;
+        }
+
+        try {
+            // Verificar que la cédula esté compuesta solo por números
+            Long.parseLong(cedula);
+        } catch (NumberFormatException e) {
+            return false;
+        }
+
+        // Extraer los dígitos necesarios
+        int provincia = Integer.parseInt(cedula.substring(0, 2));
+        int tercerDigito = Integer.parseInt(cedula.substring(2, 3));
+
+        // Verificar que el número de provincia sea válido (0-24)
+        if (provincia < 0 || provincia > 24) {
+            return false;
+        }
+
+        // Verificar que el tercer dígito sea menor que 6
+        if (tercerDigito >= 6) {
+            return false;
+        }
+
+        // Coeficientes para la validación de cédulas
+        int[] coeficientes = {2, 1, 2, 1, 2, 1, 2, 1, 2};
+        int total = 0;
+
+        for (int i = 0; i < coeficientes.length; i++) {
+            int digito = Character.getNumericValue(cedula.charAt(i));
+            int producto = digito * coeficientes[i];
+
+            if (producto >= 10) {
+                producto -= 9;
+            }
+
+            total += producto;
+        }
+
+        // Verificar el dígito verificador
+        int digitoVerificador = Character.getNumericValue(cedula.charAt(9));
+        int modulo = total % 10;
+        int valorVerificador = (modulo == 0) ? 0 : 10 - modulo;
+
+        return valorVerificador == digitoVerificador;
+    }
+
+    
 }

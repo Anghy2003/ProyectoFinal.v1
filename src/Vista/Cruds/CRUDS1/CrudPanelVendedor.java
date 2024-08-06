@@ -18,6 +18,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
@@ -27,9 +28,9 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class CrudPanelVendedor extends javax.swing.JPanel {
 
-    private byte [] imagenVende;
-    
-    public void GuardarVendedor(double sueldoBase_Vendedor, double comiciones_Vendedor, int numeroVentas_Vendedor, Vendedor.Estado estado,String ciudad,byte [] imagenVende, String cedula,
+    private byte[] imagenVende;
+
+    public void GuardarVendedor(double sueldoBase_Vendedor, double comiciones_Vendedor, int numeroVentas_Vendedor, Vendedor.Estado estado, String ciudad, byte[] imagenVende, String cedula,
             String nombres, String apellidos, String direccion, String correo, String celular, String genero,
             String fechaNacimiento, String estadoCivil, String nombreUsuario, String password, String correoRecuperacion, Rol rol) {
 
@@ -37,9 +38,9 @@ public class CrudPanelVendedor extends javax.swing.JPanel {
 
         int siguienteID = obtenerProximoIDVendedor(BaseBD);
 
-        Vendedor vendedor1 = new Vendedor( sueldoBase_Vendedor,  comiciones_Vendedor,  numeroVentas_Vendedor,  estado, ciudad, imagenVende,  cedula,
-             nombres,  apellidos,  direccion,  correo,  celular,  genero,
-             fechaNacimiento,  estadoCivil,  nombreUsuario,  password,  correoRecuperacion, rol);
+        Vendedor vendedor1 = new Vendedor(sueldoBase_Vendedor, comiciones_Vendedor, numeroVentas_Vendedor, estado, ciudad, imagenVende, cedula,
+                nombres, apellidos, direccion, correo, celular, genero,
+                fechaNacimiento, estadoCivil, nombreUsuario, password, correoRecuperacion, rol);
 
         vendedor1.setiD_Vendedor(siguienteID);
         BaseBD.close();
@@ -86,24 +87,25 @@ public class CrudPanelVendedor extends javax.swing.JPanel {
         // El próximo ID es el máximo + 1
         return maxID + 1;
     }
-    
+
     private void mostrarComboCiudad() {
-    ObjectContainer BaseBD = Conexion_db.ConectarBD();
-    
-    Query ciudadbox = BaseBD.query();
-    ciudadbox.constrain(Ciudad.class);
-    ObjectSet<Ciudad> resultado = ciudadbox.execute();
-    
-    for (Ciudad ciudad : resultado) {
-        cbxCiudadVende.addItem(ciudad.getCiudad());
+        ObjectContainer BaseBD = Conexion_db.ConectarBD();
+
+        Query ciudadbox = BaseBD.query();
+        ciudadbox.constrain(Ciudad.class);
+        ObjectSet<Ciudad> resultado = ciudadbox.execute();
+
+        for (Ciudad ciudad : resultado) {
+            cbxCiudadVende.addItem(ciudad.getCiudad());
+        }
+
+        BaseBD.close();
     }
-    
-    BaseBD.close();
-}
 
     public CrudPanelVendedor() {
         initComponents();
         mostrarComboCiudad();
+        configurarFechaNacimiento();
     }
 
     /**
@@ -383,8 +385,24 @@ public class CrudPanelVendedor extends javax.swing.JPanel {
         }
 
         if (!usuarioRepetido) {
+        // Verificar que todos los campos no estén vacíos
+        if (txtCedulaVende.getText().isEmpty()
+                || txtNombresVende.getText().isEmpty()
+                || txtApellidosVende.getText().isEmpty()
+                || txtCorreoVende.getText().isEmpty()
+                || txtCelularVende.getText().isEmpty()
+                || txtSueldoVende.getText().isEmpty()
+                || txtComicionesVende.getText().isEmpty()
+                || txtNumeroVentasVende.getText().isEmpty()
+                || txtDireccionVende.getText().isEmpty()
+                || txtPasswordVende.getText().isEmpty()
+                || jDateFechaNacVende.getDate() == null) {
 
-            Boolean valido = false;
+            JOptionPane.showMessageDialog(null, "Por favor, complete todos los campos.");
+            return; // Detener la ejecución si algún campo está vacío
+        }
+
+        Boolean valido = true;
 
             Date fechaNacimientoDate = jDateFechaNacVende.getDate(); // Obtener la fecha de nacimiento del JDateChooser
 
@@ -392,29 +410,29 @@ public class CrudPanelVendedor extends javax.swing.JPanel {
             SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
             String fechaNacimiento = sdf.format(fechaNacimientoDate);
 
-            if (valido = txtCedulaVende.getText().matches("\\d{10}")) {
+            if (Persona.validarCedula(txtCedulaVende.getText())) {
                 if (valido = txtNombresVende.getText().toUpperCase().matches("^[a-zA-Z]+(?:\\s[a-zA-Z]+)?$")) {
                     if (valido = txtApellidosVende.getText().toUpperCase().matches("^[a-zA-Z]+(?:\\s[a-zA-Z]+)?$")) {
 
                         if (valido = txtCorreoVende.getText().matches("^[\\w.-]+@[\\w.-]+\\.[a-zA-Z]{2,6}$")) {
                             if (valido = txtCelularVende.getText().matches("^09\\d{8}$")) {
-                                
+
                                 if (imagenVende == null) {
-                                try {
-                                    File imagenPredeterminada = new File("C:\\BasedeDatos\\defectousuario\\imagenDefecto.jpg");
-                                    imagenVende = leerImagen(imagenPredeterminada);
-                                } catch (IOException e) {
-                                    JOptionPane.showMessageDialog(null, "Error al cargar la imagen predeterminada: " + e.getMessage());
+                                    try {
+                                        File imagenPredeterminada = new File("C:\\BasedeDatos\\defectousuario\\imagenDefecto.jpg");
+                                        imagenVende = leerImagen(imagenPredeterminada);
+                                    } catch (IOException e) {
+                                        JOptionPane.showMessageDialog(null, "Error al cargar la imagen predeterminada: " + e.getMessage());
+                                    }
                                 }
-                            }
 
                                 GuardarVendedor(Double.parseDouble(txtSueldoVende.getText()), Double.parseDouble(txtComicionesVende.getText()), Integer.parseInt(txtNumeroVentasVende.getText()), Estado.ACTIVO,
-                                        (String)cbxCiudadVende.getSelectedItem(),imagenVende,txtCedulaVende.getText(), txtNombresVende.getText().toUpperCase(), txtApellidosVende.getText().toUpperCase(), txtDireccionVende.getText().toUpperCase(),
+                                        (String) cbxCiudadVende.getSelectedItem(), imagenVende, txtCedulaVende.getText(), txtNombresVende.getText().toUpperCase(), txtApellidosVende.getText().toUpperCase(), txtDireccionVende.getText().toUpperCase(),
                                         txtCorreoVende.getText(), txtCelularVende.getText(), (String) cbxGeneroVende.getSelectedItem(), fechaNacimiento, (String) cbxEstadoCivilVende.getSelectedItem(),
                                         txtCedulaVende.getText(), txtPasswordVende.getText(), txtCorreoVende.getText(), Rol.VENDEDOR);
-                                
-                                        cambiartabla();
-                                        
+
+                                cambiartabla();
+
                             } else {
                                 JOptionPane.showMessageDialog(null, "Ingrese un celular valido");
                             }
@@ -440,7 +458,7 @@ public class CrudPanelVendedor extends javax.swing.JPanel {
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-       cambiartabla();
+        cambiartabla();
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnSeleccionarImgen1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSeleccionarImgen1ActionPerformed
@@ -488,7 +506,7 @@ public class CrudPanelVendedor extends javax.swing.JPanel {
             return baos.toByteArray();
         }
     }
-    
+
     private void ShowpanelCruds(JPanel p) {
         p.setSize(870, 630);
         p.setLocation(0, 0);
@@ -497,6 +515,21 @@ public class CrudPanelVendedor extends javax.swing.JPanel {
         VistaMenu.PanelPrincipal.revalidate();
         VistaMenu.PanelPrincipal.repaint();
     }
+
+    private void configurarFechaNacimiento() {
+        Calendar calendar = Calendar.getInstance();
+        // Obtener la fecha actual
+        Date fechaActual = calendar.getTime();
+
+        // Calcular la fecha máxima permitida (fecha actual menos 18 años)
+        calendar.add(Calendar.YEAR, -18);
+        Date fechaMaxima = calendar.getTime();
+
+        // Establecer el rango de fechas permitido en el JDateChooser
+        jDateFechaNacVende.setMaxSelectableDate(fechaMaxima);
+        jDateFechaNacVende.setMinSelectableDate(null); // Si no deseas establecer una fecha mínima, puedes dejar esto como null
+    }
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel CedulaVende;
     private rojeru_san.RSButtonRiple btnCancelar;

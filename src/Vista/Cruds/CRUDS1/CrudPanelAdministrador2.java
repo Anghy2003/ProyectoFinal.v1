@@ -284,46 +284,68 @@ public class CrudPanelAdministrador2 extends javax.swing.JPanel {
         
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
 
-        Boolean valido = false;
+        if (txtCedulaAdmi.getText().isEmpty()
+                || txtNombresAdmi.getText().isEmpty()
+                || txtApellidosAdmi.getText().isEmpty()
+                || txtCorreoAdmi.getText().isEmpty()
+                || txtCelularAdmi.getText().isEmpty()
+                || txtTituloAdmi.getText().isEmpty()
+                || txtDireccionAdmi.getText().isEmpty()
+                || txtPasswordAdmi.getText().isEmpty()
+                || jDateFechaNacAdmi.getDate() == null) {
 
-        Date fechaNacimientoDate = jDateFechaNacAdmi.getDate(); // Obtener la fecha de nacimiento del JDateChooser
+            JOptionPane.showMessageDialog(null, "Por favor, complete todos los campos.");
+            return; // Detener la ejecución si algún campo está vacío
+        }
 
-        // Formatear la fecha como String en el formato deseado (por ejemplo, "dd/MM/yyyy")
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-        String fechaNacimiento = sdf.format(fechaNacimientoDate);
+        Boolean valido = true;
 
-        if (valido = txtCedulaAdmi.getText().matches("\\d{10}")) {
-            if (valido = txtNombresAdmi.getText().toUpperCase().matches("^[a-zA-Z]+(?:\\s[a-zA-Z]+)?$")) {
-                if (valido = txtApellidosAdmi.getText().toUpperCase().matches("^[a-zA-Z]+(?:\\s[a-zA-Z]+)?$")) {
-                    if (valido = txtCorreoAdmi.getText().matches("^[\\w.-]+@[\\w.-]+\\.[a-zA-Z]{2,6}$")) {
-                        if (valido = txtCelularAdmi.getText().matches("^09\\d{8}$")) {
+            Date fechaNacimientoDate = jDateFechaNacAdmi.getDate(); // Obtener la fecha de nacimiento del JDateChooser
 
-                            modificarAdministrador(txtTituloAdmi.getText(), Administrador.Estado.ACTIVO, (String) cbxCiudadAdmi.getSelectedItem(), imagenAdmi, txtCedulaAdmi.getText(),
-                                    txtNombresAdmi.getText().toUpperCase(), txtApellidosAdmi.getText().toUpperCase(), txtDireccionAdmi.getText().toUpperCase(), txtCorreoAdmi.getText(), txtCelularAdmi.getText(),
-                                    (String) cbxGeneroAdmi.getSelectedItem(), fechaNacimiento, (String) cbxEstadoCivilAdmi.getSelectedItem(), txtCedulaAdmi.getText(), txtPasswordAdmi.getText(),
-                                    txtCorreoAdmi.getText(), Rol.ADMINISTRADOR);
-                            JOptionPane.showMessageDialog(null, "Modificacion Correcta");
-                            cambiartabla();
+            // Formatear la fecha como String en el formato deseado (por ejemplo, "dd/MM/yyyy")
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+            String fechaNacimiento = sdf.format(fechaNacimientoDate);
+
+            if (Persona.validarCedula(txtCedulaAdmi.getText())) {
+                if (valido = txtNombresAdmi.getText().toUpperCase().matches("^[a-zA-Z]+(?:\\s[a-zA-Z]+)?$")) {
+                    if (valido = txtApellidosAdmi.getText().toUpperCase().matches("^[a-zA-Z]+(?:\\s[a-zA-Z]+)?$")) {
+                        if (valido = txtCorreoAdmi.getText().matches("^[\\w.-]+@[\\w.-]+\\.[a-zA-Z]{2,6}$")) {
+                            if (valido = txtCelularAdmi.getText().matches("^09\\d{8}$")) {
+
+                                if (imagenAdmi == null) {
+                                    try {
+                                        File imagenPredeterminada = new File("C:\\BasedeDatos\\defectousuario\\imagenDefecto.jpg");
+                                        imagenAdmi = leerImagen(imagenPredeterminada);
+                                    } catch (IOException e) {
+                                        JOptionPane.showMessageDialog(null, "Error al cargar la imagen predeterminada: " + e.getMessage());
+                                    }
+                                }
+
+                                modificarAdministrador(txtTituloAdmi.getText(), Administrador.Estado.ACTIVO, (String) cbxCiudadAdmi.getSelectedItem(), imagenAdmi, txtCedulaAdmi.getText(),
+                                        txtNombresAdmi.getText().toUpperCase(), txtApellidosAdmi.getText().toUpperCase(), txtDireccionAdmi.getText().toUpperCase(), txtCorreoAdmi.getText(), txtCelularAdmi.getText(),
+                                        (String) cbxGeneroAdmi.getSelectedItem(), fechaNacimiento, (String) cbxEstadoCivilAdmi.getSelectedItem(), txtCedulaAdmi.getText(), txtPasswordAdmi.getText(),
+                                        txtCorreoAdmi.getText(), Rol.ADMINISTRADOR);
+
+                                cambiartabla();
+                                
+                            } else {
+                                JOptionPane.showMessageDialog(null, "Ingrese un celular valido");
+                            }
 
                         } else {
-                            JOptionPane.showMessageDialog(null, "Ingrese un celular valido");
+                            JOptionPane.showMessageDialog(null, "Ingrese un correo valida");
                         }
-
                     } else {
-                        JOptionPane.showMessageDialog(null, "Ingrese un correo valida");
+                        JOptionPane.showMessageDialog(null, "Ingrese un apellido valido");
                     }
 
                 } else {
-                    JOptionPane.showMessageDialog(null, "Ingrese un apellido valido");
+                    JOptionPane.showMessageDialog(null, "Ingrese un nombre valido");
                 }
 
             } else {
-                JOptionPane.showMessageDialog(null, "Ingrese un nombre valido");
+                JOptionPane.showMessageDialog(null, "Ingrese una cedula valida");
             }
-
-        } else {
-            JOptionPane.showMessageDialog(null, "Ingrese una cedula valida");
-        }
     }//GEN-LAST:event_btnModificarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed

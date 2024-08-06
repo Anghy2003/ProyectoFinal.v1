@@ -3,20 +3,20 @@ package Vista.Cruds.CRUDS1;
 import Conexion.Conexion_db;
 import Models.Ciudad;
 import Models.Cliente;
+import Models.Cliente.Estado;
+import Models.Persona;
 import Models.Persona.Rol;
 import Vista.Menu.VistaMenu;
 import Vista.Tables.TablaClientes;
 import com.db4o.ObjectContainer;
 import com.db4o.ObjectSet;
 import com.db4o.query.Query;
-
 import java.awt.BorderLayout;
 import java.awt.Image;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.swing.ImageIcon;
@@ -28,8 +28,8 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 public class CrudPanelCliente2 extends javax.swing.JPanel {
 
     private String BuscarCliente;
-    private byte [] imagenCli;
-    
+    private byte[] imagenCli;
+
     public CrudPanelCliente2(String receivedString) {
         this.BuscarCliente = receivedString;
         initComponents();
@@ -37,23 +37,24 @@ public class CrudPanelCliente2 extends javax.swing.JPanel {
         mostrarComboCiudad();
 
     }
-    
+
     private void mostrarComboCiudad() {
-    ObjectContainer BaseBD = Conexion_db.ConectarBD();
-    
-    Query ciudadbox = BaseBD.query();
-    ciudadbox.constrain(Ciudad.class);
-    ObjectSet<Ciudad> resultado = ciudadbox.execute();
-    
-    for (Ciudad ciudad : resultado) {
-        cbxCiudadCli.addItem(ciudad.getCiudad());
+        ObjectContainer BaseBD = Conexion_db.ConectarBD();
+
+        Query ciudadbox = BaseBD.query();
+        ciudadbox.constrain(Ciudad.class);
+        ObjectSet<Ciudad> resultado = ciudadbox.execute();
+
+        for (Ciudad ciudad : resultado) {
+            cbxCiudadCli.addItem(ciudad.getCiudad());
+        }
+
+        BaseBD.close();
     }
-    
-    BaseBD.close();
-}
-     //tranforma la imagen a bytes
+    //tranforma la imagen a bytes
+
     private byte[] leerImagen(File archivoImagen) throws IOException {
-        try (ByteArrayOutputStream baos = new ByteArrayOutputStream(); FileInputStream fis = new FileInputStream(archivoImagen)) {
+        try ( ByteArrayOutputStream baos = new ByteArrayOutputStream();  FileInputStream fis = new FileInputStream(archivoImagen)) {
             byte[] buffer = new byte[1024];
             int bytesRead;
             while ((bytesRead = fis.read(buffer)) != -1) {
@@ -293,47 +294,65 @@ public class CrudPanelCliente2 extends javax.swing.JPanel {
     }
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
 
-        Boolean valido = false;
+        Boolean valido = true;
 
-        Date fechaNacimientoDate = jDateFechaNacCli.getDate(); // Obtener la fecha de nacimiento del JDateChooser
+        // Verificar si algún campo está vacío
+        if (txtCedulaCli.getText().trim().isEmpty()
+                || txtNombresCli.getText().trim().isEmpty()
+                || txtApellidosCli.getText().trim().isEmpty()
+                || txtCorreoCli.getText().trim().isEmpty()
+                || txtCelularCli.getText().trim().isEmpty()
+                || txtDireccionCli.getText().trim().isEmpty()
+                || txtPasswordCli.getText().trim().isEmpty()
+                || jDateFechaNacCli.getDate() == null) {
 
-        // Formatear la fecha como String en el formato deseado (por ejemplo, "dd/MM/yyyy")
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-        String fechaNacimiento = sdf.format(fechaNacimientoDate);
-
-        if (valido = txtCedulaCli.getText().matches("\\d{10}")) {
-            if (valido = txtNombresCli.getText().toUpperCase().matches("^[a-zA-Z]+$")) {
-                if (valido = txtApellidosCli.getText().toUpperCase().matches("^[a-zA-Z]+$")) {
-                    if (valido = txtCorreoCli.getText().matches("^[\\w.-]+@[\\w.-]+\\.[a-zA-Z]{2,6}$")) {
-                        if (valido = txtCelularCli.getText().matches("^09\\d{8}$")) {
-
-                            modificarCliente(Cliente.Estado.ACTIVO,(String)cbxCiudadCli.getSelectedItem(),imagenCli,txtCedulaCli.getText(), txtNombresCli.getText().toUpperCase().toUpperCase(), txtApellidosCli.getText().toUpperCase(),
-                                    txtDireccionCli.getText().toUpperCase(), txtCorreoCli.getText(),txtCelularCli.getText(), (String) cbxGeneroCli.getSelectedItem(), fechaNacimiento, (String) cbxEstadoCivilCli.getSelectedItem(),
-                                    txtCedulaCli.getText(), txtPasswordCli.getText(), fechaNacimiento, Rol.CLIENTE);
-                            
-                            JOptionPane.showMessageDialog(null, "Modificacion Correcta");
-                            cambiartabla();
-
-                        } else {
-                            JOptionPane.showMessageDialog(null, "Ingrese un celular valido");
-                        }
-
-                    } else {
-                        JOptionPane.showMessageDialog(null, "Ingrese un correo valida");
-                    }
-                } else {
-                    JOptionPane.showMessageDialog(null, "Ingrese un apellido valido");
-                }
-
-            } else {
-                JOptionPane.showMessageDialog(null, "Ingrese un nombre valido");
-            }
-
-        } else {
-            JOptionPane.showMessageDialog(null, "Ingrese una cedula valida");
+            JOptionPane.showMessageDialog(null, "Todos los campos deben ser llenados");
+            valido = false;
         }
 
+        if (valido) {
+            Date fechaNacimientoDate = jDateFechaNacCli.getDate(); // Obtener la fecha de nacimiento del JDateChooser
 
+            // Formatear la fecha como String en el formato deseado (por ejemplo, "dd/MM/yyyy")
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+            String fechaNacimiento = sdf.format(fechaNacimientoDate);
+
+            if (Persona.validarCedula(txtCedulaCli.getText())) {
+                if (valido = txtNombresCli.getText().toUpperCase().matches("^[a-zA-Z]+(?:\\s[a-zA-Z]+)?$")) {
+                    if (valido = txtApellidosCli.getText().toUpperCase().matches("^[a-zA-Z]+(?:\\s[a-zA-Z]+)?$")) {
+                        if (valido = txtCorreoCli.getText().matches("^[\\w.-]+@[\\w.-]+\\.[a-zA-Z]{2,6}$")) {
+                            if (valido = txtCelularCli.getText().matches("^09\\d{8}$")) {
+
+                                if (imagenCli == null) {
+                                    try {
+                                        File imagenPredeterminada = new File("C:\\BasedeDatos\\defectousuario\\imagenDefecto.jpg");
+                                        imagenCli = leerImagen(imagenPredeterminada);
+                                    } catch (IOException e) {
+                                        JOptionPane.showMessageDialog(null, "Error al cargar la imagen predeterminada: " + e.getMessage());
+                                    }
+                                }
+
+                                modificarCliente(Estado.ACTIVO, (String) cbxCiudadCli.getSelectedItem(), imagenCli, txtCedulaCli.getText(), txtNombresCli.getText().toUpperCase().toUpperCase(), txtApellidosCli.getText().toUpperCase(),
+                                        txtDireccionCli.getText().toUpperCase(), txtCorreoCli.getText(), txtCelularCli.getText(), (String) cbxGeneroCli.getSelectedItem(), fechaNacimiento, (String) cbxEstadoCivilCli.getSelectedItem(),
+                                        txtCedulaCli.getText(), txtPasswordCli.getText(), txtCorreoCli.getText(), Rol.CLIENTE);
+
+                                cambiartabla();
+                            } else {
+                                JOptionPane.showMessageDialog(null, "Ingrese un celular valido");
+                            }
+                        } else {
+                            JOptionPane.showMessageDialog(null, "Ingrese un correo valido");
+                        }
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Ingrese un apellido valido");
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(null, "Ingrese un nombre valido");
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Ingrese una cedula valida");
+            }
+        }
     }//GEN-LAST:event_btnModificarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
@@ -375,7 +394,6 @@ public class CrudPanelCliente2 extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_cbxCiudadCliActionPerformed
 
-    
     public final void Clientebuscar() {
 
         Boolean encontrado = true;
@@ -402,7 +420,6 @@ public class CrudPanelCliente2 extends javax.swing.JPanel {
             cbxEstadoCivilCli.setSelectedItem(cli.getEstadoCivil());
             jDateFechaNacCli.setDate(convertirStringADate(cli.getFechaNacimiento()));
 
-            
             // Mostrar la imagen
             byte[] imagen = cli.getImagenCli();
             if (imagen != null) {
@@ -427,7 +444,7 @@ public class CrudPanelCliente2 extends javax.swing.JPanel {
                     lblImagenCli.setIcon(null); // O puedes poner una imagen por defecto
                 }
             }
-            
+
             encontrado = true;
             JOptionPane.showMessageDialog(this, "Encontrado");
         }
@@ -452,12 +469,12 @@ public class CrudPanelCliente2 extends javax.swing.JPanel {
 
         ObjectContainer BaseBD = Conexion_db.ConectarBD();
 
-        Cliente modificarCliente = new Cliente(estado,ciudad,imagenCli, cedula, nombres, apellidos, direccion, correo, celular,
+        Cliente modificarCliente = new Cliente(estado, ciudad, imagenCli, cedula, nombres, apellidos, direccion, correo, celular,
                 genero, fechaNacimiento, estadoCivil, nombreUsuario, password, correoRecuperacion, rol);
 
-        Cliente clienteBusca = new Cliente(null,null,null, cedula, null,
+        Cliente clienteBusca = new Cliente(null, null, null, cedula, null,
                 null, null, null, null, null, null, null, null,
-                null, null,null);
+                null, null, null);
 
         ObjectSet resultado = BaseBD.get(clienteBusca);
 
@@ -469,10 +486,10 @@ public class CrudPanelCliente2 extends javax.swing.JPanel {
             BaseBD.delete(clienteVEliminar);
 
             BaseBD.set(modificarCliente);
-            JOptionPane.showMessageDialog(this, "Vendedor Modificado");
+            JOptionPane.showMessageDialog(this, "Cliente Modificado");
 
         } else {
-            JOptionPane.showMessageDialog(this, "No se encontro ningun vehiculo");
+            JOptionPane.showMessageDialog(this, "No se encontro ningun Cliente");
         }
 
         BaseBD.close();

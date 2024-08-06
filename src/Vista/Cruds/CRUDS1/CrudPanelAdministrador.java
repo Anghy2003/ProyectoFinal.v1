@@ -3,6 +3,7 @@ package Vista.Cruds.CRUDS1;
 import Conexion.Conexion_db;
 import Models.Administrador;
 import Models.Ciudad;
+import Models.Persona;
 import Models.Persona.Rol;
 import Vista.Menu.VistaMenu;
 import Vista.Tables.TablaAdministradores;
@@ -16,6 +17,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
@@ -35,9 +37,9 @@ public class CrudPanelAdministrador extends javax.swing.JPanel {
 
         int siguienteID = obtenerProximoIDAdministrador(BaseBD);
 
-        Administrador administrador1 = new Administrador( titulo_Administrador, estado,  ciudad,imagenAdmi,  cedula,
-         nombres,  apellidos,  direccion,  correo,  celular,  genero,  fechaNacimiento,
-                 estadoCivil,  nombreUsuario,  password,  correoRecuperacion, rol);
+        Administrador administrador1 = new Administrador(titulo_Administrador, estado, ciudad, imagenAdmi, cedula,
+                nombres, apellidos, direccion, correo, celular, genero, fechaNacimiento,
+                estadoCivil, nombreUsuario, password, correoRecuperacion, rol);
 
         administrador1.setiD_Administrador(siguienteID);
         BaseBD.close();
@@ -84,25 +86,25 @@ public class CrudPanelAdministrador extends javax.swing.JPanel {
         // El próximo ID es el máximo + 1
         return maxID + 1;
     }
-    
+
     private void mostrarComboCiudad() {
-    ObjectContainer BaseBD = Conexion_db.ConectarBD();
-    
-    Query ciudadbox = BaseBD.query();
-    ciudadbox.constrain(Ciudad.class);
-    ObjectSet<Ciudad> resultado = ciudadbox.execute();
-    
-    for (Ciudad ciudad : resultado) {
-        cbxCiudadAdmi.addItem(ciudad.getCiudad());
+        ObjectContainer BaseBD = Conexion_db.ConectarBD();
+
+        Query ciudadbox = BaseBD.query();
+        ciudadbox.constrain(Ciudad.class);
+        ObjectSet<Ciudad> resultado = ciudadbox.execute();
+
+        for (Ciudad ciudad : resultado) {
+            cbxCiudadAdmi.addItem(ciudad.getCiudad());
+        }
+
+        BaseBD.close();
     }
-    
-    BaseBD.close();
-}
 
     public CrudPanelAdministrador() {
         initComponents();
-        
-         mostrarComboCiudad(); 
+        mostrarComboCiudad();
+        configurarFechaNacimiento();
     }
 
     /**
@@ -380,8 +382,22 @@ public class CrudPanelAdministrador extends javax.swing.JPanel {
         }
 
         if (!usuarioRepetido) {
+        // Verificar que todos los campos no estén vacíos
+        if (txtCedulaAdmi.getText().isEmpty()
+                || txtNombresAdmi.getText().isEmpty()
+                || txtApellidosAdmi.getText().isEmpty()
+                || txtCorreoAdmi.getText().isEmpty()
+                || txtCelularAdmi.getText().isEmpty()
+                || txtTituloAdmi.getText().isEmpty()
+                || txtDireccionAdmi.getText().isEmpty()
+                || txtPasswordAdmi.getText().isEmpty()
+                || jDateFechaNacAdmi.getDate() == null) {
 
-            Boolean valido = false;
+            JOptionPane.showMessageDialog(null, "Por favor, complete todos los campos.");
+            return; // Detener la ejecución si algún campo está vacío
+        }
+
+        Boolean valido = true;
 
             Date fechaNacimientoDate = jDateFechaNacAdmi.getDate(); // Obtener la fecha de nacimiento del JDateChooser
 
@@ -389,21 +405,20 @@ public class CrudPanelAdministrador extends javax.swing.JPanel {
             SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
             String fechaNacimiento = sdf.format(fechaNacimientoDate);
 
-            if (valido = txtCedulaAdmi.getText().matches("\\d{10}")) {
+            if (Persona.validarCedula(txtCedulaAdmi.getText())) {
                 if (valido = txtNombresAdmi.getText().toUpperCase().matches("^[a-zA-Z]+(?:\\s[a-zA-Z]+)?$")) {
                     if (valido = txtApellidosAdmi.getText().toUpperCase().matches("^[a-zA-Z]+(?:\\s[a-zA-Z]+)?$")) {
-
                         if (valido = txtCorreoAdmi.getText().matches("^[\\w.-]+@[\\w.-]+\\.[a-zA-Z]{2,6}$")) {
                             if (valido = txtCelularAdmi.getText().matches("^09\\d{8}$")) {
-                                
+
                                 if (imagenAdmi == null) {
-                                try {
-                                    File imagenPredeterminada = new File("C:\\BasedeDatos\\defectousuario\\imagenDefecto.jpg");
-                                    imagenAdmi = leerImagen(imagenPredeterminada);
-                                } catch (IOException e) {
-                                    JOptionPane.showMessageDialog(null, "Error al cargar la imagen predeterminada: " + e.getMessage());
+                                    try {
+                                        File imagenPredeterminada = new File("C:\\BasedeDatos\\defectousuario\\imagenDefecto.jpg");
+                                        imagenAdmi = leerImagen(imagenPredeterminada);
+                                    } catch (IOException e) {
+                                        JOptionPane.showMessageDialog(null, "Error al cargar la imagen predeterminada: " + e.getMessage());
+                                    }
                                 }
-                            }
 
                                 GuardarAdministrador(txtTituloAdmi.getText(), Administrador.Estado.ACTIVO, (String) cbxCiudadAdmi.getSelectedItem(), imagenAdmi, txtCedulaAdmi.getText(),
                                         txtNombresAdmi.getText().toUpperCase(), txtApellidosAdmi.getText().toUpperCase(), txtDireccionAdmi.getText().toUpperCase(), txtCorreoAdmi.getText(), txtCelularAdmi.getText(),
@@ -457,28 +472,28 @@ public class CrudPanelAdministrador extends javax.swing.JPanel {
 //                JOptionPane.showMessageDialog(this, "Error al leer la imagen: " + e.getMessage());
 //            }
 //        }
-JFileChooser jFileChooser = new JFileChooser();
-    FileNameExtensionFilter filtrado = new FileNameExtensionFilter("JPG, PNG & GIF", "jpg", "png", "gif");
-    jFileChooser.setFileFilter(filtrado);
+        JFileChooser jFileChooser = new JFileChooser();
+        FileNameExtensionFilter filtrado = new FileNameExtensionFilter("JPG, PNG & GIF", "jpg", "png", "gif");
+        jFileChooser.setFileFilter(filtrado);
 
-    int respuesta = jFileChooser.showOpenDialog(this);
+        int respuesta = jFileChooser.showOpenDialog(this);
 
-    if (respuesta == JFileChooser.APPROVE_OPTION) {
-        File archivoImagen = jFileChooser.getSelectedFile();
-        String Ruta = archivoImagen.getPath();
+        if (respuesta == JFileChooser.APPROVE_OPTION) {
+            File archivoImagen = jFileChooser.getSelectedFile();
+            String Ruta = archivoImagen.getPath();
 
-        try {
-            // Leer la imagen y convertirla a un array de bytes
-            imagenAdmi = leerImagen(archivoImagen);
+            try {
+                // Leer la imagen y convertirla a un array de bytes
+                imagenAdmi = leerImagen(archivoImagen);
 
-            // Mostrar la imagen en el label
-            Image mImagen = new ImageIcon(Ruta).getImage();
-            ImageIcon mIcono = new ImageIcon(mImagen.getScaledInstance(lblImagenAdmi.getWidth(), lblImagenAdmi.getHeight(), Image.SCALE_SMOOTH));
-            lblImagenAdmi.setIcon(mIcono);
-        } catch (IOException e) {
-            JOptionPane.showMessageDialog(this, "Error al leer la imagen: " + e.getMessage());
+                // Mostrar la imagen en el label
+                Image mImagen = new ImageIcon(Ruta).getImage();
+                ImageIcon mIcono = new ImageIcon(mImagen.getScaledInstance(lblImagenAdmi.getWidth(), lblImagenAdmi.getHeight(), Image.SCALE_SMOOTH));
+                lblImagenAdmi.setIcon(mIcono);
+            } catch (IOException e) {
+                JOptionPane.showMessageDialog(this, "Error al leer la imagen: " + e.getMessage());
+            }
         }
-    }
     }//GEN-LAST:event_btnSeleccionarImgenActionPerformed
 
     private void txtPasswordAdmiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPasswordAdmiActionPerformed
@@ -515,12 +530,26 @@ JFileChooser jFileChooser = new JFileChooser();
         txtCorreoAdmi.setText("");
         txtCelularAdmi.setText("");
         txtTituloAdmi.setText("");
-        cbxCiudadAdmi.setSelectedItem(-1);        
+        cbxCiudadAdmi.setSelectedItem(-1);
         jDateFechaNacAdmi.setDate(null);
         cbxEstadoCivilAdmi.setSelectedIndex(-1);
         cbxGeneroAdmi.setSelectedIndex(-1);
         imagenAdmi = null;
         lblImagenAdmi.setIcon(null);
+    }
+
+    private void configurarFechaNacimiento() {
+        Calendar calendar = Calendar.getInstance();
+        // Obtener la fecha actual
+        Date fechaActual = calendar.getTime();
+
+        // Calcular la fecha máxima permitida (fecha actual menos 18 años)
+        calendar.add(Calendar.YEAR, -18);
+        Date fechaMaxima = calendar.getTime();
+
+        // Establecer el rango de fechas permitido en el JDateChooser
+        jDateFechaNacAdmi.setMaxSelectableDate(fechaMaxima);
+        jDateFechaNacAdmi.setMinSelectableDate(null); // Si no deseas establecer una fecha mínima, puedes dejar esto como null
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
