@@ -53,6 +53,7 @@ import javax.mail.internet.MimeMultipart;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JTable;
 import javax.swing.RowFilter;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
@@ -63,12 +64,11 @@ public class Citas extends javax.swing.JPanel {
 
     public Citas() {
         initComponents();
-        mostrarTablaServicios();
-        txtcodigoCita.setEnabled(false);
+          mostrarTablaServicios();
+        txtcodigoCita.setEnabled(true);
         txtdireccionCli.setEnabled(false);
         txtNombreCli.setEnabled(false);
         txtCelularCli.setEnabled(false);
-
         mostrarComboMecanico();
 
     }
@@ -82,25 +82,17 @@ public class Citas extends javax.swing.JPanel {
         PanelPrincipal.repaint();
     }
 
-    //combobox mecanico
     private void mostrarComboMecanico() {
         ObjectContainer BaseBD = Conexion_db.ConectarBD();
-
         Query mechabox = BaseBD.query();
         mechabox.constrain(Mecanico.class);
         ObjectSet<Mecanico> resultado = mechabox.execute();
 
-        // Limpiar el combo box antes de poblarlo
         cbxMecaCita.removeAllItems();
-
         for (Mecanico mechanic : resultado) {
-            String item = (mechanic.getCedula()) + " "
-                    + (mechanic.getNombres()) + " "
-                    + (mechanic.getApellidos()) + " "
-                    + (mechanic.getCelular());
+            String item = (mechanic.getCedula()) + " " + (mechanic.getNombres()) + " " + (mechanic.getApellidos()) + " " + (mechanic.getCelular());
             cbxMecaCita.addItem(item);
         }
-
         BaseBD.close();
     }
 
@@ -563,22 +555,23 @@ public class Citas extends javax.swing.JPanel {
             clienteQuery.constrain(Cliente.class);
             clienteQuery.descend("cedula").constrain(cedulaBuscar);
             ObjectSet<Cliente> resultadoCliente = clienteQuery.execute();
-
+            CargarCliente();
             if (!resultadoCliente.isEmpty()) {
                 Cliente cliente = resultadoCliente.get(0);
-
+                CargarCliente();
                 // Buscar los vehículos del cliente
                 Query vehiculoQuery = BaseBD.query();
                 vehiculoQuery.constrain(Vehiculo.class);
                 vehiculoQuery.descend("id_Cliente").constrain(cliente.getCedula()); // Asumiendo que los vehículos tienen un campo cedulaCliente
                 ObjectSet<Vehiculo> resultadoVehiculo = vehiculoQuery.execute();
-
+                CargarCliente();
                 // Limpiar el JComboBox antes de añadir nuevos elementos
                 cbxPlacasVehiculos.removeAllItems();
-
+                CargarCliente();
                 // Añadir los vehículos al JComboBox
                 if (!resultadoVehiculo.isEmpty()) {
                     for (Vehiculo vehiculo : resultadoVehiculo) {
+                        
                         cbxPlacasVehiculos.addItem(vehiculo.getPlaca_Vehiculo());
                         CargarCliente();
                     }
@@ -652,6 +645,7 @@ public class Citas extends javax.swing.JPanel {
         baseBD.close();
     }
 
+    
     public static Date convertirStringADate(String fechaString) {
         SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
         try {
@@ -740,47 +734,7 @@ public class Citas extends javax.swing.JPanel {
         VistaMenu.PanelPrincipal.repaint();// Repinta el panel principal para reflejar los cambios visualmente
     }
 
-    //guardar cita
-    private void guardarCita() {
-        DefaultTableModel model = (DefaultTableModel) JtableCita.getModel();
-
-        Date fechaNacimientoDate = jDateFechaCita.getDate(); // Obtener la fecha de nacimiento del JDateChooser
-        // Formatear la fecha como String en el formato deseado (por ejemplo, "dd/MM/yyyy")
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-        String fechaNacimiento = sdf.format(fechaNacimientoDate);
-
-        // Obtener los datos del encabezado de la factura
-        String codigoCita = txtcodigoCita.getText();
-        String fecha = fechaNacimiento;
-        String cedulaCli = txtCedulaCli.getText();
-        String cedulaMec = (String) cbxMecaCita.getSelectedItem();
-//        String placa = txtPlacaVehi.getText();
-
-        // Crear el encabezado de la cita
-        EncabezadoCita cita1 = new EncabezadoCita(codigoCita, fecha, cedulaCli, cedulaMec);
-
-        // Guardar el encabezado y los detalles en la base de datos
-        ObjectContainer baseBD = Conexion_db.ConectarBD();
-        baseBD.store(cita1);
-
-        // Guardar los detalles de la cita
-        for (int i = 0; i < model.getRowCount(); i++) {
-            String codigo = model.getValueAt(i, 0).toString();
-
-            double precio = Double.parseDouble(model.getValueAt(i, 1).toString());
-
-            // Crear el detalle de la cita con nombre del servicio y precio
-            DetalleCita detalle = new DetalleCita(precio, codigo);
-
-            // Guardar el detalle en la base de datos
-            baseBD.store(detalle);
-        }
-
-        baseBD.close();
-
-        JOptionPane.showMessageDialog(this, "Cita guardada exitosamente!");
-
-    }
+    
 
 //Servicios 
     private void mostrarTablaServicios() {
@@ -1045,7 +999,149 @@ public class Citas extends javax.swing.JPanel {
 
         return correoCliente;
     }
-    
+        
+
+    // Método para resetear el formulario
+    private void resetearFormulario() {
+        txtCedulaCli.setText("");
+        txtNombreCli.setText("");
+        txtdireccionCli.setText("");
+        txtCelularCli.setText("");
+        txtcodigoCita.setText("");
+        jDateFechaCita.setDate(new Date());
+
+        DefaultTableModel model = (DefaultTableModel) JtableCita.getModel();
+        model.setRowCount(0);
+
+        setearCodigoCita();
+    }
+
+    // Método para setear el código de la cita automáticamente
+    private void setearCodigoCita() {
+        ObjectContainer baseBD = Conexion_db.ConectarBD();
+        String codigoCita = obtenerProximaCita(baseBD);
+        txtcodigoCita.setText(codigoCita);
+        baseBD.close();
+    }
+  
+private void guardarCita() {
+    DefaultTableModel model = (DefaultTableModel) JtableCita.getModel();
+
+    // Validar que los datos del cliente y la cita estén completos
+    if (txtcodigoCita.getText().isEmpty() || jDateFechaCita.getDate() == null || txtCedulaCli.getText().isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Por favor, complete todos los datos de la cita.");
+        return;
+    }
+
+    // Validar que la tabla de detalles no esté vacía
+    if (model.getRowCount() == 0) {
+        JOptionPane.showMessageDialog(this, "No se puede guardar una cita vacía.");
+        return;
+    }
+
+    // Obtener los datos del encabezado de la cita
+    String codigoCita = txtcodigoCita.getText();
+    String fechaCita = new SimpleDateFormat("dd/MM/yyyy").format(jDateFechaCita.getDate());
+    String cedulaCli = txtCedulaCli.getText();
+    String cedulaMec = (String) cbxMecaCita.getSelectedItem();
+
+    // Crear el encabezado de la cita
+    EncabezadoCita cita = new EncabezadoCita(codigoCita, fechaCita, cedulaCli, cedulaMec);
+
+    // Guardar el encabezado y los detalles en la base de datos
+    ObjectContainer baseBD = Conexion_db.ConectarBD();
+    baseBD.store(cita);
+
+    // Guardar los detalles de la cita
+    for (int i = 0; i < model.getRowCount(); i++) {
+        String codigoServicio = model.getValueAt(i, 0).toString();
+        double precioServicio = 0.0;
+        Object value = model.getValueAt(i, 1);
+        if (value instanceof Number) {
+            precioServicio = ((Number) value).doubleValue();
+        } else {
+            JOptionPane.showMessageDialog(this, "El precio del servicio en la fila " + (i + 1) + " no es un número válido.");
+            continue; // Saltar esta fila y continuar con las demás
+        }
+
+        DetalleCita detalle = new DetalleCita(codigoCita, precioServicio, codigoServicio);
+        baseBD.store(detalle);
+    }
+
+    baseBD.close();
+    JOptionPane.showMessageDialog(this, "Cita guardada exitosamente!");
+
+    // Reiniciar y generar una nueva cita
+    resetearFormulario();
+}
+
+
+
+public void cargarDatosCita(String codigoCita, JTable tblEncabezado, JTable tblDetalle) {
+    // Conexión a la base de datos
+    ObjectContainer baseBD = Conexion_db.ConectarBD();
+
+    try {
+        // Buscar el encabezado de la cita
+        EncabezadoCita citaBuscar = new EncabezadoCita();
+        citaBuscar.setCodigo_encabezadoCita(codigoCita);
+        ObjectSet<EncabezadoCita> resultadoEncabezado = baseBD.get(citaBuscar);
+
+        if (!resultadoEncabezado.isEmpty()) {
+            EncabezadoCita encabezado = resultadoEncabezado.get(0);
+            txtcodigoCita.setText(encabezado.getCodigo_encabezadoCita());
+            jDateFechaCita.setDate(convertirStringADate(encabezado.getFecha_encabezadoCita()));
+            txtCedulaCli.setText(encabezado.getCedulaCliente_encabezadoCita());
+            // Aquí también podrías cargar otros datos del cliente si es necesario
+
+            // Actualizar la tabla de encabezado
+            String[][] matrizEncabezado = new String[1][4];
+            matrizEncabezado[0][0] = encabezado.getCodigo_encabezadoCita();
+            matrizEncabezado[0][1] = encabezado.getFecha_encabezadoCita();
+            matrizEncabezado[0][2] = encabezado.getCedulaCliente_encabezadoCita();
+            matrizEncabezado[0][3] = encabezado.getCedulaMecanico_encabezadoCita();
+            tblEncabezado.setModel(new javax.swing.table.DefaultTableModel(
+                matrizEncabezado,
+                new String[]{"Código Cita", "Fecha", "Cédula Cliente", "Cédula Mecánico"}
+            ));
+
+            // Buscar los detalles de la cita
+            DetalleCita detalleBuscar = new DetalleCita();
+            detalleBuscar.setCodigo_encabezadoCita(codigoCita);
+            ObjectSet<DetalleCita> resultadoDetalle = baseBD.get(detalleBuscar);
+
+            // Crear una matriz para almacenar los datos de los detalles
+            String[][] matrizDetalle = new String[resultadoDetalle.size()][3];
+            int i = 0;
+            for (DetalleCita detalle : resultadoDetalle) {
+                matrizDetalle[i][0] = detalle.getCodigoServicio_detallecita();
+                matrizDetalle[i][1] = obtenerNombreServicio(detalle.getCodigoServicio_detallecita(), baseBD);
+                matrizDetalle[i][2] = String.valueOf(detalle.getPrecioServicio_detallecita());
+                i++;
+            }
+
+            // Configurar los datos en la tabla de detalles
+            tblDetalle.setModel(new javax.swing.table.DefaultTableModel(
+                matrizDetalle,
+                new String[]{"Código Servicio", "Nombre Servicio", "Precio Servicio"}
+            ));
+        } else {
+            JOptionPane.showMessageDialog(this, "No se encontró la cita con el código proporcionado.");
+        }
+    } finally {
+        baseBD.close();
+    }
+}
+
+
+
+
+
+
+
+
+
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable JtableCita;
     private javax.swing.JDialog TablaServicios;

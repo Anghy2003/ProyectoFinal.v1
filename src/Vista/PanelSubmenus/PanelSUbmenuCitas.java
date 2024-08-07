@@ -5,6 +5,11 @@
  */
 package Vista.PanelSubmenus;
 
+import Vista.Menu.VistaMenu;
+import Vista.Tables.TablaCitas;
+import java.awt.BorderLayout;
+import javax.swing.JPanel;
+
 /**
  *
  * @author 59399
@@ -28,15 +33,25 @@ public class PanelSUbmenuCitas extends javax.swing.JPanel {
     private void initComponents() {
 
         jSeparator1 = new javax.swing.JSeparator();
-        btnCatser = new javax.swing.JToggleButton();
+        btnCatvisualizar = new javax.swing.JToggleButton();
+        btnCatser1 = new javax.swing.JToggleButton();
 
         setBackground(new java.awt.Color(255, 255, 255));
 
         jSeparator1.setForeground(new java.awt.Color(0, 53, 79));
 
-        btnCatser.setFont(new java.awt.Font("Roboto Medium", 1, 12)); // NOI18N
-        btnCatser.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/servicio.png"))); // NOI18N
-        btnCatser.setText("AGENDAR CITAS");
+        btnCatvisualizar.setFont(new java.awt.Font("Roboto Medium", 1, 12)); // NOI18N
+        btnCatvisualizar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/servicio.png"))); // NOI18N
+        btnCatvisualizar.setText("VISUALIZAR CITAS ");
+        btnCatvisualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCatvisualizarActionPerformed(evt);
+            }
+        });
+
+        btnCatser1.setFont(new java.awt.Font("Roboto Medium", 1, 12)); // NOI18N
+        btnCatser1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/servicio.png"))); // NOI18N
+        btnCatser1.setText("AGENDAR CITAS");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -47,23 +62,42 @@ public class PanelSUbmenuCitas extends javax.swing.JPanel {
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 870, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnCatser, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(56, 56, 56))
+                .addComponent(btnCatvisualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnCatser1, javax.swing.GroupLayout.PREFERRED_SIZE, 177, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(57, 57, 57))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnCatser)
-                .addContainerGap(21, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnCatvisualizar)
+                    .addComponent(btnCatser1))
+                .addContainerGap(15, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnCatvisualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCatvisualizarActionPerformed
+       TablaCitas miCita = new TablaCitas();
+        MostrarpaneCruds(miCita);
+       
+    }//GEN-LAST:event_btnCatvisualizarActionPerformed
+
+    private void MostrarpaneCruds(JPanel p) {
+        p.setSize(870, 630);
+        p.setLocation(0, 0);
+        VistaMenu.PanelPrincipal.removeAll();
+        VistaMenu.PanelPrincipal.add(p, BorderLayout.CENTER);
+        VistaMenu.PanelPrincipal.revalidate();
+        VistaMenu.PanelPrincipal.repaint();
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JToggleButton btnCatser;
+    private javax.swing.JToggleButton btnCatser1;
+    private javax.swing.JToggleButton btnCatvisualizar;
     private javax.swing.JSeparator jSeparator1;
     // End of variables declaration//GEN-END:variables
 }
