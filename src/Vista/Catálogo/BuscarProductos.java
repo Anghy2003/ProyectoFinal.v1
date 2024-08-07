@@ -427,6 +427,7 @@ public class BuscarProductos extends javax.swing.JPanel {
 
     private void BtnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnBuscarActionPerformed
         activarJdialog(TablaProvedores);
+        
     }//GEN-LAST:event_BtnBuscarActionPerformed
 
     private void btnSeleccionarImgenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSeleccionarImgenActionPerformed
@@ -588,8 +589,11 @@ public class BuscarProductos extends javax.swing.JPanel {
 
             if (codigoProveedor.equals(inputCodigo)) {
                 txtProveedorID.setText(miProveedor.getNombre_proveedor());
+                JOptionPane.showMessageDialog(this, " Proveedor Añadido con exito");
                 encontrado = true;
+                   
                 break;
+                
             }
         }
 
@@ -599,6 +603,7 @@ public class BuscarProductos extends javax.swing.JPanel {
 
         // Cerrar la conexión con la base de datos
         BaseBD.close();
+       
     }
     
    public static void modificarProducto(String codigo_Producto, String nombre_Producto, Double precio_Producto, String codigo_categoria_Producto, int numeroProductos_Producto, int existenciaMaxima_Producto, int existenciaMinima_Producto, String descripcion_Producto, String ID_Proveedor_Producto, byte[] imagen, Producto.Estado estado) {
@@ -624,6 +629,7 @@ public class BuscarProductos extends javax.swing.JPanel {
 
     // Cerrar la base de datos
     BaseBD.close();
+    
 }
    
     private void mostrarCombo() {

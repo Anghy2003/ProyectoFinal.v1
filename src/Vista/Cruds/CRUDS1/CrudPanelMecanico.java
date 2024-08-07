@@ -355,85 +355,80 @@ public class CrudPanelMecanico extends javax.swing.JPanel {
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         boolean usuarioRepetido = false;
 
-        if (VerificarMecanicoRepetidos() != 0) {
-            JOptionPane.showMessageDialog(null, "Mecanico ya registrado");
-            usuarioRepetido = true;
+    if (VerificarMecanicoRepetidos() != 0) {
+        JOptionPane.showMessageDialog(null, "Mecánico ya registrado");
+        usuarioRepetido = true;
+    }
+
+    if (!usuarioRepetido) {
+
+        Boolean valido = true;
+        // Verificar que todos los campos no estén vacíos
+        if (txtCedulaMeca.getText().isEmpty()
+                || txtNombresMeca.getText().isEmpty()
+                || txtApellidosMeca.getText().isEmpty()
+                || txtCorreoMeca.getText().isEmpty()
+                || txtCelularMeca.getText().isEmpty()
+                || txtTituloMeca.getText().isEmpty()
+                || txtSueldoMeca.getText().isEmpty()
+                || txtDireccionMeca.getText().isEmpty()
+                || txtPasswordMeca.getText().isEmpty()
+                || jDateFechaNacMeca.getDate() == null) {
+            valido = false;
+            
+            JOptionPane.showMessageDialog(null, "Por favor, complete todos los campos.");
         }
 
-        if (!usuarioRepetido) {
+        if (valido) {
+            Date fechaNacimientoDate = jDateFechaNacMeca.getDate(); // Obtener la fecha de nacimiento del JDateChooser
 
-            Boolean valido = true;
-            // Verificar que todos los campos no estén vacíos
-            if (txtCedulaMeca.getText().isEmpty()
-                    || txtNombresMeca.getText().isEmpty()
-                    || txtApellidosMeca.getText().isEmpty()
-                    || txtCorreoMeca.getText().isEmpty()
-                    || txtCelularMeca.getText().isEmpty()
-                    || txtTituloMeca.getText().isEmpty()
-                    || txtSueldoMeca.getText().isEmpty()
-                    || txtDireccionMeca.getText().isEmpty()
-                    || txtPasswordMeca.getText().isEmpty()
-                    || jDateFechaNacMeca.getDate() == null) {
-                valido = false;
-                JOptionPane.showMessageDialog(null, "Por favor, complete todos los campos.");
+            // Formatear la fecha como String en el formato deseado (por ejemplo, "dd/MM/yyyy")
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+            String fechaNacimiento = sdf.format(fechaNacimientoDate);
 
-            }
+            if (Persona.validarCedula(txtCedulaMeca.getText())) {
+                if (valido = txtNombresMeca.getText().toUpperCase().matches("^[a-zA-Z]+(?:\\s[a-zA-Z]+)?$")) {
+                    if (valido = txtApellidosMeca.getText().toUpperCase().matches("^[a-zA-Z]+(?:\\s[a-zA-Z]+)?$")) {
+                        if (valido = txtCorreoMeca.getText().matches("^[\\w.-]+@[\\w.-]+\\.[a-zA-Z]{2,6}$")) {
+                            if (valido = txtCelularMeca.getText().matches("^09\\d{8}$")) {
+                                if (valido = txtSueldoMeca.getText().matches("^\\d+(\\.\\d{1,2})?$")) {
 
-            if (valido) {
-
-                Date fechaNacimientoDate = jDateFechaNacMeca.getDate(); // Obtener la fecha de nacimiento del JDateChooser
-
-                // Formatear la fecha como String en el formato deseado (por ejemplo, "dd/MM/yyyy")
-                SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-                String fechaNacimiento = sdf.format(fechaNacimientoDate);
-
-                if (Persona.validarCedula(txtCedulaMeca.getText())) {
-                    if (valido = txtNombresMeca.getText().toUpperCase().matches("^[a-zA-Z]+(?:\\s[a-zA-Z]+)?$")) {
-                        if (valido = txtApellidosMeca.getText().toUpperCase().matches("^[a-zA-Z]+(?:\\s[a-zA-Z]+)?$")) {
-                            if (valido = txtCorreoMeca.getText().matches("^[\\w.-]+@[\\w.-]+\\.[a-zA-Z]{2,6}$")) {
-                                if (valido = txtCelularMeca.getText().matches("^09\\d{8}$")) {
-                                    if (valido = txtSueldoMeca.getText().matches("^\\d+(\\.\\d{1,2})?$")) {
-
-                                        if (imagenMeca == null) {
-                                            try {
-                                                File imagenPredeterminada = new File("C:\\BasedeDatos\\defectousuario\\imagenDefecto.jpg");
-                                                imagenMeca = leerImagen(imagenPredeterminada);
-                                            } catch (IOException e) {
-                                                JOptionPane.showMessageDialog(null, "Error al cargar la imagen predeterminada: " + e.getMessage());
-                                            }
+                                    if (imagenMeca == null) {
+                                        try {
+                                            File imagenPredeterminada = new File("C:\\BasedeDatos\\defectousuario\\imagenDefecto.jpg");
+                                            imagenMeca = leerImagen(imagenPredeterminada);
+                                        } catch (IOException e) {
+                                            JOptionPane.showMessageDialog(null, "Error al cargar la imagen predeterminada: " + e.getMessage());
                                         }
-
-                                        GuardarMecanico(txtTituloMeca.getText().toUpperCase(), Double.parseDouble(txtSueldoMeca.getText()), Mecanico.Estado.ACTIVO, (String) cbxCiudadMeca.getSelectedItem(), imagenMeca, txtCedulaMeca.getText(), txtNombresMeca.getText().toUpperCase(),
-                                                txtApellidosMeca.getText().toUpperCase(), txtDireccionMeca.getText().toUpperCase(), txtCorreoMeca.getText(), txtCelularMeca.getText(),
-                                                (String) cbxGeneroMeca.getSelectedItem(), fechaNacimiento, (String) cbxEstadoCivilMeca.getSelectedItem(), txtCedulaMeca.getText(), txtPasswordMeca.getText(),
-                                                txtCorreoMeca.getText(), Rol.MECANICO);
-
-                                        cambiartabla();
-
-                                    } else {
-                                        JOptionPane.showMessageDialog(null, "Ingrese un sueldo valido");
                                     }
 
-                                } else {
-                                    JOptionPane.showMessageDialog(null, "Ingrese un celular valido");
-                                }
+                                    GuardarMecanico(txtTituloMeca.getText().toUpperCase(), Double.parseDouble(txtSueldoMeca.getText()), Mecanico.Estado.ACTIVO, (String) cbxCiudadMeca.getSelectedItem(), imagenMeca, txtCedulaMeca.getText(), txtNombresMeca.getText().toUpperCase(),
+                                            txtApellidosMeca.getText().toUpperCase(), txtDireccionMeca.getText().toUpperCase(), txtCorreoMeca.getText(), txtCelularMeca.getText(),
+                                            (String) cbxGeneroMeca.getSelectedItem(), fechaNacimiento, (String) cbxEstadoCivilMeca.getSelectedItem(), txtCedulaMeca.getText(), txtPasswordMeca.getText(),
+                                            txtCorreoMeca.getText(), Rol.MECANICO);
 
+                                    cambiartabla();
+
+                                } else {
+                                    JOptionPane.showMessageDialog(null, "Ingrese un sueldo válido (números enteros o decimales)");
+                                }
                             } else {
-                                JOptionPane.showMessageDialog(null, "Ingrese un correo valido");
+                                JOptionPane.showMessageDialog(null, "Ingrese un celular válido");
                             }
                         } else {
-                            JOptionPane.showMessageDialog(null, "Ingrese un apellido valido");
+                            JOptionPane.showMessageDialog(null, "Ingrese un correo válido");
                         }
-
                     } else {
-                        JOptionPane.showMessageDialog(null, "Ingrese un nombre valido");
+                        JOptionPane.showMessageDialog(null, "Ingrese un apellido válido");
                     }
-
                 } else {
-                    JOptionPane.showMessageDialog(null, "Ingrese una cedula valida");
+                    JOptionPane.showMessageDialog(null, "Ingrese un nombre válido");
                 }
+            } else {
+                JOptionPane.showMessageDialog(null, "Ingrese una cédula válida");
             }
         }
+    }
 
     }//GEN-LAST:event_btnGuardarActionPerformed
 

@@ -320,6 +320,7 @@ public class TablaServicios extends javax.swing.JPanel {
                 BaseBD.store(servicioAInactivar);
                 BaseBD.commit(); // Asegúrate de que el cambio se guarda en la base de datos
                 System.out.println("Servicio inactivado correctamente: " + servicioAInactivar.getCodigo_Servicio() + " Estado: " + servicioAInactivar.getEstado());
+                BaseBD.close();
             } else {
                 System.out.println("Inactivación cancelada por el usuario");
             }

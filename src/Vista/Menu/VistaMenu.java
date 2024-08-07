@@ -485,7 +485,6 @@ public class VistaMenu extends javax.swing.JFrame {
         btnProductos.setVisible(false);
         btnProvedores.setVisible(false);
         btnciudades.setVisible(false);
-        btnUsuario.setVisible(false);
         btnReportes1.setVisible(false);
     }
  private void deshabilitarComponentesVendedor() {
@@ -500,7 +499,7 @@ public class VistaMenu extends javax.swing.JFrame {
         btnProvedores.setVisible(false);
         btnciudades.setVisible(false);
         btnReportes1.setVisible(false);
-        btnReportes1.setVisible(false);
+        btnAgendarCitas1.setVisible(false);
         btnCatalogo.setVisible(false);
         btnFactura.setVisible(false);
        

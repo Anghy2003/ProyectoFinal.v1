@@ -150,8 +150,6 @@ public class CrudPanelVendedor extends javax.swing.JPanel {
         cbxGeneroVende = new javax.swing.JComboBox<>();
         lblGeneroVende = new javax.swing.JLabel();
         cbxEstadoCivilVende = new javax.swing.JComboBox<>();
-        lblSueldoVende = new javax.swing.JLabel();
-        txtSueldoVende = new rojeru_san.RSMTextFull();
 
         jPanel1.setLayout(new java.awt.BorderLayout());
 
@@ -335,17 +333,6 @@ public class CrudPanelVendedor extends javax.swing.JPanel {
         cbxEstadoCivilVende.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Masculino", "Femenino" }));
         jPanel2.add(cbxEstadoCivilVende, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 390, 220, 30));
 
-        lblSueldoVende.setFont(new java.awt.Font("Roboto Medium", 0, 21)); // NOI18N
-        lblSueldoVende.setForeground(new java.awt.Color(0, 53, 79));
-        lblSueldoVende.setText("Sueldo:");
-        jPanel2.add(lblSueldoVende, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 500, 70, 40));
-
-        txtSueldoVende.setForeground(new java.awt.Color(0, 53, 79));
-        txtSueldoVende.setColorTransparente(true);
-        txtSueldoVende.setFont(new java.awt.Font("Roboto Light", 1, 14)); // NOI18N
-        txtSueldoVende.setPlaceholder("$600");
-        jPanel2.add(txtSueldoVende, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 500, 230, 40));
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -367,7 +354,9 @@ public class CrudPanelVendedor extends javax.swing.JPanel {
                     .addGap(0, 315, Short.MAX_VALUE)))
         );
     }// </editor-fold>//GEN-END:initComponents
-
+private double calcularSueldoTotal(double sueldoBase, double comisiones, int numeroVentas) {
+    return sueldoBase + (comisiones * numeroVentas);
+}
     private void btnCancelarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCancelarMouseClicked
 
     }//GEN-LAST:event_btnCancelarMouseClicked
@@ -379,19 +368,18 @@ public class CrudPanelVendedor extends javax.swing.JPanel {
 
         boolean usuarioRepetido = false;
 
-        if (VerificarVendedorRepetidos() != 0) {
-            JOptionPane.showMessageDialog(null, "Vendedor ya registrado");
-            usuarioRepetido = true;
-        }
+    if (VerificarVendedorRepetidos() != 0) {
+        JOptionPane.showMessageDialog(null, "Vendedor ya registrado");
+        usuarioRepetido = true;
+    }
 
-        if (!usuarioRepetido) {
+    if (!usuarioRepetido) {
         // Verificar que todos los campos no estén vacíos
         if (txtCedulaVende.getText().isEmpty()
                 || txtNombresVende.getText().isEmpty()
                 || txtApellidosVende.getText().isEmpty()
                 || txtCorreoVende.getText().isEmpty()
-                || txtCelularVende.getText().isEmpty()
-                || txtSueldoVende.getText().isEmpty()
+                || txtCelularVende.getText().isEmpty()                
                 || txtComicionesVende.getText().isEmpty()
                 || txtNumeroVentasVende.getText().isEmpty()
                 || txtDireccionVende.getText().isEmpty()
@@ -404,57 +392,64 @@ public class CrudPanelVendedor extends javax.swing.JPanel {
 
         Boolean valido = true;
 
-            Date fechaNacimientoDate = jDateFechaNacVende.getDate(); // Obtener la fecha de nacimiento del JDateChooser
+        Date fechaNacimientoDate = jDateFechaNacVende.getDate(); // Obtener la fecha de nacimiento del JDateChooser
 
-            // Formatear la fecha como String en el formato deseado (por ejemplo, "dd/MM/yyyy")
-            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-            String fechaNacimiento = sdf.format(fechaNacimientoDate);
+        // Formatear la fecha como String en el formato deseado (por ejemplo, "dd/MM/yyyy")
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        String fechaNacimiento = sdf.format(fechaNacimientoDate);
 
-            if (Persona.validarCedula(txtCedulaVende.getText())) {
-                if (valido = txtNombresVende.getText().toUpperCase().matches("^[a-zA-Z]+(?:\\s[a-zA-Z]+)?$")) {
-                    if (valido = txtApellidosVende.getText().toUpperCase().matches("^[a-zA-Z]+(?:\\s[a-zA-Z]+)?$")) {
+        if (Persona.validarCedula(txtCedulaVende.getText())) {
+            if (valido = txtNombresVende.getText().toUpperCase().matches("^[a-zA-Z]+(?:\\s[a-zA-Z]+)?$")) {
+                if (valido = txtApellidosVende.getText().toUpperCase().matches("^[a-zA-Z]+(?:\\s[a-zA-Z]+)?$")) {
 
-                        if (valido = txtCorreoVende.getText().matches("^[\\w.-]+@[\\w.-]+\\.[a-zA-Z]{2,6}$")) {
-                            if (valido = txtCelularVende.getText().matches("^09\\d{8}$")) {
+                    if (valido = txtCorreoVende.getText().matches("^[\\w.-]+@[\\w.-]+\\.[a-zA-Z]{2,6}$")) {
+                        if (valido = txtCelularVende.getText().matches("^09\\d{8}$")) {
+                            if (valido = txtComicionesVende.getText().matches("^[0-9]*\\.?[0-9]+$")) {
+                                if (valido = txtNumeroVentasVende.getText().matches("^[0-9]+$")) {
 
-                                if (imagenVende == null) {
-                                    try {
-                                        File imagenPredeterminada = new File("C:\\BasedeDatos\\defectousuario\\imagenDefecto.jpg");
-                                        imagenVende = leerImagen(imagenPredeterminada);
-                                    } catch (IOException e) {
-                                        JOptionPane.showMessageDialog(null, "Error al cargar la imagen predeterminada: " + e.getMessage());
+                                    if (imagenVende == null) {
+                                        try {
+                                            File imagenPredeterminada = new File("C:\\BasedeDatos\\defectousuario\\imagenDefecto.jpg");
+                                            imagenVende = leerImagen(imagenPredeterminada);
+                                        } catch (IOException e) {
+                                            JOptionPane.showMessageDialog(null, "Error al cargar la imagen predeterminada: " + e.getMessage());
+                                        }
                                     }
+
+                                    double sueldo = 465; // Sueldo base
+                                    double comisiones = Double.parseDouble(txtComicionesVende.getText());
+                                    int numeroVentas = Integer.parseInt(txtNumeroVentasVende.getText());
+                                    double sueldoTotal = calcularSueldoTotal(sueldo, comisiones, numeroVentas);
+
+                                    GuardarVendedor(sueldoTotal, comisiones, numeroVentas, Estado.ACTIVO,
+                                            (String) cbxCiudadVende.getSelectedItem(), imagenVende, txtCedulaVende.getText(), txtNombresVende.getText().toUpperCase(), txtApellidosVende.getText().toUpperCase(), txtDireccionVende.getText().toUpperCase(),
+                                            txtCorreoVende.getText(), txtCelularVende.getText(), (String) cbxGeneroVende.getSelectedItem(), fechaNacimiento, (String) cbxEstadoCivilVende.getSelectedItem(),
+                                            txtCedulaVende.getText(), txtPasswordVende.getText(), txtCorreoVende.getText(), Rol.VENDEDOR);
+
+                                    cambiartabla();
+
+                                } else {
+                                    JOptionPane.showMessageDialog(null, "Ingrese un número de ventas válido (solo números enteros)");
                                 }
-
-                                GuardarVendedor(Double.parseDouble(txtSueldoVende.getText()), Double.parseDouble(txtComicionesVende.getText()), Integer.parseInt(txtNumeroVentasVende.getText()), Estado.ACTIVO,
-                                        (String) cbxCiudadVende.getSelectedItem(), imagenVende, txtCedulaVende.getText(), txtNombresVende.getText().toUpperCase(), txtApellidosVende.getText().toUpperCase(), txtDireccionVende.getText().toUpperCase(),
-                                        txtCorreoVende.getText(), txtCelularVende.getText(), (String) cbxGeneroVende.getSelectedItem(), fechaNacimiento, (String) cbxEstadoCivilVende.getSelectedItem(),
-                                        txtCedulaVende.getText(), txtPasswordVende.getText(), txtCorreoVende.getText(), Rol.VENDEDOR);
-
-                                cambiartabla();
-
                             } else {
-                                JOptionPane.showMessageDialog(null, "Ingrese un celular valido");
+                                JOptionPane.showMessageDialog(null, "Ingrese un valor de comisiones válido (números enteros o decimales)");
                             }
-
                         } else {
-                            JOptionPane.showMessageDialog(null, "Ingrese un correo valida");
+                            JOptionPane.showMessageDialog(null, "Ingrese un celular válido");
                         }
                     } else {
-                        JOptionPane.showMessageDialog(null, "Ingrese un apellido valido");
+                        JOptionPane.showMessageDialog(null, "Ingrese un correo válido");
                     }
-
                 } else {
-                    JOptionPane.showMessageDialog(null, "Ingrese un nombre valido");
+                    JOptionPane.showMessageDialog(null, "Ingrese un apellido válido");
                 }
-
             } else {
-                JOptionPane.showMessageDialog(null, "Ingrese una cedula valida");
+                JOptionPane.showMessageDialog(null, "Ingrese un nombre válido");
             }
-
+        } else {
+            JOptionPane.showMessageDialog(null, "Ingrese una cédula válida");
         }
-
-
+    }
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
@@ -555,7 +550,6 @@ public class CrudPanelVendedor extends javax.swing.JPanel {
     private javax.swing.JLabel lblNombresVende;
     private javax.swing.JLabel lblNumeroVentasVende;
     private javax.swing.JLabel lblPasswordVende;
-    private javax.swing.JLabel lblSueldoVende;
     private rojeru_san.RSMTextFull txtApellidosVende;
     private rojeru_san.RSMTextFull txtCedulaVende;
     private rojeru_san.RSMTextFull txtCelularVende;
@@ -565,6 +559,5 @@ public class CrudPanelVendedor extends javax.swing.JPanel {
     private rojeru_san.RSMTextFull txtNombresVende;
     private rojeru_san.RSMTextFull txtNumeroVentasVende;
     private rojeru_san.RSMPassView txtPasswordVende;
-    private rojeru_san.RSMTextFull txtSueldoVende;
     // End of variables declaration//GEN-END:variables
 }
