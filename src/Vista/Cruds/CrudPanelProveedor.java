@@ -300,7 +300,7 @@ public class CrudPanelProveedor extends javax.swing.JPanel {
 
     private void txtCelularKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCelularKeyTyped
         char x = evt.getKeyChar();
-        if (Character.isDigit(x)) {
+        if (Character.isLetter(x)) {
             JOptionPane.showMessageDialog(this, "Ingrese solo números");
             evt.consume();
         } else if (txtCelular.getText().length() >= 10) {
