@@ -524,7 +524,7 @@ public class Factura extends javax.swing.JPanel {
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(lblTituloFac, javax.swing.GroupLayout.PREFERRED_SIZE, 542, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(301, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -532,7 +532,7 @@ public class Factura extends javax.swing.JPanel {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(lblTituloFac, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2))
-                .addGap(0, 16, Short.MAX_VALUE))
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         jPanel3.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 930, 70));
@@ -626,7 +626,7 @@ public class Factura extends javax.swing.JPanel {
                 btnImprimirActionPerformed(evt);
             }
         });
-        jPanel3.add(btnImprimir, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 300, 80, 70));
+        jPanel3.add(btnImprimir, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 300, 80, 70));
 
         btnCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/rechazar.png"))); // NOI18N
         btnCancelar.addActionListener(new java.awt.event.ActionListener() {
@@ -1416,6 +1416,7 @@ public class Factura extends javax.swing.JPanel {
         return producto;
     }
 
+    //para generar un pdf primer paso 
     public void generarReciboPDF() {
         try {
             PdfWriter writer = new PdfWriter(pdfPath);
@@ -1512,6 +1513,7 @@ public class Factura extends javax.swing.JPanel {
         }
     }
 
+    //para enviar al correo 
     public static void transfer_to_email(String correo, String pdfPath) {
         String correoEnvia = "yingsyyangmecanica@gmail.com";
         String contrasena = "ghsd axnw dxtk fxei";
@@ -1557,6 +1559,8 @@ public class Factura extends javax.swing.JPanel {
         }
     }
 
+        //hasta aqui lo del pdf y correo 
+    
     private void guardarFactura() {
     DefaultTableModel model = (DefaultTableModel) JtableFactura.getModel();
     String codigoFactura = txtcodigoFac.getText();
