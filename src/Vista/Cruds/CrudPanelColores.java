@@ -163,6 +163,10 @@ public class CrudPanelColores extends javax.swing.JPanel {
         if (Character.isLowerCase(x)) {
             evt.setKeyChar(Character.toUpperCase(x));
         }
+        if (Character.isDigit(x)) {
+            JOptionPane.showMessageDialog(this, "Ingrese solo letras");
+            evt.consume();
+        } 
     }//GEN-LAST:event_txtColorKeyTyped
 
         

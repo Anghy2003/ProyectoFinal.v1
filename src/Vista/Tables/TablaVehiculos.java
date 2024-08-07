@@ -319,7 +319,9 @@ public class TablaVehiculos extends javax.swing.JPanel {
         char x= evt.getKeyChar();
         if (Character.isLowerCase(x)) {
             evt.setKeyChar(Character.toUpperCase(x));
-        }
+        }else if (txtBuscar.getText().length() >= 10) {
+        evt.consume();
+    }
     }//GEN-LAST:event_txtBuscarKeyTyped
 
     private void tblVehiculoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblVehiculoMouseClicked

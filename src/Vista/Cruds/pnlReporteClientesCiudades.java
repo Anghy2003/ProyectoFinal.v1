@@ -1,8 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package Vista.Cruds;
 
 import Conexion.Conexion_db;
@@ -28,7 +24,6 @@ public final class pnlReporteClientesCiudades extends javax.swing.JPanel {
 
     public pnlReporteClientesCiudades() {
         initComponents();
-        //crearGrafico();
         crearGraficoClientesPorCiudad();
         
     }
@@ -86,8 +81,14 @@ public final class pnlReporteClientesCiudades extends javax.swing.JPanel {
     // Crear el gráfico
     DefaultCategoryDataset dataset = new DefaultCategoryDataset();
 
+        // Recorre cada entrada en el mapa "clientesPorCiudad" utilizando un bucle for-each
         for (Map.Entry<String, Integer> entry : clientesPorCiudad.entrySet()) {
+
+            // Obtiene la clave (ciudad) de la entrada actual, y si es null, asigna el valor "Desconocido"
             String clave = entry.getKey() != null ? entry.getKey() : "Desconocido";
+
+            // Agrega un valor al  dataset con la cantidad de clientes
+            // para la ciudad correspondiente, dentro de la categoría Clientes
             dataset.addValue(entry.getValue(), "Clientes", clave);
         }
 

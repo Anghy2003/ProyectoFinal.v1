@@ -155,8 +155,8 @@ public class TablaCategoria extends javax.swing.JPanel {
                         .addGap(26, 26, 26)
                         .addComponent(jLabel2)))
                 .addGap(44, 44, 44)
-                .addComponent(tblaCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 446, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(35, Short.MAX_VALUE))
+                .addComponent(tblaCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 387, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(94, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -202,9 +202,9 @@ public class TablaCategoria extends javax.swing.JPanel {
     }//GEN-LAST:event_btnEliminarActionPerformed
    public void eliminarCategoria(String codigoCat) {
     for (int i = 0; i < 3; i++) { // Reintenta 3 veces
-        ObjectContainer BaseBD = null;
-        try {
-            BaseBD = Conexion_db.ConectarBD();
+        
+        
+         ObjectContainer   BaseBD = Conexion_db.ConectarBD();
             if (verificarProductosCategoria(BaseBD, codigoCat) > 0) {
                 JOptionPane.showMessageDialog(this, "No se puede eliminar la categoría porque tiene productos registrados con esta categoría.");
                 return;
@@ -213,24 +213,20 @@ public class TablaCategoria extends javax.swing.JPanel {
                 cat.setCodigoCat(codigoCat);
                 ObjectSet<Categoria> result = BaseBD.get(cat);
                 if (!result.isEmpty()) {
-                    BaseBD.delete(result.get(0));
+                    Categoria todelete=result.next();
+                    BaseBD.delete(todelete);
                     JOptionPane.showMessageDialog(this, "Categoría eliminada exitosamente.");
+                    BaseBD.close();
                     mostrarTablapro();
                     return;
                 }
             }
-        } catch (DatabaseFileLockedException e) {
-            // Esperar un poco antes de reintentar
-            try {
-                Thread.sleep(1000);
-            } catch (InterruptedException ie) {
-                Thread.currentThread().interrupt();
-            }
-        } finally {
-            if (BaseBD != null) {
+        
+             
+       
                 BaseBD.close();
-            }
-        }
+            
+        
     }
     JOptionPane.showMessageDialog(this, "No se pudo eliminar la categoría debido a un bloqueo en el archivo de base de datos.");
    }

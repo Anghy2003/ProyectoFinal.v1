@@ -56,7 +56,7 @@ public class TablaCategoriaSer extends javax.swing.JPanel {
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
 
         jLabel1.setFont(new java.awt.Font("Roboto Black", 0, 22)); // NOI18N
-        jLabel1.setText("Listado Categorias");
+        jLabel1.setText("Listado Categorias Servicios");
 
         tblaCategoria.setBackground(new java.awt.Color(255, 255, 255));
         tblaCategoria.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
@@ -123,12 +123,6 @@ public class TablaCategoriaSer extends javax.swing.JPanel {
                 .addGap(24, 24, 24)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addComponent(tblaCategoria)
-                        .addContainerGap())
-                    .addGroup(jPanel2Layout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addGap(39, 39, 39)
                         .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -138,7 +132,13 @@ public class TablaCategoriaSer extends javax.swing.JPanel {
                         .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(37, 37, 37))))
+                        .addGap(37, 37, 37))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 319, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(tblaCategoria))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -157,9 +157,9 @@ public class TablaCategoriaSer extends javax.swing.JPanel {
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(26, 26, 26)
                         .addComponent(jLabel2)))
-                .addGap(44, 44, 44)
-                .addComponent(tblaCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 446, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(35, Short.MAX_VALUE))
+                .addGap(42, 42, 42)
+                .addComponent(tblaCategoria, javax.swing.GroupLayout.PREFERRED_SIZE, 393, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(159, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -172,7 +172,7 @@ public class TablaCategoriaSer extends javax.swing.JPanel {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 644, Short.MAX_VALUE)
+            .addGap(0, 713, Short.MAX_VALUE)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -198,6 +198,7 @@ public class TablaCategoriaSer extends javax.swing.JPanel {
         if (selectedRow != -1) {
             String codigoCatSer = tblCategoriaSer.getValueAt(selectedRow, 0).toString();
             eliminarCategoriaServicio(codigoCatSer);
+            mostrarTablaServicios();
         } else {
             JOptionPane.showMessageDialog(this, "Seleccione una categoría para eliminar.");
         }
@@ -228,9 +229,9 @@ private void mostrarTablaServicios() {
     
    private void eliminarCategoriaServicio(String codigoCatSer) {
         for (int i = 0; i < 3; i++) { // Reintenta 3 veces
-            ObjectContainer BaseBD = null;
-            try {
-                BaseBD = Conexion_db.ConectarBD();
+            
+            
+                ObjectContainer BaseBD = Conexion_db.ConectarBD();
                 if (verificarServiciosCategoria(BaseBD, codigoCatSer) > 0) {
                     JOptionPane.showMessageDialog(this, "No se puede eliminar la categoría porque tiene servicios asociados.");
                     return;
@@ -239,27 +240,24 @@ private void mostrarTablaServicios() {
                     cat.setCodigoCatSer(codigoCatSer);
                     ObjectSet<CategoriaServicio> result = BaseBD.get(cat);
                     if (!result.isEmpty()) {
-                        BaseBD.delete(result.get(0));
+                        CategoriaServicio toDelete = result.next();
+                        BaseBD.delete(toDelete);//borrar
                         JOptionPane.showMessageDialog(this, "Categoría eliminada exitosamente.");
+                        BaseBD.close();
                         mostrarTablaServicios();
+                        
                         return;
                     }
                 }
-            } catch (DatabaseFileLockedException e) {
-                // Esperar un poco antes de reintentar
-                try {
-                    Thread.sleep(1000);
-                } catch (InterruptedException ie) {
-                    Thread.currentThread().interrupt();
-                }
-            } finally {
-                if (BaseBD != null) {
+            
+             
+             
                     BaseBD.close();
-                }
+                
             }
         }
-        JOptionPane.showMessageDialog(this, "No se pudo eliminar la categoría debido a un bloqueo en el archivo de base de datos.");
-    } 
+       
+     
     
     
     private void MostrarpaneCruds(JPanel p) {

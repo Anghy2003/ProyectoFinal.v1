@@ -774,7 +774,9 @@ public class BuscarPanelVehiculo extends javax.swing.JPanel {
     if (Character.isLetter(x)) {
         JOptionPane.showMessageDialog(this, "Ingrese solo números");
         evt.consume();
-    } 
+    } else if (txtCliente.getText().length() >= 10) {
+        evt.consume();
+    }
     }//GEN-LAST:event_txtClienteKeyTyped
 
     private void cmbMarcaRegistroVehiculoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbMarcaRegistroVehiculoItemStateChanged
@@ -802,9 +804,11 @@ public class BuscarPanelVehiculo extends javax.swing.JPanel {
     }//GEN-LAST:event_cmbModeloRegistroVehiculo1MouseEntered
 
     private void txtPlacaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPlacaKeyTyped
-        char x= evt.getKeyChar();
+        char x = evt.getKeyChar();
         if (Character.isLowerCase(x)) {
             evt.setKeyChar(Character.toUpperCase(x));
+        } else if (txtCliente.getText().length() >= 8) {
+            evt.consume();
         }
     }//GEN-LAST:event_txtPlacaKeyTyped
     

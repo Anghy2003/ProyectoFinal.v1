@@ -149,6 +149,11 @@ public class CrudPanelProveedor extends javax.swing.JPanel {
         txtCelular.setColorTransparente(true);
         txtCelular.setFont(new java.awt.Font("Roboto Light", 1, 14)); // NOI18N
         txtCelular.setPlaceholder("Ejm: 0911111111");
+        txtCelular.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtCelularKeyTyped(evt);
+            }
+        });
         jPanel2.add(txtCelular, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 390, 230, 40));
 
         jPanel1.add(jPanel2, java.awt.BorderLayout.CENTER);
@@ -292,6 +297,16 @@ public class CrudPanelProveedor extends javax.swing.JPanel {
             evt.setKeyChar(Character.toUpperCase(x));
         }
     }//GEN-LAST:event_txtDireccionKeyTyped
+
+    private void txtCelularKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCelularKeyTyped
+        char x = evt.getKeyChar();
+        if (Character.isDigit(x)) {
+            JOptionPane.showMessageDialog(this, "Ingrese solo números");
+            evt.consume();
+        } else if (txtCelular.getText().length() >= 10) {
+        evt.consume();
+    }
+    }//GEN-LAST:event_txtCelularKeyTyped
     private void ShowpanelCruds(JPanel p) {
         p.setSize(870, 630);
         p.setLocation(0, 0);
