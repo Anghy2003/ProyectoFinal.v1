@@ -9,12 +9,12 @@ public class EncabezadoCita {
     private String cedulaMecanico_encabezadoCita;
     private String placaVehiculo_encabezadoCita;
 
-    public EncabezadoCita(String codigo_encabezadoCita, String fecha_encabezadoCita, String cedulaCliente_encabezadoCita, String cedulaMecanico_encabezadoCita, String placaVehiculo_encabezadoCita) {
+    public EncabezadoCita(String codigo_encabezadoCita, String fecha_encabezadoCita, String cedulaCliente_encabezadoCita, String cedulaMecanico_encabezadoCita) {
         this.codigo_encabezadoCita = codigo_encabezadoCita;
         this.fecha_encabezadoCita = fecha_encabezadoCita;
         this.cedulaCliente_encabezadoCita = cedulaCliente_encabezadoCita;
         this.cedulaMecanico_encabezadoCita = cedulaMecanico_encabezadoCita;
-        this.placaVehiculo_encabezadoCita = placaVehiculo_encabezadoCita;
+        
     }
     
     

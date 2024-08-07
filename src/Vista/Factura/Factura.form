@@ -667,7 +667,7 @@
                               <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="lblTituloFac" min="-2" pref="542" max="-2" attributes="0"/>
-                              <EmptySpace pref="301" max="32767" attributes="0"/>
+                              <EmptySpace max="32767" attributes="0"/>
                           </Group>
                       </Group>
                     </DimensionLayout>
@@ -678,7 +678,7 @@
                                   <Component id="lblTituloFac" min="-2" pref="54" max="-2" attributes="0"/>
                                   <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
                               </Group>
-                              <EmptySpace min="0" pref="16" max="32767" attributes="0"/>
+                              <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                           </Group>
                       </Group>
                     </DimensionLayout>
@@ -937,7 +937,7 @@
                   </Events>
                   <Constraints>
                     <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                      <AbsoluteConstraints x="770" y="300" width="80" height="70"/>
+                      <AbsoluteConstraints x="650" y="300" width="80" height="70"/>
                     </Constraint>
                   </Constraints>
                 </Component>
