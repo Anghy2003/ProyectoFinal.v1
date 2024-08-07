@@ -372,57 +372,70 @@ public class BuscarProductos extends javax.swing.JPanel {
         VistaMenu.PanelPrincipal.repaint();
     }
     private void btnModficarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModficarActionPerformed
-       if (validarCampos()) {
-        modificarProducto(
-            txtCodigoProducto.getText().toUpperCase(),
-            txtNombreProducto.getText(),
-            Double.parseDouble(txtPrecioProducto.getText()),
-            cmbCategoria.getSelectedItem().toString().toUpperCase(),
-            Integer.parseInt(txtNumeroProductos.getText()),
-            Integer.parseInt(txtExistenciaMaxima.getText()),
-            Integer.parseInt(txtExistenciaMinima.getText()),
-            txtDescripcion.getText(),
-            txtProveedorID.getText(),
-            imagenProducto,
-            Producto.Estado.ACTIVO
-        );
+                                                 
+   if (validarCampos()) {
+       String precioProducto = txtPrecioProducto.getText().replace(",", ".");
+       modificarProducto(
+           txtCodigoProducto.getText().toUpperCase(),
+           txtNombreProducto.getText(),
+           Double.parseDouble(precioProducto),
+           cmbCategoria.getSelectedItem().toString().toUpperCase(),
+           Integer.parseInt(txtNumeroProductos.getText()),
+           Integer.parseInt(txtExistenciaMaxima.getText()),
+           Integer.parseInt(txtExistenciaMinima.getText()),
+           txtDescripcion.getText(),
+           txtProveedorID.getText(),
+           imagenProducto,
+           Producto.Estado.ACTIVO
+       );
+       
 
-        JOptionPane.showMessageDialog(this, "Producto Modificado");
-        resetCampos();
-    }
+       JOptionPane.showMessageDialog(this, "Producto Modificado");
+       resetCampos();
+        
+        TablaProductos tblpro = new TablaProductos();
+        MostrarpaneCruds(tblpro);
+   }
+
 
     }//GEN-LAST:event_btnModficarActionPerformed
     private boolean validarCampos() {
-    if (txtNombreProducto.getText().trim().isEmpty()) {
-        JOptionPane.showMessageDialog(this, "Ingrese un nombre válido");
-        return false;
+        if (txtNombreProducto.getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Ingrese un nombre válido");
+            return false;
+        }
+        if (txtDescripcion.getText().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Ingrese una descripción válida");
+            return false;
+        }
+        if (!txtPrecioProducto.getText().matches("\\d+(\\.\\d{1,2})?")) {
+            JOptionPane.showMessageDialog(this, "Ingrese valores numéricos válidos para el precio");
+            return false;
+        }
+        if (!txtNumeroProductos.getText().matches("\\d+")) {
+            JOptionPane.showMessageDialog(this, "Ingrese un número de productos válido");
+            return false;
+        }
+        if (!txtExistenciaMaxima.getText().matches("\\d+")) {
+            JOptionPane.showMessageDialog(this, "Ingrese una existencia máxima válida");
+            return false;
+        }
+        if (!txtExistenciaMinima.getText().matches("\\d+")) {
+            JOptionPane.showMessageDialog(this, "Ingrese una existencia mínima válida");
+            return false;
+        }
+        int existenciaMaxima = Integer.parseInt(txtExistenciaMaxima.getText());
+        int existenciaMinima = Integer.parseInt(txtExistenciaMinima.getText());
+        if (existenciaMinima > existenciaMaxima) {
+            JOptionPane.showMessageDialog(this, "La existencia mínima no puede ser mayor que la existencia máxima");
+            return false;
+        }
+        if (cmbCategoria.getSelectedIndex() == -1) {
+            JOptionPane.showMessageDialog(this, "Seleccione una categoría válida");
+            return false;
+        }
+        return true;
     }
-    if (txtDescripcion.getText().isEmpty()) {
-        JOptionPane.showMessageDialog(this, "Ingrese una descripción válida");
-        return false;
-    }
-    if (!txtPrecioProducto.getText().matches("\\d+(\\.\\d{1,2})?")) {
-        JOptionPane.showMessageDialog(this, "Ingrese valores numéricos válidos para el precio");
-        return false;
-    }
-    if (!txtNumeroProductos.getText().matches("\\d+")) {
-        JOptionPane.showMessageDialog(this, "Ingrese un número de productos válido");
-        return false;
-    }
-    if (!txtExistenciaMaxima.getText().matches("\\d+")) {
-        JOptionPane.showMessageDialog(this, "Ingrese una existencia máxima válida");
-        return false;
-    }
-    if (!txtExistenciaMinima.getText().matches("\\d+")) {
-        JOptionPane.showMessageDialog(this, "Ingrese una existencia mínima válida");
-        return false;
-    }
-    if (cmbCategoria.getSelectedIndex() == -1) {
-        JOptionPane.showMessageDialog(this, "Seleccione una categoría válida");
-        return false;
-    }
-    return true;
-}
     
 
     private void BtnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnBuscarActionPerformed
@@ -515,7 +528,7 @@ public class BuscarProductos extends javax.swing.JPanel {
         lblImagen.setText("No image available"); // Establecer texto por defecto si no hay imagen
     }
 
-    private void buscarProducto() {
+private void buscarProducto() {
     Boolean encontrado = false;
     ObjectContainer BaseBD = Conexion_db.ConectarBD();
     Query productoQuery = BaseBD.query();
@@ -527,7 +540,9 @@ public class BuscarProductos extends javax.swing.JPanel {
         Producto prod = resultado.next();
         txtCodigoProducto.setText(prod.getCodigo_Producto());
         txtNombreProducto.setText(prod.getNombre_Producto());
-        txtPrecioProducto.setText(String.format("%.2f", prod.getPrecio_Producto()));
+        // Asegurarse de que el precio se muestre con punto decimal
+        String precioFormateado = String.format("%.2f", prod.getPrecio_Producto()).replace(",", ".");
+        txtPrecioProducto.setText(precioFormateado);
         cmbCategoria.setSelectedItem(prod.getCodigo_categoria_Producto());
         txtNumeroProductos.setText(String.valueOf(prod.getNumeroProductos_Producto()));
         txtExistenciaMaxima.setText(String.valueOf(prod.getExistenciaMaxima_Producto()));
@@ -589,9 +604,9 @@ public class BuscarProductos extends javax.swing.JPanel {
 
             if (codigoProveedor.equals(inputCodigo)) {
                 txtProveedorID.setText(miProveedor.getNombre_proveedor());
-                JOptionPane.showMessageDialog(this, " Proveedor Añadido con exito");
                 encontrado = true;
-                   
+                  JOptionPane.showMessageDialog(this, " Proveedor Añadido con exito");
+                  TablaProvedores.dispose();
                 break;
                 
             }

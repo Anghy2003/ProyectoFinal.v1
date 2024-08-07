@@ -74,6 +74,7 @@ public class CatalogoServicios extends javax.swing.JPanel {
         jDialog1.setUndecorated(true);
 
         jPanel3.setBackground(new java.awt.Color(255, 255, 255));
+        jPanel3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 255)));
         jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel2.setFont(new java.awt.Font("Roboto Black", 0, 30)); // NOI18N
