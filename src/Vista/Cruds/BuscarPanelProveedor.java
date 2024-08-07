@@ -83,9 +83,10 @@ public class BuscarPanelProveedor extends javax.swing.JPanel {
         jPanel1.add(lblDireccion, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 270, 110, 30));
 
         txtCodigo.setForeground(new java.awt.Color(0, 53, 79));
+        txtCodigo.setToolTipText("NO SE PUEDE EDITAR ID");
         txtCodigo.setColorTransparente(true);
         txtCodigo.setFont(new java.awt.Font("Roboto Light", 1, 14)); // NOI18N
-        txtCodigo.setPlaceholder("Ejm: AAA-9999");
+        txtCodigo.setPlaceholder("CODIGO");
         jPanel1.add(txtCodigo, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 110, 210, 40));
 
         txtTipo.setForeground(new java.awt.Color(0, 53, 79));
@@ -261,7 +262,7 @@ public class BuscarPanelProveedor extends javax.swing.JPanel {
                 && !txtEmail.getText().trim().isBlank()
                 && !txtCelular.getText().trim().isBlank()) {// condicion de que todos esten completos
              //Validamos
-             if (txtEmail.getText().trim().matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$")) {
+             if (txtEmail.getText().trim().matches("^[\\w.-]+@[\\w.-]+\\.[a-zA-Z]{2,6}$")) {
                  if (txtCelular.getText().trim().matches("^09\\d{8}$")) {
                     modificarProveedor(txtCodigo.getText().toUpperCase().trim(), txtTipo.getText().toUpperCase().trim(), txtNombre.getText().toUpperCase().trim(),txtDireccion.getText().toUpperCase().trim(), txtEmail.getText().trim(), txtCelular.getText(),Proveedor.Estado.ACTIVO);
                     
