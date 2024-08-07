@@ -626,7 +626,7 @@ public class Factura extends javax.swing.JPanel {
                 btnImprimirActionPerformed(evt);
             }
         });
-        jPanel3.add(btnImprimir, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 300, 80, 70));
+        jPanel3.add(btnImprimir, new org.netbeans.lib.awtextra.AbsoluteConstraints(770, 300, 80, 70));
 
         btnCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/rechazar.png"))); // NOI18N
         btnCancelar.addActionListener(new java.awt.event.ActionListener() {

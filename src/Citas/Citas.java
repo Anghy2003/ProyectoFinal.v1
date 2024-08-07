@@ -15,16 +15,41 @@ import Models.Vehiculo;
 import Vista.Cruds.CRUDS1.CrudPanelCliente;
 import Vista.Cruds.CRUDS1.CrudPanelMecanico;
 import Vista.Cruds.CrudPanelVehiculo;
+import static Vista.Factura.Factura.transfer_to_email;
 import Vista.Menu.VistaMenu;
 import static Vista.Menu.VistaMenu.PanelPrincipal;
 import com.db4o.ObjectContainer;
 import com.db4o.ObjectSet;
 import com.db4o.query.Query;
+import com.itextpdf.io.image.ImageDataFactory;
+import com.itextpdf.kernel.colors.ColorConstants;
+import com.itextpdf.kernel.pdf.PdfDocument;
+import com.itextpdf.kernel.pdf.PdfWriter;
+import com.itextpdf.layout.Document;
+import com.itextpdf.layout.element.Cell;
+import com.itextpdf.layout.element.Image;
+import com.itextpdf.layout.element.Paragraph;
+import com.itextpdf.layout.element.Table;
+import com.itextpdf.layout.property.TextAlignment;
+import com.itextpdf.layout.property.UnitValue;
 import java.awt.BorderLayout;
+import java.awt.Desktop;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.Properties;
+import javax.mail.Message;
+import javax.mail.Multipart;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeBodyPart;
+import javax.mail.internet.MimeMessage;
+import javax.mail.internet.MimeMultipart;
 import javax.swing.JDialog;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
@@ -33,82 +58,8 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
 
 public class Citas extends javax.swing.JPanel {
-
-    // Método para buscar placas de vehículos asociadas a una cédula de cliente
-    public List<String> buscarPlacasVehiculos(String cedulaCliente) {
-        // Se crea una lista vacía para almacenar las placas de vehículos
-        List<String> placasVehiculos = new ArrayList<>();
-
-        // Se conecta a la base de datos y se obtiene un objeto ObjectContainer
-        ObjectContainer BaseBD = Conexion_db.ConectarBD();
-
-        // Se utiliza un try-finally para asegurarse de cerrar la conexión a la base de datos
-        try {
-            // Se crea un objeto Query para buscar objetos de tipo Cliente
-            Query query = BaseBD.query();
-
-            // Se especifica que se quiere buscar objetos de tipo Cliente
-            query.constrain(Cliente.class);
-
-            // Se baja al campo "cedula" del objeto Cliente y se busca la cédula del cliente especificada
-            query.descend("cedula").constrain(cedulaCliente);
-
-            // Se ejecuta la consulta y se obtiene un conjunto de objetos Cliente que coinciden con la cédula
-            ObjectSet<Cliente> clientes = query.execute();
-
-            // Se verifica si se encontraron clientes con la cédula especificada
-            if (!clientes.isEmpty()) {
-                // Se obtiene el primer cliente del conjunto (en este caso solo debería haber uno)
-                Cliente cliente = clientes.next();
-
-                // Se crea un objeto Query para buscar objetos de tipo Vehiculo
-                Query queryVehiculos = BaseBD.query();
-
-                // Se especifica que se quiere buscar objetos de tipo Vehiculo
-                queryVehiculos.constrain(Vehiculo.class);
-
-                // Se baja al campo "id_Cliente" del objeto Vehiculo y se busca el id del cliente obtenido anteriormente
-                queryVehiculos.descend("cedula").constrain(cliente.getiD_Cliente());
-
-                // Se ejecuta la consulta y se obtiene un conjunto de objetos Vehiculo que coinciden con el id del cliente
-                ObjectSet<Vehiculo> vehiculos = queryVehiculos.execute();
-
-                // Se itera sobre el conjunto de vehículos y se agregan las placas a la lista
-                while (vehiculos.hasNext()) {
-                    // Se obtiene el siguiente vehículo del conjunto
-                    Vehiculo vehiculo = vehiculos.next();
-
-                    // Se agrega la placa del vehículo a la lista
-                    placasVehiculos.add(vehiculo.getPlaca_Vehiculo());
-                }
-            }
-        } finally {
-            // Se cierra la conexión a la base de datos
-            BaseBD.close();
-        }
-
-        // Se devuelve la lista de placas de vehículos
-        return placasVehiculos;
-    }
-
-// En el método que gestiona el evento de búsqueda, por ejemplo, un botón
-    public void buscarYllenarComboBox() {
-        // Obtiene la cédula del cliente desde el campo de texto
-        String cedulaCliente = txtCedulaCli.getText();
-
-        // Busca las placas de vehículos asociadas al cliente utilizando el método buscarPlacasVehiculos
-        List<String> placasVehiculos = buscarPlacasVehiculos(cedulaCliente);
-
-        // Ahora puedes llenar el combobox con las placas de vehículos
-        // Primero, limpia todos los elementos del combobox
-        cbxPlacasVehiculos.removeAllItems();
-
-        // Itera sobre la lista de placas de vehículos y agrega cada placa al combobox
-        for (String placa : placasVehiculos) {
-            // Agrega la placa de vehículo al combobox
-            cbxPlacasVehiculos.addItem(placa);
-        }
-    }
+    
+     private String pdfPath = "Cita.pdf";
 
     public Citas() {
         initComponents();
@@ -117,11 +68,9 @@ public class Citas extends javax.swing.JPanel {
         txtdireccionCli.setEnabled(false);
         txtNombreCli.setEnabled(false);
         txtCelularCli.setEnabled(false);
-//        txtModeloVehi.setEnabled(false);
-//        txtMarcaVehi.setEnabled(false);
-        txtNombreMeca.setEnabled(false);
-        txtCelularMeca.setEnabled(false);
-        buscarYllenarComboBox();
+
+        mostrarComboMecanico();
+
     }
 
     private void MostarpanelCruds(JPanel p) {
@@ -131,6 +80,28 @@ public class Citas extends javax.swing.JPanel {
         PanelPrincipal.add(p, BorderLayout.CENTER);
         PanelPrincipal.revalidate();
         PanelPrincipal.repaint();
+    }
+
+    //combobox mecanico
+    private void mostrarComboMecanico() {
+        ObjectContainer BaseBD = Conexion_db.ConectarBD();
+
+        Query mechabox = BaseBD.query();
+        mechabox.constrain(Mecanico.class);
+        ObjectSet<Mecanico> resultado = mechabox.execute();
+
+        // Limpiar el combo box antes de poblarlo
+        cbxMecaCita.removeAllItems();
+
+        for (Mecanico mechanic : resultado) {
+            String item = (mechanic.getCedula()) + " "
+                    + (mechanic.getNombres()) + " "
+                    + (mechanic.getApellidos()) + " "
+                    + (mechanic.getCelular());
+            cbxMecaCita.addItem(item);
+        }
+
+        BaseBD.close();
     }
 
     @SuppressWarnings("unchecked")
@@ -150,7 +121,6 @@ public class Citas extends javax.swing.JPanel {
         jPanel3 = new javax.swing.JPanel();
         lblDatosCli = new javax.swing.JLabel();
         lblFecha = new javax.swing.JLabel();
-        btnBuscarVehiculo = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         JtableCita = new javax.swing.JTable();
         btnNuevo = new javax.swing.JButton();
@@ -172,19 +142,13 @@ public class Citas extends javax.swing.JPanel {
         lblDireccion2 = new javax.swing.JLabel();
         txtCelularCli = new javax.swing.JTextField();
         lblDatosCli2 = new javax.swing.JLabel();
-        lblcedula2 = new javax.swing.JLabel();
-        lblNombre3 = new javax.swing.JLabel();
-        txtNombreMeca = new javax.swing.JTextField();
-        txtcedulaMeca = new javax.swing.JTextField();
-        lblDireccion4 = new javax.swing.JLabel();
-        txtCelularMeca = new javax.swing.JTextField();
-        btnBuscaMecanico = new javax.swing.JButton();
         jDateFechaCita = new com.toedter.calendar.JDateChooser();
         btnFinalizarCita1 = new rojeru_san.RSButton();
         lblverlis1 = new javax.swing.JLabel();
         lblCuadro2 = new javax.swing.JLabel();
         lblCuadro = new javax.swing.JLabel();
         cbxPlacasVehiculos = new javax.swing.JComboBox<>();
+        cbxMecaCita = new javax.swing.JComboBox<>();
         lblTituloFac = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
 
@@ -317,15 +281,6 @@ public class Citas extends javax.swing.JPanel {
         lblFecha.setText("Fecha:");
         jPanel3.add(lblFecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 20, -1, -1));
 
-        btnBuscarVehiculo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/mas (1).png"))); // NOI18N
-        btnBuscarVehiculo.setText("Buscar");
-        btnBuscarVehiculo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnBuscarVehiculoActionPerformed(evt);
-            }
-        });
-        jPanel3.add(btnBuscarVehiculo, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 180, 110, 40));
-
         JtableCita.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -355,6 +310,11 @@ public class Citas extends javax.swing.JPanel {
         jPanel3.add(btnNuevo, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 60, 80, 70));
 
         btnResibo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/impresion.png"))); // NOI18N
+        btnResibo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnResiboActionPerformed(evt);
+            }
+        });
         jPanel3.add(btnResibo, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 160, 80, 70));
 
         btnCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/rechazar.png"))); // NOI18N
@@ -424,7 +384,7 @@ public class Citas extends javax.swing.JPanel {
                 btnBuscarClienteActionPerformed(evt);
             }
         });
-        jPanel3.add(btnBuscarCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 90, 110, 40));
+        jPanel3.add(btnBuscarCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 80, 110, 40));
 
         lblDireccion1.setFont(new java.awt.Font("Yu Gothic UI Light", 1, 14)); // NOI18N
         lblDireccion1.setText("Direccion:");
@@ -438,36 +398,6 @@ public class Citas extends javax.swing.JPanel {
 
         lblDatosCli2.setText("Datos Vehiculo");
         jPanel3.add(lblDatosCli2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 150, -1, 20));
-
-        lblcedula2.setFont(new java.awt.Font("Yu Gothic UI Light", 1, 14)); // NOI18N
-        lblcedula2.setText("Cedula:");
-        jPanel3.add(lblcedula2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 280, -1, -1));
-
-        lblNombre3.setFont(new java.awt.Font("Yu Gothic UI Light", 1, 14)); // NOI18N
-        lblNombre3.setText("Nombre");
-        jPanel3.add(lblNombre3, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 320, -1, -1));
-        jPanel3.add(txtNombreMeca, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 320, 190, -1));
-
-        txtcedulaMeca.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtcedulaMecaActionPerformed(evt);
-            }
-        });
-        jPanel3.add(txtcedulaMeca, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 280, 190, 30));
-
-        lblDireccion4.setFont(new java.awt.Font("Yu Gothic UI Light", 1, 14)); // NOI18N
-        lblDireccion4.setText("Celular");
-        jPanel3.add(lblDireccion4, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 280, -1, -1));
-        jPanel3.add(txtCelularMeca, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 280, 220, -1));
-
-        btnBuscaMecanico.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/mas (1).png"))); // NOI18N
-        btnBuscaMecanico.setText("Buscar");
-        btnBuscaMecanico.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnBuscaMecanicoActionPerformed(evt);
-            }
-        });
-        jPanel3.add(btnBuscaMecanico, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 280, 110, 40));
         jPanel3.add(jDateFechaCita, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 20, 220, 30));
 
         btnFinalizarCita1.setBackground(new java.awt.Color(0, 204, 0));
@@ -490,6 +420,13 @@ public class Citas extends javax.swing.JPanel {
 
         jPanel3.add(cbxPlacasVehiculos, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 180, 490, -1));
 
+        cbxMecaCita.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbxMecaCitaActionPerformed(evt);
+            }
+        });
+        jPanel3.add(cbxMecaCita, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 280, 490, -1));
+
         lblTituloFac.setBackground(new java.awt.Color(0, 53, 79));
         lblTituloFac.setFont(new java.awt.Font("Yu Gothic UI Light", 1, 14)); // NOI18N
         lblTituloFac.setForeground(new java.awt.Color(255, 255, 255));
@@ -501,19 +438,20 @@ public class Citas extends javax.swing.JPanel {
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                .addContainerGap(55, Short.MAX_VALUE)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGap(26, 26, 26)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(lblTituloFac, javax.swing.GroupLayout.PREFERRED_SIZE, 542, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 890, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(16, 16, 16))
+                .addContainerGap(51, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel4Layout.createSequentialGroup()
                         .addGap(8, 8, 8)
@@ -528,29 +466,13 @@ public class Citas extends javax.swing.JPanel {
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(jPanel4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+            .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
-
-    private void btnBuscarVehiculoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarVehiculoActionPerformed
-//        if (verificarPlacasRepetidas() == 0) {//si es cero, no existen clientes con esa cedula, mandamos a registro
-//            txtPlacaVehi.setText("");
-//            JOptionPane.showMessageDialog(this, "Vehiculo no registrado, por favor registrese");
-//            CrudPanelVehiculo CrearMivehiculo = new CrudPanelVehiculo();
-//            ShowpanelCruds(CrearMivehiculo);
-//        } else {//sino vamos a dejar la cedula en el  textfield
-//
-////            CargarVehiculo();
-//        }
-    }//GEN-LAST:event_btnBuscarVehiculoActionPerformed
 
     private void btnNuevoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNuevoActionPerformed
         Citas nuevo = new Citas();
@@ -582,53 +504,13 @@ public class Citas extends javax.swing.JPanel {
     }//GEN-LAST:event_btnAñadirServicosActionPerformed
 
     private void btnBuscarClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarClienteActionPerformed
-     // Obtiene la cédula del cliente desde el campo de texto
-    String cedulaCliente = txtCedulaCli.getText();
-
-    // Verifica que el campo de cédula no esté vacío
-    if (cedulaCliente.isEmpty()) {
-        JOptionPane.showMessageDialog(this, "Por favor, ingrese la cédula del cliente.");
-        return;
-    }
-
-    // Verifica la existencia del cliente
-    if (verificarExistenciaCliente() == 0) {
-        // Si es cero, no existen clientes con esa cédula, mandamos a registro
-        txtCedulaCli.setText("");
-        JOptionPane.showMessageDialog(this, "Cliente no registrado, por favor regístrese.");
-        CrudPanelCliente CrearMiCliente = new CrudPanelCliente();
-        ShowpanelCruds(CrearMiCliente);
-    } else {
-        // Si existe, busca las placas de vehículos asociadas al cliente
-        List<String> placasVehiculos = buscarPlacasVehiculos(cedulaCliente);
-        CargarCliente();
-        // Limpia todos los elementos del combobox
-        cbxPlacasVehiculos.removeAllItems();
-
-    }
-
+        CargarVehiculosCliente();
 
     }//GEN-LAST:event_btnBuscarClienteActionPerformed
 
     private void txtCedulaCliActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtCedulaCliActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtCedulaCliActionPerformed
-
-    private void txtcedulaMecaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtcedulaMecaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtcedulaMecaActionPerformed
-
-    private void btnBuscaMecanicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscaMecanicoActionPerformed
-        if (verificarExistenciaMecanico() == 0) {//si es cero, no existen clientes con esa cedula, mandamos a registro
-            txtcedulaMeca.setText("");
-            JOptionPane.showMessageDialog(this, "Mecanico no registrado, por favor registrese");
-            CrudPanelMecanico CrearMiCliente = new CrudPanelMecanico();
-            ShowpanelCruds(CrearMiCliente);
-        } else {//sino vamos a dejar la cedula en el  textfield
-
-            CargarMecanico();
-        }
-    }//GEN-LAST:event_btnBuscaMecanicoActionPerformed
 
     private void btnBuscarServicioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarServicioActionPerformed
 
@@ -643,6 +525,80 @@ public class Citas extends javax.swing.JPanel {
 
     }//GEN-LAST:event_btnInsetarServiciosActionPerformed
 
+    private void cbxMecaCitaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxMecaCitaActionPerformed
+
+    }//GEN-LAST:event_cbxMecaCitaActionPerformed
+
+    private void btnResiboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnResiboActionPerformed
+         
+        generarReciboPDF();
+        String cedula = txtCedulaCli.getText().trim();
+        if (!cedula.isEmpty()) {
+            String correoCliente = obtenerCorreoCliente(cedula);
+            if (correoCliente != null) {
+                transfer_to_email(correoCliente, pdfPath);
+            } else {
+                JOptionPane.showMessageDialog(this, "No se pudo obtener el correo del cliente.");
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "Por favor, seleccione un cliente.");
+        }
+    }//GEN-LAST:event_btnResiboActionPerformed
+
+    public final void CargarVehiculosCliente() {
+        // Verifica que el campo de cédula no esté vacío
+        String cedulaBuscar = txtCedulaCli.getText().trim();
+        if (cedulaBuscar.isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Por favor, ingrese una cédula para buscar.");
+            return;
+        }
+
+        // Establecer conexión con la base de datos
+        ObjectContainer BaseBD = null;
+        try {
+            BaseBD = Conexion_db.ConectarBD();
+
+            // Buscar el cliente
+            Query clienteQuery = BaseBD.query();
+            clienteQuery.constrain(Cliente.class);
+            clienteQuery.descend("cedula").constrain(cedulaBuscar);
+            ObjectSet<Cliente> resultadoCliente = clienteQuery.execute();
+
+            if (!resultadoCliente.isEmpty()) {
+                Cliente cliente = resultadoCliente.get(0);
+
+                // Buscar los vehículos del cliente
+                Query vehiculoQuery = BaseBD.query();
+                vehiculoQuery.constrain(Vehiculo.class);
+                vehiculoQuery.descend("id_Cliente").constrain(cliente.getCedula()); // Asumiendo que los vehículos tienen un campo cedulaCliente
+                ObjectSet<Vehiculo> resultadoVehiculo = vehiculoQuery.execute();
+
+                // Limpiar el JComboBox antes de añadir nuevos elementos
+                cbxPlacasVehiculos.removeAllItems();
+
+                // Añadir los vehículos al JComboBox
+                if (!resultadoVehiculo.isEmpty()) {
+                    for (Vehiculo vehiculo : resultadoVehiculo) {
+                        cbxPlacasVehiculos.addItem(vehiculo.getPlaca_Vehiculo());
+                        CargarCliente();
+                    }
+
+                    JOptionPane.showMessageDialog(this, "Vehículos encontrados y añadidos al comboBox.");
+                } else {
+                    JOptionPane.showMessageDialog(this, "No se encontraron vehículos para el cliente.");
+                }
+            } else {
+                JOptionPane.showMessageDialog(this, "No se encontró el cliente.");
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error al buscar los vehículos del cliente: " + e.getMessage());
+        } finally {
+            if (BaseBD != null) {
+                BaseBD.close();
+            }
+        }
+    }
+
     public final int verificarExistenciaCliente() {
         Boolean encontrado = false;
         // ESTABLECER CONEXION CON LA BASE DE DATOS
@@ -656,31 +612,6 @@ public class Citas extends javax.swing.JPanel {
         return coincidencias;
     }
 
-//    public final int verificarPlacasRepetidas() {
-//        Boolean encontrado = false;
-//        // ESTABLECER CONEXION CON LA BASE DE DATOS
-//        ObjectContainer BaseBD = Conexion_db.ConectarBD();
-//        Query vehiculo = BaseBD.query();//metodo para iniciar una consulta
-//        vehiculo.constrain(Vehiculo.class);//buscaremos en la clase Vehiculo
-//        vehiculo.descend("placa_Vehiculo").constrain(txtPlacaVehi.getText().toUpperCase()); // verificamos las coincidencias en el atributo especificado
-//        ObjectSet<Vehiculo> resultado = vehiculo.execute();//Ejecutamos la consulta y almacenamos en "resultado"
-//        int coincidencias = resultado.size();
-//        BaseBD.close();
-//        return coincidencias;
-//    }
-
-    public final int verificarExistenciaMecanico() {
-        Boolean encontrado = false;
-        // ESTABLECER CONEXION CON LA BASE DE DATOS
-        ObjectContainer BaseBD = Conexion_db.ConectarBD();
-        Query meca4 = BaseBD.query();//metodo para iniciar una consulta
-        meca4.constrain(Mecanico.class);//buscaremos en la clase Vehiculo
-        meca4.descend("cedula").constrain(txtcedulaMeca.getText().toUpperCase()); // verificamos las coincidencias en el atributo especificado
-        ObjectSet<Mecanico> resultado = meca4.execute();//Ejecutamos la consulta y almacenamos en "resultado"
-        int coincidencias = resultado.size();
-        BaseBD.close();
-        return coincidencias;
-    }
 
     //autoenumerado de citas
     private static String obtenerProximaCita(ObjectContainer db) {
@@ -761,103 +692,21 @@ public class Citas extends javax.swing.JPanel {
                     txtCelularCli.setText(cliente.getCelular());
 
                     encontrado = true;
-                    JOptionPane.showMessageDialog(this, "Cliente encontrado");
+
                     break; // Salimos del bucle una vez encontrado el cliente
                 }
             } else {
                 JOptionPane.showMessageDialog(this, "No se encontró Cliente");
             }
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Error al buscar el cliente: " + e.getMessage());
+
         } finally {
             if (BaseBD != null) {
                 BaseBD.close();
             }
         }
     }
-//    //cargar vehiculo
-//    public final void CargarVehiculo() {
-//        Boolean encontrado = false;
-//        // Verifica que el campo de búsqueda no esté vacío
-//        String placaBuscar = txtPlacaVehi.getText().trim();
-//        if (placaBuscar.isEmpty()) {
-//            JOptionPane.showMessageDialog(this, "Por favor, ingrese una placa para buscar.");
-//            return;
-//        }
-//        // ESTABLECER CONEXION CON LA BASE DE DATOS
-//        ObjectContainer BaseBD = null;
-//        try {
-//            BaseBD = Conexion_db.ConectarBD();
-//            Query query = BaseBD.query(); // Método para iniciar una consulta
-//            query.constrain(Vehiculo.class); // Buscaremos en la clase Cliente
-//            query.descend("placa_Vehiculo").constrain(placaBuscar); // Verificamos las coincidencias en el atributo especificado
-//            ObjectSet<Vehiculo> resultado = query.execute(); // Ejecutamos la consulta y almacenamos en "resultado"
-//
-//            // si s los resultados
-//            if (!resultado.isEmpty()) {
-//                for (Vehiculo car : resultado) {
-//                    // Seteamos en los campos recibiendo del objeto
-//                    txtPlacaVehi.setText(car.getPlaca_Vehiculo());
-//                    txtMarcaVehi.setText(car.getMarca_Vehiculo());
-//                    txtModeloVehi.setText(car.getModelo_Vehiculo());
-//
-//                    encontrado = true;
-//                    JOptionPane.showMessageDialog(this, "Vehiculo encontrado");
-//                    break; // Salimos del bucle una vez encontrado el cliente
-//                }
-//            } else {
-//                JOptionPane.showMessageDialog(this, "No se encontró Vehiculo");
-//            }
-//        } catch (Exception e) {
-//            JOptionPane.showMessageDialog(this, "Error al buscar el Vehiculo: " + e.getMessage());
-//        } finally {
-//            if (BaseBD != null) {
-//                BaseBD.close();
-//            }
-//        }
-//    }
-    //datos mecanico
-    public final void CargarMecanico() {
-        Boolean encontrado = false;
-        // Verifica que el campo de búsqueda no esté vacío
-        String cedulaBuscar = txtcedulaMeca.getText().trim();
-        if (cedulaBuscar.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Por favor, ingrese una cédula para buscar.");
-            return;
-        }
 
-        // ESTABLECER CONEXION CON LA BASE DE DATOS
-        ObjectContainer BaseBD = null;
-        try {
-            BaseBD = Conexion_db.ConectarBD();
-            Query query = BaseBD.query(); // Método para iniciar una consulta
-            query.constrain(Mecanico.class); // Buscaremos en la clase Cliente
-            query.descend("cedula").constrain(cedulaBuscar); // Verificamos las coincidencias en el atributo especificado
-            ObjectSet<Mecanico> resultado = query.execute(); // Ejecutamos la consulta y almacenamos en "resultado"
-
-            // si s los resultados
-            if (!resultado.isEmpty()) {
-                for (Mecanico meca : resultado) {
-                    // Seteamos en los campos recibiendo del objeto
-                    txtcedulaMeca.setText(meca.getCedula());
-                    txtNombreMeca.setText(meca.getNombres());
-                    txtCelularMeca.setText(meca.getDireccion());
-
-                    encontrado = true;
-                    JOptionPane.showMessageDialog(this, "Mecanico encontrado");
-                    break; // Salimos del bucle una vez encontrado el cliente
-                }
-            } else {
-                JOptionPane.showMessageDialog(this, "No se encontró Mecanico");
-            }
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Error al buscar el Mecanico: " + e.getMessage());
-        } finally {
-            if (BaseBD != null) {
-                BaseBD.close();
-            }
-        }
-    }
 
     //Servicios
     private String obtenerNombreServicio(String codigoServicio, ObjectContainer baseBD) {
@@ -904,7 +753,7 @@ public class Citas extends javax.swing.JPanel {
         String codigoCita = txtcodigoCita.getText();
         String fecha = fechaNacimiento;
         String cedulaCli = txtCedulaCli.getText();
-        String cedulaMec = txtcedulaMeca.getText();
+        String cedulaMec = (String) cbxMecaCita.getSelectedItem();
 //        String placa = txtPlacaVehi.getText();
 
         // Crear el encabezado de la cita
@@ -1016,14 +865,193 @@ public class Citas extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(null, "No se seleccionó ningún producto");
         }
     }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+   // para generar un pdf y enviar un correo
+    
+     //para generar un pdf primer paso 
+    public void generarReciboPDF() {
+        try {
+            PdfWriter writer = new PdfWriter(pdfPath);
+            PdfDocument pdfDoc = new PdfDocument(writer);
+            Document document = new Document(pdfDoc);
+
+            // Añadir logotipo
+            String logoPath = "src\\Images\\logote_resized.png";
+            File logoFile = new File(logoPath);
+            if (logoFile.exists()) {
+                Image img = new Image(ImageDataFactory.create(logoPath));
+                img.setWidth(100);
+                img.setHeight(50);
+                document.add(img);
+            } else {
+                JOptionPane.showMessageDialog(null, "Logotipo no encontrado en: " + logoPath);
+            }
+
+            // Añadir el título de la factura
+            Paragraph title = new Paragraph("Factura de Venta")
+                    .setTextAlignment(TextAlignment.CENTER)
+                    .setFontSize(18)
+                    .setBold();
+            document.add(title);
+
+            document.add(new Paragraph(" "));
+
+            // Información del cliente
+            document.add(new Paragraph("Cliente: " + txtNombreCli.getText()));
+            document.add(new Paragraph("Cédula: " + txtCedulaCli.getText()));
+            document.add(new Paragraph("Dirección: " + txtdireccionCli.getText()));
+            document.add(new Paragraph("Teléfono: " + txtCelularCli.getText()));
+            document.add(new Paragraph("Fecha: " + jDateFechaCita));
+            document.add(new Paragraph(" "));
+
+            // Crear una tabla con columnas
+            float[] columnWidths = {2, 4, 2, 2, 2};
+            Table table = new Table(UnitValue.createPercentArray(columnWidths));
+            table.setWidth(UnitValue.createPercentValue(100));
+
+            table.addHeaderCell(new Cell().add(new Paragraph("Código").setBold().setBackgroundColor(ColorConstants.GRAY)));
+            table.addHeaderCell(new Cell().add(new Paragraph("Descripción").setBold().setBackgroundColor(ColorConstants.GRAY)));
+            table.addHeaderCell(new Cell().add(new Paragraph("Precio Unitario").setBold().setBackgroundColor(ColorConstants.GRAY)));
+            table.addHeaderCell(new Cell().add(new Paragraph("Cantidad").setBold().setBackgroundColor(ColorConstants.GRAY)));
+            table.addHeaderCell(new Cell().add(new Paragraph("Subtotal").setBold().setBackgroundColor(ColorConstants.GRAY)));
+
+            // Agregar filas con datos de la factura
+            DefaultTableModel model = (DefaultTableModel) JtableCita.getModel();
+            for (int i = 0; i < model.getRowCount(); i++) {
+                table.addCell(new Cell().add(new Paragraph(model.getValueAt(i, 0).toString())));
+                table.addCell(new Cell().add(new Paragraph(model.getValueAt(i, 1).toString())));
+                table.addCell(new Cell().add(new Paragraph(model.getValueAt(i, 2).toString())));
+                table.addCell(new Cell().add(new Paragraph(model.getValueAt(i, 3).toString())));
+                table.addCell(new Cell().add(new Paragraph(model.getValueAt(i, 4).toString())));
+            }
+
+            // Añadir la tabla al documento
+            document.add(table);
+
+            // Añadir los totales al final del documento
+            
+//            document.add(new Paragraph("Total: " + txtTotalCit.getText()).setBold());
+
+            // Añadir pie de página con información de la empresa
+            document.add(new Paragraph(" "));
+            Paragraph footer = new Paragraph("Cita Agendada\n MECANICA YINGS AND YANG\n Octavio Chacon \n Teléfono: 123-456-789")
+                    .setTextAlignment(TextAlignment.CENTER)
+                    .setFontSize(10);
+            document.add(footer);
+
+            // Cerrar el documento
+            document.close();
+
+            JOptionPane.showMessageDialog(null, "La Cita generada en PDF con éxito!");
+
+            // Abrir el archivo PDF
+            File pdfFile = new File(pdfPath);
+            if (pdfFile.exists()) {
+                if (Desktop.isDesktopSupported()) {
+                    Desktop.getDesktop().open(pdfFile);
+                } else {
+                    JOptionPane.showMessageDialog(null, "La funcionalidad de abrir el archivo no está soportada en su sistema.");
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "El archivo PDF no se encontró.");
+            }
+        } catch (FileNotFoundException e) {
+            JOptionPane.showMessageDialog(null, "Error al generar el PDF: " + e.getMessage());
+        } catch (IOException e) {
+            JOptionPane.showMessageDialog(null, "Error al abrir el PDF: " + e.getMessage());
+        }
+    }
+
+    //para enviar al correo 
+    public static void transfer_to_email(String correo, String pdfPath) {
+        String correoEnvia = "yingsyyangmecanica@gmail.com";
+        String contrasena = "ghsd axnw dxtk fxei";
+        String mensaje = "Adjunto encontrará la cita generada.";
+        String asunto = "Cita de Servicios";
+        Properties objetoPEC = new Properties();
+        objetoPEC.put("mail.smtp.host", "smtp.gmail.com");
+        objetoPEC.setProperty("mail.smtp.starttls.enable", "true");
+        objetoPEC.setProperty("mail.smtp.port", "587");
+        objetoPEC.setProperty("mail.smtp.user", correoEnvia);
+        objetoPEC.setProperty("mail.smtp.auth", "true");
+        Session sesion = Session.getDefaultInstance(objetoPEC);
+        MimeMessage mail = new MimeMessage(sesion);
+        try {
+            mail.setFrom(new InternetAddress(correoEnvia));
+            mail.addRecipient(Message.RecipientType.TO, new InternetAddress(correo));
+            mail.setSubject(asunto);
+
+            // Crear la parte del mensaje
+            MimeBodyPart messageBodyPart = new MimeBodyPart();
+            messageBodyPart.setText(mensaje);
+
+            // Crear la parte del archivo adjunto
+            MimeBodyPart attachPart = new MimeBodyPart();
+            attachPart.attachFile(pdfPath);
+
+            // Crear multipart para combinar el mensaje y el adjunto
+            Multipart multipart = new MimeMultipart();
+            multipart.addBodyPart(messageBodyPart);
+            multipart.addBodyPart(attachPart);
+
+            // Configurar el contenido del correo
+            mail.setContent(multipart);
+
+            // Enviar el correo
+            Transport trasporte = sesion.getTransport("smtp");
+            trasporte.connect(correoEnvia, contrasena);
+            trasporte.sendMessage(mail, mail.getRecipients(Message.RecipientType.TO));
+            trasporte.close();
+            JOptionPane.showMessageDialog(null, "El correo se envió correctamente");
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(null, "Error al enviar el correo: " + ex.getMessage());
+        }
+    }
+    //obtener correo cliente
+    
+    public String obtenerCorreoCliente(String cedula) {
+        ObjectContainer baseBD = Conexion_db.ConectarBD();
+        String correoCliente = null;
+
+        try {
+            // Crear consulta para buscar cliente por cédula
+            Query clienteQuery = baseBD.query();
+            clienteQuery.constrain(Cliente.class);
+            clienteQuery.descend("cedula").constrain(cedula);
+            ObjectSet<Cliente> resultado = clienteQuery.execute();
+
+            // Si se encuentra el cliente, obtener el correo
+            if (!resultado.isEmpty()) {
+                Cliente cliente = resultado.next();
+                correoCliente = cliente.getCorreo();
+            } else {
+                JOptionPane.showMessageDialog(this, "Cliente no encontrado.");
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, "Error al buscar el cliente: " + e.getMessage());
+        } finally {
+            if (baseBD != null) {
+                baseBD.close();
+            }
+        }
+
+        return correoCliente;
+    }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTable JtableCita;
     private javax.swing.JDialog TablaServicios;
     private javax.swing.JButton btnAñadirServicos;
-    private javax.swing.JButton btnBuscaMecanico;
     private javax.swing.JButton btnBuscarCliente;
     private rsbuttongradiente.RSButtonGradiente btnBuscarServicio;
-    private javax.swing.JButton btnBuscarVehiculo;
     private javax.swing.JButton btnCancelar;
     private rojeru_san.RSButton btnFinalizarCita;
     private rojeru_san.RSButton btnFinalizarCita1;
@@ -1031,6 +1059,7 @@ public class Citas extends javax.swing.JPanel {
     private javax.swing.JButton btnNuevo;
     private javax.swing.JButton btnResibo;
     private javax.swing.JButton btnSalir;
+    private javax.swing.JComboBox<String> cbxMecaCita;
     private javax.swing.JComboBox<String> cbxPlacasVehiculos;
     private com.toedter.calendar.JDateChooser jDateFechaCita;
     private javax.swing.JLabel jLabel2;
@@ -1048,23 +1077,17 @@ public class Citas extends javax.swing.JPanel {
     private javax.swing.JLabel lblDatosCli2;
     private javax.swing.JLabel lblDireccion1;
     private javax.swing.JLabel lblDireccion2;
-    private javax.swing.JLabel lblDireccion4;
     private javax.swing.JLabel lblFecha;
     private javax.swing.JLabel lblNombre2;
-    private javax.swing.JLabel lblNombre3;
     private javax.swing.JLabel lblTituloFac;
     private javax.swing.JLabel lblcedula1;
-    private javax.swing.JLabel lblcedula2;
     private javax.swing.JLabel lblcodFac1;
     private javax.swing.JLabel lblverlis1;
     private javax.swing.JTable tblServicios;
     private rojeru_san.RSMTextFull txtBuscarServicio;
     private javax.swing.JTextField txtCedulaCli;
     private javax.swing.JTextField txtCelularCli;
-    private javax.swing.JTextField txtCelularMeca;
     private javax.swing.JTextField txtNombreCli;
-    private javax.swing.JTextField txtNombreMeca;
-    private javax.swing.JTextField txtcedulaMeca;
     private javax.swing.JTextField txtcodigoCita;
     private javax.swing.JTextField txtdireccionCli;
     // End of variables declaration//GEN-END:variables
