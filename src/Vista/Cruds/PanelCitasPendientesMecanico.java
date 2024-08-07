@@ -7,6 +7,7 @@ package Vista.Cruds;
 
 import Conexion.Conexion_db;
 import Models.Cita;
+import Models.Cita.Estado;
 import com.db4o.*;
 import com.db4o.query.Query;
 import javax.swing.DefaultCellEditor;
@@ -22,7 +23,7 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author aberr
  */
-public class PanelCitasPendientesMecanico extends javax.swing.JPanel {
+public final class PanelCitasPendientesMecanico extends javax.swing.JPanel {
 
     /**
      * Creates new form PanelCitasPendientesMecanico
@@ -42,7 +43,10 @@ public class PanelCitasPendientesMecanico extends javax.swing.JPanel {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        txtCedulaMecanico = new javax.swing.JTextField();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tblCitas = new javax.swing.JTable();
+        txtCedulaa = new rojeru_san.RSMTextFull();
+        lblCedula = new javax.swing.JLabel();
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setMinimumSize(new java.awt.Dimension(890, 650));
@@ -51,7 +55,32 @@ public class PanelCitasPendientesMecanico extends javax.swing.JPanel {
         jLabel1.setForeground(new java.awt.Color(102, 102, 102));
         jLabel1.setText("PENDIENTES:");
 
-        txtCedulaMecanico.setText("jTextField1");
+        tblCitas.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane1.setViewportView(tblCitas);
+
+        txtCedulaa.setForeground(new java.awt.Color(0, 53, 79));
+        txtCedulaa.setColorTransparente(true);
+        txtCedulaa.setFont(new java.awt.Font("Roboto Light", 1, 14)); // NOI18N
+        txtCedulaa.setPlaceholder("Ejm: 0909090909");
+        txtCedulaa.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtCedulaaKeyTyped(evt);
+            }
+        });
+
+        lblCedula.setFont(new java.awt.Font("Roboto Medium", 0, 21)); // NOI18N
+        lblCedula.setForeground(new java.awt.Color(0, 53, 79));
+        lblCedula.setText("Cédula:");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -59,22 +88,27 @@ public class PanelCitasPendientesMecanico extends javax.swing.JPanel {
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(50, 50, 50)
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 576, Short.MAX_VALUE)
-                .addComponent(txtCedulaMecanico, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(43, 43, 43))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 802, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(lblCedula, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, 0)
+                        .addComponent(txtCedulaa, javax.swing.GroupLayout.PREFERRED_SIZE, 270, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jLabel1))
+                .addContainerGap(38, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(34, 34, 34)
-                        .addComponent(jLabel1))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(17, 17, 17)
-                        .addComponent(txtCedulaMecanico, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(587, Short.MAX_VALUE))
+                .addGap(34, 34, 34)
+                .addComponent(jLabel1)
+                .addGap(8, 8, 8)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(txtCedulaa, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblCedula))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(118, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -89,66 +123,25 @@ public class PanelCitasPendientesMecanico extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-
-    public void mostrarCitasActivasPorMecanico() {
-    ObjectContainer BaseBD = Conexion_db.ConectarBD();
-    try {
-        String cedulaMecanico = txtCedulaMecanico.getText();
-        Query query = BaseBD.query();
-        query.constrain(Cita.class);
-        query.descend("Id_mecanico").constrain(cedulaMecanico);
-        query.descend("estado").constrain(Cita.Estado.ACTIVO);
-        ObjectSet<Cita> citas = query.execute();
-
-        // Crear un modelo de tabla para mostrar las citas
-        DefaultTableModel modelo = new DefaultTableModel();
-        modelo.addColumn("Cita");
-        modelo.addColumn("Fecha");
-        modelo.addColumn("Hora");
-        modelo.addColumn("Estado");
-
-        for (Cita cita : citas) {
-            Object[] fila = new Object[] {
-                cita.getCodigo_cita(),
-                cita.getFecha_cita(),
-                cita.getHora(),
-                new Boolean(false) // Checkbox vacío para indicar estado activo
-            };
-            modelo.addRow(fila);
+    private void txtCedulaaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCedulaaKeyTyped
+        char x = evt.getKeyChar();
+        if (Character.isLowerCase(x)) {
+            evt.setKeyChar(Character.toUpperCase(x));
+        } else if (txtPlaca.getText().length() >= 10) {
+            evt.consume();
         }
+    }//GEN-LAST:event_txtCedulaaKeyTyped
 
-        // Crear una tabla para mostrar las citas
-        JTable tabla = new JTable(modelo);
-        tabla.getColumnModel().getColumn(3).setCellEditor(new DefaultCellEditor(new JCheckBox()));
 
-        // Agregar la tabla a un scrollpane y mostrarla en un dialogo
-        JScrollPane scrollPane = new JScrollPane(tabla);
-        JOptionPane.showMessageDialog(null, scrollPane, "Citas activas del mecanico", JOptionPane.INFORMATION_MESSAGE);
 
-        // Agregar un listener para detectar cambios en los checkboxes
-        tabla.getModel().addTableModelListener(new TableModelListener() {
-            public void tableChanged(TableModelEvent e) {
-                int fila = e.getFirstRow();
-                int columna = e.getColumn();
-                if (columna == 3) { // Columna de estado
-                    Boolean estado = (Boolean) tabla.getValueAt(fila, columna);
-                    Cita cita = citas.get(fila);
-                    if (estado) {
-                        cita.setEstado(Cita.Estado.INACTIVO);
-                    } else {
-                        cita.setEstado(Cita.Estado.ACTIVO);
-                    }
-                    BaseBD.store(cita);
-                }
-            }
-        });
-    } finally {
-        BaseBD.close();
-    }
-}
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JTextField txtCedulaMecanico;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lblCedula;
+    private javax.swing.JTable tblCitas;
+    private rojeru_san.RSMTextFull txtCedulaa;
+    private rojeru_san.RSMTextFull txtPlaca;
     // End of variables declaration//GEN-END:variables
 }

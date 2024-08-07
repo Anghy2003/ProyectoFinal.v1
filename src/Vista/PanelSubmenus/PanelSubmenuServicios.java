@@ -3,6 +3,7 @@ package Vista.PanelSubmenus;
 
 import Citas.CrudlistadosServicios;
 import Vista.Catálogo.CrudPanelServicios;
+import Vista.Cruds.PanelCitasPendientesMecanico;
 import Vista.Menu.VistaMenu;
 import Vista.Tables.TablaCategoriaSer;
 import Vista.Tables.TablaServicios;
@@ -45,6 +46,11 @@ public class PanelSubmenuServicios extends javax.swing.JPanel {
         btnCitasAgendadas.setFont(new java.awt.Font("Roboto Medium", 1, 11)); // NOI18N
         btnCitasAgendadas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/gestion-de-servicios.png"))); // NOI18N
         btnCitasAgendadas.setText("CITAS AGENDADAS");
+        btnCitasAgendadas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCitasAgendadasActionPerformed(evt);
+            }
+        });
 
         btnordenesTrabajo.setFont(new java.awt.Font("Roboto Medium", 1, 11)); // NOI18N
         btnordenesTrabajo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/portapapeles.png"))); // NOI18N
@@ -125,6 +131,11 @@ public class PanelSubmenuServicios extends javax.swing.JPanel {
         TablaCategoriaSer tblcat = new TablaCategoriaSer();
         ShowpanelCruds(tblcat);
     }//GEN-LAST:event_btnCategoria1ActionPerformed
+
+    private void btnCitasAgendadasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCitasAgendadasActionPerformed
+        PanelCitasPendientesMecanico misCitas= new PanelCitasPendientesMecanico();
+        ShowpanelCruds(misCitas);
+    }//GEN-LAST:event_btnCitasAgendadasActionPerformed
  private void ShowpanelCruds(JPanel p) {
         p.setSize(870, 630);
         p.setLocation(0, 0);

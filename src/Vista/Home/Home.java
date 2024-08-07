@@ -14,7 +14,6 @@ import javax.swing.*;
 import javax.swing.JOptionPane;
 import utils.Global;
 import java.awt.BorderLayout;
-import Vista.Cruds.CRUDS1.CrudPanelCliente.JPanel1;//panel de crear cliente
 
 public class Home extends javax.swing.JFrame {
 
@@ -27,6 +26,16 @@ public class Home extends javax.swing.JFrame {
     public void setRolUsuario(String rolUsuario) {
         this.rolUsuario = rolUsuario;
     }
+    private String CedulaUsuario;
+
+    public String getCedulaUsuario() {
+        return CedulaUsuario;
+    }
+
+    public void setCedulaUsuario(String CedulaUsuario) {
+        this.CedulaUsuario = CedulaUsuario;
+    }
+    
 
     public Home() {
         initComponents();
@@ -233,7 +242,13 @@ public class Home extends javax.swing.JFrame {
     }//GEN-LAST:event_txtRolUsuarioActionPerformed
 
     private void txtRolUsuarioKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtRolUsuarioKeyTyped
-        
+        char x = evt.getKeyChar();
+        if (Character.isLetter(x)) {
+            JOptionPane.showMessageDialog(this, "Ingrese solo números");
+            evt.consume();
+        } else if (txtRolUsuario.getText().length() >= 10) {
+            evt.consume();
+        }
     }//GEN-LAST:event_txtRolUsuarioKeyTyped
 public void iniciarSesion(String cedula, String password) {
     ObjectContainer BaseBD = Conexion_db.ConectarBD();
@@ -247,7 +262,7 @@ public void iniciarSesion(String cedula, String password) {
         if (cliente.getPassword().equals(password)) {
             JOptionPane.showMessageDialog(this, "Inicio de sesión exitoso");
             Global.rolUsuario = cliente.getRol().name();
-            VistaMenu menucli = new VistaMenu();
+            VistaMenu menucli = new VistaMenu(txtRolUsuario.getText().trim());
             menucli.setVisible(true);
             this.dispose();
             BaseBD.close();
@@ -340,7 +355,7 @@ private void verificarYCrearAdminPorDefecto() {
         defaultAdmin.setRol(Persona.Rol.ADMINISTRADOR); // Usa el enum de Persona
 
         BaseBD.store(defaultAdmin);
-        JOptionPane.showMessageDialog(this, "Administrador por defecto creado. Usuario: admin, Contraseña: admin");
+        JOptionPane.showMessageDialog(this, "Administrador por defecto creado. Usuario: 1234, Contraseña: admin");
     }
 
     BaseBD.close();
@@ -355,6 +370,9 @@ private void verificarYCrearAdminPorDefecto() {
 
     private String obtenercontraseñaUsu() {
         return new String(txtpassword.getPassword());
+    }
+    private String obtenerCedulaUsuario() {
+        return txtRolUsuario.getText();
     }
 
     /**

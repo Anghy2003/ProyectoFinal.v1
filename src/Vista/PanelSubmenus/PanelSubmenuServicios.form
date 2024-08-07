@@ -84,6 +84,9 @@
                 </Property>
                 <Property name="text" type="java.lang.String" value="CITAS AGENDADAS"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnCitasAgendadasActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JToggleButton" name="btnordenesTrabajo">
               <Properties>
