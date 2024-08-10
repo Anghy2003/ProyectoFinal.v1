@@ -9,7 +9,9 @@ import Citas.Citas;
 import Conexion.Conexion_db;
 import Models.DetalleCita;
 import Models.EncabezadoCita;
+import Models.EncabezadoCita.Estado;
 import Models.Servicios;
+import Models.Vendedor;
 import static Vista.Menu.VistaMenu.PanelPrincipal;
 import com.db4o.ObjectContainer;
 import com.db4o.ObjectSet;
@@ -285,7 +287,7 @@ public class TablaCitas extends javax.swing.JPanel {
 private void mostrarDatosCitas() {
         tblCitas.setEnabled(true);
         ObjectContainer BaseBD = Conexion_db.ConectarBD();
-        EncabezadoCita citaBuscar = new EncabezadoCita("", "", "", "");
+        EncabezadoCita citaBuscar = new EncabezadoCita("", "", "", "","",null);
         ObjectSet<EncabezadoCita> resultado = BaseBD.get(citaBuscar);
 
         String matriz[][] = new String[resultado.size()][4];

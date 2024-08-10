@@ -270,6 +270,7 @@ public void iniciarSesion(String cedula, String password) {
             BaseBD.close();
             return;
         } else {
+            txtpassword.setText("");
             JOptionPane.showMessageDialog(this, "Contraseña Incorrecta");
             BaseBD.close();
             return;
@@ -333,6 +334,7 @@ public void iniciarSesion(String cedula, String password) {
             BaseBD.close();
             return;
         } else {
+            txtpassword.setText("");
             JOptionPane.showMessageDialog(this, "Contraseña Incorrecta");
             BaseBD.close();
             return;
@@ -340,6 +342,8 @@ public void iniciarSesion(String cedula, String password) {
     }
 
     // Si no se encontro
+    txtRolUsuario.setText("");
+    txtpassword.setText("");
     JOptionPane.showMessageDialog(this, "Usuario No Encontrado");
     BaseBD.close();
 }

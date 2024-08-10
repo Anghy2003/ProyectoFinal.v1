@@ -5,6 +5,7 @@
  */
 package Vista.PanelSubmenus;
 
+import Citas.Citas;
 import Vista.Menu.VistaMenu;
 import Vista.Tables.TablaCitas;
 import java.awt.BorderLayout;
@@ -52,6 +53,11 @@ public class PanelSUbmenuCitas extends javax.swing.JPanel {
         btnCatser1.setFont(new java.awt.Font("Roboto Medium", 1, 12)); // NOI18N
         btnCatser1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/servicio.png"))); // NOI18N
         btnCatser1.setText("AGENDAR CITAS");
+        btnCatser1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCatser1ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
@@ -85,6 +91,11 @@ public class PanelSUbmenuCitas extends javax.swing.JPanel {
         MostrarpaneCruds(miCita);
        
     }//GEN-LAST:event_btnCatvisualizarActionPerformed
+
+    private void btnCatser1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCatser1ActionPerformed
+        Citas miCita = new Citas();
+        MostrarpaneCruds(miCita);
+    }//GEN-LAST:event_btnCatser1ActionPerformed
 
     private void MostrarpaneCruds(JPanel p) {
         p.setSize(870, 630);

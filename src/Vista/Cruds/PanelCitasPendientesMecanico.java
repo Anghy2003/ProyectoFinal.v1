@@ -7,6 +7,9 @@ package Vista.Cruds;
 
 import Conexion.Conexion_db;
 import Models.Cita;
+import Models.DetalleCita;
+import Models.EncabezadoCita;
+import Models.Servicios;
 import Vista.Home.Home;
 import com.db4o.*;
 import com.db4o.query.Query;
@@ -38,7 +41,6 @@ public final class PanelCitasPendientesMecanico extends javax.swing.JPanel {
         if (!esMecanico) {
             inicializarTablaCitas(tblCitas);
         }else{btnBuscarMecanico.setVisible(false);}
-        
     }
 
     @SuppressWarnings("unchecked")
@@ -186,7 +188,9 @@ public final class PanelCitasPendientesMecanico extends javax.swing.JPanel {
     }//GEN-LAST:event_btnBuscarMecanicoMouseClicked
 
     private void btnBuscarMecanicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarMecanicoActionPerformed
-        
+    if (txtCedulaa.getText().trim().isEmpty()) {
+            JOptionPane.showMessageDialog(this, "Ingrese la cedula del mecanico");
+        }else{buscarCitasPorMecanico();}
     }//GEN-LAST:event_btnBuscarMecanicoActionPerformed
 
     private void btnRealizadoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRealizadoMouseClicked
@@ -204,39 +208,34 @@ public final class PanelCitasPendientesMecanico extends javax.swing.JPanel {
         // Conectar a la base de datos
         ObjectContainer BaseBD = Conexion_db.ConectarBD();
 
-        // Crear una consulta para buscar citas con el id del mecanico y estado ACTIVO
+        // Crear una consulta para buscar encabezados de citas con el id del mecanico y estado ACTIVO
         Query query = BaseBD.query();
-        query.constrain(Cita.class);
-        query.descend("Id_mecanico").constrain(Home.CedulaUsuario);
-        query.descend("estado").constrain(Cita.Estado.ACTIVO);
+        query.constrain(EncabezadoCita.class);
+        query.descend("cedulaMecanico_encabezadoCita").constrain(txtCedulaa.getText().trim());
+        query.descend("estado").constrain(EncabezadoCita.Estado.ACTIVO);
 
         // Ejecutar la consulta y obtener los resultados
-        ObjectSet<Cita> resultados = query.execute();
+        ObjectSet<EncabezadoCita> resultadosEncabezado = query.execute();
 
         // Crear un modelo de tabla para mostrar los resultados
         DefaultTableModel modelo = new DefaultTableModel();
-        modelo.addColumn("Código Cita");
-        modelo.addColumn("Fecha Cita");
+        modelo.addColumn("Código Encabezado");
+        modelo.addColumn("Fecha Encabezado");
         modelo.addColumn("Cédula Cliente");
-        modelo.addColumn("Código Servicio");
-        modelo.addColumn("Hora");
-        modelo.addColumn("Precio Total");
-        modelo.addColumn("Duración Servicio");
         modelo.addColumn("Placa Vehículo");
         modelo.addColumn("Estado");
+        modelo.addColumn("Detalle Cita");
 
         // Agregar los resultados a la tabla
-        for (Cita cita : resultados) {
+        for (EncabezadoCita encabezado : resultadosEncabezado) {
             Object[] fila = new Object[]{
-                cita.getCodigo_cita(),
-                cita.getFecha_cita(),
-                cita.getCedula_cliente(),
-                cita.getCodigo_servicio(),
-                cita.getHora(),
-                cita.getPrecioTotal(),
-                cita.getDuracion_Servicio(),
-                cita.getPlaca_Vehiculo(),
-                cita.getEstado()
+                encabezado.getCodigo_encabezadoCita(),
+                encabezado.getFecha_encabezadoCita(),
+                encabezado.getCedulaCliente_encabezadoCita(),
+                encabezado.getPlacaVehiculo_encabezadoCita(),
+                encabezado.getEstado(),
+                
+                getDetallesCita(encabezado.getCodigo_encabezadoCita(), BaseBD)
             };
             modelo.addRow(fila);
         }
@@ -249,6 +248,47 @@ public final class PanelCitasPendientesMecanico extends javax.swing.JPanel {
         tblCitas.setDefaultEditor(Object.class, null); // Deshabilita la edición
         personalizarEncabezadoTabla(tblCitas);
     }
+
+//    private String getDetallesCita(String codigoEncabezado, ObjectContainer BaseBD) {
+//        Query query = BaseBD.query();
+//        query.constrain(DetalleCita.class);
+//        query.descend("codigo_encabezadoCita").constrain(codigoEncabezado);
+//
+//        ObjectSet<DetalleCita> resultadosDetalle = query.execute();
+//
+//        StringBuilder detalles = new StringBuilder();
+//        for (DetalleCita detalle : resultadosDetalle) {
+//            detalles.append("Codigo Servicio: ").append(detalle.getCodigoServicio_detallecita())
+//                    .append(", Precio Servicio: ").append(detalle.getPrecioServicio_detallecita()).append("\n");
+//        }
+//
+//        return detalles.toString();
+//    }
+    private String getDetallesCita(String codigoEncabezado, ObjectContainer BaseBD) {
+    Query query = BaseBD.query();
+    query.constrain(DetalleCita.class);
+    query.descend("codigo_encabezadoCita").constrain(codigoEncabezado);
+
+    ObjectSet<DetalleCita> resultadosDetalle = query.execute();
+
+    StringBuilder detalles = new StringBuilder();
+    for (DetalleCita detalle : resultadosDetalle) {
+        String codigoServicio = detalle.getCodigoServicio_detallecita();
+
+        Query queryServicio = BaseBD.query();
+        queryServicio.constrain(Servicios.class);
+        queryServicio.descend("codigo_Servicio").constrain(codigoServicio);
+
+        ObjectSet<Servicios> resultadosServicio = queryServicio.execute();
+        if (resultadosServicio.hasNext()) {
+            Servicios servicio = resultadosServicio.next();
+            detalles.append("").append(servicio.getNombre_Servicio())
+                    .append(", Precio: ").append(detalle.getPrecioServicio_detallecita()).append("\n");
+        }
+    }
+
+    return detalles.toString();
+}
 
     public void desactivarCitaSeleccionada() {
         // Obtener el índice de la fila seleccionada
@@ -272,11 +312,11 @@ public final class PanelCitasPendientesMecanico extends javax.swing.JPanel {
         try {
             // Crear una consulta para buscar la cita seleccionada
             Query query = BaseBD.query();
-            query.constrain(Cita.class);
-            query.descend("Codigo_cita").constrain(codigoCita);
+            query.constrain(EncabezadoCita.class);
+            query.descend("codigo_encabezadoCita").constrain(codigoCita);
 
             // Ejecutar la consulta y obtener el resultado
-            ObjectSet<Cita> resultado = query.execute();
+            ObjectSet<EncabezadoCita> resultado = query.execute();
 
             // Verificar si se ha encontrado la cita
             if (resultado.isEmpty()) {
@@ -285,12 +325,12 @@ public final class PanelCitasPendientesMecanico extends javax.swing.JPanel {
             }
 
             // Obtener la cita seleccionada
-            Cita citaSeleccionada = resultado.get(0);
-            Cita citaAnterior = resultado.get(0);
+            EncabezadoCita citaSeleccionada = resultado.get(0);
+            EncabezadoCita citaAnterior = resultado.get(0);
 
             // Cambiar el estado de la cita a INACTIVO
-            citaSeleccionada.desactivarCita();
-
+            citaSeleccionada.desactivarEncabezadoCita();
+            
             // Actualizar la cita en la base de datos
             BaseBD.delete(citaAnterior);
             BaseBD.store(citaSeleccionada);

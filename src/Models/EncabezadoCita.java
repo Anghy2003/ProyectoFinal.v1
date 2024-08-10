@@ -8,15 +8,24 @@ public class EncabezadoCita {
     private String cedulaCliente_encabezadoCita;
     private String cedulaMecanico_encabezadoCita;
     private String placaVehiculo_encabezadoCita;
+    private Estado estado;
+    
+    //haremos que tenga solo dos posibles valores
+    public enum Estado {
+        ACTIVO,
+        INACTIVO
+    }
 
     public EncabezadoCita() {
     }
 
-    public EncabezadoCita(String codigo_encabezadoCita, String fecha_encabezadoCita, String cedulaCliente_encabezadoCita, String cedulaMecanico_encabezadoCita) {
+    public EncabezadoCita(String codigo_encabezadoCita, String fecha_encabezadoCita, String cedulaCliente_encabezadoCita, String cedulaMecanico_encabezadoCita, String placaVehiculo_encabezadoCita, Estado estado) {
         this.codigo_encabezadoCita = codigo_encabezadoCita;
         this.fecha_encabezadoCita = fecha_encabezadoCita;
         this.cedulaCliente_encabezadoCita = cedulaCliente_encabezadoCita;
         this.cedulaMecanico_encabezadoCita = cedulaMecanico_encabezadoCita;
+        this.placaVehiculo_encabezadoCita = placaVehiculo_encabezadoCita;
+        this.estado = estado;
     }
 
     /**
@@ -89,10 +98,29 @@ public class EncabezadoCita {
         this.placaVehiculo_encabezadoCita = placaVehiculo_encabezadoCita;
     }
 
+    /**
+     * @return the estado
+     */
+    public Estado getEstado() {
+        return estado;
+    }
+
+    /**
+     * @param estado the estado to set
+     */
+    public void setEstado(Estado estado) {
+        this.estado = estado;
+    }
     
-    
-    
-    
+
+   //METODOS
+    public  void activarEncabezadoCita() {
+        this.setEstado(Estado.ACTIVO);
+    }
+
+    public  void desactivarEncabezadoCita() {
+        this.setEstado(Estado.INACTIVO);
+    }
     
 
         
