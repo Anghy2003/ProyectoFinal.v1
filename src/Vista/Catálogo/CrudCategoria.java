@@ -9,6 +9,7 @@ import Conexion.Conexion_db;
 import Models.Categoria;
 import Vista.Menu.VistaMenu;
 import Vista.Tables.TablaCategoria;
+import Vista.Tables.TablaProductos;
 import com.db4o.ObjectContainer;
 import com.db4o.ObjectSet;
 import java.awt.BorderLayout;
@@ -122,6 +123,9 @@ public class CrudCategoria extends javax.swing.JPanel {
     } else {
         JOptionPane.showMessageDialog(this, "No deje espacios en blanco en el nombre de la Categoria");
     }
+        // Redirigir a la tabla de productos después de guardar
+    TablaCategoria tblproCA = new TablaCategoria();
+    MostrarpaneCruds(tblproCA);
     }//GEN-LAST:event_btnGuardarActionPerformed
     public static void guardarCategoria(String nombreCat, String descripcionCat) {
     // Establecer conexión con la base de datos

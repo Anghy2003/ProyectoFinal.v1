@@ -320,20 +320,25 @@ public class BuscarServicios extends javax.swing.JPanel {
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
         if (validarCampos()) {
-            modificarServicio(
-                txtCodigo.getText().toUpperCase(),
-                txtNombres.getText(),
-                txtDescripcion.getText(),
-                Double.parseDouble(txtPrecio.getText()),
-                CmbDuracion.getSelectedItem().toString(),
-                imagenServicio,
-                Servicios.Estado.ACTIVO,
-                CmbCategoria.getSelectedItem().toString()
-            );
+        String precioConPunto = txtPrecio.getText().replace(",", ".");
+        modificarServicio(
+            txtCodigo.getText().toUpperCase(),
+            txtNombres.getText(),
+            txtDescripcion.getText(),
+            Double.parseDouble(precioConPunto),
+            CmbDuracion.getSelectedItem().toString(),
+            imagenServicio,
+            Servicios.Estado.ACTIVO,
+            CmbCategoria.getSelectedItem().toString()
+        );
 
-            JOptionPane.showMessageDialog(this, "Servicio Modificado");
-            resetCampos();
-        }
+        JOptionPane.showMessageDialog(this, "Servicio Modificado");
+        resetCampos();
+
+        // Redirigir a la tabla de servicios después de modificar
+        TablaServicios tblServ = new TablaServicios();
+        MostrarpaneCruds(tblServ);
+    }
     }
 
     private boolean validarCampos() {
@@ -394,46 +399,48 @@ private void mostrarCombo() {
     }
 }
   private void buscarServicio() {
-        Boolean encontrado = false;
-        ObjectContainer BaseBD = Conexion_db.ConectarBD();
-        Query servicioQuery = BaseBD.query();
-        servicioQuery.constrain(Servicios.class);
-        servicioQuery.descend("codigo_Servicio").constrain(BuscarCodigo.toUpperCase());
-        ObjectSet<Servicios> resultado = servicioQuery.execute();
+    Boolean encontrado = false;
+    ObjectContainer BaseBD = Conexion_db.ConectarBD();
+    Query servicioQuery = BaseBD.query();
+    servicioQuery.constrain(Servicios.class);
+    servicioQuery.descend("codigo_Servicio").constrain(BuscarCodigo.toUpperCase());
+    ObjectSet<Servicios> resultado = servicioQuery.execute();
 
-        if (resultado.hasNext()) {
-            Servicios ser = resultado.next();
-            txtCodigo.setText(ser.getCodigo_Servicio());
-            txtNombres.setText(ser.getNombre_Servicio());
-            txtDescripcion.setText(ser.getDescripcion_Servicio());
-            txtPrecio.setText(String.format("%.2f", ser.getPrecioTotal_Servicio()));
-            CmbDuracion.setSelectedItem(ser.getDuracion_Servicio());
-            CmbCategoria.setSelectedItem(ser.getCategoria());
+    if (resultado.hasNext()) {
+        Servicios ser = resultado.next();
+        txtCodigo.setText(ser.getCodigo_Servicio());
+        txtNombres.setText(ser.getNombre_Servicio());
+        txtDescripcion.setText(ser.getDescripcion_Servicio());
+        // Asegurarse de que el precio se maneje con punto decimal
+        String precioFormateado = String.format("%.2f", ser.getPrecioTotal_Servicio()).replace(",", ".");
+        txtPrecio.setText(precioFormateado);
+        CmbDuracion.setSelectedItem(ser.getDuracion_Servicio());
+        CmbCategoria.setSelectedItem(ser.getCategoria());
 
-            byte[] imagen = ser.getImagen();
-            if (imagen != null) {
-                ImageIcon icono = new ImageIcon(imagen);
-                int ancho = lblImagen.getWidth();
-                int alto = lblImagen.getHeight();
-                if (ancho > 0 && alto > 0) {
-                    Image imagenEscalada = icono.getImage().getScaledInstance(ancho, alto, Image.SCALE_SMOOTH);
-                    lblImagen.setIcon(new ImageIcon(imagenEscalada));
-                } else {
-                    Image imagenEscalada = icono.getImage().getScaledInstance(180, 140, Image.SCALE_SMOOTH);
-                    lblImagen.setIcon(new ImageIcon(imagenEscalada));
-                }
-                this.imagenServicio = imagen; // Guardar la imagen en el campo de la clase
+        byte[] imagen = ser.getImagen();
+        if (imagen != null) {
+            ImageIcon icono = new ImageIcon(imagen);
+            int ancho = lblImagen.getWidth();
+            int alto = lblImagen.getHeight();
+            if (ancho > 0 && alto > 0) {
+                Image imagenEscalada = icono.getImage().getScaledInstance(ancho, alto, Image.SCALE_SMOOTH);
+                lblImagen.setIcon(new ImageIcon(imagenEscalada));
+            } else {
+                Image imagenEscalada = icono.getImage().getScaledInstance(180, 140, Image.SCALE_SMOOTH);
+                lblImagen.setIcon(new ImageIcon(imagenEscalada));
             }
-
-            txtNombres.setEnabled(true);
-            encontrado = true;
-            JOptionPane.showMessageDialog(this, "SERVICIO ENCONTRADO");
-        } else {
-            JOptionPane.showMessageDialog(this, "No se encontró el Servicio");
+            this.imagenServicio = imagen; // Guardar la imagen en el campo de la clase
         }
 
-        BaseBD.close();
+        txtNombres.setEnabled(true);
+        encontrado = true;
+        JOptionPane.showMessageDialog(this, "SERVICIO ENCONTRADO");
+    } else {
+        JOptionPane.showMessageDialog(this, "No se encontró el Servicio");
     }
+
+    BaseBD.close();
+}
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JComboBox<String> CmbCategoria;

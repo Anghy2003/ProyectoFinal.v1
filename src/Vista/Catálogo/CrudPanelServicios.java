@@ -292,22 +292,28 @@ public class CrudPanelServicios extends javax.swing.JPanel {
     }
    
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
- if (!txtNombres.getText().trim().isBlank()) {
+if (!txtNombres.getText().trim().isBlank()) {
         Boolean valido = false; // creamos una bandera para validar datos
 
         // número con dos decimales para el precio
-        if (valido = txtPrecio.getText().matches("^\\d+(\\.\\d{1,2})?$")) {
+        String precioConPunto = txtPrecio.getText().replace(",", ".");
+        if (valido = precioConPunto.matches("^\\d+(\\.\\d{1,2})?$")) {
             guardarServicio(
                 txtNombres.getText(),
                 txtDescripcion.getText(),
-                Double.parseDouble(txtPrecio.getText()),
+                Double.parseDouble(precioConPunto),
                 CbmDuracion.getSelectedItem().toString(),
                 imagenServicio,
                 Servicios.Estado.ACTIVO,
                 CmbCategoria.getSelectedItem().toString()  // Obtén la categoría seleccionada
             );
 
+            JOptionPane.showMessageDialog(this, "Servicio Guardado");
             resetCampos();
+
+            // Redirigir a la tabla de servicios después de guardar
+            TablaServicios tblServ = new TablaServicios();
+            MostrarpaneCruds(tblServ);
         } else {
             JOptionPane.showMessageDialog(this, "Ingrese un precio válido (ejemplo: 10.99)");
         }

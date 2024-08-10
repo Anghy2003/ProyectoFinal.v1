@@ -35,6 +35,8 @@ import java.awt.Desktop;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Properties;
 import javax.mail.Message;
 import javax.mail.Multipart;
@@ -818,19 +820,25 @@ public class Factura extends javax.swing.JPanel {
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnImprimirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnImprimirActionPerformed
-        // Obtener la cédula del cliente seleccionado
-        generarReciboPDF();
-        String cedula = txtcedula.getText().trim();
-        if (!cedula.isEmpty()) {
-            String correoCliente = obtenerCorreoCliente(cedula);
-            if (correoCliente != null) {
-                transfer_to_email(correoCliente, pdfPath);
-            } else {
-                JOptionPane.showMessageDialog(this, "No se pudo obtener el correo del cliente.");
-            }
+        // Validar que la tabla de detalles no esté vacía
+    if (JtableFactura.getRowCount() == 0) {
+        JOptionPane.showMessageDialog(this, "No se puede generar un PDF de una factura vacía.");
+        return;
+    }
+    
+    // Obtener la cédula del cliente seleccionado
+    generarReciboPDF();
+    String cedula = txtcedula.getText().trim();
+    if (!cedula.isEmpty()) {
+        String correoCliente = obtenerCorreoCliente(cedula);
+        if (correoCliente != null) {
+            transfer_to_email(correoCliente, pdfPath);
         } else {
-            JOptionPane.showMessageDialog(this, "Por favor, seleccione un cliente.");
+            JOptionPane.showMessageDialog(this, "No se pudo obtener el correo del cliente.");
         }
+    } else {
+        JOptionPane.showMessageDialog(this, "Por favor, seleccione un cliente.");
+    }
 
     }//GEN-LAST:event_btnImprimirActionPerformed
 
@@ -927,29 +935,35 @@ public class Factura extends javax.swing.JPanel {
     }
 
     private void mostrarTablaProductos() {
-        ObjectContainer BaseBD = Conexion_db.ConectarBD();
-        Producto producto = new Producto(null, null, null, null, 0, 0, 0, null, null, null, null);
-        ObjectSet<Producto> resul = BaseBD.get(producto);
+    ObjectContainer BaseBD = Conexion_db.ConectarBD();
+    Producto producto = new Producto(null, null, null, null, 0, 0, 0, null, null, null, null);
+    ObjectSet<Producto> resul = BaseBD.get(producto);
 
-        String matriz[][] = new String[resul.size()][4];
-
-        for (int i = 0; i < resul.size(); i++) {
-            Producto prod = (Producto) resul.next();
-
-            matriz[i][0] = prod.getCodigo_Producto();
-            matriz[i][1] = prod.getNombre_Producto();
-            matriz[i][2] = String.valueOf(prod.getPrecio_Producto());
-            matriz[i][3] = String.valueOf(prod.getNumeroProductos_Producto());
+    // Filtrar productos con stock mayor que cero
+    List<Producto> productosFiltrados = new ArrayList<>();
+    for (Producto prod : resul) {
+        if (prod.getNumeroProductos_Producto() > 0) {
+            productosFiltrados.add(prod);
         }
-
-        Tablproductos1.setModel(new javax.swing.table.DefaultTableModel(
-                matriz,
-                new String[]{
-                    "Código Producto", "Nombre Producto", "Precio", "Número de Productos"
-                }
-        ));
-        BaseBD.close();
     }
+
+    String matriz[][] = new String[productosFiltrados.size()][4];
+    for (int i = 0; i < productosFiltrados.size(); i++) {
+        Producto prod = productosFiltrados.get(i);
+        matriz[i][0] = prod.getCodigo_Producto();
+        matriz[i][1] = prod.getNombre_Producto();
+        matriz[i][2] = String.format("%.2f", prod.getPrecio_Producto());
+        matriz[i][3] = String.valueOf(prod.getNumeroProductos_Producto());
+    }
+
+    Tablproductos1.setModel(new javax.swing.table.DefaultTableModel(
+        matriz,
+        new String[]{
+            "Código Producto", "Nombre Producto", "Precio", "Número de Productos"
+        }
+    ));
+    BaseBD.close();
+}
 
     private void filtrarTabla(String consulta) {
         DefaultTableModel modelo = (DefaultTableModel) Tablproductos1.getModel();
@@ -1002,49 +1016,49 @@ public class Factura extends javax.swing.JPanel {
     }
 
     public final void CargarCliente() {
-        Boolean encontrado = false;
+    Boolean encontrado = false;
 
-        // Verifica que el campo de búsqueda no esté vacío
-        String cedulaBuscar = txtBuscar1.getText().trim();
-        if (cedulaBuscar.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Por favor, ingrese una cédula para buscar.");
-            return;
+    // Verifica que el campo de búsqueda no esté vacío
+    String cedulaBuscar = txtBuscar1.getText().trim();
+    if (cedulaBuscar.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Por favor, ingrese una cédula para buscar.");
+        return;
+    }
+
+    // ESTABLECER CONEXION CON LA BASE DE DATOS
+    ObjectContainer BaseBD = null;
+    try {
+        BaseBD = Conexion_db.ConectarBD();
+        Query clienteQuery = BaseBD.query(); // Método para iniciar una consulta
+        clienteQuery.constrain(Cliente.class); // Buscaremos en la clase Cliente
+        clienteQuery.descend("cedula").constrain(cedulaBuscar); // Verificamos las coincidencias en el atributo especificado
+        ObjectSet<Cliente> resultado = clienteQuery.execute(); // Ejecutamos la consulta y almacenamos en "resultado"
+
+        // si hay resultados
+        if (!resultado.isEmpty()) {
+            for (Cliente cliente : resultado) {
+                // Seteamos en los campos recibiendo del objeto
+                txtcedula.setText(cliente.getCedula());
+                txtcedula.setEnabled(false); // Para que el usuario no edite la cédula
+                txtNombre1.setText(cliente.getNombres() + " " + cliente.getApellidos()); // Concatenar nombres y apellidos
+                txtdireccion.setText(cliente.getDireccion());
+                txttelefono.setText(cliente.getCelular());
+                tablaClientes.dispose();
+                encontrado = true;
+                JOptionPane.showMessageDialog(this, "Cliente encontrado");
+                break; // Salimos del bucle una vez encontrado el cliente
+            }
+        } else {
+            JOptionPane.showMessageDialog(this, "No se encontró Cliente");
         }
-
-        // ESTABLECER CONEXION CON LA BASE DE DATOS
-        ObjectContainer BaseBD = null;
-        try {
-            BaseBD = Conexion_db.ConectarBD();
-            Query clienteQuery = BaseBD.query(); // Método para iniciar una consulta
-            clienteQuery.constrain(Cliente.class); // Buscaremos en la clase Cliente
-            clienteQuery.descend("cedula").constrain(cedulaBuscar); // Verificamos las coincidencias en el atributo especificado
-            ObjectSet<Cliente> resultado = clienteQuery.execute(); // Ejecutamos la consulta y almacenamos en "resultado"
-
-            // si s los resultados
-            if (!resultado.isEmpty()) {
-                for (Cliente cliente : resultado) {
-                    // Seteamos en los campos recibiendo del objeto
-                    txtcedula.setText(cliente.getCedula());
-                    txtcedula.setEnabled(false); // Para que el usuario no edite la cédula
-                    txtNombre1.setText(cliente.getNombres());
-                    txtdireccion.setText(cliente.getDireccion());
-                    txttelefono.setText(cliente.getCelular());
-                    tablaClientes.dispose();
-                    encontrado = true;
-                    JOptionPane.showMessageDialog(this, "Cliente encontrado");
-                    break; // Salimos del bucle una vez encontrado el cliente
-                }
-            } else {
-                JOptionPane.showMessageDialog(this, "No se encontró Cliente");
-            }
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Error al buscar el cliente: " + e.getMessage());
-        } finally {
-            if (BaseBD != null) {
-                BaseBD.close();
-            }
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(this, "Error al buscar el cliente: " + e.getMessage());
+    } finally {
+        if (BaseBD != null) {
+            BaseBD.close();
         }
     }
+}
 
     public void seteardatosPro() {
         int filaSeleccionada = Tablproductos1.getSelectedRow();
@@ -1287,9 +1301,10 @@ public class Factura extends javax.swing.JPanel {
         PanelPrincipal.repaint();
     }
 
-    public void cargarDatosFactura(String codigoFactura) {
-        ObjectContainer baseBD = Conexion_db.ConectarBD();
+public void cargarDatosFactura(String codigoFactura) {
+    ObjectContainer baseBD = Conexion_db.ConectarBD();
 
+    try {
         // Consultar el encabezado de la factura
         EncabezadoFactura_1 facturaBuscar = new EncabezadoFactura_1();
         facturaBuscar.setCodigo_encabezadoFactura(codigoFactura);
@@ -1310,10 +1325,10 @@ public class Factura extends javax.swing.JPanel {
 
             if (!resultadoCliente.isEmpty()) {
                 Cliente cliente = resultadoCliente.next();
-                txtNombre1.setText(cliente.getNombres());
+                // Concatenar el nombre y el apellido en el mismo campo
+                txtNombre1.setText(cliente.getNombres() + " " + cliente.getApellidos());
                 txtdireccion.setText(cliente.getDireccion());
                 txttelefono.setText(cliente.getCelular());
-
             }
 
             // Consultar los detalles de la factura
@@ -1355,9 +1370,10 @@ public class Factura extends javax.swing.JPanel {
         } else {
             JOptionPane.showMessageDialog(this, "Factura no encontrada.");
         }
-
+    } finally {
         baseBD.close();
     }
+}
 
     private String obtenerNombreProducto(String codigo, ObjectContainer baseBD) {
         Producto productoBuscar = new Producto();

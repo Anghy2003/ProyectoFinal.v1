@@ -352,55 +352,68 @@ public class CrudProductos extends javax.swing.JPanel {
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         // Verificar que el nombre del producto no esté vacío
-        if (txtNombreProducto.getText().trim().isEmpty()) {
-            JOptionPane.showMessageDialog(this, "No deje espacios en blanco en el nombre del producto");
-            return;
-        }
+    if (txtNombreProducto.getText().trim().isEmpty()) {
+        JOptionPane.showMessageDialog(this, "No deje espacios en blanco en el nombre del producto");
+        return;
+    }
 
-        // Validar precio del producto
-        if (!txtPrecioProducto.getText().matches("\\d+(\\.\\d{1,2})?")) {
-            JOptionPane.showMessageDialog(this, "Ingrese un precio válido (ejemplo: 10.99)");
-            return;
-        }
+    // Validar precio del producto
+    if (!txtPrecioProducto.getText().matches("\\d+(\\.\\d{1,2})?")) {
+        JOptionPane.showMessageDialog(this, "Ingrese un precio válido (ejemplo: 10.99)");
+        return;
+    }
 
-        // Validar número de productos
-        if (!txtNumeroProductos1.getText().matches("\\d+")) {
-            JOptionPane.showMessageDialog(this, "Ingrese un número de productos válido");
-            return;
-        }
+    // Validar número de productos
+    if (!txtNumeroProductos1.getText().matches("\\d+")) {
+        JOptionPane.showMessageDialog(this, "Ingrese un número de productos válido");
+        return;
+    }
 
-        // Validar existencia máxima
-        if (!txtExistenciaMaxima.getText().matches("\\d+")) {
-            JOptionPane.showMessageDialog(this, "Ingrese una existencia máxima válida");
-            return;
-        }
+    // Validar existencia máxima
+    if (!txtExistenciaMaxima.getText().matches("\\d+")) {
+        JOptionPane.showMessageDialog(this, "Ingrese una existencia máxima válida");
+        return;
+    }
 
-        // Validar existencia mínima
-        if (!txtExistenciaMinima.getText().matches("\\d+")) {
-            JOptionPane.showMessageDialog(this, "Ingrese una existencia mínima válida");
-            return;
-        }
+    // Validar existencia mínima
+    if (!txtExistenciaMinima.getText().matches("\\d+")) {
+        JOptionPane.showMessageDialog(this, "Ingrese una existencia mínima válida");
+        return;
+    }
 
-        // Si todas las validaciones pasan, proceder a guardar el producto
-        guardarProducto(
-                txtNombreProducto.getText(),
-                Double.parseDouble(txtPrecioProducto.getText()),
-                CmbCategoria.getSelectedItem().toString(),
-                Integer.parseInt(txtNumeroProductos1.getText()),
-                Integer.parseInt(txtExistenciaMaxima.getText()),
-                Integer.parseInt(txtExistenciaMinima.getText()),
-                txtDescripcion.getText(),
-                txtProveedorID.getText(),
-                imagenProducto,
-                Producto.Estado.ACTIVO
-        );
+    int existenciaMaxima = Integer.parseInt(txtExistenciaMaxima.getText());
+    int existenciaMinima = Integer.parseInt(txtExistenciaMinima.getText());
+    if (existenciaMinima > existenciaMaxima) {
+        JOptionPane.showMessageDialog(this, "La existencia mínima no puede ser mayor que la existencia máxima");
+        return;
+    }
 
-        // Resetear los campos
-        resetCampos();
+    // Si todas las validaciones pasan, proceder a guardar el producto
+    String precioProducto = txtPrecioProducto.getText().replace(",", ".");
+    guardarProducto(
+        txtNombreProducto.getText(),
+        Double.parseDouble(precioProducto),
+        CmbCategoria.getSelectedItem().toString(),
+        Integer.parseInt(txtNumeroProductos1.getText()),
+        Integer.parseInt(txtExistenciaMaxima.getText()),
+        Integer.parseInt(txtExistenciaMinima.getText()),
+        txtDescripcion.getText(),
+        txtProveedorID.getText(),
+        imagenProducto,
+        Producto.Estado.ACTIVO
+    );
+
+    JOptionPane.showMessageDialog(this, "Producto Guardado");
+    resetCampos();
+
+    // Redirigir a la tabla de productos después de guardar
+    TablaProductos tblpro = new TablaProductos();
+    MostrarpaneCruds(tblpro);
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
-
+     TablaProductos tblpro = new TablaProductos();
+    MostrarpaneCruds(tblpro);
     }//GEN-LAST:event_btnCancelarActionPerformed
 
     private void btnSeleccionarImgenActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSeleccionarImgenActionPerformed
@@ -443,6 +456,7 @@ public class CrudProductos extends javax.swing.JPanel {
     }
     private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
         mostrarNombreProveedor();
+        
     }//GEN-LAST:event_btnAgregarActionPerformed
 
     private void BtnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtnBuscarActionPerformed
@@ -585,6 +599,8 @@ public class CrudProductos extends javax.swing.JPanel {
             if (codigoProveedor.equals(inputCodigo)) {
                 txtProveedorID.setText(miProveedor.getNombre_proveedor());
                 encontrado = true;
+                  JOptionPane.showMessageDialog(this, " Proveedor Agregado");
+                 
                 break;
             }
         }
@@ -592,7 +608,7 @@ public class CrudProductos extends javax.swing.JPanel {
         if (!encontrado) {
             JOptionPane.showMessageDialog(this, "No se encontró Proveedor");
         }
-
+        TablaProvedores.dispose();
         // Cerrar la conexión con la base de datos
         BaseBD.close();
     }

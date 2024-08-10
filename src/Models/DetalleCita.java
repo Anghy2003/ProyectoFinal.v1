@@ -3,34 +3,18 @@ package Models;
 
 public class DetalleCita {
     
+   
     private String codigo_encabezadoCita;
     private double precioServicio_detallecita;
     private String codigoServicio_detallecita;
-    private double precioToral_detallecita;
 
-    public DetalleCita(String codigoServicio_detallecita) {
-        this.codigoServicio_detallecita = codigoServicio_detallecita;
+    public DetalleCita() {
     }
 
     public DetalleCita(String codigo_encabezadoCita, double precioServicio_detallecita, String codigoServicio_detallecita) {
         this.codigo_encabezadoCita = codigo_encabezadoCita;
         this.precioServicio_detallecita = precioServicio_detallecita;
         this.codigoServicio_detallecita = codigoServicio_detallecita;
-    }
-
-    public DetalleCita(double precioServicio_detallecita, String codigoServicio_detallecita) {
-        this.precioServicio_detallecita = precioServicio_detallecita;
-        this.codigoServicio_detallecita = codigoServicio_detallecita;
-    }
-
-    
-    
-    
-    
-
-    @Override
-    public String toString() {
-        return "DetalleCita{" + "codigo_encabezadoCita=" + getCodigo_encabezadoCita() + ", precioServicio_detallecita=" + getPrecioServicio_detallecita() + ", codigoServicio_detallecita=" + getCodigoServicio_detallecita() + ", precioToral_detallecita=" + getPrecioToral_detallecita() + '}';
     }
 
     /**
@@ -74,21 +58,10 @@ public class DetalleCita {
     public void setCodigoServicio_detallecita(String codigoServicio_detallecita) {
         this.codigoServicio_detallecita = codigoServicio_detallecita;
     }
-
-    /**
-     * @return the precioToral_detallecita
-     */
-    public double getPrecioToral_detallecita() {
-        return precioToral_detallecita;
-    }
-
-    /**
-     * @param precioToral_detallecita the precioToral_detallecita to set
-     */
-    public void setPrecioToral_detallecita(double precioToral_detallecita) {
-        this.precioToral_detallecita = precioToral_detallecita;
-    }
     
     
+    
+    
+
     
 }

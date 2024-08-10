@@ -83,7 +83,7 @@ public class CatalogoProductos extends javax.swing.JPanel {
         jLabel2.setFont(new java.awt.Font("Roboto Black", 0, 30)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(0, 53, 79));
         jLabel2.setText("Producto:");
-        jPanel3.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 10, 150, 40));
+        jPanel3.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 0, 150, 40));
 
         jLabel4.setFont(new java.awt.Font("Roboto Medium", 1, 18)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(0, 53, 79));
@@ -95,7 +95,7 @@ public class CatalogoProductos extends javax.swing.JPanel {
         txtNombreProducto.setColorTransparente(true);
         txtNombreProducto.setFont(new java.awt.Font("Roboto Light", 1, 14)); // NOI18N
         txtNombreProducto.setPlaceholder("Escriba el nombre");
-        jPanel3.add(txtNombreProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 70, 130, 40));
+        jPanel3.add(txtNombreProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 80, 150, 40));
 
         lblPrecioProducto.setFont(new java.awt.Font("Roboto Medium", 1, 18)); // NOI18N
         lblPrecioProducto.setForeground(new java.awt.Color(0, 53, 79));
@@ -105,21 +105,21 @@ public class CatalogoProductos extends javax.swing.JPanel {
         lblDescripcion.setFont(new java.awt.Font("Roboto Medium", 1, 18)); // NOI18N
         lblDescripcion.setForeground(new java.awt.Color(0, 53, 79));
         lblDescripcion.setText("Descripción:");
-        jPanel3.add(lblDescripcion, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 150, -1, 40));
+        jPanel3.add(lblDescripcion, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 160, -1, 40));
 
         txtDescripcion.setForeground(new java.awt.Color(0, 53, 79));
         txtDescripcion.setBordeColorFocus(new java.awt.Color(255, 255, 255));
         txtDescripcion.setColorTransparente(true);
         txtDescripcion.setFont(new java.awt.Font("Roboto Light", 1, 14)); // NOI18N
         txtDescripcion.setPlaceholder("Descripción");
-        jPanel3.add(txtDescripcion, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 150, 130, 40));
+        jPanel3.add(txtDescripcion, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 160, 130, 40));
 
         txtPrecioProducto.setForeground(new java.awt.Color(0, 53, 79));
         txtPrecioProducto.setBordeColorFocus(new java.awt.Color(255, 255, 255));
         txtPrecioProducto.setColorTransparente(true);
         txtPrecioProducto.setFont(new java.awt.Font("Roboto Light", 1, 14)); // NOI18N
         txtPrecioProducto.setPlaceholder("Escriba el precio");
-        jPanel3.add(txtPrecioProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 110, 130, 40));
+        jPanel3.add(txtPrecioProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 120, 150, 40));
 
         lblImagen.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(0, 0, 0), 1, true));
         jPanel3.add(lblImagen, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 50, 180, 140));
@@ -135,7 +135,7 @@ public class CatalogoProductos extends javax.swing.JPanel {
         txtCodigoProducto.setColorTransparente(true);
         txtCodigoProducto.setFont(new java.awt.Font("Roboto Light", 1, 14)); // NOI18N
         txtCodigoProducto.setPlaceholder("Código");
-        jPanel3.add(txtCodigoProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 40, 120, 40));
+        jPanel3.add(txtCodigoProducto, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 40, 140, 40));
 
         lblcerrar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/cruz.png"))); // NOI18N
         lblcerrar.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -149,9 +149,7 @@ public class CatalogoProductos extends javax.swing.JPanel {
         DiaPro.getContentPane().setLayout(DiaProLayout);
         DiaProLayout.setHorizontalGroup(
             DiaProLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, DiaProLayout.createSequentialGroup()
-                .addGap(0, 0, Short.MAX_VALUE)
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, 543, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addComponent(jPanel3, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 563, Short.MAX_VALUE)
         );
         DiaProLayout.setVerticalGroup(
             DiaProLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
