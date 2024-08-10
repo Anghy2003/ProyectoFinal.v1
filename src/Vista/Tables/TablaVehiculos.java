@@ -8,22 +8,24 @@ import static Models.Vehiculo.Estado.ACTIVO;
 import static Models.Vehiculo.Estado.INACTIVO;
 import Vista.Cruds.BuscarPanelVehiculo;
 import Vista.Cruds.pnlReporteVehiculos;
+import Vista.Home.Home;
 import Vista.Menu.VistaMenu;
 import com.db4o.*;
 import com.db4o.query.Query;
 import java.awt.BorderLayout;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import utils.Global;
 
-public class TablaVehiculos extends javax.swing.JPanel {
+public final class TablaVehiculos extends javax.swing.JPanel {
 
     /**
      * Creates new form TablaVehiculos
      */
     public TablaVehiculos() {
         initComponents();
-        mostrarDatosActivos();
-        mostrarDatosInactivo();
+        verificarCliente();
+        
     }
 
     /**
@@ -47,6 +49,7 @@ public class TablaVehiculos extends javax.swing.JPanel {
         scrlpTablaVehi2 = new javax.swing.JScrollPane();
         tblVehiculoInactivo = new javax.swing.JTable();
         lbl_Inactivos = new javax.swing.JLabel();
+        cmbPlacas = new javax.swing.JComboBox<>();
 
         setLayout(new java.awt.BorderLayout());
 
@@ -56,9 +59,11 @@ public class TablaVehiculos extends javax.swing.JPanel {
                 pnlListadoMouseClicked(evt);
             }
         });
+        pnlListado.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         jLabel1.setFont(new java.awt.Font("Roboto Black", 0, 22)); // NOI18N
         jLabel1.setText("Listado Vehículo");
+        pnlListado.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(24, 38, -1, -1));
 
         scrlpTablaVehi1.setBackground(new java.awt.Color(255, 255, 255));
         scrlpTablaVehi1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
@@ -83,6 +88,8 @@ public class TablaVehiculos extends javax.swing.JPanel {
         });
         scrlpTablaVehi1.setViewportView(tblVehiculo);
 
+        pnlListado.add(scrlpTablaVehi1, new org.netbeans.lib.awtextra.AbsoluteConstraints(24, 174, 822, 136));
+
         txtBuscar.setFont(new java.awt.Font("Roboto Bold", 2, 14)); // NOI18N
         txtBuscar.setPlaceholder("ejm. ABG-0023");
         txtBuscar.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -90,9 +97,11 @@ public class TablaVehiculos extends javax.swing.JPanel {
                 txtBuscarKeyTyped(evt);
             }
         });
+        pnlListado.add(txtBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(251, 79, 169, -1));
 
         jLabel2.setFont(new java.awt.Font("Roboto Black", 0, 18)); // NOI18N
         jLabel2.setText("Buscar");
+        pnlListado.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(24, 86, -1, -1));
 
         btnAgregar.setText("Agregar");
         btnAgregar.setToolTipText("Ingresar un nuevo vehiculo");
@@ -113,6 +122,7 @@ public class TablaVehiculos extends javax.swing.JPanel {
                 btnAgregarActionPerformed(evt);
             }
         });
+        pnlListado.add(btnAgregar, new org.netbeans.lib.awtextra.AbsoluteConstraints(459, 81, 102, -1));
 
         btnEliminar.setText("Eliminar");
         btnEliminar.setColorPrimario(new java.awt.Color(204, 0, 0));
@@ -129,6 +139,7 @@ public class TablaVehiculos extends javax.swing.JPanel {
                 btnEliminarActionPerformed(evt);
             }
         });
+        pnlListado.add(btnEliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(733, 81, 102, -1));
 
         btnEditar.setToolTipText("Previamente ingrese una placa");
         btnEditar.setColorPrimario(new java.awt.Color(0, 51, 153));
@@ -146,6 +157,7 @@ public class TablaVehiculos extends javax.swing.JPanel {
                 btnEditarActionPerformed(evt);
             }
         });
+        pnlListado.add(btnEditar, new org.netbeans.lib.awtextra.AbsoluteConstraints(605, 81, 102, -1));
 
         scrlpTablaVehi2.setBackground(new java.awt.Color(255, 255, 255));
         scrlpTablaVehi2.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
@@ -166,70 +178,19 @@ public class TablaVehiculos extends javax.swing.JPanel {
         tblVehiculoInactivo.setEnabled(false);
         scrlpTablaVehi2.setViewportView(tblVehiculoInactivo);
 
+        pnlListado.add(scrlpTablaVehi2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 350, 826, 182));
+
         lbl_Inactivos.setFont(new java.awt.Font("Roboto Black", 0, 18)); // NOI18N
         lbl_Inactivos.setText("Vehiculos Eliminados:");
+        pnlListado.add(lbl_Inactivos, new org.netbeans.lib.awtextra.AbsoluteConstraints(14, 322, -1, -1));
 
-        javax.swing.GroupLayout pnlListadoLayout = new javax.swing.GroupLayout(pnlListado);
-        pnlListado.setLayout(pnlListadoLayout);
-        pnlListadoLayout.setHorizontalGroup(
-            pnlListadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlListadoLayout.createSequentialGroup()
-                .addGap(14, 14, 14)
-                .addGroup(pnlListadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(pnlListadoLayout.createSequentialGroup()
-                        .addGap(6, 6, 6)
-                        .addComponent(scrlpTablaVehi2, javax.swing.GroupLayout.PREFERRED_SIZE, 826, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(lbl_Inactivos))
-                .addGap(0, 44, Short.MAX_VALUE))
-            .addGroup(pnlListadoLayout.createSequentialGroup()
-                .addGap(24, 24, 24)
-                .addGroup(pnlListadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(pnlListadoLayout.createSequentialGroup()
-                        .addGroup(pnlListadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(pnlListadoLayout.createSequentialGroup()
-                                .addComponent(jLabel2)
-                                .addGap(39, 39, 39)
-                                .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(91, 91, 91)
-                                .addComponent(btnAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(44, 44, 44)
-                                .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(26, 26, 26)
-                                .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(11, 11, 11))
-                            .addComponent(scrlpTablaVehi1, javax.swing.GroupLayout.PREFERRED_SIZE, 822, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(pnlListadoLayout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-        );
-        pnlListadoLayout.setVerticalGroup(
-            pnlListadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlListadoLayout.createSequentialGroup()
-                .addGap(38, 38, 38)
-                .addComponent(jLabel1)
-                .addGroup(pnlListadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(pnlListadoLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(pnlListadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnAgregar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(pnlListadoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(pnlListadoLayout.createSequentialGroup()
-                            .addGap(14, 14, 14)
-                            .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(pnlListadoLayout.createSequentialGroup()
-                            .addGap(26, 26, 26)
-                            .addComponent(jLabel2))))
-                .addGap(53, 53, 53)
-                .addComponent(scrlpTablaVehi1, javax.swing.GroupLayout.PREFERRED_SIZE, 136, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(lbl_Inactivos)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(scrlpTablaVehi2, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(110, Short.MAX_VALUE))
-        );
+        cmbPlacas.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cmbPlacas.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbPlacasActionPerformed(evt);
+            }
+        });
+        pnlListado.add(cmbPlacas, new org.netbeans.lib.awtextra.AbsoluteConstraints(85, 77, 148, 42));
 
         add(pnlListado, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
@@ -254,8 +215,9 @@ public class TablaVehiculos extends javax.swing.JPanel {
         BaseBD.close();
         return numClientes;
     }
-
+ private Boolean vehiculoEliminado=false;
     public void eliminarVehiculo(String placa) {
+        vehiculoEliminado=false;
         ObjectContainer BaseBD = Conexion_db.ConectarBD();
         ObjectSet<Vehiculo> result = BaseBD.queryByExample(new Vehiculo(placa, null, null, null, 0, null, null)); // Crear objeto para consultar
         if (result.hasNext()) {
@@ -266,6 +228,7 @@ public class TablaVehiculos extends javax.swing.JPanel {
             if (opcion == JOptionPane.YES_OPTION) {
                 VehiculoAEliminar.desactivarVehiculo();
                 BaseBD.store(VehiculoAEliminar);
+                vehiculoEliminado=true;
                 System.out.println("Vehiculo eliminado correctamente.");
             } else {
                 System.out.println("Vehiculo cancelada por el usuario.");
@@ -277,16 +240,27 @@ public class TablaVehiculos extends javax.swing.JPanel {
     }
 
     private void btnEliminarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEliminarMouseClicked
-        if (!txtBuscar.getText().trim().isEmpty()) {
+        if (Global.rolUsuario.equals("CLIENTE")) {
+            String eliminarVehi = (String)cmbPlacas.getSelectedItem();
+            eliminarVehiculo(eliminarVehi);
+            cargarPlacasVehiculos();
+            if (vehiculoEliminado) {
+                JOptionPane.showMessageDialog(this, "Vehiculo Eliminado");
+            }
+            mostrarVehiculoClienteActivo();
+            mostrarVehiculoClienteInactivo();
+        }else{if (!txtBuscar.getText().trim().isEmpty()) {
             String eliminarVehi = txtBuscar.getText().toUpperCase();
             eliminarVehiculo(eliminarVehi);
-            JOptionPane.showMessageDialog(this, "Vehiculo Eliminado");
+            if (vehiculoEliminado) {
+             JOptionPane.showMessageDialog(this, "Vehiculo Eliminado");   
+            }
             mostrarDatosActivos();
             mostrarDatosInactivo();
 
         } else {
             JOptionPane.showMessageDialog(this, "Vehiculo no encontrado ");
-        }
+        }}
     }//GEN-LAST:event_btnEliminarMouseClicked
 
     private void btnEditarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditarMouseClicked
@@ -294,12 +268,18 @@ public class TablaVehiculos extends javax.swing.JPanel {
     }//GEN-LAST:event_btnEditarMouseClicked
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
+        if (Global.rolUsuario.equals("CLIENTE")) {
+            String BuscarPlaca = (String)cmbPlacas.getSelectedItem(); // Obtener el texto del combobox
+            BuscarPanelVehiculo miBuscarPanelVehiculo = new BuscarPanelVehiculo(BuscarPlaca);//creo el componente llevando el valor del String
+            ShowpanelCruds(miBuscarPanelVehiculo);  
+        }else{
         if (!txtBuscar.getText().trim().isEmpty()) {
             String BuscarPlaca = txtBuscar.getText(); // Obtener el texto de txtBuscar
             BuscarPanelVehiculo miBuscarPanelVehiculo = new BuscarPanelVehiculo(BuscarPlaca);//creo el componente llevando el valor del String
             ShowpanelCruds(miBuscarPanelVehiculo);
         } else {
             JOptionPane.showMessageDialog(this, "Ingrese la placa del vehiculo  ");
+        }
         }
     }//GEN-LAST:event_btnEditarActionPerformed
 
@@ -332,6 +312,10 @@ public class TablaVehiculos extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_pnlListadoMouseClicked
 
+    private void cmbPlacasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbPlacasActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cmbPlacasActionPerformed
+
     private void mostrarDatosInactivo() {
         // ESTABLECER CONEXION CON LA BASE DE DATOS
         ObjectContainer BaseBD = Conexion_db.ConectarBD();
@@ -341,6 +325,7 @@ public class TablaVehiculos extends javax.swing.JPanel {
         Query query = BaseBD.query();
         query.constrain(Vehiculo.class);
         query.descend("estado").constrain(INACTIVO);
+        
         ObjectSet<Vehiculo> resultado = query.execute();
 
         String matriz[][] = new String[resultado.size()][7];
@@ -413,11 +398,121 @@ public class TablaVehiculos extends javax.swing.JPanel {
     VistaMenu.PanelPrincipal.revalidate();
     VistaMenu.PanelPrincipal.repaint();
 }
+    private Boolean esCliente=false;
+    public void verificarCliente() {
+        esCliente=false;
+        if (Global.rolUsuario.equals("CLIENTE")) {
+            txtBuscar.setVisible(false);
+            System.out.println("SI ES CLIENTE");
+            //necesito buscar las placas para este usuario
+            cargarPlacasVehiculos();
+            mostrarVehiculoClienteActivo();
+            mostrarVehiculoClienteInactivo();
+            
+            esCliente=true;
+        }else{System.out.println("NO ES CLIENTE");
+        mostrarDatosActivos();
+        mostrarDatosInactivo();
+        cmbPlacas.setVisible(false);
+        }
+    }
+    
+    public void cargarPlacasVehiculos() {
+    // Conectar a la base de datos
+    ObjectContainer BaseBD = Conexion_db.ConectarBD();
+
+    try {
+        // Crear una consulta para buscar los vehículos del cliente
+        Query query = BaseBD.query();
+        query.constrain(Vehiculo.class);
+        query.descend("id_Cliente").constrain(Home.CedulaUsuario);
+        query.descend("estado").constrain(Estado.ACTIVO);
+
+        // Ejecutar la consulta y obtener el resultado
+        ObjectSet<Vehiculo> resultado = query.execute();
+
+        // Limpiar el comboBox
+        cmbPlacas.removeAllItems();
+
+        // Agregar las placas de los vehículos al comboBox
+        for (Vehiculo vehiculo : resultado) {
+            cmbPlacas.addItem(vehiculo.getPlaca_Vehiculo());
+        }
+    } finally {
+        // Cerrar la base de datos
+        BaseBD.close();
+    }
+}
+    private void mostrarVehiculoClienteActivo() {
+    // ESTABLECER CONEXION CON LA BASE DE DATOS
+    ObjectContainer BaseBD = Conexion_db.ConectarBD();
+    tblVehiculo.setEnabled(true);
+    // Consulta para filtrar solo vehículos inactivos y que pertenecen al cliente
+    Query query = BaseBD.query();
+    query.constrain(Vehiculo.class);
+    query.descend("estado").constrain(ACTIVO);
+    query.descend("id_Cliente").constrain(Home.CedulaUsuario);
+    ObjectSet<Vehiculo> resultado = query.execute();
+    //Creo una matriz
+    String matriz[][] = new String[resultado.size()][7];
+    int i = 0;
+    for (Vehiculo miVehi : resultado) {//iteramos en cada elemento de "resultado"
+        matriz[i][0] = miVehi.getPlaca_Vehiculo();
+        matriz[i][1] = miVehi.getModelo_Vehiculo();
+        matriz[i][2] = miVehi.getMarca_Vehiculo();
+        matriz[i][3] = miVehi.getColor_Vehiculo();
+        String Año = String.valueOf(miVehi.getAnioFabricacion_Vehiculo());//Convierto el año a String para la tabla
+        matriz[i][4] = Año;
+        matriz[i][5] = miVehi.getId_Cliente();
+        String Estao = String.valueOf(miVehi.getEstado());
+        matriz[i][6] = Estao;
+        i++;
+    }
+    // datos configurados
+    tblVehiculo.setModel(new javax.swing.table.DefaultTableModel(matriz, new String[]{"Placa", "Modelo ", "Marca", "Color", "Año Fabricacion", "Propietario", "Estado"}));
+    tblVehiculo.setEnabled(false);
+    {
+        BaseBD.close();
+    }
+}
+    private void mostrarVehiculoClienteInactivo() {
+        // ESTABLECER CONEXION CON LA BASE DE DATOS
+        ObjectContainer BaseBD = Conexion_db.ConectarBD();
+        tblVehiculoInactivo.setEnabled(true);
+
+        // Consulta para filtrar solo vehículos inactivos
+        Query query = BaseBD.query();
+        query.constrain(Vehiculo.class);
+        query.descend("estado").constrain(INACTIVO);
+        query.descend("id_Cliente").constrain(Home.CedulaUsuario);
+        
+        ObjectSet<Vehiculo> resultado = query.execute();
+
+        String matriz[][] = new String[resultado.size()][7];
+        int i = 0;
+        for (Vehiculo miVehi : resultado) {//iteramos en cada elemento de "resultado"
+            matriz[i][0] = miVehi.getPlaca_Vehiculo();
+            matriz[i][1] = miVehi.getModelo_Vehiculo();
+            matriz[i][2] = miVehi.getMarca_Vehiculo();
+            matriz[i][3] = miVehi.getColor_Vehiculo();
+            String Año = String.valueOf(miVehi.getAnioFabricacion_Vehiculo());//Convierto el año a String para la tabla
+            matriz[i][4] = Año;
+            matriz[i][5] = miVehi.getId_Cliente();
+            String estao = String.valueOf(miVehi.getEstado());
+            matriz[i][6] = estao;
+            i++;
+        }
+        // datos configurados
+        tblVehiculoInactivo.setModel(new javax.swing.table.DefaultTableModel(matriz, new String[]{"Placa", "Modelo ", "Marca", "Color", "Año Fabricacion", "Propietario", "Estado"}));
+        tblVehiculoInactivo.setEnabled(false);
+        BaseBD.close();
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private rsbuttongradiente.RSButtonGradiente btnAgregar;
     private rsbuttongradiente.RSButtonGradiente btnEditar;
     private rsbuttongradiente.RSButtonGradiente btnEliminar;
+    private javax.swing.JComboBox<String> cmbPlacas;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel lbl_Inactivos;

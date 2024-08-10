@@ -26,7 +26,7 @@ public class Home extends javax.swing.JFrame {
     public void setRolUsuario(String rolUsuario) {
         this.rolUsuario = rolUsuario;
     }
-    private String CedulaUsuario;
+    
 
     public String getCedulaUsuario() {
         return CedulaUsuario;
@@ -42,6 +42,7 @@ public class Home extends javax.swing.JFrame {
         this.setLocationRelativeTo(this);
          verificarYCrearAdminPorDefecto(); // Verifica y crea el administrador por defecto
     }
+    public static String CedulaUsuario;
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -217,6 +218,7 @@ public class Home extends javax.swing.JFrame {
 
     private void btnIniciarSesionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnIniciarSesionActionPerformed
         String cedula = obtenerUsuario();
+        CedulaUsuario=txtRolUsuario.getText().trim();
         String password = obtenercontraseñaUsu();
         iniciarSesion(cedula, password);
     }//GEN-LAST:event_btnIniciarSesionActionPerformed

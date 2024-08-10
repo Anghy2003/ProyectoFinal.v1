@@ -1,4 +1,3 @@
-
 package Vista.Cruds;
 
 import Conexion.Conexion_db;
@@ -12,26 +11,31 @@ import static Models.MarcaVehiculo.verificarNumeroMarcas;
 import Models.Vehiculo.Estado;
 import static Models.Vehiculo.Estado.ACTIVO;
 import Vista.Cruds.CRUDS1.CrudPanelCliente;
+import Vista.Home.Home;
 import com.db4o.query.Query;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
-import javax.swing.JDialog;
-import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import utils.Global;
 
-public class CrudPanelVehiculo extends javax.swing.JPanel {
+public final class CrudPanelVehiculo extends javax.swing.JPanel {
 
     /**
      * Creates new form CrudPanelVehiculo
      */
     public CrudPanelVehiculo() {
         initComponents();
+        YEARAño.setStartYear(1800); // Establece el año inicial 
+        int añoActual = Calendar.getInstance().get(Calendar.YEAR);
+        YEARAño.setEndYear(añoActual + 1); // Establece el año final en el año actual + 1 
+        verificarCliente();
         mostrarComboMarcas();
         mostrarComboModelos();
         mostrarDatosMarca();
         mostrarDatosModelo();
         mostrarComboColores();
-        
+
     }
 
     /**
@@ -42,6 +46,7 @@ public class CrudPanelVehiculo extends javax.swing.JPanel {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+        java.awt.GridBagConstraints gridBagConstraints;
 
         jLabel13 = new javax.swing.JLabel();
         jdlCrearMarca = new javax.swing.JDialog();
@@ -287,22 +292,22 @@ public class CrudPanelVehiculo extends javax.swing.JPanel {
         lblPlaca.setFont(new java.awt.Font("Roboto Medium", 0, 21)); // NOI18N
         lblPlaca.setForeground(new java.awt.Color(0, 53, 79));
         lblPlaca.setText("Placa:");
-        jPanel1.add(lblPlaca, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 100, 70, 40));
+        jPanel1.add(lblPlaca, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 110, 70, 40));
 
         lblModelo.setFont(new java.awt.Font("Roboto Medium", 0, 21)); // NOI18N
         lblModelo.setForeground(new java.awt.Color(0, 53, 79));
         lblModelo.setText("Modelo:");
-        jPanel1.add(lblModelo, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 250, 100, 40));
+        jPanel1.add(lblModelo, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 260, 100, 40));
 
         lblColor.setFont(new java.awt.Font("Roboto Medium", 0, 21)); // NOI18N
         lblColor.setForeground(new java.awt.Color(0, 53, 79));
         lblColor.setText("Color:");
-        jPanel1.add(lblColor, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 290, 60, 40));
+        jPanel1.add(lblColor, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 300, 60, 40));
 
         lblAño.setFont(new java.awt.Font("Roboto Medium", 0, 21)); // NOI18N
         lblAño.setForeground(new java.awt.Color(0, 53, 79));
         lblAño.setText("Año Fabricación:");
-        jPanel1.add(lblAño, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 340, 180, 40));
+        jPanel1.add(lblAño, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 350, 180, 40));
 
         txtPlaca.setForeground(new java.awt.Color(0, 53, 79));
         txtPlaca.setColorTransparente(true);
@@ -313,7 +318,7 @@ public class CrudPanelVehiculo extends javax.swing.JPanel {
                 txtPlacaKeyTyped(evt);
             }
         });
-        jPanel1.add(txtPlaca, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 90, 270, 40));
+        jPanel1.add(txtPlaca, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 100, 190, 40));
 
         btnCancelar.setBackground(new java.awt.Color(255, 51, 51));
         btnCancelar.setText("Cancelar");
@@ -343,12 +348,12 @@ public class CrudPanelVehiculo extends javax.swing.JPanel {
             }
         });
         jPanel1.add(btnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 410, -1, -1));
-        jPanel1.add(YEARAño, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 340, 270, 30));
+        jPanel1.add(YEARAño, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 350, 190, 30));
 
         lblPropietario.setFont(new java.awt.Font("Roboto Medium", 0, 21)); // NOI18N
         lblPropietario.setForeground(new java.awt.Color(0, 53, 79));
         lblPropietario.setText("Cédula Propietario:");
-        jPanel1.add(lblPropietario, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 150, 190, 30));
+        jPanel1.add(lblPropietario, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 160, 190, 30));
 
         cmbMarcaRegistroVehiculo.setToolTipText("Ingrese la Marca del Vehiculo");
         cmbMarcaRegistroVehiculo.addItemListener(new java.awt.event.ItemListener() {
@@ -372,7 +377,7 @@ public class CrudPanelVehiculo extends javax.swing.JPanel {
                 cmbMarcaRegistroVehiculoActionPerformed(evt);
             }
         });
-        jPanel1.add(cmbMarcaRegistroVehiculo, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 190, 190, 40));
+        jPanel1.add(cmbMarcaRegistroVehiculo, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 200, 190, 40));
 
         cmbModeloRegistroVehiculo1.setToolTipText("Ingrese la Marca del Vehiculo");
         cmbModeloRegistroVehiculo1.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -380,10 +385,10 @@ public class CrudPanelVehiculo extends javax.swing.JPanel {
                 cmbModeloRegistroVehiculo1MouseEntered(evt);
             }
         });
-        jPanel1.add(cmbModeloRegistroVehiculo1, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 240, 190, 40));
+        jPanel1.add(cmbModeloRegistroVehiculo1, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 250, 190, 40));
 
         cmbColorVehiculo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Blanco", "Negro", "Gris", "Plata", "Azul", "Rojo", "Café ", "Beige", "Amarillo u oro", "Verde" }));
-        jPanel1.add(cmbColorVehiculo, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 290, 270, 40));
+        jPanel1.add(cmbColorVehiculo, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 300, 190, 40));
 
         btnAñadirMarcaRegistroVehiculos.setText("Añadir");
         btnAñadirMarcaRegistroVehiculos.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -396,18 +401,21 @@ public class CrudPanelVehiculo extends javax.swing.JPanel {
                 btnAñadirMarcaRegistroVehiculosActionPerformed(evt);
             }
         });
-        jPanel1.add(btnAñadirMarcaRegistroVehiculos, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 190, 80, 40));
+        jPanel1.add(btnAñadirMarcaRegistroVehiculos, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 200, 80, 40));
 
         txtCliente.setForeground(new java.awt.Color(0, 53, 79));
         txtCliente.setColorTransparente(true);
         txtCliente.setFont(new java.awt.Font("Roboto Light", 1, 14)); // NOI18N
         txtCliente.setPlaceholder("Ejm: 0102030405");
         txtCliente.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtClienteKeyReleased(evt);
+            }
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 txtClienteKeyTyped(evt);
             }
         });
-        jPanel1.add(txtCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 140, 190, 40));
+        jPanel1.add(txtCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 150, 190, 40));
 
         btnAñadirModeloREgistroVehiculos.setText("Añadir");
         btnAñadirModeloREgistroVehiculos.setToolTipText("Verificar la marca previamente");
@@ -421,7 +429,7 @@ public class CrudPanelVehiculo extends javax.swing.JPanel {
                 btnAñadirModeloREgistroVehiculosActionPerformed(evt);
             }
         });
-        jPanel1.add(btnAñadirModeloREgistroVehiculos, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 240, 80, 40));
+        jPanel1.add(btnAñadirModeloREgistroVehiculos, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 250, 80, 40));
 
         btnBuscarClienteRegistroVehiculos1.setText("Buscar");
         btnBuscarClienteRegistroVehiculos1.setToolTipText("Verificar la marca previamente");
@@ -435,12 +443,12 @@ public class CrudPanelVehiculo extends javax.swing.JPanel {
                 btnBuscarClienteRegistroVehiculos1ActionPerformed(evt);
             }
         });
-        jPanel1.add(btnBuscarClienteRegistroVehiculos1, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 140, 80, 40));
+        jPanel1.add(btnBuscarClienteRegistroVehiculos1, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 150, 80, 40));
 
         lblMarca1.setFont(new java.awt.Font("Roboto Medium", 0, 21)); // NOI18N
         lblMarca1.setForeground(new java.awt.Color(0, 53, 79));
         lblMarca1.setText("Marca:");
-        jPanel1.add(lblMarca1, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 200, 80, 40));
+        jPanel1.add(lblMarca1, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 210, 80, 40));
 
         add(jPanel1, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
@@ -455,14 +463,12 @@ public class CrudPanelVehiculo extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnCancelarActionPerformed
 
-    
-    
-        //Guardar USUARIO
+    //Guardar USUARIO
     public static void guardarVehiculos(String placa_Vehiculo, String modelo_Vehiculo, String marca_Vehiculo, String color_Vehiculo, int anioFabricacion_Vehiculo, String id_Cliente, Estado estado) {
         // ESTABLECER CONEXION CON LA BASE DE DATOS
         ObjectContainer BaseBD = Conexion_db.ConectarBD();
 
-        Vehiculo vehiculo1 = new Vehiculo( placa_Vehiculo,  modelo_Vehiculo,  marca_Vehiculo,  color_Vehiculo,  anioFabricacion_Vehiculo,  id_Cliente,  ACTIVO);
+        Vehiculo vehiculo1 = new Vehiculo(placa_Vehiculo, modelo_Vehiculo, marca_Vehiculo, color_Vehiculo, anioFabricacion_Vehiculo, id_Cliente, ACTIVO);
         //Cerrar BD (antes de  verificar usuario que abre nuevamente la BD)
         BaseBD.close();
         if (verificarVehiculosGuardar(placa_Vehiculo) == 0) {
@@ -474,39 +480,41 @@ public class CrudPanelVehiculo extends javax.swing.JPanel {
             System.out.println("Vehiculo Guardado");
         } else {
             System.out.println("Vehiculo ya existe en la BD");
-        } 
+        }
     }
+
     //verificar VEHICULOS
     public static int verificarVehiculosGuardar(String placa_Vehiculo) {
         // ESTABLECER CONEXION CON LA BASE DE DATOS
         ObjectContainer BaseBD = Conexion_db.ConectarBD();
-        Vehiculo VehiculosBusca = new Vehiculo(placa_Vehiculo, null, null, null, 0,null,null);
+        Vehiculo VehiculosBusca = new Vehiculo(placa_Vehiculo, null, null, null, 0, null, null);
         ObjectSet resultado = BaseBD.get(VehiculosBusca);
-        int coincidencias= resultado.size();
+        int coincidencias = resultado.size();
         //Cerrar BD
         BaseBD.close();
         return coincidencias;
     }
-    
-    public  void resetCampos(){
-    txtPlaca.setText("");
-    YEARAño.setYear(2024);
+
+    public void resetCampos() {
+        txtPlaca.setText("");
+        YEARAño.setYear(2024);
     }
-    public final int verificarPlacasRepetidas(){
+
+    public final int verificarPlacasRepetidas() {
         Boolean encontrado = false;
         // ESTABLECER CONEXION CON LA BASE DE DATOS
         ObjectContainer BaseBD = Conexion_db.ConectarBD();
         Query vehiculo = BaseBD.query();//metodo para iniciar una consulta
         vehiculo.constrain(Vehiculo.class);//buscaremos en la clase Vehiculo
         vehiculo.descend("placa_Vehiculo").constrain(txtPlaca.getText().toUpperCase()); // verificamos las coincidencias en el atributo especificado
-        ObjectSet<Vehiculo> resultado=vehiculo.execute();//Ejecutamos la consulta y almacenamos en "resultado"
-        int coincidencias= resultado.size();
+        ObjectSet<Vehiculo> resultado = vehiculo.execute();//Ejecutamos la consulta y almacenamos en "resultado"
+        int coincidencias = resultado.size();
         BaseBD.close();
         return coincidencias;
     }
-    
+
     private void btnGuardarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnGuardarMouseClicked
-        
+
     }//GEN-LAST:event_btnGuardarMouseClicked
 
     private void txtMarcaVRegistrarKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtMarcaVRegistrarKeyTyped
@@ -526,19 +534,18 @@ public class CrudPanelVehiculo extends javax.swing.JPanel {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnCancelar1ActionPerformed
 
-    
-    public final int verificarMarcaRepetida(){
+    public final int verificarMarcaRepetida() {
         // ESTABLECER CONEXION CON LA BASE DE DATOS
         ObjectContainer BaseBD = Conexion_db.ConectarBD();
         Query marca = BaseBD.query();//metodo para iniciar una consulta
         marca.constrain(MarcaVehiculo.class);//buscaremos en la clase Vehiculo
         marca.descend("nombre_Marca").constrain(txtMarcaVRegistrar.getText().toUpperCase()); // verificamos las coincidencias en el atributo especificado
-        ObjectSet<MarcaVehiculo> resultado=marca.execute();//Ejecutamos la consulta y almacenamos en "resultado"
-        int coincidencias= resultado.size();
+        ObjectSet<MarcaVehiculo> resultado = marca.execute();//Ejecutamos la consulta y almacenamos en "resultado"
+        int coincidencias = resultado.size();
         BaseBD.close();
         return coincidencias;
     }
-    public static Boolean marcaGuardada=false;
+    public static Boolean marcaGuardada = false;
     private void btnGuardarMarcaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnGuardarMarcaMouseClicked
         if (txtMarcaVRegistrar.getText().toUpperCase().trim().isBlank() || txtModeloMarcaRegistro.getText().toUpperCase().trim().isBlank()) {
             JOptionPane.showMessageDialog(null, "No dejar campos en blanco");
@@ -558,7 +565,7 @@ public class CrudPanelVehiculo extends javax.swing.JPanel {
                     if (!marcaGuardada) {
                         JOptionPane.showMessageDialog(this, "Marca no Guardada");
                     }
-                    
+
                     //Guardamos el modelo
                     guardarModelo(txtModeloMarcaRegistro.getText().trim().toUpperCase(), txtMarcaVRegistrar.getText().trim().toUpperCase());
                     cmbModeloRegistroVehiculo1.setSelectedItem(txtModeloRegistrar.getText().toUpperCase().trim());
@@ -580,15 +587,15 @@ public class CrudPanelVehiculo extends javax.swing.JPanel {
     }//GEN-LAST:event_btnGuardarMarcaMouseClicked
 
     private void btnAñadirMarcaRegistroVehiculosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAñadirMarcaRegistroVehiculosMouseClicked
-        
+
     }//GEN-LAST:event_btnAñadirMarcaRegistroVehiculosMouseClicked
 
     private void btnAñadirMarcaRegistroVehiculosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAñadirMarcaRegistroVehiculosActionPerformed
-                mostrarDatosMarca();
-                jdlCrearMarca.setModal(true); // hacemos que el dialogo bloquee la interaccion con la pantalla principal
-                jdlCrearMarca.setSize(579, 460); // establecemos un tamaño para el diálogo
-                jdlCrearMarca.setLocationRelativeTo(null); // centramos el diálogo en la pantalla
-                jdlCrearMarca.setVisible(true); // llamamos al dialogo        
+        mostrarDatosMarca();
+        jdlCrearMarca.setModal(true); // hacemos que el dialogo bloquee la interaccion con la pantalla principal
+        jdlCrearMarca.setSize(579, 460); // establecemos un tamaño para el diálogo
+        jdlCrearMarca.setLocationRelativeTo(null); // centramos el diálogo en la pantalla
+        jdlCrearMarca.setVisible(true); // llamamos al dialogo        
     }//GEN-LAST:event_btnAñadirMarcaRegistroVehiculosActionPerformed
 
     private void txtModeloMarcaRegistroKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtModeloMarcaRegistroKeyTyped
@@ -606,28 +613,27 @@ public class CrudPanelVehiculo extends javax.swing.JPanel {
     private void btnCancelarModeloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarModeloActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnCancelarModeloActionPerformed
- 
-    
-    
+
+
     private void btnGuardarModeloMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnGuardarModeloMouseClicked
         String comboMarcas = (String) cmbMarcas.getSelectedItem();
         if (txtModeloRegistrar.getText().toUpperCase().trim().isBlank() || comboMarcas.equalsIgnoreCase("Elegir")) {
             JOptionPane.showMessageDialog(null, "No dejar campos en blanco");
-        } else {    
+        } else {
             guardarModelo(txtModeloRegistrar.getText().toUpperCase().trim(), (String) cmbMarcas.getSelectedItem());
             if (modeloGuadrado) {
                 JOptionPane.showMessageDialog(this, "Modelo Guardado");
-            cmbMarcaRegistroVehiculo.setSelectedItem((String)cmbMarcas.getSelectedItem());
-            cmbModeloRegistroVehiculo1.setSelectedItem(txtModeloRegistrar.getText().toUpperCase().trim());
-            jdlCrearModelo.dispose();
+                cmbMarcaRegistroVehiculo.setSelectedItem((String) cmbMarcas.getSelectedItem());
+                cmbModeloRegistroVehiculo1.setSelectedItem(txtModeloRegistrar.getText().toUpperCase().trim());
+                jdlCrearModelo.dispose();
             }
         }
-            
-         
+
+
     }//GEN-LAST:event_btnGuardarModeloMouseClicked
 
     private void btnGuardarModeloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarModeloActionPerformed
-        
+
     }//GEN-LAST:event_btnGuardarModeloActionPerformed
 
     private void txtModeloRegistrarKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtModeloRegistrarKeyTyped
@@ -635,7 +641,7 @@ public class CrudPanelVehiculo extends javax.swing.JPanel {
     }//GEN-LAST:event_txtModeloRegistrarKeyTyped
 
     private void btnAñadirModeloREgistroVehiculosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAñadirModeloREgistroVehiculosMouseClicked
-        
+
     }//GEN-LAST:event_btnAñadirModeloREgistroVehiculosMouseClicked
 
     private void btnAñadirModeloREgistroVehiculosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAñadirModeloREgistroVehiculosActionPerformed
@@ -651,17 +657,17 @@ public class CrudPanelVehiculo extends javax.swing.JPanel {
 
     public final int VerificarClienteRepetidos() {
 
-        ObjectContainer BaseBD = Conexion_db.ConectarBD();        
+        ObjectContainer BaseBD = Conexion_db.ConectarBD();
         Query cliente = BaseBD.query();
         cliente.constrain(Cliente.class);
         cliente.descend("cedula").constrain(txtCliente.getText());
         ObjectSet<Cliente> resultado = cliente.execute();
-        
+
         int coincidencias = resultado.size();
-        
+
         BaseBD.close();
         return coincidencias;
-        
+
     }
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         Boolean encontrado = false;
@@ -669,31 +675,36 @@ public class CrudPanelVehiculo extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(null, "Placa de Vehiculo ya registrado");
             encontrado = true;
         }
-        if (VerificarClienteRepetidos()== 0) {
+        if (VerificarClienteRepetidos() == 0) {
             JOptionPane.showMessageDialog(null, "Cliente no Registrado");
             CrudPanelCliente miCliente = new CrudPanelCliente();
-            ShowpanelCruds(miCliente);            
+            ShowpanelCruds(miCliente);
             encontrado = true;
-            
-        }
-            if (!encontrado) {
-            Boolean valido = false;//creamos una bandera para validar datos
-            if (valido = txtPlaca.getText().toUpperCase().matches("^[A-Z]{3}-\\d{3,4}$")) {//aceptamos 3 letras, un guion y luego 3 a 4 numeros
-               
-                // LUEGO, CUANDO NECESITES OBTENER EL codigoColor DEL ITEM SELECCIONADO, PUEDES HACERLO DE LA SIGUIENTE MANERA:
-                String selectedItem = (String) cmbColorVehiculo.getSelectedItem();
-                String codigoColor = mapaColores.get(selectedItem.trim().toUpperCase());
-                guardarVehiculos(txtPlaca.getText().toUpperCase(), (String) cmbModeloRegistroVehiculo1.getSelectedItem(), (String) cmbMarcaRegistroVehiculo.getSelectedItem(), codigoColor, YEARAño.getYear(), txtCliente.getText().toUpperCase().trim(), Estado.ACTIVO);
-                buscarMarca();
-                buscarModelo();
-                buscarVehiculoConsola();
-                JOptionPane.showMessageDialog(this, "Vehiculo Guardado");
-                TablaVehiculos tablaVehi = new TablaVehiculos();
-                ShowpanelCruds(tablaVehi);
 
-            } else {
-                JOptionPane.showMessageDialog(this, "Ingrese una placa Válida");
-            }
+        }
+        if (!encontrado) {
+            Boolean valido = false;//creamos una bandera para validar datos
+            int añoActual = Calendar.getInstance().get(Calendar.YEAR);
+            if (valido == (YEARAño.getYear() > 1800 && YEARAño.getYear() < añoActual + 1)) {
+                if (valido = txtPlaca.getText().toUpperCase().matches("^[A-Z]{3}-\\d{3,4}$")) {//aceptamos 3 letras, un guion y luego 3 a 4 numeros
+
+                    String selectedItem = (String) cmbColorVehiculo.getSelectedItem();
+                    String codigoColor = mapaColores.get(selectedItem.trim().toUpperCase());
+                    guardarVehiculos(txtPlaca.getText().toUpperCase(), (String) cmbModeloRegistroVehiculo1.getSelectedItem(), (String) cmbMarcaRegistroVehiculo.getSelectedItem(), codigoColor, YEARAño.getYear(), txtCliente.getText().toUpperCase().trim(), Estado.ACTIVO);
+                    buscarMarca();
+                    buscarModelo();
+                    buscarVehiculoConsola();
+                    JOptionPane.showMessageDialog(this, "Vehiculo Guardado");
+                    TablaVehiculos tablaVehi = new TablaVehiculos();
+                    ShowpanelCruds(tablaVehi);
+
+                } else {
+                    JOptionPane.showMessageDialog(this, "Ingrese una placa Válida");
+                } 
+            }else {
+                    JOptionPane.showMessageDialog(this, "Ingrese un año Válido");
+                } 
+            
         }
         resetCampos();
     }//GEN-LAST:event_btnGuardarActionPerformed
@@ -703,62 +714,46 @@ public class CrudPanelVehiculo extends javax.swing.JPanel {
     }//GEN-LAST:event_btnBuscarClienteRegistroVehiculos1MouseClicked
 
     private void btnBuscarClienteRegistroVehiculos1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarClienteRegistroVehiculos1ActionPerformed
-
-        if (verificarExistenciaCliente()==0) {//si es cero, no existen clientes con esa cedula, mandamos a registro
+        if (txtCliente.getText().trim().isEmpty()) {//si esta vacio tendremos que verificar si  el usuario es cliente para rellenar con la cedula
+            if (Global.rolUsuario.equals("CLIENTE")) {
+                txtCliente.setText(Home.CedulaUsuario.trim());
+            }else{JOptionPane.showMessageDialog(this, "INGRESE UNA CEDULA");}
+   
+        }else{
+        if (verificarExistenciaCliente() == 0) {//si es cero, no existen clientes con esa cedula, mandamos a registro
             txtCliente.setText("");
             JOptionPane.showMessageDialog(this, "Cliente no registrado, por favor registrese");
             CrudPanelCliente CrearMiCliente = new CrudPanelCliente();
             ShowpanelCruds(CrearMiCliente);
-        }else{//sino vamos a dejar la cedula en el  textfield
-        JOptionPane.showMessageDialog(this, "Cliente Verificado");
+        } else {//sino vamos a dejar la cedula en el  textfield
+            JOptionPane.showMessageDialog(this, "Cliente Verificado");
         }
-        
+        }
 
     }//GEN-LAST:event_btnBuscarClienteRegistroVehiculos1ActionPerformed
 
-    public final int verificarExistenciaCliente(){
+    public final int verificarExistenciaCliente() {
         Boolean encontrado = false;
         // ESTABLECER CONEXION CON LA BASE DE DATOS
         ObjectContainer BaseBD = Conexion_db.ConectarBD();
         Query cliente = BaseBD.query();//metodo para iniciar una consulta
         cliente.constrain(Cliente.class);//buscaremos en la clase Vehiculo
         cliente.descend("cedula").constrain(txtCliente.getText().toUpperCase()); // verificamos las coincidencias en el atributo especificado
-        ObjectSet<Cliente> resultado=cliente.execute();//Ejecutamos la consulta y almacenamos en "resultado"
-        int coincidencias= resultado.size();
+        ObjectSet<Cliente> resultado = cliente.execute();//Ejecutamos la consulta y almacenamos en "resultado"
+        int coincidencias = resultado.size();
         BaseBD.close();
         return coincidencias;
     }
-    
+
     private void txtClienteKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtClienteKeyTyped
-    char x=evt.getKeyChar();
-    if (Character.isLetter(x)) {
-        JOptionPane.showMessageDialog(this, "Ingrese solo números");
-        evt.consume();
-    }
-     else if (txtCliente.getText().length() >= 10) {
-        evt.consume();
-    }
+        char x = evt.getKeyChar();
+        if (Character.isLetter(x)) {
+            JOptionPane.showMessageDialog(this, "Ingrese solo números");
+            evt.consume();
+        } else if (txtCliente.getText().length() >= 10) {
+            evt.consume();
+        }
     }//GEN-LAST:event_txtClienteKeyTyped
-
-    private void cmbMarcaRegistroVehiculoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbMarcaRegistroVehiculoItemStateChanged
-    //mostrarComboModelos();
-    }//GEN-LAST:event_cmbMarcaRegistroVehiculoItemStateChanged
-
-    private void cmbMarcaRegistroVehiculoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cmbMarcaRegistroVehiculoMouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cmbMarcaRegistroVehiculoMouseClicked
-
-    private void cmbMarcaRegistroVehiculoMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cmbMarcaRegistroVehiculoMouseExited
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cmbMarcaRegistroVehiculoMouseExited
-
-    private void cmbMarcaRegistroVehiculoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbMarcaRegistroVehiculoActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cmbMarcaRegistroVehiculoActionPerformed
-
-    private void cmbMarcaRegistroVehiculoMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cmbMarcaRegistroVehiculoMouseEntered
-        mostrarComboModelos();// TODO add your handling code here:
-    }//GEN-LAST:event_cmbMarcaRegistroVehiculoMouseEntered
 
     private void cmbModeloRegistroVehiculo1MouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cmbModeloRegistroVehiculo1MouseEntered
         mostrarComboModelos();// TODO add your handling code here:
@@ -772,8 +767,35 @@ public class CrudPanelVehiculo extends javax.swing.JPanel {
             evt.consume();
         }
     }//GEN-LAST:event_txtPlacaKeyTyped
-    
-    
+
+    private void txtClienteKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtClienteKeyReleased
+        if (Global.rolUsuario.equals("CLIENTE")) {
+            if (txtCliente.getText().isEmpty()) {
+                txtCliente.setText(Home.CedulaUsuario.trim());
+            }
+        }
+    }//GEN-LAST:event_txtClienteKeyReleased
+
+    private void cmbMarcaRegistroVehiculoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbMarcaRegistroVehiculoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cmbMarcaRegistroVehiculoActionPerformed
+
+    private void cmbMarcaRegistroVehiculoMouseExited(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cmbMarcaRegistroVehiculoMouseExited
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cmbMarcaRegistroVehiculoMouseExited
+
+    private void cmbMarcaRegistroVehiculoMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cmbMarcaRegistroVehiculoMouseEntered
+        mostrarComboModelos();// TODO add your handling code here:
+    }//GEN-LAST:event_cmbMarcaRegistroVehiculoMouseEntered
+
+    private void cmbMarcaRegistroVehiculoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cmbMarcaRegistroVehiculoMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cmbMarcaRegistroVehiculoMouseClicked
+
+    private void cmbMarcaRegistroVehiculoItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbMarcaRegistroVehiculoItemStateChanged
+        //mostrarComboModelos();
+    }//GEN-LAST:event_cmbMarcaRegistroVehiculoItemStateChanged
+
     private void ShowpanelCruds(JPanel p) {
         p.setSize(870, 630);// Establece el tamaño
         p.setLocation(0, 0);// Coloca el panel en la posición (0, 0) 
@@ -782,6 +804,7 @@ public class CrudPanelVehiculo extends javax.swing.JPanel {
         VistaMenu.PanelPrincipal.revalidate();// Vuelve a validar el panel principal para asegurarse de que se actualicen los cambios
         VistaMenu.PanelPrincipal.repaint();// Repinta el panel principal para reflejar los cambios visualmente
     }
+
     private void mostrarDatosMarca() {
         // ESTABLECER CONEXION CON LA BASE DE DATOS
         ObjectContainer BaseBD = Conexion_db.ConectarBD();
@@ -799,11 +822,13 @@ public class CrudPanelVehiculo extends javax.swing.JPanel {
             i++;
         }
         // datos configurados
-        tblMarca_VehiRegistro.setModel(new javax.swing.table.DefaultTableModel(matriz, new String[]{"Marca","Modelo"}));
-        tblMarca_VehiRegistro.setEnabled(false);{
-        BaseBD.close();
+        tblMarca_VehiRegistro.setModel(new javax.swing.table.DefaultTableModel(matriz, new String[]{"Marca", "Modelo"}));
+        tblMarca_VehiRegistro.setEnabled(false);
+        {
+            BaseBD.close();
+        }
     }
-    }
+
     private void mostrarDatosModelo() {
         // ESTABLECER CONEXION CON LA BASE DE DATOS
         ObjectContainer BaseBD = Conexion_db.ConectarBD();
@@ -821,18 +846,18 @@ public class CrudPanelVehiculo extends javax.swing.JPanel {
             i++;
         }
         // datos configurados
-        tblModelo_VehiRegistro.setModel(new javax.swing.table.DefaultTableModel(matriz, new String[]{"Marca","Modelo"}));
-        tblModelo_VehiRegistro.setEnabled(false);{
-        BaseBD.close();
+        tblModelo_VehiRegistro.setModel(new javax.swing.table.DefaultTableModel(matriz, new String[]{"Marca", "Modelo"}));
+        tblModelo_VehiRegistro.setEnabled(false);
+        {
+            BaseBD.close();
+        }
     }
-    }
-    
-    
+
     //GUARDAR MARCA
     public static void guardarMarca(String id_Marca, String nombre_Marca) {
         // ESTABLECER CONEXION CON LA BASE DE DATOS
         ObjectContainer BaseBD = Conexion_db.ConectarBD();
-        marcaGuardada=false;
+        marcaGuardada = false;
         MarcaVehiculo Marcavehi1 = new MarcaVehiculo(id_Marca, nombre_Marca);
         //Cerrar BD (antes de  verificar usuario que abre nuevamente la BD)
         BaseBD.close();
@@ -841,43 +866,45 @@ public class CrudPanelVehiculo extends javax.swing.JPanel {
             BaseBD = Conexion_db.ConectarBD();
             BaseBD.set(Marcavehi1);
             BaseBD.close();
-            marcaGuardada=true;
+            marcaGuardada = true;
             System.out.println("Marca de Vehiculo Guardado");
         } else {
             System.out.println("Marca de Vehiculo ya existe en la BD");
-        } 
+        }
     }
+
     //verificar MARCA
     public static int verificarMarcaGuardar(String nombre_Marca) {
         // ESTABLECER CONEXION CON LA BASE DE DATOS
         ObjectContainer BaseBD = Conexion_db.ConectarBD();
-        MarcaVehiculo MarcaVehiculoBusca = new MarcaVehiculo(null,nombre_Marca);
+        MarcaVehiculo MarcaVehiculoBusca = new MarcaVehiculo(null, nombre_Marca);
         ObjectSet resultado = BaseBD.get(MarcaVehiculoBusca);
-        int coincidencias= resultado.size();
+        int coincidencias = resultado.size();
         //Cerrar BD
         BaseBD.close();
         return coincidencias;
     }
-    
-    public static Boolean modeloGuadrado=false;
+
+    public static Boolean modeloGuadrado = false;
+
     //guardar modelo
     public static void guardarModelo(String Nombre_modelo, String Nombre_Marca) {
-        modeloGuadrado=false;
-        int K=ModeloVehiculo.verificarNumeroModelos()+1;//verificamos el numero de modelos para autoenumerar al guardar
+        modeloGuadrado = false;
+        int K = ModeloVehiculo.verificarNumeroModelos() + 1;//verificamos el numero de modelos para autoenumerar al guardar
         // ESTABLECER CONEXION CON LA BASE DE DATOS
         ObjectContainer BaseBD = Conexion_db.ConectarBD();
 
-        ModeloVehiculo Modelovehi1 = new ModeloVehiculo("MODELO"+K,Nombre_modelo, Nombre_Marca);
+        ModeloVehiculo Modelovehi1 = new ModeloVehiculo("MODELO" + K, Nombre_modelo, Nombre_Marca);
         //Cerrar BD (antes de  verificar usuario que abre nuevamente la BD)
         BaseBD.close();
-        
+
         if (verificarMarcaGuardar(Nombre_Marca) != 0) {//debe existir una coincidencia de marca 
-            if (verificarModeloGuardar(Nombre_modelo,Nombre_Marca) == 0) {//no debe existir el modelo para esa marca
+            if (verificarModeloGuardar(Nombre_modelo, Nombre_Marca) == 0) {//no debe existir el modelo para esa marca
                 //volvemos a abrir para guardar 
                 BaseBD = Conexion_db.ConectarBD();
                 BaseBD.set(Modelovehi1);
                 BaseBD.close();
-                modeloGuadrado=true;
+                modeloGuadrado = true;
                 System.out.println("Modelo de Vehiculo Guardado");
             } else {
                 System.out.println("Modelo de Vehiculo ya existe en la BD");
@@ -886,21 +913,22 @@ public class CrudPanelVehiculo extends javax.swing.JPanel {
             System.out.println("Marca de Vehiculo con esa marca ya existe en la BD");
         }
     }
+
     //verificar Modelo
     public static int verificarModeloGuardar(String Nombre_modelo, String Nombre_Marca) {
         // ESTABLECER CONEXION CON LA BASE DE DATOS
         ObjectContainer BaseBD = Conexion_db.ConectarBD();
-        ModeloVehiculo ModelVehiculoBusca = new ModeloVehiculo(null,Nombre_modelo,Nombre_Marca);
+        ModeloVehiculo ModelVehiculoBusca = new ModeloVehiculo(null, Nombre_modelo, Nombre_Marca);
         ObjectSet resultado = BaseBD.get(ModelVehiculoBusca);
-        int coincidencias= resultado.size();
+        int coincidencias = resultado.size();
         //Cerrar BD
         BaseBD.close();
         return coincidencias;
     }
-    
+
     //mostrar Marcas
     private void mostrarComboMarcas() {
-        ObjectContainer BaseBD=Conexion_db.ConectarBD();
+        ObjectContainer BaseBD = Conexion_db.ConectarBD();
         // Consulta a la base de datos para obtener todos los objetos de marca
         ObjectSet<MarcaVehiculo> marcas = BaseBD.query(MarcaVehiculo.class);
         //primero limpiamos combobox para luego agregar
@@ -909,17 +937,18 @@ public class CrudPanelVehiculo extends javax.swing.JPanel {
         cmbModeloRegistroVehiculo1.removeAllItems();
         // Itera sobre los resultados y agrega los nombres de ciudades al JComboBox
         marcas.forEach((MArca) -> {
-            
+
             cmbMarcas.addItem(MArca.getNombre_Marca());
             cmbMarcaRegistroVehiculo.addItem(MArca.getNombre_Marca());
         });
         BaseBD.close();
     }
-    private void mostrarComboModelos(){
-        ObjectContainer BaseBD = Conexion_db.ConectarBD();        
+
+    private void mostrarComboModelos() {
+        ObjectContainer BaseBD = Conexion_db.ConectarBD();
         Query query = BaseBD.query();
         query.constrain(ModeloVehiculo.class);
-        query.descend("id_Marca").constrain((String)cmbMarcaRegistroVehiculo.getSelectedItem());
+        query.descend("id_Marca").constrain((String) cmbMarcaRegistroVehiculo.getSelectedItem());
         ObjectSet<ModeloVehiculo> resultado = query.execute();
         // Limpia el comboBox 
         cmbModeloRegistroVehiculo1.removeAllItems();
@@ -930,35 +959,23 @@ public class CrudPanelVehiculo extends javax.swing.JPanel {
         BaseBD.close();
     }
     private Map<String, String> mapaColores = new HashMap<>();
-    
-    private void mostrarComboColores() {
-    ObjectContainer BaseBD = Conexion_db.ConectarBD();
-    // Consulta a la base de datos para obtener todos los objetos Ciudad
-    ObjectSet<Color> colores = BaseBD.query(Color.class);
-    cmbColorVehiculo.removeAllItems();
-    // Itera sobre los resultados y agrega los nombres de ciudades al JComboBox
-    colores.forEach((color) -> {
-        String texto = color.getNomnbre_color()+ " " + color.getTipoColor();
-        mapaColores.put(texto, color.getCodigoColor());
-        cmbColorVehiculo.addItem(texto);
-    });
-    BaseBD.close();
-}
 
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+    private void mostrarComboColores() {
+        ObjectContainer BaseBD = Conexion_db.ConectarBD();
+        // Consulta a la base de datos para obtener todos los objetos Ciudad
+        ObjectSet<Color> colores = BaseBD.query(Color.class);
+        cmbColorVehiculo.removeAllItems();
+        // Itera sobre los resultados y agrega los nombres de ciudades al JComboBox
+        colores.forEach((color) -> {
+            String texto = color.getNomnbre_color() + " " + color.getTipoColor();
+            mapaColores.put(texto, color.getCodigoColor());
+            cmbColorVehiculo.addItem(texto);
+        });
+        BaseBD.close();
+    }
+
     public static void buscarMarca() {
-        ObjectContainer base=Conexion_db.ConectarBD();
+        ObjectContainer base = Conexion_db.ConectarBD();
         // Crear un nuevo objeto Clientes para usar como plantilla de búsqueda
         MarcaVehiculo CBusca = new MarcaVehiculo();
 
@@ -975,8 +992,9 @@ public class CrudPanelVehiculo extends javax.swing.JPanel {
         }
         base.close();
     }
+
     public static void buscarModelo() {
-        ObjectContainer base=Conexion_db.ConectarBD();
+        ObjectContainer base = Conexion_db.ConectarBD();
         // Crear un nuevo objeto Clientes para usar como plantilla de búsqueda
         MarcaVehiculo CBusca = new MarcaVehiculo();
 
@@ -993,8 +1011,9 @@ public class CrudPanelVehiculo extends javax.swing.JPanel {
         }
         base.close();
     }
+
     public static void buscarVehiculoConsola() {
-        ObjectContainer base=Conexion_db.ConectarBD();
+        ObjectContainer base = Conexion_db.ConectarBD();
         // Crear un nuevo objeto Clientes para usar como plantilla de búsqueda
         Vehiculo CBusca = new Vehiculo();
 
@@ -1011,9 +1030,20 @@ public class CrudPanelVehiculo extends javax.swing.JPanel {
         }
         base.close();
     }
-    
-    
-    
+
+    public void verificarCliente() {
+        if (Global.rolUsuario.equals("CLIENTE")) {
+            txtCliente.setText(Home.CedulaUsuario.trim());
+            txtCliente.setEnabled(false);
+            txtCliente.setDisabledTextColor(java.awt.Color.black);
+            btnBuscarClienteRegistroVehiculos1.setText("CARGA");
+            btnAñadirMarcaRegistroVehiculos.setVisible(false);
+            btnAñadirModeloREgistroVehiculos.setVisible(false);
+
+        }else{btnBuscarClienteRegistroVehiculos1.setText("BUSCAR");}
+    }
+
+
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private com.toedter.calendar.JYearChooser YEARAño;
     private rojeru_san.RSButtonRiple btnAñadirMarcaRegistroVehiculos;

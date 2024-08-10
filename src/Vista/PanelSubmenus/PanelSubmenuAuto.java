@@ -1,5 +1,6 @@
 package Vista.PanelSubmenus;
 
+import Vista.Home.Home;
 import Vista.Menu.VistaMenu;
 import static Vista.Menu.VistaMenu.PanelHeader;
 import static Vista.Menu.VistaMenu.PanelPrincipal;
@@ -9,14 +10,16 @@ import Vista.Tables.TablaMarcasVehiculo;
 import Vista.Tables.TablaVehiculos;
 import java.awt.BorderLayout;
 import javax.swing.JPanel;
+import utils.Global;
 
 /**
  *
  * @author aberr
  */
-public class PanelSubmenuAuto extends javax.swing.JPanel {
+public final class PanelSubmenuAuto extends javax.swing.JPanel {
     public PanelSubmenuAuto() {
         initComponents();
+        verificarCliente();
     }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -167,7 +170,17 @@ public class PanelSubmenuAuto extends javax.swing.JPanel {
         VistaMenu.PanelPrincipal.revalidate();
         VistaMenu.PanelPrincipal.repaint();
     }
-
+    public void verificarCliente(){
+        if (Global.rolUsuario.equals("CLIENTE")) {
+            System.out.println("SI ES CLIENTE");
+            btnGestionColores.setVisible(false);
+            btnGestionVehiculos.setVisible(false);
+            btnGestionMarcas.setVisible(false);
+        }else{System.out.println("NO ES CLIENTE");
+        btnGestionColores.setVisible(true);
+            btnGestionVehiculos.setVisible(true);
+            btnGestionMarcas.setVisible(true);}
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JToggleButton btnGestionColores;

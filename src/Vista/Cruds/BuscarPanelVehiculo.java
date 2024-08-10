@@ -12,10 +12,13 @@ import static Models.MarcaVehiculo.verificarNumeroMarcas;
 import Models.Vehiculo.Estado;
 import static Models.Vehiculo.Estado.ACTIVO;
 import Vista.Cruds.CRUDS1.CrudPanelCliente;
+import Vista.Home.Home;
 import com.db4o.query.Query;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 import javax.swing.JOptionPane;
+import utils.Global;
 
 public class BuscarPanelVehiculo extends javax.swing.JPanel {
 
@@ -25,6 +28,10 @@ public class BuscarPanelVehiculo extends javax.swing.JPanel {
     public BuscarPanelVehiculo(String receivedString) {
         this.BuscarPlaca = receivedString;
         initComponents();
+        YEARAño.setStartYear(1800); // Establece el año inicial 
+        int añoActual = Calendar.getInstance().get(Calendar.YEAR);
+        YEARAño.setEndYear(añoActual + 1); // Establece el año final en el año actual + 1 
+        verificarCliente();
         mostrarComboMarcas();
         mostrarComboModelos();
         mostrarDatosMarca();
@@ -288,22 +295,22 @@ public class BuscarPanelVehiculo extends javax.swing.JPanel {
         lblPlaca.setFont(new java.awt.Font("Roboto Medium", 0, 21)); // NOI18N
         lblPlaca.setForeground(new java.awt.Color(0, 53, 79));
         lblPlaca.setText("Placa:");
-        jPanel1.add(lblPlaca, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 100, 70, 40));
+        jPanel1.add(lblPlaca, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 100, 70, 40));
 
         lblModelo.setFont(new java.awt.Font("Roboto Medium", 0, 21)); // NOI18N
         lblModelo.setForeground(new java.awt.Color(0, 53, 79));
         lblModelo.setText("Modelo:");
-        jPanel1.add(lblModelo, new org.netbeans.lib.awtextra.AbsoluteConstraints(230, 250, 100, 40));
+        jPanel1.add(lblModelo, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 250, 100, 40));
 
         lblColor.setFont(new java.awt.Font("Roboto Medium", 0, 21)); // NOI18N
         lblColor.setForeground(new java.awt.Color(0, 53, 79));
         lblColor.setText("Color:");
-        jPanel1.add(lblColor, new org.netbeans.lib.awtextra.AbsoluteConstraints(250, 290, 60, 40));
+        jPanel1.add(lblColor, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 290, 60, 40));
 
         lblAño.setFont(new java.awt.Font("Roboto Medium", 0, 21)); // NOI18N
         lblAño.setForeground(new java.awt.Color(0, 53, 79));
         lblAño.setText("Año Fabricación:");
-        jPanel1.add(lblAño, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 340, 180, 40));
+        jPanel1.add(lblAño, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 340, 180, 40));
 
         txtPlaca.setForeground(new java.awt.Color(0, 53, 79));
         txtPlaca.setColorTransparente(true);
@@ -314,7 +321,7 @@ public class BuscarPanelVehiculo extends javax.swing.JPanel {
                 txtPlacaKeyTyped(evt);
             }
         });
-        jPanel1.add(txtPlaca, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 90, 270, 40));
+        jPanel1.add(txtPlaca, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 90, 190, 40));
 
         btnCancelar.setBackground(new java.awt.Color(255, 51, 51));
         btnCancelar.setText("Cancelar");
@@ -344,12 +351,12 @@ public class BuscarPanelVehiculo extends javax.swing.JPanel {
             }
         });
         jPanel1.add(btnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 410, -1, -1));
-        jPanel1.add(YEARAño, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 340, 270, 30));
+        jPanel1.add(YEARAño, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 340, 190, 30));
 
         lblPropietario.setFont(new java.awt.Font("Roboto Medium", 0, 21)); // NOI18N
         lblPropietario.setForeground(new java.awt.Color(0, 53, 79));
         lblPropietario.setText("Cédula Propietario:");
-        jPanel1.add(lblPropietario, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 150, 190, 30));
+        jPanel1.add(lblPropietario, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 150, 190, 30));
 
         cmbMarcaRegistroVehiculo.setToolTipText("Ingrese la Marca del Vehiculo");
         cmbMarcaRegistroVehiculo.addItemListener(new java.awt.event.ItemListener() {
@@ -373,7 +380,7 @@ public class BuscarPanelVehiculo extends javax.swing.JPanel {
                 cmbMarcaRegistroVehiculoActionPerformed(evt);
             }
         });
-        jPanel1.add(cmbMarcaRegistroVehiculo, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 190, 190, 40));
+        jPanel1.add(cmbMarcaRegistroVehiculo, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 190, 190, 40));
 
         cmbModeloRegistroVehiculo1.setToolTipText("Ingrese la Marca del Vehiculo");
         cmbModeloRegistroVehiculo1.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -381,10 +388,10 @@ public class BuscarPanelVehiculo extends javax.swing.JPanel {
                 cmbModeloRegistroVehiculo1MouseEntered(evt);
             }
         });
-        jPanel1.add(cmbModeloRegistroVehiculo1, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 240, 190, 40));
+        jPanel1.add(cmbModeloRegistroVehiculo1, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 240, 190, 40));
 
         cmbColorVehiculo.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Blanco", "Negro", "Gris", "Plata", "Azul", "Rojo", "Café ", "Beige", "Amarillo u oro", "Verde" }));
-        jPanel1.add(cmbColorVehiculo, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 290, 270, 40));
+        jPanel1.add(cmbColorVehiculo, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 290, 190, 40));
 
         btnAñadirMarcaRegistroVehiculos.setText("Añadir");
         btnAñadirMarcaRegistroVehiculos.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -397,7 +404,7 @@ public class BuscarPanelVehiculo extends javax.swing.JPanel {
                 btnAñadirMarcaRegistroVehiculosActionPerformed(evt);
             }
         });
-        jPanel1.add(btnAñadirMarcaRegistroVehiculos, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 190, 80, 40));
+        jPanel1.add(btnAñadirMarcaRegistroVehiculos, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 190, 80, 40));
 
         txtCliente.setForeground(new java.awt.Color(0, 53, 79));
         txtCliente.setColorTransparente(true);
@@ -408,7 +415,7 @@ public class BuscarPanelVehiculo extends javax.swing.JPanel {
                 txtClienteKeyTyped(evt);
             }
         });
-        jPanel1.add(txtCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 140, 190, 40));
+        jPanel1.add(txtCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 140, 190, 40));
 
         btnAñadirModeloREgistroVehiculos.setText("Añadir");
         btnAñadirModeloREgistroVehiculos.setToolTipText("Verificar la marca previamente");
@@ -422,7 +429,7 @@ public class BuscarPanelVehiculo extends javax.swing.JPanel {
                 btnAñadirModeloREgistroVehiculosActionPerformed(evt);
             }
         });
-        jPanel1.add(btnAñadirModeloREgistroVehiculos, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 240, 80, 40));
+        jPanel1.add(btnAñadirModeloREgistroVehiculos, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 240, 80, 40));
 
         btnBuscarClienteRegistroVehiculos1.setText("Buscar");
         btnBuscarClienteRegistroVehiculos1.setToolTipText("Verificar la marca previamente");
@@ -436,12 +443,12 @@ public class BuscarPanelVehiculo extends javax.swing.JPanel {
                 btnBuscarClienteRegistroVehiculos1ActionPerformed(evt);
             }
         });
-        jPanel1.add(btnBuscarClienteRegistroVehiculos1, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 140, 80, 40));
+        jPanel1.add(btnBuscarClienteRegistroVehiculos1, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 140, 80, 40));
 
         lblMarca1.setFont(new java.awt.Font("Roboto Medium", 0, 21)); // NOI18N
         lblMarca1.setForeground(new java.awt.Color(0, 53, 79));
         lblMarca1.setText("Marca:");
-        jPanel1.add(lblMarca1, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 200, 80, 40));
+        jPanel1.add(lblMarca1, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 200, 80, 40));
 
         add(jPanel1, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
@@ -664,24 +671,36 @@ public class BuscarPanelVehiculo extends javax.swing.JPanel {
         
     }
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-        if (!txtPlaca.getText().trim().isBlank()) {
-            if (!txtCliente.getText().isBlank()) {
-                Boolean valido = false;//creamos una bandera para validar datos
+        Boolean valido = false;//creamos una bandera para validar datos
+        int añoActual = Calendar.getInstance().get(Calendar.YEAR);
+        if (valido == (YEARAño.getYear() > 1800 && YEARAño.getYear() < añoActual + 1)) {
+            if (!txtPlaca.getText().trim().isBlank()) {
+                if (!txtCliente.getText().isBlank()) {
 
                     String selectedItem = (String) cmbColorVehiculo.getSelectedItem();
                     String codigoColor = mapaColores.get(selectedItem.trim().toUpperCase());
-                    modificarVehiculo(txtPlaca.getText().toUpperCase(),(String) cmbModeloRegistroVehiculo1.getSelectedItem(),(String)cmbMarcaRegistroVehiculo.getSelectedItem(),codigoColor,  YEARAño.getYear(),txtCliente.getText().toUpperCase().trim(),Estado.ACTIVO );
+                    modificarVehiculo(txtPlaca.getText().toUpperCase(), (String) cmbModeloRegistroVehiculo1.getSelectedItem(), (String) cmbMarcaRegistroVehiculo.getSelectedItem(), codigoColor, YEARAño.getYear(), txtCliente.getText().toUpperCase().trim(), Estado.ACTIVO);
                     JOptionPane.showMessageDialog(this, "Vehiculo Modificado");
-                
-                resetCampos();
-                TablaVehiculos miTablaVehiculos = new TablaVehiculos();
-                ShowpanelCruds(miTablaVehiculos);
-            }else{JOptionPane.showMessageDialog(this, "No deje espacios en blanco");}
 
-        }else{JOptionPane.showMessageDialog(this, "No deje espacios en blanco");}
-        buscarMarca();
-        buscarModelo();
-        buscarVehiculoConsola();
+                    resetCampos();
+                    TablaVehiculos miTablaVehiculos = new TablaVehiculos();
+                    ShowpanelCruds(miTablaVehiculos);
+                } else {
+                    JOptionPane.showMessageDialog(this, "No deje espacios en blanco");
+                }
+
+            } else {
+                JOptionPane.showMessageDialog(this, "No deje espacios en blanco");
+            }
+            buscarMarca();
+            buscarModelo();
+            buscarVehiculoConsola();
+
+        } else {
+            JOptionPane.showMessageDialog(this, "Ingrese un año Válido");
+        }
+
+
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     public static void buscarMarca() {
@@ -743,16 +762,23 @@ public class BuscarPanelVehiculo extends javax.swing.JPanel {
     }//GEN-LAST:event_btnBuscarClienteRegistroVehiculos1MouseClicked
 
     private void btnBuscarClienteRegistroVehiculos1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarClienteRegistroVehiculos1ActionPerformed
+        if (txtCliente.getText().trim().isEmpty()) {//si esta vacio tendremos que verificar si  el usuario es cliente para rellenar con la cedula
+            if (Global.rolUsuario.equals("CLIENTE")) {
+                txtCliente.setText(Home.CedulaUsuario.trim());
+            } else {
+                JOptionPane.showMessageDialog(this, "INGRESE UNA CEDULA");
+            }
 
-        if (verificarExistenciaCliente()==0) {//si es cero, no existen clientes con esa cedula, mandamos a registro
-            txtCliente.setText("");
-            JOptionPane.showMessageDialog(this, "Cliente no registrado, por favor registrese");
-            CrudPanelCliente CrearMiCliente = new CrudPanelCliente();
-            ShowpanelCruds(CrearMiCliente);
-        }else{//sino vamos a dejar la cedula en el  textfield
-        JOptionPane.showMessageDialog(this, "Cliente Verificado");
+        } else {
+            if (verificarExistenciaCliente() == 0) {//si es cero, no existen clientes con esa cedula, mandamos a registro
+                txtCliente.setText("");
+                JOptionPane.showMessageDialog(this, "Cliente no registrado, por favor registrese");
+                CrudPanelCliente CrearMiCliente = new CrudPanelCliente();
+                ShowpanelCruds(CrearMiCliente);
+            } else {//sino vamos a dejar la cedula en el  textfield
+                JOptionPane.showMessageDialog(this, "Cliente Verificado");
+            }
         }
-        
 
     }//GEN-LAST:event_btnBuscarClienteRegistroVehiculos1ActionPerformed
 
@@ -1056,6 +1082,17 @@ public class BuscarPanelVehiculo extends javax.swing.JPanel {
     });
     BaseBD.close();
 }
+    public void verificarCliente() {
+        if (Global.rolUsuario.equals("CLIENTE")) {
+            txtCliente.setText(Home.CedulaUsuario.trim());
+            txtCliente.setEnabled(false);
+            txtCliente.setDisabledTextColor(java.awt.Color.black);
+            btnBuscarClienteRegistroVehiculos1.setText("CARGA");
+            btnAñadirMarcaRegistroVehiculos.setVisible(false);
+            btnAñadirModeloREgistroVehiculos.setVisible(false);
+
+        }else{btnBuscarClienteRegistroVehiculos1.setText("BUSCAR");}
+    }
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
