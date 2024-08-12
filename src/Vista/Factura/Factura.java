@@ -839,7 +839,7 @@ public class Factura extends javax.swing.JPanel {
     } else {
         JOptionPane.showMessageDialog(this, "Por favor, seleccione un cliente.");
     }
-   resetearFormulario();
+   
     }//GEN-LAST:event_btnImprimirActionPerformed
 
     public String obtenerCorreoCliente(String cedula) {
@@ -1623,7 +1623,7 @@ public void cargarDatosFactura(String codigoFactura) {
 
     baseBD.close();
     JOptionPane.showMessageDialog(this, "Factura guardada exitosamente!");
-
+   resetearFormulario();
    
 }
  private void resetearFormulario() {
