@@ -1,4 +1,3 @@
-
 package Vista.Tables;
 
 import Conexion.Conexion_db;
@@ -26,7 +25,7 @@ public class TablaFactura extends javax.swing.JPanel {
      */
     public TablaFactura() {
         initComponents();
-        
+
         mostrarDatosFacturas();
     }
 
@@ -90,6 +89,11 @@ public class TablaFactura extends javax.swing.JPanel {
         btnEliminar.setColorPrimarioHover(new java.awt.Color(255, 51, 51));
         btnEliminar.setColorSecundario(new java.awt.Color(255, 153, 153));
         btnEliminar.setColorSecundarioHover(new java.awt.Color(255, 204, 204));
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarActionPerformed(evt);
+            }
+        });
 
         scrlpTabla.setBackground(new java.awt.Color(255, 255, 255));
         scrlpTabla.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
@@ -228,149 +232,157 @@ public class TablaFactura extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnbuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnbuscarActionPerformed
-       String consulta = txtBuscar.getText();  // Suponiendo que txtBuscar es el campo de texto donde se ingresa el código de la factura
-    filtrarTablaFacturas(consulta);
-    
+        String consulta = txtBuscar.getText();  // Suponiendo que txtBuscar es el campo de texto donde se ingresa el código de la factura
+        filtrarTablaFacturas(consulta);
+
     }//GEN-LAST:event_btnbuscarActionPerformed
 
     private void btnVizualizar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVizualizar1ActionPerformed
-      // Obtiene la linea despues de la filtracion
-    int selectedRow = tblFacturas.getSelectedRow();
-    if (selectedRow != -1) {
-        String codigoFactura = tblFacturas.getValueAt(selectedRow, 0).toString();
-        
-        //abrir la interfaz con los datos cargados
-        abrirFacturaConDatos(codigoFactura);
-    } 
-    
-    }//GEN-LAST:event_btnVizualizar1ActionPerformed
-private void abrirFacturaConDatos(String codigoFactura) {
-    // Crear una instancia de la interfaz de Factura
-    Factura facturaPanel = new Factura();
-    
-    // Cargar los datos de la factura en la interfaz
-    facturaPanel.cargarDatosFactura(codigoFactura);
-    
-    // Mostrar la interfaz de Factura
-    MostarpanelCruds(facturaPanel);
-}
- private void mostrarDetallesFactura() {
-    // Obtener la factura seleccionada de la tabla de facturas
-    int selectedRow = tblFacturas.getSelectedRow();
-    if (selectedRow == -1) {
-        JOptionPane.showMessageDialog(this, "Seleccione una factura para ver sus detalles");
-        return;
-    }
+        // Obtiene la linea despues de la filtracion
+        int selectedRow = tblFacturas.getSelectedRow();
+        if (selectedRow != -1) {
+            String codigoFactura = tblFacturas.getValueAt(selectedRow, 0).toString();
 
-    String codigoFactura = tblFacturas.getValueAt(selectedRow, 0).toString();
-
-    // Establecer conexión con la base de datos
-    ObjectContainer BaseBD = Conexion_db.ConectarBD();
-    DetalleFactura_1 detalleBuscar = new DetalleFactura_1();
-    detalleBuscar.setCodigo_encabezadoFactura(codigoFactura);
-
-    ObjectSet<DetalleFactura_1> resultado = BaseBD.get(detalleBuscar);
-
-    // Crear una matriz para almacenar los datos
-    String matriz[][] = new String[resultado.size()][4];
-    int i = 0;
-    for (DetalleFactura_1 miDetalle : resultado) {
-        matriz[i][0] = miDetalle.getCodigo_encabezadoFactura();
-        String codigo = miDetalle.getCodigoProducto_detalleFactura();
-        matriz[i][1] = codigo;
-        matriz[i][2] = obtenerNombre(codigo, BaseBD);
-        matriz[i][3] = String.valueOf(miDetalle.getCantidadProdcutos_detalleFactura());
-        i++;
-    }
-
-    // Configurar datos en la tabla de detalles
-    tabladetalle.setModel(new javax.swing.table.DefaultTableModel(matriz, new String[]{"Código Factura", "Código", "Nombre", "Cantidad"}));
-
-    // Cerrar la conexión con la base de datos
-    BaseBD.close();
-}
-private void mostrarDatosFacturas() {
-    // ESTABLECER CONEXION CON LA BASE DE DATOS
-    tblFacturas.setEnabled(true);
-    ObjectContainer BaseBD = Conexion_db.ConectarBD();
-    EncabezadoFactura_1 facturaBuscar = new EncabezadoFactura_1();
-    ObjectSet<EncabezadoFactura_1> resultado = BaseBD.get(facturaBuscar);
-
-    // Crear una matriz para almacenar los datos
-    String matriz[][] = new String[resultado.size()][4];
-    int i = 0;
-    for (EncabezadoFactura_1 miFactura : resultado) {
-        matriz[i][0] = miFactura.getCodigo_encabezadoFactura();
-        matriz[i][1] = miFactura.getFecha_encabezadoFactura();
-        matriz[i][2] = miFactura.getCedulaCliente_encabezadoFactura();
-        matriz[i][3] = String.valueOf(miFactura.getTotal_encabezadoFactura());
-        i++;
-    }
-
-    // Configurar datos en la tabla
-    tblFacturas.setModel(new javax.swing.table.DefaultTableModel(matriz, new String[]{"Código Factura", "Fecha", "Cédula", "Total"}));
-    tblFacturas.setEnabled(true); // Permitir la selección de filas
-
-    // Añadir listener para manejar la selección de filas
-    tblFacturas.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
-        public void valueChanged(ListSelectionEvent event) {
-            if (!event.getValueIsAdjusting()) { // Solo actuar cuando la selección esté completa
-                mostrarDetallesFactura(); // Llamar al método sin parámetros
-            }
+            //abrir la interfaz con los datos cargados
+            abrirFacturaConDatos(codigoFactura);
         }
-    });
 
-    // Cerrar la conexión con la base de datos
-    BaseBD.close();
-}
+    }//GEN-LAST:event_btnVizualizar1ActionPerformed
 
-private String obtenerNombre(String codigo, ObjectContainer baseBD) {
-    // Buscar como Producto
-    Producto productoBuscar = new Producto();
-    productoBuscar.setCodigo_Producto(codigo);
-    ObjectSet<Producto> resultadoProducto = baseBD.get(productoBuscar);
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnEliminarActionPerformed
+    private void abrirFacturaConDatos(String codigoFactura) {
+        // Crear una instancia de la interfaz de Factura
+        Factura facturaPanel = new Factura();
 
-    if (!resultadoProducto.isEmpty()) {
-        return resultadoProducto.next().getNombre_Producto();
+        // Cargar los datos de la factura en la interfaz
+        facturaPanel.cargarDatosFactura(codigoFactura);
+
+        // Mostrar la interfaz de Factura
+        MostarpanelCruds(facturaPanel);
     }
 
-    // Buscar como Servicio
-    Servicios servicioBuscar = new Servicios();
-    servicioBuscar.setCodigo_Servicio(codigo);
-    ObjectSet<Servicios> resultadoServicio = baseBD.get(servicioBuscar);
+    private void mostrarDetallesFactura() {
+        // Obtener la factura seleccionada de la tabla de facturas
+        int selectedRow = tblFacturas.getSelectedRow();
+        if (selectedRow == -1) {
+            JOptionPane.showMessageDialog(this, "Seleccione una factura para ver sus detalles");
+            return;
+        }
 
-    if (!resultadoServicio.isEmpty()) {
-        return resultadoServicio.next().getNombre_Servicio();
+        String codigoFactura = tblFacturas.getValueAt(selectedRow, 0).toString();
+
+        // Establecer conexión con la base de datos
+        ObjectContainer BaseBD = Conexion_db.ConectarBD();
+        DetalleFactura_1 detalleBuscar = new DetalleFactura_1();
+        detalleBuscar.setCodigo_encabezadoFactura(codigoFactura);
+
+        ObjectSet<DetalleFactura_1> resultado = BaseBD.get(detalleBuscar);
+
+        // Crear una matriz para almacenar los datos
+        String matriz[][] = new String[resultado.size()][4];
+        int i = 0;
+        for (DetalleFactura_1 miDetalle : resultado) {
+            matriz[i][0] = miDetalle.getCodigo_encabezadoFactura();
+            String codigo = miDetalle.getCodigoProducto_detalleFactura();
+            matriz[i][1] = codigo;
+            matriz[i][2] = obtenerNombre(codigo, BaseBD);
+            matriz[i][3] = String.valueOf(miDetalle.getCantidadProdcutos_detalleFactura());
+            i++;
+        }
+
+        // Configurar datos en la tabla de detalles
+        tabladetalle.setModel(new javax.swing.table.DefaultTableModel(matriz, new String[]{"Código Factura", "Código", "Nombre", "Cantidad"}));
+
+        // Cerrar la conexión con la base de datos
+        BaseBD.close();
     }
 
-    return "";
-}
-private void MostarpanelCruds(JPanel p) {
-    p.setSize(900, 660);
-    p.setLocation(0, 0);
-    PanelPrincipal.removeAll();
-    PanelPrincipal.add(p, BorderLayout.CENTER);
-    PanelPrincipal.revalidate();
-    PanelPrincipal.repaint();
-}
-private void filtrarTablaFacturas(String consulta) {
-    DefaultTableModel modelo = (DefaultTableModel) tblFacturas.getModel();
-    TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(modelo);
-    tblFacturas.setRowSorter(sorter);
+    private void mostrarDatosFacturas() {
+        // ESTABLECER CONEXION CON LA BASE DE DATOS
+        tblFacturas.setEnabled(true);
+        ObjectContainer BaseBD = Conexion_db.ConectarBD();
+        EncabezadoFactura_1 facturaBuscar = new EncabezadoFactura_1();
+        ObjectSet<EncabezadoFactura_1> resultado = BaseBD.get(facturaBuscar);
 
-    if (consulta.trim().length() == 0) {
-        sorter.setRowFilter(null);
-    } else {
-        sorter.setRowFilter(RowFilter.regexFilter("(?i)" + consulta));
+        // Crear una matriz para almacenar los datos
+        String matriz[][] = new String[resultado.size()][4];
+        int i = 0;
+        for (EncabezadoFactura_1 miFactura : resultado) {
+            matriz[i][0] = miFactura.getCodigo_encabezadoFactura();
+            matriz[i][1] = miFactura.getFecha_encabezadoFactura();
+            matriz[i][2] = miFactura.getCedulaCliente_encabezadoFactura();
+            matriz[i][3] = String.valueOf(miFactura.getTotal_encabezadoFactura());
+            i++;
+        }
+
+        // Configurar datos en la tabla
+        tblFacturas.setModel(new javax.swing.table.DefaultTableModel(matriz, new String[]{"Código Factura", "Fecha", "Cédula", "Total"}));
+        tblFacturas.setEnabled(true); // Permitir la selección de filas
+
+        // Añadir listener para manejar la selección de filas
+        tblFacturas.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+            public void valueChanged(ListSelectionEvent event) {
+                if (!event.getValueIsAdjusting()) { // Solo actuar cuando la selección esté completa
+                    mostrarDetallesFactura(); // Llamar al método sin parámetros
+                }
+            }
+        });
+
+        // Cerrar la conexión con la base de datos
+        BaseBD.close();
     }
 
-    // Selecciona automáticamente la primera fila filtrada
-    if (tblFacturas.getRowCount() > 0) {
-        tblFacturas.setRowSelectionInterval(0, 0);
-        mostrarDetallesFactura();  
+    private String obtenerNombre(String codigo, ObjectContainer baseBD) {
+        // Buscar como Producto
+        Producto productoBuscar = new Producto();
+        productoBuscar.setCodigo_Producto(codigo);
+        ObjectSet<Producto> resultadoProducto = baseBD.get(productoBuscar);
+
+        if (!resultadoProducto.isEmpty()) {
+            return resultadoProducto.next().getNombre_Producto();
+        }
+
+        // Buscar como Servicio
+        Servicios servicioBuscar = new Servicios();
+        servicioBuscar.setCodigo_Servicio(codigo);
+        ObjectSet<Servicios> resultadoServicio = baseBD.get(servicioBuscar);
+
+        if (!resultadoServicio.isEmpty()) {
+            return resultadoServicio.next().getNombre_Servicio();
+        }
+
+        return "";
     }
 
-}
+    private void MostarpanelCruds(JPanel p) {
+        p.setSize(900, 660);
+        p.setLocation(0, 0);
+        PanelPrincipal.removeAll();
+        PanelPrincipal.add(p, BorderLayout.CENTER);
+        PanelPrincipal.revalidate();
+        PanelPrincipal.repaint();
+    }
+
+    private void filtrarTablaFacturas(String consulta) {
+        DefaultTableModel modelo = (DefaultTableModel) tblFacturas.getModel();
+        TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(modelo);
+        tblFacturas.setRowSorter(sorter);
+
+        if (consulta.trim().length() == 0) {
+            sorter.setRowFilter(null);
+        } else {
+            sorter.setRowFilter(RowFilter.regexFilter("(?i)" + consulta));
+        }
+
+        // Selecciona automáticamente la primera fila filtrada
+        if (tblFacturas.getRowCount() > 0) {
+            tblFacturas.setRowSelectionInterval(0, 0);
+            mostrarDetallesFactura();
+        }
+
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private rsbuttongradiente.RSButtonGradiente btnEliminar;
     private rsbuttongradiente.RSButtonGradiente btnVizualizar1;

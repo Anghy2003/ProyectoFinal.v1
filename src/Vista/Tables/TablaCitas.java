@@ -9,9 +9,7 @@ import Citas.Citas;
 import Conexion.Conexion_db;
 import Models.DetalleCita;
 import Models.EncabezadoCita;
-import Models.EncabezadoCita.Estado;
 import Models.Servicios;
-import Models.Vendedor;
 import static Vista.Menu.VistaMenu.PanelPrincipal;
 import com.db4o.ObjectContainer;
 import com.db4o.ObjectSet;
@@ -37,8 +35,7 @@ public class TablaCitas extends javax.swing.JPanel {
     public TablaCitas() {
         initComponents();
         mostrarDatosCitas();
-        
-        
+
     }
 
     /**
@@ -53,11 +50,11 @@ public class TablaCitas extends javax.swing.JPanel {
         jPanel2 = new javax.swing.JPanel();
         lbltitulo = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tblCitas = new javax.swing.JTable();
+        tblEntrevista = new javax.swing.JTable();
         txtBuscar = new rojeru_san.RSMTextFull();
         jLabel2 = new javax.swing.JLabel();
         scrlpTabla = new javax.swing.JScrollPane();
-        tabladetalle = new javax.swing.JTable();
+        tbldetalleEntrevista = new javax.swing.JTable();
         btnbuscar = new rsbuttongradiente.RSButtonGradiente();
         lblDetalleFactura = new javax.swing.JLabel();
         lblEncabezado = new javax.swing.JLabel();
@@ -72,8 +69,8 @@ public class TablaCitas extends javax.swing.JPanel {
         jScrollPane1.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         jScrollPane1.setForeground(new java.awt.Color(255, 255, 255));
 
-        tblCitas.setFont(new java.awt.Font("Roboto Medium", 0, 14)); // NOI18N
-        tblCitas.setModel(new javax.swing.table.DefaultTableModel(
+        tblEntrevista.setFont(new java.awt.Font("Roboto Medium", 0, 14)); // NOI18N
+        tblEntrevista.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -92,7 +89,7 @@ public class TablaCitas extends javax.swing.JPanel {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(tblCitas);
+        jScrollPane1.setViewportView(tblEntrevista);
 
         txtBuscar.setFont(new java.awt.Font("Roboto Bold", 2, 14)); // NOI18N
         txtBuscar.setPlaceholder("ejm. FAC-001");
@@ -104,8 +101,8 @@ public class TablaCitas extends javax.swing.JPanel {
         scrlpTabla.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         scrlpTabla.setForeground(new java.awt.Color(255, 255, 255));
 
-        tabladetalle.setFont(new java.awt.Font("Roboto Medium", 0, 14)); // NOI18N
-        tabladetalle.setModel(new javax.swing.table.DefaultTableModel(
+        tbldetalleEntrevista.setFont(new java.awt.Font("Roboto Medium", 0, 14)); // NOI18N
+        tbldetalleEntrevista.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -124,7 +121,7 @@ public class TablaCitas extends javax.swing.JPanel {
                 return canEdit [columnIndex];
             }
         });
-        scrlpTabla.setViewportView(tabladetalle);
+        scrlpTabla.setViewportView(tbldetalleEntrevista);
 
         btnbuscar.setText("Buscar");
         btnbuscar.setColorPrimario(new java.awt.Color(0, 0, 255));
@@ -161,7 +158,7 @@ public class TablaCitas extends javax.swing.JPanel {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                        .addContainerGap(31, Short.MAX_VALUE)
+                        .addContainerGap(87, Short.MAX_VALUE)
                         .addComponent(lblDetalleFactura)
                         .addGap(675, 675, 675))
                     .addGroup(jPanel2Layout.createSequentialGroup()
@@ -203,7 +200,7 @@ public class TablaCitas extends javax.swing.JPanel {
                 .addComponent(lblEncabezado)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 88, Short.MAX_VALUE)
                 .addComponent(lblDetalleFactura)
                 .addGap(18, 18, 18)
                 .addComponent(scrlpTabla, javax.swing.GroupLayout.PREFERRED_SIZE, 182, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -214,58 +211,59 @@ public class TablaCitas extends javax.swing.JPanel {
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 838, Short.MAX_VALUE)
+            .addGap(0, 890, Short.MAX_VALUE)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 564, Short.MAX_VALUE)
+            .addGap(0, 646, Short.MAX_VALUE)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnbuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnbuscarActionPerformed
-      String consulta = txtBuscar.getText();
+        String consulta = txtBuscar.getText();
         filtrarTablaCitas(consulta);
     }//GEN-LAST:event_btnbuscarActionPerformed
 
     private void btnVizualizar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVizualizar1ActionPerformed
-          int selectedRow = tblCitas.getSelectedRow();
+          // Obtiene la linea despues de la filtracion
+    int selectedRow = tblEntrevista.getSelectedRow();
     if (selectedRow != -1) {
-        String codigoCita = tblCitas.getValueAt(selectedRow, 0).toString();
-        Citas citaPanel = new Citas();
-        // Supongamos que las tablas de encabezado y detalle están en tu JFrame principal
-        JTable tblEncabezado = this.tblCitas;
-        JTable tblDetalle = this.tabladetalle;
-        citaPanel.cargarDatosCita(codigoCita, tblEncabezado, tblDetalle);
-        MostarpanelCruds(citaPanel);
-    } else {
-        JOptionPane.showMessageDialog(this, "Seleccione una cita para visualizar.");
-    }
+        String codigoFactura = tblEntrevista.getValueAt(selectedRow, 0).toString();
+        
+        //abrir la interfaz con los datos cargados
+        abrirCitaConDatos(codigoFactura);
+    } 
 
     }//GEN-LAST:event_btnVizualizar1ActionPerformed
- private void abrirCitaConDatos(String codigoCita) {
+    
+   
+    
+    private void abrirCitaConDatos(String codigoCita) {
+    // Crear una instancia de la interfaz de Factura
     Citas citaPanel = new Citas();
-    // Supongamos que las tablas de encabezado y detalle están en tu JFrame principal
-    JTable tblEncabezado = this.tblCitas;
-    JTable tblDetalle = this.tabladetalle;
-    citaPanel.cargarDatosCita(codigoCita, tblEncabezado, tblDetalle);
+    
+    // Cargar los datos de la factura en la interfaz
+    citaPanel.cargarDatosCitas(codigoCita);
+    
+    // Mostrar la interfaz de Factura
     MostarpanelCruds(citaPanel);
 }
 
     private void mostrarDetallesCita() {
-        int selectedRow = tblCitas.getSelectedRow();
+        int selectedRow = tblEntrevista.getSelectedRow();
         if (selectedRow == -1) {
             JOptionPane.showMessageDialog(this, "Seleccione una cita para ver sus detalles");
             return;
         }
 
-        String codigoCita = tblCitas.getValueAt(selectedRow, 0).toString();
+        String codigoCita = tblEntrevista.getValueAt(selectedRow, 0).toString();
 
         ObjectContainer BaseBD = Conexion_db.ConectarBD();
-        DetalleCita detalleBuscar = new DetalleCita(codigoCita, 0, "");
+        DetalleCita detalleBuscar = new DetalleCita();
         detalleBuscar.setCodigo_encabezadoCita(codigoCita);
 
         ObjectSet<DetalleCita> resultado = BaseBD.get(detalleBuscar);
@@ -280,30 +278,33 @@ public class TablaCitas extends javax.swing.JPanel {
             matriz[i][3] = String.valueOf(miDetalle.getPrecioServicio_detallecita());
             i++;
         }
-
-        tabladetalle.setModel(new javax.swing.table.DefaultTableModel(matriz, new String[]{"Código Cita", "Código Servicio", "Nombre Servicio", "Precio Servicio"}));
+        
+        // Configurar datos en la tabla de detalles
+        tbldetalleEntrevista.setModel(new javax.swing.table.DefaultTableModel(matriz, new String[]{"Código Cita", "Código Servicio", "Nombre Servicio", "Precio Servicio"}));
         BaseBD.close();
     }
-private void mostrarDatosCitas() {
-        tblCitas.setEnabled(true);
+
+    private void mostrarDatosCitas() {
+        tblEntrevista.setEnabled(true);
         ObjectContainer BaseBD = Conexion_db.ConectarBD();
-        EncabezadoCita citaBuscar = new EncabezadoCita("", "", "", "","",null);
+        EncabezadoCita citaBuscar = new EncabezadoCita();
         ObjectSet<EncabezadoCita> resultado = BaseBD.get(citaBuscar);
 
-        String matriz[][] = new String[resultado.size()][4];
+        String matriz[][] = new String[resultado.size()][5];
         int i = 0;
         for (EncabezadoCita miCita : resultado) {
             matriz[i][0] = miCita.getCodigo_encabezadoCita();
             matriz[i][1] = miCita.getFecha_encabezadoCita();
             matriz[i][2] = miCita.getCedulaCliente_encabezadoCita();
             matriz[i][3] = miCita.getCedulaMecanico_encabezadoCita();
+            matriz[i][4] = miCita.getPlacaVehiculo_encabezadoCita();
             i++;
         }
 
-        tblCitas.setModel(new javax.swing.table.DefaultTableModel(matriz, new String[]{"Código Cita", "Fecha", "Cédula Cliente", "Cédula Mecánico"}));
-        tblCitas.setEnabled(true);
+        tblEntrevista.setModel(new javax.swing.table.DefaultTableModel(matriz, new String[]{"Código Cita", "Fecha", "Cédula Cliente", "Cédula Mecánico","Placa Vehiculo"}));
+        tblEntrevista.setEnabled(true);
 
-        tblCitas.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
+        tblEntrevista.getSelectionModel().addListSelectionListener(new ListSelectionListener() {
             public void valueChanged(ListSelectionEvent event) {
                 if (!event.getValueIsAdjusting()) {
                     mostrarDetallesCita();
@@ -336,9 +337,9 @@ private void mostrarDatosCitas() {
     }
 
     private void filtrarTablaCitas(String consulta) {
-        DefaultTableModel modelo = (DefaultTableModel) tblCitas.getModel();
+        DefaultTableModel modelo = (DefaultTableModel) tblEntrevista.getModel();
         TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(modelo);
-        tblCitas.setRowSorter(sorter);
+        tblEntrevista.setRowSorter(sorter);
 
         if (consulta.trim().length() == 0) {
             sorter.setRowFilter(null);
@@ -346,8 +347,9 @@ private void mostrarDatosCitas() {
             sorter.setRowFilter(RowFilter.regexFilter("(?i)" + consulta));
         }
 
-        if (tblCitas.getRowCount() > 0) {
-            tblCitas.setRowSelectionInterval(0, 0);
+        // Selecciona automáticamente la primera fila filtrada
+        if (tblEntrevista.getRowCount() > 0) {
+            tblEntrevista.setRowSelectionInterval(0, 0);
             mostrarDetallesCita();
         }
     }
@@ -362,8 +364,8 @@ private void mostrarDatosCitas() {
     private javax.swing.JLabel lblEncabezado;
     private javax.swing.JLabel lbltitulo;
     private javax.swing.JScrollPane scrlpTabla;
-    private javax.swing.JTable tabladetalle;
-    private javax.swing.JTable tblCitas;
+    private javax.swing.JTable tblEntrevista;
+    private javax.swing.JTable tbldetalleEntrevista;
     private rojeru_san.RSMTextFull txtBuscar;
     // End of variables declaration//GEN-END:variables
 }
