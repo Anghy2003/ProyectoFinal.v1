@@ -14,6 +14,8 @@ import com.db4o.query.Query;
 import java.awt.Image;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -257,9 +259,10 @@ public class CatalogoProductos extends javax.swing.JPanel {
     Producto producto = new Producto(null, null, null, null, 0, 0, 0, null, null, null, null);
     ObjectSet<Producto> resul = BaseBD.get(producto);
 
-    Object matriz[][] = new Object[resul.size()][5]; // Cambiar a Object y añadir columnas para descripción y precio
+    Object[][] matriz = new Object[resul.size()][5]; // Cambiar a Object y añadir columnas para descripción y precio
 
-    for (int i = 0; i < resul.size(); i++) {
+    int i = 0;
+    while (resul.hasNext()) {
         Producto prod = resul.next();
 
         matriz[i][0] = prod.getCodigo_Producto();
@@ -269,43 +272,30 @@ public class CatalogoProductos extends javax.swing.JPanel {
         
         // Convertir imagen a un icono para mostrar en la tabla
         byte[] imagen = prod.getImagen();
-        if (imagen != null) {
-            ImageIcon icono = new ImageIcon(new ImageIcon(imagen).getImage().getScaledInstance(180, 140, Image.SCALE_SMOOTH)); // Tamaño más grande
-            matriz[i][4] = new JLabel(icono); // Agregar imagen a la matriz
-        } else {
-            matriz[i][4] = new JLabel("No image"); // Placeholder para productos sin imagen
-        }
+        matriz[i][4] = (imagen != null) ? new JLabel(new ImageIcon(new ImageIcon(imagen).getImage().getScaledInstance(180, 140, Image.SCALE_SMOOTH))) : new JLabel("No image");
+        i++;
     }
 
     tblCatalgoProductos.setModel(new javax.swing.table.DefaultTableModel(
-            matriz,
-            new String[]{
-                "Código Producto", "Nombre Producto", "Descripción", "Precio", "Imagen"
-            
-            }
-            
-            
+        matriz,
+        new String[]{
+            "Código Producto", "Nombre Producto", "Descripción", "Precio", "Imagen"
+        }
     ));
 
     // Columna de imagenes
-    if (tblCatalgoProductos.getColumnModel().getColumnCount() > 4) {
-        tblCatalgoProductos.getColumnModel().getColumn(4).setCellRenderer(new ImageRenderer());
-    } else {
-        System.out.println("No hay suficientes columnas en la tabla para renderizar imágenes.");
-    }
-
-    // Ajusta el tamaño de las filas para mostrar imágenes más grandes
+    tblCatalgoProductos.getColumnModel().getColumn(4).setCellRenderer(new ImageRenderer());
     tblCatalgoProductos.setRowHeight(100);
 
-     // Crear un renderizador de celdas que centre el contenido
-     DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
-     centerRenderer.setHorizontalAlignment(JLabel.CENTER);
+    // Crear un renderizador de celdas que centre el contenido
+    DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+    centerRenderer.setHorizontalAlignment(JLabel.CENTER);
 
-     // Aplicar el renderizador a cada columna menos la última
-     for (int i = 0; i < tblCatalgoProductos.getColumnCount() - 1; i++) {
-         TableColumn column = tblCatalgoProductos.getColumnModel().getColumn(i);
-         column.setCellRenderer(centerRenderer);
-     }
+    // Aplicar el renderizador a cada columna menos la última
+    for (int j = 0; j < tblCatalgoProductos.getColumnCount() - 1; j++) {
+        TableColumn column = tblCatalgoProductos.getColumnModel().getColumn(j);
+        column.setCellRenderer(centerRenderer);
+    }
 
     // Ocultar columnas de descripción y precio
     tblCatalgoProductos.getColumnModel().getColumn(2).setMinWidth(0);
@@ -318,50 +308,55 @@ public class CatalogoProductos extends javax.swing.JPanel {
 
     BaseBD.close();
 }
-  private void buscarProductoPorNombre(String nombre) {
+private void buscarProductoPorNombre(String nombre) {
     if (nombre.isEmpty()) {
         JOptionPane.showMessageDialog(this, "Por favor, ingrese el nombre del producto.");
         return;
-    } 
-    ObjectContainer BaseBD = Conexion_db.ConectarBD();
-    Query query = BaseBD.query();
-    query.constrain(Producto.class);
-    query.descend("nombre_Producto").constrain(nombre).like();
-    ObjectSet<Producto> resultados = query.execute();
-
-    ObjectSet<Producto> resul = BaseBD.get(new Producto(null, null, null, null, 0, 0, 0, null, null, null, null));
-
-    if (resultados.size() > 0) {
-        Producto productoEncontrado = resultados.get(0);
-        Object[][] matriz = new Object[resul.size()][3];
-        
-        matriz[0][0] = productoEncontrado.getCodigo_Producto();
-        matriz[0][1] = productoEncontrado.getNombre_Producto();
-        byte[] imagen = productoEncontrado.getImagen();
-        matriz[0][2] = (imagen != null) ? new JLabel(new ImageIcon(new ImageIcon(imagen).getImage().getScaledInstance(100, 80, Image.SCALE_SMOOTH))) : new JLabel("No image");
-
-        int i = 1;
-        while (resul.hasNext()) {
-            Producto prod = resul.next();
-            if (!prod.getCodigo_Producto().equals(productoEncontrado.getCodigo_Producto())) {
-                matriz[i][0] = prod.getCodigo_Producto();
-                matriz[i][1] = prod.getNombre_Producto();
-                byte[] img = prod.getImagen();
-                matriz[i][2] = (img != null) ? new JLabel(new ImageIcon(new ImageIcon(img).getImage().getScaledInstance(100, 80, Image.SCALE_SMOOTH))) : new JLabel("No image");
-                i++;
-            }
-        }
-
-        tblCatalgoProductos.setModel(new javax.swing.table.DefaultTableModel(
-            matriz,
-            new String[]{"Código Producto", "Nombre Producto", "Imagen"}
-        ));
-
-        tblCatalgoProductos.getColumnModel().getColumn(2).setCellRenderer(new ImageRenderer());
-        tblCatalgoProductos.setRowHeight(80);
-    } else {
-        JOptionPane.showMessageDialog(this, "Producto no encontrado.");
     }
+    
+    ObjectContainer BaseBD = Conexion_db.ConectarBD();
+    ObjectSet<Producto> todosLosProductos = BaseBD.query(Producto.class);
+    List<Producto> productosCoincidentes = new ArrayList<>();
+    List<Producto> otrosProductos = new ArrayList<>();
+    
+    // Clasificar productos en coincidentes y no coincidentes
+    for (Producto producto : todosLosProductos) {
+        if (producto.getNombre_Producto().toLowerCase().contains(nombre.toLowerCase())) {
+            productosCoincidentes.add(producto);
+        } else {
+            otrosProductos.add(producto);
+        }
+    }
+    
+    // Unir ambas listas, primero los coincidentes y luego los demás
+    productosCoincidentes.addAll(otrosProductos);
+
+    // Crear la matriz para la tabla
+    Object[][] matriz = new Object[productosCoincidentes.size()][5];
+
+    int i = 0;
+    for (Producto prod : productosCoincidentes) {
+        matriz[i][0] = prod.getCodigo_Producto();
+        matriz[i][1] = prod.getNombre_Producto();
+        matriz[i][2] = prod.getDescripcion_Producto();
+        matriz[i][3] = prod.getPrecio_Producto();
+
+        // Convertir imagen a un icono para mostrar en la tabla
+        byte[] imagen = prod.getImagen();
+        matriz[i][4] = (imagen != null) ? new JLabel(new ImageIcon(new ImageIcon(imagen).getImage().getScaledInstance(100, 80, Image.SCALE_SMOOTH))) : new JLabel("No image");
+
+        i++;
+    }
+
+    tblCatalgoProductos.setModel(new javax.swing.table.DefaultTableModel(
+        matriz,
+        new String[]{
+            "Código Producto", "Nombre Producto", "Descripción", "Precio", "Imagen"
+        }
+    ));
+
+    tblCatalgoProductos.getColumnModel().getColumn(4).setCellRenderer(new ImageRenderer());
+    tblCatalgoProductos.setRowHeight(80);
 
     BaseBD.close();
 }

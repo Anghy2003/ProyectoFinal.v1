@@ -762,10 +762,10 @@ public class Factura extends javax.swing.JPanel {
     }//GEN-LAST:event_btnAñadirServicosActionPerformed
 
     private void btnFinalizarFacActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFinalizarFacActionPerformed
-        actualizarFactura();
-        guardarFactura();
+         
+    guardarFactura();
 
-
+    
     }//GEN-LAST:event_btnFinalizarFacActionPerformed
 
     private void btnbuscarproductosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnbuscarproductosActionPerformed
@@ -839,7 +839,7 @@ public class Factura extends javax.swing.JPanel {
     } else {
         JOptionPane.showMessageDialog(this, "Por favor, seleccione un cliente.");
     }
-
+   resetearFormulario();
     }//GEN-LAST:event_btnImprimirActionPerformed
 
     public String obtenerCorreoCliente(String cedula) {
@@ -1624,11 +1624,9 @@ public void cargarDatosFactura(String codigoFactura) {
     baseBD.close();
     JOptionPane.showMessageDialog(this, "Factura guardada exitosamente!");
 
-    // Reiniciar y generar una nueva factura
-    resetearFormulario();
+   
 }
-
-    private void resetearFormulario() {
+ private void resetearFormulario() {
         txtcedula.setText("");
         txtNombre1.setText("");
         txtdireccion.setText("");
@@ -1642,7 +1640,8 @@ public void cargarDatosFactura(String codigoFactura) {
         model.setRowCount(0);
 
         setearcabe();
-    }
+   
+   }
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

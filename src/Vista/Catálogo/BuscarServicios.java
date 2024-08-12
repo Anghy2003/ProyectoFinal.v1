@@ -19,7 +19,7 @@ import com.db4o.ext.InvalidIDException;
 import com.db4o.query.Query;
 import java.awt.BorderLayout;
 import java.awt.Image;
-import java.awt.image.BufferedImage;
+
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
