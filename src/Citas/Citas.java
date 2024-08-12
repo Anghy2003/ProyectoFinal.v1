@@ -36,6 +36,7 @@ import java.awt.Desktop;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -59,8 +60,8 @@ import javax.swing.table.TableRowSorter;
 import utils.Global;
 
 public class Citas extends javax.swing.JPanel {
-    
-     private String pdfPath = "Cita.pdf";
+
+    private String pdfPath = "Cita.pdf";
 
     public Citas() {
         initComponents();
@@ -117,11 +118,10 @@ public class Citas extends javax.swing.JPanel {
         JtableCita = new javax.swing.JTable();
         btnNuevo = new javax.swing.JButton();
         btnResibo = new javax.swing.JButton();
-        btnCancelar = new javax.swing.JButton();
+        btnCancelarCita = new javax.swing.JButton();
         btnSalir = new javax.swing.JButton();
         txtcodigoCita = new javax.swing.JTextField();
         lblcodFac1 = new javax.swing.JLabel();
-        btnFinalizarCita = new rojeru_san.RSButton();
         btnAñadirServicos = new javax.swing.JButton();
         lblDatosCli1 = new javax.swing.JLabel();
         lblcedula1 = new javax.swing.JLabel();
@@ -135,12 +135,14 @@ public class Citas extends javax.swing.JPanel {
         txtCelularCli = new javax.swing.JTextField();
         lblDatosCli2 = new javax.swing.JLabel();
         jDateFechaCita = new com.toedter.calendar.JDateChooser();
-        btnFinalizarCita1 = new rojeru_san.RSButton();
+        btnFinalizarCita = new rojeru_san.RSButton();
         lblverlis1 = new javax.swing.JLabel();
         lblCuadro2 = new javax.swing.JLabel();
-        lblCuadro = new javax.swing.JLabel();
         cbxPlacasVehiculos = new javax.swing.JComboBox<>();
         cbxMecaCita = new javax.swing.JComboBox<>();
+        lblverlis2 = new javax.swing.JLabel();
+        lblverlis3 = new javax.swing.JLabel();
+        lblverlis4 = new javax.swing.JLabel();
         lblTituloFac = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
 
@@ -267,22 +269,22 @@ public class Citas extends javax.swing.JPanel {
         jPanel3.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         lblDatosCli.setText("Datos Mecanico");
-        jPanel3.add(lblDatosCli, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 250, -1, 20));
+        jPanel3.add(lblDatosCli, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 290, -1, 20));
 
         lblFecha.setFont(new java.awt.Font("Yu Gothic UI Light", 1, 14)); // NOI18N
         lblFecha.setText("Fecha:");
-        jPanel3.add(lblFecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 20, -1, -1));
+        jPanel3.add(lblFecha, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 20, -1, -1));
 
         JtableCita.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
             new String [] {
-                "Tipo de Servicio", "Precio del Servicio"
+                "Codigo de Servicio", "Tipo de Servicio", "Precio del Servicio"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, true
+                true, false, true
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -299,7 +301,7 @@ public class Citas extends javax.swing.JPanel {
                 btnNuevoActionPerformed(evt);
             }
         });
-        jPanel3.add(btnNuevo, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 60, 80, 70));
+        jPanel3.add(btnNuevo, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 70, 80, 70));
 
         btnResibo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/impresion.png"))); // NOI18N
         btnResibo.addActionListener(new java.awt.event.ActionListener() {
@@ -307,15 +309,15 @@ public class Citas extends javax.swing.JPanel {
                 btnResiboActionPerformed(evt);
             }
         });
-        jPanel3.add(btnResibo, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 160, 80, 70));
+        jPanel3.add(btnResibo, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 190, 80, 70));
 
-        btnCancelar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/rechazar.png"))); // NOI18N
-        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
+        btnCancelarCita.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/rechazar.png"))); // NOI18N
+        btnCancelarCita.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCancelarActionPerformed(evt);
+                btnCancelarCitaActionPerformed(evt);
             }
         });
-        jPanel3.add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 270, 80, 70));
+        jPanel3.add(btnCancelarCita, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 310, 80, 70));
 
         btnSalir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/cerrar-sesion.png"))); // NOI18N
         btnSalir.addActionListener(new java.awt.event.ActionListener() {
@@ -323,7 +325,7 @@ public class Citas extends javax.swing.JPanel {
                 btnSalirActionPerformed(evt);
             }
         });
-        jPanel3.add(btnSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 390, 80, 70));
+        jPanel3.add(btnSalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 440, 80, 70));
 
         txtcodigoCita.setToolTipText("AUTOGENERADO");
         jPanel3.add(txtcodigoCita, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 20, 190, -1));
@@ -331,15 +333,6 @@ public class Citas extends javax.swing.JPanel {
         lblcodFac1.setFont(new java.awt.Font("Yu Gothic UI Light", 1, 14)); // NOI18N
         lblcodFac1.setText("N° Cita:");
         jPanel3.add(lblcodFac1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 20, 70, -1));
-
-        btnFinalizarCita.setBackground(new java.awt.Color(255, 0, 0));
-        btnFinalizarCita.setText("Cancelar");
-        btnFinalizarCita.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnFinalizarCitaActionPerformed(evt);
-            }
-        });
-        jPanel3.add(btnFinalizarCita, new org.netbeans.lib.awtextra.AbsoluteConstraints(260, 510, 100, -1));
 
         btnAñadirServicos.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/mas (1).png"))); // NOI18N
         btnAñadirServicos.setText("Añadir Servicios ");
@@ -356,11 +349,11 @@ public class Citas extends javax.swing.JPanel {
         jPanel3.add(btnAñadirServicos, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 360, -1, -1));
 
         lblDatosCli1.setText("Datos del Cliente");
-        jPanel3.add(lblDatosCli1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 60, -1, 20));
+        jPanel3.add(lblDatosCli1, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 60, -1, 20));
 
         lblcedula1.setFont(new java.awt.Font("Yu Gothic UI Light", 1, 14)); // NOI18N
         lblcedula1.setText("Cedula:");
-        jPanel3.add(lblcedula1, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 90, -1, -1));
+        jPanel3.add(lblcedula1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 90, -1, -1));
 
         txtCedulaCli.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -372,12 +365,12 @@ public class Citas extends javax.swing.JPanel {
                 txtCedulaCliKeyTyped(evt);
             }
         });
-        jPanel3.add(txtCedulaCli, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 80, 190, 30));
+        jPanel3.add(txtCedulaCli, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 90, 190, 30));
 
         lblNombre2.setFont(new java.awt.Font("Yu Gothic UI Light", 1, 14)); // NOI18N
         lblNombre2.setText("Nombre");
-        jPanel3.add(lblNombre2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 120, -1, -1));
-        jPanel3.add(txtNombreCli, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 120, 190, -1));
+        jPanel3.add(lblNombre2, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 130, -1, -1));
+        jPanel3.add(txtNombreCli, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 130, 190, -1));
 
         btnBuscarCliente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/mas (1).png"))); // NOI18N
         btnBuscarCliente.setText("Buscar");
@@ -386,48 +379,54 @@ public class Citas extends javax.swing.JPanel {
                 btnBuscarClienteActionPerformed(evt);
             }
         });
-        jPanel3.add(btnBuscarCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 80, 110, 40));
+        jPanel3.add(btnBuscarCliente, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 220, 110, 40));
 
         lblDireccion1.setFont(new java.awt.Font("Yu Gothic UI Light", 1, 14)); // NOI18N
         lblDireccion1.setText("Direccion:");
-        jPanel3.add(lblDireccion1, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 80, -1, -1));
-        jPanel3.add(txtdireccionCli, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 80, 220, -1));
+        jPanel3.add(lblDireccion1, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 90, -1, -1));
+        jPanel3.add(txtdireccionCli, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 90, 220, -1));
 
         lblDireccion2.setFont(new java.awt.Font("Yu Gothic UI Light", 1, 14)); // NOI18N
         lblDireccion2.setText("Celular");
-        jPanel3.add(lblDireccion2, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 120, -1, -1));
-        jPanel3.add(txtCelularCli, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 120, 220, -1));
+        jPanel3.add(lblDireccion2, new org.netbeans.lib.awtextra.AbsoluteConstraints(350, 130, -1, -1));
+        jPanel3.add(txtCelularCli, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 130, 220, -1));
 
         lblDatosCli2.setText("Datos Vehiculo");
-        jPanel3.add(lblDatosCli2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 150, -1, 20));
-        jPanel3.add(jDateFechaCita, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 20, 220, 30));
+        jPanel3.add(lblDatosCli2, new org.netbeans.lib.awtextra.AbsoluteConstraints(40, 180, -1, 20));
+        jPanel3.add(jDateFechaCita, new org.netbeans.lib.awtextra.AbsoluteConstraints(400, 20, 220, 30));
 
-        btnFinalizarCita1.setBackground(new java.awt.Color(0, 204, 0));
-        btnFinalizarCita1.setText("Finalizar");
-        btnFinalizarCita1.addActionListener(new java.awt.event.ActionListener() {
+        btnFinalizarCita.setBackground(new java.awt.Color(0, 204, 0));
+        btnFinalizarCita.setText("Finalizar Cita");
+        btnFinalizarCita.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnFinalizarCita1ActionPerformed(evt);
+                btnFinalizarCitaActionPerformed(evt);
             }
         });
-        jPanel3.add(btnFinalizarCita1, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 510, 100, -1));
+        jPanel3.add(btnFinalizarCita, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 500, 210, -1));
 
         lblverlis1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        jPanel3.add(lblverlis1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 740, 50));
+        jPanel3.add(lblverlis1, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 330, 740, 230));
 
         lblCuadro2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        jPanel3.add(lblCuadro2, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 10, 120, 490));
+        jPanel3.add(lblCuadro2, new org.netbeans.lib.awtextra.AbsoluteConstraints(760, 10, 120, 550));
 
-        lblCuadro.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
-        jPanel3.add(lblCuadro, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 500, 860, 60));
-
-        jPanel3.add(cbxPlacasVehiculos, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 180, 490, -1));
+        jPanel3.add(cbxPlacasVehiculos, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 176, 490, 30));
 
         cbxMecaCita.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 cbxMecaCitaActionPerformed(evt);
             }
         });
-        jPanel3.add(cbxMecaCita, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 280, 490, -1));
+        jPanel3.add(cbxMecaCita, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 290, 490, 30));
+
+        lblverlis2.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jPanel3.add(lblverlis2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 10, 740, 50));
+
+        lblverlis3.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jPanel3.add(lblverlis3, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 60, 740, 210));
+
+        lblverlis4.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        jPanel3.add(lblverlis4, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 270, 740, 60));
 
         lblTituloFac.setBackground(new java.awt.Color(0, 53, 79));
         lblTituloFac.setFont(new java.awt.Font("Yu Gothic UI Light", 1, 14)); // NOI18N
@@ -481,20 +480,16 @@ public class Citas extends javax.swing.JPanel {
         MostarpanelCruds(nuevo);
     }//GEN-LAST:event_btnNuevoActionPerformed
 
-    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+    private void btnCancelarCitaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarCitaActionPerformed
         VistaMenu cancelar = new VistaMenu();
         cancelar.setEnabled(true);
 
-    }//GEN-LAST:event_btnCancelarActionPerformed
+    }//GEN-LAST:event_btnCancelarCitaActionPerformed
 
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
         VistaMenu Salir = new VistaMenu();
         Salir.setEnabled(true);
     }//GEN-LAST:event_btnSalirActionPerformed
-
-    private void btnFinalizarCitaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFinalizarCitaActionPerformed
-
-    }//GEN-LAST:event_btnFinalizarCitaActionPerformed
 
     private void btnAñadirServicosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAñadirServicosActionPerformed
         if (txtCedulaCli.getText().trim().isEmpty()) {
@@ -518,9 +513,9 @@ public class Citas extends javax.swing.JPanel {
 
     }//GEN-LAST:event_btnBuscarServicioActionPerformed
 
-    private void btnFinalizarCita1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFinalizarCita1ActionPerformed
+    private void btnFinalizarCitaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFinalizarCitaActionPerformed
         guardarCita();
-    }//GEN-LAST:event_btnFinalizarCita1ActionPerformed
+    }//GEN-LAST:event_btnFinalizarCitaActionPerformed
 
     private void btnInsetarServiciosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInsetarServiciosActionPerformed
         seteardatosSer();
@@ -532,12 +527,22 @@ public class Citas extends javax.swing.JPanel {
     }//GEN-LAST:event_cbxMecaCitaActionPerformed
 
     private void btnResiboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnResiboActionPerformed
-         
+// Validar que la tabla de detalles no esté vacía
+        if (JtableCita.getRowCount() == 0) {
+            JOptionPane.showMessageDialog(this, "No se puede generar un PDF de una factura vacía.");
+            return;
+        }
+
+// Generar el recibo en formato PDF
         generarReciboPDF();
+
+// Obtener la cédula del cliente seleccionado
         String cedula = txtCedulaCli.getText().trim();
         if (!cedula.isEmpty()) {
+            // Obtener el correo electrónico del cliente
             String correoCliente = obtenerCorreoCliente(cedula);
             if (correoCliente != null) {
+                // Transferir el PDF al correo del cliente
                 transfer_to_email(correoCliente, pdfPath);
             } else {
                 JOptionPane.showMessageDialog(this, "No se pudo obtener el correo del cliente.");
@@ -553,8 +558,8 @@ public class Citas extends javax.swing.JPanel {
             CargarVehiculosCliente();
         }
         if (txtCedulaCli.getText().length() >= 10) {
-        evt.consume();
-    }
+            evt.consume();
+        }
     }//GEN-LAST:event_txtCedulaCliKeyTyped
 
     private void btnAñadirServicosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnAñadirServicosMouseClicked
@@ -595,7 +600,7 @@ public class Citas extends javax.swing.JPanel {
                 // Añadir los vehículos al JComboBox
                 if (!resultadoVehiculo.isEmpty()) {
                     for (Vehiculo vehiculo : resultadoVehiculo) {
-                        
+
                         cbxPlacasVehiculos.addItem(vehiculo.getPlaca_Vehiculo());
                         CargarCliente();
                     }
@@ -632,30 +637,6 @@ public class Citas extends javax.swing.JPanel {
         return coincidencias;
     }
 
-
-    //autoenumerado de citas
-    private static String obtenerProximaCita(ObjectContainer db) {
-        // Consultar todos los productos
-        ObjectSet<EncabezadoCita> result = db.queryByExample(EncabezadoCita.class);
-
-        // Determinar el máximo ID numérico existente
-        int auto = 0;
-        while (result.hasNext()) {
-            EncabezadoCita city = result.next();
-            String codigocita = city.getCodigo_encabezadoCita();
-            if (codigocita != null && codigocita.startsWith("CITA-")) {
-                int id = Integer.parseInt(codigocita.substring(5)); // Extraer la parte numérica del código
-                if (id > auto) {
-                    auto = id;
-                }
-            }
-        }
-        // El próximo ID es el máximo + 1
-        int siguienteID = auto + 1;
-        // Retornar el nuevo código concatenado con "PRO"
-        return "CITA" + siguienteID;
-    }
-
     //settea para numero citas y fecha
     public void setearcitas() {
 
@@ -672,7 +653,6 @@ public class Citas extends javax.swing.JPanel {
         baseBD.close();
     }
 
-    
     public static Date convertirStringADate(String fechaString) {
         SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
         try {
@@ -708,7 +688,7 @@ public class Citas extends javax.swing.JPanel {
                 for (Cliente cliente : resultado) {
                     // Seteamos en los campos recibiendo del objeto
                     txtCedulaCli.setText(cliente.getCedula());
-                    txtNombreCli.setText(cliente.getNombres());
+                    txtNombreCli.setText(cliente.getNombres() + " " + cliente.getApellidos());
                     txtdireccionCli.setText(cliente.getDireccion());
                     txtCelularCli.setText(cliente.getCelular());
 
@@ -727,7 +707,6 @@ public class Citas extends javax.swing.JPanel {
             }
         }
     }
-
 
     //Servicios
     private String obtenerNombreServicio(String codigoServicio, ObjectContainer baseBD) {
@@ -760,8 +739,6 @@ public class Citas extends javax.swing.JPanel {
         VistaMenu.PanelPrincipal.revalidate();// Vuelve a validar el panel principal para asegurarse de que se actualicen los cambios
         VistaMenu.PanelPrincipal.repaint();// Repinta el panel principal para reflejar los cambios visualmente
     }
-
-    
 
 //Servicios 
     private void mostrarTablaServicios() {
@@ -825,19 +802,18 @@ public class Citas extends javax.swing.JPanel {
             String numerodevehiculos = "";
             boolean esValido = false;
 
-            while (!esValido) {
-                numerodevehiculos = JOptionPane.showInputDialog("Ingrese el número de vehículos a los que se les realizó el servicio");
-                if (numerodevehiculos != null && numerodevehiculos.matches("\\d+")) {
-                    esValido = true;
-                    TablaServicios.dispose();
-                } else {
-                    JOptionPane.showMessageDialog(null, "Por favor ingrese solo dígitos.");
-                }
-            }
-
+//            while (!esValido) {
+//                numerodevehiculos = JOptionPane.showInputDialog("Ingrese el número de vehículos a los que se les realizó el servicio");
+//                if (numerodevehiculos != null && numerodevehiculos.matches("\\d+")) {
+//                    esValido = true;
+//                    TablaServicios.dispose();
+//                } else {
+//                    JOptionPane.showMessageDialog(null, "Por favor ingrese solo dígitos.");
+//                }
+//            }
             DefaultTableModel modeloCita = (DefaultTableModel) JtableCita.getModel();
             // Establecer los nombres de las columnas
-            modeloCita.setColumnIdentifiers(new Object[]{"Código Servicio", "Nombre Servicio", "Precio Servicio", "Número de Vehículos"});
+            modeloCita.setColumnIdentifiers(new Object[]{"Código Servicio", "Nombre Servicio", "Precio Servicio"});
             // Agregar la fila
             modeloCita.addRow(new Object[]{codigoServicio, nombreServicio, precioServicio, numerodevehiculos});
 
@@ -849,18 +825,9 @@ public class Citas extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(null, "No se seleccionó ningún producto");
         }
     }
-    
-    
-    
-    
-    
-    
-    
-    
-    
-   // para generar un pdf y enviar un correo
-    
-     //para generar un pdf primer paso 
+
+    // para generar un pdf y enviar un correo
+    //para generar un pdf primer paso 
     public void generarReciboPDF() {
         try {
             PdfWriter writer = new PdfWriter(pdfPath);
@@ -868,11 +835,11 @@ public class Citas extends javax.swing.JPanel {
             Document document = new Document(pdfDoc);
 
             // Añadir logotipo
-            String logoPath = "src\\Images\\logote_resized.png";
+            String logoPath = "src\\Images\\.nuevo.png";
             File logoFile = new File(logoPath);
             if (logoFile.exists()) {
                 Image img = new Image(ImageDataFactory.create(logoPath));
-                img.setWidth(100);
+                img.setWidth(50);
                 img.setHeight(50);
                 document.add(img);
             } else {
@@ -880,7 +847,7 @@ public class Citas extends javax.swing.JPanel {
             }
 
             // Añadir el título de la factura
-            Paragraph title = new Paragraph("Factura de Venta")
+            Paragraph title = new Paragraph("Cita de Servicio")
                     .setTextAlignment(TextAlignment.CENTER)
                     .setFontSize(18)
                     .setBold();
@@ -893,19 +860,17 @@ public class Citas extends javax.swing.JPanel {
             document.add(new Paragraph("Cédula: " + txtCedulaCli.getText()));
             document.add(new Paragraph("Dirección: " + txtdireccionCli.getText()));
             document.add(new Paragraph("Teléfono: " + txtCelularCli.getText()));
-            document.add(new Paragraph("Fecha: " + jDateFechaCita));
+            document.add(new Paragraph("Fecha: " + new SimpleDateFormat("dd-MM-yyyy").format(jDateFechaCita.getDate())));
             document.add(new Paragraph(" "));
 
             // Crear una tabla con columnas
-            float[] columnWidths = {2, 4, 2, 2, 2};
+            float[] columnWidths = {4, 4, 4};
             Table table = new Table(UnitValue.createPercentArray(columnWidths));
             table.setWidth(UnitValue.createPercentValue(100));
 
-            table.addHeaderCell(new Cell().add(new Paragraph("Código").setBold().setBackgroundColor(ColorConstants.GRAY)));
-            table.addHeaderCell(new Cell().add(new Paragraph("Descripción").setBold().setBackgroundColor(ColorConstants.GRAY)));
-            table.addHeaderCell(new Cell().add(new Paragraph("Precio Unitario").setBold().setBackgroundColor(ColorConstants.GRAY)));
-            table.addHeaderCell(new Cell().add(new Paragraph("Cantidad").setBold().setBackgroundColor(ColorConstants.GRAY)));
-            table.addHeaderCell(new Cell().add(new Paragraph("Subtotal").setBold().setBackgroundColor(ColorConstants.GRAY)));
+            table.addHeaderCell(new Cell().add(new Paragraph("Codigo de Servicio").setBold().setBackgroundColor(ColorConstants.GRAY)));
+            table.addHeaderCell(new Cell().add(new Paragraph("Tipo de Servicio").setBold().setBackgroundColor(ColorConstants.GRAY)));
+            table.addHeaderCell(new Cell().add(new Paragraph("Precio del Servicio").setBold().setBackgroundColor(ColorConstants.GRAY)));
 
             // Agregar filas con datos de la factura
             DefaultTableModel model = (DefaultTableModel) JtableCita.getModel();
@@ -913,20 +878,15 @@ public class Citas extends javax.swing.JPanel {
                 table.addCell(new Cell().add(new Paragraph(model.getValueAt(i, 0).toString())));
                 table.addCell(new Cell().add(new Paragraph(model.getValueAt(i, 1).toString())));
                 table.addCell(new Cell().add(new Paragraph(model.getValueAt(i, 2).toString())));
-                table.addCell(new Cell().add(new Paragraph(model.getValueAt(i, 3).toString())));
-                table.addCell(new Cell().add(new Paragraph(model.getValueAt(i, 4).toString())));
+
             }
 
             // Añadir la tabla al documento
             document.add(table);
 
-            // Añadir los totales al final del documento
-            
-//            document.add(new Paragraph("Total: " + txtTotalCit.getText()).setBold());
-
             // Añadir pie de página con información de la empresa
             document.add(new Paragraph(" "));
-            Paragraph footer = new Paragraph("Cita Agendada\n MECANICA YINGS AND YANG\n Octavio Chacon \n Teléfono: 123-456-789")
+            Paragraph footer = new Paragraph("Cita Agendada\n MECANICA YINGS AND YANG\n Octavio Chacon \n Teléfono: 072867265")
                     .setTextAlignment(TextAlignment.CENTER)
                     .setFontSize(10);
             document.add(footer);
@@ -957,7 +917,7 @@ public class Citas extends javax.swing.JPanel {
     //para enviar al correo 
     public static void transfer_to_email(String correo, String pdfPath) {
         String correoEnvia = "yingsyyangmecanica@gmail.com";
-        String contrasena = "ghsd axnw dxtk fxei";
+        String contrasena = "icqy mece whon ddiw";
         String mensaje = "Adjunto encontrará la cita generada.";
         String asunto = "Cita de Servicios";
         Properties objetoPEC = new Properties();
@@ -966,7 +926,8 @@ public class Citas extends javax.swing.JPanel {
         objetoPEC.setProperty("mail.smtp.port", "587");
         objetoPEC.setProperty("mail.smtp.user", correoEnvia);
         objetoPEC.setProperty("mail.smtp.auth", "true");
-        Session sesion = Session.getDefaultInstance(objetoPEC);
+        Session sesion = Session.getInstance(objetoPEC);
+//        Session sesion = Session.getDefaultInstance(objetoPEC);
         MimeMessage mail = new MimeMessage(sesion);
         try {
             mail.setFrom(new InternetAddress(correoEnvia));
@@ -1000,7 +961,7 @@ public class Citas extends javax.swing.JPanel {
         }
     }
     //obtener correo cliente
-    
+
     public String obtenerCorreoCliente(String cedula) {
         ObjectContainer baseBD = Conexion_db.ConectarBD();
         String correoCliente = null;
@@ -1029,14 +990,13 @@ public class Citas extends javax.swing.JPanel {
 
         return correoCliente;
     }
-        
 
     // Método para resetear el formulario
     private void resetearFormulario() {
         Citas miCita = new Citas();
         ShowpanelCruds(miCita);
     }
-  
+
     private void guardarCita() {
         DefaultTableModel model = (DefaultTableModel) JtableCita.getModel();
         // Validar que los datos del cliente y la cita estén completos
@@ -1057,14 +1017,13 @@ public class Citas extends javax.swing.JPanel {
         String selectedItemString = (selectedItem == null) ? "" : selectedItem.toString();
         String cedulaMec = selectedItemString.substring(0, Math.min(selectedItemString.length(), 10));//obtengo solo la cedula del comboBox
 
-    
-        String placaVehiculo=(String)cbxPlacasVehiculos.getSelectedItem();
+        String placaVehiculo = (String) cbxPlacasVehiculos.getSelectedItem();
         // Crear el encabezado de la cita
-        EncabezadoCita cita = new EncabezadoCita(codigoCita, fechaCita, cedulaCli, cedulaMec,placaVehiculo, Estado.ACTIVO);
+        EncabezadoCita cita = new EncabezadoCita(codigoCita, fechaCita, cedulaCli, cedulaMec, placaVehiculo, Estado.ACTIVO);
         // Guardar el encabezado y los detalles en la base de datos
         ObjectContainer baseBD = Conexion_db.ConectarBD();
         baseBD.store(cita);
-        Boolean citaGuardada=false;
+        Boolean citaGuardada = false;
         // Guardar los detalles de la cita
         for (int i = 0; i < model.getRowCount(); i++) {// Iterar sobre cada fila de la tabla, desde la primera (i=0) hasta la última (i=model.getRowCount()-1)
             String codigoServicio = model.getValueAt(i, 0).toString();// Obtener el valor de la celda en la columna 0 (índice 0) de la fila actual y convertirlo a una cadena
@@ -1083,88 +1042,99 @@ public class Citas extends javax.swing.JPanel {
                 continue; // Saltar esta fila y continuar con las demás
             }
             DetalleCita detalle = new DetalleCita(codigoCita, precioServicio, codigoServicio);// Crear un objeto DetalleCita con los valores obtenidos y asignados
-            citaGuardada=true;
+            citaGuardada = true;
             baseBD.store(detalle);
         }
         baseBD.close();
         if (citaGuardada) {
             JOptionPane.showMessageDialog(this, "Cita guardada exitosamente!");
-        }else{JOptionPane.showMessageDialog(this, "Cita no guardada");}
-        
+        } else {
+            JOptionPane.showMessageDialog(this, "Cita no guardada");
+        }
+
         resetearFormulario();
     }
 
-    
-    
-    
+    public void cargarDatosCitas(String codigoCita) {
+        ObjectContainer baseBD = Conexion_db.ConectarBD();
 
+        try {
+            // Consultar el encabezado de la Cita
+            EncabezadoCita citaBuscar = new EncabezadoCita();
+            citaBuscar.setCodigo_encabezadoCita(codigoCita);
+            ObjectSet<EncabezadoCita> resultadoFactura = baseBD.get(citaBuscar);
 
-public void cargarDatosCita(String codigoCita, JTable tblEncabezado, JTable tblDetalle) {
-    // Conexión a la base de datos
-    ObjectContainer baseBD = Conexion_db.ConectarBD();
+            if (!resultadoFactura.isEmpty()) {
+                EncabezadoCita miCita = resultadoFactura.next();
 
-    try {
-        // Buscar el encabezado de la cita
-        EncabezadoCita citaBuscar = new EncabezadoCita();
-        citaBuscar.setCodigo_encabezadoCita(codigoCita);
-        ObjectSet<EncabezadoCita> resultadoEncabezado = baseBD.get(citaBuscar);
+                // Cargar los datos del encabezado de la factura
+                txtcodigoCita.setText(miCita.getCodigo_encabezadoCita());
+                jDateFechaCita.setDate(convertirStringADate(miCita.getFecha_encabezadoCita()));
+                txtCedulaCli.setText(miCita.getCedulaCliente_encabezadoCita());
+                cbxMecaCita.setSelectedItem(miCita.getCedulaMecanico_encabezadoCita());
+                cbxPlacasVehiculos.setSelectedItem(miCita.getPlacaVehiculo_encabezadoCita());
 
-        if (!resultadoEncabezado.isEmpty()) {
-            EncabezadoCita encabezado = resultadoEncabezado.get(0);
-            txtcodigoCita.setText(encabezado.getCodigo_encabezadoCita());
-            jDateFechaCita.setDate(convertirStringADate(encabezado.getFecha_encabezadoCita()));
-            txtCedulaCli.setText(encabezado.getCedulaCliente_encabezadoCita());
-            // Aquí también podrías cargar otros datos del cliente si es necesario
+                // Consultar los datos del cliente
+                Cliente clienteBuscar = new Cliente();
+                clienteBuscar.setCedula(miCita.getCedulaCliente_encabezadoCita());
+                ObjectSet<Cliente> resultadoCliente = baseBD.get(clienteBuscar);
 
-            // Actualizar la tabla de encabezado
-            String[][] matrizEncabezado = new String[1][4];
-            matrizEncabezado[0][0] = encabezado.getCodigo_encabezadoCita();
-            matrizEncabezado[0][1] = encabezado.getFecha_encabezadoCita();
-            matrizEncabezado[0][2] = encabezado.getCedulaCliente_encabezadoCita();
-            matrizEncabezado[0][3] = encabezado.getCedulaMecanico_encabezadoCita();
-            tblEncabezado.setModel(new javax.swing.table.DefaultTableModel(
-                matrizEncabezado,
-                new String[]{"Código Cita", "Fecha", "Cédula Cliente", "Cédula Mecánico"}
-            ));
+                if (!resultadoCliente.isEmpty()) {
+                    Cliente cliente = resultadoCliente.next();
+                    // Concatenar el nombre y el apellido en el mismo campo
+                    txtNombreCli.setText(cliente.getNombres() + " " + cliente.getApellidos());
+                    txtdireccionCli.setText(cliente.getDireccion());
+                    txtCelularCli.setText(cliente.getCelular());
+                }
 
-            // Buscar los detalles de la cita
-            DetalleCita detalleBuscar = new DetalleCita();
-            detalleBuscar.setCodigo_encabezadoCita(codigoCita);
-            ObjectSet<DetalleCita> resultadoDetalle = baseBD.get(detalleBuscar);
+                // Consultar los detalles de la Cita
+                DetalleCita detalleBuscar = new DetalleCita();
+                detalleBuscar.setCodigo_encabezadoCita(codigoCita);
+                ObjectSet<DetalleCita> resultadoDetalle = baseBD.get(detalleBuscar);
 
-            // Crear una matriz para almacenar los datos de los detalles
-            String[][] matrizDetalle = new String[resultadoDetalle.size()][3];
-            int i = 0;
-            for (DetalleCita detalle : resultadoDetalle) {
-                matrizDetalle[i][0] = detalle.getCodigoServicio_detallecita();
-                matrizDetalle[i][1] = obtenerNombreServicio(detalle.getCodigoServicio_detallecita(), baseBD);
-                matrizDetalle[i][2] = String.valueOf(detalle.getPrecioServicio_detallecita());
-                i++;
+                DefaultTableModel modeloCita = (DefaultTableModel) JtableCita.getModel();
+                modeloCita.setRowCount(0); // Limpiar la tabla
+
+                for (DetalleCita miDetalle : resultadoDetalle) {
+                    String codigo = miDetalle.getCodigoServicio_detallecita();
+                    String nombre = "";
+                    double precio = 0.0;
+
+                    if (!obtenerNombreServicio(codigo, baseBD).isEmpty()) {
+                        nombre = obtenerNombreServicio(codigo, baseBD);
+                        precio = obtenerPrecioServicio(codigo, baseBD);
+                    }
+
+                    modeloCita.addRow(new Object[]{codigo, nombre, String.valueOf(precio)});
+                }
+
+                // Deshabilitar botones  
+                txtCedulaCli.setEnabled(false);
+                btnBuscarCliente.setEnabled(false);
+                btnAñadirServicos.setEnabled(false);
+                btnCancelarCita.setEnabled(false);
+                btnFinalizarCita.setEnabled(false);
+
+            } else {
+                JOptionPane.showMessageDialog(this, "Factura no encontrada.");
             }
-
-            // Configurar los datos en la tabla de detalles
-            tblDetalle.setModel(new javax.swing.table.DefaultTableModel(
-                matrizDetalle,
-                new String[]{"Código Servicio", "Nombre Servicio", "Precio Servicio"}
-            ));
-        } else {
-            JOptionPane.showMessageDialog(this, "No se encontró la cita con el código proporcionado.");
+        } finally {
+            baseBD.close();
         }
-    } finally {
-        baseBD.close();
     }
-}
+
     private int numeroCita() {//para calcular el numero
         ObjectContainer BaseBD = Conexion_db.ConectarBD();
         EncabezadoCita citasBusca = new EncabezadoCita();
         ObjectSet resultado = BaseBD.get(citasBusca);
-        System.out.println("se tiene "+resultado.size()+" encabezados de citas");
-        int valor=resultado.size()+1;
+        System.out.println("se tiene " + resultado.size() + " encabezados de citas");
+        int valor = resultado.size() + 1;
         BaseBD.close();
         return valor;//devolvera el numero de coincidencias
     }
-    private void encabezadoCita(){//para enviar el codigo al Textfield y setear fecha
-        String codigo="CITA-00"+numeroCita();
+
+    private void encabezadoCita() {//para enviar el codigo al Textfield y setear fecha
+        String codigo = "CITA-00" + numeroCita();
         txtcodigoCita.setText(codigo);//enviamos el codigo
         txtcodigoCita.setDisabledTextColor(Color.black);//definimos la letra del textfield deshabilitado en negro
         jDateFechaCita.setDate(new Date());
@@ -1178,25 +1148,18 @@ public void cargarDatosCita(String codigoCita, JTable tblEncabezado, JTable tblD
         textField.setDisabledTextColor(Color.BLACK);//para poner la fecha en negro
         txtcodigoCita.setEnabled(false);//deshabilitamos el textfield del codigo
     }
-    private void verificarCliente(){
+
+    private void verificarCliente() {
         if (Global.rolUsuario.equals("CLIENTE")) {
             txtCedulaCli.setText(Home.CedulaUsuario);
             txtCedulaCli.setEnabled(false);
             txtCedulaCli.setDisabledTextColor(Color.black);
             CargarVehiculosCliente();
-        }else{System.out.println("No es Cliente");}
-        
+        } else {
+            System.out.println("No es Cliente");
+        }
+
     }
-    
-    
-    
-
-
-
-
-
-
-
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -1205,9 +1168,8 @@ public void cargarDatosCita(String codigoCita, JTable tblEncabezado, JTable tblD
     private javax.swing.JButton btnAñadirServicos;
     private javax.swing.JButton btnBuscarCliente;
     private rsbuttongradiente.RSButtonGradiente btnBuscarServicio;
-    private javax.swing.JButton btnCancelar;
+    private javax.swing.JButton btnCancelarCita;
     private rojeru_san.RSButton btnFinalizarCita;
-    private rojeru_san.RSButton btnFinalizarCita1;
     private rsbuttongradiente.RSButtonGradiente btnInsetarServicios;
     private javax.swing.JButton btnNuevo;
     private javax.swing.JButton btnResibo;
@@ -1223,7 +1185,6 @@ public void cargarDatosCita(String codigoCita, JTable tblEncabezado, JTable tblD
     private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane5;
-    private javax.swing.JLabel lblCuadro;
     private javax.swing.JLabel lblCuadro2;
     private javax.swing.JLabel lblDatosCli;
     private javax.swing.JLabel lblDatosCli1;
@@ -1236,6 +1197,9 @@ public void cargarDatosCita(String codigoCita, JTable tblEncabezado, JTable tblD
     private javax.swing.JLabel lblcedula1;
     private javax.swing.JLabel lblcodFac1;
     private javax.swing.JLabel lblverlis1;
+    private javax.swing.JLabel lblverlis2;
+    private javax.swing.JLabel lblverlis3;
+    private javax.swing.JLabel lblverlis4;
     private javax.swing.JTable tblServicios;
     private rojeru_san.RSMTextFull txtBuscarServicio;
     private javax.swing.JTextField txtCedulaCli;
