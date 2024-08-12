@@ -357,7 +357,7 @@ public class TablaFactura extends javax.swing.JPanel {
     }
 
     private void MostarpanelCruds(JPanel p) {
-        p.setSize(900, 660);
+        p.setSize(890, 630);
         p.setLocation(0, 0);
         PanelPrincipal.removeAll();
         PanelPrincipal.add(p, BorderLayout.CENTER);

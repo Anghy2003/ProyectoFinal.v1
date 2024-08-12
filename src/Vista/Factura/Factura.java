@@ -763,8 +763,8 @@ public class Factura extends javax.swing.JPanel {
 
     private void btnFinalizarFacActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnFinalizarFacActionPerformed
          
-    guardarFactura();
-
+           guardarFactura();
+         
     
     }//GEN-LAST:event_btnFinalizarFacActionPerformed
 
@@ -1440,7 +1440,7 @@ public void cargarDatosFactura(String codigoFactura) {
             Document document = new Document(pdfDoc);
 
             // Añadir logotipo
-            String logoPath = "src\\Images\\logote_resized.png";
+            String logoPath = "src\\Images\\.nuevo.png";
             File logoFile = new File(logoPath);
             if (logoFile.exists()) {
                 Image img = new Image(ImageDataFactory.create(logoPath));
