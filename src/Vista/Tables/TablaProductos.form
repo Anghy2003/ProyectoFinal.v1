@@ -159,7 +159,7 @@
             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
               <Font name="Roboto Bold" size="14" style="2"/>
             </Property>
-            <Property name="placeholder" type="java.lang.String" value="ejm. Pro-01"/>
+            <Property name="placeholder" type="java.lang.String" value="ejm. Llantas24x24"/>
           </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="jLabel2">

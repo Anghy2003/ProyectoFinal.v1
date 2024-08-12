@@ -10,10 +10,12 @@ import Conexion.ImageRenderer;
 import Models.Servicios;
 import com.db4o.ObjectContainer;
 import com.db4o.ObjectSet;
-import com.db4o.query.Query;
+
 import java.awt.Image;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
+import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -264,7 +266,8 @@ private void mostrarTablaServicios() {
 
     Object[][] matriz = new Object[resul.size()][5];
 
-    for (int i = 0; i < resul.size(); i++) {
+    int i = 0;
+    while (resul.hasNext()) {
         Servicios serv = resul.next();
         matriz[i][0] = serv.getCodigo_Servicio();
         matriz[i][1] = serv.getNombre_Servicio();
@@ -272,6 +275,7 @@ private void mostrarTablaServicios() {
         matriz[i][3] = serv.getPrecioTotal_Servicio();
         byte[] imagen = serv.getImagen();
         matriz[i][4] = (imagen != null) ? new JLabel(new ImageIcon(new ImageIcon(imagen).getImage().getScaledInstance(180, 140, Image.SCALE_SMOOTH))) : new JLabel("No image");
+        i++;
     }
 
     tblServicios.setModel(new javax.swing.table.DefaultTableModel(
@@ -282,7 +286,6 @@ private void mostrarTablaServicios() {
     tblServicios.getColumnModel().getColumn(4).setCellRenderer(new ImageRenderer());
     tblServicios.setRowHeight(100);
 
-    // Ocultar columnas de descripción y precio
     tblServicios.getColumnModel().getColumn(2).setMinWidth(0);
     tblServicios.getColumnModel().getColumn(2).setMaxWidth(0);
     tblServicios.getColumnModel().getColumn(2).setWidth(0);
@@ -293,56 +296,53 @@ private void mostrarTablaServicios() {
 
     BaseBD.close();
 }
-  private void buscarServicioPorNombre(String nombre) {
-        if (nombre.isEmpty()) {
-            JOptionPane.showMessageDialog(this, "Por favor, ingrese el nombre del servicio.");
-            return;
-        }
-
-        ObjectContainer BaseBD = Conexion_db.ConectarBD();
-        Query query = BaseBD.query();
-        query.constrain(Servicios.class);
-        query.descend("nombre_Servicio").constrain(nombre).like();
-        ObjectSet<Servicios> resultados = query.execute();
-
-        ObjectSet<Servicios> resul = BaseBD.get(new Servicios(null, null, null, 0.0, null, null, null, null));
-
-        if (resultados.size() > 0) {
-            Servicios servicioEncontrado = resultados.get(0);
-            Object[][] matriz = new Object[resul.size()][3];
-            
-            // Primero agregamos el servicio encontrado
-            matriz[0][0] = servicioEncontrado.getCodigo_Servicio();
-            matriz[0][1] = servicioEncontrado.getNombre_Servicio();
-            byte[] imagen = servicioEncontrado.getImagen();
-            matriz[0][2] = (imagen != null) ? new JLabel(new ImageIcon(new ImageIcon(imagen).getImage().getScaledInstance(180, 140, Image.SCALE_SMOOTH))) : new JLabel("No image");
-
-            // Luego agregamos los demás servicios
-            int i = 1;
-            while (resul.hasNext()) {
-                Servicios serv = resul.next();
-                if (!serv.getCodigo_Servicio().equals(servicioEncontrado.getCodigo_Servicio())) {
-                    matriz[i][0] = serv.getCodigo_Servicio();
-                    matriz[i][1] = serv.getNombre_Servicio();
-                    byte[] img = serv.getImagen();
-                    matriz[i][2] = (img != null) ? new JLabel(new ImageIcon(new ImageIcon(img).getImage().getScaledInstance(180, 140, Image.SCALE_SMOOTH))) : new JLabel("No image");
-                    i++;
-                }
-            }
-
-            tblServicios.setModel(new javax.swing.table.DefaultTableModel(
-                matriz,
-                new String[]{"Código Servicio", "Nombre Servicio", "Imagen"}
-            ));
-
-            tblServicios.getColumnModel().getColumn(2).setCellRenderer(new ImageRenderer());
-            tblServicios.setRowHeight(100);
-        } else {
-            JOptionPane.showMessageDialog(this, "Servicio no encontrado.");
-        }
-
-        BaseBD.close();
+ private void buscarServicioPorNombre(String nombre) {
+    if (nombre.isEmpty()) {
+        JOptionPane.showMessageDialog(this, "Por favor, ingrese el nombre del servicio.");
+        return;
     }
+
+    ObjectContainer BaseBD = Conexion_db.ConectarBD();
+    ObjectSet<Servicios> todosLosServicios = BaseBD.query(Servicios.class);
+    List<Servicios> serviciosCoincidentes = new ArrayList<>();
+    List<Servicios> otrosServicios = new ArrayList<>();
+    
+    // Clasificar servicios en coincidentes y no coincidentes
+    for (Servicios servicio : todosLosServicios) {
+        if (servicio.getNombre_Servicio().toLowerCase().contains(nombre.toLowerCase())) {
+            serviciosCoincidentes.add(servicio);
+        } else {
+            otrosServicios.add(servicio);
+        }
+    }
+    
+    // Unir ambas listas, primero los coincidentes y luego los demás
+    serviciosCoincidentes.addAll(otrosServicios);
+
+    // Crear la matriz para la tabla
+    Object[][] matriz = new Object[serviciosCoincidentes.size()][5];
+
+    int i = 0;
+    for (Servicios serv : serviciosCoincidentes) {
+        matriz[i][0] = serv.getCodigo_Servicio();
+        matriz[i][1] = serv.getNombre_Servicio();
+        matriz[i][2] = serv.getDescripcion_Servicio();
+        matriz[i][3] = serv.getPrecioTotal_Servicio();
+        byte[] imagen = serv.getImagen();
+        matriz[i][4] = (imagen != null) ? new JLabel(new ImageIcon(new ImageIcon(imagen).getImage().getScaledInstance(180, 140, Image.SCALE_SMOOTH))) : new JLabel("No image");
+        i++;
+    }
+
+    tblServicios.setModel(new javax.swing.table.DefaultTableModel(
+        matriz,
+        new String[]{"Código Servicio", "Nombre Servicio", "Descripción", "Precio", "Imagen"}
+    ));
+
+    tblServicios.getColumnModel().getColumn(4).setCellRenderer(new ImageRenderer());
+    tblServicios.setRowHeight(100);
+
+    BaseBD.close();
+}
 private void tblServiciosMouseClicked(MouseEvent evt) {
     int selectedRow = tblServicios.getSelectedRow();
     if (selectedRow != -1) {
