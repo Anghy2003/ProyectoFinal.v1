@@ -671,41 +671,54 @@ public final class CrudPanelVehiculo extends javax.swing.JPanel {
     }
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
         Boolean encontrado = false;
+
         if (verificarPlacasRepetidas() != 0) {
-            JOptionPane.showMessageDialog(null, "Placa de Vehiculo ya registrado");
+            JOptionPane.showMessageDialog(null, "Placa de Vehículo ya registrada");
             encontrado = true;
         }
+
         if (VerificarClienteRepetidos() == 0) {
             JOptionPane.showMessageDialog(null, "Cliente no Registrado");
             CrudPanelCliente miCliente = new CrudPanelCliente();
             ShowpanelCruds(miCliente);
             encontrado = true;
-
         }
-        if (!encontrado) {
-            Boolean valido = false;//creamos una bandera para validar datos
-            int añoActual = Calendar.getInstance().get(Calendar.YEAR);
-            if (valido == (YEARAño.getYear() > 1800 && YEARAño.getYear() < añoActual + 1)) {
-                if (valido = txtPlaca.getText().toUpperCase().matches("^[A-Z]{3}-\\d{3,4}$")) {//aceptamos 3 letras, un guion y luego 3 a 4 numeros
 
+        if (!encontrado) {
+            int añoActual = Calendar.getInstance().get(Calendar.YEAR);
+            int añoSeleccionado = YEARAño.getYear();
+
+            // Validar el año seleccionado
+            if (añoSeleccionado > 1800 && añoSeleccionado <= añoActual + 1) {
+                // Validar la placa
+                if (txtPlaca.getText().toUpperCase().matches("^[A-Z]{3}-\\d{3,4}$")) {
                     String selectedItem = (String) cmbColorVehiculo.getSelectedItem();
                     String codigoColor = mapaColores.get(selectedItem.trim().toUpperCase());
-                    guardarVehiculos(txtPlaca.getText().toUpperCase(), (String) cmbModeloRegistroVehiculo1.getSelectedItem(), (String) cmbMarcaRegistroVehiculo.getSelectedItem(), codigoColor, YEARAño.getYear(), txtCliente.getText().toUpperCase().trim(), Estado.ACTIVO);
+
+                    // Guardar vehículo
+                    guardarVehiculos(txtPlaca.getText().toUpperCase(),
+                            (String) cmbModeloRegistroVehiculo1.getSelectedItem(),
+                            (String) cmbMarcaRegistroVehiculo.getSelectedItem(),
+                            codigoColor,
+                            añoSeleccionado,
+                            txtCliente.getText().toUpperCase().trim(),
+                            Estado.ACTIVO);
+
+                    // Actualizar y mostrar información
                     buscarMarca();
                     buscarModelo();
                     buscarVehiculoConsola();
-                    JOptionPane.showMessageDialog(this, "Vehiculo Guardado");
+                    JOptionPane.showMessageDialog(this, "Vehículo Guardado");
                     TablaVehiculos tablaVehi = new TablaVehiculos();
                     ShowpanelCruds(tablaVehi);
-
                 } else {
-                    JOptionPane.showMessageDialog(this, "Ingrese una placa Válida");
-                } 
-            }else {
-                    JOptionPane.showMessageDialog(this, "Ingrese un año Válido");
-                } 
-            
+                    JOptionPane.showMessageDialog(this, "Ingrese una placa válida");
+                }
+            } else {
+                JOptionPane.showMessageDialog(this, "Ingrese un año válido");
+            }
         }
+
         resetCampos();
     }//GEN-LAST:event_btnGuardarActionPerformed
 
@@ -717,17 +730,19 @@ public final class CrudPanelVehiculo extends javax.swing.JPanel {
         if (txtCliente.getText().trim().isEmpty()) {//si esta vacio tendremos que verificar si  el usuario es cliente para rellenar con la cedula
             if (Global.rolUsuario.equals("CLIENTE")) {
                 txtCliente.setText(Home.CedulaUsuario.trim());
-            }else{JOptionPane.showMessageDialog(this, "INGRESE UNA CEDULA");}
-   
-        }else{
-        if (verificarExistenciaCliente() == 0) {//si es cero, no existen clientes con esa cedula, mandamos a registro
-            txtCliente.setText("");
-            JOptionPane.showMessageDialog(this, "Cliente no registrado, por favor registrese");
-            CrudPanelCliente CrearMiCliente = new CrudPanelCliente();
-            ShowpanelCruds(CrearMiCliente);
-        } else {//sino vamos a dejar la cedula en el  textfield
-            JOptionPane.showMessageDialog(this, "Cliente Verificado");
-        }
+            } else {
+                JOptionPane.showMessageDialog(this, "INGRESE UNA CEDULA");
+            }
+
+        } else {
+            if (verificarExistenciaCliente() == 0) {//si es cero, no existen clientes con esa cedula, mandamos a registro
+                txtCliente.setText("");
+                JOptionPane.showMessageDialog(this, "Cliente no registrado, por favor registrese");
+                CrudPanelCliente CrearMiCliente = new CrudPanelCliente();
+                ShowpanelCruds(CrearMiCliente);
+            } else {//sino vamos a dejar la cedula en el  textfield
+                JOptionPane.showMessageDialog(this, "Cliente Verificado");
+            }
         }
 
     }//GEN-LAST:event_btnBuscarClienteRegistroVehiculos1ActionPerformed
@@ -1040,7 +1055,9 @@ public final class CrudPanelVehiculo extends javax.swing.JPanel {
             btnAñadirMarcaRegistroVehiculos.setVisible(false);
             btnAñadirModeloREgistroVehiculos.setVisible(false);
 
-        }else{btnBuscarClienteRegistroVehiculos1.setText("BUSCAR");}
+        } else {
+            btnBuscarClienteRegistroVehiculos1.setText("BUSCAR");
+        }
     }
 
 
