@@ -59,6 +59,11 @@ public class TablaProductos extends javax.swing.JPanel {
         tblProductos.setBackground(new java.awt.Color(255, 255, 255));
         tblProductos.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
         tblProductos.setForeground(new java.awt.Color(255, 255, 255));
+        tblProductos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                tblProductosMouseClicked(evt);
+            }
+        });
 
         TablProductos1.setFont(new java.awt.Font("Roboto Medium", 0, 14)); // NOI18N
         TablProductos1.setModel(new javax.swing.table.DefaultTableModel(
@@ -253,26 +258,31 @@ public class TablaProductos extends javax.swing.JPanel {
         VistaMenu.PanelPrincipal.repaint();
     }
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
-       if (!txtBuscar.getText().trim().isEmpty()) {
-            String codigoProducto = txtBuscar.getText(); // Obtener el texto de txtBuscar
-            BuscarProductos miBuscarProducto = new BuscarProductos(codigoProducto); // Crear el componente con el código de producto
-            ShowpanelCruds(miBuscarProducto); // Mostrar el panel de búsqueda de producto
-        } else {
-            JOptionPane.showMessageDialog(this, "Ingrese un código de producto");
-        }
+     if (!txtBuscar.getText().trim().isEmpty()) {
+    String codigoProducto = txtBuscar.getText(); // Obtener el texto de txtBuscar
+    BuscarProductos miBuscarProducto = new BuscarProductos(codigoProducto); // Crear el componente con el código de producto
+    ShowpanelCruds(miBuscarProducto); // Mostrar el panel de búsqueda de producto
+} else {
+    JOptionPane.showMessageDialog(this, "Ingrese un código de producto");
+}
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-  if (!txtBuscar.getText().trim().isEmpty()) {
-            String codigoProducto = txtBuscar.getText();
+   int selectedRow = TablProductos1.getSelectedRow();
+        if (selectedRow != -1) {
+            String codigoProducto = TablProductos1.getValueAt(selectedRow, 0).toString();
             inactivarProducto(codigoProducto);
-            JOptionPane.showMessageDialog(this, "Producto inactivado");
+            JOptionPane.showMessageDialog(this, "Producto eliminado.");
             mostrarDatosActivos();
             mostrarDatosInactivo();
         } else {
-            JOptionPane.showMessageDialog(this, "Producto no encontrado");
-        }  
+            JOptionPane.showMessageDialog(this, "Seleccione un producto para eliminar.");
+        }
     }//GEN-LAST:event_btnEliminarActionPerformed
+
+    private void tblProductosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblProductosMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tblProductosMouseClicked
   
     public void inactivarProducto(String codigo_Producto) {
     ObjectContainer BaseBD = Conexion_db.ConectarBD();

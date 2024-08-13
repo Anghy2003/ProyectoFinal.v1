@@ -39,7 +39,6 @@ public class TablaFactura extends javax.swing.JPanel {
         tblFacturas = new javax.swing.JTable();
         txtBuscar = new rojeru_san.RSMTextFull();
         jLabel2 = new javax.swing.JLabel();
-        btnEliminar = new rsbuttongradiente.RSButtonGradiente();
         scrlpTabla = new javax.swing.JScrollPane();
         tabladetalle = new javax.swing.JTable();
         btnbuscar = new rsbuttongradiente.RSButtonGradiente();
@@ -83,17 +82,6 @@ public class TablaFactura extends javax.swing.JPanel {
 
         jLabel2.setFont(new java.awt.Font("Roboto Black", 0, 18)); // NOI18N
         jLabel2.setText("Buscar");
-
-        btnEliminar.setText("Eliminar");
-        btnEliminar.setColorPrimario(new java.awt.Color(204, 0, 0));
-        btnEliminar.setColorPrimarioHover(new java.awt.Color(255, 51, 51));
-        btnEliminar.setColorSecundario(new java.awt.Color(255, 153, 153));
-        btnEliminar.setColorSecundarioHover(new java.awt.Color(255, 204, 204));
-        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnEliminarActionPerformed(evt);
-            }
-        });
 
         scrlpTabla.setBackground(new java.awt.Color(255, 255, 255));
         scrlpTabla.setBorder(javax.swing.BorderFactory.createEmptyBorder(1, 1, 1, 1));
@@ -174,10 +162,8 @@ public class TablaFactura extends javax.swing.JPanel {
                                         .addGap(18, 18, 18)
                                         .addComponent(btnbuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(18, 18, 18)
-                                        .addComponent(btnVizualizar1, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addGap(0, 0, Short.MAX_VALUE)))))
+                                        .addComponent(btnVizualizar1, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(0, 275, Short.MAX_VALUE)))))
                 .addContainerGap())
             .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                 .addGroup(jPanel2Layout.createSequentialGroup()
@@ -196,12 +182,11 @@ public class TablaFactura extends javax.swing.JPanel {
                         .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(txtBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(btnbuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnVizualizar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(btnVizualizar1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                     .addGroup(jPanel2Layout.createSequentialGroup()
                         .addGap(26, 26, 26)
                         .addComponent(jLabel2)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 88, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 90, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 172, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(17, 17, 17)
                 .addComponent(lblDetalleFactura)
@@ -248,10 +233,6 @@ public class TablaFactura extends javax.swing.JPanel {
         }
 
     }//GEN-LAST:event_btnVizualizar1ActionPerformed
-
-    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnEliminarActionPerformed
     private void abrirFacturaConDatos(String codigoFactura) {
         // Crear una instancia de la interfaz de Factura
         Factura facturaPanel = new Factura();
@@ -384,7 +365,6 @@ public class TablaFactura extends javax.swing.JPanel {
 
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private rsbuttongradiente.RSButtonGradiente btnEliminar;
     private rsbuttongradiente.RSButtonGradiente btnVizualizar1;
     private rsbuttongradiente.RSButtonGradiente btnbuscar;
     private javax.swing.JLabel jLabel2;
