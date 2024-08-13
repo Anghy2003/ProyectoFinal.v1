@@ -1623,6 +1623,19 @@ public void cargarDatosFactura(String codigoFactura) {
 
     baseBD.close();
     JOptionPane.showMessageDialog(this, "Factura guardada exitosamente!");
+     
+    generarReciboPDF();
+
+    if (!cedula.isEmpty()) {
+        String correoCliente = obtenerCorreoCliente(cedula);
+        if (correoCliente != null) {
+            transfer_to_email(correoCliente, pdfPath);
+        } else {
+            JOptionPane.showMessageDialog(this, "No se pudo obtener el correo del cliente.");
+        }
+    } else {
+        JOptionPane.showMessageDialog(this, "Por favor, seleccione un cliente.");
+    }
    resetearFormulario();
    
 }

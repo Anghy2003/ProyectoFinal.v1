@@ -527,16 +527,16 @@ public class Citas extends javax.swing.JPanel {
     }//GEN-LAST:event_cbxMecaCitaActionPerformed
 
     private void btnResiboActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnResiboActionPerformed
-// Validar que la tabla de detalles no esté vacía
+        // Validar que la tabla de detalles no esté vacía
         if (JtableCita.getRowCount() == 0) {
             JOptionPane.showMessageDialog(this, "No se puede generar un PDF de una factura vacía.");
             return;
         }
 
-// Generar el recibo en formato PDF
+        // Generar el recibo en formato PDF
         generarReciboPDF();
 
-// Obtener la cédula del cliente seleccionado
+        // Obtener la cédula del cliente seleccionado
         String cedula = txtCedulaCli.getText().trim();
         if (!cedula.isEmpty()) {
             // Obtener el correo electrónico del cliente
@@ -998,6 +998,7 @@ public class Citas extends javax.swing.JPanel {
     }
 
     private void guardarCita() {
+
         DefaultTableModel model = (DefaultTableModel) JtableCita.getModel();
         // Validar que los datos del cliente y la cita estén completos
         if (txtcodigoCita.getText().isEmpty() || jDateFechaCita.getDate() == null || txtCedulaCli.getText().isEmpty()) {
@@ -1046,8 +1047,25 @@ public class Citas extends javax.swing.JPanel {
             baseBD.store(detalle);
         }
         baseBD.close();
+        
         if (citaGuardada) {
             JOptionPane.showMessageDialog(this, "Cita guardada exitosamente!");
+            // Generar el recibo en formato PDF
+            generarReciboPDF();
+            // Obtener la cédula del cliente seleccionado
+            String cedula = txtCedulaCli.getText().trim();
+            if (!cedula.isEmpty()) {
+                // Obtener el correo electrónico del cliente
+                String correoCliente = obtenerCorreoCliente(cedula);
+                if (correoCliente != null) {
+                    // Transferir el PDF al correo del cliente
+                    transfer_to_email(correoCliente, pdfPath);
+                } else {
+                    JOptionPane.showMessageDialog(this, "No se pudo obtener el correo del cliente.");
+                }
+            } else {
+                JOptionPane.showMessageDialog(this, "Por favor, seleccione un cliente.");
+            }
         } else {
             JOptionPane.showMessageDialog(this, "Cita no guardada");
         }
