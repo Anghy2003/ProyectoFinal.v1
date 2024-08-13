@@ -527,11 +527,7 @@ public class VistaMenu extends javax.swing.JFrame {
         if (panelSubmenuServicios != null) {
            
             switch (rolUsuario) {
-                case "VENDEDOR":
-                    panelSubmenuServicios.getBtnordenesTrabajo().setVisible(false);
-                    
-                    
-                    break;
+               
                 case "MECANICO":
                     panelSubmenuServicios.getBtnCategoria1().setVisible(false);
                     panelSubmenuServicios.getBtngestionser1().setVisible(false);
@@ -549,6 +545,7 @@ public class VistaMenu extends javax.swing.JFrame {
         PanelSubmenu.add(p, BorderLayout.CENTER);
         PanelSubmenu.revalidate();
         PanelSubmenu.repaint();
+        
 if (p instanceof PanelSubmenuUsuarioss) {
             this.panelSubmenuUsuarios = (PanelSubmenuUsuarioss) p;
             actualizarVisibilidadSubmenuUsuarios();

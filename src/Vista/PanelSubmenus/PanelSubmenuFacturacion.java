@@ -95,7 +95,7 @@ public class PanelSubmenuFacturacion extends javax.swing.JPanel {
  
                                              
 private void MostrarpaneCruds(JPanel p) {
-        p.setSize(870, 630);
+         p.setSize(890, 630);
         p.setLocation(0, 0);
         VistaMenu.PanelPrincipal.removeAll();
         VistaMenu.PanelPrincipal.add(p, BorderLayout.CENTER);

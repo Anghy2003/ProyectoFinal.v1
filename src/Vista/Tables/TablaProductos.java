@@ -80,7 +80,7 @@ public class TablaProductos extends javax.swing.JPanel {
         tblProductos.setViewportView(TablProductos1);
 
         txtBuscar.setFont(new java.awt.Font("Roboto Bold", 2, 14)); // NOI18N
-        txtBuscar.setPlaceholder("ejm. Llantas24x24");
+        txtBuscar.setPlaceholder("ejm. PRO1");
 
         jLabel2.setFont(new java.awt.Font("Roboto Black", 0, 18)); // NOI18N
         jLabel2.setText("Buscar");

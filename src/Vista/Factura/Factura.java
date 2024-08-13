@@ -1367,6 +1367,9 @@ public void cargarDatosFactura(String codigoFactura) {
             btnEliminar.setEnabled(false);
             btnFinalizarFac.setEnabled(false);
             btnBuscarcliente.setEnabled(false);
+            btnVentasGeneradas.setEnabled(false);
+            btnCancelar.setEnabled(false);
+            btnNuevo.setEnabled(false);
         } else {
             JOptionPane.showMessageDialog(this, "Factura no encontrada.");
         }

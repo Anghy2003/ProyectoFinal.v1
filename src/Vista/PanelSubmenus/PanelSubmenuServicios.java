@@ -31,8 +31,7 @@ public class PanelSubmenuServicios extends javax.swing.JPanel {
 
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
-        btnCitasAgendadas = new javax.swing.JToggleButton();
-        btnordenesTrabajo = new javax.swing.JToggleButton();
+        btnChecklist = new javax.swing.JToggleButton();
         jSeparator1 = new javax.swing.JSeparator();
         btngestionser1 = new javax.swing.JToggleButton();
         btnCategoria1 = new javax.swing.JToggleButton();
@@ -43,21 +42,12 @@ public class PanelSubmenuServicios extends javax.swing.JPanel {
 
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
 
-        btnCitasAgendadas.setFont(new java.awt.Font("Roboto Medium", 1, 11)); // NOI18N
-        btnCitasAgendadas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/gestion-de-servicios.png"))); // NOI18N
-        btnCitasAgendadas.setText("CITAS AGENDADAS");
-        btnCitasAgendadas.addActionListener(new java.awt.event.ActionListener() {
+        btnChecklist.setFont(new java.awt.Font("Roboto Medium", 1, 11)); // NOI18N
+        btnChecklist.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/gestion-de-servicios.png"))); // NOI18N
+        btnChecklist.setText("CITAS PENDIENTES");
+        btnChecklist.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnCitasAgendadasActionPerformed(evt);
-            }
-        });
-
-        btnordenesTrabajo.setFont(new java.awt.Font("Roboto Medium", 1, 11)); // NOI18N
-        btnordenesTrabajo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Iconos/portapapeles.png"))); // NOI18N
-        btnordenesTrabajo.setText("ORDENES DE TRABAJO");
-        btnordenesTrabajo.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnordenesTrabajoActionPerformed(evt);
             }
         });
 
@@ -86,29 +76,25 @@ public class PanelSubmenuServicios extends javax.swing.JPanel {
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(57, 57, 57)
-                .addComponent(btnordenesTrabajo)
-                .addGap(10, 10, 10)
-                .addComponent(btnCitasAgendadas)
-                .addGap(18, 18, 18)
+                .addGap(223, 223, 223)
+                .addComponent(btnChecklist)
+                .addGap(37, 37, 37)
                 .addComponent(btngestionser1)
-                .addGap(18, 18, 18)
+                .addGap(29, 29, 29)
                 .addComponent(btnCategoria1)
-                .addContainerGap(17, Short.MAX_VALUE))
+                .addContainerGap(27, Short.MAX_VALUE))
             .addComponent(jSeparator1)
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(17, Short.MAX_VALUE)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 13, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(btnordenesTrabajo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnCitasAgendadas, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                    .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(btngestionser1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
-                        .addComponent(btnCategoria1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE, false)
+                    .addComponent(btngestionser1, javax.swing.GroupLayout.PREFERRED_SIZE, 39, Short.MAX_VALUE)
+                    .addComponent(btnCategoria1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnChecklist, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
 
@@ -116,11 +102,6 @@ public class PanelSubmenuServicios extends javax.swing.JPanel {
 
         add(jPanel1, java.awt.BorderLayout.CENTER);
     }// </editor-fold>//GEN-END:initComponents
-
-    private void btnordenesTrabajoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnordenesTrabajoActionPerformed
-        TablaServicios serv = new TablaServicios();
-       ShowpanelCruds(serv);
-    }//GEN-LAST:event_btnordenesTrabajoActionPerformed
 
     private void btngestionser1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btngestionser1ActionPerformed
        CrudPanelServicios servcito = new CrudPanelServicios();
@@ -153,13 +134,9 @@ public class PanelSubmenuServicios extends javax.swing.JPanel {
         this.btnCategoria1 = btnCategoria1;
     }
 
-    public JToggleButton getBtnCitasAgendadas() {
-        return btnCitasAgendadas;
-    }
+   
 
-    public void setBtnCitasAgendadas(JToggleButton btnCitasAgendadas) {
-        this.btnCitasAgendadas = btnCitasAgendadas;
-    }
+    
 
     public JToggleButton getBtngestionser1() {
         return btngestionser1;
@@ -169,21 +146,14 @@ public class PanelSubmenuServicios extends javax.swing.JPanel {
         this.btngestionser1 = btngestionser1;
     }
 
-    public JToggleButton getBtnordenesTrabajo() {
-        return btnordenesTrabajo;
-    }
-
-    public void setBtnordenesTrabajo(JToggleButton btnordenesTrabajo) {
-        this.btnordenesTrabajo = btnordenesTrabajo;
-    }
+    
 
     
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JToggleButton btnCategoria1;
-    private javax.swing.JToggleButton btnCitasAgendadas;
+    private javax.swing.JToggleButton btnChecklist;
     private javax.swing.JToggleButton btngestionser1;
-    private javax.swing.JToggleButton btnordenesTrabajo;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JSeparator jSeparator1;
