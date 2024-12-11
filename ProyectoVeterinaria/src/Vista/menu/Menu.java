@@ -5,6 +5,9 @@
  */
 package Vista.menu;
 
+import Controladores.ControladorMascota;
+import Modelo.conexion;
+import Vista.crud.crud_mascotas;
 import Vista.home.Home;
 import Vista.submenu.PanelSubmenuControlVacu;
 import Vista.submenu.*;
@@ -243,7 +246,7 @@ public class Menu extends javax.swing.JFrame {
         PanelSubmenumascotas SubmenuUsu = new PanelSubmenumascotas();
         MostrarpanelTitulo(titmas);
         MostrarpanelSubmenu(SubmenuUsu);
-       
+        
     }//GEN-LAST:event_btnMascotasMouseClicked
 
     private void btnControlMedMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnControlMedMouseClicked
