@@ -2,26 +2,6 @@
 <project-private xmlns="http://www.netbeans.org/ns/project-private/1">
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
-        <group>
-            <file>file:/C:/Users/59399/Documents/ProyectoFinal.v1/ProyectoVeterinaria/src/Imagenes/logo%20plomo.PNG</file>
-            <file>file:/C:/Users/59399/Documents/ProyectoFinal.v1/ProyectoVeterinaria/src/Modelo/Propietario.java</file>
-            <file>file:/C:/Users/59399/Documents/ProyectoFinal.v1/ProyectoVeterinaria/src/Vista/menu/Menu.java</file>
-            <file>file:/C:/Users/59399/Documents/ProyectoFinal.v1/ProyectoVeterinaria/src/Vista/titulos/PanelTItuloControlMedico.java</file>
-            <file>file:/C:/Users/59399/Documents/ProyectoFinal.v1/ProyectoVeterinaria/src/Modelo/Control_Vacunas.java</file>
-            <file>file:/C:/Users/59399/Documents/ProyectoFinal.v1/ProyectoVeterinaria/src/proyectoveterinaria/ProyectoVeterinaria.java</file>
-            <file>file:/C:/Users/59399/Documents/ProyectoFinal.v1/ProyectoVeterinaria/src/Modelo/conexion.java</file>
-            <file>file:/C:/Users/59399/Documents/ProyectoFinal.v1/ProyectoVeterinaria/src/Vista/submenu/PanelSubmenuControlVacu.java</file>
-            <file>file:/C:/Users/59399/Documents/ProyectoFinal.v1/ProyectoVeterinaria/src/Vista/home/Home.java</file>
-            <file>file:/C:/Users/59399/Documents/ProyectoFinal.v1/ProyectoVeterinaria/src/Modelo/Mascotas.java</file>
-            <file>file:/C:/Users/59399/Documents/ProyectoFinal.v1/ProyectoVeterinaria/src/Modelo/Control_Medico.java</file>
-            <file>file:/C:/Users/59399/Documents/ProyectoFinal.v1/ProyectoVeterinaria/src/Vista/titulos/PanelTituloPropietario.java</file>
-            <file>file:/C:/Users/59399/Documents/ProyectoFinal.v1/ProyectoVeterinaria/src/Vista/titulos/PaneltituloControldeVcunas.java</file>
-            <file>file:/C:/Users/59399/Documents/ProyectoFinal.v1/ProyectoVeterinaria/src/Vista/crud/crud_mascotas.java</file>
-            <file>file:/C:/Users/59399/Documents/ProyectoFinal.v1/ProyectoVeterinaria/src/Imagenes/logoazul.PNG</file>
-            <file>file:/C:/Users/59399/Documents/ProyectoFinal.v1/ProyectoVeterinaria/src/Vista/titulos/PanelTituloMascotas.java</file>
-            <file>file:/C:/Users/59399/Documents/ProyectoFinal.v1/ProyectoVeterinaria/src/Vista/submenu/PanelSubmenumascotas.java</file>
-            <file>file:/C:/Users/59399/Documents/ProyectoFinal.v1/ProyectoVeterinaria/src/Vista/submenu/PanelSubmenuControMedi.java</file>
-            <file>file:/C:/Users/59399/Documents/ProyectoFinal.v1/ProyectoVeterinaria/src/Vista/submenu/PanelSubmenuPropietario.java</file>
-        </group>
+        <group/>
     </open-files>
 </project-private>
