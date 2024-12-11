@@ -5,6 +5,9 @@
  */
 package proyectoveterinaria;
 
+import Modelo.conexion;
+import Vista.menu.Menu;
+
 /**
  *
  * @author aberr
@@ -15,7 +18,9 @@ public class ProyectoVeterinaria {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        // TODO code application logic here
+        conexion conn = new conexion();
+        Menu menuxito=new Menu();
+        menuxito.setVisible(true);
     }
     
 }
