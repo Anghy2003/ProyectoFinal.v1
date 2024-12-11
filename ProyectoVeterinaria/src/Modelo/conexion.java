@@ -25,38 +25,17 @@ public class conexion {
     public void conectar() {
         Scanner numero = new Scanner(System.in);
         int opcion = 0;
-        while (opcion != 1 && opcion != 2) {
-            System.out.println("Ingrese 1 si es Angi  o 2 si (otro)");
-            opcion = numero.nextInt();
-            if (opcion == 1) {
-                //codigo Angi
-                try {
-                    Class.forName("oracle.jdbc.OracleDriver");
-                    URL = "jdbc:oracle:thin:@localhost:1521:XE";
-                    USUARIO = "C##ADMIS";
-                    CONTRA = "1234";
-                    conn = DriverManager.getConnection(URL, USUARIO, CONTRA);
-                    System.out.println("Conectado ala base");
-                } catch (Exception e) {
-                    System.err.println("Error,de la base no se conecto");
-                }
 
-            } else if (opcion == 2) {
-                try {
-                    Class.forName("oracle.jdbc.OracleDriver");
-                    URL = "jdbc:oracle:thin:@192.168.43.157:1521:XE";
-                    USUARIO = "C##ADMIS";
-                    CONTRA = "1234";
-                    conn = DriverManager.getConnection(URL, USUARIO, CONTRA);
-                    System.out.println("Conectado ala base");
-                } catch (Exception e) {
-                    System.err.println("Error,de la base no se conecto");
-                }
-
-            }
-
+        try {
+            Class.forName("oracle.jdbc.OracleDriver");
+            URL = "jdbc:oracle:thin:@192.168.43.157:1521:XE";
+            USUARIO = "C##ADMIS";
+            CONTRA = "1234";
+            conn = DriverManager.getConnection(URL, USUARIO, CONTRA);
+            System.out.println("Conectado ala base");
+        } catch (Exception e) {
+            System.err.println("Error,de la base no se conecto");
         }
-
     }
 
     public void desconectar() {
