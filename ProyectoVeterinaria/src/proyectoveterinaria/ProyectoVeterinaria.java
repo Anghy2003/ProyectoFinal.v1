@@ -7,6 +7,7 @@ package proyectoveterinaria;
 
 import Modelo.conexion;
 import Vista.menu.Menu;
+import java.sql.Connection;
 
 /**
  *
@@ -18,9 +19,12 @@ public class ProyectoVeterinaria {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        conexion conn = new conexion();
+        conexion con = new conexion();
+          con.conectar();
+
         Menu menuxito=new Menu();
         menuxito.setVisible(true);
     }
+    private Connection conn;
     
 }
