@@ -26,7 +26,7 @@ public class conexion {
         Scanner numero = new Scanner(System.in);
         int opcion = 0;
         while (opcion != 1 && opcion != 2) {
-            System.out.println("Ingrese 1 si es Angi o 2 si (otro)");
+            System.out.println("Ingrese 1 si es Angi (localhost) o 2 si (otro)");
             opcion = numero.nextInt();
             if (opcion == 1) {
                 //codigo Angi
