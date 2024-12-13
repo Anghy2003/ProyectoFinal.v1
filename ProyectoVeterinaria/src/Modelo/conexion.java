@@ -28,9 +28,9 @@ public class conexion {
 
         try {
             Class.forName("oracle.jdbc.OracleDriver");
-            URL = "jdbc:oracle:thin:@192.168.43.157:1521:XE";
-            USUARIO = "C##ADMIS";
-            CONTRA = "1234";
+            URL = "jdbc:oracle:thin:@localhost:1521:XE";
+            USUARIO = "BaseU4";
+            CONTRA = "123";
             conn = DriverManager.getConnection(URL, USUARIO, CONTRA);
             System.out.println("Conectado ala base");
         } catch (Exception e) {
