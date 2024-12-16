@@ -7,7 +7,7 @@ package Vista.menu;
 
 import Modelo.conexion;
 import Vista.crud.crud_mascotas;
-import Vista.home.Home;
+import Vista.home.home;
 import Vista.submenu.PanelSubmenuControlVacu;
 import Vista.submenu.*;
 import Vista.titulos.*;
@@ -47,6 +47,8 @@ public class Menu extends javax.swing.JFrame {
         btnControlMed = new javax.swing.JLabel();
         btnPropietarios = new javax.swing.JLabel();
         btnSalir = new javax.swing.JLabel();
+        btnControlVac1 = new javax.swing.JLabel();
+        btnControlVac2 = new javax.swing.JLabel();
         PanelHeader = new javax.swing.JPanel();
         PanelPrincipal = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
@@ -129,6 +131,26 @@ public class Menu extends javax.swing.JFrame {
             }
         });
 
+        btnControlVac1.setFont(new java.awt.Font("Roboto Black", 0, 19)); // NOI18N
+        btnControlVac1.setForeground(new java.awt.Color(255, 255, 255));
+        btnControlVac1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/icons8-clínica-externa-veterinaria-y-mascotas-creatype-bicolor-colorcreatype-5-40.png"))); // NOI18N
+        btnControlVac1.setText("Veterinario");
+        btnControlVac1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnControlVac1MouseClicked(evt);
+            }
+        });
+
+        btnControlVac2.setFont(new java.awt.Font("Roboto Black", 0, 19)); // NOI18N
+        btnControlVac2.setForeground(new java.awt.Color(255, 255, 255));
+        btnControlVac2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/icons8-clínica-externa-veterinaria-y-mascotas-creatype-bicolor-colorcreatype-5-40.png"))); // NOI18N
+        btnControlVac2.setText(" Vacunas ");
+        btnControlVac2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnControlVac2MouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout PanelBotonesMenuLayout = new javax.swing.GroupLayout(PanelBotonesMenu);
         PanelBotonesMenu.setLayout(PanelBotonesMenuLayout);
         PanelBotonesMenuLayout.setHorizontalGroup(
@@ -138,24 +160,34 @@ public class Menu extends javax.swing.JFrame {
                     .addComponent(btnMascotas, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnControlMed, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnControlVac)
-                    .addComponent(btnSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnPropietarios))
-                .addGap(0, 12, Short.MAX_VALUE))
+                    .addComponent(btnPropietarios)
+                    .addComponent(btnSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(PanelBotonesMenuLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(PanelBotonesMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnControlVac2)
+                    .addComponent(btnControlVac1))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         PanelBotonesMenuLayout.setVerticalGroup(
             PanelBotonesMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(PanelBotonesMenuLayout.createSequentialGroup()
-                .addGap(37, 37, 37)
+                .addGap(25, 25, 25)
                 .addComponent(btnMascotas, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(28, 28, 28)
+                .addGap(18, 18, 18)
                 .addComponent(btnPropietarios, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(33, 33, 33)
+                .addGap(18, 18, 18)
                 .addComponent(btnControlMed)
-                .addGap(37, 37, 37)
+                .addGap(18, 18, 18)
                 .addComponent(btnControlVac)
-                .addGap(45, 45, 45)
+                .addGap(18, 18, 18)
+                .addComponent(btnControlVac2)
+                .addGap(18, 18, 18)
+                .addComponent(btnControlVac1)
+                .addGap(18, 18, 18)
                 .addComponent(btnSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(82, Short.MAX_VALUE))
+                .addContainerGap(49, Short.MAX_VALUE))
         );
 
         PanelMenu.add(PanelBotonesMenu, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 130, -1, 490));
@@ -252,6 +284,7 @@ public class Menu extends javax.swing.JFrame {
         
         PanelTItuloControlMedico titSer = new PanelTItuloControlMedico();
         PanelSubmenuControMedi Submenuserv = new PanelSubmenuControMedi();
+        
         MostrarpanelTitulo(titSer);
         MostrarpanelSubmenu(Submenuserv);
         
@@ -267,7 +300,7 @@ public class Menu extends javax.swing.JFrame {
     }//GEN-LAST:event_btnPropietariosMouseClicked
 
     private void btnSalirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSalirMouseClicked
-        Home homesito=new Home();
+        home homesito=new home();
         
     }//GEN-LAST:event_btnSalirMouseClicked
  private void MostrarpanelTitulo(JPanel p) {
@@ -282,6 +315,14 @@ public class Menu extends javax.swing.JFrame {
     private void PanelBotonesMenuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_PanelBotonesMenuMouseClicked
         // TODO add your handling code here:
     }//GEN-LAST:event_PanelBotonesMenuMouseClicked
+
+    private void btnControlVac1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnControlVac1MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnControlVac1MouseClicked
+
+    private void btnControlVac2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnControlVac2MouseClicked
+       
+    }//GEN-LAST:event_btnControlVac2MouseClicked
 private void MostrarpanelSubmenu(JPanel p) {
         p.setSize(870, 80);
         p.setLocation(0, 0);
@@ -334,6 +375,8 @@ private void MostrarpanelSubmenu(JPanel p) {
     public static javax.swing.JPanel PanelSubmenu;
     private javax.swing.JLabel btnControlMed;
     private javax.swing.JLabel btnControlVac;
+    private javax.swing.JLabel btnControlVac1;
+    private javax.swing.JLabel btnControlVac2;
     private javax.swing.JLabel btnMascotas;
     private javax.swing.JLabel btnPropietarios;
     private javax.swing.JLabel btnSalir;
