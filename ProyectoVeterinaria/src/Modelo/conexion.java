@@ -7,6 +7,7 @@ package Modelo;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.util.Scanner;
 
 /**
@@ -45,5 +46,29 @@ public class conexion {
             System.err.println("Error,no se pudo desconectar");
         }
 
+    }
+    
+    
+    public Connection conectarBD() {
+        Connection connection = null;
+        String url = "jdbc:oracle:thin:@localhost:1521:xe";
+        String user = "BaseU4Copy";
+        String password = "123";
+
+        try {
+            // Cargar el driver de Oracle
+            Class.forName("oracle.jdbc.driver.OracleDriver");
+            // Establecer la conexión
+            connection = DriverManager.getConnection(url, user, password);
+            //System.out.println("Conexión exitosa a la base de datos.");
+        } catch (ClassNotFoundException e) {
+            System.out.println("Error: No se pudo encontrar el driver de Oracle.");
+            e.printStackTrace();
+        } catch (SQLException e) {
+            System.out.println("Error de conexión a la base de datos.");
+            e.printStackTrace();
+        }
+
+        return connection;
     }
 }

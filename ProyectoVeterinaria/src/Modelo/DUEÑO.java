@@ -10,25 +10,44 @@ package Modelo;
  * @author aberr
  */
 public class DUEÑO {
+    String ID;
     String CEDULA;
     String NOMBRE;
     String APELLIDO;
     String DIRECCION;
     String TELEFONO;
     String ID_MASCOTA;
-    String ID_DUEÑO;
+    
 
     public DUEÑO() {
     }
 
-    public DUEÑO(String CEDULA, String NOMBRE, String APELLIDO, String DIRECCION, String TELEFONO, String ID_MASCOTA, String ID_DUEÑO) {
+    public DUEÑO(String ID, String CEDULA, String NOMBRE, String APELLIDO, String DIRECCION, String TELEFONO, String ID_MASCOTA) {
+        this.ID = ID;
         this.CEDULA = CEDULA;
         this.NOMBRE = NOMBRE;
         this.APELLIDO = APELLIDO;
         this.DIRECCION = DIRECCION;
         this.TELEFONO = TELEFONO;
         this.ID_MASCOTA = ID_MASCOTA;
-        this.ID_DUEÑO = ID_DUEÑO;
+    }
+
+    public DUEÑO(String CEDULA, String NOMBRE, String APELLIDO, String DIRECCION, String TELEFONO, String ID_MASCOTA) {
+        this.CEDULA = CEDULA;
+        this.NOMBRE = NOMBRE;
+        this.APELLIDO = APELLIDO;
+        this.DIRECCION = DIRECCION;
+        this.TELEFONO = TELEFONO;
+        this.ID_MASCOTA = ID_MASCOTA;
+    }
+    
+
+    public String getID() {
+        return ID;
+    }
+
+    public void setID(String ID) {
+        this.ID = ID;
     }
 
     public String getCEDULA() {
@@ -77,19 +96,6 @@ public class DUEÑO {
 
     public void setID_MASCOTA(String ID_MASCOTA) {
         this.ID_MASCOTA = ID_MASCOTA;
-    }
-
-    public String getID_DUEÑO() {
-        return ID_DUEÑO;
-    }
-
-    public void setID_DUEÑO(String ID_DUEÑO) {
-        this.ID_DUEÑO = ID_DUEÑO;
-    }
-
-    @Override
-    public String toString() {
-        return "DUE\u00d1O{" + "CEDULA=" + CEDULA + ", NOMBRE=" + NOMBRE + ", APELLIDO=" + APELLIDO + ", DIRECCION=" + DIRECCION + ", TELEFONO=" + TELEFONO + ", ID_MASCOTA=" + ID_MASCOTA + ", ID_DUE\u00d1O=" + ID_DUEÑO + '}';
     }
     
 }

@@ -6,21 +6,37 @@ package Modelo;
  * @author aberr
  */
 public class VACUNA {
+    String ID;
     String TIPO;
     String NOMBRE;
     String FECHA_CREACION;
     String FECHA_EXPIRACION;
-    String ID_VACUNA;
+    
 
     public VACUNA() {
     }
 
-    public VACUNA(String TIPO, String NOMBRE, String FECHA_CREACION, String FECHA_EXPIRACION, String ID_VACUNA) {
+    public VACUNA(String ID, String TIPO, String NOMBRE, String FECHA_CREACION, String FECHA_EXPIRACION) {
+        this.ID = ID;
         this.TIPO = TIPO;
         this.NOMBRE = NOMBRE;
         this.FECHA_CREACION = FECHA_CREACION;
         this.FECHA_EXPIRACION = FECHA_EXPIRACION;
-        this.ID_VACUNA = ID_VACUNA;
+    }
+
+    public VACUNA(String TIPO, String NOMBRE, String FECHA_CREACION, String FECHA_EXPIRACION) {
+        this.TIPO = TIPO;
+        this.NOMBRE = NOMBRE;
+        this.FECHA_CREACION = FECHA_CREACION;
+        this.FECHA_EXPIRACION = FECHA_EXPIRACION;
+    }
+
+    public String getID() {
+        return ID;
+    }
+
+    public void setID(String ID) {
+        this.ID = ID;
     }
 
     public String getTIPO() {
@@ -54,20 +70,6 @@ public class VACUNA {
     public void setFECHA_EXPIRACION(String FECHA_EXPIRACION) {
         this.FECHA_EXPIRACION = FECHA_EXPIRACION;
     }
-
-    public String getID_VACUNA() {
-        return ID_VACUNA;
-    }
-
-    public void setID_VACUNA(String ID_VACUNA) {
-        this.ID_VACUNA = ID_VACUNA;
-    }
-
-    @Override
-    public String toString() {
-        return "VACUNA{" + "TIPO=" + TIPO + ", NOMBRE=" + NOMBRE + ", FECHA_CREACION=" + FECHA_CREACION + ", FECHA_EXPIRACION=" + FECHA_EXPIRACION + ", ID_VACUNA=" + ID_VACUNA + '}';
-    }
-    
     
     
 }

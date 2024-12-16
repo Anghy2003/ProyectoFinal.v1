@@ -8,21 +8,39 @@ import java.util.Date;
  * @author aberr
  */
 public class Mascotas {
+    String ID;
     String  NOMBRE;
     String ESPECIE;
     String RAZA;
-    String CEDULA_DUEÑO;
-    String ID_MASCOTA;
+    String CEDULA_DUEÑO;    
+    Date FECHANACIMIENTO;
 
     public Mascotas() {
     }
 
-    public Mascotas(String NOMBRE, String ESPECIE, String RAZA, String CEDULA_DUEÑO, String ID_MASCOTA) {
+    public Mascotas(String ID, String NOMBRE, String ESPECIE, String RAZA, String CEDULA_DUEÑO, Date FECHANACIMIENTO) {
+        this.ID = ID;
         this.NOMBRE = NOMBRE;
         this.ESPECIE = ESPECIE;
         this.RAZA = RAZA;
         this.CEDULA_DUEÑO = CEDULA_DUEÑO;
-        this.ID_MASCOTA = ID_MASCOTA;
+        this.FECHANACIMIENTO = FECHANACIMIENTO;
+    }
+
+    public Mascotas(String NOMBRE, String ESPECIE, String RAZA, String CEDULA_DUEÑO, Date FECHANACIMIENTO) {
+        this.NOMBRE = NOMBRE;
+        this.ESPECIE = ESPECIE;
+        this.RAZA = RAZA;
+        this.CEDULA_DUEÑO = CEDULA_DUEÑO;
+        this.FECHANACIMIENTO = FECHANACIMIENTO;
+    }
+
+    public String getID() {
+        return ID;
+    }
+
+    public void setID(String ID) {
+        this.ID = ID;
     }
 
     public String getNOMBRE() {
@@ -57,17 +75,14 @@ public class Mascotas {
         this.CEDULA_DUEÑO = CEDULA_DUEÑO;
     }
 
-    public String getID_MASCOTA() {
-        return ID_MASCOTA;
+    public Date getFECHANACIMIENTO() {
+        return FECHANACIMIENTO;
     }
 
-    public void setID_MASCOTA(String ID_MASCOTA) {
-        this.ID_MASCOTA = ID_MASCOTA;
+    public void setFECHANACIMIENTO(Date FECHANACIMIENTO) {
+        this.FECHANACIMIENTO = FECHANACIMIENTO;
     }
-
-    @Override
-    public String toString() {
-        return "Mascotas{" + "NOMBRE=" + NOMBRE + ", ESPECIE=" + ESPECIE + ", RAZA=" + RAZA + ", CEDULA_DUE\u00d1O=" + CEDULA_DUEÑO + ", ID_MASCOTA=" + ID_MASCOTA + '}';
-    }
+    
+    
     
 }

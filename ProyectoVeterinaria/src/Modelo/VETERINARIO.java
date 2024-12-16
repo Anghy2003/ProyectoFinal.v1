@@ -6,21 +6,36 @@ package Modelo;
  * @author aberr
  */
 public class VETERINARIO {
+    String ID;
     String CEDULA;
     String NOMBRE;
     String DIRECCION;
     String CELULAR;
-    String ID_VETERINARIO;
 
     public VETERINARIO() {
     }
 
-    public VETERINARIO(String CEDULA, String NOMBRE, String DIRECCION, String CELULAR, String ID_VETERINARIO) {
+    public VETERINARIO(String ID, String CEDULA, String NOMBRE, String DIRECCION, String CELULAR) {
+        this.ID = ID;
         this.CEDULA = CEDULA;
         this.NOMBRE = NOMBRE;
         this.DIRECCION = DIRECCION;
         this.CELULAR = CELULAR;
-        this.ID_VETERINARIO = ID_VETERINARIO;
+    }
+
+    public VETERINARIO(String CEDULA, String NOMBRE, String DIRECCION, String CELULAR) {
+        this.CEDULA = CEDULA;
+        this.NOMBRE = NOMBRE;
+        this.DIRECCION = DIRECCION;
+        this.CELULAR = CELULAR;
+    }
+
+    public String getID() {
+        return ID;
+    }
+
+    public void setID(String ID) {
+        this.ID = ID;
     }
 
     public String getCEDULA() {
@@ -53,19 +68,6 @@ public class VETERINARIO {
 
     public void setCELULAR(String CELULAR) {
         this.CELULAR = CELULAR;
-    }
-
-    public String getID_VETERINARIO() {
-        return ID_VETERINARIO;
-    }
-
-    public void setID_VETERINARIO(String ID_VETERINARIO) {
-        this.ID_VETERINARIO = ID_VETERINARIO;
-    }
-
-    @Override
-    public String toString() {
-        return "VETERINARIO{" + "CEDULA=" + CEDULA + ", NOMBRE=" + NOMBRE + ", DIRECCION=" + DIRECCION + ", CELULAR=" + CELULAR + ", ID_VETERINARIO=" + ID_VETERINARIO + '}';
     }
     
     

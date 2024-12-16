@@ -10,21 +10,37 @@ package Modelo;
  * @author aberr
  */
 public class Control_Vacunas {
+    String ID;
     int DOSIS;
     String FECHA;
     String ID_VACUNA;
-    String ID_CONTROL_VACUNA;
     String ID_MASCOTA;
 
     public Control_Vacunas() {
     }
 
-    public Control_Vacunas(int DOSIS, String FECHA, String ID_VACUNA, String ID_CONTROL_VACUNA, String ID_MASCOTA) {
+    public Control_Vacunas(String ID, int DOSIS, String FECHA, String ID_VACUNA, String ID_MASCOTA) {
+        this.ID = ID;
         this.DOSIS = DOSIS;
         this.FECHA = FECHA;
         this.ID_VACUNA = ID_VACUNA;
-        this.ID_CONTROL_VACUNA = ID_CONTROL_VACUNA;
         this.ID_MASCOTA = ID_MASCOTA;
+    }
+
+    public Control_Vacunas(int DOSIS, String FECHA, String ID_VACUNA, String ID_MASCOTA) {
+        this.DOSIS = DOSIS;
+        this.FECHA = FECHA;
+        this.ID_VACUNA = ID_VACUNA;
+        this.ID_MASCOTA = ID_MASCOTA;
+    }
+    
+
+    public String getID() {
+        return ID;
+    }
+
+    public void setID(String ID) {
+        this.ID = ID;
     }
 
     public int getDOSIS() {
@@ -51,14 +67,6 @@ public class Control_Vacunas {
         this.ID_VACUNA = ID_VACUNA;
     }
 
-    public String getID_CONTROL_VACUNA() {
-        return ID_CONTROL_VACUNA;
-    }
-
-    public void setID_CONTROL_VACUNA(String ID_CONTROL_VACUNA) {
-        this.ID_CONTROL_VACUNA = ID_CONTROL_VACUNA;
-    }
-
     public String getID_MASCOTA() {
         return ID_MASCOTA;
     }
@@ -66,11 +74,7 @@ public class Control_Vacunas {
     public void setID_MASCOTA(String ID_MASCOTA) {
         this.ID_MASCOTA = ID_MASCOTA;
     }
-
-    @Override
-    public String toString() {
-        return "Control_Vacunas{" + "DOSIS=" + DOSIS + ", FECHA=" + FECHA + ", ID_VACUNA=" + ID_VACUNA + ", ID_CONTROL_VACUNA=" + ID_CONTROL_VACUNA + ", ID_MASCOTA=" + ID_MASCOTA + '}';
-    }
+    
     
     
 }
