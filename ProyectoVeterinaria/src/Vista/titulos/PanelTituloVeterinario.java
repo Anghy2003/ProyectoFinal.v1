@@ -9,12 +9,12 @@ package Vista.titulos;
  *
  * @author 59399
  */
-public class PanelTituloMascotas extends javax.swing.JPanel {
+public class PanelTituloVeterinario extends javax.swing.JPanel {
 
     /**
-     * Creates new form PanelTituloMascotas
+     * Creates new form PanelTituloVeterinario
      */
-    public PanelTituloMascotas() {
+    public PanelTituloVeterinario() {
         initComponents();
     }
 
@@ -35,22 +35,26 @@ public class PanelTituloMascotas extends javax.swing.JPanel {
 
         lbltituloUsuarios.setFont(new java.awt.Font("Roboto Black", 0, 30)); // NOI18N
         lbltituloUsuarios.setForeground(new java.awt.Color(79, 107, 155));
-        lbltituloUsuarios.setText("Mascotas");
+        lbltituloUsuarios.setText("Veterinarios");
         jPanel1.add(lbltituloUsuarios, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 50, 322, 30));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 720, Short.MAX_VALUE)
+            .addGap(0, 760, Short.MAX_VALUE)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 720, Short.MAX_VALUE))
+                .addGroup(layout.createSequentialGroup()
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 760, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 0, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 92, Short.MAX_VALUE)
+            .addGap(0, 99, Short.MAX_VALUE)
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(layout.createSequentialGroup()
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 0, Short.MAX_VALUE)))
         );
     }// </editor-fold>//GEN-END:initComponents
 

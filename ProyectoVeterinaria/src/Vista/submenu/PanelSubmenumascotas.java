@@ -87,7 +87,7 @@ public class PanelSubmenumascotas extends javax.swing.JPanel {
 
 
     private void ShowpanelCruds(JPanel p) {
-        p.setSize(870, 630);
+        p.setSize(700,460);
         p.setLocation(0, 0);
         Menu.PanelPrincipal.removeAll();
         Menu.PanelPrincipal.add(p, BorderLayout.CENTER);

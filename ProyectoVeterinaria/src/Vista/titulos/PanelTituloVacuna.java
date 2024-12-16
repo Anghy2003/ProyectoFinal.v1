@@ -9,12 +9,12 @@ package Vista.titulos;
  *
  * @author 59399
  */
-public class PanelTituloMascotas extends javax.swing.JPanel {
+public class PanelTituloVacuna extends javax.swing.JPanel {
 
     /**
-     * Creates new form PanelTituloMascotas
+     * Creates new form PanelTitulo
      */
-    public PanelTituloMascotas() {
+    public PanelTituloVacuna() {
         initComponents();
     }
 
@@ -35,22 +35,18 @@ public class PanelTituloMascotas extends javax.swing.JPanel {
 
         lbltituloUsuarios.setFont(new java.awt.Font("Roboto Black", 0, 30)); // NOI18N
         lbltituloUsuarios.setForeground(new java.awt.Color(79, 107, 155));
-        lbltituloUsuarios.setText("Mascotas");
-        jPanel1.add(lbltituloUsuarios, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 50, 322, 30));
+        lbltituloUsuarios.setText(" Vacunas");
+        jPanel1.add(lbltituloUsuarios, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 50, 322, 30));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 720, Short.MAX_VALUE)
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 720, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 720, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 92, Short.MAX_VALUE)
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
 
