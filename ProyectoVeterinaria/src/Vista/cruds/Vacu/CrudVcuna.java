@@ -123,7 +123,7 @@ public class CrudVcuna extends javax.swing.JPanel {
         lblMarca2.setFont(new java.awt.Font("Roboto Medium", 0, 21)); // NOI18N
         lblMarca2.setForeground(new java.awt.Color(79, 107, 155));
         lblMarca2.setText("Fecha de Creación:");
-        jPanel1.add(lblMarca2, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 200, 210, 40));
+        jPanel1.add(lblMarca2, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 200, 190, 40));
         jPanel1.add(jDateChooser1, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 210, 210, -1));
         jPanel1.add(jDateChooser2, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 260, 210, -1));
 

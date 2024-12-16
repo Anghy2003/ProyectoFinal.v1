@@ -47,8 +47,8 @@ public class Menu extends javax.swing.JFrame {
         btnControlMed = new javax.swing.JLabel();
         btnPropietarios = new javax.swing.JLabel();
         btnSalir = new javax.swing.JLabel();
-        btnControlVac1 = new javax.swing.JLabel();
-        btnControlVac2 = new javax.swing.JLabel();
+        Btnveterinario = new javax.swing.JLabel();
+        btnVacunas = new javax.swing.JLabel();
         PanelHeader = new javax.swing.JPanel();
         PanelPrincipal = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
@@ -131,23 +131,23 @@ public class Menu extends javax.swing.JFrame {
             }
         });
 
-        btnControlVac1.setFont(new java.awt.Font("Roboto Black", 0, 19)); // NOI18N
-        btnControlVac1.setForeground(new java.awt.Color(255, 255, 255));
-        btnControlVac1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/icons8-clínica-externa-veterinaria-y-mascotas-creatype-bicolor-colorcreatype-5-40.png"))); // NOI18N
-        btnControlVac1.setText("Veterinario");
-        btnControlVac1.addMouseListener(new java.awt.event.MouseAdapter() {
+        Btnveterinario.setFont(new java.awt.Font("Roboto Black", 0, 19)); // NOI18N
+        Btnveterinario.setForeground(new java.awt.Color(255, 255, 255));
+        Btnveterinario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/icons8-clínica-externa-veterinaria-y-mascotas-creatype-bicolor-colorcreatype-5-40.png"))); // NOI18N
+        Btnveterinario.setText("Veterinario");
+        Btnveterinario.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnControlVac1MouseClicked(evt);
+                BtnveterinarioMouseClicked(evt);
             }
         });
 
-        btnControlVac2.setFont(new java.awt.Font("Roboto Black", 0, 19)); // NOI18N
-        btnControlVac2.setForeground(new java.awt.Color(255, 255, 255));
-        btnControlVac2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/icons8-clínica-externa-veterinaria-y-mascotas-creatype-bicolor-colorcreatype-5-40.png"))); // NOI18N
-        btnControlVac2.setText(" Vacunas ");
-        btnControlVac2.addMouseListener(new java.awt.event.MouseAdapter() {
+        btnVacunas.setFont(new java.awt.Font("Roboto Black", 0, 19)); // NOI18N
+        btnVacunas.setForeground(new java.awt.Color(255, 255, 255));
+        btnVacunas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/icons8-clínica-externa-veterinaria-y-mascotas-creatype-bicolor-colorcreatype-5-40.png"))); // NOI18N
+        btnVacunas.setText(" Vacunas ");
+        btnVacunas.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnControlVac2MouseClicked(evt);
+                btnVacunasMouseClicked(evt);
             }
         });
 
@@ -166,8 +166,8 @@ public class Menu extends javax.swing.JFrame {
             .addGroup(PanelBotonesMenuLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(PanelBotonesMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnControlVac2)
-                    .addComponent(btnControlVac1))
+                    .addComponent(btnVacunas)
+                    .addComponent(Btnveterinario))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         PanelBotonesMenuLayout.setVerticalGroup(
@@ -182,9 +182,9 @@ public class Menu extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(btnControlVac)
                 .addGap(18, 18, 18)
-                .addComponent(btnControlVac2)
+                .addComponent(btnVacunas)
                 .addGap(18, 18, 18)
-                .addComponent(btnControlVac1)
+                .addComponent(Btnveterinario)
                 .addGap(18, 18, 18)
                 .addComponent(btnSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(49, Short.MAX_VALUE))
@@ -313,18 +313,24 @@ public class Menu extends javax.swing.JFrame {
     }
  
     private void PanelBotonesMenuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_PanelBotonesMenuMouseClicked
-        // TODO add your handling code here:
+       
     }//GEN-LAST:event_PanelBotonesMenuMouseClicked
 
-    private void btnControlVac1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnControlVac1MouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnControlVac1MouseClicked
+    private void BtnveterinarioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnveterinarioMouseClicked
+       PanelTituloVeterinario tituvet = new PanelTituloVeterinario();
+        PanelSubmenuVeterinario Submenuvet = new PanelSubmenuVeterinario();
+        MostrarpanelTitulo(tituvet);
+        MostrarpanelSubmenu(Submenuvet);
+    }//GEN-LAST:event_BtnveterinarioMouseClicked
 
-    private void btnControlVac2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnControlVac2MouseClicked
-       
-    }//GEN-LAST:event_btnControlVac2MouseClicked
+    private void btnVacunasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnVacunasMouseClicked
+        PanelTituloVacuna tituvac = new PanelTituloVacuna();
+        PanelSubmenuVacunas Submenuvet = new PanelSubmenuVacunas();
+        MostrarpanelTitulo(tituvac);
+        MostrarpanelSubmenu(Submenuvet);
+    }//GEN-LAST:event_btnVacunasMouseClicked
 private void MostrarpanelSubmenu(JPanel p) {
-        p.setSize(870, 80);
+        p.setSize(720, 80);
         p.setLocation(0, 0);
         PanelSubmenu.removeAll();
         PanelSubmenu.add(p, BorderLayout.CENTER);
@@ -368,6 +374,7 @@ private void MostrarpanelSubmenu(JPanel p) {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel Btnveterinario;
     private javax.swing.JPanel PanelBotonesMenu;
     public static javax.swing.JPanel PanelHeader;
     private javax.swing.JPanel PanelMenu;
@@ -375,11 +382,10 @@ private void MostrarpanelSubmenu(JPanel p) {
     public static javax.swing.JPanel PanelSubmenu;
     private javax.swing.JLabel btnControlMed;
     private javax.swing.JLabel btnControlVac;
-    private javax.swing.JLabel btnControlVac1;
-    private javax.swing.JLabel btnControlVac2;
     private javax.swing.JLabel btnMascotas;
     private javax.swing.JLabel btnPropietarios;
     private javax.swing.JLabel btnSalir;
+    private javax.swing.JLabel btnVacunas;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JLabel lbliconologo;
