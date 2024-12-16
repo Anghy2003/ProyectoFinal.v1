@@ -11,7 +11,7 @@ import java.util.Scanner;
 
 /**
  *
- * @author 59399
+ * @author aberr
  */
 public class conexion {
 

@@ -1,72 +1,73 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
+
 package Modelo;
 
 import java.util.Date;
 
 /**
  *
- * @author 59399
+ * @author aberr
  */
 public class Mascotas {
-    String  Nombre;
-    int id_Mascota,id_Propietario;
-    private Date Fecha_Nacimiento;
+    String  NOMBRE;
+    String ESPECIE;
+    String RAZA;
+    String CEDULA_DUEÑO;
+    String ID_MASCOTA;
 
     public Mascotas() {
     }
 
-    public Mascotas(String Nombre, int id_Mascota, int id_Propietario, Date Fecha_Nacimiento) {
-        this.Nombre = Nombre;
-        this.id_Mascota = id_Mascota;
-        this.id_Propietario = id_Propietario;
-        this.Fecha_Nacimiento = Fecha_Nacimiento;
+    public Mascotas(String NOMBRE, String ESPECIE, String RAZA, String CEDULA_DUEÑO, String ID_MASCOTA) {
+        this.NOMBRE = NOMBRE;
+        this.ESPECIE = ESPECIE;
+        this.RAZA = RAZA;
+        this.CEDULA_DUEÑO = CEDULA_DUEÑO;
+        this.ID_MASCOTA = ID_MASCOTA;
     }
 
-    public String getNombre() {
-        return Nombre;
+    public String getNOMBRE() {
+        return NOMBRE;
     }
 
-    public void setNombre(String Nombre) {
-        this.Nombre = Nombre;
+    public void setNOMBRE(String NOMBRE) {
+        this.NOMBRE = NOMBRE;
     }
 
-    public int getId_Mascota() {
-        return id_Mascota;
+    public String getESPECIE() {
+        return ESPECIE;
     }
 
-    public void setId_Mascota(int id_Mascota) {
-        this.id_Mascota = id_Mascota;
+    public void setESPECIE(String ESPECIE) {
+        this.ESPECIE = ESPECIE;
     }
 
-    public int getId_Propietario() {
-        return id_Propietario;
+    public String getRAZA() {
+        return RAZA;
     }
 
-    public void setId_Propietario(int id_Propietario) {
-        this.id_Propietario = id_Propietario;
+    public void setRAZA(String RAZA) {
+        this.RAZA = RAZA;
     }
 
-    public Date getFecha_Nacimiento() {
-        return Fecha_Nacimiento;
+    public String getCEDULA_DUEÑO() {
+        return CEDULA_DUEÑO;
     }
 
-    public void setFecha_Nacimiento(Date Fecha_Nacimiento) {
-        this.Fecha_Nacimiento = Fecha_Nacimiento;
+    public void setCEDULA_DUEÑO(String CEDULA_DUEÑO) {
+        this.CEDULA_DUEÑO = CEDULA_DUEÑO;
+    }
+
+    public String getID_MASCOTA() {
+        return ID_MASCOTA;
+    }
+
+    public void setID_MASCOTA(String ID_MASCOTA) {
+        this.ID_MASCOTA = ID_MASCOTA;
     }
 
     @Override
     public String toString() {
-        return "Mascotas{" + "Nombre=" + Nombre + ", id_Mascota=" + id_Mascota + ", id_Propietario=" + id_Propietario + ", Fecha_Nacimiento=" + Fecha_Nacimiento + '}';
+        return "Mascotas{" + "NOMBRE=" + NOMBRE + ", ESPECIE=" + ESPECIE + ", RAZA=" + RAZA + ", CEDULA_DUE\u00d1O=" + CEDULA_DUEÑO + ", ID_MASCOTA=" + ID_MASCOTA + '}';
     }
-
     
-
-    
-
-    
-
 }
