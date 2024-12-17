@@ -16,29 +16,26 @@ public class DUEÑO {
     String APELLIDO;
     String DIRECCION;
     String TELEFONO;
-    String ID_MASCOTA;
     
 
     public DUEÑO() {
     }
 
-    public DUEÑO(String ID, String CEDULA, String NOMBRE, String APELLIDO, String DIRECCION, String TELEFONO, String ID_MASCOTA) {
+    public DUEÑO(String ID, String CEDULA, String NOMBRE, String APELLIDO, String DIRECCION, String TELEFONO) {
         this.ID = ID;
         this.CEDULA = CEDULA;
         this.NOMBRE = NOMBRE;
         this.APELLIDO = APELLIDO;
         this.DIRECCION = DIRECCION;
         this.TELEFONO = TELEFONO;
-        this.ID_MASCOTA = ID_MASCOTA;
     }
 
-    public DUEÑO(String CEDULA, String NOMBRE, String APELLIDO, String DIRECCION, String TELEFONO, String ID_MASCOTA) {
+    public DUEÑO(String CEDULA, String NOMBRE, String APELLIDO, String DIRECCION, String TELEFONO) {
         this.CEDULA = CEDULA;
         this.NOMBRE = NOMBRE;
         this.APELLIDO = APELLIDO;
         this.DIRECCION = DIRECCION;
         this.TELEFONO = TELEFONO;
-        this.ID_MASCOTA = ID_MASCOTA;
     }
     
 
@@ -90,12 +87,5 @@ public class DUEÑO {
         this.TELEFONO = TELEFONO;
     }
 
-    public String getID_MASCOTA() {
-        return ID_MASCOTA;
-    }
-
-    public void setID_MASCOTA(String ID_MASCOTA) {
-        this.ID_MASCOTA = ID_MASCOTA;
-    }
     
 }
