@@ -5,6 +5,10 @@
  */
 package Vista.cruds.Vacu;
 
+import Modelo.bdVacuna;
+import Modelo.conexion;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author 59399
@@ -16,6 +20,47 @@ public class CrudVcuna extends javax.swing.JPanel {
      */
     public CrudVcuna() {
         initComponents();
+         int opcion = JOptionPane.showOptionDialog(
+            null, 
+            "¿La vacuna ya está registrada en el sistema?", 
+            "Consulta de vacunas", 
+            JOptionPane.YES_NO_OPTION, 
+            JOptionPane.QUESTION_MESSAGE, 
+            null, 
+            new Object[] {"Sí", "No"}, 
+            "Sí");
+
+    // Manejar las respuestas
+    if (opcion == JOptionPane.YES_OPTION) {
+        lblnombre.setVisible(true);
+        txtnombre.setVisible(true);
+        btnBuscar.setVisible(true);
+        btnGuardar.setVisible(false);
+        lbltipo.setVisible(false);
+        txttipo.setVisible(false);
+        lblfechacreacion.setVisible(false);
+        lblfechaexp.setVisible(false);
+        jDateChooser1.setVisible(false);
+        jDateChooser2.setVisible(false);
+        btnEliminar.setVisible(false);
+
+    } else if (opcion == JOptionPane.NO_OPTION) {
+        btnGuardar.setVisible(true);
+        lbltipo.setVisible(true);
+        txttipo.setVisible(true);
+        txtnombre.setVisible(true);
+        lblnombre.setVisible(true);
+        lblfechacreacion.setVisible(true);
+        lblfechaexp.setVisible(true);
+        jDateChooser1.setVisible(true);
+        jDateChooser2.setVisible(true);
+        btnBuscar.setVisible(false);
+        btnEditar.setVisible(false);
+        btnEliminar.setVisible(false);
+
+    } else {
+        JOptionPane.showMessageDialog(null, "No seleccionaste ninguna opción.");
+    }
     }
 
     /**
@@ -29,15 +74,20 @@ public class CrudVcuna extends javax.swing.JPanel {
 
         jPanel1 = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
-        lblPlaca = new javax.swing.JLabel();
-        txtPlaca = new rojeru_san.RSMTextFull();
-        btnCancelar = new rojeru_san.RSButtonRiple();
+        jPanel5 = new javax.swing.JPanel();
+        jPanel6 = new javax.swing.JPanel();
+        btnEliminar = new rojeru_san.RSButtonRiple();
+        btnBuscar = new rojeru_san.RSButtonRiple();
+        btnEditar = new rojeru_san.RSButtonRiple();
         btnGuardar = new rojeru_san.RSButtonRiple();
-        lblPropietario = new javax.swing.JLabel();
-        lblMarca1 = new javax.swing.JLabel();
-        txtCliente3 = new rojeru_san.RSMTextFull();
-        lblMarca2 = new javax.swing.JLabel();
+        jPanel4 = new javax.swing.JPanel();
+        lbltipo = new javax.swing.JLabel();
+        lblnombre = new javax.swing.JLabel();
+        txttipo = new rojeru_san.RSMTextFull();
+        txtnombre = new rojeru_san.RSMTextFull();
+        lblfechacreacion = new javax.swing.JLabel();
         jDateChooser1 = new com.toedter.calendar.JDateChooser();
+        lblfechaexp = new javax.swing.JLabel();
         jDateChooser2 = new com.toedter.calendar.JDateChooser();
 
         jPanel1.setBackground(new java.awt.Color(183, 224, 210));
@@ -46,45 +96,53 @@ public class CrudVcuna extends javax.swing.JPanel {
         jLabel2.setFont(new java.awt.Font("Roboto Black", 0, 30)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(79, 107, 155));
         jLabel2.setText("Registro de Vacunas");
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 30, 320, 40));
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 0, 320, 40));
 
-        lblPlaca.setFont(new java.awt.Font("Roboto Medium", 0, 21)); // NOI18N
-        lblPlaca.setForeground(new java.awt.Color(79, 107, 155));
-        lblPlaca.setText("id_Vacuna:");
-        jPanel1.add(lblPlaca, new org.netbeans.lib.awtextra.AbsoluteConstraints(270, 100, 110, 40));
+        jPanel6.setBackground(new java.awt.Color(183, 224, 210));
 
-        txtPlaca.setForeground(new java.awt.Color(0, 53, 79));
-        txtPlaca.setColorTransparente(true);
-        txtPlaca.setFont(new java.awt.Font("Roboto Light", 1, 14)); // NOI18N
-        txtPlaca.setPlaceholder("Ejm: VACU_01");
-        txtPlaca.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtPlacaActionPerformed(evt);
-            }
-        });
-        txtPlaca.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtPlacaKeyTyped(evt);
-            }
-        });
-        jPanel1.add(txtPlaca, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 90, 230, 40));
-
-        btnCancelar.setBackground(new java.awt.Color(204, 51, 0));
-        btnCancelar.setText("Cancelar");
-        btnCancelar.setToolTipText("Regresar a la lista de Vehiculos");
-        btnCancelar.addMouseListener(new java.awt.event.MouseAdapter() {
+        btnEliminar.setBackground(new java.awt.Color(204, 51, 0));
+        btnEliminar.setText("Eliminar");
+        btnEliminar.setToolTipText("Regresar a la lista de Vehiculos");
+        btnEliminar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                btnCancelarMouseClicked(evt);
+                btnEliminarMouseClicked(evt);
             }
         });
-        btnCancelar.addActionListener(new java.awt.event.ActionListener() {
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnCancelarActionPerformed(evt);
+                btnEliminarActionPerformed(evt);
             }
         });
-        jPanel1.add(btnCancelar, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 410, -1, -1));
 
-        btnGuardar.setBackground(new java.awt.Color(0, 153, 255));
+        btnBuscar.setBackground(new java.awt.Color(0, 153, 255));
+        btnBuscar.setText("Buscar");
+        btnBuscar.setToolTipText("Verificar y rellenar todos los campos");
+        btnBuscar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnBuscarMouseClicked(evt);
+            }
+        });
+        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarActionPerformed(evt);
+            }
+        });
+
+        btnEditar.setBackground(new java.awt.Color(0, 153, 255));
+        btnEditar.setText("Editar");
+        btnEditar.setToolTipText("Verificar y rellenar todos los campos");
+        btnEditar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnEditarMouseClicked(evt);
+            }
+        });
+        btnEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditarActionPerformed(evt);
+            }
+        });
+
+        btnGuardar.setBackground(new java.awt.Color(0, 204, 51));
         btnGuardar.setText("Guardar");
         btnGuardar.setToolTipText("Verificar y rellenar todos los campos");
         btnGuardar.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -97,101 +155,230 @@ public class CrudVcuna extends javax.swing.JPanel {
                 btnGuardarActionPerformed(evt);
             }
         });
-        jPanel1.add(btnGuardar, new org.netbeans.lib.awtextra.AbsoluteConstraints(480, 410, -1, -1));
 
-        lblPropietario.setFont(new java.awt.Font("Roboto Medium", 0, 21)); // NOI18N
-        lblPropietario.setForeground(new java.awt.Color(79, 107, 155));
-        lblPropietario.setText("Tipo:");
-        jPanel1.add(lblPropietario, new org.netbeans.lib.awtextra.AbsoluteConstraints(320, 150, 50, 30));
+        jPanel4.setBackground(new java.awt.Color(183, 224, 210));
+        jPanel4.setForeground(new java.awt.Color(183, 224, 210));
 
-        lblMarca1.setFont(new java.awt.Font("Roboto Medium", 0, 21)); // NOI18N
-        lblMarca1.setForeground(new java.awt.Color(79, 107, 155));
-        lblMarca1.setText("Fecha de expiración:");
-        jPanel1.add(lblMarca1, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 250, 210, 40));
+        lbltipo.setFont(new java.awt.Font("Roboto Medium", 1, 16)); // NOI18N
+        lbltipo.setForeground(new java.awt.Color(79, 107, 155));
+        lbltipo.setText("Tipo:");
 
-        txtCliente3.setForeground(new java.awt.Color(0, 53, 79));
-        txtCliente3.setColorTransparente(true);
-        txtCliente3.setFont(new java.awt.Font("Roboto Light", 1, 14)); // NOI18N
-        txtCliente3.setPlaceholder("");
-        txtCliente3.addKeyListener(new java.awt.event.KeyAdapter() {
-            public void keyTyped(java.awt.event.KeyEvent evt) {
-                txtCliente3KeyTyped(evt);
+        lblnombre.setFont(new java.awt.Font("Roboto Medium", 1, 16)); // NOI18N
+        lblnombre.setForeground(new java.awt.Color(79, 107, 155));
+        lblnombre.setText("Nombre:");
+
+        txttipo.setForeground(new java.awt.Color(0, 53, 79));
+        txttipo.setColorTransparente(true);
+        txttipo.setFont(new java.awt.Font("Roboto Light", 1, 12)); // NOI18N
+        txttipo.setPlaceholder("");
+        txttipo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txttipoActionPerformed(evt);
             }
         });
-        jPanel1.add(txtCliente3, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 140, 230, 40));
+        txttipo.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txttipoKeyTyped(evt);
+            }
+        });
 
-        lblMarca2.setFont(new java.awt.Font("Roboto Medium", 0, 21)); // NOI18N
-        lblMarca2.setForeground(new java.awt.Color(79, 107, 155));
-        lblMarca2.setText("Fecha de Creación:");
-        jPanel1.add(lblMarca2, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 200, 190, 40));
-        jPanel1.add(jDateChooser1, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 210, 210, -1));
-        jPanel1.add(jDateChooser2, new org.netbeans.lib.awtextra.AbsoluteConstraints(380, 260, 210, -1));
+        txtnombre.setForeground(new java.awt.Color(0, 53, 79));
+        txtnombre.setColorTransparente(true);
+        txtnombre.setFont(new java.awt.Font("Roboto Light", 1, 14)); // NOI18N
+        txtnombre.setPlaceholder("");
+        txtnombre.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtnombreKeyTyped(evt);
+            }
+        });
+
+        lblfechacreacion.setFont(new java.awt.Font("Roboto Medium", 1, 16)); // NOI18N
+        lblfechacreacion.setForeground(new java.awt.Color(79, 107, 155));
+        lblfechacreacion.setText("Fecha de Creación:");
+
+        lblfechaexp.setFont(new java.awt.Font("Roboto Medium", 1, 16)); // NOI18N
+        lblfechaexp.setForeground(new java.awt.Color(79, 107, 155));
+        lblfechaexp.setText("Fecha de expiración:");
+
+        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
+        jPanel4.setLayout(jPanel4Layout);
+        jPanel4Layout.setHorizontalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addContainerGap(98, Short.MAX_VALUE)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGap(31, 31, 31)
+                        .addComponent(lbltipo))
+                    .addComponent(lblnombre, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(17, 17, 17)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(txtnombre, javax.swing.GroupLayout.DEFAULT_SIZE, 257, Short.MAX_VALUE)
+                    .addComponent(txttipo, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(19, 19, 19))
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(lblfechacreacion, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblfechaexp, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jDateChooser2, javax.swing.GroupLayout.DEFAULT_SIZE, 257, Short.MAX_VALUE)
+                    .addComponent(jDateChooser1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+        );
+        jPanel4Layout.setVerticalGroup(
+            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGap(14, 14, 14)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lbltipo, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txttipo, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtnombre, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblnombre, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(lblfechaexp, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGap(7, 7, 7)
+                        .addComponent(lblfechacreacion, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jDateChooser2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(70, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
+        jPanel6.setLayout(jPanel6Layout);
+        jPanel6Layout.setHorizontalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel6Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(482, 482, 482))
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
+        );
+        jPanel6Layout.setVerticalGroup(
+            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel6Layout.createSequentialGroup()
+                .addGap(16, 16, 16)
+                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(64, Short.MAX_VALUE))
+        );
+
+        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
+        jPanel5.setLayout(jPanel5Layout);
+        jPanel5Layout.setHorizontalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, 653, Short.MAX_VALUE)
+        );
+        jPanel5Layout.setVerticalGroup(
+            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jPanel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+        );
+
+        jPanel1.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 50, 600, 400));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 890, Short.MAX_VALUE)
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 890, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 0, Short.MAX_VALUE)))
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 771, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 650, Short.MAX_VALUE)
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 650, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 0, Short.MAX_VALUE)))
+            .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 447, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txtPlacaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtPlacaKeyTyped
-       
-    }//GEN-LAST:event_txtPlacaKeyTyped
-
-    private void btnCancelarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnCancelarMouseClicked
-      
-       
-        
-    }//GEN-LAST:event_btnCancelarMouseClicked
-
-    private void btnCancelarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarActionPerformed
+    private void btnEliminarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEliminarMouseClicked
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnCancelarActionPerformed
+    }//GEN-LAST:event_btnEliminarMouseClicked
+
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnEliminarActionPerformed
+
+    private void btnBuscarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBuscarMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnBuscarMouseClicked
+
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnBuscarActionPerformed
+
+    private void btnEditarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditarMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnEditarMouseClicked
+
+    private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnEditarActionPerformed
 
     private void btnGuardarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnGuardarMouseClicked
+        if (txttipo.getText().isBlank() || txtnombre.getText().isBlank() || jDateChooser1.getDate() == null ||  jDateChooser2.getDate() == null) {
+   JOptionPane.showMessageDialog(null, "No dejar espacios en blanco ni fechas sin seleccionar");
+} else {
+    conexion Base = new conexion();
+    bdVacuna miVacunita = new bdVacuna(Base);
 
+miVacunita.insertar(txttipo.getText().trim(),  txtnombre.getText().trim(), jDateChooser1.getDate(),  jDateChooser2.getDate());
+
+        }
     }//GEN-LAST:event_btnGuardarMouseClicked
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-       
+        // TODO add your handling code here:
     }//GEN-LAST:event_btnGuardarActionPerformed
 
-    private void txtPlacaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtPlacaActionPerformed
+    private void txttipoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txttipoActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtPlacaActionPerformed
+    }//GEN-LAST:event_txttipoActionPerformed
 
-    private void txtCliente3KeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCliente3KeyTyped
+    private void txttipoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txttipoKeyTyped
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtCliente3KeyTyped
+    }//GEN-LAST:event_txttipoKeyTyped
+
+    private void txtnombreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtnombreKeyTyped
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtnombreKeyTyped
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private rojeru_san.RSButtonRiple btnCancelar;
+    private rojeru_san.RSButtonRiple btnBuscar;
+    private rojeru_san.RSButtonRiple btnEditar;
+    private rojeru_san.RSButtonRiple btnEliminar;
     private rojeru_san.RSButtonRiple btnGuardar;
     private com.toedter.calendar.JDateChooser jDateChooser1;
     private com.toedter.calendar.JDateChooser jDateChooser2;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JPanel jPanel1;
-    private javax.swing.JLabel lblMarca1;
-    private javax.swing.JLabel lblMarca2;
-    private javax.swing.JLabel lblPlaca;
-    private javax.swing.JLabel lblPropietario;
-    private rojeru_san.RSMTextFull txtCliente3;
-    private rojeru_san.RSMTextFull txtPlaca;
+    private javax.swing.JPanel jPanel4;
+    private javax.swing.JPanel jPanel5;
+    private javax.swing.JPanel jPanel6;
+    private javax.swing.JLabel lblfechacreacion;
+    private javax.swing.JLabel lblfechaexp;
+    private javax.swing.JLabel lblnombre;
+    private javax.swing.JLabel lbltipo;
+    private rojeru_san.RSMTextFull txtnombre;
+    private rojeru_san.RSMTextFull txttipo;
     // End of variables declaration//GEN-END:variables
 }

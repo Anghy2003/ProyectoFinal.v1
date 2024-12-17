@@ -31,7 +31,7 @@
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="panelPrincipal" min="-2" max="-2" attributes="0"/>
+          <Component id="panelPrincipal" alignment="0" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
   </Layout>
@@ -63,7 +63,7 @@
           </Properties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="0" y="0" width="-1" height="-1"/>
+              <AbsoluteConstraints x="0" y="0" width="240" height="-1"/>
             </Constraint>
           </Constraints>
 
@@ -113,7 +113,7 @@
               </Events>
               <Constraints>
                 <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-                  <AbsoluteConstraints x="10" y="130" width="-1" height="490"/>
+                  <AbsoluteConstraints x="10" y="140" width="-1" height="490"/>
                 </Constraint>
               </Constraints>
 
@@ -121,13 +121,7 @@
                 <DimensionLayout dim="0">
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" attributes="0">
-                          <Group type="103" groupAlignment="0" attributes="0">
-                              <Component id="btnMascotas" alignment="0" min="-2" pref="155" max="-2" attributes="0"/>
-                              <Component id="btnControlMed" alignment="0" min="-2" pref="189" max="-2" attributes="0"/>
-                              <Component id="btnControlVac" alignment="0" min="-2" max="-2" attributes="0"/>
-                              <Component id="btnPropietarios" min="-2" max="-2" attributes="0"/>
-                              <Component id="btnSalir" min="-2" pref="181" max="-2" attributes="0"/>
-                          </Group>
+                          <Component id="btnMascotas" min="-2" pref="155" max="-2" attributes="0"/>
                           <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                       </Group>
                       <Group type="102" attributes="0">
@@ -135,6 +129,10 @@
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Component id="btnVacunas" min="-2" max="-2" attributes="0"/>
                               <Component id="Btnveterinario" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="btnPropietarios" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="btnControlMed" alignment="0" min="-2" pref="189" max="-2" attributes="0"/>
+                              <Component id="btnControlVac" alignment="0" min="-2" max="-2" attributes="0"/>
+                              <Component id="btnSalir" alignment="0" min="-2" pref="181" max="-2" attributes="0"/>
                           </Group>
                           <EmptySpace max="32767" attributes="0"/>
                       </Group>
@@ -143,21 +141,21 @@
                 <DimensionLayout dim="1">
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" alignment="0" attributes="0">
-                          <EmptySpace min="-2" pref="25" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="43" max="-2" attributes="0"/>
                           <Component id="btnMascotas" min="-2" pref="44" max="-2" attributes="0"/>
-                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <EmptySpace max="-2" attributes="0"/>
                           <Component id="btnPropietarios" min="-2" pref="54" max="-2" attributes="0"/>
-                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
                           <Component id="btnControlMed" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <EmptySpace pref="27" max="32767" attributes="0"/>
                           <Component id="btnControlVac" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
                           <Component id="btnVacunas" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="27" max="-2" attributes="0"/>
                           <Component id="Btnveterinario" min="-2" max="-2" attributes="0"/>
-                          <EmptySpace type="separate" max="-2" attributes="0"/>
+                          <EmptySpace min="-2" pref="29" max="-2" attributes="0"/>
                           <Component id="btnSalir" min="-2" pref="50" max="-2" attributes="0"/>
-                          <EmptySpace pref="49" max="32767" attributes="0"/>
+                          <EmptySpace min="-2" pref="30" max="-2" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -172,7 +170,7 @@
                       <Color blue="ff" green="ff" red="ff" type="rgb"/>
                     </Property>
                     <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                      <Image iconType="3" name="/Imagenes/icons8-cl&#xed;nica-externa-veterinaria-y-mascotas-creatype-bicolor-colorcreatype-5-40.png"/>
+                      <Image iconType="3" name="/Imagenes/vacuna-para-mascotas (2).png"/>
                     </Property>
                     <Property name="text" type="java.lang.String" value="Control de Vacunas "/>
                   </Properties>
@@ -209,7 +207,7 @@
                       <Color blue="ff" green="ff" red="ff" type="rgb"/>
                     </Property>
                     <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                      <Image iconType="3" name="/Imagenes/icons8-medicaci&#xf3;n-externa-veterinaria-y-mascotas-creatipo-contorno-colorcreatipo-40.png"/>
+                      <Image iconType="3" name="/Imagenes/revision-medica.png"/>
                     </Property>
                     <Property name="text" type="java.lang.String" value="Control Medico "/>
                   </Properties>
@@ -226,7 +224,7 @@
                       <Color blue="ff" green="ff" red="ff" type="rgb"/>
                     </Property>
                     <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                      <Image iconType="3" name="/Imagenes/icons8-persona-40.png"/>
+                      <Image iconType="3" name="/Imagenes/dueno-de-una-mascota.png"/>
                     </Property>
                     <Property name="text" type="java.lang.String" value="Propietarios "/>
                   </Properties>
@@ -260,7 +258,7 @@
                       <Color blue="ff" green="ff" red="ff" type="rgb"/>
                     </Property>
                     <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                      <Image iconType="3" name="/Imagenes/icons8-cl&#xed;nica-externa-veterinaria-y-mascotas-creatype-bicolor-colorcreatype-5-40.png"/>
+                      <Image iconType="3" name="/Imagenes/veterinario.png"/>
                     </Property>
                     <Property name="text" type="java.lang.String" value="Veterinario"/>
                   </Properties>
@@ -277,7 +275,7 @@
                       <Color blue="ff" green="ff" red="ff" type="rgb"/>
                     </Property>
                     <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                      <Image iconType="3" name="/Imagenes/icons8-cl&#xed;nica-externa-veterinaria-y-mascotas-creatype-bicolor-colorcreatype-5-40.png"/>
+                      <Image iconType="3" name="/Imagenes/medicina-para-mascotas.png"/>
                     </Property>
                     <Property name="text" type="java.lang.String" value=" Vacunas "/>
                   </Properties>
@@ -334,7 +332,7 @@
           </AuxValues>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout" value="org.netbeans.modules.form.compat2.layouts.DesignAbsoluteLayout$AbsoluteConstraintsDescription">
-              <AbsoluteConstraints x="240" y="160" width="720" height="460"/>
+              <AbsoluteConstraints x="240" y="160" width="720" height="470"/>
             </Constraint>
           </Constraints>
 
@@ -342,7 +340,7 @@
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="1" attributes="0">
-                      <EmptySpace pref="246" max="32767" attributes="0"/>
+                      <EmptySpace pref="243" max="32767" attributes="0"/>
                       <Component id="jLabel4" min="-2" pref="252" max="-2" attributes="0"/>
                       <EmptySpace min="-2" pref="222" max="-2" attributes="0"/>
                   </Group>
@@ -353,7 +351,7 @@
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace min="-2" pref="149" max="-2" attributes="0"/>
                       <Component id="jLabel4" min="-2" pref="148" max="-2" attributes="0"/>
-                      <EmptySpace pref="163" max="32767" attributes="0"/>
+                      <EmptySpace pref="173" max="32767" attributes="0"/>
                   </Group>
               </Group>
             </DimensionLayout>

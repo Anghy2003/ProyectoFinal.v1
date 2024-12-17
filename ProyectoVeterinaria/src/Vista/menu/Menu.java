@@ -10,6 +10,7 @@ import Vista.crud.crud_mascotas;
 import Vista.home.home;
 import Vista.submenu.PanelSubmenuControlVacu;
 import Vista.submenu.*;
+import Vista.tablas.TablaVacuna;
 import Vista.titulos.*;
 import Vista.titulos.PaneltituloControldeVcunas;
 import java.awt.BorderLayout;
@@ -82,7 +83,7 @@ public class Menu extends javax.swing.JFrame {
 
         btnControlVac.setFont(new java.awt.Font("Roboto Black", 0, 19)); // NOI18N
         btnControlVac.setForeground(new java.awt.Color(255, 255, 255));
-        btnControlVac.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/icons8-clínica-externa-veterinaria-y-mascotas-creatype-bicolor-colorcreatype-5-40.png"))); // NOI18N
+        btnControlVac.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/vacuna-para-mascotas (2).png"))); // NOI18N
         btnControlVac.setText("Control de Vacunas ");
         btnControlVac.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -103,7 +104,7 @@ public class Menu extends javax.swing.JFrame {
 
         btnControlMed.setFont(new java.awt.Font("Roboto Black", 0, 19)); // NOI18N
         btnControlMed.setForeground(new java.awt.Color(255, 255, 255));
-        btnControlMed.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/icons8-medicación-externa-veterinaria-y-mascotas-creatipo-contorno-colorcreatipo-40.png"))); // NOI18N
+        btnControlMed.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/revision-medica.png"))); // NOI18N
         btnControlMed.setText("Control Medico ");
         btnControlMed.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -113,7 +114,7 @@ public class Menu extends javax.swing.JFrame {
 
         btnPropietarios.setFont(new java.awt.Font("Roboto Black", 0, 19)); // NOI18N
         btnPropietarios.setForeground(new java.awt.Color(255, 255, 255));
-        btnPropietarios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/icons8-persona-40.png"))); // NOI18N
+        btnPropietarios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/dueno-de-una-mascota.png"))); // NOI18N
         btnPropietarios.setText("Propietarios ");
         btnPropietarios.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -133,7 +134,7 @@ public class Menu extends javax.swing.JFrame {
 
         Btnveterinario.setFont(new java.awt.Font("Roboto Black", 0, 19)); // NOI18N
         Btnveterinario.setForeground(new java.awt.Color(255, 255, 255));
-        Btnveterinario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/icons8-clínica-externa-veterinaria-y-mascotas-creatype-bicolor-colorcreatype-5-40.png"))); // NOI18N
+        Btnveterinario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/veterinario.png"))); // NOI18N
         Btnveterinario.setText("Veterinario");
         Btnveterinario.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -143,7 +144,7 @@ public class Menu extends javax.swing.JFrame {
 
         btnVacunas.setFont(new java.awt.Font("Roboto Black", 0, 19)); // NOI18N
         btnVacunas.setForeground(new java.awt.Color(255, 255, 255));
-        btnVacunas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/icons8-clínica-externa-veterinaria-y-mascotas-creatype-bicolor-colorcreatype-5-40.png"))); // NOI18N
+        btnVacunas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/medicina-para-mascotas.png"))); // NOI18N
         btnVacunas.setText(" Vacunas ");
         btnVacunas.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -156,43 +157,42 @@ public class Menu extends javax.swing.JFrame {
         PanelBotonesMenuLayout.setHorizontalGroup(
             PanelBotonesMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(PanelBotonesMenuLayout.createSequentialGroup()
-                .addGroup(PanelBotonesMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnMascotas, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnControlMed, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(btnControlVac)
-                    .addComponent(btnPropietarios)
-                    .addComponent(btnSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(btnMascotas, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(PanelBotonesMenuLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(PanelBotonesMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnVacunas)
-                    .addComponent(Btnveterinario))
+                    .addComponent(Btnveterinario)
+                    .addComponent(btnPropietarios)
+                    .addComponent(btnControlMed, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnControlVac)
+                    .addComponent(btnSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         PanelBotonesMenuLayout.setVerticalGroup(
             PanelBotonesMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(PanelBotonesMenuLayout.createSequentialGroup()
-                .addGap(25, 25, 25)
+                .addGap(43, 43, 43)
                 .addComponent(btnMascotas, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnPropietarios, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addGap(24, 24, 24)
                 .addComponent(btnControlMed)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
                 .addComponent(btnControlVac)
-                .addGap(18, 18, 18)
+                .addGap(28, 28, 28)
                 .addComponent(btnVacunas)
-                .addGap(18, 18, 18)
+                .addGap(27, 27, 27)
                 .addComponent(Btnveterinario)
-                .addGap(18, 18, 18)
+                .addGap(29, 29, 29)
                 .addComponent(btnSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(49, Short.MAX_VALUE))
+                .addGap(30, 30, 30))
         );
 
-        PanelMenu.add(PanelBotonesMenu, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 130, -1, 490));
+        PanelMenu.add(PanelBotonesMenu, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 140, -1, 490));
 
-        panelPrincipal.add(PanelMenu, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
+        panelPrincipal.add(PanelMenu, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 240, -1));
 
         PanelHeader.setBackground(new java.awt.Color(255, 255, 255));
         PanelHeader.setForeground(new java.awt.Color(153, 153, 153));
@@ -220,7 +220,7 @@ public class Menu extends javax.swing.JFrame {
         PanelPrincipalLayout.setHorizontalGroup(
             PanelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelPrincipalLayout.createSequentialGroup()
-                .addContainerGap(246, Short.MAX_VALUE)
+                .addContainerGap(243, Short.MAX_VALUE)
                 .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(222, 222, 222))
         );
@@ -229,10 +229,10 @@ public class Menu extends javax.swing.JFrame {
             .addGroup(PanelPrincipalLayout.createSequentialGroup()
                 .addGap(149, 149, 149)
                 .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(163, Short.MAX_VALUE))
+                .addContainerGap(173, Short.MAX_VALUE))
         );
 
-        panelPrincipal.add(PanelPrincipal, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 160, 720, 460));
+        panelPrincipal.add(PanelPrincipal, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 160, 720, 470));
 
         PanelSubmenu.setBackground(new java.awt.Color(204, 204, 204));
 
@@ -257,7 +257,7 @@ public class Menu extends javax.swing.JFrame {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(panelPrincipal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(panelPrincipal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -326,8 +326,10 @@ public class Menu extends javax.swing.JFrame {
     private void btnVacunasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnVacunasMouseClicked
         PanelTituloVacuna tituvac = new PanelTituloVacuna();
         PanelSubmenuVacunas Submenuvet = new PanelSubmenuVacunas();
+        TablaVacuna tablita = new TablaVacuna();
         MostrarpanelTitulo(tituvac);
         MostrarpanelSubmenu(Submenuvet);
+        ShowpanelCruds(tablita);
     }//GEN-LAST:event_btnVacunasMouseClicked
 private void MostrarpanelSubmenu(JPanel p) {
         p.setSize(720, 80);
@@ -337,6 +339,14 @@ private void MostrarpanelSubmenu(JPanel p) {
         PanelSubmenu.revalidate();
         PanelSubmenu.repaint();
 
+    }
+   private void ShowpanelCruds(JPanel p) {
+        p.setSize(700,460);
+        p.setLocation(0, 0);
+        Menu.PanelPrincipal.removeAll();
+        Menu.PanelPrincipal.add(p, BorderLayout.CENTER);
+        Menu.PanelPrincipal.revalidate();
+        Menu.PanelPrincipal.repaint();
     }
     /**
      * @param args the command line arguments
