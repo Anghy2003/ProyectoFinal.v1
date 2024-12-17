@@ -30,7 +30,7 @@ public class conexion {
         try {
             Class.forName("oracle.jdbc.OracleDriver");
             URL = "jdbc:oracle:thin:@localhost:1521:XE";
-            USUARIO = "BaseU4";
+            USUARIO = "BaseU4Copy";
             CONTRA = "123";
             conn = DriverManager.getConnection(URL, USUARIO, CONTRA);
             System.out.println("Conectado ala base");
