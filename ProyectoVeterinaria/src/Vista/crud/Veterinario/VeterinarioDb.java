@@ -141,7 +141,7 @@ public class VeterinarioDb extends Modelo.VETERINARIO {
     
   public void llenarComboBoxVeterinarios(JComboBox<String> comboBox) {
     // Consulta SQL para obtener la cédula y el nombre de los veterinarios
-    String sql = "SELECT CEDULA, INITCAP(NOMBRE) AS NOMBRE FROM BaseU4COPY.VETERINARIO";
+    String sql = "SELECT CEDULA, INITCAP(NOMBRE) AS NOMBRE FROM VETERINARIO";
 
     try (Connection connection = Base.conectarBD();
          PreparedStatement preparedStatement = connection.prepareStatement(sql);
