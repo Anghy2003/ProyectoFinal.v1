@@ -5,6 +5,7 @@
  */
 package Vista.submenu;
 
+import Vista.crud.Veterinario.Veterinario;
 import Vista.menu.Menu;
 import java.awt.BorderLayout;
 import javax.swing.JPanel;
@@ -90,7 +91,8 @@ public class PanelSubmenuVeterinario extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btngestionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btngestionActionPerformed
-       
+        Veterinario vete = new Veterinario();
+        Mostrarpanelcrud(vete);
     }//GEN-LAST:event_btngestionActionPerformed
 private void Mostrarpanelcrud(JPanel p) {
         p.setSize(700, 460);
