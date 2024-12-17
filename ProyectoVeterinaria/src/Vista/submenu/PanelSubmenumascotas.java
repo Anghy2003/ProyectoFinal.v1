@@ -5,6 +5,7 @@
  */
 package Vista.submenu;
 
+import Vista.Mascota.CRUDMascotas;
 import Vista.crud.crud_mascotas;
 import Vista.menu.Menu;
 import java.awt.BorderLayout;
@@ -42,6 +43,11 @@ public class PanelSubmenumascotas extends javax.swing.JPanel {
 
         btngestion.setFont(new java.awt.Font("Roboto Medium", 1, 12)); // NOI18N
         btngestion.setText("GESTION  DE MASCOTAS");
+        btngestion.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btngestionMouseClicked(evt);
+            }
+        });
         btngestion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btngestionActionPerformed(evt);
@@ -85,15 +91,20 @@ public class PanelSubmenumascotas extends javax.swing.JPanel {
        
     }//GEN-LAST:event_btngestionActionPerformed
 
+    private void btngestionMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btngestionMouseClicked
+        Vista.Mascota.CRUDMascotas CrudMascota= new  CRUDMascotas();
+        Mostrarpanelcrud(CrudMascota);
+    }//GEN-LAST:event_btngestionMouseClicked
 
-    private void ShowpanelCruds(JPanel p) {
-        p.setSize(700,460);
+    private void Mostrarpanelcrud(JPanel p) {
+        p.setSize(700, 460);
         p.setLocation(0, 0);
         Menu.PanelPrincipal.removeAll();
         Menu.PanelPrincipal.add(p, BorderLayout.CENTER);
         Menu.PanelPrincipal.revalidate();
         Menu.PanelPrincipal.repaint();
     }
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JToggleButton btngestion;

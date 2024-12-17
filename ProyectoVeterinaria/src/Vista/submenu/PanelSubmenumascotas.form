@@ -72,6 +72,7 @@
             <Property name="text" type="java.lang.String" value="GESTION  DE MASCOTAS"/>
           </Properties>
           <Events>
+            <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btngestionMouseClicked"/>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btngestionActionPerformed"/>
           </Events>
         </Component>
