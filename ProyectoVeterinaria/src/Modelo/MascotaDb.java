@@ -149,7 +149,7 @@ public class MascotaDb extends Mascotas {
     
     public void llenarComboBoxDueños(JComboBox<String> comboBox) {
         // Consulta SQL para obtener el ID, nombre y apellido de los dueños
-        String sql = "SELECT CEDULA, INITCAP(NOMBRE) || ' ' || INITCAP(APELLIDO) AS NOMBRE_COMPLETO FROM BaseU4COPY.DUEÑO";
+        String sql = "SELECT CEDULA, INITCAP(NOMBRE) || ' ' || INITCAP(APELLIDO) AS NOMBRE_COMPLETO FROM DUENO";
 
         try (Connection connection = Base.conectarBD();
                 PreparedStatement preparedStatement = connection.prepareStatement(sql);
@@ -205,7 +205,7 @@ public class MascotaDb extends Mascotas {
     
     public void llenarComboBoxMascotasPorDueño(JComboBox<String> comboBox, String CEDULA) {
     // Consulta SQL para obtener las mascotas usando la cédula del dueño
-    String sqlMascotas = "SELECT INITCAP(NOMBRE) AS NOMBRE_MASCOTA FROM BASEU4COPY.MASCOTA WHERE CEDULA_DUEÑO = ?";
+    String sqlMascotas = "SELECT INITCAP(NOMBRE) AS NOMBRE_MASCOTA FROM BASEU4.MASCOTA WHERE CEDULA_DUENO = ?";
 
     try (Connection connection = Base.conectarBD();
             PreparedStatement preparedStatementMascotas = connection.prepareStatement(sqlMascotas)) {
