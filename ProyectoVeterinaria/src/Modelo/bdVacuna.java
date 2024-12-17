@@ -103,7 +103,7 @@ public class bdVacuna extends VACUNA {
 }
     
     
-    
+    //eliminar
    public void eliminar(String NOMBRE) {
         if (!verificarVacuna(NOMBRE)) {
         JOptionPane.showMessageDialog(null, "La vacuna con el nombre: " + NOMBRE + " no existe en la base de datos");

@@ -114,7 +114,7 @@ public class Menu extends javax.swing.JFrame {
 
         btnPropietarios.setFont(new java.awt.Font("Roboto Black", 0, 19)); // NOI18N
         btnPropietarios.setForeground(new java.awt.Color(255, 255, 255));
-        btnPropietarios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/dueno-de-una-mascota.png"))); // NOI18N
+        btnPropietarios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/icons8-clínica-externa-veterinaria-y-mascotas-creatype-bicolor-colorcreatype-5-40.png"))); // NOI18N
         btnPropietarios.setText("Propietarios ");
         btnPropietarios.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
