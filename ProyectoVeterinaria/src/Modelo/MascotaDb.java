@@ -39,25 +39,25 @@ public class MascotaDb extends Mascotas {
     }
 
     //constructor con atributos
-    public MascotaDb(String ID, String NOMBRE, String ESPECIE, String RAZA, String CEDULA_DUEÑO, Date FECHANACIMIENTO) {
-        super(ID, NOMBRE, ESPECIE, RAZA, CEDULA_DUEÑO, FECHANACIMIENTO);
+    public MascotaDb(String ID, String NOMBRE, String ESPECIE, String RAZA, String CEDULA_DUENO, Date FECHANACIMIENTO) {
+        super(ID, NOMBRE, ESPECIE, RAZA, CEDULA_DUENO, FECHANACIMIENTO);
     }
 
-    public MascotaDb(String NOMBRE, String ESPECIE, String RAZA, String CEDULA_DUEÑO, Date FECHANACIMIENTO) {
-        super(NOMBRE, ESPECIE, RAZA, CEDULA_DUEÑO, FECHANACIMIENTO);
+    public MascotaDb(String NOMBRE, String ESPECIE, String RAZA, String CEDULA_DUENO, Date FECHANACIMIENTO) {
+        super(NOMBRE, ESPECIE, RAZA, CEDULA_DUENO, FECHANACIMIENTO);
     }
 
-    public boolean insertar(String NOMBRE, String ESPECIE, String RAZA, String CEDULA_DUEÑO, Date FECHANACIMIENTO) {
+    public boolean insertar(String NOMBRE, String ESPECIE, String RAZA, String CEDULA_DUENO, Date FECHANACIMIENTO) {
         // Verificar si la mascota ya existe
-        if (verificarMascota(NOMBRE, CEDULA_DUEÑO)) {
-            JOptionPane.showMessageDialog(null, "La Mascota con nombre: " + NOMBRE + " y Dueño: " + CEDULA_DUEÑO + " ya existe en la base de datos.");
+        if (verificarMascota(NOMBRE, CEDULA_DUENO)) {
+            JOptionPane.showMessageDialog(null, "La Mascota con nombre: " + NOMBRE + " y Dueño: " + CEDULA_DUENO + " ya existe en la base de datos.");
             return false; // No se pudo insertar porque ya existe
         }
 
         // Consulta SQL para insertar datos
-        String sqlInsert = "INSERT INTO MASCOTA (NOMBRE, ESPECIE, RAZA, CEDULA_DUEÑO, FECHANACIMIENTO) "
+        String sqlInsert = "INSERT INTO BaseU4Copy.MASCOTA (NOMBRE, ESPECIE, RAZA, CEDULA_DUENO, FECHANACIMIENTO) "
                 + "VALUES (INITCAP(?), INITCAP(?), INITCAP(?), ?, ?)";
-        String sqlLastId = "SELECT MAX(ID) AS ID FROM MASCOTA"; // Obtener el último ID insertado
+        String sqlLastId = "SELECT MAX(ID) AS ID FROM BaseU4Copy.MASCOTA"; // Obtener el último ID insertado
 
         try (Connection connection = Base.conectarBD();
                 PreparedStatement preparedStatement = connection.prepareStatement(sqlInsert)) {
@@ -66,7 +66,7 @@ public class MascotaDb extends Mascotas {
             preparedStatement.setString(1, NOMBRE);
             preparedStatement.setString(2, ESPECIE);
             preparedStatement.setString(3, RAZA);
-            preparedStatement.setString(4, obtenerIdDeString(CEDULA_DUEÑO));
+            preparedStatement.setString(4, obtenerIdDeString(CEDULA_DUENO));
 
             // Convertir FECHANACIMIENTO a java.sql.Date y asignarlo
             java.sql.Date sqlDate = new java.sql.Date(FECHANACIMIENTO.getTime());
@@ -118,15 +118,15 @@ public class MascotaDb extends Mascotas {
     }
 
     //verificarMascota
-    public boolean verificarMascota(String NOMBRE, String CEDULA_DUEÑO) {
-        String sql = "SELECT COUNT(*) FROM MASCOTA WHERE NOMBRE = INITCAP(?) AND CEDULA_DUEÑO = ?";
+    public boolean verificarMascota(String NOMBRE, String CEDULA_DUENO) {
+        String sql = "SELECT COUNT(*) FROM BaseU4Copy.MASCOTA WHERE NOMBRE = INITCAP(?) AND CEDULA_DUENO = ?";
 
         try (Connection connection = Base.conectarBD();
                 PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
             // Establecer los parámetros de la consulta
             preparedStatement.setString(1, NOMBRE);
-            preparedStatement.setString(2, CEDULA_DUEÑO);
+            preparedStatement.setString(2, CEDULA_DUENO);
 
             // Ejecutar la consulta
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -149,7 +149,7 @@ public class MascotaDb extends Mascotas {
     
     public void llenarComboBoxDueños(JComboBox<String> comboBox) {
         // Consulta SQL para obtener el ID, nombre y apellido de los dueños
-        String sql = "SELECT CEDULA, INITCAP(NOMBRE) || ' ' || INITCAP(APELLIDO) AS NOMBRE_COMPLETO FROM DUENO";
+        String sql = "SELECT CEDULA, INITCAP(NOMBRE) || ' ' || INITCAP(APELLIDO) AS NOMBRE_COMPLETO FROM BaseU4Copy.DUENO";
 
         try (Connection connection = Base.conectarBD();
                 PreparedStatement preparedStatement = connection.prepareStatement(sql);
@@ -205,7 +205,7 @@ public class MascotaDb extends Mascotas {
     
     public void llenarComboBoxMascotasPorDueño(JComboBox<String> comboBox, String CEDULA) {
     // Consulta SQL para obtener las mascotas usando la cédula del dueño
-    String sqlMascotas = "SELECT INITCAP(NOMBRE) AS NOMBRE_MASCOTA FROM BASEU4.MASCOTA WHERE CEDULA_DUENO = ?";
+    String sqlMascotas = "SELECT INITCAP(NOMBRE) AS NOMBRE_MASCOTA FROM BaseU4Copy.MASCOTA WHERE CEDULA_DUENO = ?";
 
     try (Connection connection = Base.conectarBD();
             PreparedStatement preparedStatementMascotas = connection.prepareStatement(sqlMascotas)) {
@@ -276,23 +276,28 @@ public class MascotaDb extends Mascotas {
     
     
     
-        public void obtenerIdMascotaPorCedulaYNombre(String cedulaDueño, String nombreMascota) {
+        public void obtenerIdMascotaPorCedulaYNombre(String cedulaDueno, String nombreMascota) {
         // Consulta SQL para obtener el ID de la mascota usando la cédula del dueño y el nombre de la mascota
-        String sql = "SELECT ID FROM BASEU4COPY.MASCOTA WHERE CEDULA_DUEÑO = ? AND INITCAP(NOMBRE) = ?";
+        String sql = "SELECT ID FROM BaseU4Copy.MASCOTA WHERE CEDULA_DUENO = ? AND INITCAP(NOMBRE) = ?";
 
         try (Connection connection = Base.conectarBD();
                 PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
             // Establecer los parámetros de la consulta
-            preparedStatement.setString(1, obtenerIdDeString(cedulaDueño));
+            preparedStatement.setString(1, obtenerIdDeString(cedulaDueno));
             preparedStatement.setString(2, nombreMascota);
 
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
                 if (resultSet.next()) {
                     // Si encontramos la mascota, obtenemos el ID
                     String idMascota = resultSet.getString("ID");
+                    
                     System.out.println("ID de la mascota: " + idMascota);
                     idMascotaActual=idMascota;
+                    nombreMascotaActual=nombreMascota;
+                    ceduladuenoActual=obtenerIdDeString(cedulaDueno);
+                    
+                    
                     // Realizar alguna acción adicional con el ID si es necesario
                 } else {
                     // Si no se encuentra la mascota, imprimir un mensaje
@@ -310,7 +315,7 @@ public class MascotaDb extends Mascotas {
 
     public String obtenerNombreMascotaPorId() {
         // Consulta SQL para obtener el nombre de la mascota usando el ID
-        String sql = "SELECT INITCAP(NOMBRE) AS NOMBRE_MASCOTA FROM BASEU4COPY.MASCOTA WHERE ID = ?";
+        String sql = "SELECT INITCAP(NOMBRE) AS NOMBRE_MASCOTA FROM BaseU4Copy.MASCOTA WHERE ID = ?";
 
         try (Connection connection = Base.conectarBD();
                 PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
@@ -338,7 +343,7 @@ public class MascotaDb extends Mascotas {
 
     public String obtenerEspecieMascotaPorId() {
         // Consulta SQL para obtener la especie de la mascota usando el ID
-        String sql = "SELECT INITCAP(ESPECIE) AS ESPECIE_MASCOTA FROM BASEU4COPY.MASCOTA WHERE ID = ?";
+        String sql = "SELECT INITCAP(ESPECIE) AS ESPECIE_MASCOTA FROM BaseU4Copy.MASCOTA WHERE ID = ?";
 
         try (Connection connection = Base.conectarBD();
                 PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
@@ -366,7 +371,7 @@ public class MascotaDb extends Mascotas {
     
     public String obtenerRazaMascotaPorId() {
         // Consulta SQL para obtener la raza de la mascota usando el ID
-        String sql = "SELECT INITCAP(RAZA) AS RAZA_MASCOTA FROM BASEU4COPY.MASCOTA WHERE ID = ?";
+        String sql = "SELECT INITCAP(RAZA) AS RAZA_MASCOTA FROM BaseU4Copy.MASCOTA WHERE ID = ?";
 
         try (Connection connection = Base.conectarBD();
                 PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
@@ -397,7 +402,7 @@ public class MascotaDb extends Mascotas {
     
         public Date obtenerFechaNacimientoMascotaPorId() {
         // Consulta SQL para obtener la fecha de nacimiento de la mascota usando el ID
-        String sql = "SELECT FECHANACIMIENTO FROM BASEU4COPY.MASCOTA WHERE ID = ?";
+        String sql = "SELECT FECHANACIMIENTO FROM BaseU4Copy.MASCOTA WHERE ID = ?";
 
         try (Connection connection = Base.conectarBD();
                 PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
@@ -426,7 +431,7 @@ public class MascotaDb extends Mascotas {
         
     public boolean eliminarMascotaPorId() {
         // Consulta SQL para eliminar la mascota usando el ID
-        String sql = "DELETE FROM BASEU4COPY.MASCOTA WHERE ID = ?";
+        String sql = "DELETE FROM BaseU4Copy.MASCOTA WHERE ID = ?";
         System.out.println("Eliminar id: "+idMascotaActual);
         try (Connection connection = Base.conectarBD();
                 PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
@@ -456,18 +461,18 @@ public class MascotaDb extends Mascotas {
     
     
     
-    public void obtenerIdMascotayEliminar(String cedulaDueño, String nombreMascota) {
+    public void obtenerIdMascotayEliminar(String cedulaDueno, String nombreMascota) {
     String idMascotaEliminar = null;
 
     // Consulta SQL para obtener el ID de la mascota
-    String sqlSelect = "SELECT ID FROM BASEU4COPY.MASCOTA WHERE CEDULA_DUEÑO = ? AND INITCAP(NOMBRE) = ?";
+    String sqlSelect = "SELECT ID FROM BaseU4Copy.MASCOTA WHERE CEDULA_DUENO = ? AND INITCAP(NOMBRE) = ?";
     // Consulta SQL para eliminar la mascota usando el ID
-    String sqlDelete = "DELETE FROM BASEU4COPY.MASCOTA WHERE ID = ?";
+    String sqlDelete = "DELETE FROM MASCOTA WHERE ID = ?";
 
     try (Connection connection = Base.conectarBD()) {
         // Primer bloque: Obtener el ID de la mascota
         try (PreparedStatement preparedStatement = connection.prepareStatement(sqlSelect)) {
-            preparedStatement.setString(1, obtenerIdDeString(cedulaDueño));
+            preparedStatement.setString(1, obtenerIdDeString(cedulaDueno));
             preparedStatement.setString(2, nombreMascota);
 
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
@@ -475,7 +480,7 @@ public class MascotaDb extends Mascotas {
                     idMascotaEliminar = resultSet.getString("ID");
                     System.out.println("ID de la mascota: " + idMascotaEliminar);
                 } else {
-                    System.out.println("Mascota no encontrada.");
+                    JOptionPane.showMessageDialog(null, "Mascota no encontrada.");
                     return; // Sale del método si no encuentra la mascota
                 }
             }
@@ -487,9 +492,9 @@ public class MascotaDb extends Mascotas {
 
             int filasAfectadas = preparedStatement.executeUpdate();
             if (filasAfectadas > 0) {
-                System.out.println("Mascota eliminada con éxito.");
+                JOptionPane.showMessageDialog(null, "Mascota eliminada con éxito.");
             } else {
-                System.out.println("No se encontró una mascota con ese ID.");
+                JOptionPane.showMessageDialog(null, "No se encontró una mascota con ese ID.");
             }
         }
 
@@ -499,6 +504,140 @@ public class MascotaDb extends Mascotas {
     }
 }
     
+    
+    
+    
+    
+    private String ceduladuenoActual;
+    private String nombreMascotaActual;
+    
+//     public boolean actualizarMascota(String cedulaDueño, String nombre, String especie, String raza, Date fecha) {
+//        // Tomar solo la parte antes del primer espacio en cedulaDueño
+//        String cedulaSolo = cedulaDueño.split(" ")[0];
+//         System.out.println("Id de la mascota: "+idMascotaActual+" tambien ");
+//
+//        // Consulta SQL para actualizar los datos de la mascota con el ID proporcionado
+//        String sql = "UPDATE MASCOTA SET CEDULA_DUENO = ?, NOMBRE = ?, ESPECIE = ?, RAZA = ?, FECHANACIMIENTO = ? WHERE ID = ?";
+//
+//        try (Connection connection = Base.conectarBD();  // Reemplaza con tu método para conectar a la BD
+//             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+//
+//            // Establecer los parámetros en el PreparedStatement
+//            preparedStatement.setString(1, cedulaSolo);  // Asignar la cédula procesada
+//            preparedStatement.setString(2, nombre);      // Asignar el nombre de la mascota
+//            preparedStatement.setString(3, especie);     // Asignar la especie
+//            preparedStatement.setString(4, raza);        // Asignar la raza
+//
+//            // Convertir el objeto java.util.Date a java.sql.Date
+//            java.sql.Date sqlDate = new java.sql.Date(fecha.getTime());
+//            preparedStatement.setDate(5, sqlDate);       // Asignar la fecha
+//
+//            preparedStatement.setString(6, idMascotaActual);          // Asignar el ID de la mascota
+//
+//            // Ejecutar la actualización
+//            int filasActualizadas = preparedStatement.executeUpdate();
+//
+//            // Retornar true si al menos una fila fue actualizada
+//            return filasActualizadas > 0;
+//
+//        } catch (SQLException e) {
+//            // Manejo de excepciones
+//            System.err.println("Error al actualizar la mascota: " + e.getMessage());
+//            e.printStackTrace();
+//            return false;
+//        }
+//    }
+    
+    public String quieroId(String cedulaDueno, String nombreMascota) {
+    // Consulta SQL para obtener el ID de la mascota usando la cédula del dueño y el nombre de la mascota
+    String sql = "SELECT ID FROM BaseU4Copy.MASCOTA WHERE CEDULA_DUENO = ? AND INITCAP(NOMBRE) = ?";
+
+    // Variable para almacenar el ID de la mascota
+    String idMascota = null;
+
+    try (Connection connection = Base.conectarBD();
+            PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+
+        // Establecer los parámetros de la consulta
+        preparedStatement.setString(1, obtenerIdDeString(cedulaDueno));
+        preparedStatement.setString(2, nombreMascota);
+
+        try (ResultSet resultSet = preparedStatement.executeQuery()) {
+            if (resultSet.next()) {
+                // Si encontramos la mascota, obtenemos el ID
+                idMascota = resultSet.getString("ID");
+                
+                // Almacenar los valores actuales (si es necesario para otro propósito)
+                idMascotaActual = idMascota;
+                nombreMascotaActual = nombreMascota;
+                ceduladuenoActual = obtenerIdDeString(cedulaDueno);
+            } else {
+                // Si no se encuentra la mascota, manejar el caso aquí si es necesario
+                System.out.println("Mascota no encontrada.");
+            }
+        }
+    } catch (SQLException e) {
+        JOptionPane.showMessageDialog(null, "Error al obtener el ID de la mascota: " + e.getMessage());
+        e.printStackTrace();
+    }
+
+    // Retornar el ID de la mascota encontrado, o null si no se encuentra
+    return idMascota;
+}
+    
+    
+    
+    
+    
+                            public boolean actualizarMascota(String idMascota, String cedulaDueño, String nombre, String especie, String raza, Date fecha) {
+                            // Tomar solo la parte antes del primer espacio en cedulaDueño
+                            String cedulaSolo = cedulaDueño.split(" ")[0];
+
+                            // Aplicar InitCap a los datos
+                            String nombreInitCap = aplicarInitCap(nombre);
+                            String especieInitCap = aplicarInitCap(especie);
+                            String razaInitCap = aplicarInitCap(raza);
+
+                            // Consulta SQL para actualizar los datos de la mascota con el ID proporcionado
+                            String actualizarSql = "UPDATE MASCOTA SET CEDULA_DUENO = ?, NOMBRE = ?, ESPECIE = ?, RAZA = ?, FECHANACIMIENTO = ? WHERE ID = ?";
+
+                            try (Connection connection = Base.conectarBD();
+                                 PreparedStatement actualizarStatement = connection.prepareStatement(actualizarSql)) {
+
+                                // Establecer los parámetros en el PreparedStatement
+                                actualizarStatement.setString(1, cedulaSolo);       // Asignar la cédula procesada
+                                actualizarStatement.setString(2, nombreInitCap);    // Asignar el nombre con InitCap
+                                actualizarStatement.setString(3, especieInitCap);   // Asignar la especie con InitCap
+                                actualizarStatement.setString(4, razaInitCap);      // Asignar la raza con InitCap
+
+                                // Convertir el objeto java.util.Date a java.sql.Date
+                                java.sql.Date sqlDate = new java.sql.Date(fecha.getTime());
+                                actualizarStatement.setDate(5, sqlDate);            // Asignar la fecha
+
+                                actualizarStatement.setString(6, idMascota);       // Usar el ID de la mascota proporcionado
+
+                                // Ejecutar la actualización
+                                int filasActualizadas = actualizarStatement.executeUpdate();
+
+                                // Retornar true si al menos una fila fue actualizada
+                                return filasActualizadas > 0;
+
+                            } catch (SQLException e) {
+                                // Manejo de excepciones
+                                System.err.println("Error al actualizar la mascota: " + e.getMessage());
+                                e.printStackTrace();
+                                return false;
+                            }
+                        }
+
+                        private String aplicarInitCap(String texto) {
+                            if (texto == null || texto.isEmpty()) {
+                                return texto;
+                            }
+                            return texto.substring(0, 1).toUpperCase() + texto.substring(1).toLowerCase();
+                        }
+
+
     
     
     
