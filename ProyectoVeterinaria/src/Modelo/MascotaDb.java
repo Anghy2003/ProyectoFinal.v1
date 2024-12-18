@@ -80,7 +80,7 @@ public class MascotaDb extends Mascotas {
                         ResultSet rs = psLastId.executeQuery()) {
                     if (rs.next()) {
                         int idMascota = rs.getInt("ID");
-                        JOptionPane.showMessageDialog(null, "Mascota agregada exitosamente. ID asignado: " + idMascota);
+                        JOptionPane.showMessageDialog(null, "Mascota agregada exitosamente");
                         return true; // Inserción exitosa
                     }
                 }
