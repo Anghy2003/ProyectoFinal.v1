@@ -18,8 +18,8 @@ public class conexion {
         try {
             Class.forName("oracle.jdbc.OracleDriver");
 
-            URL = "jdbc:oracle:thin:@192.168.20.151:1521:XE";
-            USUARIO = "BaseU4";
+            URL = "jdbc:oracle:thin:@localhost:1521:XE";
+            USUARIO = "BaseU4COPY";
             CONTRA = "123";
 
             conn = DriverManager.getConnection(URL, USUARIO, CONTRA);
@@ -35,8 +35,8 @@ public class conexion {
     public Connection conectarBD() {
         Connection connection = null;
 
-        String url = "jdbc:oracle:thin:@192.168.20.151:1521:xe";
-        String user = "BaseU4";
+        String url = "jdbc:oracle:thin:@localhost:1521:xe";
+        String user = "BaseU4COPY";
         String password = "123";
 
         try {
