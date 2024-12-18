@@ -18,7 +18,7 @@ import Vista.menu.Menu;
 import com.toedter.calendar.JDateChooser;
 import java.awt.BorderLayout;
 import javax.swing.JComboBox;
-import Modelo.*;
+import java.util.Date;
 
 /**
  *
@@ -34,13 +34,13 @@ public class CRUDMascotas extends javax.swing.JPanel {
         lblIdOculto.setVisible(false);
         // Mostrar el JOptionPane con la pregunta
         int opcion = JOptionPane.showOptionDialog(
-                null, 
-                "¿Su mascota está registrada en el sistema?", 
-                "Consulta de Mascota", 
-                JOptionPane.YES_NO_OPTION, 
-                JOptionPane.QUESTION_MESSAGE, 
-                null, 
-                new Object[] {"Sí", "No"}, 
+                null,
+                "¿Su mascota está registrada en el sistema?",
+                "Consulta de Mascota",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.QUESTION_MESSAGE,
+                null,
+                new Object[]{"Sí", "No"},
                 "Sí");
 
         // Manejar las respuestas
@@ -61,17 +61,17 @@ public class CRUDMascotas extends javax.swing.JPanel {
             cmbCedula.setVisible(true);
             lblFechaNacimiento.setVisible(false);
             jDateFecha.setVisible(false);
+            bloquearDate(jDateFecha);
             btnModificar.setVisible(false);
             btnEliminar.setVisible(false);
             btnRegresar.setVisible(false);
             //agregar datos de dueños  a combobox
             conexion Base = new conexion();
-            
+
             MascotaDb masDb = new MascotaDb(Base);
             masDb.llenarComboBoxDueños(cmbCedula);
             masDb.llenarComboBoxMascotasPorDueño(cmbIdMascota, cmbCedula.getSelectedItem().toString());
-            
-            
+
         } else if (opcion == JOptionPane.NO_OPTION) {
             lblIdMascota.setVisible(false);
             cmbIdMascota.setVisible(false);
@@ -86,25 +86,23 @@ public class CRUDMascotas extends javax.swing.JPanel {
             cmbCedula.setVisible(true);
             lblFechaNacimiento.setVisible(true);
             jDateFecha.setVisible(true);
+            bloquearDate(jDateFecha);
             btnBuscar.setVisible(false);
             btnModificar.setVisible(false);
             btnEliminar.setVisible(false);
-            btnRegresar.setVisible(false); 
-            
+            btnRegresar.setVisible(false);
+
             //agregar datos de dueños  a combobox
             conexion Base = new conexion();
             MascotaDb masDb = new MascotaDb(Base);
             masDb.llenarComboBoxDueños(cmbCedula);
-            
+
         } else {
             JOptionPane.showMessageDialog(null, "No seleccionaste ninguna opción.");
         }
     }
-    
-    
-    
-    //getter  setter
 
+    //getter  setter
     public JButton getBtnBuscar() {
         return btnBuscar;
     }
@@ -280,7 +278,6 @@ public class CRUDMascotas extends javax.swing.JPanel {
     public void setCmbIdMascota(JComboBox<String> cmbIdMascota) {
         this.cmbIdMascota = cmbIdMascota;
     }
-    
 
     public JTextField getTxtNombre() {
         return txtNombre;
@@ -321,8 +318,6 @@ public class CRUDMascotas extends javax.swing.JPanel {
     public void setAccessibleContext(AccessibleContext accessibleContext) {
         this.accessibleContext = accessibleContext;
     }
-    
-    
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -501,6 +496,11 @@ public class CRUDMascotas extends javax.swing.JPanel {
         pnlCampos.setBackground(new java.awt.Color(183, 224, 210));
 
         txtRaza.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+        txtRaza.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtRazaKeyTyped(evt);
+            }
+        });
 
         lblRaza.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         lblRaza.setForeground(new java.awt.Color(78, 108, 152));
@@ -529,8 +529,20 @@ public class CRUDMascotas extends javax.swing.JPanel {
         lblFechaNacimiento.setText("Fecha Nacimiento:");
 
         txtEspecie.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+        txtEspecie.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtEspecieKeyTyped(evt);
+            }
+        });
 
         txtNombre.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+        txtNombre.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtNombreKeyTyped(evt);
+            }
+        });
+
+        jDateFecha.setForeground(new java.awt.Color(0, 0, 0));
 
         cmbCedula.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         cmbCedula.addItemListener(new java.awt.event.ItemListener() {
@@ -681,12 +693,12 @@ public class CRUDMascotas extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-        if (txtNombre.getText().isBlank()||txtEspecie.getText().isBlank()||txtRaza.getText().isBlank()||jDateFecha.getDate().toString().isBlank()||cmbCedula.getSelectedItem().toString().isBlank()) {
+        if (txtNombre.getText().isBlank() || txtEspecie.getText().isBlank() || txtRaza.getText().isBlank() || jDateFecha.getDate().toString().isBlank() || cmbCedula.getSelectedItem().toString().isBlank()) {
             JOptionPane.showMessageDialog(null, "No dejar espacios en blanco");
-        }else{
-            conexion Base= new  conexion();
-            MascotaDb miMascota= new MascotaDb(Base);
-            if (miMascota.insertar(txtNombre.getText().trim(), txtEspecie.getText().trim(), txtRaza.getText().trim(),cmbCedula.getSelectedItem().toString(), jDateFecha.getDate())) {
+        } else {
+            conexion Base = new conexion();
+            MascotaDb miMascota = new MascotaDb(Base);
+            if (miMascota.insertar(txtNombre.getText().trim(), txtEspecie.getText().trim(), txtRaza.getText().trim(), cmbCedula.getSelectedItem().toString(), jDateFecha.getDate())) {
                 txtNombre.setText(null);
                 txtNombre.setText(null);
                 txtEspecie.setText(null);
@@ -694,7 +706,7 @@ public class CRUDMascotas extends javax.swing.JPanel {
                 cmbCedula.setSelectedItem(null);
                 jDateFecha.setDate(null);
             }
-            
+
         }
     }//GEN-LAST:event_btnGuardarActionPerformed
 
@@ -707,8 +719,7 @@ public class CRUDMascotas extends javax.swing.JPanel {
         this.cmbCedula = cmbCedula;
     }
 
-    
-    
+
     private void btnSalirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSalirMouseClicked
         pnlPrincipal.setVisible(false);
         Mostrarpanelcrud(pnlLogo);
@@ -746,13 +757,12 @@ public class CRUDMascotas extends javax.swing.JPanel {
         txtEspecie.setText(masDb.obtenerEspecieMascotaPorId());
         txtRaza.setText(masDb.obtenerRazaMascotaPorId());
         jDateFecha.setDate(masDb.obtenerFechaNacimientoMascotaPorId());
-        
-            
-            
+
+
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void cmbCedulaItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbCedulaItemStateChanged
-        
+
     }//GEN-LAST:event_cmbCedulaItemStateChanged
 
     private void cmbIdMascotaMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cmbIdMascotaMouseEntered
@@ -787,90 +797,125 @@ public class CRUDMascotas extends javax.swing.JPanel {
         MascotaDb masDb = new MascotaDb(Base);
         masDb.llenarComboBoxDueños(cmbCedula);
         masDb.llenarComboBoxMascotasPorDueño(cmbIdMascota, cmbCedula.getSelectedItem().toString());
-        
+
     }//GEN-LAST:event_btnRegresarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         conexion Base = new conexion();
         MascotaDb masDb = new MascotaDb(Base);
-        
+
         masDb.obtenerIdMascotayEliminar(cmbCedula.getSelectedItem().toString(), cmbIdMascota.getSelectedItem().toString());
-        
+
         //mostrar anteriormenu
         //PARA BUSQUEDA
-            lblIdMascota.setVisible(true);
-            cmbIdMascota.setVisible(true);
-            btnBuscar.setVisible(true);
-            btnGuardar.setVisible(false);
-            lblNombre.setVisible(false);
-            txtNombre.setVisible(false);
-            lblEspecie.setVisible(false);
-            txtEspecie.setVisible(false);
-            lblRaza.setVisible(false);
-            txtRaza.setVisible(false);
-            lblCedDuenio.setVisible(true);
-            cmbCedula.setVisible(true);
-            lblFechaNacimiento.setVisible(false);
-            jDateFecha.setVisible(false);
-            btnModificar.setVisible(false);
-            btnEliminar.setVisible(false);
-            btnRegresar.setVisible(false);
-            //agregar datos de dueños  a combobox
-            masDb.llenarComboBoxDueños(cmbCedula);
-            masDb.llenarComboBoxMascotasPorDueño(cmbIdMascota, cmbCedula.getSelectedItem().toString());
-        
+        lblIdMascota.setVisible(true);
+        cmbIdMascota.setVisible(true);
+        btnBuscar.setVisible(true);
+        btnGuardar.setVisible(false);
+        lblNombre.setVisible(false);
+        txtNombre.setVisible(false);
+        lblEspecie.setVisible(false);
+        txtEspecie.setVisible(false);
+        lblRaza.setVisible(false);
+        txtRaza.setVisible(false);
+        lblCedDuenio.setVisible(true);
+        cmbCedula.setVisible(true);
+        lblFechaNacimiento.setVisible(false);
+        jDateFecha.setVisible(false);
+        btnModificar.setVisible(false);
+        btnEliminar.setVisible(false);
+        btnRegresar.setVisible(false);
+        //agregar datos de dueños  a combobox
+        masDb.llenarComboBoxDueños(cmbCedula);
+        masDb.llenarComboBoxMascotasPorDueño(cmbIdMascota, cmbCedula.getSelectedItem().toString());
+
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
-     //verifico que los campos no esten vacios
-        if (txtNombre.getText().isBlank()||txtEspecie.getText().isBlank()||txtRaza.getText().isBlank()||jDateFecha.getDate()==null) {
+        //verifico que los campos no esten vacios
+        if (txtNombre.getText().isBlank() || txtEspecie.getText().isBlank() || txtRaza.getText().isBlank() || jDateFecha.getDate() == null) {
             JOptionPane.showMessageDialog(null, "Ingrese los campos");
-        }else{
-        //Logica de modificacion
-        conexion Base = new conexion();
-        MascotaDb masDb = new MascotaDb(Base);
-        if (masDb.actualizarMascota(lblIdOculto.getText(),cmbCedula.getSelectedItem().toString(), txtNombre.getText(), txtEspecie.getText(), txtRaza.getText(), jDateFecha.getDate())) {
-            JOptionPane.showMessageDialog(null, "Mascota actualizada correctamente");
-            lblIdOculto.setText(null);
-            lblIdOculto.setVisible(false);
-            //reseteo campos
-            cmbCedula.setSelectedItem(null);
-            txtNombre.setText(null);
-            txtEspecie.setText(null);
-            txtRaza.setText(null);
-            jDateFecha.setDate(null);
-            
-            //mostrar menu anterior
-            //PARA BUSQUEDA
-            lblIdMascota.setVisible(true);
-            cmbIdMascota.setVisible(true);
-            btnBuscar.setVisible(true);
-            btnGuardar.setVisible(false);
-            lblNombre.setVisible(false);
-            txtNombre.setVisible(false);
-            lblEspecie.setVisible(false);
-            txtEspecie.setVisible(false);
-            lblRaza.setVisible(false);
-            txtRaza.setVisible(false);
-            lblCedDuenio.setVisible(true);
-            cmbCedula.setVisible(true);
-            lblFechaNacimiento.setVisible(false);
-            jDateFecha.setVisible(false);
-            btnModificar.setVisible(false);
-            btnEliminar.setVisible(false);
-            btnRegresar.setVisible(false);
-            //agregar datos de dueños  a combobox
-            masDb.llenarComboBoxDueños(cmbCedula);
-            masDb.llenarComboBoxMascotasPorDueño(cmbIdMascota, cmbCedula.getSelectedItem().toString());
-            
-            
-        }else{
-        JOptionPane.showMessageDialog(null, "Error al actualizar Mascota");
-        }
+        } else {
+            //Logica de modificacion
+            conexion Base = new conexion();
+            MascotaDb masDb = new MascotaDb(Base);
+            if (masDb.actualizarMascota(lblIdOculto.getText(), cmbCedula.getSelectedItem().toString(), txtNombre.getText(), txtEspecie.getText(), txtRaza.getText(), jDateFecha.getDate())) {
+                JOptionPane.showMessageDialog(null, "Mascota actualizada correctamente");
+                lblIdOculto.setText(null);
+                lblIdOculto.setVisible(false);
+                //reseteo campos
+                cmbCedula.setSelectedItem(null);
+                txtNombre.setText(null);
+                txtEspecie.setText(null);
+                txtRaza.setText(null);
+                jDateFecha.setDate(null);
+
+                //mostrar menu anterior
+                //PARA BUSQUEDA
+                lblIdMascota.setVisible(true);
+                cmbIdMascota.setVisible(true);
+                btnBuscar.setVisible(true);
+                btnGuardar.setVisible(false);
+                lblNombre.setVisible(false);
+                txtNombre.setVisible(false);
+                lblEspecie.setVisible(false);
+                txtEspecie.setVisible(false);
+                lblRaza.setVisible(false);
+                txtRaza.setVisible(false);
+                lblCedDuenio.setVisible(true);
+                cmbCedula.setVisible(true);
+                lblFechaNacimiento.setVisible(false);
+                jDateFecha.setVisible(false);
+                btnModificar.setVisible(false);
+                btnEliminar.setVisible(false);
+                btnRegresar.setVisible(false);
+                //agregar datos de dueños  a combobox
+                masDb.llenarComboBoxDueños(cmbCedula);
+                masDb.llenarComboBoxMascotasPorDueño(cmbIdMascota, cmbCedula.getSelectedItem().toString());
+
+            } else {
+                JOptionPane.showMessageDialog(null, "Error al actualizar Mascota");
+            }
         }
 
 
     }//GEN-LAST:event_btnModificarActionPerformed
+
+    private void txtNombreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreKeyTyped
+        char caracter = evt.getKeyChar();
+
+        // Verificar si el carácter es un número
+        if (Character.isDigit(caracter)) {
+            // Mostrar un JDialog
+            JOptionPane.showMessageDialog(this, "No se pueden ingresar números", "Error", JOptionPane.ERROR_MESSAGE);
+            // Cancelar el evento de tecla
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtNombreKeyTyped
+
+    private void txtEspecieKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtEspecieKeyTyped
+        char caracter = evt.getKeyChar();
+
+        // Verificar si el carácter es un número
+        if (Character.isDigit(caracter)) {
+            // Mostrar un JDialog
+            JOptionPane.showMessageDialog(this, "No se pueden ingresar números", "Error", JOptionPane.ERROR_MESSAGE);
+            // Cancelar el evento de tecla
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtEspecieKeyTyped
+
+    private void txtRazaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtRazaKeyTyped
+        char caracter = evt.getKeyChar();
+
+        // Verificar si el carácter es un número
+        if (Character.isDigit(caracter)) {
+            // Mostrar un JDialog
+            JOptionPane.showMessageDialog(this, "No se pueden ingresar números", "Error", JOptionPane.ERROR_MESSAGE);
+            // Cancelar el evento de tecla
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtRazaKeyTyped
 
     private void Mostrarpanelcrud(JPanel p) {
         p.setSize(700, 460);
@@ -879,6 +924,13 @@ public class CRUDMascotas extends javax.swing.JPanel {
         Menu.PanelPrincipal.add(p, BorderLayout.CENTER);
         Menu.PanelPrincipal.revalidate();
         Menu.PanelPrincipal.repaint();
+    }
+
+    private void bloquearDate(JDateChooser dateChooser) {
+        // Deshabilitar la edición del campo de texto
+        dateChooser.getDateEditor().setEnabled(false);
+        // Establecer la fecha máxima como la fecha actual
+        dateChooser.setMaxSelectableDate(new Date());
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -911,4 +963,3 @@ public class CRUDMascotas extends javax.swing.JPanel {
     private javax.swing.JTextField txtRaza;
     // End of variables declaration//GEN-END:variables
 }
-

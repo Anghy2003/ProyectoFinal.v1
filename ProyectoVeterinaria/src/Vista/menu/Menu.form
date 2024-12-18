@@ -224,7 +224,7 @@
                       <Color blue="ff" green="ff" red="ff" type="rgb"/>
                     </Property>
                     <Property name="icon" type="javax.swing.Icon" editor="org.netbeans.modules.form.editors2.IconEditor">
-                      <Image iconType="3" name="/Imagenes/icons8-cl&#xed;nica-externa-veterinaria-y-mascotas-creatype-bicolor-colorcreatype-5-40.png"/>
+                      <Image iconType="3" name="/Imagenes/dueno-de-una-mascota.png"/>
                     </Property>
                     <Property name="text" type="java.lang.String" value="Propietarios "/>
                   </Properties>
