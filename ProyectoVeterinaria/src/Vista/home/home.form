@@ -131,6 +131,7 @@
           </Properties>
           <Events>
             <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="btningresarMouseClicked"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btningresarActionPerformed"/>
           </Events>
         </Component>
         <Component class="rojeru_san.RSMTextFull" name="txtusuario">
@@ -156,10 +157,10 @@
             <Property name="foreground" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="da" green="d1" red="7b" type="rgb"/>
             </Property>
-            <Property name="text" type="java.lang.String" value="rSMPassView1"/>
             <Property name="bordeColorFocus" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
               <Color blue="da" green="d1" red="7b" type="rgb"/>
             </Property>
+            <Property name="placeholder" type="java.lang.String" value="************"/>
           </Properties>
         </Component>
       </SubComponents>

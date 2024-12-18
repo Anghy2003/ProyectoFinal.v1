@@ -63,6 +63,11 @@ public class home extends javax.swing.JFrame {
                 btningresarMouseClicked(evt);
             }
         });
+        btningresar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btningresarActionPerformed(evt);
+            }
+        });
 
         txtusuario.setForeground(new java.awt.Color(123, 209, 218));
         txtusuario.setBordeColorFocus(new java.awt.Color(123, 209, 218));
@@ -72,8 +77,8 @@ public class home extends javax.swing.JFrame {
 
         txtcontra.setBackground(new java.awt.Color(255, 255, 255));
         txtcontra.setForeground(new java.awt.Color(123, 209, 218));
-        txtcontra.setText("rSMPassView1");
         txtcontra.setBordeColorFocus(new java.awt.Color(123, 209, 218));
+        txtcontra.setPlaceholder("************");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -155,8 +160,12 @@ public class home extends javax.swing.JFrame {
           
         
     } else {
-        JOptionPane.showMessageDialog(this, "Usuario o contraseña incorrectos.");}
+        JOptionPane.showMessageDialog(this, "Usuario o contraseña incorrectos");}
     }//GEN-LAST:event_btningresarMouseClicked
+
+    private void btningresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btningresarActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btningresarActionPerformed
 
 private void Mostrarpanelcrud(JFrame loginFrame, JFrame frame) {
     // Cerrar el JFrame de login

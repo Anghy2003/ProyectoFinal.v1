@@ -284,7 +284,7 @@ public class ControlVacu extends javax.swing.JPanel {
 
             // Obtener valores de los ComboBox
             String VACUNA_SELECCIONADA = cmbVacunas.getSelectedItem().toString();
-            String MASCOTA_SELECCIONADA = cmbVacunas.getSelectedItem().toString();
+            String MASCOTA_SELECCIONADA = cmbMascota.getSelectedItem().toString();
 
             // Extraer directamente los IDs de los ComboBox
             String ID_VACUNA = VACUNA_SELECCIONADA.split(" ")[0]; // ID de la vacuna

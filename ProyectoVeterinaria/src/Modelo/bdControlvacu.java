@@ -32,43 +32,27 @@ public void INSERTAR(int DOSIS, Date FECHA, String ID_VACUNA, String ID_MASCOTA)
     String SQL = "INSERT INTO CONTROLVACUNA (DOSIS, FECHA, ID_VACUNA, ID_MASCOTA) VALUES (?, ?, ?, ?)";
 
     try (Connection CONNECTION = Base.conectar();
-         PreparedStatement PREPARED_STATEMENT = CONNECTION.prepareStatement(SQL)) {
-
+         PreparedStatement datosisrt = CONNECTION.prepareStatement(SQL)) {
         // Convertir la fecha a SQL Date
-        java.sql.Date SQL_FECHA = new java.sql.Date(FECHA.getTime());
-
-      
-        
-        
-        System.out.println("Dosis: " + DOSIS);
-        System.out.println("Fecha: " + SQL_FECHA);
-        System.out.println("ID Vacuna: " + ID_VACUNA);
-        System.out.println("ID Mascota: " + ID_MASCOTA);
+         java.sql.Date SQL_FECHA = new java.sql.Date(FECHA.getTime());
 
         // Setear los valores
-        PREPARED_STATEMENT.setInt(1, DOSIS);
-        PREPARED_STATEMENT.setDate(2, SQL_FECHA);
-        PREPARED_STATEMENT.setString(3, ID_VACUNA);  
-        PREPARED_STATEMENT.setString(4, ID_MASCOTA); 
+        datosisrt.setInt(1, DOSIS);
+        datosisrt.setDate(2, SQL_FECHA);
+        datosisrt.setString(3, ID_VACUNA);  
+        datosisrt.setString(4, ID_MASCOTA); 
 
         // Ejecutar la consulta de inserción
-        int ROWS_AFFECTED = PREPARED_STATEMENT.executeUpdate();
+        int ROWS_AFFECTED = datosisrt.executeUpdate();
         if (ROWS_AFFECTED > 0) {
             JOptionPane.showMessageDialog(null, "CONTROL DE VACUNA AGREGADO EXITOSAMENTE");
-            System.out.println("Inserción exitosa. Filas afectadas: " + ROWS_AFFECTED);
         } else {
-            JOptionPane.showMessageDialog(null, "NO SE PUDO AGREGAR EL CONTROL DE LA VACUNA");
-            System.out.println("Inserción fallida. Filas afectadas: " + ROWS_AFFECTED);
+            JOptionPane.showMessageDialog(null, "NO SE PUDO AGREGAR EL CONTROL DE LA VACUNA");  
         }
-
     } catch (SQLException E) {
         JOptionPane.showMessageDialog(null, "ERROR AL AGREGAR EL CONTROL DE LA VACUNA: " + E.getMessage());
-        System.out.println("Error SQL: " + E.getMessage());
-        E.printStackTrace();
     } catch (Exception E) {
         JOptionPane.showMessageDialog(null, "ERROR INESPERADO: " + E.getMessage());
-        System.out.println("Error inesperado: " + E.getMessage());
-        E.printStackTrace();
     }
 }
 
