@@ -5,7 +5,7 @@
  */
 package Vista.submenu;
 
-import Vista.crud.crud_mascotas;
+import DUENO.CRUDDuenos;
 import Vista.menu.Menu;
 import java.awt.BorderLayout;
 import javax.swing.JPanel;
@@ -42,6 +42,11 @@ public class PanelSubmenuPropietario extends javax.swing.JPanel {
 
         btngestion.setFont(new java.awt.Font("Roboto Medium", 1, 12)); // NOI18N
         btngestion.setText("GESTION PROPIETARIOS");
+        btngestion.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btngestionMouseClicked(evt);
+            }
+        });
         btngestion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btngestionActionPerformed(evt);
@@ -91,9 +96,13 @@ public class PanelSubmenuPropietario extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btngestionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btngestionActionPerformed
-        crud_mascotas pro= new crud_mascotas();
-        Mostrarpanelcrud(pro);
+        
     }//GEN-LAST:event_btngestionActionPerformed
+
+    private void btngestionMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btngestionMouseClicked
+        DUENO.CRUDDuenos Crud= new CRUDDuenos();
+        Mostrarpanelcrud(Crud);
+    }//GEN-LAST:event_btngestionMouseClicked
 private void Mostrarpanelcrud(JPanel p) {
         p.setSize(700, 460);
         p.setLocation(0, 0);
