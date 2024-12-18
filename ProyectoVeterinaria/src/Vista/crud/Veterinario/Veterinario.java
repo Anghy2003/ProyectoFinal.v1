@@ -8,6 +8,8 @@ package Vista.crud.Veterinario;
 import Modelo.conexion;
 import javax.swing.JOptionPane;
 import Vista.menu.Menu;
+import java.awt.BorderLayout;
+import javax.swing.JPanel;
 
 
 /**
@@ -91,6 +93,8 @@ public class Veterinario extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        pnlLogo = new javax.swing.JPanel();
+        jLabel4 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         pnlPrincipal = new javax.swing.JPanel();
         btnSalir = new javax.swing.JButton();
@@ -113,6 +117,28 @@ public class Veterinario extends javax.swing.JPanel {
         txtCedulaVeterinario = new javax.swing.JTextField();
         lblVeterinarios = new javax.swing.JLabel();
         cmbVeterinarios = new javax.swing.JComboBox<>();
+
+        pnlLogo.setBackground(new java.awt.Color(255, 255, 255));
+        pnlLogo.setForeground(new java.awt.Color(204, 204, 204));
+
+        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/LOGOPL.png"))); // NOI18N
+
+        javax.swing.GroupLayout pnlLogoLayout = new javax.swing.GroupLayout(pnlLogo);
+        pnlLogo.setLayout(pnlLogoLayout);
+        pnlLogoLayout.setHorizontalGroup(
+            pnlLogoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlLogoLayout.createSequentialGroup()
+                .addContainerGap(246, Short.MAX_VALUE)
+                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(222, 222, 222))
+        );
+        pnlLogoLayout.setVerticalGroup(
+            pnlLogoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(pnlLogoLayout.createSequentialGroup()
+                .addGap(149, 149, 149)
+                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(163, Short.MAX_VALUE))
+        );
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
@@ -191,6 +217,11 @@ public class Veterinario extends javax.swing.JPanel {
         btnRegresar.setText("Regresar");
         btnRegresar.setToolTipText("NO CAMBIAR");
         btnRegresar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnRegresar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRegresarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout pnlBotonesLayout = new javax.swing.GroupLayout(pnlBotones);
         pnlBotones.setLayout(pnlBotonesLayout);
@@ -418,6 +449,27 @@ public class Veterinario extends javax.swing.JPanel {
     // Opcional: Deshabilitar campos nuevamente después de modificar
     txtCedulaVeterinario.setEditable(false);
     limpiarCamposVeterinario();
+    
+    lblVeterinarios.setVisible(true);
+            cmbVeterinarios.setVisible(true);
+            btnBuscar.setVisible(true);
+            btnGuardar.setVisible(false);
+            lblNombre.setVisible(false);
+            txtNombreVeterinario.setVisible(false);
+            lblCedula.setVisible(false);
+            txtCedulaVeterinario.setVisible(false);
+            lblDireccion.setVisible(false);
+            txtDireccionVeterinario.setVisible(false);
+            lblCelular.setVisible(false);
+            txtCelularVeterinario.setVisible(false);
+            btnModificar.setVisible(false);
+            btnEliminar.setVisible(false);
+            btnRegresar.setVisible(false);
+
+            // Llenar los ComboBox con datos
+            conexion Base = new conexion();
+            VeterinarioDb masDb = new VeterinarioDb(Base);
+            masDb.llenarComboBoxVeterinarios(cmbVeterinarios);
     }//GEN-LAST:event_btnModificarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
@@ -444,22 +496,76 @@ public class Veterinario extends javax.swing.JPanel {
             JOptionPane.showMessageDialog(null, "El veterinario ha sido eliminado exitosamente.");
             // Limpiar los campos o actualizar la vista según sea necesario
             limpiarCamposVeterinario();
+            lblVeterinarios.setVisible(true);
+            cmbVeterinarios.setVisible(true);
+            btnBuscar.setVisible(true);
+            btnGuardar.setVisible(false);
+            lblNombre.setVisible(false);
+            txtNombreVeterinario.setVisible(false);
+            lblCedula.setVisible(false);
+            txtCedulaVeterinario.setVisible(false);
+            lblDireccion.setVisible(false);
+            txtDireccionVeterinario.setVisible(false);
+            lblCelular.setVisible(false);
+            txtCelularVeterinario.setVisible(false);
+            btnModificar.setVisible(false);
+            btnEliminar.setVisible(false);
+            btnRegresar.setVisible(false);
+
+            // Llenar los ComboBox con datos
+           
+            VeterinarioDb masDb = new VeterinarioDb(Base);
+            masDb.llenarComboBoxVeterinarios(cmbVeterinarios);
         } else {
             JOptionPane.showMessageDialog(null, "No se pudo eliminar el veterinario. Verifica el registro.");
         }
     }
+    
+    
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
-        Menu main = new Menu();
-        main.setVisible(true);
+      pnlPrincipal.setVisible(false);
+        Mostrarpanelcrud(pnlLogo);
     }//GEN-LAST:event_btnSalirActionPerformed
+
+    private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
+        lblVeterinarios.setVisible(true);
+            cmbVeterinarios.setVisible(true);
+            btnBuscar.setVisible(true);
+            btnGuardar.setVisible(false);
+            lblNombre.setVisible(false);
+            txtNombreVeterinario.setVisible(false);
+            lblCedula.setVisible(false);
+            txtCedulaVeterinario.setVisible(false);
+            lblDireccion.setVisible(false);
+            txtDireccionVeterinario.setVisible(false);
+            lblCelular.setVisible(false);
+            txtCelularVeterinario.setVisible(false);
+            btnModificar.setVisible(false);
+            btnEliminar.setVisible(false);
+            btnRegresar.setVisible(false);
+
+            // Llenar los ComboBox con datos
+            conexion Base = new conexion();
+            VeterinarioDb masDb = new VeterinarioDb(Base);
+            masDb.llenarComboBoxVeterinarios(cmbVeterinarios);
+    }//GEN-LAST:event_btnRegresarActionPerformed
 private void limpiarCamposVeterinario() {
     txtCedulaVeterinario.setText("");
     txtNombreVeterinario.setText("");
     txtDireccionVeterinario.setText("");
     txtCelularVeterinario.setText("");
     // Si tienes más campos, agrégales limpieza aquí
+}
+
+private void Mostrarpanelcrud(JPanel p) {
+        p.setSize(700, 460);
+        p.setLocation(0, 0);
+        Menu.PanelPrincipal.removeAll();
+        Menu.PanelPrincipal.add(p, BorderLayout.CENTER);
+        Menu.PanelPrincipal.revalidate();
+        Menu.PanelPrincipal.repaint();
 }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -470,6 +576,7 @@ private void limpiarCamposVeterinario() {
     private javax.swing.JButton btnRegresar;
     private javax.swing.JButton btnSalir;
     private javax.swing.JComboBox<String> cmbVeterinarios;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel lblCedula;
     private javax.swing.JLabel lblCelular;
@@ -480,6 +587,7 @@ private void limpiarCamposVeterinario() {
     private javax.swing.JPanel pnlBotones;
     private javax.swing.JPanel pnlCRUDS;
     private javax.swing.JPanel pnlCampos;
+    public static javax.swing.JPanel pnlLogo;
     private javax.swing.JPanel pnlPrincipal;
     private javax.swing.JTextField txtCedulaVeterinario;
     private javax.swing.JTextField txtCelularVeterinario;

@@ -5,7 +5,8 @@
  */
 package Vista.submenu;
 
-import Vista.crud.crud_mascotas;
+
+import Vista.crud.Veterinario.ControlMedico;
 import Vista.menu.Menu;
 import java.awt.BorderLayout;
 import javax.swing.JPanel;
@@ -81,8 +82,8 @@ public class PanelSubmenuControMedi extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btngestionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btngestionActionPerformed
-        crud_mascotas pro= new crud_mascotas();
-        Mostrarpanelcrud(pro);
+        ControlMedico crtlMedico= new ControlMedico();
+        Mostrarpanelcrud(crtlMedico);
     }//GEN-LAST:event_btngestionActionPerformed
 
 private void Mostrarpanelcrud(JPanel p) {
