@@ -10,6 +10,7 @@ import Vista.home.home;
 import Vista.submenu.PanelSubmenuControlVacu;
 import Vista.submenu.*;
 import Vista.tablas.TablaVacuna;
+import Vista.tablas.tablaControlVacuna;
 import Vista.titulos.*;
 import Vista.titulos.PaneltituloControldeVcunas;
 import java.awt.BorderLayout;
@@ -266,9 +267,10 @@ public class Menu extends javax.swing.JFrame {
         
         PaneltituloControldeVcunas titvac = new PaneltituloControldeVcunas();
         PanelSubmenuControlVacu subvacu = new PanelSubmenuControlVacu();
+        tablaControlVacuna tablva=new tablaControlVacuna();
         MostrarpanelSubmenu(subvacu);
         MostrarpanelTitulo(titvac);
-        
+        ShowpanelCruds(tablva);
     }//GEN-LAST:event_btnControlVacMouseClicked
 
     private void btnMascotasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnMascotasMouseClicked

@@ -32,42 +32,44 @@ public class bdVacuna extends VACUNA {
 
     public void insertar(String TIPO, String NOMBRE, Date FECHA_CREACION, Date FECHA_EXPIRACION) {
 
-        if (verificarVacuna(NOMBRE)) {
-           JOptionPane.showMessageDialog(null, "La Vacuna con  ese nombre: " + NOMBRE + " ya existe en la base de datos.");
-            return;
+    // Verificar si la vacuna ya existe en la base de datos
+    if (verificarVacuna(NOMBRE)) {
+        JOptionPane.showMessageDialog(null, "La Vacuna con el nombre: " + NOMBRE + " ya existe en la base de datos.");
+        return;
     }
-        String sql = "INSERT INTO VACUNA (TIPO, NOMBRE, FECHA_CREACION, FECHA_EXPIRACION) "
-                + "VALUES (INITCAP(?), INITCAP(?), ?, ?)";
 
-        try (Connection connection = Base.conectar();
-                PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+    // Preparar la consulta de inserción
+    String sql = "INSERT INTO VACUNA (TIPO, NOMBRE, FECHA_CREACION, FECHA_EXPIRACION) "
+            + "VALUES (INITCAP(?), INITCAP(?), ?, ?)";
 
-            // CONVERTIR FECHAS 
-            java.sql.Date sqlFechaCreacion = new java.sql.Date(FECHA_CREACION.getTime());
-            java.sql.Date sqlFechaExpiracion = new java.sql.Date(FECHA_EXPIRACION.getTime());
+    try (Connection connection = Base.conectar();
+         PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
-            // ESTABLECER LOS PARAMETROS 
-            preparedStatement.setString(1, TIPO);
-            preparedStatement.setString(2, NOMBRE);
-            preparedStatement.setDate(3, sqlFechaCreacion);
-            preparedStatement.setDate(4, sqlFechaExpiracion);
+        // Convertir las fechas a SQL Date
+        java.sql.Date sqlFechaCreacion = new java.sql.Date(FECHA_CREACION.getTime());
+        java.sql.Date sqlFechaExpiracion = new java.sql.Date(FECHA_EXPIRACION.getTime());
 
-            // EJECUTA LA CONSULTA
-            int rowsAffected = preparedStatement.executeUpdate();
-            if (rowsAffected > 0) {
-                JOptionPane.showMessageDialog(null, "Vacuna agregada exitosamente");
-            } else {
-                JOptionPane.showMessageDialog(null, "No se pudo agregar la Vacuna");
-            }
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Error al agregar la Vacuna: " + e.getMessage());
-            e.printStackTrace();
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Error inesperado: " + e.getMessage());
-            e.printStackTrace();
-        }     
+        // Establecer los parámetros de la consulta
+        preparedStatement.setString(1, TIPO);
+        preparedStatement.setString(2, NOMBRE);
+        preparedStatement.setDate(3, sqlFechaCreacion);
+        preparedStatement.setDate(4, sqlFechaExpiracion);
 
+        // Ejecutar la consulta de inserción
+        int rowsAffected = preparedStatement.executeUpdate();
+        if (rowsAffected > 0) {
+            JOptionPane.showMessageDialog(null, "Vacuna agregada exitosamente");
+        } else {
+            JOptionPane.showMessageDialog(null, "No se pudo agregar la Vacuna");
+        }
+    } catch (SQLException e) {
+        JOptionPane.showMessageDialog(null, "Error al agregar la Vacuna: " + e.getMessage());
+        e.printStackTrace();
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(null, "Error inesperado: " + e.getMessage());
+        e.printStackTrace();
     }
+}
 
      public static void cargardatos(JTable tablaVacunas, conexion Base) {
     try (Connection connection = Base.conectar();
@@ -131,23 +133,72 @@ public class bdVacuna extends VACUNA {
         e.printStackTrace();
     }
    }
+   
+   
+   
+   
+   
+   //cargar vacuna en el buscar 
+   public void cargarVacuna(String nombreVacuna, rojeru_san.RSMTextFull txtNombre, rojeru_san.RSMTextFull txtTipo, com.toedter.calendar.JDateChooser jDateChooser1, com.toedter.calendar.JDateChooser jDateChooser2) {
+
+    String sql = "SELECT * FROM VACUNA WHERE NOMBRE = INITCAP(?)";
+
+    try (Connection connection = Base.conectar();
+         PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+
+        preparedStatement.setString(1, nombreVacuna);
+        
+        // Ejecutamos la consulta
+        ResultSet rs = preparedStatement.executeQuery();
+
+        if (rs.next()) {
+            // Asignamos los valores obtenidos a los campos de texto
+            txtNombre.setText(rs.getString("nombre"));
+            txtTipo.setText(rs.getString("tipo"));
+            jDateChooser1.setDate(rs.getDate("fecha_creacion"));
+            jDateChooser2.setDate(rs.getDate("fecha_expiracion"));
+        } else {
+            JOptionPane.showMessageDialog(null, "No se encontraron datos para la vacuna: " + nombreVacuna);
+        }
+    } catch (SQLException e) {
+        JOptionPane.showMessageDialog(null, "Error al cargar los datos de la vacuna: " + e.getMessage());
+        e.printStackTrace();
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(null, "Error inesperado: " + e.getMessage());
+        e.printStackTrace();
+    }
+}
+ 
+    public void editar(String nombreVacuna, String tipoVacuna, Date fechaCreacion, Date fechaExpiracion) {
+
+    String sql = "UPDATE VACUNA SET tipo = ?, fecha_creacion = ?, fecha_expiracion = ? WHERE nombre = INITCAP(?)";
+
+    try (Connection connection = Base.conectar();
+         PreparedStatement ps = connection.prepareStatement(sql)) {
+        
+        ps.setString(1, tipoVacuna);
+        ps.setDate(2, new java.sql.Date(fechaCreacion.getTime()));
+        ps.setDate(3, new java.sql.Date(fechaExpiracion.getTime()));
+        ps.setString(4, nombreVacuna);
+        
+        if (ps.executeUpdate() > 0) {
+            JOptionPane.showMessageDialog(null, "Vacuna actualizada exitosamente");
+        } else {
+            JOptionPane.showMessageDialog(null, "No se pudo actualizar la vacuna");
+        }
+    } catch (SQLException e) {
+        JOptionPane.showMessageDialog(null, "Error al actualizar: " + e.getMessage());
+        e.printStackTrace();
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(null, "Error inesperado: " + e.getMessage());
+        e.printStackTrace();
+    }
+}
     
     
     
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+  // verfica existencia de la vacuna 
     public boolean verificarVacuna(String NOMBRE) {
     String sql = "SELECT COUNT(*) FROM VACUNA WHERE NOMBRE = ?";
     try (Connection connection = Base.conectar();

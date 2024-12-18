@@ -5,6 +5,8 @@
  */
 package Modelo;
 
+import java.util.Date;
+
 /**
  *
  * @author aberr
@@ -12,14 +14,14 @@ package Modelo;
 public class Control_Vacunas {
     String ID;
     int DOSIS;
-    String FECHA;
+    Date FECHA;
     String ID_VACUNA;
     String ID_MASCOTA;
 
     public Control_Vacunas() {
     }
 
-    public Control_Vacunas(String ID, int DOSIS, String FECHA, String ID_VACUNA, String ID_MASCOTA) {
+    public Control_Vacunas(String ID, int DOSIS, Date FECHA, String ID_VACUNA, String ID_MASCOTA) {
         this.ID = ID;
         this.DOSIS = DOSIS;
         this.FECHA = FECHA;
@@ -27,13 +29,12 @@ public class Control_Vacunas {
         this.ID_MASCOTA = ID_MASCOTA;
     }
 
-    public Control_Vacunas(int DOSIS, String FECHA, String ID_VACUNA, String ID_MASCOTA) {
+    public Control_Vacunas(int DOSIS, Date FECHA, String ID_VACUNA, String ID_MASCOTA) {
         this.DOSIS = DOSIS;
         this.FECHA = FECHA;
         this.ID_VACUNA = ID_VACUNA;
         this.ID_MASCOTA = ID_MASCOTA;
     }
-    
 
     public String getID() {
         return ID;
@@ -51,11 +52,11 @@ public class Control_Vacunas {
         this.DOSIS = DOSIS;
     }
 
-    public String getFECHA() {
+    public Date getFECHA() {
         return FECHA;
     }
 
-    public void setFECHA(String FECHA) {
+    public void setFECHA(Date FECHA) {
         this.FECHA = FECHA;
     }
 
@@ -74,6 +75,8 @@ public class Control_Vacunas {
     public void setID_MASCOTA(String ID_MASCOTA) {
         this.ID_MASCOTA = ID_MASCOTA;
     }
+
+   
     
     
     
