@@ -17,6 +17,7 @@ import Modelo.*;
 import Vista.menu.Menu;
 import com.toedter.calendar.JDateChooser;
 import java.awt.BorderLayout;
+import java.awt.event.KeyEvent;
 import javax.swing.JComboBox;
 
 /**
@@ -30,39 +31,48 @@ public class CRUDDuenos extends javax.swing.JPanel {
      */
     public CRUDDuenos() {
         initComponents();
-        lblIdOculto.setVisible(false);
         // Mostrar el JOptionPane con la pregunta
         int opcion = JOptionPane.showOptionDialog(
                 null, 
                 "¿Se encuentra registrad@ en el sistema?", 
-                "Consulta de Dueños", 
-                JOptionPane.YES_NO_OPTION, 
-                JOptionPane.QUESTION_MESSAGE, 
-                null, 
-                new Object[] {"Sí", "No"}, 
+                "Consulta de Dueños",
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.QUESTION_MESSAGE,
+                null,
+                new Object[]{"Sí", "No"},
                 "Sí");
 
         // Manejar las respuestas
         if (opcion == JOptionPane.YES_OPTION) {
 
             //PARA BUSQUEDA
-            lblNombre.setVisible(true);
-            btnBuscar.setVisible(true);
-            btnGuardar.setVisible(false);
+            lblCedula.setVisible(false);
+            txtCedula.setVisible(false);
+            lblNombre.setVisible(false);
+            txtNombre.setVisible(false);
             lblApellido.setVisible(false);
             txtApellido.setVisible(false);
             lblDireccion.setVisible(false);
             txtDireccion.setVisible(false);
             lblTelefono.setVisible(false);
             txtTelefono.setVisible(false);
-            lblCedula.setVisible(true);
+            //botones
+            btnBuscar.setVisible(true);
             btnModificar.setVisible(false);
             btnEliminar.setVisible(false);
             btnRegresar.setVisible(false);
-            
-            
+            btnGuardar.setVisible(false);
+            //busqueda campos
+            lblBuscarDueno.setVisible(true);
+            cmbBuscarCedula.setVisible(true);
+
+            //agregar datos de dueños  a combobox
+            conexion Base = new conexion();
+            DuenoDb dueDb = new DuenoDb(Base);
+            dueDb.llenarComboBoxBuscar(cmbBuscarCedula);
+
         } else if (opcion == JOptionPane.NO_OPTION) {
-            
+
             lblCedula.setVisible(true);
             txtCedula.setVisible(true);
             lblNombre.setVisible(true);
@@ -79,6 +89,9 @@ public class CRUDDuenos extends javax.swing.JPanel {
             btnEliminar.setVisible(false);
             btnRegresar.setVisible(false);
             btnGuardar.setVisible(true);
+            //busqueda
+            lblBuscarDueno.setVisible(false);
+            cmbBuscarCedula.setVisible(false);
             
             
             
@@ -318,17 +331,18 @@ public class CRUDDuenos extends javax.swing.JPanel {
         btnBuscar = new javax.swing.JButton();
         btnRegresar = new javax.swing.JButton();
         pnlCampos = new javax.swing.JPanel();
+        txtDireccion = new javax.swing.JTextField();
+        lblDireccion = new javax.swing.JLabel();
+        txtApellido = new javax.swing.JTextField();
+        lblApellido = new javax.swing.JLabel();
+        txtNombre = new javax.swing.JTextField();
+        lblNombre = new javax.swing.JLabel();
+        txtCedula = new javax.swing.JTextField();
+        lblCedula = new javax.swing.JLabel();
+        lblBuscarDueno = new javax.swing.JLabel();
+        cmbBuscarCedula = new javax.swing.JComboBox<>();
         txtTelefono = new javax.swing.JTextField();
         lblTelefono = new javax.swing.JLabel();
-        lblDireccion = new javax.swing.JLabel();
-        lblApellido = new javax.swing.JLabel();
-        lblNombre = new javax.swing.JLabel();
-        lblCedula = new javax.swing.JLabel();
-        txtDireccion = new javax.swing.JTextField();
-        txtApellido = new javax.swing.JTextField();
-        txtCedula = new javax.swing.JTextField();
-        txtNombre = new javax.swing.JTextField();
-        lblIdOculto = new javax.swing.JLabel();
 
         pnlLogo.setBackground(new java.awt.Color(255, 255, 255));
         pnlLogo.setForeground(new java.awt.Color(204, 204, 204));
@@ -469,84 +483,129 @@ public class CRUDDuenos extends javax.swing.JPanel {
 
         pnlCampos.setBackground(new java.awt.Color(183, 224, 210));
 
-        txtTelefono.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
-
-        lblTelefono.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        lblTelefono.setForeground(new java.awt.Color(78, 108, 152));
-        lblTelefono.setText("Teléfono:");
+        txtDireccion.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
 
         lblDireccion.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         lblDireccion.setForeground(new java.awt.Color(78, 108, 152));
         lblDireccion.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         lblDireccion.setText("Direccion:");
 
+        txtApellido.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+        txtApellido.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtApellidoKeyTyped(evt);
+            }
+        });
+
         lblApellido.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         lblApellido.setForeground(new java.awt.Color(78, 108, 152));
         lblApellido.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         lblApellido.setText("Apellido:");
 
+        txtNombre.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+        txtNombre.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtNombreKeyTyped(evt);
+            }
+        });
+
         lblNombre.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         lblNombre.setForeground(new java.awt.Color(78, 108, 152));
         lblNombre.setText("Nombre:");
+
+        txtCedula.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+        txtCedula.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtCedulaKeyTyped(evt);
+            }
+        });
 
         lblCedula.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         lblCedula.setForeground(new java.awt.Color(78, 108, 152));
         lblCedula.setText("Cédula:");
 
-        txtDireccion.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+        lblBuscarDueno.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        lblBuscarDueno.setForeground(new java.awt.Color(78, 108, 152));
+        lblBuscarDueno.setText("Dueño:");
 
-        txtApellido.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+        cmbBuscarCedula.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cmbBuscarCedula.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cmbBuscarCedulaActionPerformed(evt);
+            }
+        });
 
-        txtCedula.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+        txtTelefono.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+        txtTelefono.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                txtTelefonoMouseClicked(evt);
+            }
+        });
+        txtTelefono.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtTelefonoKeyTyped(evt);
+            }
+        });
 
-        txtNombre.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+        lblTelefono.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        lblTelefono.setForeground(new java.awt.Color(78, 108, 152));
+        lblTelefono.setText("Teléfono:");
 
         javax.swing.GroupLayout pnlCamposLayout = new javax.swing.GroupLayout(pnlCampos);
         pnlCampos.setLayout(pnlCamposLayout);
         pnlCamposLayout.setHorizontalGroup(
             pnlCamposLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlCamposLayout.createSequentialGroup()
-                .addGap(79, 79, 79)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlCamposLayout.createSequentialGroup()
+                .addGap(0, 0, 0)
                 .addGroup(pnlCamposLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblTelefono, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlCamposLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(lblApellido, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(lblNombre, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(lblBuscarDueno, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(lblCedula, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(lblNombre, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblApellido, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(lblDireccion, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblCedula, javax.swing.GroupLayout.Alignment.TRAILING))
-                .addGap(18, 18, 18)
+                    .addComponent(lblTelefono, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addGroup(pnlCamposLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(txtTelefono)
-                    .addComponent(txtDireccion)
-                    .addComponent(txtCedula, javax.swing.GroupLayout.PREFERRED_SIZE, 287, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(txtNombre)
-                    .addComponent(txtApellido))
-                .addContainerGap())
+                    .addGroup(pnlCamposLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(pnlCamposLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtDireccion)
+                            .addComponent(txtNombre)
+                            .addComponent(txtCedula)
+                            .addComponent(cmbBuscarCedula, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(txtApellido))
+                        .addContainerGap())
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlCamposLayout.createSequentialGroup()
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
+                        .addComponent(txtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(15, 15, 15))))
         );
         pnlCamposLayout.setVerticalGroup(
             pnlCamposLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlCamposLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(pnlCamposLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblBuscarDueno)
+                    .addComponent(cmbBuscarCedula, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(pnlCamposLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblCedula)
                     .addComponent(txtCedula, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(pnlCamposLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblNombre)
-                    .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                    .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblNombre))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(pnlCamposLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtApellido, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblApellido))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(pnlCamposLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtDireccion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblDireccion))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(pnlCamposLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblTelefono))
-                .addGap(92, 92, 92))
+                .addContainerGap(46, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout pnlCRUDSLayout = new javax.swing.GroupLayout(pnlCRUDS);
@@ -556,27 +615,21 @@ public class CRUDDuenos extends javax.swing.JPanel {
             .addGroup(pnlCRUDSLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(pnlCRUDSLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(pnlCRUDSLayout.createSequentialGroup()
-                        .addComponent(pnlCampos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, 0))
+                    .addComponent(pnlCampos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(pnlBotones, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap())
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         pnlCRUDSLayout.setVerticalGroup(
             pnlCRUDSLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlCRUDSLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(pnlBotones, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(pnlCampos, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(pnlCampos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(52, Short.MAX_VALUE))
         );
 
         jPanel1.add(pnlCRUDS);
-
-        lblIdOculto.setFont(new java.awt.Font("Dialog", 1, 2)); // NOI18N
-        lblIdOculto.setForeground(new java.awt.Color(183, 224, 210));
-        lblIdOculto.setText("jLabel1");
 
         javax.swing.GroupLayout pnlPrincipalLayout = new javax.swing.GroupLayout(pnlPrincipal);
         pnlPrincipal.setLayout(pnlPrincipalLayout);
@@ -590,10 +643,6 @@ public class CRUDDuenos extends javax.swing.JPanel {
             .addGroup(pnlPrincipalLayout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 692, Short.MAX_VALUE)
                 .addContainerGap())
-            .addGroup(pnlPrincipalLayout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addComponent(lblIdOculto)
-                .addGap(0, 0, Short.MAX_VALUE))
         );
         pnlPrincipalLayout.setVerticalGroup(
             pnlPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -605,9 +654,7 @@ public class CRUDDuenos extends javax.swing.JPanel {
                         .addComponent(lblDUENOS)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
-                .addComponent(lblIdOculto)
-                .addGap(18, 18, 18))
+                .addContainerGap(9, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -654,8 +701,16 @@ public class CRUDDuenos extends javax.swing.JPanel {
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
 
+        conexion Base = new conexion();
+        DuenoDb dueDb = new DuenoDb(Base);
+        txtCedula.setText(dueDb.obtenerIdDeString(cmbBuscarCedula.getSelectedItem().toString()));
+        txtCedula.setEditable(false);
         //BOTONES y campos
-        lblNombre.setVisible(false);
+        lblBuscarDueno.setVisible(false);
+
+        txtCedula.setVisible(true);
+        lblNombre.setVisible(true);
+        txtNombre.setVisible(true);
         btnBuscar.setVisible(false);
         btnGuardar.setVisible(false);
         lblApellido.setVisible(true);
@@ -668,124 +723,196 @@ public class CRUDDuenos extends javax.swing.JPanel {
         btnModificar.setVisible(true);
         btnEliminar.setVisible(true);
         btnRegresar.setVisible(true);
-        //habilito el id que nadie sabe que existe MUEJEJE
-        lblIdOculto.setVisible(true);
-        //obtengo id
-        conexion Base = new conexion();
-        MascotaDb masDb = new MascotaDb(Base);
-//        masDb.obtenerIdMascotaPorCedulaYNombre(cmbCedula.getSelectedItem().toString(), cmbIdMascota.getSelectedItem().toString());
-//        lblIdOculto.setText(masDb.quieroId(cmbCedula.getSelectedItem().toString(), cmbIdMascota.getSelectedItem().toString()));
-        //setteos
-        txtApellido.setText(masDb.obtenerNombreMascotaPorId());
-        txtDireccion.setText(masDb.obtenerEspecieMascotaPorId());
-        txtTelefono.setText(masDb.obtenerRazaMascotaPorId());
-        
-            
-            
+
+        //llenar campos
+        txtNombre.setText(dueDb.obtenerNombrePorCedula(txtCedula.getText()));
+        txtApellido.setText(dueDb.obtenerApellidoPorCedula(txtCedula.getText()));
+        txtDireccion.setText(dueDb.obtenerDireccionPorCedula(txtCedula.getText()));
+        txtTelefono.setText(dueDb.obtenerTelefonoPorCedula(txtCedula.getText()));
+        //oculto el combo anterior        
+        cmbBuscarCedula.setVisible(false);
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
-
 //PARA BUSQUEDA
-        lblNombre.setVisible(true);
-        btnBuscar.setVisible(true);
-        btnGuardar.setVisible(false);
+        lblCedula.setVisible(false);
+        txtCedula.setVisible(false);
+        lblNombre.setVisible(false);
+        txtNombre.setVisible(false);
         lblApellido.setVisible(false);
         txtApellido.setVisible(false);
         lblDireccion.setVisible(false);
         txtDireccion.setVisible(false);
         lblTelefono.setVisible(false);
         txtTelefono.setVisible(false);
-        lblCedula.setVisible(true);;
+        //botones
+        btnBuscar.setVisible(true);
         btnModificar.setVisible(false);
         btnEliminar.setVisible(false);
         btnRegresar.setVisible(false);
+        btnGuardar.setVisible(false);
+        //busqueda campos
+        lblBuscarDueno.setVisible(true);
+        cmbBuscarCedula.setVisible(true);
+
         //agregar datos de dueños  a combobox
         conexion Base = new conexion();
-
-        MascotaDb masDb = new MascotaDb(Base);
-//        masDb.llenarComboBoxDueños(cmbCedula);
-//        masDb.llenarComboBoxMascotasPorDueño(cmbIdMascota, cmbCedula.getSelectedItem().toString());
-        
+        DuenoDb dueDb = new DuenoDb(Base);
+        dueDb.llenarComboBoxBuscar(cmbBuscarCedula);
     }//GEN-LAST:event_btnRegresarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         conexion Base = new conexion();
-        MascotaDb masDb = new MascotaDb(Base);
-        
-//        masDb.obtenerIdMascotayEliminar(cmbCedula.getSelectedItem().toString(), cmbIdMascota.getSelectedItem().toString());
-        
-        //mostrar anteriormenu
+        DuenoDb dueDb = new DuenoDb(Base);
+        dueDb.eliminarDuenoPorCedula(txtCedula.getText());
         //PARA BUSQUEDA
-            lblNombre.setVisible(true);
-            btnBuscar.setVisible(true);
-            btnGuardar.setVisible(false);
+            lblCedula.setVisible(false);
+            txtCedula.setVisible(false);
+            lblNombre.setVisible(false);
+            txtNombre.setVisible(false);
             lblApellido.setVisible(false);
             txtApellido.setVisible(false);
             lblDireccion.setVisible(false);
             txtDireccion.setVisible(false);
             lblTelefono.setVisible(false);
             txtTelefono.setVisible(false);
-            lblCedula.setVisible(true);
+            //botones
+            btnBuscar.setVisible(true);
             btnModificar.setVisible(false);
             btnEliminar.setVisible(false);
             btnRegresar.setVisible(false);
-            //agregar datos de dueños  a combobox
-//            masDb.llenarComboBoxDueños(cmbCedula);
-//            masDb.llenarComboBoxMascotasPorDueño(cmbIdMascota, cmbCedula.getSelectedItem().toString());
+            btnGuardar.setVisible(false);
+            //busqueda campos
+            lblBuscarDueno.setVisible(true);
+            cmbBuscarCedula.setVisible(true);
+            dueDb.llenarComboBoxBuscar(cmbBuscarCedula);
+        
+        
         
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
-     //verifico que los campos no esten vacios
-//        if (txtApellido.getText().isBlank()||txtDireccion.getText().isBlank()||txtTelefono.getText().isBlank()||jDateFecha.getDate()==null) {
-//            JOptionPane.showMessageDialog(null, "Ingrese los campos");
-//        }else{
-//        //Logica de modificacion
-//        conexion Base = new conexion();
-//        MascotaDb masDb = new MascotaDb(Base);
-//        if (masDb.actualizarMascota(lblIdOculto.getText(),cmbCedula.getSelectedItem().toString(), txtApellido.getText(), txtDireccion.getText(), txtTelefono.getText(), jDateFecha.getDate())) {
-//            JOptionPane.showMessageDialog(null, "Mascota actualizada correctamente");
-//            lblIdOculto.setText(null);
-//            lblIdOculto.setVisible(false);
-//            //reseteo campos
-//            cmbCedula.setSelectedItem(null);
-//            txtApellido.setText(null);
-//            txtDireccion.setText(null);
-//            txtTelefono.setText(null);
-//            jDateFecha.setDate(null);
-//            
-//            //mostrar menu anterior
-//            //PARA BUSQUEDA
-//            lblNombre.setVisible(true);
-//            cmbIdMascota.setVisible(true);
-//            btnBuscar.setVisible(true);
-//            btnGuardar.setVisible(false);
-//            lblApellido.setVisible(false);
-//            txtApellido.setVisible(false);
-//            lblDireccion.setVisible(false);
-//            txtDireccion.setVisible(false);
-//            lblTelefono.setVisible(false);
-//            txtTelefono.setVisible(false);
-//            lblCedula.setVisible(true);
-//            cmbCedula.setVisible(true);
-//            lblFechaNacimiento.setVisible(false);
-//            jDateFecha.setVisible(false);
-//            btnModificar.setVisible(false);
-//            btnEliminar.setVisible(false);
-//            btnRegresar.setVisible(false);
-//            //agregar datos de dueños  a combobox
-//            masDb.llenarComboBoxDueños(cmbCedula);
-//            masDb.llenarComboBoxMascotasPorDueño(cmbIdMascota, cmbCedula.getSelectedItem().toString());
-//            
-//            
-//        }else{
-//        JOptionPane.showMessageDialog(null, "Error al actualizar Mascota");
-//        }
-//        }
+     //erifico que los campos no esten vacios
+        if (txtNombre.getText().isBlank()||txtApellido.getText().isBlank()||txtDireccion.getText().isBlank()||txtTelefono.getText().isBlank()) {
+            JOptionPane.showMessageDialog(null, "Ingrese los campos");
+        }else{
+        //Logica de modificacion
+        conexion Base = new conexion();
+        DuenoDb dueDb = new DuenoDb(Base);
+        dueDb.actualizarDueno(txtCedula.getText(), txtNombre.getText(), txtApellido.getText(), txtDireccion.getText(), txtTelefono.getText());
+        
+        
+        
+        //reseteo campos
+            txtNombre.setText(null);
+            txtApellido.setText(null);
+            txtDireccion.setText(null);
+            txtTelefono.setText(null);
+            
+            //mostrar menu anterior
+            //PARA BUSQUEDA
+            lblCedula.setVisible(false);
+            txtCedula.setVisible(false);
+            lblNombre.setVisible(false);
+            txtNombre.setVisible(false);
+            lblApellido.setVisible(false);
+            txtApellido.setVisible(false);
+            lblDireccion.setVisible(false);
+            txtDireccion.setVisible(false);
+            lblTelefono.setVisible(false);
+            txtTelefono.setVisible(false);
+            //botones
+            btnBuscar.setVisible(true);
+            btnModificar.setVisible(false);
+            btnEliminar.setVisible(false);
+            btnRegresar.setVisible(false);
+            btnGuardar.setVisible(false);
+            //busqueda campos
+            lblBuscarDueno.setVisible(true);
+            cmbBuscarCedula.setVisible(true);
+
+            dueDb.llenarComboBoxBuscar(cmbBuscarCedula);
+            
+        }
 
 
     }//GEN-LAST:event_btnModificarActionPerformed
+
+    private void cmbBuscarCedulaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbBuscarCedulaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cmbBuscarCedulaActionPerformed
+
+    private void txtCedulaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCedulaKeyTyped
+     char caracter = evt.getKeyChar();
+    
+    // Verificar si el carácter es un número
+    if (Character.isDigit(caracter)) {
+        // Obtener el texto actual del campo
+        String textoActual = txtCedula.getText(); // Cambiado a txtCedula
+        
+        // Si el texto actual tiene 10 dígitos, no permitir más entradas
+        if (textoActual.length() >= 10) {
+            evt.consume(); // Cancelar el evento de tecla
+        }
+    } else {
+        // Si el carácter no es un número (es una letra u otro carácter), cancelar el evento
+        evt.consume();
+    }
+    }//GEN-LAST:event_txtCedulaKeyTyped
+
+    private void txtNombreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreKeyTyped
+        char caracter = evt.getKeyChar();
+
+        // Verificar si el carácter es un número
+        if (Character.isDigit(caracter)) {
+            // Mostrar un JDialog
+            JOptionPane.showMessageDialog(this, "No se pueden ingresar números", "Error", JOptionPane.ERROR_MESSAGE);
+            // Cancelar el evento de tecla
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtNombreKeyTyped
+
+    private void txtApellidoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtApellidoKeyTyped
+        char caracter = evt.getKeyChar();
+
+        // Verificar si el carácter es un número
+        if (Character.isDigit(caracter)) {
+            // Mostrar un JDialog
+            JOptionPane.showMessageDialog(this, "No se pueden ingresar números", "Error", JOptionPane.ERROR_MESSAGE);
+            // Cancelar el evento de tecla
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtApellidoKeyTyped
+
+    private void txtTelefonoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTelefonoKeyTyped
+    char caracter = evt.getKeyChar();
+    
+    // Verificar si el carácter es un número
+    if (Character.isDigit(caracter)) {
+        // Si el campo está vacío y se intenta ingresar un número, agregar "09"
+        if (txtTelefono.getText().isEmpty()) {
+            txtTelefono.setText("09");
+        }
+
+        // Verificar la longitud del texto después de agregar el nuevo carácter
+        String textoActual = txtTelefono.getText();
+        
+        // Si el texto actual tiene 10 dígitos, no permitir más entradas
+        if (textoActual.length() >= 10) {
+            evt.consume(); // Cancelar el evento de tecla
+        }
+    } else {
+        // Si el carácter no es un número (es una letra u otro carácter), cancelar el evento
+        evt.consume();
+    }
+    }//GEN-LAST:event_txtTelefonoKeyTyped
+
+    private void txtTelefonoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtTelefonoMouseClicked
+        // Si el campo de texto está vacío, agregar "09"
+                    if (txtTelefono.getText().isEmpty()) {
+                        txtTelefono.setText("09");
+                    }
+    }//GEN-LAST:event_txtTelefonoMouseClicked
 
     private void Mostrarpanelcrud(JPanel p) {
         p.setSize(700, 460);
@@ -803,13 +930,14 @@ public class CRUDDuenos extends javax.swing.JPanel {
     private javax.swing.JButton btnModificar;
     private javax.swing.JButton btnRegresar;
     private javax.swing.JButton btnSalir;
+    private javax.swing.JComboBox<String> cmbBuscarCedula;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel lblApellido;
+    private javax.swing.JLabel lblBuscarDueno;
     private javax.swing.JLabel lblCedula;
     private javax.swing.JLabel lblDUENOS;
     private javax.swing.JLabel lblDireccion;
-    private javax.swing.JLabel lblIdOculto;
     private javax.swing.JLabel lblNombre;
     private javax.swing.JLabel lblTelefono;
     private javax.swing.JPanel pnlBotones;

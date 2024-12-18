@@ -55,7 +55,7 @@ public class MascotaDb extends Mascotas {
         }
 
         // Consulta SQL para insertar datos
-        String sqlInsert = "INSERT INTO MASCOTA (NOMBRE, ESPECIE, RAZA, CEDULA_DUENO, FECHANACIMIENTO) "
+        String sqlInsert = "INSERT INTO  MASCOTA (NOMBRE, ESPECIE, RAZA, CEDULA_DUENO, FECHANACIMIENTO) "
                 + "VALUES (INITCAP(?), INITCAP(?), INITCAP(?), ?, ?)";
         String sqlLastId = "SELECT MAX(ID) AS ID FROM  MASCOTA"; // Obtener el último ID insertado
 
