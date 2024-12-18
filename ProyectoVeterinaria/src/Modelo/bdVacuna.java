@@ -217,4 +217,40 @@ public class bdVacuna extends VACUNA {
     }
     return false;
 }
+    public void cargarVacunasPorControl(JTable tablaVacunas, String idControlVacuna, conexion Base) {
+    String sql = "SELECT * FROM VACUNA WHERE CONTROL_ID = ?";  // Filtramos por CONTROL_ID
+    try (Connection connection = Base.conectar();
+         PreparedStatement ps = connection.prepareStatement(sql)) {
+
+        ps.setString(1, idControlVacuna);
+        ResultSet llenar = ps.executeQuery();
+
+        // CREA EL MODELO
+        DefaultTableModel modelo = new DefaultTableModel();
+        modelo.addColumn("ID");
+        modelo.addColumn("TIPO");
+        modelo.addColumn("NOMBRE");
+        modelo.addColumn("FECHA_CREACION");
+        modelo.addColumn("FECHA_EXPIRACION");
+        modelo.setRowCount(0);
+
+        // LLENA LA TABLA
+        while (llenar.next()) {
+            Object[] row = new Object[5]; 
+            row[0] = llenar.getInt("ID"); 
+            row[1] = llenar.getString("TIPO");
+            row[2] = llenar.getString("NOMBRE");
+            row[3] = llenar.getDate("FECHA_CREACION");
+            row[4] = llenar.getDate("FECHA_EXPIRACION");
+
+            modelo.addRow(row); // LIMPIA LA TABLA
+        }
+
+        tablaVacunas.setModel(modelo);
+
+    } catch (SQLException e) {
+        JOptionPane.showMessageDialog(null, "Error al cargar los datos: " + e.getMessage());
+        e.printStackTrace(); 
+    }
+}
 }
