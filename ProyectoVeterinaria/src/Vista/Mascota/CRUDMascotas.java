@@ -91,6 +91,7 @@ public class CRUDMascotas extends javax.swing.JPanel {
             btnModificar.setVisible(false);
             btnEliminar.setVisible(false);
             btnRegresar.setVisible(false);
+            jDateFecha.setDate(new Date());//pongo por defecto fecha de hoy
 
             //agregar datos de dueños  a combobox
             conexion Base = new conexion();
