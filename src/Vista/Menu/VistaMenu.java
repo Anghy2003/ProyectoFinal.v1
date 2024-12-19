@@ -357,7 +357,7 @@ public class VistaMenu extends javax.swing.JFrame {
         jDesktopPane1Layout.setHorizontalGroup(
             jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jDesktopPane1Layout.createSequentialGroup()
-                .addContainerGap(1258, Short.MAX_VALUE)
+                .addContainerGap(1255, Short.MAX_VALUE)
                 .addComponent(jSeparator2, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
             .addGroup(jDesktopPane1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -580,15 +580,6 @@ public class VistaMenu extends javax.swing.JFrame {
         PanelSubmenu.add(p, BorderLayout.CENTER);
         PanelSubmenu.revalidate();
         PanelSubmenu.repaint();
-        
-if (p instanceof PanelSubmenuUsuarioss) {
-            this.panelSubmenuUsuarios = (PanelSubmenuUsuarioss) p;
-            actualizarVisibilidadSubmenuUsuarios();
-        }
-       if (p instanceof PanelSubmenuServicios) {
-            this.panelSubmenuServicios = (PanelSubmenuServicios) p;
-            actualizarVisibilidadSubmenuServicios();
-        }
 
     }
 
