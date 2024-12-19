@@ -8,6 +8,8 @@ package Vista.menu;
 import DUENO.TablaDuenos;
 import Modelo.conexion;
 import Vista.Mascota.TablaMascotas;
+import Vista.crud.Veterinario.TablaControlMedico;
+import Vista.crud.Veterinario.TablaVeterinario;
 import Vista.home.home;
 import Vista.submenu.PanelSubmenuControlVacu;
 import Vista.submenu.*;
@@ -306,8 +308,8 @@ public class Menu extends javax.swing.JFrame {
         PanelTItuloControlMedico titSer = new PanelTItuloControlMedico();
         PanelSubmenuControMedi Submenuserv = new PanelSubmenuControMedi();
         
-        MostrarpanelTitulo(titSer);
-        MostrarpanelSubmenu(Submenuserv);
+        TablaControlMedico tbctrl = new TablaControlMedico();
+        Mostrarpanelcrud(tbctrl); 
         
     }//GEN-LAST:event_btnControlMedMouseClicked
 
@@ -342,8 +344,8 @@ public class Menu extends javax.swing.JFrame {
     private void BtnveterinarioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnveterinarioMouseClicked
        PanelTituloVeterinario tituvet = new PanelTituloVeterinario();
         PanelSubmenuVeterinario Submenuvet = new PanelSubmenuVeterinario();
-        MostrarpanelTitulo(tituvet);
-        MostrarpanelSubmenu(Submenuvet);
+        TablaVeterinario tbvete = new TablaVeterinario();
+        Mostrarpanelcrud(tbvete); 
     }//GEN-LAST:event_BtnveterinarioMouseClicked
 
     private void btnVacunasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnVacunasMouseClicked
