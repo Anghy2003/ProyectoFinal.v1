@@ -9,7 +9,9 @@ import Modelo.conexion;
 import java.sql.*;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -190,6 +192,45 @@ public class VeterinarioDb extends Modelo.VETERINARIO {
     }
 }
    
+  public void cargarDatosEnTabla(JTable tabla) {
+    DefaultTableModel modelo = new DefaultTableModel();
+    modelo.addColumn("ID");
+    modelo.addColumn("CEDULA");
+    modelo.addColumn("NOMBRE");
+    modelo.addColumn("DIRECCION");
+    modelo.addColumn("CELULAR");
+
+    Connection connection = Base.conectarBD(); // Asegúrate de implementar correctamente este método
+    String query = "SELECT ID, CEDULA, NOMBRE, DIRECCION, CELULAR FROM VETERINARIO";
+
+    try {
+        java.sql.Statement statement = connection.createStatement();
+        ResultSet resultSet = statement.executeQuery(query);
+
+        while (resultSet.next()) {
+            Object[] fila = new Object[5];
+            fila[0] = resultSet.getInt("ID");
+            fila[1] = resultSet.getString("CEDULA");
+            fila[2] = resultSet.getString("NOMBRE");
+            fila[3] = resultSet.getString("DIRECCION");
+            fila[4] = resultSet.getString("CELULAR");
+            modelo.addRow(fila);
+        }
+
+        tabla.setModel(modelo);
+    } catch (SQLException e) {
+        System.out.println("Error al cargar los datos en la tabla.");
+        e.printStackTrace();
+    } finally {
+        try {
+            if (connection != null) {
+                connection.close();
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+}
    
     // Obtener lista de veterinarios
 //    public List<Veterinario> obtenerVeterinarios() {

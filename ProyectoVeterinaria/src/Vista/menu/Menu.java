@@ -8,6 +8,8 @@ package Vista.menu;
 import DUENO.TablaDuenos;
 import Modelo.conexion;
 import Vista.Mascota.TablaMascotas;
+import Vista.crud.Veterinario.TablaControlMedico;
+import Vista.crud.Veterinario.TablaVeterinario;
 import Vista.home.home;
 import Vista.submenu.PanelSubmenuControlVacu;
 import Vista.submenu.*;
@@ -305,11 +307,13 @@ public class Menu extends javax.swing.JFrame {
     
     private void btnControlMedMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnControlMedMouseClicked
         
-        PanelTItuloControlMedico titSer = new PanelTItuloControlMedico();
-        PanelSubmenuControMedi Submenuserv = new PanelSubmenuControMedi();
+        PanelTItuloControlMedico ctrl = new PanelTItuloControlMedico();
+        PanelSubmenuControMedi SubmenuUsu = new PanelSubmenuControMedi();
+        MostrarpanelTitulo(ctrl);
+        MostrarpanelSubmenu(SubmenuUsu);
         
-        MostrarpanelTitulo(titSer);
-        MostrarpanelSubmenu(Submenuserv);
+        TablaControlMedico tbctrl = new TablaControlMedico();
+        Mostrarpanelcrud(tbctrl); 
         
     }//GEN-LAST:event_btnControlMedMouseClicked
 
@@ -342,10 +346,12 @@ public class Menu extends javax.swing.JFrame {
     }//GEN-LAST:event_PanelBotonesMenuMouseClicked
 
     private void BtnveterinarioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnveterinarioMouseClicked
-       PanelTituloVeterinario tituvet = new PanelTituloVeterinario();
-        PanelSubmenuVeterinario Submenuvet = new PanelSubmenuVeterinario();
-        MostrarpanelTitulo(tituvet);
-        MostrarpanelSubmenu(Submenuvet);
+          PanelTituloVeterinario ctrl = new PanelTituloVeterinario();
+        PanelSubmenuVeterinario SubmenuUsu = new PanelSubmenuVeterinario();
+        MostrarpanelTitulo(ctrl);
+        MostrarpanelSubmenu(SubmenuUsu);
+        TablaVeterinario tbvete = new TablaVeterinario();
+        Mostrarpanelcrud(tbvete); 
     }//GEN-LAST:event_BtnveterinarioMouseClicked
 
     private void btnVacunasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnVacunasMouseClicked
