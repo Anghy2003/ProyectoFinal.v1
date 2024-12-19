@@ -157,10 +157,10 @@ public class home extends javax.swing.JFrame {
     private void btningresarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btningresarMouseClicked
        if (txtusuario.getText().equals("admin") && new String(txtcontra.getPassword()).equals("12345")) {
         JOptionPane.showMessageDialog(this, "Ingreso exitoso!");
+        this.dispose();
         Menu menusito = new Menu();
-        home home =new home();
-           Mostrarpanelcrud(home,menusito);
-          
+        menusito.setVisible(true);
+         
         
     } else {
         JOptionPane.showMessageDialog(this, "Usuario o contraseña incorrectos");}
@@ -170,16 +170,7 @@ public class home extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_btningresarActionPerformed
 
-private void Mostrarpanelcrud(JFrame loginFrame, JFrame frame) {
-    // Cerrar el JFrame de login
-    loginFrame.dispose();
-    
-    // Configurar y mostrar el nuevo JFrame
-    frame.setSize(700, 460);
-    frame.setLocationRelativeTo(null); // Centra el JFrame en la pantalla
-    frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE); // Cierra el JFrame sin cerrar la aplicación principal
-    frame.setVisible(true);
-}
+
     /**
      * @param args the command line arguments
      */
