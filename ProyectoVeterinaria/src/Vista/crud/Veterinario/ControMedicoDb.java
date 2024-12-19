@@ -217,58 +217,77 @@ public class ControMedicoDb extends Modelo.Control_Medico {
         }
     }
 
-   public void cargarDatos(String idControlMedico, JDateChooser dateChooser, JTextField txtDiagnostico, JComboBox<String> cmbVeterinario, JComboBox<String> cmbMascota) {
-    // Consulta SQL para buscar el registro por ID
-    String sql = "SELECT FECHA, DIAGNOSTICO, ID_VETERINARIO, ID_MASCOTA FROM CONTROLMEDICO WHERE ID = ?";
+   public void cargarControlMedico(String idControlMedico, JDateChooser jDateChooser, JTextField txtDiagnostico, JComboBox<String> cmbVeterinario, JComboBox<String> cmbMascota) {
+    String sql = "SELECT * FROM CONTROLMEDICO WHERE ID = ?";
 
-    // Usar la conexión de la clase Base
-    try (Connection conn = Base.conectar(); 
-         PreparedStatement stmt = conn.prepareStatement(sql)) {
-        
-        stmt.setString(1, idControlMedico);  // Establecer el ID como String en la consulta
-        
-        // Ejecutar la consulta
-        try (ResultSet rs = stmt.executeQuery()) {
-            // Si se encuentra el registro, cargar los datos
-            if (rs.next()) {
-                // Obtener y establecer la fecha en el JDateChooser
-                dateChooser.setDate(rs.getDate("FECHA"));
-                
-                // Obtener y establecer el diagnóstico en el JTextField
-                txtDiagnostico.setText(rs.getString("DIAGNOSTICO"));
-                
-                // Obtener el ID del veterinario y la mascota
-                String idVeterinario = String.valueOf(rs.getInt("ID_VETERINARIO"));
-                String idMascota = String.valueOf(rs.getInt("ID_MASCOTA"));
-                
-                // Buscar los elementos en los JComboBox para establecer la selección
-                for (int i = 0; i < cmbVeterinario.getItemCount(); i++) {
-                    String item = cmbVeterinario.getItemAt(i);
-                    // Aquí buscamos si el id del veterinario está en el texto del item (por ejemplo: "123 Veterinario")
-                    if (item.startsWith(idVeterinario)) {
-                        cmbVeterinario.setSelectedItem(item); // Establecer el item seleccionado
-                        break;
-                    }
-                }
-                
-                for (int i = 0; i < cmbMascota.getItemCount(); i++) {
-                    String item = cmbMascota.getItemAt(i);
-                    // Aquí buscamos si el id de la mascota está en el texto del item (por ejemplo: "456 Mascota")
-                    if (item.startsWith(idMascota)) {
-                        cmbMascota.setSelectedItem(item); // Establecer el item seleccionado
-                        break;
-                    }
-                }
-            } else {
-                // Si no se encuentra el registro, mostrar un mensaje
-                JOptionPane.showMessageDialog(null, "No se encontraron datos para el ID especificado.");
-            }
+    try (Connection connection = Base.conectar();
+         PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+
+        if (connection == null) {
+            JOptionPane.showMessageDialog(null, "Error: No se pudo establecer conexión con la base de datos.");
+            return;
         }
-        
+
+        preparedStatement.setString(1, idControlMedico);  // Usar el ID como String
+        ResultSet rs = preparedStatement.executeQuery();
+
+        if (rs.next()) {
+            // Asignar los valores obtenidos a los campos correspondientes
+            txtDiagnostico.setText(rs.getString("DIAGNOSTICO"));
+            jDateChooser.setDate(rs.getDate("FECHA"));
+
+            // Cargar y establecer las opciones en los ComboBox
+            if (!cargarOpcionesComboBox(cmbVeterinario, "VETERINARIO", rs.getString("ID_VETERINARIO"))) {
+                JOptionPane.showMessageDialog(null, "Advertencia: No se pudo establecer el veterinario seleccionado.");
+            }
+
+            if (!cargarOpcionesComboBox(cmbMascota, "MASCOTA", rs.getString("ID_MASCOTA"))) {
+                JOptionPane.showMessageDialog(null, "Advertencia: No se pudo establecer la mascota seleccionada.");
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "No se encontraron datos para el control médico con ID: " + idControlMedico);
+        }
     } catch (SQLException e) {
+        JOptionPane.showMessageDialog(null, "Error al cargar los datos del control médico: " + e.getMessage());
         e.printStackTrace();
-        JOptionPane.showMessageDialog(null, "Error al cargar los datos: " + e.getMessage());
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(null, "Error inesperado: " + e.getMessage());
+        e.printStackTrace();
     }
+}
+
+private boolean cargarOpcionesComboBox(JComboBox<String> comboBox, String tabla, String idSeleccionado) {
+    String sql = "SELECT ID, NOMBRE FROM " + tabla;
+    boolean cargado = false;
+
+    try (Connection connection = Base.conectar();
+         PreparedStatement preparedStatement = connection.prepareStatement(sql);
+         ResultSet rs = preparedStatement.executeQuery()) {
+
+        if (connection == null) {
+            JOptionPane.showMessageDialog(null, "Error: No se pudo establecer conexión con la base de datos.");
+            return false;
+        }
+
+        comboBox.removeAllItems(); // Limpiar el ComboBox
+
+        while (rs.next()) {
+            String id = rs.getString("ID");
+            String nombre = rs.getString("NOMBRE");
+            comboBox.addItem(id + " - " + nombre); // Agregar opciones al ComboBox
+
+            // Establecer la selección si coincide el ID
+            if (id.equals(idSeleccionado)) {
+                comboBox.setSelectedItem(id + " - " + nombre);
+            }
+            cargado = true;
+        }
+    } catch (SQLException e) {
+        JOptionPane.showMessageDialog(null, "Error al cargar las opciones de " + tabla + ": " + e.getMessage());
+        e.printStackTrace();
+    }
+
+    return cargado;
 }
 
     private void setComboBoxSelection(JComboBox<String> comboBox, String id) {
@@ -280,4 +299,60 @@ public class ControMedicoDb extends Modelo.Control_Medico {
             }
         }
     }
+    
+    public void modificarControlMedico(String idControlMedico, String diagnostico, Date fecha, String idVeterinario, String idMascota) {
+    String sql = "UPDATE CONTROLMEDICO SET DIAGNOSTICO = ?, FECHA = ?, ID_VETERINARIO = ?, ID_MASCOTA = ? WHERE ID = ?";
+
+    try (Connection connection = Base.conectar();
+         PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+
+        if (connection == null) {
+            JOptionPane.showMessageDialog(null, "Error: No se pudo establecer conexión con la base de datos.");
+            return;
+        }
+
+        preparedStatement.setString(1, diagnostico);
+        preparedStatement.setDate(2, new java.sql.Date(fecha.getTime())); // Convertir a java.sql.Date
+        preparedStatement.setString(3, idVeterinario);
+        preparedStatement.setString(4, idMascota);
+        preparedStatement.setString(5, idControlMedico);  // Usar el ID como String
+
+        int rowsAffected = preparedStatement.executeUpdate();
+
+        if (rowsAffected > 0) {
+            JOptionPane.showMessageDialog(null, "Control médico modificado con éxito.");
+        } else {
+            JOptionPane.showMessageDialog(null, "No se encontró el control médico con el ID especificado.");
+        }
+    } catch (SQLException e) {
+        JOptionPane.showMessageDialog(null, "Error al modificar los datos del control médico: " + e.getMessage());
+        e.printStackTrace();
+    }
+}
+    
+    public void eliminarControlMedico(String idControlMedico) {
+    String sql = "DELETE FROM CONTROLMEDICO WHERE ID = ?";
+
+    try (Connection connection = Base.conectar();
+         PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+
+        if (connection == null) {
+            JOptionPane.showMessageDialog(null, "Error: No se pudo establecer conexión con la base de datos.");
+            return;
+        }
+
+        preparedStatement.setString(1, idControlMedico);  // Usar el ID como String
+
+        int rowsAffected = preparedStatement.executeUpdate();
+
+        if (rowsAffected > 0) {
+            JOptionPane.showMessageDialog(null, "Control médico eliminado con éxito.");
+        } else {
+            JOptionPane.showMessageDialog(null, "No se encontró el control médico con el ID especificado.");
+        }
+    } catch (SQLException e) {
+        JOptionPane.showMessageDialog(null, "Error al eliminar los datos del control médico: " + e.getMessage());
+        e.printStackTrace();
+    }
+}
 }

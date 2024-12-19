@@ -194,11 +194,21 @@ public class ControlMedico extends javax.swing.JPanel {
         btnModificar.setForeground(new java.awt.Color(78, 108, 152));
         btnModificar.setText("Modificar");
         btnModificar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnModificar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnModificarActionPerformed(evt);
+            }
+        });
 
         btnEliminar.setBackground(new java.awt.Color(183, 224, 210));
         btnEliminar.setForeground(new java.awt.Color(78, 108, 152));
         btnEliminar.setText("Eliminar");
         btnEliminar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarActionPerformed(evt);
+            }
+        });
 
         btnBuscar.setBackground(new java.awt.Color(183, 224, 210));
         btnBuscar.setForeground(new java.awt.Color(78, 108, 152));
@@ -484,21 +494,21 @@ public class ControlMedico extends javax.swing.JPanel {
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
-        btnBuscar.setVisible(true);
-        btnGuardar.setVisible(false);
-        lblIdControlMedico.setVisible(true);
-        cmbIdControlMedico.setVisible(true);
-        lblFecha.setVisible(false);
-        jDateFechaControl.setVisible(false);
-        lblDiagnostico.setVisible(false);
-        txtDiagnostico.setVisible(false);
-        lblVeterinario.setVisible(false);
-        cmbVeterinario.setVisible(false);
-        lblMascota.setVisible(false);
-        cmbMascota.setVisible(false);
-        btnModificar.setVisible(false);
-        btnEliminar.setVisible(false);
-        btnRegresar.setVisible(false);
+       btnBuscar.setVisible(false);
+            btnGuardar.setVisible(true);
+            lblIdControlMedico.setVisible(false);
+            cmbIdControlMedico.setVisible(false);
+            lblFecha.setVisible(true);
+            jDateFechaControl.setVisible(true);
+            lblDiagnostico.setVisible(true);
+            txtDiagnostico.setVisible(true);
+            lblVeterinario.setVisible(true);
+            cmbVeterinario.setVisible(true);
+            lblMascota.setVisible(true);
+            cmbMascota.setVisible(true);
+            btnModificar.setVisible(true);
+            btnEliminar.setVisible(true);
+            btnRegresar.setVisible(true);
 
 // Obtener el ID_CONTROL como String desde un JTextField
         // Obtener el ID_CONTROL como String desde un JComboBox
@@ -512,13 +522,78 @@ public class ControlMedico extends javax.swing.JPanel {
         }
 
 // Llamada al método cargarDatos con los parámetros correctos
-        ctrl.cargarDatos(idControlMedico, jDateFechaControl, txtDiagnostico, cmbVeterinario, cmbMascota);
+        ctrl.cargarControlMedico(idControlMedico, jDateFechaControl, txtDiagnostico, cmbVeterinario, cmbMascota);
 
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnSalirActionPerformed
+
+    private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
+        btnBuscar.setVisible(false);
+            btnGuardar.setVisible(true);
+            lblIdControlMedico.setVisible(false);
+            cmbIdControlMedico.setVisible(false);
+            lblFecha.setVisible(true);
+            jDateFechaControl.setVisible(true);
+            lblDiagnostico.setVisible(true);
+            txtDiagnostico.setVisible(true);
+            lblVeterinario.setVisible(true);
+            cmbVeterinario.setVisible(true);
+            lblMascota.setVisible(true);
+            cmbMascota.setVisible(true);
+            btnModificar.setVisible(true);
+            btnEliminar.setVisible(true);
+            btnRegresar.setVisible(true);
+        
+        String idControlMedico = cmbIdControlMedico.getSelectedItem().toString();  // Obtener el ID desde el campo correspondiente
+    String diagnostico = txtDiagnostico.getText();
+    Date fecha = jDateFechaControl.getDate();
+    String idVeterinario = cmbVeterinario.getSelectedItem().toString().split(" - ")[0]; // Obtener solo el ID
+    String idMascota = cmbMascota.getSelectedItem().toString().split(" - ")[0]; // Obtener solo el ID
+
+    if (idControlMedico.isEmpty() || diagnostico.isEmpty() || fecha == null || idVeterinario.isEmpty() || idMascota.isEmpty()) {
+        JOptionPane.showMessageDialog(null, "Por favor, complete todos los campos.");
+    } else {
+        // Llamar al método de modificación
+        conexion Base = new conexion(); // Asegúrate de que la clase conexion esté correctamente implementada
+        ControMedicoDb ctrl = new ControMedicoDb(Base);
+        ctrl.modificarControlMedico(idControlMedico, diagnostico, fecha, idVeterinario, idMascota);
+    }
+    }//GEN-LAST:event_btnModificarActionPerformed
+
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+        btnBuscar.setVisible(false);
+            btnGuardar.setVisible(true);
+            lblIdControlMedico.setVisible(false);
+            cmbIdControlMedico.setVisible(false);
+            lblFecha.setVisible(true);
+            jDateFechaControl.setVisible(true);
+            lblDiagnostico.setVisible(true);
+            txtDiagnostico.setVisible(true);
+            lblVeterinario.setVisible(true);
+            cmbVeterinario.setVisible(true);
+            lblMascota.setVisible(true);
+            cmbMascota.setVisible(true);
+            btnModificar.setVisible(false);
+            btnEliminar.setVisible(false);
+            btnRegresar.setVisible(false);
+            
+        String idControlMedico = cmbIdControlMedico.getSelectedItem().toString();  // Obtener el ID desde el campo correspondiente
+
+    if (idControlMedico.isEmpty()) {
+        JOptionPane.showMessageDialog(null, "Por favor, ingrese el ID del control médico.");
+    } else {
+        // Llamar al método de eliminación
+        int confirm = JOptionPane.showConfirmDialog(null, "¿Está seguro de que desea eliminar este control médico?", "Confirmación", JOptionPane.YES_NO_OPTION);
+        if (confirm == JOptionPane.YES_OPTION) {
+             conexion Base = new conexion(); // Asegúrate de que la clase conexion esté correctamente implementada
+        ControMedicoDb ctrl = new ControMedicoDb(Base);
+            ctrl.eliminarControlMedico(idControlMedico);
+        }
+    }
+    }//GEN-LAST:event_btnEliminarActionPerformed
     private void limpiarCampos() {
         jDateFechaControl.setDate(null);
         txtDiagnostico.setText("");
