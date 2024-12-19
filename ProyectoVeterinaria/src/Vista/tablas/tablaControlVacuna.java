@@ -5,17 +5,21 @@
  */
 package Vista.tablas;
 
+import Modelo.bdControlvacu;
+import Modelo.conexion;
+import Vista.ControlVacuna.ControlVacu;
+
 /**
  *
  * @author 59399
  */
 public class tablaControlVacuna extends javax.swing.JPanel {
-
-    /**
-     * Creates new form tablaControlVacuna
-     */
+ private bdControlvacu convacunaBD;
     public tablaControlVacuna() {
-        initComponents();
+         initComponents();  
+        conexion conexionBD = new conexion(); 
+        convacunaBD = new bdControlvacu(conexionBD);  
+        convacunaBD.cargardatos(jTable1, conexionBD);  
     }
 
     /**
@@ -61,13 +65,12 @@ public class tablaControlVacuna extends javax.swing.JPanel {
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(16, 16, 16)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 588, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(lblbuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 632, Short.MAX_VALUE))
-                .addContainerGap())
+                        .addComponent(lblbuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(69, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

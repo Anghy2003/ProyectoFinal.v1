@@ -10,6 +10,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -19,7 +21,7 @@ public class MascotaDb extends Mascotas {
 
     //agrego la base
     private conexion Base;
-    private  String idMascotaActual="";
+    private String idMascotaActual = "";
 
     public String getIdMascotaActual() {
         return idMascotaActual;
@@ -28,10 +30,6 @@ public class MascotaDb extends Mascotas {
     public void setIdMascotaActual(String idMascotaActual) {
         this.idMascotaActual = idMascotaActual;
     }
-    
-    
-    
-
 
     //constructor con la base
     public MascotaDb(conexion Base) {
@@ -99,9 +97,6 @@ public class MascotaDb extends Mascotas {
         }
         return false;
     }
-    
-    
-    
 
     // Método auxiliar para verificar si una fecha es válida
     private boolean esFechaValida(String fecha) {
@@ -146,7 +141,6 @@ public class MascotaDb extends Mascotas {
         return false;
     }
 
-    
     public void llenarComboBoxDueños(JComboBox<String> comboBox) {
         // Consulta SQL para obtener el ID, nombre y apellido de los dueños
         String sql = "SELECT CEDULA, INITCAP(NOMBRE) || ' ' || INITCAP(APELLIDO) AS NOMBRE_COMPLETO FROM  DUENO";
@@ -198,50 +192,42 @@ public class MascotaDb extends Mascotas {
             return texto;
         }
     }
- 
-    
-    
-    
-    
+
     public void llenarComboBoxMascotasPorDueño(JComboBox<String> comboBox, String CEDULA) {
-    // Consulta SQL para obtener las mascotas usando la cédula del dueño
-    String sqlMascotas = "SELECT INITCAP(NOMBRE) AS NOMBRE_MASCOTA FROM  MASCOTA WHERE CEDULA_DUENO = ?";
+        // Consulta SQL para obtener las mascotas usando la cédula del dueño
+        String sqlMascotas = "SELECT INITCAP(NOMBRE) AS NOMBRE_MASCOTA FROM  MASCOTA WHERE CEDULA_DUENO = ?";
 
-    try (Connection connection = Base.conectarBD();
-            PreparedStatement preparedStatementMascotas = connection.prepareStatement(sqlMascotas)) {
+        try (Connection connection = Base.conectarBD();
+                PreparedStatement preparedStatementMascotas = connection.prepareStatement(sqlMascotas)) {
 
-        // Establecer el parámetro de la consulta para las mascotas
-        preparedStatementMascotas.setString(1, obtenerIdDeString(CEDULA));
+            // Establecer el parámetro de la consulta para las mascotas
+            preparedStatementMascotas.setString(1, obtenerIdDeString(CEDULA));
 
-        try (ResultSet resultSetMascotas = preparedStatementMascotas.executeQuery()) {
-            // Limpiar el comboBox antes de llenarlo
-            comboBox.removeAllItems();
+            try (ResultSet resultSetMascotas = preparedStatementMascotas.executeQuery()) {
+                // Limpiar el comboBox antes de llenarlo
+                comboBox.removeAllItems();
 
-            boolean hayMascotas = false; // Variable para verificar si hay mascotas
+                boolean hayMascotas = false; // Variable para verificar si hay mascotas
 
-            // Llenar el comboBox con los resultados
-            while (resultSetMascotas.next()) {
-                hayMascotas = true; // Si entra aquí, hay mascotas
-                String nombreMascota = resultSetMascotas.getString("NOMBRE_MASCOTA");
-                System.out.println(nombreMascota);
-                comboBox.addItem(nombreMascota);
+                // Llenar el comboBox con los resultados
+                while (resultSetMascotas.next()) {
+                    hayMascotas = true; // Si entra aquí, hay mascotas
+                    String nombreMascota = resultSetMascotas.getString("NOMBRE_MASCOTA");
+                    System.out.println(nombreMascota);
+                    comboBox.addItem(nombreMascota);
+                }
+
+                // Si no hay mascotas, agregar el mensaje "No hay mascotas"
+                if (!hayMascotas) {
+                    comboBox.addItem("No hay mascotas");
+                }
             }
-
-            // Si no hay mascotas, agregar el mensaje "No hay mascotas"
-            if (!hayMascotas) {
-                comboBox.addItem("No hay mascotas");
-            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error al llenar el comboBox: " + e.getMessage());
+            e.printStackTrace();
         }
-    } catch (SQLException e) {
-        JOptionPane.showMessageDialog(null, "Error al llenar el comboBox: " + e.getMessage());
-        e.printStackTrace();
     }
-}
-    
-    
-        
-        
-        
+
 //        public void mostrarNombreYApellidoDueños() {
 //    // Consulta SQL para obtener el nombre y apellido de todos los dueños
 //    String sql = "SELECT INITCAP(NOMBRE) AS NOMBRE, INITCAP(APELLIDO) AS APELLIDO FROM BASEU4COPY.DUEÑO";
@@ -269,14 +255,7 @@ public class MascotaDb extends Mascotas {
 //        e.printStackTrace();
 //    }
 //}
-
-    
-    
-    
-    
-    
-    
-        public void obtenerIdMascotaPorCedulaYNombre(String cedulaDueno, String nombreMascota) {
+    public void obtenerIdMascotaPorCedulaYNombre(String cedulaDueno, String nombreMascota) {
         // Consulta SQL para obtener el ID de la mascota usando la cédula del dueño y el nombre de la mascota
         String sql = "SELECT ID FROM  MASCOTA WHERE CEDULA_DUENO = ? AND INITCAP(NOMBRE) = ?";
 
@@ -291,13 +270,12 @@ public class MascotaDb extends Mascotas {
                 if (resultSet.next()) {
                     // Si encontramos la mascota, obtenemos el ID
                     String idMascota = resultSet.getString("ID");
-                    
+
                     System.out.println("ID de la mascota: " + idMascota);
-                    idMascotaActual=idMascota;
-                    nombreMascotaActual=nombreMascota;
-                    ceduladuenoActual=obtenerIdDeString(cedulaDueno);
-                    
-                    
+                    idMascotaActual = idMascota;
+                    nombreMascotaActual = nombreMascota;
+                    ceduladuenoActual = obtenerIdDeString(cedulaDueno);
+
                     // Realizar alguna acción adicional con el ID si es necesario
                 } else {
                     // Si no se encuentra la mascota, imprimir un mensaje
@@ -309,9 +287,6 @@ public class MascotaDb extends Mascotas {
             e.printStackTrace();
         }
     }
-        
-        
-        
 
     public String obtenerNombreMascotaPorId() {
         // Consulta SQL para obtener el nombre de la mascota usando el ID
@@ -368,7 +343,7 @@ public class MascotaDb extends Mascotas {
             return null;
         }
     }
-    
+
     public String obtenerRazaMascotaPorId() {
         // Consulta SQL para obtener la raza de la mascota usando el ID
         String sql = "SELECT INITCAP(RAZA) AS RAZA_MASCOTA FROM  MASCOTA WHERE ID = ?";
@@ -396,11 +371,8 @@ public class MascotaDb extends Mascotas {
             return null;
         }
     }
-    
-   
-    
-    
-        public Date obtenerFechaNacimientoMascotaPorId() {
+
+    public Date obtenerFechaNacimientoMascotaPorId() {
         // Consulta SQL para obtener la fecha de nacimiento de la mascota usando el ID
         String sql = "SELECT FECHANACIMIENTO FROM  MASCOTA WHERE ID = ?";
 
@@ -427,12 +399,11 @@ public class MascotaDb extends Mascotas {
             return null;
         }
     }
-        
-        
+
     public boolean eliminarMascotaPorId() {
         // Consulta SQL para eliminar la mascota usando el ID
         String sql = "DELETE FROM  MASCOTA WHERE ID = ?";
-        System.out.println("Eliminar id: "+idMascotaActual);
+        System.out.println("Eliminar id: " + idMascotaActual);
         try (Connection connection = Base.conectarBD();
                 PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
@@ -457,60 +428,54 @@ public class MascotaDb extends Mascotas {
             e.printStackTrace();
             return false;
         }
-}
-    
-    
-    
+    }
+
     public void obtenerIdMascotayEliminar(String cedulaDueno, String nombreMascota) {
-    String idMascotaEliminar = null;
+        String idMascotaEliminar = null;
 
-    // Consulta SQL para obtener el ID de la mascota
-    String sqlSelect = "SELECT ID FROM  MASCOTA WHERE CEDULA_DUENO = ? AND INITCAP(NOMBRE) = ?";
-    // Consulta SQL para eliminar la mascota usando el ID
-    String sqlDelete = "DELETE FROM MASCOTA WHERE ID = ?";
+        // Consulta SQL para obtener el ID de la mascota
+        String sqlSelect = "SELECT ID FROM  MASCOTA WHERE CEDULA_DUENO = ? AND INITCAP(NOMBRE) = ?";
+        // Consulta SQL para eliminar la mascota usando el ID
+        String sqlDelete = "DELETE FROM MASCOTA WHERE ID = ?";
 
-    try (Connection connection = Base.conectarBD()) {
-        // Primer bloque: Obtener el ID de la mascota
-        try (PreparedStatement preparedStatement = connection.prepareStatement(sqlSelect)) {
-            preparedStatement.setString(1, obtenerIdDeString(cedulaDueno));
-            preparedStatement.setString(2, nombreMascota);
+        try (Connection connection = Base.conectarBD()) {
+            // Primer bloque: Obtener el ID de la mascota
+            try (PreparedStatement preparedStatement = connection.prepareStatement(sqlSelect)) {
+                preparedStatement.setString(1, obtenerIdDeString(cedulaDueno));
+                preparedStatement.setString(2, nombreMascota);
 
-            try (ResultSet resultSet = preparedStatement.executeQuery()) {
-                if (resultSet.next()) {
-                    idMascotaEliminar = resultSet.getString("ID");
-                    System.out.println("ID de la mascota: " + idMascotaEliminar);
-                } else {
-                    JOptionPane.showMessageDialog(null, "Mascota no encontrada.");
-                    return; // Sale del método si no encuentra la mascota
+                try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                    if (resultSet.next()) {
+                        idMascotaEliminar = resultSet.getString("ID");
+                        System.out.println("ID de la mascota: " + idMascotaEliminar);
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Mascota no encontrada.");
+                        return; // Sale del método si no encuentra la mascota
+                    }
                 }
             }
-        }
 
-        // Segundo bloque: Eliminar la mascota usando el ID obtenido
-        try (PreparedStatement preparedStatement = connection.prepareStatement(sqlDelete)) {
-            preparedStatement.setString(1, idMascotaEliminar);
+            // Segundo bloque: Eliminar la mascota usando el ID obtenido
+            try (PreparedStatement preparedStatement = connection.prepareStatement(sqlDelete)) {
+                preparedStatement.setString(1, idMascotaEliminar);
 
-            int filasAfectadas = preparedStatement.executeUpdate();
-            if (filasAfectadas > 0) {
-                JOptionPane.showMessageDialog(null, "Mascota eliminada con éxito.");
-            } else {
-                JOptionPane.showMessageDialog(null, "No se encontró una mascota con ese ID.");
+                int filasAfectadas = preparedStatement.executeUpdate();
+                if (filasAfectadas > 0) {
+                    JOptionPane.showMessageDialog(null, "Mascota eliminada con éxito.");
+                } else {
+                    JOptionPane.showMessageDialog(null, "No se encontró una mascota con ese ID.");
+                }
             }
-        }
 
-    } catch (SQLException e) {
-        JOptionPane.showMessageDialog(null, "Error en la operación: " + e.getMessage());
-        e.printStackTrace();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error en la operación: " + e.getMessage());
+            e.printStackTrace();
+        }
     }
-}
-    
-    
-    
-    
-    
+
     private String ceduladuenoActual;
     private String nombreMascotaActual;
-    
+
 //     public boolean actualizarMascota(String cedulaDueño, String nombre, String especie, String raza, Date fecha) {
 //        // Tomar solo la parte antes del primer espacio en cedulaDueño
 //        String cedulaSolo = cedulaDueño.split(" ")[0];
@@ -547,99 +512,131 @@ public class MascotaDb extends Mascotas {
 //            return false;
 //        }
 //    }
-    
     public String quieroId(String cedulaDueno, String nombreMascota) {
-    // Consulta SQL para obtener el ID de la mascota usando la cédula del dueño y el nombre de la mascota
-    String sql = "SELECT ID FROM  MASCOTA WHERE CEDULA_DUENO = ? AND INITCAP(NOMBRE) = ?";
+        // Consulta SQL para obtener el ID de la mascota usando la cédula del dueño y el nombre de la mascota
+        String sql = "SELECT ID FROM  MASCOTA WHERE CEDULA_DUENO = ? AND INITCAP(NOMBRE) = ?";
 
-    // Variable para almacenar el ID de la mascota
-    String idMascota = null;
+        // Variable para almacenar el ID de la mascota
+        String idMascota = null;
 
-    try (Connection connection = Base.conectarBD();
-            PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+        try (Connection connection = Base.conectarBD();
+                PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
-        // Establecer los parámetros de la consulta
-        preparedStatement.setString(1, obtenerIdDeString(cedulaDueno));
-        preparedStatement.setString(2, nombreMascota);
+            // Establecer los parámetros de la consulta
+            preparedStatement.setString(1, obtenerIdDeString(cedulaDueno));
+            preparedStatement.setString(2, nombreMascota);
 
-        try (ResultSet resultSet = preparedStatement.executeQuery()) {
-            if (resultSet.next()) {
-                // Si encontramos la mascota, obtenemos el ID
-                idMascota = resultSet.getString("ID");
-                
-                // Almacenar los valores actuales (si es necesario para otro propósito)
-                idMascotaActual = idMascota;
-                nombreMascotaActual = nombreMascota;
-                ceduladuenoActual = obtenerIdDeString(cedulaDueno);
-            } else {
-                // Si no se encuentra la mascota, manejar el caso aquí si es necesario
-                System.out.println("Mascota no encontrada.");
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    // Si encontramos la mascota, obtenemos el ID
+                    idMascota = resultSet.getString("ID");
+
+                    // Almacenar los valores actuales (si es necesario para otro propósito)
+                    idMascotaActual = idMascota;
+                    nombreMascotaActual = nombreMascota;
+                    ceduladuenoActual = obtenerIdDeString(cedulaDueno);
+                } else {
+                    // Si no se encuentra la mascota, manejar el caso aquí si es necesario
+                    System.out.println("Mascota no encontrada.");
+                }
             }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error al obtener el ID de la mascota: " + e.getMessage());
+            e.printStackTrace();
         }
-    } catch (SQLException e) {
-        JOptionPane.showMessageDialog(null, "Error al obtener el ID de la mascota: " + e.getMessage());
-        e.printStackTrace();
+
+        // Retornar el ID de la mascota encontrado, o null si no se encuentra
+        return idMascota;
     }
 
-    // Retornar el ID de la mascota encontrado, o null si no se encuentra
-    return idMascota;
-}
-    
-    
-    
-    
-    
-                            public boolean actualizarMascota(String idMascota, String cedulaDueño, String nombre, String especie, String raza, Date fecha) {
-                            // Tomar solo la parte antes del primer espacio en cedulaDueño
-                            String cedulaSolo = cedulaDueño.split(" ")[0];
+    public boolean actualizarMascota(String idMascota, String cedulaDueño, String nombre, String especie, String raza, Date fecha) {
+        // Tomar solo la parte antes del primer espacio en cedulaDueño
+        String cedulaSolo = cedulaDueño.split(" ")[0];
 
-                            // Aplicar InitCap a los datos
-                            String nombreInitCap = aplicarInitCap(nombre);
-                            String especieInitCap = aplicarInitCap(especie);
-                            String razaInitCap = aplicarInitCap(raza);
+        // Aplicar InitCap a los datos
+        String nombreInitCap = aplicarInitCap(nombre);
+        String especieInitCap = aplicarInitCap(especie);
+        String razaInitCap = aplicarInitCap(raza);
 
-                            // Consulta SQL para actualizar los datos de la mascota con el ID proporcionado
-                            String actualizarSql = "UPDATE MASCOTA SET CEDULA_DUENO = ?, NOMBRE = ?, ESPECIE = ?, RAZA = ?, FECHANACIMIENTO = ? WHERE ID = ?";
+        // Consulta SQL para actualizar los datos de la mascota con el ID proporcionado
+        String actualizarSql = "UPDATE MASCOTA SET CEDULA_DUENO = ?, NOMBRE = ?, ESPECIE = ?, RAZA = ?, FECHANACIMIENTO = ? WHERE ID = ?";
 
-                            try (Connection connection = Base.conectarBD();
-                                 PreparedStatement actualizarStatement = connection.prepareStatement(actualizarSql)) {
+        try (Connection connection = Base.conectarBD();
+                PreparedStatement actualizarStatement = connection.prepareStatement(actualizarSql)) {
 
-                                // Establecer los parámetros en el PreparedStatement
-                                actualizarStatement.setString(1, cedulaSolo);       // Asignar la cédula procesada
-                                actualizarStatement.setString(2, nombreInitCap);    // Asignar el nombre con InitCap
-                                actualizarStatement.setString(3, especieInitCap);   // Asignar la especie con InitCap
-                                actualizarStatement.setString(4, razaInitCap);      // Asignar la raza con InitCap
+            // Establecer los parámetros en el PreparedStatement
+            actualizarStatement.setString(1, cedulaSolo);       // Asignar la cédula procesada
+            actualizarStatement.setString(2, nombreInitCap);    // Asignar el nombre con InitCap
+            actualizarStatement.setString(3, especieInitCap);   // Asignar la especie con InitCap
+            actualizarStatement.setString(4, razaInitCap);      // Asignar la raza con InitCap
 
-                                // Convertir el objeto java.util.Date a java.sql.Date
-                                java.sql.Date sqlDate = new java.sql.Date(fecha.getTime());
-                                actualizarStatement.setDate(5, sqlDate);            // Asignar la fecha
+            // Convertir el objeto java.util.Date a java.sql.Date
+            java.sql.Date sqlDate = new java.sql.Date(fecha.getTime());
+            actualizarStatement.setDate(5, sqlDate);            // Asignar la fecha
 
-                                actualizarStatement.setString(6, idMascota);       // Usar el ID de la mascota proporcionado
+            actualizarStatement.setString(6, idMascota);       // Usar el ID de la mascota proporcionado
 
-                                // Ejecutar la actualización
-                                int filasActualizadas = actualizarStatement.executeUpdate();
+            // Ejecutar la actualización
+            int filasActualizadas = actualizarStatement.executeUpdate();
 
-                                // Retornar true si al menos una fila fue actualizada
-                                return filasActualizadas > 0;
+            // Retornar true si al menos una fila fue actualizada
+            return filasActualizadas > 0;
 
-                            } catch (SQLException e) {
-                                // Manejo de excepciones
-                                System.err.println("Error al actualizar la mascota: " + e.getMessage());
-                                e.printStackTrace();
-                                return false;
-                            }
-                        }
+        } catch (SQLException e) {
+            // Manejo de excepciones
+            System.err.println("Error al actualizar la mascota: " + e.getMessage());
+            e.printStackTrace();
+            return false;
+        }
+    }
 
-                        private String aplicarInitCap(String texto) {
-                            if (texto == null || texto.isEmpty()) {
-                                return texto;
-                            }
-                            return texto.substring(0, 1).toUpperCase() + texto.substring(1).toLowerCase();
-                        }
+    private String aplicarInitCap(String texto) {
+        if (texto == null || texto.isEmpty()) {
+            return texto;
+        }
+        return texto.substring(0, 1).toUpperCase() + texto.substring(1).toLowerCase();
+    }
 
+    public void cargarDatosEnTabla(JTable tabla) {
+        DefaultTableModel modelo = new DefaultTableModel();
+        modelo.addColumn("ID");
+        modelo.addColumn("NOMBRE");
+        modelo.addColumn("ESPECIE");
+        modelo.addColumn("RAZA");
+        modelo.addColumn("CEDULA_DUENO");
+        modelo.addColumn("FECHANACIMIENTO");
 
-    
-    
-    
+        Connection connection = Base.conectarBD();
+        String query = "SELECT ID, NOMBRE, ESPECIE, RAZA, CEDULA_DUENO, FECHANACIMIENTO FROM MASCOTA";
+
+        try {
+            java.sql.Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(query);
+
+            while (resultSet.next()) {
+                Object[] fila = new Object[6];
+                fila[0] = resultSet.getInt("ID");
+                fila[1] = resultSet.getString("NOMBRE");
+                fila[2] = resultSet.getString("ESPECIE");
+                fila[3] = resultSet.getString("RAZA");
+                fila[4] = resultSet.getString("CEDULA_DUENO");
+                fila[5] = resultSet.getDate("FECHANACIMIENTO");
+                modelo.addRow(fila);
+            }
+
+            tabla.setModel(modelo);
+        } catch (SQLException e) {
+            System.out.println("Error al cargar los datos en la tabla.");
+            e.printStackTrace();
+        } finally {
+            try {
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+    }
 
 }

@@ -11,7 +11,6 @@ import javax.swing.JOptionPane;
 
 public class ControlVacu extends javax.swing.JPanel {
 
-
     public JComboBox<String> getCmbVacunas() {
         return cmbVacunas;
     }
@@ -30,7 +29,6 @@ public class ControlVacu extends javax.swing.JPanel {
 
    
     public ControlVacu() {
-        
         initComponents();
                 int opcion = JOptionPane.showOptionDialog(
             null, 
@@ -44,10 +42,37 @@ public class ControlVacu extends javax.swing.JPanel {
 
     // Manejar las respuestas
     if (opcion == JOptionPane.YES_OPTION) {
-      
+       btnGuardar.setVisible(false);
+        btnEliminar.setVisible(false);
+        btnEditar.setVisible(false);
+        btnBuscar.setVisible(true);
+        lblid.setVisible(true);
+        cmbId.setVisible(true);
+        lbldosis.setVisible(false);
+        txtDOsis.setVisible(false);
+        lblfecha.setVisible(false);
+        jDateChooser1.setVisible(false);
+        lblmasco.setVisible(false);
+        cmbMascota.setVisible(false);
+        lblvacu.setVisible(false);
+        cmbVacunas.setVisible(false);
       
 
     } else if (opcion == JOptionPane.NO_OPTION) {
+        btnGuardar.setVisible(true);
+        btnEliminar.setVisible(false);
+        btnEditar.setVisible(false);
+        btnBuscar.setVisible(false);
+        lblid.setVisible(false);
+        cmbId.setVisible(false);
+        lbldosis.setVisible(true);
+        txtDOsis.setVisible(true);
+        lblfecha.setVisible(true);
+        jDateChooser1.setVisible(true);
+        lblmasco.setVisible(true);
+        cmbMascota.setVisible(true);
+        lblvacu.setVisible(true);
+        cmbVacunas.setVisible(true);
         
 
     } else {
@@ -68,14 +93,16 @@ public class ControlVacu extends javax.swing.JPanel {
         btnEditar = new rojeru_san.RSButtonRiple();
         btnGuardar = new rojeru_san.RSButtonRiple();
         jPanel4 = new javax.swing.JPanel();
-        lbltipo = new javax.swing.JLabel();
+        lbldosis = new javax.swing.JLabel();
         txtDOsis = new rojeru_san.RSMTextFull();
         jDateChooser1 = new com.toedter.calendar.JDateChooser();
-        lblfechaexp = new javax.swing.JLabel();
+        lblmasco = new javax.swing.JLabel();
         cmbMascota = new javax.swing.JComboBox<>();
-        lblfechaexp1 = new javax.swing.JLabel();
-        lblfechaexp2 = new javax.swing.JLabel();
+        lblfecha = new javax.swing.JLabel();
+        lblvacu = new javax.swing.JLabel();
         cmbVacunas = new javax.swing.JComboBox<>();
+        lblid = new javax.swing.JLabel();
+        cmbId = new javax.swing.JComboBox<>();
 
         jPanel1.setBackground(new java.awt.Color(183, 224, 210));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
@@ -126,18 +153,18 @@ public class ControlVacu extends javax.swing.JPanel {
         jPanel4.setBackground(new java.awt.Color(183, 224, 210));
         jPanel4.setForeground(new java.awt.Color(183, 224, 210));
 
-        lbltipo.setFont(new java.awt.Font("Roboto Medium", 1, 16)); // NOI18N
-        lbltipo.setForeground(new java.awt.Color(79, 107, 155));
-        lbltipo.setText("Dosis:");
+        lbldosis.setFont(new java.awt.Font("Roboto Medium", 1, 16)); // NOI18N
+        lbldosis.setForeground(new java.awt.Color(79, 107, 155));
+        lbldosis.setText("Dosis:");
 
         txtDOsis.setForeground(new java.awt.Color(0, 53, 79));
         txtDOsis.setColorTransparente(true);
         txtDOsis.setFont(new java.awt.Font("Roboto Light", 1, 12)); // NOI18N
         txtDOsis.setPlaceholder("");
 
-        lblfechaexp.setFont(new java.awt.Font("Roboto Medium", 1, 16)); // NOI18N
-        lblfechaexp.setForeground(new java.awt.Color(79, 107, 155));
-        lblfechaexp.setText("Mascota:");
+        lblmasco.setFont(new java.awt.Font("Roboto Medium", 1, 16)); // NOI18N
+        lblmasco.setForeground(new java.awt.Color(79, 107, 155));
+        lblmasco.setText("Mascota:");
 
         cmbMascota.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         cmbMascota.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -146,13 +173,13 @@ public class ControlVacu extends javax.swing.JPanel {
             }
         });
 
-        lblfechaexp1.setFont(new java.awt.Font("Roboto Medium", 1, 16)); // NOI18N
-        lblfechaexp1.setForeground(new java.awt.Color(79, 107, 155));
-        lblfechaexp1.setText("Fecha:");
+        lblfecha.setFont(new java.awt.Font("Roboto Medium", 1, 16)); // NOI18N
+        lblfecha.setForeground(new java.awt.Color(79, 107, 155));
+        lblfecha.setText("Fecha:");
 
-        lblfechaexp2.setFont(new java.awt.Font("Roboto Medium", 1, 16)); // NOI18N
-        lblfechaexp2.setForeground(new java.awt.Color(79, 107, 155));
-        lblfechaexp2.setText("Vacuna:");
+        lblvacu.setFont(new java.awt.Font("Roboto Medium", 1, 16)); // NOI18N
+        lblvacu.setForeground(new java.awt.Color(79, 107, 155));
+        lblvacu.setText("Vacuna:");
 
         cmbVacunas.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         cmbVacunas.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -161,46 +188,71 @@ public class ControlVacu extends javax.swing.JPanel {
             }
         });
 
+        lblid.setFont(new java.awt.Font("Roboto Medium", 1, 16)); // NOI18N
+        lblid.setForeground(new java.awt.Color(79, 107, 155));
+        lblid.setText("Id:");
+
+        cmbId.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cmbId.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                cmbIdMouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                .addContainerGap(125, Short.MAX_VALUE)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lbltipo, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(lblfechaexp1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblfechaexp, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(lblfechaexp2, javax.swing.GroupLayout.Alignment.TRAILING))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(jDateChooser1, javax.swing.GroupLayout.DEFAULT_SIZE, 257, Short.MAX_VALUE)
-                        .addComponent(txtDOsis, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(cmbMascota, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(cmbVacunas, javax.swing.GroupLayout.PREFERRED_SIZE, 256, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(188, Short.MAX_VALUE)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblmasco, javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(lblvacu, javax.swing.GroupLayout.Alignment.TRAILING))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(cmbMascota, javax.swing.GroupLayout.PREFERRED_SIZE, 257, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cmbVacunas, javax.swing.GroupLayout.PREFERRED_SIZE, 256, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(lblfecha, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(lbldosis)
+                            .addComponent(lblid))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(txtDOsis, javax.swing.GroupLayout.DEFAULT_SIZE, 257, Short.MAX_VALUE)
+                                .addComponent(jDateChooser1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(cmbId, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(1, 1, 1)))
                 .addGap(19, 19, 19))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGap(14, 14, 14)
+                .addGap(15, 15, 15)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(txtDOsis, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lbltipo, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lbldosis, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(lblid, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(cmbId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(txtDOsis, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblfechaexp1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(12, 12, 12)
+                    .addComponent(lblfecha, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblfechaexp2, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cmbVacunas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(cmbVacunas, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblvacu, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblfechaexp, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(cmbMascota, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(90, Short.MAX_VALUE))
+                    .addComponent(cmbMascota, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblmasco, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(72, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
@@ -232,7 +284,7 @@ public class ControlVacu extends javax.swing.JPanel {
                     .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(36, Short.MAX_VALUE))
+                .addContainerGap(17, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
@@ -261,19 +313,114 @@ public class ControlVacu extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnEliminarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEliminarMouseClicked
+String idControlVacuna = cmbId.getSelectedItem().toString().trim();
 
+    if (idControlVacuna.isEmpty() || idControlVacuna.equals("No hay controles de vacunas registrados")) {
+        JOptionPane.showMessageDialog(null, "Por favor, seleccione un control de vacuna válido");
+        return;
+    }
+
+    int opcion = JOptionPane.showOptionDialog(
+            null,
+            "¿Está seguro de eliminar este control de vacuna?",
+            "Eliminar control de vacuna",
+            JOptionPane.YES_NO_OPTION,
+            JOptionPane.QUESTION_MESSAGE,
+            null,
+            new Object[] {"Sí", "No"},
+            "No");
+
+    if (opcion == JOptionPane.YES_OPTION) {
+        conexion Base = new conexion();
+        bdControlvacu controlVacuna = new bdControlvacu(Base);
+
+        // Eliminar el control de vacuna
+        controlVacuna.eliminar(idControlVacuna);
+    } else {
+        JOptionPane.showMessageDialog(null, "Operación de eliminación cancelada.");
+    }
 
 
     }//GEN-LAST:event_btnEliminarMouseClicked
 
     private void btnBuscarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBuscarMouseClicked
+String idControlVacuna = cmbId.getSelectedItem().toString().trim();
 
+    if (idControlVacuna.isEmpty() || idControlVacuna.equals("No hay controles de vacunas registrados")) {
+        JOptionPane.showMessageDialog(null, "Por favor, seleccione un control de vacuna válido");
+        return;
+    }
+
+    conexion Base = new conexion();
+    bdControlvacu controlVacuna = new bdControlvacu(Base);
+
+    if (controlVacuna.verificarControlVacuna(idControlVacuna)) {
+        // Cargar los datos en los campos correspondientes
+        controlVacuna.cargarControlVacuna(idControlVacuna, cmbVacunas, cmbMascota, txtDOsis, jDateChooser1);
+        
+        // Hacer visibles los botones para editar y eliminar
+        btnEditar.setVisible(true);
+        btnEliminar.setVisible(true);
+        // Hacer visibles los campos de texto para modificar
+        lbldosis.setVisible(true);
+        lblvacu.setVisible(true);
+        lblmasco.setVisible(true);
+        lblfecha.setVisible(true);
+        txtDOsis.setVisible(true);
+        cmbVacunas.setVisible(true);
+        cmbMascota.setVisible(true);
+        jDateChooser1.setVisible(true);
+        btnBuscar.setVisible(false);
+        lblid.setVisible(false);
+        cmbId.setVisible(false);
+        
+    } else {
+        JOptionPane.showMessageDialog(null, "Control de vacuna no encontrado");
+    }
     }//GEN-LAST:event_btnBuscarMouseClicked
 
     private void btnEditarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditarMouseClicked
+String idControlVacuna = cmbId.getSelectedItem().toString().trim();
+    String dosisText = txtDOsis.getText().trim();
+    Date fecha = jDateChooser1.getDate();
+    String idVacuna = cmbVacunas.getSelectedItem().toString().split(" ")[0]; // Obtener el ID de la vacuna
+    String idMascota = cmbMascota.getSelectedItem().toString().split(" ")[0]; // Obtener el ID de la mascota
 
+    if (dosisText.isBlank() || fecha == null || idVacuna.isBlank() || idMascota.isBlank()) {
+        JOptionPane.showMessageDialog(null, "No dejar espacios en blanco ni fechas sin seleccionar");
+        return;
+    }
+
+    try {
+        int dosis = Integer.parseInt(dosisText); // Convertir dosis a número
+
+        // Validar si el control de vacuna existe
+        conexion Base = new conexion();
+        bdControlvacu controlVacuna = new bdControlvacu(Base);
+
+        if (controlVacuna.verificarControlVacuna(idControlVacuna)) {
+            // Editar el control de vacuna
+            controlVacuna.editarControlVacuna(idControlVacuna, dosis, fecha, idVacuna, idMascota);
+            resetCampos();
+        } else {
+            JOptionPane.showMessageDialog(null, "El control de vacuna no existe");
+        }
+    } catch (NumberFormatException e) {
+        JOptionPane.showMessageDialog(null, "La dosis debe ser un número válido");
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(null, "Error inesperado: " + e.getMessage());
+    }
     }//GEN-LAST:event_btnEditarMouseClicked
-
+private void resetCampos() {
+    // Limpiar los campos de texto
+    txtDOsis.setText("");
+    // Limpiar los ComboBoxes (vacuna y mascota)
+    cmbVacunas.setSelectedIndex(0);  // Restablece el ComboBox a la primera opción
+    cmbMascota.setSelectedIndex(0);  // Restablece el ComboBox a la primera opción
+    // Limpiar el JDateChooser
+    jDateChooser1.setDate(null);  // Borra la fecha seleccionada
+    // Si tienes otros campos de texto o controles, también deberías limpiarlos
+}
     private void btnGuardarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnGuardarMouseClicked
          if (txtDOsis.getText().isBlank() || jDateChooser1.getDate() == null || cmbVacunas.getSelectedItem() == null || cmbMascota.getSelectedItem() == null) {
         JOptionPane.showMessageDialog(null, "NO DEJAR ESPACIOS EN BLANCO NI CAMPOS SIN SELECCIONAR");
@@ -300,6 +447,7 @@ public class ControlVacu extends javax.swing.JPanel {
     bdControlvacu miVacunita = new bdControlvacu(Base);
 
             miVacunita.INSERTAR(DOSIS, FECHA, ID_VACUNA, ID_MASCOTA);
+            resetCampos();
 
         } catch (NumberFormatException E) {
             JOptionPane.showMessageDialog(null, "LA DOSIS DEBE SER UN NÚMERO VÁLIDO");
@@ -310,16 +458,22 @@ public class ControlVacu extends javax.swing.JPanel {
     }//GEN-LAST:event_btnGuardarMouseClicked
 
     private void cmbVacunasMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cmbVacunasMouseClicked
-      conexion Base = new conexion();
+        conexion Base = new conexion();
         bdControlvacu masDb = new bdControlvacu(Base);
         masDb.ComboboxVacuna(cmbVacunas);
     }//GEN-LAST:event_cmbVacunasMouseClicked
 
     private void cmbMascotaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cmbMascotaMouseClicked
-         conexion Base = new conexion();
+        conexion Base = new conexion();
         bdControlvacu masDb = new bdControlvacu(Base);
         masDb.ComboboxMascota(cmbMascota);
     }//GEN-LAST:event_cmbMascotaMouseClicked
+
+    private void cmbIdMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cmbIdMouseClicked
+       conexion Base = new conexion();
+        bdControlvacu masDb = new bdControlvacu(Base);
+        masDb.ComboboxControlVacuna(cmbId);
+    }//GEN-LAST:event_cmbIdMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -327,6 +481,7 @@ public class ControlVacu extends javax.swing.JPanel {
     private rojeru_san.RSButtonRiple btnEditar;
     private rojeru_san.RSButtonRiple btnEliminar;
     private rojeru_san.RSButtonRiple btnGuardar;
+    private javax.swing.JComboBox<String> cmbId;
     private javax.swing.JComboBox<String> cmbMascota;
     private javax.swing.JComboBox<String> cmbVacunas;
     private com.toedter.calendar.JDateChooser jDateChooser1;
@@ -335,10 +490,11 @@ public class ControlVacu extends javax.swing.JPanel {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
-    private javax.swing.JLabel lblfechaexp;
-    private javax.swing.JLabel lblfechaexp1;
-    private javax.swing.JLabel lblfechaexp2;
-    private javax.swing.JLabel lbltipo;
+    private javax.swing.JLabel lbldosis;
+    private javax.swing.JLabel lblfecha;
+    private javax.swing.JLabel lblid;
+    private javax.swing.JLabel lblmasco;
+    private javax.swing.JLabel lblvacu;
     private rojeru_san.RSMTextFull txtDOsis;
     // End of variables declaration//GEN-END:variables
 }
