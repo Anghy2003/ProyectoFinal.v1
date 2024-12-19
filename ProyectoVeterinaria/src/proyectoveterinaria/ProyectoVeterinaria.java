@@ -6,6 +6,7 @@
 package proyectoveterinaria;
 
 import Modelo.conexion;
+import Vista.home.home;
 import Vista.menu.Menu;
 import java.sql.Connection;
 
@@ -22,8 +23,9 @@ public class ProyectoVeterinaria {
         conexion con = new conexion();
           con.conectar();
 
-        Menu menuxito=new Menu();
-        menuxito.setVisible(true);
+        home homesito=new home();
+        homesito.setVisible(true);
+        
     }
     private Connection conn;
     
