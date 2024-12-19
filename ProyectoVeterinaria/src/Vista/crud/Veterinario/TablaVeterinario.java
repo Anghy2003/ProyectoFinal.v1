@@ -76,7 +76,7 @@ public class TablaVeterinario extends javax.swing.JPanel {
         setMinimumSize(new java.awt.Dimension(700, 480));
         setPreferredSize(new java.awt.Dimension(700, 582));
 
-        pnlPrincipalTabla.setBackground(new java.awt.Color(183, 224, 210));
+        pnlPrincipalTabla.setBackground(new java.awt.Color(255, 255, 255));
         pnlPrincipalTabla.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(78, 108, 152)));
         pnlPrincipalTabla.setPreferredSize(new java.awt.Dimension(700, 480));
 
@@ -146,8 +146,9 @@ public class TablaVeterinario extends javax.swing.JPanel {
                 .addGap(148, 148, 148)
                 .addComponent(btnSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addGroup(pnlPrincipalTablaLayout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 692, Short.MAX_VALUE)
-                .addContainerGap())
+                .addGap(35, 35, 35)
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 603, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 60, Short.MAX_VALUE))
         );
         pnlPrincipalTablaLayout.setVerticalGroup(
             pnlPrincipalTablaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -157,9 +158,9 @@ public class TablaVeterinario extends javax.swing.JPanel {
                     .addGroup(pnlPrincipalTablaLayout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(lblMASCOTAS)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(18, 18, 18)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(60, Short.MAX_VALUE))
+                .addContainerGap(48, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);

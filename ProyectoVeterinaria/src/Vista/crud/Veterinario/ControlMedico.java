@@ -6,9 +6,12 @@
 package Vista.crud.Veterinario;
 
 import Modelo.conexion;
+import Vista.menu.Menu;
+import java.awt.BorderLayout;
 import java.sql.SQLException;
 import java.util.Date;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JTextField;
 
 /**
@@ -155,7 +158,7 @@ public class ControlMedico extends javax.swing.JPanel {
         jPanel2.setMinimumSize(new java.awt.Dimension(700, 480));
         jPanel2.setPreferredSize(new java.awt.Dimension(700, 582));
 
-        pnlPrincipal.setBackground(new java.awt.Color(183, 224, 210));
+        pnlPrincipal.setBackground(new java.awt.Color(255, 255, 255));
         pnlPrincipal.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(78, 108, 152)));
         pnlPrincipal.setPreferredSize(new java.awt.Dimension(700, 480));
 
@@ -226,6 +229,11 @@ public class ControlMedico extends javax.swing.JPanel {
         btnRegresar.setText("Regresar");
         btnRegresar.setToolTipText("NO CAMBIAR");
         btnRegresar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnRegresar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnRegresarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout pnlBotonesLayout = new javax.swing.GroupLayout(pnlBotones);
         pnlBotones.setLayout(pnlBotonesLayout);
@@ -495,7 +503,7 @@ public class ControlMedico extends javax.swing.JPanel {
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
        btnBuscar.setVisible(false);
-            btnGuardar.setVisible(true);
+            btnGuardar.setVisible(false);
             lblIdControlMedico.setVisible(false);
             cmbIdControlMedico.setVisible(false);
             lblFecha.setVisible(true);
@@ -527,7 +535,8 @@ public class ControlMedico extends javax.swing.JPanel {
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
-        // TODO add your handling code here:
+        pnlPrincipal.setVisible(false);
+        Mostrarpanelcrud(pnlLogo);
     }//GEN-LAST:event_btnSalirActionPerformed
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
@@ -565,7 +574,7 @@ public class ControlMedico extends javax.swing.JPanel {
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         btnBuscar.setVisible(false);
-            btnGuardar.setVisible(true);
+            btnGuardar.setVisible(false);
             lblIdControlMedico.setVisible(false);
             cmbIdControlMedico.setVisible(false);
             lblFecha.setVisible(true);
@@ -594,12 +603,46 @@ public class ControlMedico extends javax.swing.JPanel {
         }
     }
     }//GEN-LAST:event_btnEliminarActionPerformed
+
+    private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
+        
+            btnBuscar.setVisible(true);
+            btnGuardar.setVisible(false);
+            lblIdControlMedico.setVisible(true);
+            cmbIdControlMedico.setVisible(true);
+            lblFecha.setVisible(false);
+            jDateFechaControl.setVisible(false);
+            lblDiagnostico.setVisible(false);
+            txtDiagnostico.setVisible(false);
+            lblVeterinario.setVisible(false);
+            cmbVeterinario.setVisible(false);
+            lblMascota.setVisible(false);
+            cmbMascota.setVisible(false);
+            btnModificar.setVisible(false);
+            btnEliminar.setVisible(false);
+            btnRegresar.setVisible(false);
+
+            // Llenar los ComboBox con datos
+            // Llenar los ComboBox con datos
+            conexion Base = new conexion();
+            ControMedicoDb ctrlmed = new ControMedicoDb(Base);
+            ctrlmed.llenarComboBoxControlMedico(cmbIdControlMedico);
+    }//GEN-LAST:event_btnRegresarActionPerformed
     private void limpiarCampos() {
         jDateFechaControl.setDate(null);
         txtDiagnostico.setText("");
         cmbVeterinario.setSelectedIndex(-1); // Deseleccionar veterinario
         cmbMascota.setSelectedIndex(-1);    // Deseleccionar mascota
     }
+    
+    private void Mostrarpanelcrud(JPanel p) {
+        p.setSize(700, 460);
+        p.setLocation(0, 0);
+        Menu.PanelPrincipal.removeAll();
+        Menu.PanelPrincipal.add(p, BorderLayout.CENTER);
+        Menu.PanelPrincipal.revalidate();
+        Menu.PanelPrincipal.repaint();
+}
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBuscar;
