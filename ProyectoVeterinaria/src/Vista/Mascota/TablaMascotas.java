@@ -76,7 +76,7 @@ public class TablaMascotas extends javax.swing.JPanel {
         setMinimumSize(new java.awt.Dimension(700, 480));
         setPreferredSize(new java.awt.Dimension(700, 582));
 
-        pnlPrincipalTabla.setBackground(new java.awt.Color(183, 224, 210));
+        pnlPrincipalTabla.setBackground(new java.awt.Color(255, 255, 255));
         pnlPrincipalTabla.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(78, 108, 152)));
         pnlPrincipalTabla.setPreferredSize(new java.awt.Dimension(700, 480));
 
@@ -94,7 +94,7 @@ public class TablaMascotas extends javax.swing.JPanel {
         lblMASCOTAS.setForeground(new java.awt.Color(78, 108, 152));
         lblMASCOTAS.setText("MASCOTAS");
 
-        jPanel1.setBackground(new java.awt.Color(183, 224, 210));
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
         pnlTabla.setBackground(new java.awt.Color(183, 224, 210));
         pnlTabla.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(78, 108, 152), 1, true));

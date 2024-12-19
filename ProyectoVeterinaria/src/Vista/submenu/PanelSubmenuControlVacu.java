@@ -95,7 +95,7 @@ public class PanelSubmenuControlVacu extends javax.swing.JPanel {
         Mostrarpanelcrud(vacu);
     }//GEN-LAST:event_btngestionActionPerformed
 private void Mostrarpanelcrud(JPanel p) {
-        p.setSize(600, 460);
+        p.setSize(720, 470);
         p.setLocation(0, 0);
         Menu.PanelPrincipal.removeAll();
         Menu.PanelPrincipal.add(p, BorderLayout.CENTER);

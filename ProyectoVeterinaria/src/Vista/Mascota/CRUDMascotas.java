@@ -385,7 +385,7 @@ public class CRUDMascotas extends javax.swing.JPanel {
         setMinimumSize(new java.awt.Dimension(700, 480));
         setPreferredSize(new java.awt.Dimension(700, 582));
 
-        pnlPrincipal.setBackground(new java.awt.Color(183, 224, 210));
+        pnlPrincipal.setBackground(new java.awt.Color(255, 255, 255));
         pnlPrincipal.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(78, 108, 152)));
         pnlPrincipal.setPreferredSize(new java.awt.Dimension(700, 480));
 
@@ -403,7 +403,7 @@ public class CRUDMascotas extends javax.swing.JPanel {
         lblMASCOTAS.setForeground(new java.awt.Color(78, 108, 152));
         lblMASCOTAS.setText("MASCOTAS");
 
-        jPanel1.setBackground(new java.awt.Color(183, 224, 210));
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
         pnlCRUDS.setBackground(new java.awt.Color(183, 224, 210));
         pnlCRUDS.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(78, 108, 152), 1, true));
@@ -469,9 +469,9 @@ public class CRUDMascotas extends javax.swing.JPanel {
         pnlBotonesLayout.setHorizontalGroup(
             pnlBotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlBotonesLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(13, 13, 13)
+                .addComponent(btnGuardar)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnBuscar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnModificar)

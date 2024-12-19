@@ -74,11 +74,12 @@ public class Menu extends javax.swing.JFrame {
 
         lbliconologo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/logoazuy.png"))); // NOI18N
         lbliconologo.setToolTipText("");
-        jPanel2.add(lbliconologo, new org.netbeans.lib.awtextra.AbsoluteConstraints(-20, -50, 220, 250));
+        jPanel2.add(lbliconologo, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, -40, 220, 250));
 
-        PanelMenu.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 10, 220, 140));
+        PanelMenu.add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 10, 240, 140));
 
         PanelBotonesMenu.setBackground(new java.awt.Color(183, 224, 210));
+        PanelBotonesMenu.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
         PanelBotonesMenu.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 PanelBotonesMenuMouseClicked(evt);
@@ -89,6 +90,7 @@ public class Menu extends javax.swing.JFrame {
         btnControlVac.setForeground(new java.awt.Color(255, 255, 255));
         btnControlVac.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/vacuna-para-mascotas (2).png"))); // NOI18N
         btnControlVac.setText("Control de Vacunas ");
+        btnControlVac.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(129, 157, 207)));
         btnControlVac.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnControlVacMouseClicked(evt);
@@ -99,7 +101,6 @@ public class Menu extends javax.swing.JFrame {
         btnMascotas.setForeground(new java.awt.Color(255, 255, 255));
         btnMascotas.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/icons8-veterinario-48.png"))); // NOI18N
         btnMascotas.setText("Mascotas ");
-        btnMascotas.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
         btnMascotas.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         btnMascotas.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -121,6 +122,7 @@ public class Menu extends javax.swing.JFrame {
         btnPropietarios.setForeground(new java.awt.Color(255, 255, 255));
         btnPropietarios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/dueno-de-una-mascota.png"))); // NOI18N
         btnPropietarios.setText("Propietarios ");
+        btnPropietarios.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(129, 157, 207)));
         btnPropietarios.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnPropietariosMouseClicked(evt);
@@ -141,6 +143,7 @@ public class Menu extends javax.swing.JFrame {
         Btnveterinario.setForeground(new java.awt.Color(255, 255, 255));
         Btnveterinario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/veterinario.png"))); // NOI18N
         Btnveterinario.setText("Veterinario");
+        Btnveterinario.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(129, 157, 207)));
         Btnveterinario.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 BtnveterinarioMouseClicked(evt);
@@ -162,41 +165,40 @@ public class Menu extends javax.swing.JFrame {
         PanelBotonesMenuLayout.setHorizontalGroup(
             PanelBotonesMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(btnMascotas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(btnPropietarios, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(btnControlMed, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(btnControlVac, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(PanelBotonesMenuLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(PanelBotonesMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(btnPropietarios, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(PanelBotonesMenuLayout.createSequentialGroup()
-                        .addGroup(PanelBotonesMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(btnVacunas)
-                            .addComponent(Btnveterinario)
-                            .addComponent(btnControlVac)
-                            .addComponent(btnSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnControlMed))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addComponent(btnSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 181, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 45, Short.MAX_VALUE))
+                    .addComponent(btnVacunas, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
+            .addComponent(Btnveterinario, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         PanelBotonesMenuLayout.setVerticalGroup(
             PanelBotonesMenuLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(PanelBotonesMenuLayout.createSequentialGroup()
                 .addGap(37, 37, 37)
                 .addComponent(btnMascotas, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnPropietarios, javax.swing.GroupLayout.PREFERRED_SIZE, 66, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnPropietarios, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(24, 24, 24)
-                .addComponent(btnControlMed)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 27, Short.MAX_VALUE)
-                .addComponent(btnControlVac)
-                .addGap(28, 28, 28)
-                .addComponent(btnVacunas)
-                .addGap(27, 27, 27)
-                .addComponent(Btnveterinario)
-                .addGap(29, 29, 29)
+                .addComponent(btnControlMed, javax.swing.GroupLayout.DEFAULT_SIZE, 51, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnControlVac, javax.swing.GroupLayout.PREFERRED_SIZE, 54, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnVacunas, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(Btnveterinario, javax.swing.GroupLayout.PREFERRED_SIZE, 55, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(30, 30, 30))
         );
 
-        PanelMenu.add(PanelBotonesMenu, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 140, -1, 490));
+        PanelMenu.add(PanelBotonesMenu, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 140, 240, 490));
 
         panelPrincipal.add(PanelMenu, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 240, -1));
 
@@ -219,28 +221,28 @@ public class Menu extends javax.swing.JFrame {
         PanelPrincipal.setBackground(new java.awt.Color(255, 255, 255));
         PanelPrincipal.setForeground(new java.awt.Color(204, 204, 204));
 
-        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/LOGOPL.png"))); // NOI18N
+        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/Turquoise_and_Black_Animals_Illustrative_Pets_Store_Logo__6_-removebg-preview.png"))); // NOI18N
 
         javax.swing.GroupLayout PanelPrincipalLayout = new javax.swing.GroupLayout(PanelPrincipal);
         PanelPrincipal.setLayout(PanelPrincipalLayout);
         PanelPrincipalLayout.setHorizontalGroup(
             PanelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelPrincipalLayout.createSequentialGroup()
-                .addContainerGap(243, Short.MAX_VALUE)
-                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(222, 222, 222))
+            .addGroup(PanelPrincipalLayout.createSequentialGroup()
+                .addGap(109, 109, 109)
+                .addComponent(jLabel4)
+                .addContainerGap(111, Short.MAX_VALUE))
         );
         PanelPrincipalLayout.setVerticalGroup(
             PanelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(PanelPrincipalLayout.createSequentialGroup()
-                .addGap(149, 149, 149)
-                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(173, Short.MAX_VALUE))
+                .addGap(27, 27, 27)
+                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(143, Short.MAX_VALUE))
         );
 
         panelPrincipal.add(PanelPrincipal, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 160, 720, 470));
 
-        PanelSubmenu.setBackground(new java.awt.Color(204, 204, 204));
+        PanelSubmenu.setBackground(new java.awt.Color(255, 255, 255));
 
         javax.swing.GroupLayout PanelSubmenuLayout = new javax.swing.GroupLayout(PanelSubmenu);
         PanelSubmenu.setLayout(PanelSubmenuLayout);
@@ -366,7 +368,7 @@ private void MostrarpanelSubmenu(JPanel p) {
 
     }
    private void ShowpanelCruds(JPanel p) {
-        p.setSize(700,460);
+        p.setSize(720, 470);
         p.setLocation(0, 0);
         Menu.PanelPrincipal.removeAll();
         Menu.PanelPrincipal.add(p, BorderLayout.CENTER);
