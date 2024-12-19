@@ -674,20 +674,28 @@ public class CRUDDuenos extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-        if (txtCedula.getText().isBlank()||txtNombre.getText().isBlank()||txtApellido.getText().isBlank()||txtDireccion.getText().isBlank()||txtTelefono.getText().isBlank()) {
+        if (txtCedula.getText().isBlank() || txtNombre.getText().isBlank() || txtApellido.getText().isBlank() || txtDireccion.getText().isBlank() || txtTelefono.getText().isBlank()) {
             JOptionPane.showMessageDialog(null, "No dejar espacios en blanco");
-        }else{
-            conexion Base= new  conexion();
-            DuenoDb miDueno= new DuenoDb(Base);
-            if (miDueno.guardarDueno(txtCedula.getText(), txtNombre.getText(), txtApellido.getText(), txtDireccion.getText(), txtTelefono.getText())) {
-                txtApellido.setText(null);
-                txtApellido.setText(null);
-                txtDireccion.setText(null);
-                txtTelefono.setText(null);
-                txtCedula.setText(null);
-                txtNombre.setText(null);
+        } else {
+            if (DuenoDb.validarCedula(txtCedula.getText().trim())) {
+                if (DuenoDb.verificarTelefono(txtTelefono.getText().trim())) {
+                    conexion Base = new conexion();
+                    DuenoDb miDueno = new DuenoDb(Base);
+                    if (miDueno.guardarDueno(txtCedula.getText(), txtNombre.getText(), txtApellido.getText(), txtDireccion.getText(), txtTelefono.getText())) {
+                        txtApellido.setText(null);
+                        txtApellido.setText(null);
+                        txtDireccion.setText(null);
+                        txtTelefono.setText(null);
+                        txtCedula.setText(null);
+                        txtNombre.setText(null);
+                    }
+                } else {
+                    JOptionPane.showMessageDialog(null, "Ingrese un telefono válido");
+                }
+            } else {
+                JOptionPane.showMessageDialog(null, "Ingrese una cedula válida");
             }
-            
+
         }
     }//GEN-LAST:event_btnGuardarActionPerformed
 

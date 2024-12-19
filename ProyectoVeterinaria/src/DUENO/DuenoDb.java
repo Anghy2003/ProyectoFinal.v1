@@ -11,6 +11,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -151,8 +153,7 @@ public class DuenoDb extends DUEÑO {
         }
         return initCapStr.toString().trim(); // Eliminar el espacio final
     }
-    
-    
+
     public void llenarComboBoxBuscar(JComboBox<String> comboBox) {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
@@ -188,16 +189,21 @@ public class DuenoDb extends DUEÑO {
         } finally {
             // Cerrar recursos
             try {
-                if (resultSet != null) resultSet.close();
-                if (preparedStatement != null) preparedStatement.close();
-                if (connection != null) connection.close();
+                if (resultSet != null) {
+                    resultSet.close();
+                }
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
+                if (connection != null) {
+                    connection.close();
+                }
             } catch (SQLException e) {
                 JOptionPane.showMessageDialog(null, "Error al cerrar la conexión: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
             }
         }
     }
-    
-    
+
     public String obtenerIdDeString(String texto) {
         // Verificar si el texto contiene un espacio
         int espacioIndex = texto.indexOf(" ");
@@ -210,7 +216,7 @@ public class DuenoDb extends DUEÑO {
             return texto;
         }
     }
-    
+
     public String obtenerNombrePorCedula(String cedula) {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
@@ -234,9 +240,15 @@ public class DuenoDb extends DUEÑO {
         } finally {
             // Cerrar recursos
             try {
-                if (resultSet != null) resultSet.close();
-                if (preparedStatement != null) preparedStatement.close();
-                if (connection != null) connection.close();
+                if (resultSet != null) {
+                    resultSet.close();
+                }
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
+                if (connection != null) {
+                    connection.close();
+                }
             } catch (SQLException e) {
                 System.out.println("Error al cerrar la conexión: " + e.getMessage());
             }
@@ -244,7 +256,7 @@ public class DuenoDb extends DUEÑO {
 
         return nombre;
     }
-    
+
     public String obtenerApellidoPorCedula(String cedula) {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
@@ -268,9 +280,15 @@ public class DuenoDb extends DUEÑO {
         } finally {
             // Cerrar recursos
             try {
-                if (resultSet != null) resultSet.close();
-                if (preparedStatement != null) preparedStatement.close();
-                if (connection != null) connection.close();
+                if (resultSet != null) {
+                    resultSet.close();
+                }
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
+                if (connection != null) {
+                    connection.close();
+                }
             } catch (SQLException e) {
                 System.out.println("Error al cerrar la conexión: " + e.getMessage());
             }
@@ -278,8 +296,7 @@ public class DuenoDb extends DUEÑO {
 
         return apellido;
     }
-    
-    
+
     public String obtenerDireccionPorCedula(String cedula) {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
@@ -303,9 +320,15 @@ public class DuenoDb extends DUEÑO {
         } finally {
             // Cerrar recursos
             try {
-                if (resultSet != null) resultSet.close();
-                if (preparedStatement != null) preparedStatement.close();
-                if (connection != null) connection.close();
+                if (resultSet != null) {
+                    resultSet.close();
+                }
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
+                if (connection != null) {
+                    connection.close();
+                }
             } catch (SQLException e) {
                 System.out.println("Error al cerrar la conexión: " + e.getMessage());
             }
@@ -313,44 +336,49 @@ public class DuenoDb extends DUEÑO {
 
         return direccion;
     }
-    
+
     public String obtenerTelefonoPorCedula(String cedula) {
-    Connection connection = null;
-    PreparedStatement preparedStatement = null;
-    ResultSet resultSet = null;
-    String telefono = null;
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        String telefono = null;
 
-    String sql = "SELECT TELEFONO FROM DUENO WHERE CEDULA = ?";
+        String sql = "SELECT TELEFONO FROM DUENO WHERE CEDULA = ?";
 
-    try {
-        // Establecer conexión a la base de datos usando Base.conectarBD()
-        connection = Base.conectarBD();
-        preparedStatement = connection.prepareStatement(sql);
-        preparedStatement.setString(1, cedula);
-        resultSet = preparedStatement.executeQuery();
-
-        // Verificar si hay resultados
-        if (resultSet.next()) {
-            telefono = resultSet.getString("TELEFONO");
-        }
-
-    } catch (SQLException e) {
-        System.out.println("Error al obtener el teléfono: " + e.getMessage());
-    } finally {
-        // Cerrar recursos
         try {
-            if (resultSet != null) resultSet.close();
-            if (preparedStatement != null) preparedStatement.close();
-            if (connection != null) connection.close();
+            // Establecer conexión a la base de datos usando Base.conectarBD()
+            connection = Base.conectarBD();
+            preparedStatement = connection.prepareStatement(sql);
+            preparedStatement.setString(1, cedula);
+            resultSet = preparedStatement.executeQuery();
+
+            // Verificar si hay resultados
+            if (resultSet.next()) {
+                telefono = resultSet.getString("TELEFONO");
+            }
+
         } catch (SQLException e) {
-            System.out.println("Error al cerrar la conexión: " + e.getMessage());
+            System.out.println("Error al obtener el teléfono: " + e.getMessage());
+        } finally {
+            // Cerrar recursos
+            try {
+                if (resultSet != null) {
+                    resultSet.close();
+                }
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                System.out.println("Error al cerrar la conexión: " + e.getMessage());
+            }
         }
+
+        return telefono;
     }
 
-    return telefono;
-}
-    
-    
     public boolean eliminarDuenoPorCedula(String cedula) {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
@@ -404,59 +432,166 @@ public class DuenoDb extends DUEÑO {
 
         return resultado;
     }
-    
-    
+
     public boolean actualizarDueno(String cedula, String nombre, String apellido, String direccion, String telefono) {
-    Connection connection = null;
-    PreparedStatement preparedStatement = null;
-    boolean resultado = false;
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        boolean resultado = false;
 
-    String sql = "UPDATE DUENO SET NOMBRE = ?, APELLIDO = ?, DIRECCION = ?, TELEFONO = ? WHERE CEDULA = ?";
+        String sql = "UPDATE DUENO SET NOMBRE = ?, APELLIDO = ?, DIRECCION = ?, TELEFONO = ? WHERE CEDULA = ?";
 
-    try {
-        // Establecer conexión a la base de datos usando Base.conectarBD()
-        connection = Base.conectarBD();
-        preparedStatement = connection.prepareStatement(sql);
+        try {
+            // Establecer conexión a la base de datos usando Base.conectarBD()
+            connection = Base.conectarBD();
+            preparedStatement = connection.prepareStatement(sql);
 
-        // Formatear los datos a InitCap
-        nombre = toInitCap(nombre);
-        apellido = toInitCap(apellido);
-        direccion = toInitCap(direccion); // Si deseas también formatear la dirección
+            // Formatear los datos a InitCap
+            nombre = toInitCap(nombre);
+            apellido = toInitCap(apellido);
+            direccion = toInitCap(direccion); // Si deseas también formatear la dirección
 
-        // Asignar valores a los parámetros de la consulta
-        preparedStatement.setString(1, nombre);
-        preparedStatement.setString(2, apellido);
-        preparedStatement.setString(3, direccion);
-        preparedStatement.setString(4, telefono);
-        preparedStatement.setString(5, cedula); // Asignar la cédula del dueño a actualizar
+            // Asignar valores a los parámetros de la consulta
+            preparedStatement.setString(1, nombre);
+            preparedStatement.setString(2, apellido);
+            preparedStatement.setString(3, direccion);
+            preparedStatement.setString(4, telefono);
+            preparedStatement.setString(5, cedula); // Asignar la cédula del dueño a actualizar
 
-        // Ejecutar la actualización
-        int filasAfectadas = preparedStatement.executeUpdate();
-        resultado = filasAfectadas > 0; // Si se actualizó al menos una fila, el resultado es verdadero
+            // Ejecutar la actualización
+            int filasAfectadas = preparedStatement.executeUpdate();
+            resultado = filasAfectadas > 0; // Si se actualizó al menos una fila, el resultado es verdadero
 
-        if (resultado) {
-            JOptionPane.showMessageDialog(null, "Dueño actualizado exitosamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
-        } else {
-            JOptionPane.showMessageDialog(null, "No se pudo actualizar el dueño. Verifique la cédula.", "Error", JOptionPane.ERROR_MESSAGE);
+            if (resultado) {
+                JOptionPane.showMessageDialog(null, "Dueño actualizado exitosamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+            } else {
+                JOptionPane.showMessageDialog(null, "No se pudo actualizar el dueño. Verifique la cédula.", "Error", JOptionPane.ERROR_MESSAGE);
+            }
+
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error al actualizar el dueño en la base de datos: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        } finally {
+            // Cerrar recursos
+            try {
+                if (preparedStatement != null) {
+                    preparedStatement.close();
+                }
+                if (connection != null) {
+                    connection.close();
+                }
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, "Error al cerrar la conexión: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            }
         }
 
+        return resultado;
+    }
+
+    public void cargarDatosEnTabla(JTable tabla) {
+    DefaultTableModel modelo = new DefaultTableModel();
+    modelo.addColumn("ID");
+    modelo.addColumn("CEDULA");
+    modelo.addColumn("NOMBRE");
+    modelo.addColumn("APELLIDO");
+    modelo.addColumn("DIRECCION");
+    modelo.addColumn("TELEFONO");
+
+    Connection connection = Base.conectarBD(); // Asegúrate de que este método esté en la clase correspondiente
+    String query = "SELECT ID, CEDULA, NOMBRE, APELLIDO, DIRECCION, TELEFONO FROM DUENO"; // Cambia "MASCOTA" por el nombre correcto de tu tabla si es necesario
+
+    try {
+        java.sql.Statement statement = connection.createStatement();
+        ResultSet resultSet = statement.executeQuery(query);
+
+        while (resultSet.next()) {
+            Object[] fila = new Object[6];
+            fila[0] = resultSet.getInt("ID");
+            fila[1] = resultSet.getString("CEDULA");
+            fila[2] = resultSet.getString("NOMBRE");
+            fila[3] = resultSet.getString("APELLIDO");
+            fila[4] = resultSet.getString("DIRECCION");
+            fila[5] = resultSet.getString("TELEFONO");
+            modelo.addRow(fila);
+        }
+
+        tabla.setModel(modelo);
     } catch (SQLException e) {
-        JOptionPane.showMessageDialog(null, "Error al actualizar el dueño en la base de datos: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+        System.out.println("Error al cargar los datos en la tabla.");
+        e.printStackTrace();
     } finally {
-        // Cerrar recursos
         try {
-            if (preparedStatement != null) {
-                preparedStatement.close();
-            }
             if (connection != null) {
                 connection.close();
             }
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Error al cerrar la conexión: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            e.printStackTrace();
         }
     }
-
-    return resultado;
 }
+    
+    public static boolean validarCedula(String cedula) {
+        // Verificar que la cédula tenga 10 dígitos
+        if (cedula == null || cedula.length() != 10) {
+            return false;
+        }
+
+        try {
+            // Verificar que la cédula esté compuesta solo por números
+            Long.parseLong(cedula);
+        } catch (NumberFormatException e) {
+            return false;
+        }
+
+        // Extraer los dígitos necesarios
+        int provincia = Integer.parseInt(cedula.substring(0, 2));
+        int tercerDigito = Integer.parseInt(cedula.substring(2, 3));
+
+        // Verificar que el número de provincia sea válido (0-24)
+        if (provincia < 0 || provincia > 24) {
+            return false;
+        }
+
+        // Verificar que el tercer dígito sea menor que 6
+        if (tercerDigito >= 6) {
+            return false;
+        }
+
+        // Coeficientes para la validación de cédulas
+        int[] coeficientes = {2, 1, 2, 1, 2, 1, 2, 1, 2};
+        int total = 0;
+
+        for (int i = 0; i < coeficientes.length; i++) {
+            int digito = Character.getNumericValue(cedula.charAt(i));
+            int producto = digito * coeficientes[i];
+
+            if (producto >= 10) {
+                producto -= 9;
+            }
+
+            total += producto;
+        }
+
+        // Verificar el dígito verificador
+        int digitoVerificador = Character.getNumericValue(cedula.charAt(9));
+        int modulo = total % 10;
+        int valorVerificador = (modulo == 0) ? 0 : 10 - modulo;
+
+        return valorVerificador == digitoVerificador;
+    }
+    
+    
+    public static boolean verificarTelefono(String telefono) {
+    // Verificamos que el teléfono no sea nulo y tenga al menos 2 caracteres
+    if (telefono != null && telefono.length() >= 2) {
+        // Obtenemos los primeros dos caracteres del teléfono
+        String prefijo = telefono.substring(0, 2);
+        // Comparamos con "07" y "09"
+        return prefijo.equals("07") || prefijo.equals("09");
+    }
+    // Si el teléfono es nulo o tiene menos de 2 caracteres, retornamos falso
+    return false;
+}
+
+    
+    
 
 }
