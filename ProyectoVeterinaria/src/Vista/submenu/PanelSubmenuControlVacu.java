@@ -5,6 +5,8 @@
  */
 package Vista.submenu;
 
+import Modelo.bdControlvacu;
+import Modelo.conexion;
 import Vista.ControlVacuna.ControlVacu;
 import Vista.menu.Menu;
 import java.awt.BorderLayout;
@@ -21,6 +23,12 @@ public class PanelSubmenuControlVacu extends javax.swing.JPanel {
      */
     public PanelSubmenuControlVacu() {
         initComponents();
+        conexion Base = new conexion();
+        bdControlvacu masDb = new bdControlvacu(Base);
+        ControlVacu vacu = new ControlVacu();
+        masDb.ComboboxControlVacuna(vacu.getCmbId());
+        
+        
     }
 
     /**

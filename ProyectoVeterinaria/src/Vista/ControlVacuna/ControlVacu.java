@@ -4,11 +4,19 @@ package Vista.ControlVacuna;
 import Modelo.bdControlvacu;
 import Modelo.conexion;
 import Vista.menu.Menu;
+import com.toedter.calendar.JDateChooser;
 import java.awt.BorderLayout;
 import java.util.Date;
+import javax.accessibility.AccessibleContext;
+import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.event.EventListenerList;
+import javax.swing.plaf.ComponentUI;
+import rojeru_san.RSButtonRiple;
+import rojeru_san.RSMTextFull;
 
 
 
@@ -548,6 +556,199 @@ private void resetCampos() {
         masDb.ComboboxControlVacuna(cmbId);
     }//GEN-LAST:event_cmbIdMouseClicked
 
+    public RSButtonRiple getBtnBuscar() {
+        return btnBuscar;
+    }
+
+    public void setBtnBuscar(RSButtonRiple btnBuscar) {
+        this.btnBuscar = btnBuscar;
+    }
+
+    public RSButtonRiple getBtnEditar() {
+        return btnEditar;
+    }
+
+    public void setBtnEditar(RSButtonRiple btnEditar) {
+        this.btnEditar = btnEditar;
+    }
+
+    public RSButtonRiple getBtnEliminar() {
+        return btnEliminar;
+    }
+
+    public void setBtnEliminar(RSButtonRiple btnEliminar) {
+        this.btnEliminar = btnEliminar;
+    }
+
+    public RSButtonRiple getBtnGuardar() {
+        return btnGuardar;
+    }
+
+    public void setBtnGuardar(RSButtonRiple btnGuardar) {
+        this.btnGuardar = btnGuardar;
+    }
+
+    public JButton getBtnRegresar() {
+        return btnRegresar;
+    }
+
+    public void setBtnRegresar(JButton btnRegresar) {
+        this.btnRegresar = btnRegresar;
+    }
+
+    public JButton getBtnSalir() {
+        return btnSalir;
+    }
+
+    public void setBtnSalir(JButton btnSalir) {
+        this.btnSalir = btnSalir;
+    }
+
+    public JComboBox<String> getCmbId() {
+        return cmbId;
+    }
+
+    public void setCmbId(JComboBox<String> cmbId) {
+        this.cmbId = cmbId;
+    }
+
+    public JDateChooser getjDateChooser1() {
+        return jDateChooser1;
+    }
+
+    public void setjDateChooser1(JDateChooser jDateChooser1) {
+        this.jDateChooser1 = jDateChooser1;
+    }
+
+    public JLabel getjLabel2() {
+        return jLabel2;
+    }
+
+    public void setjLabel2(JLabel jLabel2) {
+        this.jLabel2 = jLabel2;
+    }
+
+    public JLabel getjLabel4() {
+        return jLabel4;
+    }
+
+    public void setjLabel4(JLabel jLabel4) {
+        this.jLabel4 = jLabel4;
+    }
+
+    public JPanel getjPanel1() {
+        return jPanel1;
+    }
+
+    public void setjPanel1(JPanel jPanel1) {
+        this.jPanel1 = jPanel1;
+    }
+
+    public JPanel getjPanel4() {
+        return jPanel4;
+    }
+
+    public void setjPanel4(JPanel jPanel4) {
+        this.jPanel4 = jPanel4;
+    }
+
+    public JPanel getjPanel5() {
+        return jPanel5;
+    }
+
+    public void setjPanel5(JPanel jPanel5) {
+        this.jPanel5 = jPanel5;
+    }
+
+    public JPanel getjPanel6() {
+        return jPanel6;
+    }
+
+    public void setjPanel6(JPanel jPanel6) {
+        this.jPanel6 = jPanel6;
+    }
+
+    public JLabel getLbldosis() {
+        return lbldosis;
+    }
+
+    public void setLbldosis(JLabel lbldosis) {
+        this.lbldosis = lbldosis;
+    }
+
+    public JLabel getLblfecha() {
+        return lblfecha;
+    }
+
+    public void setLblfecha(JLabel lblfecha) {
+        this.lblfecha = lblfecha;
+    }
+
+    public JLabel getLblid() {
+        return lblid;
+    }
+
+    public void setLblid(JLabel lblid) {
+        this.lblid = lblid;
+    }
+
+    public JLabel getLblmasco() {
+        return lblmasco;
+    }
+
+    public void setLblmasco(JLabel lblmasco) {
+        this.lblmasco = lblmasco;
+    }
+
+    public JLabel getLblvacu() {
+        return lblvacu;
+    }
+
+    public void setLblvacu(JLabel lblvacu) {
+        this.lblvacu = lblvacu;
+    }
+
+    public static JPanel getPnlLogo() {
+        return pnlLogo;
+    }
+
+    public static void setPnlLogo(JPanel pnlLogo) {
+        ControlVacu.pnlLogo = pnlLogo;
+    }
+
+    public RSMTextFull getTxtDOsis() {
+        return txtDOsis;
+    }
+
+    public void setTxtDOsis(RSMTextFull txtDOsis) {
+        this.txtDOsis = txtDOsis;
+    }
+
+    public ComponentUI getUi() {
+        return ui;
+    }
+
+    public void setUi(ComponentUI ui) {
+        this.ui = ui;
+    }
+
+    public EventListenerList getListenerList() {
+        return listenerList;
+    }
+
+    public void setListenerList(EventListenerList listenerList) {
+        this.listenerList = listenerList;
+    }
+
+    public AccessibleContext getAccessibleContext() {
+        return accessibleContext;
+    }
+
+    public void setAccessibleContext(AccessibleContext accessibleContext) {
+        this.accessibleContext = accessibleContext;
+    }
+
+    
     private void btnSalirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSalirMouseClicked
         jPanel1.setVisible(false);
         Mostrarpanelcrud(pnlLogo);

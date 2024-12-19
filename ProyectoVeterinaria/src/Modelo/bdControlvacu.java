@@ -133,7 +133,7 @@ public class bdControlvacu extends Control_Vacunas {
         }
     }
  public void cargardatos(JTable tablaVacunas, conexion Base) {
-        String sql = "SELECT * FROM CONTROLVACUNA";  // Ajusta la consulta según tu necesidad
+        String sql = "SELECT * FROM CONTROLVACUNA";  
         try (Connection connection = Base.conectar();
              PreparedStatement ps = connection.prepareStatement(sql)) {
 
@@ -237,23 +237,27 @@ public void cargarControlVacuna(String idControlVacuna, JComboBox<String> cmbVac
     try (Connection connection = Base.conectar();
          PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
+        if (connection == null) {
+            JOptionPane.showMessageDialog(null, "Error: No se pudo establecer conexión con la base de datos.");
+            return;
+        }
+
         preparedStatement.setString(1, idControlVacuna);
-        
-        // Ejecutamos la consulta
         ResultSet rs = preparedStatement.executeQuery();
 
         if (rs.next()) {
-            // Asignamos los valores obtenidos a los campos correspondientes
+           
             txtDOsis.setText(String.valueOf(rs.getInt("DOSIS")));
             jDateChooser1.setDate(rs.getDate("FECHA"));
 
-            // Cargar los ComboBox
-            String idVacuna = rs.getString("ID_VACUNA");
-            String idMascota = rs.getString("ID_MASCOTA");
+            // Cargar y establecer las opciones en los ComboBox
+            if (!cargarOpcionesComboBox(cmbVacunas, "VACUNA", rs.getString("ID_VACUNA"))) {
+                JOptionPane.showMessageDialog(null, "Advertencia: No se pudo establecer la vacuna seleccionada.");
+            }
 
-            // Establecer los valores seleccionados en los ComboBox
-            setComboBoxSelection(cmbVacunas, idVacuna);
-            setComboBoxSelection(cmbMascota, idMascota);
+            if (!cargarOpcionesComboBox(cmbMascota, "MASCOTA", rs.getString("ID_MASCOTA"))) {
+                JOptionPane.showMessageDialog(null, "Advertencia: No se pudo establecer la mascota seleccionada.");
+            }
         } else {
             JOptionPane.showMessageDialog(null, "No se encontraron datos para el control de vacuna con ID: " + idControlVacuna);
         }
@@ -266,13 +270,90 @@ public void cargarControlVacuna(String idControlVacuna, JComboBox<String> cmbVac
     }
 }
 
+private boolean cargarOpcionesComboBox(JComboBox<String> comboBox, String tabla, String idSeleccionado) {
+    String sql = "SELECT ID, NOMBRE FROM " + tabla;
+    boolean cargado = false;
+
+    try (Connection connection = Base.conectar();
+         PreparedStatement preparedStatement = connection.prepareStatement(sql);
+         ResultSet rs = preparedStatement.executeQuery()) {
+
+        if (connection == null) {
+            JOptionPane.showMessageDialog(null, "Error: No se pudo establecer conexión con la base de datos.");
+            return false;
+        }
+
+        comboBox.removeAllItems(); // Limpiar el ComboBox
+
+        while (rs.next()) {
+            String id = rs.getString("ID");
+            String nombre = rs.getString("NOMBRE");
+            comboBox.addItem(id + " - " + nombre); // Agregar opciones al ComboBox
+
+            // Establecer la selección si coincide el ID
+            if (id.equals(idSeleccionado)) {
+                comboBox.setSelectedItem(id + " - " + nombre);
+            }
+            cargado = true;
+        }
+    } catch (SQLException e) {
+        JOptionPane.showMessageDialog(null, "Error al cargar las opciones de " + tabla + ": " + e.getMessage());
+        e.printStackTrace();
+    }
+
+    return cargado;
+}
+
+
+private void cargarOpcionesVacunas(JComboBox<String> cmbVacunas) {
+    String sqlVacunas = "SELECT ID, NOMBRE FROM VACUNA";
+    
+    try (Connection connection = Base.conectar();
+         PreparedStatement preparedStatement = connection.prepareStatement(sqlVacunas);
+         ResultSet rs = preparedStatement.executeQuery()) {
+
+        cmbVacunas.removeAllItems(); 
+
+        while (rs.next()) {
+            String id = rs.getString("ID");
+            String nombre = rs.getString("NOMBRE");
+            cmbVacunas.addItem(id + " - " + nombre); 
+        }
+    } catch (SQLException e) {
+        JOptionPane.showMessageDialog(null, "Error al cargar las opciones de vacunas: " + e.getMessage());
+        e.printStackTrace();
+    }
+}
+
+private void cargarOpcionesMascotas(JComboBox<String> cmbMascota) {
+    String sqlMascotas = "SELECT ID, NOMBRE FROM MASCOTA";
+
+    try (Connection connection = Base.conectar();
+         PreparedStatement preparedStatement = connection.prepareStatement(sqlMascotas);
+         ResultSet rs = preparedStatement.executeQuery()) {
+
+        cmbMascota.removeAllItems(); 
+
+        while (rs.next()) {
+            String id = rs.getString("ID");
+            String nombre = rs.getString("NOMBRE");
+            cmbMascota.addItem(id + " - " + nombre); 
+        }
+    } catch (SQLException e) {
+        JOptionPane.showMessageDialog(null, "Error al cargar las opciones de mascotas: " + e.getMessage());
+        e.printStackTrace();
+    }
+}
+
 private void setComboBoxSelection(JComboBox<String> comboBox, String id) {
     for (int i = 0; i < comboBox.getItemCount(); i++) {
         String item = comboBox.getItemAt(i);
-        if (item.split(" ")[0].equals(id)) {  // Compara solo el ID
-            comboBox.setSelectedIndex(i);
+        if (item.startsWith(id + " - ")) { 
             break;
         }
     }
+
+
+
 
 }}
