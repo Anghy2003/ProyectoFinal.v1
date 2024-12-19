@@ -36,7 +36,7 @@ public class PanelSubmenuControlVacu extends javax.swing.JPanel {
         jSeparator1 = new javax.swing.JSeparator();
         btngestion = new javax.swing.JToggleButton();
 
-        jPanel1.setBackground(new java.awt.Color(183, 224, 210));
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
         jSeparator1.setForeground(new java.awt.Color(148, 184, 208));
 

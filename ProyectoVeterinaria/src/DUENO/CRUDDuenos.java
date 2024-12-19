@@ -372,7 +372,7 @@ public class CRUDDuenos extends javax.swing.JPanel {
         setMinimumSize(new java.awt.Dimension(700, 480));
         setPreferredSize(new java.awt.Dimension(700, 582));
 
-        pnlPrincipal.setBackground(new java.awt.Color(183, 224, 210));
+        pnlPrincipal.setBackground(new java.awt.Color(255, 255, 255));
         pnlPrincipal.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(78, 108, 152)));
         pnlPrincipal.setPreferredSize(new java.awt.Dimension(700, 480));
 
@@ -390,7 +390,7 @@ public class CRUDDuenos extends javax.swing.JPanel {
         lblDUENOS.setForeground(new java.awt.Color(78, 108, 152));
         lblDUENOS.setText("DUEÑOS");
 
-        jPanel1.setBackground(new java.awt.Color(183, 224, 210));
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
         pnlCRUDS.setBackground(new java.awt.Color(183, 224, 210));
         pnlCRUDS.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(78, 108, 152), 1, true));

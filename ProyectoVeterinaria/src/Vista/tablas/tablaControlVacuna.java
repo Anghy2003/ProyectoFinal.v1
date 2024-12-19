@@ -38,7 +38,7 @@ public class tablaControlVacuna extends javax.swing.JPanel {
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
 
-        jPanel1.setBackground(new java.awt.Color(183, 224, 210));
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(78, 106, 152)));
 
         jLabel2.setFont(new java.awt.Font("Segoe Print", 0, 30)); // NOI18N

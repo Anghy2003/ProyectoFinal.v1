@@ -88,7 +88,7 @@ public class Menu extends javax.swing.JFrame {
         btnControlVac.setForeground(new java.awt.Color(255, 255, 255));
         btnControlVac.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/vacuna-para-mascotas (2).png"))); // NOI18N
         btnControlVac.setText("Control de Vacunas ");
-        btnControlVac.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
+        btnControlVac.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(129, 157, 207)));
         btnControlVac.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnControlVacMouseClicked(evt);
@@ -120,7 +120,7 @@ public class Menu extends javax.swing.JFrame {
         btnPropietarios.setForeground(new java.awt.Color(255, 255, 255));
         btnPropietarios.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/dueno-de-una-mascota.png"))); // NOI18N
         btnPropietarios.setText("Propietarios ");
-        btnPropietarios.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
+        btnPropietarios.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(129, 157, 207)));
         btnPropietarios.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnPropietariosMouseClicked(evt);
@@ -141,7 +141,7 @@ public class Menu extends javax.swing.JFrame {
         Btnveterinario.setForeground(new java.awt.Color(255, 255, 255));
         Btnveterinario.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/veterinario.png"))); // NOI18N
         Btnveterinario.setText("Veterinario");
-        Btnveterinario.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 255, 255)));
+        Btnveterinario.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(129, 157, 207)));
         Btnveterinario.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 BtnveterinarioMouseClicked(evt);
@@ -219,28 +219,28 @@ public class Menu extends javax.swing.JFrame {
         PanelPrincipal.setBackground(new java.awt.Color(255, 255, 255));
         PanelPrincipal.setForeground(new java.awt.Color(204, 204, 204));
 
-        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/LOGOPL.png"))); // NOI18N
+        jLabel4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Imagenes/Turquoise_and_Black_Animals_Illustrative_Pets_Store_Logo__6_-removebg-preview.png"))); // NOI18N
 
         javax.swing.GroupLayout PanelPrincipalLayout = new javax.swing.GroupLayout(PanelPrincipal);
         PanelPrincipal.setLayout(PanelPrincipalLayout);
         PanelPrincipalLayout.setHorizontalGroup(
             PanelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PanelPrincipalLayout.createSequentialGroup()
-                .addContainerGap(243, Short.MAX_VALUE)
-                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 252, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(222, 222, 222))
+            .addGroup(PanelPrincipalLayout.createSequentialGroup()
+                .addGap(109, 109, 109)
+                .addComponent(jLabel4)
+                .addContainerGap(111, Short.MAX_VALUE))
         );
         PanelPrincipalLayout.setVerticalGroup(
             PanelPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(PanelPrincipalLayout.createSequentialGroup()
-                .addGap(149, 149, 149)
-                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 148, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(173, Short.MAX_VALUE))
+                .addGap(27, 27, 27)
+                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(143, Short.MAX_VALUE))
         );
 
         panelPrincipal.add(PanelPrincipal, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 160, 720, 470));
 
-        PanelSubmenu.setBackground(new java.awt.Color(204, 204, 204));
+        PanelSubmenu.setBackground(new java.awt.Color(255, 255, 255));
 
         javax.swing.GroupLayout PanelSubmenuLayout = new javax.swing.GroupLayout(PanelSubmenu);
         PanelSubmenu.setLayout(PanelSubmenuLayout);
