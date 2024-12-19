@@ -307,8 +307,10 @@ public class Menu extends javax.swing.JFrame {
     
     private void btnControlMedMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnControlMedMouseClicked
         
-        PanelTItuloControlMedico titSer = new PanelTItuloControlMedico();
-        PanelSubmenuControMedi Submenuserv = new PanelSubmenuControMedi();
+        PanelTItuloControlMedico ctrl = new PanelTItuloControlMedico();
+        PanelSubmenuControMedi SubmenuUsu = new PanelSubmenuControMedi();
+        MostrarpanelTitulo(ctrl);
+        MostrarpanelSubmenu(SubmenuUsu);
         
         TablaControlMedico tbctrl = new TablaControlMedico();
         Mostrarpanelcrud(tbctrl); 
@@ -344,8 +346,10 @@ public class Menu extends javax.swing.JFrame {
     }//GEN-LAST:event_PanelBotonesMenuMouseClicked
 
     private void BtnveterinarioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtnveterinarioMouseClicked
-       PanelTituloVeterinario tituvet = new PanelTituloVeterinario();
-        PanelSubmenuVeterinario Submenuvet = new PanelSubmenuVeterinario();
+          PanelTituloVeterinario ctrl = new PanelTituloVeterinario();
+        PanelSubmenuVeterinario SubmenuUsu = new PanelSubmenuVeterinario();
+        MostrarpanelTitulo(ctrl);
+        MostrarpanelSubmenu(SubmenuUsu);
         TablaVeterinario tbvete = new TablaVeterinario();
         Mostrarpanelcrud(tbvete); 
     }//GEN-LAST:event_BtnveterinarioMouseClicked
