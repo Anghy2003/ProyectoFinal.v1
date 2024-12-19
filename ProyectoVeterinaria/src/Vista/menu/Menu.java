@@ -5,7 +5,9 @@
  */
 package Vista.menu;
 
+import DUENO.TablaDuenos;
 import Modelo.conexion;
+import Vista.Mascota.TablaMascotas;
 import Vista.home.home;
 import Vista.submenu.PanelSubmenuControlVacu;
 import Vista.submenu.*;
@@ -280,9 +282,25 @@ public class Menu extends javax.swing.JFrame {
         PanelSubmenumascotas SubmenuUsu = new PanelSubmenumascotas();
         MostrarpanelTitulo(titmas);
         MostrarpanelSubmenu(SubmenuUsu);
+        TablaMascotas tbMascotas = new TablaMascotas();
+        Mostrarpanelcrud(tbMascotas);   
         
     }//GEN-LAST:event_btnMascotasMouseClicked
 
+    
+    
+    //para llamar el panel dela tabla
+    private void Mostrarpanelcrud(JPanel p) {
+        p.setSize(700, 460);
+        p.setLocation(0, 0);
+        Menu.PanelPrincipal.removeAll();
+        Menu.PanelPrincipal.add(p, BorderLayout.CENTER);
+        Menu.PanelPrincipal.revalidate();
+        Menu.PanelPrincipal.repaint();
+    }
+    
+    
+    
     private void btnControlMedMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnControlMedMouseClicked
         
         PanelTItuloControlMedico titSer = new PanelTItuloControlMedico();
@@ -299,6 +317,8 @@ public class Menu extends javax.swing.JFrame {
         PanelSubmenuPropietario Submenupro = new PanelSubmenuPropietario();
         MostrarpanelTitulo(titupro);
         MostrarpanelSubmenu(Submenupro);
+        TablaDuenos tbDuenos = new TablaDuenos();
+        Mostrarpanelcrud(tbDuenos);
        
     }//GEN-LAST:event_btnPropietariosMouseClicked
 
