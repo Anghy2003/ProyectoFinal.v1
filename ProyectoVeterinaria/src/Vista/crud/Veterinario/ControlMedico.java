@@ -7,6 +7,8 @@ package Vista.crud.Veterinario;
 
 import Modelo.MascotaDb;
 import Modelo.conexion;
+import java.sql.SQLException;
+import java.util.Date;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 
@@ -39,25 +41,25 @@ public class ControlMedico extends javax.swing.JPanel {
 
             btnBuscar.setVisible(true);
             btnGuardar.setVisible(false);
-            lblIdControlMedico.setVisible(false);
-            txtIdControlMedico.setVisible(false);
+            lblIdControlMedico.setVisible(true);
+            cmbIdControlMedico.setVisible(true);
             lblFecha.setVisible(false);
             jDateFechaControl.setVisible(false);
             lblDiagnostico.setVisible(false);
             txtDiagnostico.setVisible(false);
-            lblVeterinario.setVisible(true);
-            cmbVeterinario.setVisible(true);
-            lblMascota.setVisible(true);
-            cmbMascota.setVisible(true);
+            lblVeterinario.setVisible(false);    
+            cmbVeterinario.setVisible(false);
+            lblMascota.setVisible(false);
+            cmbMascota.setVisible(false);
             btnModificar.setVisible(false);
             btnEliminar.setVisible(false);
             btnRegresar.setVisible(false);
 
             // Llenar los ComboBox con datos
-            conexion Base = new conexion();           
-            ControMedicoDb ctrl = new ControMedicoDb(Base);
-            ctrl.llenarComboBoxVeterinarios(cmbVeterinario);
-            ctrl.llenarComboBoxMascota(cmbMascota);
+            // Llenar los ComboBox con datos
+            conexion Base = new conexion();
+            ControMedicoDb ctrlmed = new ControMedicoDb(Base);
+            ctrlmed.llenarComboBoxControlMedicoPorMascota(cmbIdControlMedico,"NOMBRE DE LA MASCOTA");
 
         } else if (opcion == JOptionPane.NO_OPTION) {
             // Configuración para agregar nueva mascota
@@ -66,7 +68,7 @@ public class ControlMedico extends javax.swing.JPanel {
             btnBuscar.setVisible(false);
             btnGuardar.setVisible(true);
             lblIdControlMedico.setVisible(false);
-            txtIdControlMedico.setVisible(false);
+            cmbIdControlMedico.setVisible(false);
             lblFecha.setVisible(true);
             jDateFechaControl.setVisible(true);
             lblDiagnostico.setVisible(true);
@@ -80,7 +82,7 @@ public class ControlMedico extends javax.swing.JPanel {
             btnRegresar.setVisible(false);
 
             //Conexion y llenar combos
-            conexion Base = new conexion();   
+            conexion Base = new conexion();
             ControMedicoDb ctrl = new ControMedicoDb(Base);
             ctrl.llenarComboBoxVeterinarios(cmbVeterinario);
             ctrl.llenarComboBoxMascota(cmbMascota);
@@ -119,12 +121,12 @@ public class ControlMedico extends javax.swing.JPanel {
         lblDiagnostico = new javax.swing.JLabel();
         lblFecha = new javax.swing.JLabel();
         lblIdControlMedico = new javax.swing.JLabel();
-        txtIdControlMedico = new javax.swing.JTextField();
         lblMascota = new javax.swing.JLabel();
         txtDiagnostico = new javax.swing.JTextField();
-        cmbVeterinario = new javax.swing.JComboBox<>();
+        cmbIdControlMedico = new javax.swing.JComboBox<>();
         cmbMascota = new javax.swing.JComboBox<>();
         jDateFechaControl = new com.toedter.calendar.JDateChooser();
+        cmbVeterinario = new javax.swing.JComboBox<>();
 
         pnlLogo.setBackground(new java.awt.Color(255, 255, 255));
         pnlLogo.setForeground(new java.awt.Color(204, 204, 204));
@@ -199,6 +201,11 @@ public class ControlMedico extends javax.swing.JPanel {
         btnBuscar.setText("Buscar");
         btnBuscar.setToolTipText("ID Necesario");
         btnBuscar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarActionPerformed(evt);
+            }
+        });
 
         btnRegresar.setBackground(new java.awt.Color(183, 224, 210));
         btnRegresar.setForeground(new java.awt.Color(78, 108, 152));
@@ -256,17 +263,17 @@ public class ControlMedico extends javax.swing.JPanel {
         lblIdControlMedico.setForeground(new java.awt.Color(78, 108, 152));
         lblIdControlMedico.setText("ID Control Medico:");
 
-        txtIdControlMedico.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
-
         lblMascota.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         lblMascota.setForeground(new java.awt.Color(78, 108, 152));
         lblMascota.setText("Mascota:");
 
         txtDiagnostico.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
 
-        cmbVeterinario.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cmbIdControlMedico.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         cmbMascota.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        cmbVeterinario.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         javax.swing.GroupLayout pnlCamposLayout = new javax.swing.GroupLayout(pnlCampos);
         pnlCampos.setLayout(pnlCamposLayout);
@@ -281,25 +288,23 @@ public class ControlMedico extends javax.swing.JPanel {
                         .addComponent(lblFecha, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(lblIdControlMedico, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addComponent(lblDiagnostico, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(pnlCamposLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(cmbVeterinario, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(pnlCamposLayout.createSequentialGroup()
-                        .addGroup(pnlCamposLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtDiagnostico, javax.swing.GroupLayout.DEFAULT_SIZE, 256, Short.MAX_VALUE)
-                            .addComponent(txtIdControlMedico, javax.swing.GroupLayout.DEFAULT_SIZE, 256, Short.MAX_VALUE)
-                            .addComponent(cmbMascota, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(jDateFechaControl, javax.swing.GroupLayout.DEFAULT_SIZE, 256, Short.MAX_VALUE))
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
+                    .addGroup(pnlCamposLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addComponent(txtDiagnostico, javax.swing.GroupLayout.DEFAULT_SIZE, 256, Short.MAX_VALUE)
+                        .addComponent(cmbMascota, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jDateFechaControl, javax.swing.GroupLayout.DEFAULT_SIZE, 256, Short.MAX_VALUE))
+                    .addComponent(cmbIdControlMedico, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(cmbVeterinario, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         pnlCamposLayout.setVerticalGroup(
             pnlCamposLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlCamposLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(pnlCamposLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtIdControlMedico, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblIdControlMedico))
+                    .addComponent(lblIdControlMedico)
+                    .addComponent(cmbIdControlMedico, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(pnlCamposLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(lblFecha)
@@ -316,7 +321,7 @@ public class ControlMedico extends javax.swing.JPanel {
                 .addGroup(pnlCamposLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblMascota)
                     .addComponent(cmbMascota, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(52, 52, 52))
+                .addContainerGap(66, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout pnlCRUDSLayout = new javax.swing.GroupLayout(pnlCRUDS);
@@ -324,12 +329,13 @@ public class ControlMedico extends javax.swing.JPanel {
         pnlCRUDSLayout.setHorizontalGroup(
             pnlCRUDSLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlCRUDSLayout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(pnlCRUDSLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(pnlBotones, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlCRUDSLayout.createSequentialGroup()
-                        .addComponent(pnlCampos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(48, 48, 48)))
+                    .addGroup(pnlCRUDSLayout.createSequentialGroup()
+                        .addGap(41, 41, 41)
+                        .addComponent(pnlBotones, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(pnlCRUDSLayout.createSequentialGroup()
+                        .addGap(15, 15, 15)
+                        .addComponent(pnlCampos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(14, Short.MAX_VALUE))
         );
         pnlCRUDSLayout.setVerticalGroup(
@@ -337,7 +343,7 @@ public class ControlMedico extends javax.swing.JPanel {
             .addGroup(pnlCRUDSLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(pnlBotones, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(pnlCampos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -427,49 +433,78 @@ public class ControlMedico extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-   // Validar los campos
+         // Validación de campos vacíos o no seleccionados
     if (jDateFechaControl.getDate() == null || 
         txtDiagnostico.getText().isBlank() || 
         cmbVeterinario.getSelectedItem() == null || 
         cmbMascota.getSelectedItem() == null) {
-
-        JOptionPane.showMessageDialog(null, "No dejar espacios en blanco o seleccione opciones válidas.");
+        
+        JOptionPane.showMessageDialog(null, "NO DEJAR ESPACIOS EN BLANCO NI CAMPOS SIN SELECCIONAR");
         return;
     }
 
-    // Obtener valores del formulario
-    java.sql.Date fecha = new java.sql.Date(jDateFechaControl.getDate().getTime());
-    String diagnostico = txtDiagnostico.getText().trim();
-    String veterinarioSeleccionado = (String) cmbVeterinario.getSelectedItem();
-    String mascotaSeleccionada = (String) cmbMascota.getSelectedItem();
+    try {
+        // Obtener y validar los datos del formulario
+        Date fecha = jDateFechaControl.getDate();
+        String diagnostico = txtDiagnostico.getText().trim();
+        
+        String veterinarioSeleccionado = cmbVeterinario.getSelectedItem().toString();
+        String mascotaSeleccionada = cmbMascota.getSelectedItem().toString();
 
-    // Validar selección en ComboBox
-    if (veterinarioSeleccionado.equals("No hay veterinarios registrados") || 
-        mascotaSeleccionada.equals("No hay mascotas registradas")) {
+        // Extraer los IDs de los ComboBox (usando el primer elemento separado por espacio)
+        String idVeterinario = veterinarioSeleccionado.split(" ")[0];
+        String idMascota = mascotaSeleccionada.split(" ")[0];
 
-        JOptionPane.showMessageDialog(null, "Seleccione un veterinario y una mascota válidos.");
-        return;
+        if (idVeterinario.isBlank() || idMascota.isBlank()) {
+            JOptionPane.showMessageDialog(null, "SELECCIONE UN VETERINARIO Y UNA MASCOTA VÁLIDAS");
+            return;
+        }
+
+        // Crear la conexión y la lógica de inserción
+        conexion base = new conexion();
+        ControMedicoDb controlMedicoDb = new ControMedicoDb(base);
+
+        // Insertar los datos
+        controlMedicoDb.insertarControlMedico(fecha, diagnostico, idVeterinario, idMascota);
+
+        // Mensaje de éxito
+        JOptionPane.showMessageDialog(null, "Control médico guardado exitosamente.");
+        
+        // Opcional: Limpiar campos después de guardar
+        limpiarCampos();
+
+    } catch (SQLException e) {
+        JOptionPane.showMessageDialog(null, "Error al guardar el control médico: " + e.getMessage());
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(null, "Error inesperado: " + e.getMessage());
     }
-
-    // Extraer IDs de las selecciones
-    int idVeterinario = Integer.parseInt(veterinarioSeleccionado.split(" ")[0]);
-    int idMascota = Integer.parseInt(mascotaSeleccionada.split(" ")[0]);
-
-    // Crear una instancia del objeto ControMedicoDb
-    ControMedicoDb controlMedico = new ControMedicoDb();
-
-    // Llamar al método guardarControlMedico
-   controlMedico.guardarControlMedico(jDateFechaControl, txtDiagnostico, cmbVeterinario, cmbMascota);
-
-    // Limpiar campos del formulario
-    limpiarCamposControlMedico();
 
     }//GEN-LAST:event_btnGuardarActionPerformed
-private void limpiarCamposControlMedico() {
+
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+         btnBuscar.setVisible(true);
+            btnGuardar.setVisible(false);
+            lblIdControlMedico.setVisible(true);
+            cmbIdControlMedico.setVisible(true);
+            lblFecha.setVisible(false);
+            jDateFechaControl.setVisible(false);
+            lblDiagnostico.setVisible(false);
+            txtDiagnostico.setVisible(false);
+            lblVeterinario.setVisible(false);
+            cmbVeterinario.setVisible(false);
+            lblMascota.setVisible(false);
+            cmbMascota.setVisible(false);
+            btnModificar.setVisible(false);
+            btnEliminar.setVisible(false);
+            btnRegresar.setVisible(false);
+            
+            
+    }//GEN-LAST:event_btnBuscarActionPerformed
+private void limpiarCampos() {
     jDateFechaControl.setDate(null);
     txtDiagnostico.setText("");
-    cmbVeterinario.setSelectedIndex(0); // Seleccionar el primer ítem del ComboBox
-    cmbMascota.setSelectedIndex(0);    // Seleccionar el primer ítem del ComboBox
+    cmbVeterinario.setSelectedIndex(-1); // Deseleccionar veterinario
+    cmbMascota.setSelectedIndex(-1);    // Deseleccionar mascota
 }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -479,6 +514,7 @@ private void limpiarCamposControlMedico() {
     private javax.swing.JButton btnModificar;
     private javax.swing.JButton btnRegresar;
     private javax.swing.JButton btnSalir;
+    private javax.swing.JComboBox<String> cmbIdControlMedico;
     private javax.swing.JComboBox<String> cmbMascota;
     private javax.swing.JComboBox<String> cmbVeterinario;
     private com.toedter.calendar.JDateChooser jDateFechaControl;
@@ -497,6 +533,5 @@ private void limpiarCamposControlMedico() {
     public static javax.swing.JPanel pnlLogo;
     private javax.swing.JPanel pnlPrincipal;
     private javax.swing.JTextField txtDiagnostico;
-    private javax.swing.JTextField txtIdControlMedico;
     // End of variables declaration//GEN-END:variables
 }

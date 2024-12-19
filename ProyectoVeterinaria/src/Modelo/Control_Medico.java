@@ -5,21 +5,23 @@
  */
 package Modelo;
 
+import java.util.Date;
+
 /**
  *
  * @author 59399
  */
 public class Control_Medico {
-    int ID;
-    String FECHA;
+    String ID;
+    Date FECHA;
     String DIAGNOSTICO;
-    int ID_VETERINARIO;
-    int ID_MASCOTA;
+    String ID_VETERINARIO;
+    String ID_MASCOTA;
 
     public Control_Medico() {
     }
 
-    public Control_Medico(int ID, String FECHA, String DIAGNOSTICO, int ID_VETERINARIO, int ID_MASCOTA) {
+    public Control_Medico(String ID, Date FECHA, String DIAGNOSTICO, String ID_VETERINARIO, String ID_MASCOTA) {
         this.ID = ID;
         this.FECHA = FECHA;
         this.DIAGNOSTICO = DIAGNOSTICO;
@@ -27,7 +29,7 @@ public class Control_Medico {
         this.ID_MASCOTA = ID_MASCOTA;
     }
 
-    public Control_Medico(String FECHA, String DIAGNOSTICO, int ID_VETERINARIO, int ID_MASCOTA) {
+    public Control_Medico(Date FECHA, String DIAGNOSTICO, String ID_VETERINARIO, String ID_MASCOTA) {
         this.FECHA = FECHA;
         this.DIAGNOSTICO = DIAGNOSTICO;
         this.ID_VETERINARIO = ID_VETERINARIO;
@@ -35,19 +37,19 @@ public class Control_Medico {
     }
     
 
-    public int getID() {
+    public String getID() {
         return ID;
     }
 
-    public void setID(int ID) {
+    public void setID(String ID) {
         this.ID = ID;
     }
 
-    public String getFECHA() {
+    public Date getFECHA() {
         return FECHA;
     }
 
-    public void setFECHA(String FECHA) {
+    public void setFECHA(Date FECHA) {
         this.FECHA = FECHA;
     }
 
@@ -59,19 +61,19 @@ public class Control_Medico {
         this.DIAGNOSTICO = DIAGNOSTICO;
     }
 
-    public int getID_VETERINARIO() {
+    public String getID_VETERINARIO() {
         return ID_VETERINARIO;
     }
 
-    public void setID_VETERINARIO(int ID_VETERINARIO) {
+    public void setID_VETERINARIO(String ID_VETERINARIO) {
         this.ID_VETERINARIO = ID_VETERINARIO;
     }
 
-    public int getID_MASCOTA() {
+    public String getID_MASCOTA() {
         return ID_MASCOTA;
     }
 
-    public void setID_MASCOTA(int ID_MASCOTA) {
+    public void setID_MASCOTA(String ID_MASCOTA) {
         this.ID_MASCOTA = ID_MASCOTA;
     }
     

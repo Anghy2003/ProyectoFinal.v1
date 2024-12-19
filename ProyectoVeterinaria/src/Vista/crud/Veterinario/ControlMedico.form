@@ -245,13 +245,15 @@
                   <Layout>
                     <DimensionLayout dim="0">
                       <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" alignment="0" attributes="0">
-                              <EmptySpace max="-2" attributes="0"/>
+                          <Group type="102" attributes="0">
                               <Group type="103" groupAlignment="0" attributes="0">
-                                  <Component id="pnlBotones" alignment="1" min="-2" max="-2" attributes="0"/>
-                                  <Group type="102" alignment="1" attributes="0">
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <EmptySpace min="-2" pref="41" max="-2" attributes="0"/>
+                                      <Component id="pnlBotones" min="-2" max="-2" attributes="0"/>
+                                  </Group>
+                                  <Group type="102" alignment="0" attributes="0">
+                                      <EmptySpace min="-2" pref="15" max="-2" attributes="0"/>
                                       <Component id="pnlCampos" min="-2" max="-2" attributes="0"/>
-                                      <EmptySpace min="-2" pref="48" max="-2" attributes="0"/>
                                   </Group>
                               </Group>
                               <EmptySpace pref="14" max="32767" attributes="0"/>
@@ -263,7 +265,7 @@
                           <Group type="102" alignment="0" attributes="0">
                               <EmptySpace max="-2" attributes="0"/>
                               <Component id="pnlBotones" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+                              <EmptySpace max="32767" attributes="0"/>
                               <Component id="pnlCampos" min="-2" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                           </Group>
@@ -376,6 +378,9 @@
                               <Color id="Hand Cursor"/>
                             </Property>
                           </Properties>
+                          <Events>
+                            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnBuscarActionPerformed"/>
+                          </Events>
                         </Component>
                         <Component class="javax.swing.JButton" name="btnRegresar">
                           <Properties>
@@ -415,20 +420,17 @@
                                       </Group>
                                       <Component id="lblDiagnostico" alignment="1" min="-2" pref="137" max="-2" attributes="0"/>
                                   </Group>
-                                  <EmptySpace type="separate" max="-2" attributes="0"/>
-                                  <Group type="103" groupAlignment="0" attributes="0">
-                                      <Component id="cmbVeterinario" alignment="0" max="32767" attributes="0"/>
-                                      <Group type="102" attributes="0">
-                                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
-                                              <Component id="txtDiagnostico" alignment="0" pref="256" max="32767" attributes="0"/>
-                                              <Component id="txtIdControlMedico" alignment="0" pref="256" max="32767" attributes="0"/>
-                                              <Component id="cmbMascota" alignment="0" max="32767" attributes="0"/>
-                                              <Component id="jDateFechaControl" pref="256" max="32767" attributes="0"/>
-                                          </Group>
-                                          <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                                      </Group>
-                                  </Group>
                                   <EmptySpace max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                          <Component id="txtDiagnostico" alignment="0" pref="256" max="32767" attributes="0"/>
+                                          <Component id="cmbMascota" alignment="0" max="32767" attributes="0"/>
+                                          <Component id="jDateFechaControl" pref="256" max="32767" attributes="0"/>
+                                      </Group>
+                                      <Component id="cmbIdControlMedico" alignment="0" min="-2" pref="245" max="-2" attributes="0"/>
+                                      <Component id="cmbVeterinario" alignment="0" min="-2" pref="248" max="-2" attributes="0"/>
+                                  </Group>
+                                  <EmptySpace max="32767" attributes="0"/>
                               </Group>
                           </Group>
                         </DimensionLayout>
@@ -437,8 +439,8 @@
                               <Group type="102" alignment="0" attributes="0">
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="3" attributes="0">
-                                      <Component id="txtIdControlMedico" alignment="3" min="-2" max="-2" attributes="0"/>
                                       <Component id="lblIdControlMedico" alignment="3" min="-2" max="-2" attributes="0"/>
+                                      <Component id="cmbIdControlMedico" alignment="3" min="-2" max="-2" attributes="0"/>
                                   </Group>
                                   <EmptySpace type="separate" max="-2" attributes="0"/>
                                   <Group type="103" groupAlignment="1" attributes="0">
@@ -460,7 +462,7 @@
                                       <Component id="lblMascota" alignment="3" min="-2" max="-2" attributes="0"/>
                                       <Component id="cmbMascota" alignment="3" min="-2" max="-2" attributes="0"/>
                                   </Group>
-                                  <EmptySpace min="-2" pref="52" max="-2" attributes="0"/>
+                                  <EmptySpace pref="66" max="32767" attributes="0"/>
                               </Group>
                           </Group>
                         </DimensionLayout>
@@ -512,13 +514,6 @@
                             <Property name="text" type="java.lang.String" value="ID Control Medico:"/>
                           </Properties>
                         </Component>
-                        <Component class="javax.swing.JTextField" name="txtIdControlMedico">
-                          <Properties>
-                            <Property name="cursor" type="java.awt.Cursor" editor="org.netbeans.modules.form.editors2.CursorEditor">
-                              <Color id="Text Cursor"/>
-                            </Property>
-                          </Properties>
-                        </Component>
                         <Component class="javax.swing.JLabel" name="lblMascota">
                           <Properties>
                             <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
@@ -537,7 +532,7 @@
                             </Property>
                           </Properties>
                         </Component>
-                        <Component class="javax.swing.JComboBox" name="cmbVeterinario">
+                        <Component class="javax.swing.JComboBox" name="cmbIdControlMedico">
                           <Properties>
                             <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
                               <StringArray count="4">
@@ -568,6 +563,21 @@
                           </AuxValues>
                         </Component>
                         <Component class="com.toedter.calendar.JDateChooser" name="jDateFechaControl">
+                        </Component>
+                        <Component class="javax.swing.JComboBox" name="cmbVeterinario">
+                          <Properties>
+                            <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
+                              <StringArray count="4">
+                                <StringItem index="0" value="Item 1"/>
+                                <StringItem index="1" value="Item 2"/>
+                                <StringItem index="2" value="Item 3"/>
+                                <StringItem index="3" value="Item 4"/>
+                              </StringArray>
+                            </Property>
+                          </Properties>
+                          <AuxValues>
+                            <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
+                          </AuxValues>
                         </Component>
                       </SubComponents>
                     </Container>
