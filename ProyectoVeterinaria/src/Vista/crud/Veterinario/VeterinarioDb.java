@@ -231,26 +231,140 @@ public class VeterinarioDb extends Modelo.VETERINARIO {
         }
     }
 }
-   
-    // Obtener lista de veterinarios
-//    public List<Veterinario> obtenerVeterinarios() {
-//        List<Veterinario> veterinarios = new ArrayList<>();
-//        String sql = "SELECT * FROM veterinario";
-//        try ( Statement statement = connection.createStatement();  ResultSet resultSet = statement.executeQuery(sql)) {
-//            while (resultSet.next()) {
-//                veterinarios.add(new Veterinario(
-//                        resultSet.getInt("id"),
-//                        resultSet.getString("cedula"),
-//                        resultSet.getString("nombre"),
-//                        resultSet.getString("direccion"),
-//                        resultSet.getString("celular")
-//                ));
-//            }
-//        } catch (SQLException e) {
-//            JOptionPane.showMessageDialog(null, "Error al obtener los veterinarios: " + e.getMessage());
-//            e.printStackTrace();
-//        }
-//        return veterinarios;
-//    }
+  
+  public void filtrarVeterinariosPorCedula(JTable tabla, String prefijoCedula) {
+    Connection connection = Base.conectarBD();
+    if (connection == null) {
+        System.out.println("No se pudo establecer la conexión a la base de datos.");
+        return; // Salir del método si no hay conexión
+    }
+
+    // Consulta SQL para obtener los veterinarios filtrando por el prefijo de la cédula
+    String query = "SELECT V.NOMBRE AS NOMBRE_VETERINARIO, " +
+                   "V.CEDULA AS CEDULA_VETERINARIO, " +
+                   "V.DIRECCION AS DIRECCION_VETERINARIO, " +
+                   "V.CELULAR AS CELULAR_VETERINARIO " +
+                   "FROM VETERINARIO V " +
+                   "WHERE V.CEDULA LIKE ? " + // Filtrar por cédula
+                   "ORDER BY V.NOMBRE";
+
+    DefaultTableModel model = new DefaultTableModel();
+    model.addColumn("Veterinario");
+    model.addColumn("Cédula Veterinario");
+    model.addColumn("Dirección");
+    model.addColumn("Celular");
+
+    try {
+        PreparedStatement preparedStatement = connection.prepareStatement(query);
+        preparedStatement.setString(1, prefijoCedula + "%"); // Establecer el prefijo con el comodín
+
+        ResultSet resultSet = preparedStatement.executeQuery();
+
+        int rowCount = 0;
+        while (resultSet.next()) {
+            rowCount++;
+            String nombreVeterinario = resultSet.getString("NOMBRE_VETERINARIO"); // Obtener el nombre del veterinario
+            String cedulaVeterinario = resultSet.getString("CEDULA_VETERINARIO"); // Obtener la cédula del veterinario
+            String direccionVeterinario = resultSet.getString("DIRECCION_VETERINARIO");
+            String celularVeterinario = resultSet.getString("CELULAR_VETERINARIO");
+
+            model.addRow(new Object[]{nombreVeterinario, cedulaVeterinario, direccionVeterinario, celularVeterinario});
+        }
+
+        // Verificar si se encontraron filas
+        if (rowCount == 0) {
+            JOptionPane.showMessageDialog(null, "No se encontraron resultados para la cédula: " + prefijoCedula);
+            // Limpiar el modelo de la tabla si no hay resultados
+            model.setRowCount(0); // Asegurarse de que el modelo esté vacío
+        } else {
+            System.out.println("Número de filas recuperadas: " + rowCount);
+        }
+
+        // Asignar el modelo a la tabla
+        tabla.setModel(model);
+    } catch (SQLException e) {
+        System.out.println("Error al ejecutar la consulta.");
+        e.printStackTrace();
+    } finally {
+        try {
+            if (connection != null) {
+                connection.close(); // Cerrar la conexión
+                System.out.println("Conexión cerrada.");
+            }
+        } catch (SQLException e) {
+            System.out.println("Error al cerrar la conexión.");
+            e.printStackTrace();
+        }
+    }
+}
+  
+  public static boolean validarCedula(String cedula) {
+        // Verificar que la cédula tenga 10 dígitos
+        if (cedula == null || cedula.length() != 10) {
+            return false;
+        }
+
+        try {
+            // Verificar que la cédula esté compuesta solo por números
+            Long.parseLong(cedula);
+        } catch (NumberFormatException e) {
+            return false;
+        }
+
+        // Extraer los dígitos necesarios
+        int provincia = Integer.parseInt(cedula.substring(0, 2));
+        int tercerDigito = Integer.parseInt(cedula.substring(2, 3));
+
+        // Verificar que el número de provincia sea válido (0-24)
+        if (provincia < 0 || provincia > 24) {
+            return false;
+        }
+
+        // Verificar que el tercer dígito sea menor que 6
+        if (tercerDigito >= 6) {
+            return false;
+        }
+
+        // Coeficientes para la validación de cédulas
+        int[] coeficientes = {2, 1, 2, 1, 2, 1, 2, 1, 2};
+        int total = 0;
+
+        for (int i = 0; i < coeficientes.length; i++) {
+            int digito = Character.getNumericValue(cedula.charAt(i));
+            int producto = digito * coeficientes[i];
+
+            if (producto >= 10) {
+                producto -= 9;
+            }
+
+            total += producto;
+        }
+
+        // Verificar el dígito verificador
+        int digitoVerificador = Character.getNumericValue(cedula.charAt(9));
+        int modulo = total % 10;
+        int valorVerificador = (modulo == 0) ? 0 : 10 - modulo;
+
+        return valorVerificador == digitoVerificador;
+    }
+    
+  private  static boolean validarNombre(String nombre) {
+    // Verificar que el nombre no esté vacío y solo contenga letras y espacios
+    return !nombre.isBlank() && nombre.matches("[A-Za-záéíóúÁÉÍÓÚñÑ ]+");
+}
+    
+    public static  boolean verificarTelefono(String telefono) {
+    // Verificamos que el teléfono no sea nulo y tenga al menos 2 caracteres
+    if (telefono != null && telefono.length() >= 2) {
+        // Obtenemos los primeros dos caracteres del teléfono
+        String prefijo = telefono.substring(0, 2);
+        // Comparamos con "07" y "09"
+        return prefijo.equals("07") || prefijo.equals("09");
+    }
+    // Si el teléfono es nulo o tiene menos de 2 caracteres, retornamos falso
+    return false;
+}
+    
+ 
 
 }

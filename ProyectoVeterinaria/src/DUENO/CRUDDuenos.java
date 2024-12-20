@@ -44,6 +44,7 @@ public class CRUDDuenos extends javax.swing.JPanel {
 
         // Manejar las respuestas
         if (opcion == JOptionPane.YES_OPTION) {
+            
 
             //PARA BUSQUEDA
             lblCedula.setVisible(false);
@@ -63,13 +64,15 @@ public class CRUDDuenos extends javax.swing.JPanel {
             btnRegresar.setVisible(false);
             btnGuardar.setVisible(false);
             //busqueda campos
-            lblBuscarDueno.setVisible(true);
-            cmbBuscarCedula.setVisible(true);
+            lblBuscarCedulaDueno.setVisible(true);
+            txtBuscarCedulaDueno.setVisible(true);
 
             //agregar datos de dueños  a combobox
             conexion Base = new conexion();
             DuenoDb dueDb = new DuenoDb(Base);
-            dueDb.llenarComboBoxBuscar(cmbBuscarCedula);
+            
+            // Actualizar la lista de mascotas
+                dueDb.filtrarDuenoPorCedula(tblDuenos, txtBuscarCedulaDueno.getText().trim());
 
         } else if (opcion == JOptionPane.NO_OPTION) {
 
@@ -90,15 +93,16 @@ public class CRUDDuenos extends javax.swing.JPanel {
             btnRegresar.setVisible(false);
             btnGuardar.setVisible(true);
             //busqueda
-            lblBuscarDueno.setVisible(false);
-            cmbBuscarCedula.setVisible(false);
+            lblBuscarCedulaDueno.setVisible(false);
+            txtBuscarCedulaDueno.setVisible(false);
             
             
             
             //agregar datos de dueños  a combobox
             conexion Base = new conexion();
             MascotaDb masDb = new MascotaDb(Base);
-            //masDb.llenarComboBoxDueños(cmbCedula);
+            
+            tblDuenos.setVisible(false);
             
         } else {
             JOptionPane.showMessageDialog(null, "No seleccionaste ninguna opción.");
@@ -323,12 +327,12 @@ public class CRUDDuenos extends javax.swing.JPanel {
         btnSalir = new javax.swing.JButton();
         lblDUENOS = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
         pnlCRUDS = new javax.swing.JPanel();
         pnlBotones = new javax.swing.JPanel();
         btnGuardar = new javax.swing.JButton();
         btnModificar = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
-        btnBuscar = new javax.swing.JButton();
         btnRegresar = new javax.swing.JButton();
         pnlCampos = new javax.swing.JPanel();
         txtDireccion = new javax.swing.JTextField();
@@ -339,10 +343,13 @@ public class CRUDDuenos extends javax.swing.JPanel {
         lblNombre = new javax.swing.JLabel();
         txtCedula = new javax.swing.JTextField();
         lblCedula = new javax.swing.JLabel();
-        lblBuscarDueno = new javax.swing.JLabel();
-        cmbBuscarCedula = new javax.swing.JComboBox<>();
         txtTelefono = new javax.swing.JTextField();
         lblTelefono = new javax.swing.JLabel();
+        lblBuscarCedulaDueno = new javax.swing.JLabel();
+        txtBuscarCedulaDueno = new javax.swing.JTextField();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tblDuenos = new javax.swing.JTable();
+        btnBuscar = new javax.swing.JButton();
 
         pnlLogo.setBackground(new java.awt.Color(255, 255, 255));
         pnlLogo.setForeground(new java.awt.Color(204, 204, 204));
@@ -429,17 +436,6 @@ public class CRUDDuenos extends javax.swing.JPanel {
             }
         });
 
-        btnBuscar.setBackground(new java.awt.Color(183, 224, 210));
-        btnBuscar.setForeground(new java.awt.Color(78, 108, 152));
-        btnBuscar.setText("Buscar");
-        btnBuscar.setToolTipText("ID Necesario");
-        btnBuscar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnBuscarActionPerformed(evt);
-            }
-        });
-
         btnRegresar.setBackground(new java.awt.Color(183, 224, 210));
         btnRegresar.setForeground(new java.awt.Color(78, 108, 152));
         btnRegresar.setText("Regresar");
@@ -458,9 +454,7 @@ public class CRUDDuenos extends javax.swing.JPanel {
             .addGroup(pnlBotonesLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnBuscar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(88, 88, 88)
                 .addComponent(btnModificar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnEliminar)
@@ -474,7 +468,6 @@ public class CRUDDuenos extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(pnlBotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnGuardar)
-                    .addComponent(btnBuscar)
                     .addComponent(btnModificar)
                     .addComponent(btnEliminar)
                     .addComponent(btnRegresar))
@@ -524,17 +517,6 @@ public class CRUDDuenos extends javax.swing.JPanel {
         lblCedula.setForeground(new java.awt.Color(78, 108, 152));
         lblCedula.setText("Cédula:");
 
-        lblBuscarDueno.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        lblBuscarDueno.setForeground(new java.awt.Color(78, 108, 152));
-        lblBuscarDueno.setText("Dueño:");
-
-        cmbBuscarCedula.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        cmbBuscarCedula.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                cmbBuscarCedulaActionPerformed(evt);
-            }
-        });
-
         txtTelefono.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
         txtTelefono.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -551,14 +533,62 @@ public class CRUDDuenos extends javax.swing.JPanel {
         lblTelefono.setForeground(new java.awt.Color(78, 108, 152));
         lblTelefono.setText("Teléfono:");
 
+        lblBuscarCedulaDueno.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        lblBuscarCedulaDueno.setForeground(new java.awt.Color(78, 108, 152));
+        lblBuscarCedulaDueno.setText("Cedula Dueño:");
+
+        txtBuscarCedulaDueno.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+        txtBuscarCedulaDueno.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                txtBuscarCedulaDuenoMouseClicked(evt);
+            }
+        });
+        txtBuscarCedulaDueno.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtBuscarCedulaDuenoKeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtBuscarCedulaDuenoKeyTyped(evt);
+            }
+        });
+
+        tblDuenos.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        tblDuenos.setEnabled(false);
+        tblDuenos.setShowVerticalLines(false);
+        jScrollPane2.setViewportView(tblDuenos);
+
+        btnBuscar.setBackground(new java.awt.Color(183, 224, 210));
+        btnBuscar.setForeground(new java.awt.Color(78, 108, 152));
+        btnBuscar.setText("Buscar");
+        btnBuscar.setToolTipText("ID Necesario");
+        btnBuscar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarActionPerformed(evt);
+            }
+        });
+        btnBuscar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                btnBuscarKeyReleased(evt);
+            }
+        });
+
         javax.swing.GroupLayout pnlCamposLayout = new javax.swing.GroupLayout(pnlCampos);
         pnlCampos.setLayout(pnlCamposLayout);
         pnlCamposLayout.setHorizontalGroup(
             pnlCamposLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlCamposLayout.createSequentialGroup()
-                .addGap(0, 0, 0)
                 .addGroup(pnlCamposLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblBuscarDueno, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(lblCedula, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(lblNombre, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblApellido, javax.swing.GroupLayout.Alignment.TRAILING)
@@ -571,21 +601,29 @@ public class CRUDDuenos extends javax.swing.JPanel {
                             .addComponent(txtDireccion)
                             .addComponent(txtNombre)
                             .addComponent(txtCedula)
-                            .addComponent(cmbBuscarCedula, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(txtApellido))
                         .addContainerGap())
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlCamposLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(txtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, 400, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(15, 15, 15))))
+            .addGroup(pnlCamposLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(lblBuscarCedulaDueno)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(txtBuscarCedulaDueno, javax.swing.GroupLayout.PREFERRED_SIZE, 280, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnBuscar)
+                .addGap(50, 50, 50))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlCamposLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(47, 47, 47))
         );
         pnlCamposLayout.setVerticalGroup(
             pnlCamposLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlCamposLayout.createSequentialGroup()
-                .addGroup(pnlCamposLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblBuscarDueno)
-                    .addComponent(cmbBuscarCedula, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addContainerGap()
                 .addGroup(pnlCamposLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblCedula)
                     .addComponent(txtCedula, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -605,7 +643,14 @@ public class CRUDDuenos extends javax.swing.JPanel {
                 .addGroup(pnlCamposLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtTelefono, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblTelefono))
-                .addContainerGap(46, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(pnlCamposLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtBuscarCedulaDueno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblBuscarCedulaDueno)
+                    .addComponent(btnBuscar))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 226, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(199, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout pnlCRUDSLayout = new javax.swing.GroupLayout(pnlCRUDS);
@@ -626,10 +671,10 @@ public class CRUDDuenos extends javax.swing.JPanel {
                 .addComponent(pnlBotones, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(pnlCampos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(52, Short.MAX_VALUE))
+                .addContainerGap(445, Short.MAX_VALUE))
         );
 
-        jPanel1.add(pnlCRUDS);
+        jScrollPane1.setViewportView(pnlCRUDS);
 
         javax.swing.GroupLayout pnlPrincipalLayout = new javax.swing.GroupLayout(pnlPrincipal);
         pnlPrincipal.setLayout(pnlPrincipalLayout);
@@ -643,6 +688,10 @@ public class CRUDDuenos extends javax.swing.JPanel {
             .addGroup(pnlPrincipalLayout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 692, Short.MAX_VALUE)
                 .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlPrincipalLayout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(64, 64, 64))
         );
         pnlPrincipalLayout.setVerticalGroup(
             pnlPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -653,8 +702,10 @@ public class CRUDDuenos extends javax.swing.JPanel {
                         .addContainerGap()
                         .addComponent(lblDUENOS)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(9, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -709,13 +760,15 @@ public class CRUDDuenos extends javax.swing.JPanel {
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
 
-        conexion Base = new conexion();
+        if (DuenoDb.validarCedula(txtBuscarCedulaDueno.getText().trim())) {
+            conexion Base = new conexion();
         DuenoDb dueDb = new DuenoDb(Base);
-        txtCedula.setText(dueDb.obtenerIdDeString(cmbBuscarCedula.getSelectedItem().toString()));
+        txtCedula.setText(dueDb.obtenerIdDeString(txtBuscarCedulaDueno.getText().trim()));
         txtCedula.setEditable(false);
         //BOTONES y campos
-        lblBuscarDueno.setVisible(false);
-
+        lblBuscarCedulaDueno.setVisible(false);
+        txtBuscarCedulaDueno.setVisible(false);
+        
         txtCedula.setVisible(true);
         lblNombre.setVisible(true);
         txtNombre.setVisible(true);
@@ -737,8 +790,12 @@ public class CRUDDuenos extends javax.swing.JPanel {
         txtApellido.setText(dueDb.obtenerApellidoPorCedula(txtCedula.getText()));
         txtDireccion.setText(dueDb.obtenerDireccionPorCedula(txtCedula.getText()));
         txtTelefono.setText(dueDb.obtenerTelefonoPorCedula(txtCedula.getText()));
-        //oculto el combo anterior        
-        cmbBuscarCedula.setVisible(false);
+       
+        }else{
+            JOptionPane.showMessageDialog(null, "Ingrese una cedula valida");
+        
+        }
+        
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
@@ -760,19 +817,21 @@ public class CRUDDuenos extends javax.swing.JPanel {
         btnRegresar.setVisible(false);
         btnGuardar.setVisible(false);
         //busqueda campos
-        lblBuscarDueno.setVisible(true);
-        cmbBuscarCedula.setVisible(true);
-
-        //agregar datos de dueños  a combobox
+        lblBuscarCedulaDueno.setVisible(true);
+        txtBuscarCedulaDueno.setVisible(true);
         conexion Base = new conexion();
         DuenoDb dueDb = new DuenoDb(Base);
-        dueDb.llenarComboBoxBuscar(cmbBuscarCedula);
+        // Actualizar la lista de mascotas
+        dueDb.filtrarDuenoPorCedula(tblDuenos, txtBuscarCedulaDueno.getText().trim());
     }//GEN-LAST:event_btnRegresarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
         conexion Base = new conexion();
         DuenoDb dueDb = new DuenoDb(Base);
-        dueDb.eliminarDuenoPorCedula(txtCedula.getText());
+        if (dueDb.verificarExistenciaCedulaEnMascota(txtBuscarCedulaDueno.getText())) {
+            JOptionPane.showMessageDialog(null, "Imposible eliminar, este dueño tiene mascotas");
+        }else{
+            dueDb.eliminarDuenoPorCedula(txtCedula.getText());
         //PARA BUSQUEDA
             lblCedula.setVisible(false);
             txtCedula.setVisible(false);
@@ -791,9 +850,15 @@ public class CRUDDuenos extends javax.swing.JPanel {
             btnRegresar.setVisible(false);
             btnGuardar.setVisible(false);
             //busqueda campos
-            lblBuscarDueno.setVisible(true);
-            cmbBuscarCedula.setVisible(true);
-            dueDb.llenarComboBoxBuscar(cmbBuscarCedula);
+            lblBuscarCedulaDueno.setVisible(true);
+            txtBuscarCedulaDueno.setVisible(true);  
+            
+            // Actualizar la lista de mascotas
+                dueDb.filtrarDuenoPorCedula(tblDuenos, txtBuscarCedulaDueno.getText().trim());
+        
+        }
+        
+        
         
         
         
@@ -836,19 +901,16 @@ public class CRUDDuenos extends javax.swing.JPanel {
             btnRegresar.setVisible(false);
             btnGuardar.setVisible(false);
             //busqueda campos
-            lblBuscarDueno.setVisible(true);
-            cmbBuscarCedula.setVisible(true);
-
-            dueDb.llenarComboBoxBuscar(cmbBuscarCedula);
+            lblBuscarCedulaDueno.setVisible(true);
+            txtBuscarCedulaDueno.setVisible(true);
+            
+            // Actualizar la lista de mascotas
+                dueDb.filtrarDuenoPorCedula(tblDuenos, txtBuscarCedulaDueno.getText().trim());
             
         }
 
 
     }//GEN-LAST:event_btnModificarActionPerformed
-
-    private void cmbBuscarCedulaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cmbBuscarCedulaActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_cmbBuscarCedulaActionPerformed
 
     private void txtCedulaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCedulaKeyTyped
      char caracter = evt.getKeyChar();
@@ -922,6 +984,39 @@ public class CRUDDuenos extends javax.swing.JPanel {
                     }
     }//GEN-LAST:event_txtTelefonoMouseClicked
 
+    private void txtBuscarCedulaDuenoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtBuscarCedulaDuenoMouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtBuscarCedulaDuenoMouseClicked
+
+    private void txtBuscarCedulaDuenoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarCedulaDuenoKeyTyped
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtBuscarCedulaDuenoKeyTyped
+
+    private void txtBuscarCedulaDuenoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarCedulaDuenoKeyReleased
+        char c = evt.getKeyChar();
+// Verificar si el carácter ingresado no es un número o si es Backspace
+        if (!Character.isDigit(c) && evt.getKeyCode() != KeyEvent.VK_BACK_SPACE) {
+            evt.consume(); // Ignorar el evento si no es un número
+        } else {
+            // Obtener el texto actual del JTextField
+            String cedula = txtBuscarCedulaDueno.getText().trim();
+
+            // Verificar si la longitud es 10
+            if (cedula.length() > 10) {
+                evt.consume();
+            } else {
+                // Actualizar la lista de duenos
+                conexion Base = new conexion();
+                DuenoDb dueDb = new DuenoDb(Base);
+                dueDb.filtrarDuenoPorCedula(tblDuenos, cedula);
+            }
+        }
+    }//GEN-LAST:event_txtBuscarCedulaDuenoKeyReleased
+
+    private void btnBuscarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnBuscarKeyReleased
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnBuscarKeyReleased
+
     private void Mostrarpanelcrud(JPanel p) {
         p.setSize(700, 460);
         p.setLocation(0, 0);
@@ -938,11 +1033,12 @@ public class CRUDDuenos extends javax.swing.JPanel {
     private javax.swing.JButton btnModificar;
     private javax.swing.JButton btnRegresar;
     private javax.swing.JButton btnSalir;
-    private javax.swing.JComboBox<String> cmbBuscarCedula;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel lblApellido;
-    private javax.swing.JLabel lblBuscarDueno;
+    private javax.swing.JLabel lblBuscarCedulaDueno;
     private javax.swing.JLabel lblCedula;
     private javax.swing.JLabel lblDUENOS;
     private javax.swing.JLabel lblDireccion;
@@ -953,7 +1049,9 @@ public class CRUDDuenos extends javax.swing.JPanel {
     private javax.swing.JPanel pnlCampos;
     public static javax.swing.JPanel pnlLogo;
     private javax.swing.JPanel pnlPrincipal;
+    private javax.swing.JTable tblDuenos;
     private javax.swing.JTextField txtApellido;
+    private javax.swing.JTextField txtBuscarCedulaDueno;
     private javax.swing.JTextField txtCedula;
     private javax.swing.JTextField txtDireccion;
     private javax.swing.JTextField txtNombre;

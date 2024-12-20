@@ -9,8 +9,9 @@ import Modelo.conexion;
 import javax.swing.JOptionPane;
 import Vista.menu.Menu;
 import java.awt.BorderLayout;
+import java.awt.event.KeyEvent;
 import javax.swing.JPanel;
-
+import javax.swing.JScrollBar;
 
 /**
  *
@@ -39,8 +40,10 @@ public class Veterinario extends javax.swing.JPanel {
 // Manejar las respuestas
         if (opcion == JOptionPane.YES_OPTION) {
             // Configuración para búsqueda
+            JScrollBar verticalScrollBar = ScrollVete.getVerticalScrollBar();
+            verticalScrollBar.setValue(100);
             lblVeterinarios.setVisible(true);
-            cmbVeterinarios.setVisible(true);
+            txtBuscarVeterinario.setVisible(true);
             btnBuscar.setVisible(true);
             btnGuardar.setVisible(false);
             lblNombre.setVisible(false);
@@ -55,15 +58,16 @@ public class Veterinario extends javax.swing.JPanel {
             btnEliminar.setVisible(false);
             btnRegresar.setVisible(false);
 
-            // Llenar los ComboBox con datos
+            // Crear conexión y eliminar el veterinario
             conexion Base = new conexion();
-            VeterinarioDb masDb = new VeterinarioDb(Base);
-            masDb.llenarComboBoxVeterinarios(cmbVeterinarios);
+            VeterinarioDb vetDb = new VeterinarioDb(Base);
+            vetDb.cargarDatosEnTabla(tblVeterinarioBusqueda);
+            
 
         } else if (opcion == JOptionPane.NO_OPTION) {
             // Configuración para agregar nueva mascota
             lblVeterinarios.setVisible(false);
-            cmbVeterinarios.setVisible(false);
+            txtBuscarVeterinario.setVisible(false);
             btnBuscar.setVisible(false);
             btnGuardar.setVisible(true);
             lblNombre.setVisible(true);
@@ -77,6 +81,13 @@ public class Veterinario extends javax.swing.JPanel {
             btnModificar.setVisible(false);
             btnEliminar.setVisible(false);
             btnRegresar.setVisible(false);
+            
+            
+            // Crear conexión y eliminar el veterinario
+            conexion Base = new conexion();
+            VeterinarioDb vetDb = new VeterinarioDb(Base);
+            
+            tblVeterinarioBusqueda.setVisible(false);
 
         } else {
             // Mostrar mensaje en caso de no seleccionar una opción
@@ -98,14 +109,15 @@ public class Veterinario extends javax.swing.JPanel {
         jPanel1 = new javax.swing.JPanel();
         pnlPrincipal = new javax.swing.JPanel();
         btnSalir = new javax.swing.JButton();
-        lblMASCOTAS = new javax.swing.JLabel();
+        lblTituloVeterinario = new javax.swing.JLabel();
         pnlCRUDS = new javax.swing.JPanel();
         pnlBotones = new javax.swing.JPanel();
         btnGuardar = new javax.swing.JButton();
         btnModificar = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
-        btnBuscar = new javax.swing.JButton();
         btnRegresar = new javax.swing.JButton();
+        lblVeterinarios = new javax.swing.JLabel();
+        txtBuscarVeterinario = new javax.swing.JTextField();
         pnlCampos = new javax.swing.JPanel();
         txtDireccionVeterinario = new javax.swing.JTextField();
         txtCelularVeterinario = new javax.swing.JTextField();
@@ -115,8 +127,9 @@ public class Veterinario extends javax.swing.JPanel {
         lblCelular = new javax.swing.JLabel();
         txtNombreVeterinario = new javax.swing.JTextField();
         txtCedulaVeterinario = new javax.swing.JTextField();
-        lblVeterinarios = new javax.swing.JLabel();
-        cmbVeterinarios = new javax.swing.JComboBox<>();
+        btnBuscar = new javax.swing.JButton();
+        ScrollVete = new javax.swing.JScrollPane();
+        tblVeterinarioBusqueda = new javax.swing.JTable();
 
         pnlLogo.setBackground(new java.awt.Color(255, 255, 255));
         pnlLogo.setForeground(new java.awt.Color(204, 204, 204));
@@ -146,7 +159,7 @@ public class Veterinario extends javax.swing.JPanel {
         jPanel1.setMinimumSize(new java.awt.Dimension(700, 480));
         jPanel1.setPreferredSize(new java.awt.Dimension(700, 582));
 
-        pnlPrincipal.setBackground(new java.awt.Color(183, 224, 210));
+        pnlPrincipal.setBackground(new java.awt.Color(255, 255, 255));
         pnlPrincipal.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(78, 108, 152)));
         pnlPrincipal.setPreferredSize(new java.awt.Dimension(700, 480));
 
@@ -160,14 +173,14 @@ public class Veterinario extends javax.swing.JPanel {
             }
         });
 
-        lblMASCOTAS.setFont(new java.awt.Font("Segoe Print", 1, 36)); // NOI18N
-        lblMASCOTAS.setForeground(new java.awt.Color(78, 108, 152));
-        lblMASCOTAS.setText("VETERINARIO");
+        lblTituloVeterinario.setFont(new java.awt.Font("Segoe Print", 1, 36)); // NOI18N
+        lblTituloVeterinario.setForeground(new java.awt.Color(78, 108, 152));
+        lblTituloVeterinario.setText("VETERINARIO");
 
-        pnlCRUDS.setBackground(new java.awt.Color(183, 224, 210));
+        pnlCRUDS.setBackground(new java.awt.Color(255, 255, 255));
         pnlCRUDS.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(78, 108, 152)));
 
-        pnlBotones.setBackground(new java.awt.Color(183, 224, 210));
+        pnlBotones.setBackground(new java.awt.Color(255, 255, 255));
         pnlBotones.setForeground(new java.awt.Color(183, 224, 210));
 
         btnGuardar.setBackground(new java.awt.Color(183, 224, 210));
@@ -201,17 +214,6 @@ public class Veterinario extends javax.swing.JPanel {
             }
         });
 
-        btnBuscar.setBackground(new java.awt.Color(183, 224, 210));
-        btnBuscar.setForeground(new java.awt.Color(78, 108, 152));
-        btnBuscar.setText("Buscar");
-        btnBuscar.setToolTipText("ID Necesario");
-        btnBuscar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnBuscarActionPerformed(evt);
-            }
-        });
-
         btnRegresar.setBackground(new java.awt.Color(183, 224, 210));
         btnRegresar.setForeground(new java.awt.Color(78, 108, 152));
         btnRegresar.setText("Regresar");
@@ -223,21 +225,37 @@ public class Veterinario extends javax.swing.JPanel {
             }
         });
 
+        lblVeterinarios.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        lblVeterinarios.setForeground(new java.awt.Color(78, 108, 152));
+        lblVeterinarios.setText("Veterinarios:");
+
+        txtBuscarVeterinario.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+        txtBuscarVeterinario.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtBuscarVeterinarioKeyReleased(evt);
+            }
+        });
+
         javax.swing.GroupLayout pnlBotonesLayout = new javax.swing.GroupLayout(pnlBotones);
         pnlBotones.setLayout(pnlBotonesLayout);
         pnlBotonesLayout.setHorizontalGroup(
             pnlBotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlBotonesLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(12, 12, 12)
-                .addComponent(btnBuscar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnModificar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnEliminar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(btnRegresar)
+                .addGroup(pnlBotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnlBotonesLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(88, 88, 88)
+                        .addComponent(btnModificar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnEliminar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(btnRegresar))
+                    .addGroup(pnlBotonesLayout.createSequentialGroup()
+                        .addGap(58, 58, 58)
+                        .addComponent(lblVeterinarios)
+                        .addGap(18, 18, 18)
+                        .addComponent(txtBuscarVeterinario, javax.swing.GroupLayout.PREFERRED_SIZE, 256, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(12, Short.MAX_VALUE))
         );
         pnlBotonesLayout.setVerticalGroup(
@@ -246,69 +264,114 @@ public class Veterinario extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(pnlBotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnGuardar)
-                    .addComponent(btnBuscar)
                     .addComponent(btnModificar)
                     .addComponent(btnEliminar)
                     .addComponent(btnRegresar))
-                .addContainerGap(38, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 18, Short.MAX_VALUE)
+                .addGroup(pnlBotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblVeterinarios, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtBuscarVeterinario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
 
-        pnlCampos.setBackground(new java.awt.Color(183, 224, 210));
+        pnlCampos.setBackground(new java.awt.Color(255, 255, 255));
         pnlCampos.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         txtDireccionVeterinario.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
-        pnlCampos.add(txtDireccionVeterinario, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 120, 256, -1));
+        pnlCampos.add(txtDireccionVeterinario, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 70, 256, -1));
 
         txtCelularVeterinario.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
-        pnlCampos.add(txtCelularVeterinario, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 160, 256, -1));
+        txtCelularVeterinario.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                txtCelularVeterinarioMouseClicked(evt);
+            }
+        });
+        txtCelularVeterinario.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtCelularVeterinarioKeyTyped(evt);
+            }
+        });
+        pnlCampos.add(txtCelularVeterinario, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 110, 256, -1));
 
         lblDireccion.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         lblDireccion.setForeground(new java.awt.Color(78, 108, 152));
         lblDireccion.setText("Direccion:");
-        pnlCampos.add(lblDireccion, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 120, -1, -1));
+        pnlCampos.add(lblDireccion, new org.netbeans.lib.awtextra.AbsoluteConstraints(20, 70, -1, -1));
 
         lblNombre.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         lblNombre.setForeground(new java.awt.Color(78, 108, 152));
         lblNombre.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         lblNombre.setText("Nombre:");
-        pnlCampos.add(lblNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 80, 93, -1));
+        pnlCampos.add(lblNombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(10, 30, 93, -1));
 
         lblCedula.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         lblCedula.setForeground(new java.awt.Color(78, 108, 152));
         lblCedula.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         lblCedula.setText("Cedula:");
-        pnlCampos.add(lblCedula, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 40, 120, -1));
+        pnlCampos.add(lblCedula, new org.netbeans.lib.awtextra.AbsoluteConstraints(-20, 0, 120, -1));
 
         lblCelular.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         lblCelular.setForeground(new java.awt.Color(78, 108, 152));
         lblCelular.setText("Celular:");
-        pnlCampos.add(lblCelular, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 160, -1, -1));
+        pnlCampos.add(lblCelular, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 110, -1, -1));
 
         txtNombreVeterinario.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
-        pnlCampos.add(txtNombreVeterinario, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 80, 256, -1));
+        txtNombreVeterinario.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtNombreVeterinarioKeyTyped(evt);
+            }
+        });
+        pnlCampos.add(txtNombreVeterinario, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 30, 256, -1));
 
         txtCedulaVeterinario.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
-        pnlCampos.add(txtCedulaVeterinario, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 40, 256, -1));
+        txtCedulaVeterinario.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtCedulaVeterinarioKeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtCedulaVeterinarioKeyTyped(evt);
+            }
+        });
+        pnlCampos.add(txtCedulaVeterinario, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 0, 256, -1));
 
-        lblVeterinarios.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        lblVeterinarios.setForeground(new java.awt.Color(78, 108, 152));
-        lblVeterinarios.setText("Veterinarios:");
-        pnlCampos.add(lblVeterinarios, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 10, -1, 20));
+        btnBuscar.setBackground(new java.awt.Color(183, 224, 210));
+        btnBuscar.setForeground(new java.awt.Color(78, 108, 152));
+        btnBuscar.setText("Buscar");
+        btnBuscar.setToolTipText("ID Necesario");
+        btnBuscar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarActionPerformed(evt);
+            }
+        });
+        pnlCampos.add(btnBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 150, -1, -1));
 
-        pnlCampos.add(cmbVeterinarios, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 10, 256, -1));
+        tblVeterinarioBusqueda.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        ScrollVete.setViewportView(tblVeterinarioBusqueda);
 
         javax.swing.GroupLayout pnlCRUDSLayout = new javax.swing.GroupLayout(pnlCRUDS);
         pnlCRUDS.setLayout(pnlCRUDSLayout);
         pnlCRUDSLayout.setHorizontalGroup(
             pnlCRUDSLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlCRUDSLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(pnlCRUDSLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(pnlCRUDSLayout.createSequentialGroup()
-                        .addComponent(pnlCampos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(48, 48, 48))
-                    .addComponent(pnlBotones, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(14, Short.MAX_VALUE))
+                .addGap(69, 69, 69)
+                .addGroup(pnlCRUDSLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(ScrollVete, javax.swing.GroupLayout.PREFERRED_SIZE, 484, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(pnlCRUDSLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addComponent(pnlBotones, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(pnlCRUDSLayout.createSequentialGroup()
+                            .addComponent(pnlCampos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGap(48, 48, 48))))
+                .addContainerGap(41, Short.MAX_VALUE))
         );
         pnlCRUDSLayout.setVerticalGroup(
             pnlCRUDSLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -317,7 +380,9 @@ public class Veterinario extends javax.swing.JPanel {
                 .addComponent(pnlBotones, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(pnlCampos, javax.swing.GroupLayout.PREFERRED_SIZE, 184, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(ScrollVete, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(45, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout pnlPrincipalLayout = new javax.swing.GroupLayout(pnlPrincipal);
@@ -325,15 +390,15 @@ public class Veterinario extends javax.swing.JPanel {
         pnlPrincipalLayout.setHorizontalGroup(
             pnlPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlPrincipalLayout.createSequentialGroup()
-                .addContainerGap(120, Short.MAX_VALUE)
+                .addContainerGap(57, Short.MAX_VALUE)
                 .addGroup(pnlPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlPrincipalLayout.createSequentialGroup()
-                        .addComponent(lblMASCOTAS, javax.swing.GroupLayout.PREFERRED_SIZE, 267, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(lblTituloVeterinario, javax.swing.GroupLayout.PREFERRED_SIZE, 267, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(106, 106, 106)
                         .addComponent(btnSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlPrincipalLayout.createSequentialGroup()
                         .addComponent(pnlCRUDS, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(59, 59, 59))))
+                        .addGap(32, 32, 32))))
         );
         pnlPrincipalLayout.setVerticalGroup(
             pnlPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -342,10 +407,10 @@ public class Veterinario extends javax.swing.JPanel {
                     .addComponent(btnSalir)
                     .addGroup(pnlPrincipalLayout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(lblMASCOTAS)))
+                        .addComponent(lblTituloVeterinario)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(pnlCRUDS, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(116, Short.MAX_VALUE))
+                .addContainerGap(33, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -358,7 +423,9 @@ public class Veterinario extends javax.swing.JPanel {
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(pnlPrincipal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addComponent(pnlPrincipal, javax.swing.GroupLayout.PREFERRED_SIZE, 554, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 28, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -388,50 +455,66 @@ public class Veterinario extends javax.swing.JPanel {
                 .getText().isBlank() || txtNombreVeterinario.getText().isBlank() || txtDireccionVeterinario.getText().isBlank() || txtCelularVeterinario.getText().isBlank()) {
             JOptionPane.showMessageDialog(null, "No dejar espacios en blanco");
         } else {
-            conexion Base = new conexion();
-            VeterinarioDb veterinario = new VeterinarioDb(Base);
-            veterinario.agregarVeterinario(txtCedulaVeterinario.getText().trim(), txtNombreVeterinario.getText().trim(), txtDireccionVeterinario.getText().trim(), txtCelularVeterinario.getText().trim());
+            if (VeterinarioDb.validarCedula(txtCedulaVeterinario.getText().trim())) {
+
+                if (VeterinarioDb.verificarTelefono(txtCelularVeterinario.getText().trim())) {
+
+                    conexion Base = new conexion();
+                    VeterinarioDb miVete = new VeterinarioDb(Base);
+                    miVete.agregarVeterinario(txtCedulaVeterinario
+                            .getText(), txtNombreVeterinario.getText(), txtDireccionVeterinario.getText(), txtCelularVeterinario.getText());
+
+                } else {
+                    JOptionPane.showMessageDialog(null, "Ingrese un celular correcto");
+                }
+
+            } else {
+                JOptionPane.showMessageDialog(null, "Ingrese una cedula valida");
+            }
         }
         limpiarCamposVeterinario();
     }//GEN-LAST:event_btnGuardarActionPerformed
 
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
-
-        lblVeterinarios.setVisible(false);
-        cmbVeterinarios.setVisible(false);
-        btnBuscar.setVisible(false);
-        btnGuardar.setVisible(false);
-        lblNombre.setVisible(true);
-        txtNombreVeterinario.setVisible(true);
-        lblCedula.setVisible(true);
-        txtCedulaVeterinario.setVisible(true);
-        txtCedulaVeterinario.setEditable(false);
-        lblDireccion.setVisible(true);
-        txtDireccionVeterinario.setVisible(true);
-        lblCelular.setVisible(true);
-        txtCelularVeterinario.setVisible(true);
-        btnModificar.setVisible(true);
-        btnEliminar.setVisible(true);
-        btnRegresar.setVisible(true);
-        
-        
-        
-        // Obtener la cédula del campo de texto y buscar el veterinario
- String itemSeleccionado = (String) cmbVeterinarios.getSelectedItem();
-    if (itemSeleccionado != null && !itemSeleccionado.equals("No hay veterinarios registrados")) {
-        String cedula = itemSeleccionado.split(" ")[0];
-        conexion base = new conexion();
-        VeterinarioDb veteDb = new VeterinarioDb(new conexion());
-        veteDb.obtenerVeterinarioPorCedula(cedula,txtCedulaVeterinario, txtNombreVeterinario, txtDireccionVeterinario, txtCelularVeterinario);
-    } else {
-        JOptionPane.showMessageDialog(null, "Seleccione un veterinario válido.");
+ // Ocultar elementos de la interfaz
+    lblVeterinarios.setVisible(false);
+    txtBuscarVeterinario.setVisible(false);
+    btnBuscar.setVisible(false);
+    btnGuardar.setVisible(false);
+    
+    // Hacer visibles los campos para mostrar la información del veterinario
+    lblNombre.setVisible(true);
+    txtNombreVeterinario.setVisible(true);
+    lblCedula.setVisible(true);
+    txtCedulaVeterinario.setVisible(true);
+    txtCedulaVeterinario.setEditable(false);
+    lblDireccion.setVisible(true);
+    txtDireccionVeterinario.setVisible(true);
+    lblCelular.setVisible(true);
+    txtCelularVeterinario.setVisible(true);
+    btnModificar.setVisible(true);
+    btnEliminar.setVisible(true);
+    btnRegresar.setVisible(true);
+    tblVeterinarioBusqueda.setVisible(false);
+    
+    // Obtener la cédula del veterinario desde el campo de búsqueda
+    String cedulaVeterinario = txtBuscarVeterinario.getText().trim();
+    
+    // Validar la cédula
+    if (!VeterinarioDb.validarCedula(cedulaVeterinario)) {
+        JOptionPane.showMessageDialog(null, "La cédula ingresada no es válida. Por favor, verifique e intente nuevamente.");
+        return; // Salir del método si la cédula no es válida
     }
-        
+    conexion Base = new conexion();
+            VeterinarioDb vetDb = new VeterinarioDb(Base);
+    // Llamar al método para obtener los datos del veterinario
+    vetDb.obtenerVeterinarioPorCedula(cedulaVeterinario, txtCedulaVeterinario, txtNombreVeterinario, txtDireccionVeterinario, txtCelularVeterinario);
+
     }//GEN-LAST:event_btnBuscarActionPerformed
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
-         // Obtener los valores actuales de los campos
-    String cedula = txtCedulaVeterinario.getText();
+        // Obtener los valores actuales de los campos
+    String cedula = txtCedulaVeterinario.getText(); // Asegúrate de que este campo contenga la cédula del veterinario
     String nombre = txtNombreVeterinario.getText();
     String direccion = txtDireccionVeterinario.getText();
     String celular = txtCelularVeterinario.getText();
@@ -448,43 +531,39 @@ public class Veterinario extends javax.swing.JPanel {
 
     // Opcional: Deshabilitar campos nuevamente después de modificar
     txtCedulaVeterinario.setEditable(false);
-    limpiarCamposVeterinario();
-    
-    lblVeterinarios.setVisible(true);
-            cmbVeterinarios.setVisible(true);
-            btnBuscar.setVisible(true);
-            btnGuardar.setVisible(false);
-            lblNombre.setVisible(false);
-            txtNombreVeterinario.setVisible(false);
-            lblCedula.setVisible(false);
-            txtCedulaVeterinario.setVisible(false);
-            lblDireccion.setVisible(false);
-            txtDireccionVeterinario.setVisible(false);
-            lblCelular.setVisible(false);
-            txtCelularVeterinario.setVisible(false);
-            btnModificar.setVisible(false);
-            btnEliminar.setVisible(false);
-            btnRegresar.setVisible(false);
+    limpiarCamposVeterinario(); // Asegúrate de que este método limpie los campos correctamente
 
-            // Llenar los ComboBox con datos
-            conexion Base = new conexion();
-            VeterinarioDb masDb = new VeterinarioDb(Base);
-            masDb.llenarComboBoxVeterinarios(cmbVeterinarios);
+    // Actualizar la interfaz
+    lblVeterinarios.setVisible(true);
+    txtBuscarVeterinario.setVisible(true);
+    btnBuscar.setVisible(true);
+    btnGuardar.setVisible(false);
+    lblNombre.setVisible(false);
+    txtNombreVeterinario.setVisible(false);
+    lblCedula.setVisible(false);
+    txtCedulaVeterinario.setVisible(false); // Asegúrate de que este campo esté oculto si es necesario
+    lblDireccion.setVisible(false);
+    txtDireccionVeterinario.setVisible(false);
+    lblCelular.setVisible(false);
+    txtCelularVeterinario.setVisible(false);
+    btnModificar.setVisible(false);
+    btnEliminar.setVisible(false);
+    btnRegresar.setVisible(false);
+    
     }//GEN-LAST:event_btnModificarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
          // Confirmar la eliminación
     int confirmacion = JOptionPane.showConfirmDialog(
-        null,
-        "¿Estás seguro de que deseas eliminar este veterinario?",
-        "Confirmar eliminación",
-        JOptionPane.YES_NO_OPTION,
-        JOptionPane.WARNING_MESSAGE
+            null,
+            "¿Estás seguro de que deseas eliminar este veterinario?",
+            "Confirmar eliminación",
+            JOptionPane.YES_NO_OPTION,
+            JOptionPane.WARNING_MESSAGE
     );
 
     if (confirmacion == JOptionPane.YES_OPTION) {
-        // Obtener la cédula del veterinario seleccionado
-        String cedulaVeterinario = txtCedulaVeterinario.getText();
+        String cedulaVeterinario = txtBuscarVeterinario.getText();
 
         // Crear conexión y eliminar el veterinario
         conexion Base = new conexion();
@@ -492,103 +571,181 @@ public class Veterinario extends javax.swing.JPanel {
 
         boolean resultado = vetDb.eliminarVeterinarioPorCedula(cedulaVeterinario);
 
-        if (resultado) {
-            JOptionPane.showMessageDialog(null, "El veterinario ha sido eliminado exitosamente.");
-            // Limpiar los campos o actualizar la vista según sea necesario
-            limpiarCamposVeterinario();
-            lblVeterinarios.setVisible(true);
-            cmbVeterinarios.setVisible(true);
-            btnBuscar.setVisible(true);
-            btnGuardar.setVisible(false);
-            lblNombre.setVisible(false);
-            txtNombreVeterinario.setVisible(false);
-            lblCedula.setVisible(false);
-            txtCedulaVeterinario.setVisible(false);
-            lblDireccion.setVisible(false);
-            txtDireccionVeterinario.setVisible(false);
-            lblCelular.setVisible(false);
-            txtCelularVeterinario.setVisible(false);
-            btnModificar.setVisible(false);
-            btnEliminar.setVisible(false);
-            btnRegresar.setVisible(false);
 
-            // Llenar los ComboBox con datos
-           
-            VeterinarioDb masDb = new VeterinarioDb(Base);
-            masDb.llenarComboBoxVeterinarios(cmbVeterinarios);
-        } else {
-            JOptionPane.showMessageDialog(null, "No se pudo eliminar el veterinario. Verifica el registro.");
+            if (resultado) {
+                JOptionPane.showMessageDialog(null, "El veterinario ha sido eliminado exitosamente.");
+                // Limpiar los campos o actualizar la vista según sea necesario
+                limpiarCamposVeterinario();
+
+                // Actualizar la interfaz
+                lblVeterinarios.setVisible(true);
+                txtBuscarVeterinario.setVisible(true);
+                btnBuscar.setVisible(true);
+                btnGuardar.setVisible(false);
+                lblNombre.setVisible(false);
+                txtNombreVeterinario.setVisible(false);
+                lblCedula.setVisible(false);
+                txtCedulaVeterinario.setVisible(false);
+                lblDireccion.setVisible(false);
+                txtDireccionVeterinario.setVisible(false);
+                lblCelular.setVisible(false);
+                txtCelularVeterinario.setVisible(false);
+                btnModificar.setVisible(false);
+                btnEliminar.setVisible(false);
+                btnRegresar.setVisible(false);
+            } else {
+                JOptionPane.showMessageDialog(null, "No se pudo eliminar el veterinario. Verifica el registro.");
+            }
         }
-    }
     
-    
+
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnSalirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSalirActionPerformed
-      pnlPrincipal.setVisible(false);
+        pnlPrincipal.setVisible(false);
         Mostrarpanelcrud(pnlLogo);
     }//GEN-LAST:event_btnSalirActionPerformed
 
     private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
         lblVeterinarios.setVisible(true);
-            cmbVeterinarios.setVisible(true);
-            btnBuscar.setVisible(true);
-            btnGuardar.setVisible(false);
-            lblNombre.setVisible(false);
-            txtNombreVeterinario.setVisible(false);
-            lblCedula.setVisible(false);
-            txtCedulaVeterinario.setVisible(false);
-            lblDireccion.setVisible(false);
-            txtDireccionVeterinario.setVisible(false);
-            lblCelular.setVisible(false);
-            txtCelularVeterinario.setVisible(false);
-            btnModificar.setVisible(false);
-            btnEliminar.setVisible(false);
-            btnRegresar.setVisible(false);
+        txtBuscarVeterinario.setVisible(true);
+        btnBuscar.setVisible(true);
+        btnGuardar.setVisible(false);
+        lblNombre.setVisible(false);
+        txtNombreVeterinario.setVisible(false);
+        lblCedula.setVisible(false);
+        txtBuscarVeterinario.setVisible(false);
+        lblDireccion.setVisible(false);
+        txtDireccionVeterinario.setVisible(false);
+        lblCelular.setVisible(false);
+        txtCelularVeterinario.setVisible(false);
+        btnModificar.setVisible(false);
+        btnEliminar.setVisible(false);
+        btnRegresar.setVisible(false);
 
-            // Llenar los ComboBox con datos
-            conexion Base = new conexion();
-            VeterinarioDb masDb = new VeterinarioDb(Base);
-            masDb.llenarComboBoxVeterinarios(cmbVeterinarios);
     }//GEN-LAST:event_btnRegresarActionPerformed
-private void limpiarCamposVeterinario() {
-    txtCedulaVeterinario.setText("");
-    txtNombreVeterinario.setText("");
-    txtDireccionVeterinario.setText("");
-    txtCelularVeterinario.setText("");
-    // Si tienes más campos, agrégales limpieza aquí
-}
 
-private void Mostrarpanelcrud(JPanel p) {
+    private void txtCedulaVeterinarioKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCedulaVeterinarioKeyReleased
+
+    }//GEN-LAST:event_txtCedulaVeterinarioKeyReleased
+
+    private void txtBuscarVeterinarioKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtBuscarVeterinarioKeyReleased
+        char c = evt.getKeyChar();
+// Verificar si el carácter ingresado no es un número o si es Backspace
+        if (!Character.isDigit(c) && evt.getKeyCode() != KeyEvent.VK_BACK_SPACE) {
+            evt.consume(); // Ignorar el evento si no es un número
+        } else {
+            // Obtener el texto actual del JTextField
+            String cedula = txtBuscarVeterinario.getText().trim();
+
+            // Verificar si la longitud es 10
+            if (cedula.length() > 10) {
+                evt.consume();
+            } else {
+                // Actualizar la lista de duenos
+                conexion Base = new conexion();
+                VeterinarioDb dueDb = new VeterinarioDb(Base);
+                dueDb.filtrarVeterinariosPorCedula(tblVeterinarioBusqueda, cedula);
+            }
+        }
+    }//GEN-LAST:event_txtBuscarVeterinarioKeyReleased
+
+    private void txtCelularVeterinarioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_txtCelularVeterinarioMouseClicked
+        
+    }//GEN-LAST:event_txtCelularVeterinarioMouseClicked
+
+    private void txtCelularVeterinarioKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCelularVeterinarioKeyTyped
+        char caracter = evt.getKeyChar();
+    
+    // Verificar si el carácter es un número
+    if (Character.isDigit(caracter)) {
+        // Si el campo está vacío y se intenta ingresar un número, agregar "09"
+        if (txtCelularVeterinario.getText().isEmpty()) {
+            txtCelularVeterinario.setText("09");
+        }
+
+        // Verificar la longitud del texto después de agregar el nuevo carácter
+        String textoActual = txtCelularVeterinario.getText();
+        
+        // Si el texto actual tiene 10 dígitos, no permitir más entradas
+        if (textoActual.length() >= 10) {
+            evt.consume(); // Cancelar el evento de tecla
+        }
+    } else {
+        // Si el carácter no es un número (es una letra u otro carácter), cancelar el evento
+        evt.consume();
+    }
+    }//GEN-LAST:event_txtCelularVeterinarioKeyTyped
+
+    private void txtNombreVeterinarioKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreVeterinarioKeyTyped
+        char caracter = evt.getKeyChar();
+
+        // Verificar si el carácter es un número
+        if (Character.isDigit(caracter)) {
+            // Mostrar un JDialog
+            JOptionPane.showMessageDialog(this, "No se pueden ingresar números", "Error", JOptionPane.ERROR_MESSAGE);
+            // Cancelar el evento de tecla
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtNombreVeterinarioKeyTyped
+
+    private void txtCedulaVeterinarioKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCedulaVeterinarioKeyTyped
+        char caracter = evt.getKeyChar();
+    
+    // Verificar si el carácter es un número
+    if (Character.isDigit(caracter)) {
+        // Obtener el texto actual del campo
+        String textoActual = txtCedulaVeterinario.getText(); // Cambiado a txtCedula
+        
+        // Si el texto actual tiene 10 dígitos, no permitir más entradas
+        if (textoActual.length() >= 10) {
+            evt.consume(); // Cancelar el evento de tecla
+        }
+    } else {
+        // Si el carácter no es un número (es una letra u otro carácter), cancelar el evento
+        evt.consume();
+    }
+    }//GEN-LAST:event_txtCedulaVeterinarioKeyTyped
+    private void limpiarCamposVeterinario() {
+        txtBuscarVeterinario.setText("");
+        txtNombreVeterinario.setText("");
+        txtDireccionVeterinario.setText("");
+        txtCelularVeterinario.setText("");
+        // Si tienes más campos, agrégales limpieza aquí
+    }
+
+    private void Mostrarpanelcrud(JPanel p) {
         p.setSize(700, 460);
         p.setLocation(0, 0);
         Menu.PanelPrincipal.removeAll();
         Menu.PanelPrincipal.add(p, BorderLayout.CENTER);
         Menu.PanelPrincipal.revalidate();
         Menu.PanelPrincipal.repaint();
-}
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JScrollPane ScrollVete;
     private javax.swing.JButton btnBuscar;
     private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnGuardar;
     private javax.swing.JButton btnModificar;
     private javax.swing.JButton btnRegresar;
     private javax.swing.JButton btnSalir;
-    private javax.swing.JComboBox<String> cmbVeterinarios;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel lblCedula;
     private javax.swing.JLabel lblCelular;
     private javax.swing.JLabel lblDireccion;
-    private javax.swing.JLabel lblMASCOTAS;
     private javax.swing.JLabel lblNombre;
+    private javax.swing.JLabel lblTituloVeterinario;
     private javax.swing.JLabel lblVeterinarios;
     private javax.swing.JPanel pnlBotones;
     private javax.swing.JPanel pnlCRUDS;
     private javax.swing.JPanel pnlCampos;
     public static javax.swing.JPanel pnlLogo;
     private javax.swing.JPanel pnlPrincipal;
+    private javax.swing.JTable tblVeterinarioBusqueda;
+    private javax.swing.JTextField txtBuscarVeterinario;
     private javax.swing.JTextField txtCedulaVeterinario;
     private javax.swing.JTextField txtCelularVeterinario;
     private javax.swing.JTextField txtDireccionVeterinario;

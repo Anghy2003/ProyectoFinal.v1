@@ -660,13 +660,13 @@ public class CRUDMascotas extends javax.swing.JPanel {
                                 .addGap(50, 50, 50)
                                 .addComponent(lblIdMascota)))
                         .addGap(24, 24, 24)
-                        .addGroup(pnlCamposLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(cmbIdMascota, 0, 256, Short.MAX_VALUE)
-                            .addComponent(txtCedulaDueno))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlCamposLayout.createSequentialGroup()
-                        .addComponent(panelBotonesOpcionales, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
+                        .addGroup(pnlCamposLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(pnlCamposLayout.createSequentialGroup()
+                                .addComponent(cmbIdMascota, javax.swing.GroupLayout.PREFERRED_SIZE, 256, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addComponent(txtCedulaDueno)))
+                    .addComponent(panelBotonesOpcionales, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(btnBuscar)
                 .addGap(19, 19, 19))
         );
@@ -710,14 +710,11 @@ public class CRUDMascotas extends javax.swing.JPanel {
             .addGroup(pnlCRUDSLayout.createSequentialGroup()
                 .addGroup(pnlCRUDSLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlCRUDSLayout.createSequentialGroup()
-                        .addGroup(pnlCRUDSLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(pnlCRUDSLayout.createSequentialGroup()
-                                .addGap(59, 59, 59)
-                                .addComponent(pnlBotones, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(pnlCRUDSLayout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(pnlCampos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                        .addGap(0, 0, Short.MAX_VALUE))
+                        .addGap(59, 59, 59)
+                        .addComponent(pnlBotones, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(pnlCRUDSLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(pnlCampos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addComponent(jScrollPane2))
                 .addContainerGap())
         );
@@ -960,7 +957,7 @@ public class CRUDMascotas extends javax.swing.JPanel {
     }//GEN-LAST:event_btnRegresarActionPerformed
 
     private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-conexion Base = new conexion();
+        conexion Base = new conexion();
         MascotaDb masDb = new MascotaDb(Base);
 
         //verifico que los campos no esten vacios
@@ -971,51 +968,37 @@ conexion Base = new conexion();
                 JOptionPane.showMessageDialog(null, "Dueño no registrado");
             } else {
                 //Logica de eliminacion
-                
-                
-                
-                
+
                 masDb.obtenerIdMascotayEliminar(txtCedulaDueno.getText().trim(), cmbIdMascota.getSelectedItem().toString());
 
-        //mostrar anteriormenu
-        //PARA BUSQUEDA
-        lblIdMascota.setVisible(true);
-        cmbIdMascota.setVisible(true);
-        btnBuscar.setVisible(true);
-        btnGuardar.setVisible(false);
-        lblNombre.setVisible(false);
-        txtNombre.setVisible(false);
-        lblEspecie.setVisible(false);
-        txtEspecie.setVisible(false);
-        lblRaza.setVisible(false);
-        txtRaza.setVisible(false);
-        lblCedDuenio.setVisible(true);
-        txtCedulaDueno.setVisible(true);
-        lblFechaNacimiento.setVisible(false);
-        jDateFecha.setVisible(false);
-        btnModificar.setVisible(false);
-        btnEliminar.setVisible(false);
-        btnRegresar.setVisible(false);
-        
+                //mostrar anteriormenu
+                //PARA BUSQUEDA
+                lblIdMascota.setVisible(true);
+                cmbIdMascota.setVisible(true);
+                btnBuscar.setVisible(true);
+                btnGuardar.setVisible(false);
+                lblNombre.setVisible(false);
+                txtNombre.setVisible(false);
+                lblEspecie.setVisible(false);
+                txtEspecie.setVisible(false);
+                lblRaza.setVisible(false);
+                txtRaza.setVisible(false);
+                lblCedDuenio.setVisible(true);
+                txtCedulaDueno.setVisible(true);
+                lblFechaNacimiento.setVisible(false);
+                jDateFecha.setVisible(false);
+                btnModificar.setVisible(false);
+                btnEliminar.setVisible(false);
+                btnRegresar.setVisible(false);
+
                 masDb.filtrarMascotasPorCedula(tblMascotas, txtCedulaDueno.getText().trim());
-        masDb.llenarComboBoxMascotasPorDueño(cmbIdMascota, txtCedulaDueno.getText().trim());
-                
-                
-                
-                
-                
-                
-                
+                masDb.llenarComboBoxMascotasPorDueño(cmbIdMascota, txtCedulaDueno.getText().trim());
+
             }
 
         }
 
 
-
-
-
-        
-        
     }//GEN-LAST:event_btnEliminarActionPerformed
 
     private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
