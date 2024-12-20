@@ -211,7 +211,7 @@ public class ControlVacu extends javax.swing.JPanel {
         lblmasco.setForeground(new java.awt.Color(79, 107, 155));
         lblmasco.setText("Mascota:");
 
-        cmbMascota.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cmbMascota.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Sin registros" }));
         cmbMascota.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 cmbMascotaMouseClicked(evt);
@@ -226,7 +226,7 @@ public class ControlVacu extends javax.swing.JPanel {
         lblvacu.setForeground(new java.awt.Color(79, 107, 155));
         lblvacu.setText("Vacuna:");
 
-        cmbVacunas.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cmbVacunas.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Sin registros" }));
         cmbVacunas.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 cmbVacunasMouseClicked(evt);
@@ -237,7 +237,7 @@ public class ControlVacu extends javax.swing.JPanel {
         lblid.setForeground(new java.awt.Color(79, 107, 155));
         lblid.setText("Id:");
 
-        cmbId.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cmbId.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Sin registros" }));
         cmbId.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 cmbIdMouseClicked(evt);
