@@ -563,6 +563,8 @@ public class CRUDDuenos extends javax.swing.JPanel {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        tblDuenos.setEnabled(false);
+        tblDuenos.setShowVerticalLines(false);
         jScrollPane2.setViewportView(tblDuenos);
 
         btnBuscar.setBackground(new java.awt.Color(183, 224, 210));
