@@ -17,6 +17,7 @@ public class Control_Vacunas {
     Date FECHA;
     String ID_VACUNA;
     String ID_MASCOTA;
+    
 
     public Control_Vacunas() {
     }
