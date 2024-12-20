@@ -581,17 +581,126 @@ public class DuenoDb extends DUEÑO {
     
     public static boolean verificarTelefono(String telefono) {
     // Verificamos que el teléfono no sea nulo y tenga al menos 2 caracteres
-    if (telefono != null && telefono.length() >= 2) {
-        // Obtenemos los primeros dos caracteres del teléfono
-        String prefijo = telefono.substring(0, 2);
-        // Comparamos con "07" y "09"
-        return prefijo.equals("07") || prefijo.equals("09");
+        if (telefono != null && telefono.length() >= 2) {
+            // Obtenemos los primeros dos caracteres del teléfono
+            String prefijo = telefono.substring(0, 2);
+            // Comparamos con "07" y "09"
+            return prefijo.equals("07") || prefijo.equals("09");
+        }
+        // Si el teléfono es nulo o tiene menos de 2 caracteres, retornamos falso
+        return false;
     }
-    // Si el teléfono es nulo o tiene menos de 2 caracteres, retornamos falso
-    return false;
-}
 
+    public void filtrarDuenoPorCedula(JTable tabla, String prefijoCedula) {
+        Connection connection = Base.conectarBD();
+        if (connection == null) {
+            System.out.println("No se pudo establecer la conexión a la base de datos.");
+            return; // Salir del método si no hay conexión
+        }
+
+        // Consulta SQL para obtener los dueños filtrando por el prefijo de la cédula
+        String query = "SELECT D.ID AS ID_DUENO, "
+                + "D.NOMBRE || ' ' || D.APELLIDO AS NOMBRE_DUENO, "
+                + "D.CEDULA AS CEDULA_DUENO "
+                + "FROM DUENO D "
+                + "WHERE D.CEDULA LIKE ? "
+                + // Filtrar por cédula
+                "ORDER BY D.NOMBRE, D.APELLIDO";
+
+        DefaultTableModel model = new DefaultTableModel();
+        model.addColumn("ID Dueño");
+        model.addColumn("Dueño");
+        model.addColumn("Cédula Dueño");
+
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(query);
+            preparedStatement.setString(1, prefijoCedula + "%"); // Establecer el prefijo con el comodín
+
+            ResultSet resultSet = preparedStatement.executeQuery();
+
+            int rowCount = 0;
+            while (resultSet.next()) {
+                rowCount++;
+                int idDueno = resultSet.getInt("ID_DUENO"); // Obtener el ID del dueño
+                String nombreDueno = resultSet.getString("NOMBRE_DUENO"); // Obtener el nombre del dueño
+                String cedulaDueno = resultSet.getString("CEDULA_DUENO"); // Obtener la cédula del dueño
+
+                model.addRow(new Object[]{idDueno, nombreDueno, cedulaDueno});
+            }
+
+            // Verificar si se encontraron filas
+            if (rowCount == 0) {
+                JOptionPane.showMessageDialog(null, "No se encontraron resultados para la cédula: " + prefijoCedula);
+                // Limpiar el modelo de la tabla si no hay resultados
+                model.setRowCount(0); // Asegurarse de que el modelo esté vacío
+            } else {
+                System.out.println("Número de filas recuperadas: " + rowCount);
+            }
+
+            // Asignar el modelo a la tabla
+            tabla.setModel(model);
+        } catch (SQLException e) {
+            System.out.println("Error al ejecutar la consulta.");
+            e.printStackTrace();
+        } finally {
+            try {
+                if (connection != null) {
+                    connection.close(); // Cerrar la conexión
+                    System.out.println("Conexión cerrada.");
+                }
+            } catch (SQLException e) {
+                System.out.println("Error al cerrar la conexión.");
+                e.printStackTrace();
+            }
+        }
+    }
     
     
+    public boolean verificarExistenciaCedulaEnDueno(String cedulaDueno) {
+    // Consulta SQL para verificar si la cédula existe en la tabla DUENO
+    String sql = "SELECT COUNT(*) FROM DUENO WHERE CEDULA = ?";
+
+    try (Connection connection = Base.conectarBD();
+         PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+
+        // Establecer el parámetro de la consulta
+        preparedStatement.setString(1, obtenerIdDeString(cedulaDueno));
+
+        try (ResultSet resultSet = preparedStatement.executeQuery()) {
+            if (resultSet.next()) {
+                int count = resultSet.getInt(1);
+                return count > 0; // Retornar true si hay al menos un registro
+            }
+        }
+    } catch (SQLException e) {
+        JOptionPane.showMessageDialog(null, "Error al verificar la cédula del dueño: " + e.getMessage());
+        e.printStackTrace();
+    }
+    return false; // Retornar false en caso de error o si no se encuentra
+}
+    
+    
+    public boolean verificarExistenciaCedulaEnMascota(String cedulaDueno) {
+    // Consulta SQL para verificar si la cédula del dueño existe en la tabla MASCOTA
+    String sql = "SELECT COUNT(*) FROM MASCOTA WHERE CEDULA_DUENO = ?";
+
+    try (Connection connection = Base.conectarBD();
+         PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+
+        // Establecer el parámetro de la consulta
+        preparedStatement.setString(1, cedulaDueno);
+
+        try (ResultSet resultSet = preparedStatement.executeQuery()) {
+            if (resultSet.next()) {
+                int count = resultSet.getInt(1);
+                return count > 0; // Retornar true si hay al menos un registro
+            }
+        }
+    } catch (SQLException e) {
+        JOptionPane.showMessageDialog(null, "Error al verificar la cédula en la tabla MASCOTA: " + e.getMessage());
+        e.printStackTrace();
+    }
+    return false; // Retornar false en caso de error o si no se encuentra
+}
 
 }
