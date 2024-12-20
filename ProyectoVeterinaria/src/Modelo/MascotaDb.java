@@ -212,6 +212,7 @@ public class MascotaDb extends Mascotas {
                 // Llenar el comboBox con los resultados
                 while (resultSetMascotas.next()) {
                     hayMascotas = true; // Si entra aquí, hay mascotas
+                   
                     String nombreMascota = resultSetMascotas.getString("NOMBRE_MASCOTA");
                     //System.out.println(nombreMascota);
                     comboBox.addItem(nombreMascota);
@@ -227,6 +228,44 @@ public class MascotaDb extends Mascotas {
             e.printStackTrace();
         }
     }
+    
+   public void llenarComboBoxMascotasPorDueño2(JComboBox<String> comboBox, String CEDULA) {
+    // Consulta SQL para obtener las mascotas usando la cédula del dueño
+    String sqlMascotas = "SELECT ID, INITCAP(NOMBRE) AS NOMBRE_MASCOTA FROM MASCOTA WHERE CEDULA_DUENO = ?";
+
+    try (Connection connection = Base.conectarBD();
+         PreparedStatement preparedStatementMascotas = connection.prepareStatement(sqlMascotas)) {
+
+        // Establecer el parámetro de la consulta para las mascotas
+        preparedStatementMascotas.setString(1, CEDULA);
+
+        try (ResultSet resultSetMascotas = preparedStatementMascotas.executeQuery()) {
+            // Limpiar el comboBox antes de llenarlo
+            comboBox.removeAllItems();
+
+            boolean hayMascotas = false; // Variable para verificar si hay mascotas
+
+            // Llenar el comboBox con los resultados
+            while (resultSetMascotas.next()) {
+                hayMascotas = true; // Si entra aquí, hay mascotas
+                
+                int idMascota = resultSetMascotas.getInt("ID");
+                String nombreMascota = resultSetMascotas.getString("NOMBRE_MASCOTA");
+                // Concatenar ID y nombre en un solo string
+                String itemComboBox = idMascota + " - " + nombreMascota;
+                comboBox.addItem(itemComboBox);
+            }
+
+            // Si no hay mascotas, agregar el mensaje "No hay mascotas"
+            if (!hayMascotas) {
+                comboBox.addItem("No hay mascotas");
+            }
+        }
+    } catch (SQLException e) {
+        JOptionPane.showMessageDialog(null, "Error al llenar el comboBox: " + e.getMessage());
+        e.printStackTrace();
+    }
+}
     
 //    public void obtenerIdMascotaPorCedulaYNombre(String cedulaDueno, String nombreMascota) {
 //        // Consulta SQL para obtener el ID de la mascota usando la cédula del dueño y el nombre de la mascota

@@ -155,7 +155,7 @@ public class home extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btningresarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btningresarMouseClicked
-       if (txtusuario.getText().equals("admin") && new String(txtcontra.getPassword()).equals("12345")) {
+       if (txtusuario.getText().equals("1") && new String(txtcontra.getPassword()).equals("1")) {
         JOptionPane.showMessageDialog(this, "Ingreso exitoso!");
         this.dispose();
         Menu menusito = new Menu();
