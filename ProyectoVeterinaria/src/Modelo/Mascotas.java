@@ -17,6 +17,7 @@ public class Mascotas {
 
     public Mascotas() {
     }
+    
 
     public Mascotas(String ID, String NOMBRE, String ESPECIE, String RAZA, String CEDULA_DUEÑO, Date FECHANACIMIENTO) {
         this.ID = ID;

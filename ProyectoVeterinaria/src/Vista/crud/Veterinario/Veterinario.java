@@ -11,7 +11,7 @@ import Vista.menu.Menu;
 import java.awt.BorderLayout;
 import java.awt.event.KeyEvent;
 import javax.swing.JPanel;
-import javax.swing.JScrollBar;
+
 
 /**
  *
@@ -39,9 +39,7 @@ public class Veterinario extends javax.swing.JPanel {
 
 // Manejar las respuestas
         if (opcion == JOptionPane.YES_OPTION) {
-            // Configuración para búsqueda
-            JScrollBar verticalScrollBar = ScrollVete.getVerticalScrollBar();
-            verticalScrollBar.setValue(100);
+            // Configuración para búsqueda           
             lblVeterinarios.setVisible(true);
             txtBuscarVeterinario.setVisible(true);
             btnBuscar.setVisible(true);
@@ -57,7 +55,7 @@ public class Veterinario extends javax.swing.JPanel {
             btnModificar.setVisible(false);
             btnEliminar.setVisible(false);
             btnRegresar.setVisible(false);
-
+            tblVeterinarioBusqueda.setVisible(true);
             // Crear conexión y eliminar el veterinario
             conexion Base = new conexion();
             VeterinarioDb vetDb = new VeterinarioDb(Base);
@@ -81,13 +79,14 @@ public class Veterinario extends javax.swing.JPanel {
             btnModificar.setVisible(false);
             btnEliminar.setVisible(false);
             btnRegresar.setVisible(false);
+            tblVeterinarioBusqueda.setVisible(false);
             
             
             // Crear conexión y eliminar el veterinario
             conexion Base = new conexion();
             VeterinarioDb vetDb = new VeterinarioDb(Base);
             
-            tblVeterinarioBusqueda.setVisible(false);
+            
 
         } else {
             // Mostrar mensaje en caso de no seleccionar una opción
@@ -343,6 +342,11 @@ public class Veterinario extends javax.swing.JPanel {
                 btnBuscarActionPerformed(evt);
             }
         });
+        btnBuscar.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                btnBuscarKeyReleased(evt);
+            }
+        });
         pnlCampos.add(btnBuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 150, -1, -1));
 
         tblVeterinarioBusqueda.setModel(new javax.swing.table.DefaultTableModel(
@@ -549,6 +553,7 @@ public class Veterinario extends javax.swing.JPanel {
     btnModificar.setVisible(false);
     btnEliminar.setVisible(false);
     btnRegresar.setVisible(false);
+    tblVeterinarioBusqueda.setVisible(false);
     
     }//GEN-LAST:event_btnModificarActionPerformed
 
@@ -578,6 +583,7 @@ public class Veterinario extends javax.swing.JPanel {
                 limpiarCamposVeterinario();
 
                 // Actualizar la interfaz
+                
                 lblVeterinarios.setVisible(true);
                 txtBuscarVeterinario.setVisible(true);
                 btnBuscar.setVisible(true);
@@ -593,6 +599,7 @@ public class Veterinario extends javax.swing.JPanel {
                 btnModificar.setVisible(false);
                 btnEliminar.setVisible(false);
                 btnRegresar.setVisible(false);
+                tblVeterinarioBusqueda.setVisible(false);
             } else {
                 JOptionPane.showMessageDialog(null, "No se pudo eliminar el veterinario. Verifica el registro.");
             }
@@ -622,6 +629,7 @@ public class Veterinario extends javax.swing.JPanel {
         btnModificar.setVisible(false);
         btnEliminar.setVisible(false);
         btnRegresar.setVisible(false);
+        tblVeterinarioBusqueda.setVisible(true);
 
     }//GEN-LAST:event_btnRegresarActionPerformed
 
@@ -706,6 +714,10 @@ public class Veterinario extends javax.swing.JPanel {
         evt.consume();
     }
     }//GEN-LAST:event_txtCedulaVeterinarioKeyTyped
+
+    private void btnBuscarKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_btnBuscarKeyReleased
+        // TODO add your handling code here:
+    }//GEN-LAST:event_btnBuscarKeyReleased
     private void limpiarCamposVeterinario() {
         txtBuscarVeterinario.setText("");
         txtNombreVeterinario.setText("");

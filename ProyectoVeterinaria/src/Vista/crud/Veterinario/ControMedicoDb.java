@@ -7,13 +7,17 @@ package Vista.crud.Veterinario;
 
 import Modelo.*;
 import com.toedter.calendar.JDateChooser;
+import java.awt.List;
 import javax.swing.JOptionPane;
 import java.sql.*;
 import javax.swing.JComboBox;
 import java.util.Date;
+import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
+import javax.swing.ListSelectionModel;
 import javax.swing.table.DefaultTableModel;
+import Vista.crud.Veterinario.ControlMedico.*;
 
 /**
  *
@@ -176,6 +180,53 @@ public class ControMedicoDb extends Modelo.Control_Medico {
         }
         return false;
     }
+    
+    public void llenarComboBoxMascotasPorDueño(JComboBox<String> comboBox, String CEDULA) {
+        // Consulta SQL para obtener las mascotas usando la cédula del dueño
+        String sqlMascotas = "SELECT INITCAP(NOMBRE) AS NOMBRE_MASCOTA FROM  MASCOTA WHERE CEDULA_DUENO = ?";
+
+        try (Connection connection = Base.conectarBD();
+                PreparedStatement preparedStatementMascotas = connection.prepareStatement(sqlMascotas)) {
+
+            // Establecer el parámetro de la consulta para las mascotas
+            preparedStatementMascotas.setString(1, obtenerIdDeString(CEDULA));
+
+            try (ResultSet resultSetMascotas = preparedStatementMascotas.executeQuery()) {
+                // Limpiar el comboBox antes de llenarlo
+                comboBox.removeAllItems();
+
+                boolean hayMascotas = false; // Variable para verificar si hay mascotas
+
+                // Llenar el comboBox con los resultados
+                while (resultSetMascotas.next()) {
+                    hayMascotas = true; // Si entra aquí, hay mascotas
+                    String nombreMascota = resultSetMascotas.getString("NOMBRE_MASCOTA");
+                    //System.out.println(nombreMascota);
+                    comboBox.addItem(nombreMascota);
+                }
+
+                // Si no hay mascotas, agregar el mensaje "No hay mascotas"
+                if (!hayMascotas) {
+                    comboBox.addItem("No hay mascotas");
+                }
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error al llenar el comboBox: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+    public String obtenerIdDeString(String texto) {
+        // Verificar si el texto contiene un espacio
+        int espacioIndex = texto.indexOf(" ");
+
+        // Si se encuentra un espacio, devolver todo lo que está antes de ese espacio
+        if (espacioIndex != -1) {
+            return texto.substring(0, espacioIndex);
+        } else {
+            // Si no se encuentra un espacio, devolver el texto completo
+            return texto;
+        }
+    }
 
     public void cargarDatosEnTabla(JTable tabla) {
         DefaultTableModel modelo = new DefaultTableModel();
@@ -217,116 +268,97 @@ public class ControMedicoDb extends Modelo.Control_Medico {
         }
     }
 
-   public void cargarControlMedico(String idControlMedico, JDateChooser jDateChooser, JTextField txtDiagnostico, JComboBox<String> cmbVeterinario, JComboBox<String> cmbMascota) {
-    String sql = "SELECT * FROM CONTROLMEDICO WHERE ID = ?";
-
-    try (Connection connection = Base.conectar();
-         PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
-
-        if (connection == null) {
-            JOptionPane.showMessageDialog(null, "Error: No se pudo establecer conexión con la base de datos.");
-            return;
-        }
-
-        preparedStatement.setString(1, idControlMedico);  // Usar el ID como String
-        ResultSet rs = preparedStatement.executeQuery();
-
-        if (rs.next()) {
-            // Asignar los valores obtenidos a los campos correspondientes
-            txtDiagnostico.setText(rs.getString("DIAGNOSTICO"));
-            jDateChooser.setDate(rs.getDate("FECHA"));
-
-            // Cargar y establecer las opciones en los ComboBox
-            if (!cargarOpcionesComboBox(cmbVeterinario, "VETERINARIO", rs.getString("ID_VETERINARIO"))) {
-                JOptionPane.showMessageDialog(null, "Advertencia: No se pudo establecer el veterinario seleccionado.");
-            }
-
-            if (!cargarOpcionesComboBox(cmbMascota, "MASCOTA", rs.getString("ID_MASCOTA"))) {
-                JOptionPane.showMessageDialog(null, "Advertencia: No se pudo establecer la mascota seleccionada.");
-            }
-        } else {
-            JOptionPane.showMessageDialog(null, "No se encontraron datos para el control médico con ID: " + idControlMedico);
-        }
-    } catch (SQLException e) {
-        JOptionPane.showMessageDialog(null, "Error al cargar los datos del control médico: " + e.getMessage());
-        e.printStackTrace();
-    } catch (Exception e) {
-        JOptionPane.showMessageDialog(null, "Error inesperado: " + e.getMessage());
-        e.printStackTrace();
-    }
-}
-
-private boolean cargarOpcionesComboBox(JComboBox<String> comboBox, String tabla, String idSeleccionado) {
-    String sql = "SELECT ID, NOMBRE FROM " + tabla;
-    boolean cargado = false;
-
-    try (Connection connection = Base.conectar();
-         PreparedStatement preparedStatement = connection.prepareStatement(sql);
-         ResultSet rs = preparedStatement.executeQuery()) {
-
-        if (connection == null) {
-            JOptionPane.showMessageDialog(null, "Error: No se pudo establecer conexión con la base de datos.");
-            return false;
-        }
-
-        comboBox.removeAllItems(); // Limpiar el ComboBox
-
-        while (rs.next()) {
-            String id = rs.getString("ID");
-            String nombre = rs.getString("NOMBRE");
-            comboBox.addItem(id + " - " + nombre); // Agregar opciones al ComboBox
-
-            // Establecer la selección si coincide el ID
-            if (id.equals(idSeleccionado)) {
-                comboBox.setSelectedItem(id + " - " + nombre);
-            }
-            cargado = true;
-        }
-    } catch (SQLException e) {
-        JOptionPane.showMessageDialog(null, "Error al cargar las opciones de " + tabla + ": " + e.getMessage());
-        e.printStackTrace();
-    }
-
-    return cargado;
-}
-
-    private void setComboBoxSelection(JComboBox<String> comboBox, String id) {
-        for (int i = 0; i < comboBox.getItemCount(); i++) {
-            String item = comboBox.getItemAt(i);
-            if (item.split(" ")[0].equals(id)) {  // Compara solo el ID
-                comboBox.setSelectedIndex(i);
-                break;
-            }
-        }
-    }
+  
+  public void cargarDatosControlMedico(JDateChooser fechaChooser, JTextField diagnosticoField, JComboBox<String> comboVeterinario, String cedulaDueno, JComboBox<String> comboMascota) throws SQLException {
+    // Consulta SQL para cargar los datos del control médico
+    String sql = "SELECT " +
+                 "    DUENO.CEDULA AS CEDULA_DUENO, " +
+                 "    MASCOTA.ID AS ID_MASCOTA, " +
+                 "    MASCOTA.NOMBRE AS NOMBRE_MASCOTA, " +
+                 "    CONTROLMEDICO.FECHA, " +
+                 "    CONTROLMEDICO.DIAGNOSTICO, " +
+                 "    VETERINARIO.CEDULA AS CEDULA_VETERINARIO, " +
+                 "    VETERINARIO.NOMBRE AS NOMBRE_VETERINARIO " +
+                 "FROM " +
+                 "    CONTROLMEDICO " +
+                 "INNER JOIN MASCOTA ON CONTROLMEDICO.ID_MASCOTA = MASCOTA.ID " +
+                 "INNER JOIN DUENO ON MASCOTA.CEDULA_DUENO = DUENO.CEDULA " +
+                 "INNER JOIN VETERINARIO ON CONTROLMEDICO.ID_VETERINARIO = VETERINARIO.CEDULA " +
+                 "WHERE DUENO.CEDULA = ?"; // Filtrar por cédula del dueño
     
-    public void modificarControlMedico(String idControlMedico, String diagnostico, Date fecha, String idVeterinario, String idMascota) {
-    String sql = "UPDATE CONTROLMEDICO SET DIAGNOSTICO = ?, FECHA = ?, ID_VETERINARIO = ?, ID_MASCOTA = ? WHERE ID = ?";
+    try (Connection connection = Base.conectarBD(); PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+        preparedStatement.setString(1, cedulaDueno);
+        
+        try (ResultSet resultSet = preparedStatement.executeQuery()) {
+            if (resultSet.next()) {
+                // Cargar la fecha en el JDateChooser
+                java.sql.Date fecha = resultSet.getDate("FECHA");
+                fechaChooser.setDate(fecha);
 
-    try (Connection connection = Base.conectar();
-         PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+                // Cargar el diagnóstico en el JTextField
+                String diagnostico = resultSet.getString("DIAGNOSTICO");
+                diagnosticoField.setText(diagnostico);
 
-        if (connection == null) {
-            JOptionPane.showMessageDialog(null, "Error: No se pudo establecer conexión con la base de datos.");
-            return;
-        }
+                // Cargar el veterinario en el JComboBox de veterinarios
+                String nombreVeterinario = resultSet.getString("NOMBRE_VETERINARIO");
+                String cedulaVeterinario = resultSet.getString("CEDULA_VETERINARIO");
+                String veterinarioItem = cedulaVeterinario + " " + nombreVeterinario;
 
-        preparedStatement.setString(1, diagnostico);
-        preparedStatement.setDate(2, new java.sql.Date(fecha.getTime())); // Convertir a java.sql.Date
-        preparedStatement.setString(3, idVeterinario);
-        preparedStatement.setString(4, idMascota);
-        preparedStatement.setString(5, idControlMedico);  // Usar el ID como String
+                // Verificar si el veterinario existe en el comboBox
+                boolean encontrado = false;
+                for (int i = 0; i < comboVeterinario.getItemCount(); i++) {
+                    if (comboVeterinario.getItemAt(i).equals(veterinarioItem)) {
+                        comboVeterinario.setSelectedItem(veterinarioItem);
+                        encontrado = true;
+                        break;
+                    }
+                }
 
-        int rowsAffected = preparedStatement.executeUpdate();
+                // Si no se encuentra el veterinario, mostrar un mensaje
+                if (!encontrado) {
+                    JOptionPane.showMessageDialog(null, "Veterinario no encontrado en la lista.");
+                }
 
-        if (rowsAffected > 0) {
-            JOptionPane.showMessageDialog(null, "Control médico modificado con éxito.");
-        } else {
-            JOptionPane.showMessageDialog(null, "No se encontró el control médico con el ID especificado.");
+                // Cargar la mascota en el JComboBox de mascotas
+                String nombreMascota = resultSet.getString("NOMBRE_MASCOTA");
+                String idMascota = resultSet.getString("ID_MASCOTA");
+                comboMascota.setSelectedItem(idMascota + " - " + nombreMascota);
+            } else {
+                JOptionPane.showMessageDialog(null, "No se encontraron datos para la cédula del dueño.");
+            }
         }
     } catch (SQLException e) {
-        JOptionPane.showMessageDialog(null, "Error al modificar los datos del control médico: " + e.getMessage());
-        e.printStackTrace();
+        throw new SQLException("Error al cargar los datos del control médico: " + e.getMessage());
+    }
+}
+    
+   // Codigo Modificar
+public void modificarControlMedico(int ID_CONTROLMEDICO, Date FECHA, String DIAGNOSTICO, String ID_VETERINARIO, String ID_MASCOTA) throws SQLException {
+
+    String SQL = "UPDATE CONTROLMEDICO SET FECHA = ?, DIAGNOSTICO = ?, ID_VETERINARIO = ?, ID_MASCOTA = ? WHERE ID_CONTROLMEDICO = ?";
+    try (Connection connection = Base.conectarBD(); PreparedStatement preparedStatement = connection.prepareStatement(SQL)) {
+
+        // Convierte la fecha a SQL Date
+        java.sql.Date SQL_FECHA = new java.sql.Date(FECHA.getTime());
+
+        // Setear valores en la consulta
+        preparedStatement.setDate(1, SQL_FECHA);
+        preparedStatement.setString(2, DIAGNOSTICO);
+        preparedStatement.setString(3, ID_VETERINARIO);
+        preparedStatement.setString(4, ID_MASCOTA);
+        preparedStatement.setInt(5, ID_CONTROLMEDICO);  // Setear el ID de Control Médico a modificar
+
+        // Ejecutar la consulta
+        int ROWS_AFFECTED = preparedStatement.executeUpdate();
+        if (ROWS_AFFECTED > 0) {
+            JOptionPane.showMessageDialog(null, "Control Médico modificado exitosamente");
+        } else {
+            JOptionPane.showMessageDialog(null, "Control Médico no modificado");
+        }
+    } catch (SQLException E) {
+        JOptionPane.showMessageDialog(null, "ERROR AL MODIFICAR EL CONTROL MÉDICO: " + E.getMessage());
+    } catch (Exception E) {
+        JOptionPane.showMessageDialog(null, "ERROR INESPERADO: " + E.getMessage());
     }
 }
     
@@ -353,6 +385,126 @@ private boolean cargarOpcionesComboBox(JComboBox<String> comboBox, String tabla,
     } catch (SQLException e) {
         JOptionPane.showMessageDialog(null, "Error al eliminar los datos del control médico: " + e.getMessage());
         e.printStackTrace();
+    }
+}
+    
+   public void cargarDatosEnTablaCRUD(JTable tabla) {
+    // Crear el modelo de la tabla
+    DefaultTableModel modelo = new DefaultTableModel();
+    modelo.addColumn("Cédula Dueño");
+    modelo.addColumn("ID Mascota");
+    modelo.addColumn("Nombre Mascota");
+    modelo.addColumn("Fecha");
+    modelo.addColumn("Veterinario");
+
+    // Consulta SQL actualizada
+    String query = 
+        "SELECT " +
+        "    DUENO.CEDULA AS CEDULA_DUENO, " +
+        "    MASCOTA.ID AS ID_MASCOTA, " +
+        "    MASCOTA.NOMBRE AS NOMBRE_MASCOTA, " +
+        "    CONTROLMEDICO.FECHA, " +
+        "    VETERINARIO.NOMBRE AS NOMBRE_VETERINARIO " +
+        "FROM " +
+        "    CONTROLMEDICO " +
+        "INNER JOIN MASCOTA ON CONTROLMEDICO.ID_MASCOTA = MASCOTA.ID " +
+        "INNER JOIN DUENO ON MASCOTA.CEDULA_DUENO = DUENO.CEDULA " +
+        "INNER JOIN VETERINARIO ON CONTROLMEDICO.ID_VETERINARIO = VETERINARIO.CEDULA";
+
+    try (Connection connection = Base.conectarBD();
+         Statement statement = connection.createStatement();
+         ResultSet resultSet = statement.executeQuery(query)) {
+
+        // Procesar los resultados de la consulta
+        while (resultSet.next()) {
+            Object[] fila = new Object[5];
+            fila[0] = resultSet.getString("CEDULA_DUENO"); // Cédula del dueño
+            fila[1] = resultSet.getInt("ID_MASCOTA");      // ID de la mascota
+            fila[2] = resultSet.getString("NOMBRE_MASCOTA"); // Nombre de la mascota
+            fila[3] = resultSet.getDate("FECHA");          // Fecha del control médico
+            fila[4] = resultSet.getString("NOMBRE_VETERINARIO"); // Nombre del veterinario
+            modelo.addRow(fila); // Agregar la fila al modelo
+        }
+
+        // Asignar el modelo a la tabla
+        tabla.setModel(modelo);
+    } catch (SQLException e) {
+        System.out.println("Error al cargar los datos en la tabla.");
+        e.printStackTrace();
+    }
+}
+
+  public void filtrarControlMedicoPorCedula(JTable tabla, String prefijoCedula) {
+    Connection connection = Base.conectarBD();
+    if (connection == null) {
+        System.out.println("No se pudo establecer la conexión a la base de datos.");
+        return; // Salir del método si no hay conexión
+    }
+
+    // Consulta SQL para obtener los controles médicos filtrando por el prefijo de la cédula del dueño
+    String query = "SELECT " +
+                   "DUENO.CEDULA AS CEDULA_DUENO, " +
+                   "MASCOTA.ID AS ID_MASCOTA, " +
+                   "MASCOTA.NOMBRE AS NOMBRE_MASCOTA, " +
+                   "CONTROLMEDICO.FECHA, " +
+                   "VETERINARIO.NOMBRE AS NOMBRE_VETERINARIO " +
+                   "FROM " +
+                   "CONTROLMEDICO " +
+                   "INNER JOIN MASCOTA ON CONTROLMEDICO.ID_MASCOTA = MASCOTA.ID " +
+                   "INNER JOIN DUENO ON MASCOTA.CEDULA_DUENO = DUENO.CEDULA " +
+                   "INNER JOIN VETERINARIO ON CONTROLMEDICO.ID_VETERINARIO = VETERINARIO.CEDULA " +
+                   "WHERE DUENO.CEDULA LIKE ? " + // Filtrar por cédula del dueño
+                   "ORDER BY CONTROLMEDICO.FECHA DESC";
+
+    DefaultTableModel model = new DefaultTableModel();
+    model.addColumn("Cédula Dueño");
+    model.addColumn("ID Mascota");
+    model.addColumn("Nombre Mascota");
+    model.addColumn("Fecha Control Médico");
+    model.addColumn("Veterinario");
+
+    try {
+        PreparedStatement preparedStatement = connection.prepareStatement(query);
+        preparedStatement.setString(1, prefijoCedula + "%"); // Establecer el prefijo con el comodín
+
+        ResultSet resultSet = preparedStatement.executeQuery();
+
+        int rowCount = 0;
+        while (resultSet.next()) {
+            rowCount++;
+            String cedulaDueño = resultSet.getString("CEDULA_DUENO"); // Obtener la cédula del dueño
+            int idMascota = resultSet.getInt("ID_MASCOTA"); // Obtener el ID de la mascota
+            String nombreMascota = resultSet.getString("NOMBRE_MASCOTA"); // Obtener el nombre de la mascota
+            Date fechaControl = resultSet.getDate("FECHA"); // Obtener la fecha del control médico
+            String nombreVeterinario = resultSet.getString("NOMBRE_VETERINARIO"); // Obtener el nombre del veterinario
+
+            model.addRow(new Object[]{cedulaDueño, idMascota, nombreMascota, fechaControl, nombreVeterinario});
+        }
+
+        // Verificar si se encontraron filas
+        if (rowCount == 0) {
+            JOptionPane.showMessageDialog(null, "No se encontraron resultados para la cédula del dueño: " + prefijoCedula);
+            // Limpiar el modelo de la tabla si no hay resultados
+            model.setRowCount(0); // Asegurarse de que el modelo esté vacío
+        } else {
+            System.out.println("Número de filas recuperadas: " + rowCount);
+        }
+
+        // Asignar el modelo a la tabla
+        tabla.setModel(model);
+    } catch (SQLException e) {
+        System.out.println("Error al ejecutar la consulta.");
+        e.printStackTrace();
+    } finally {
+        try {
+            if (connection != null) {
+                connection.close(); // Cerrar la conexión
+                System.out.println("Conexión cerrada.");
+            }
+        } catch (SQLException e) {
+            System.out.println("Error al cerrar la conexión.");
+            e.printStackTrace();
+        }
     }
 }
 }

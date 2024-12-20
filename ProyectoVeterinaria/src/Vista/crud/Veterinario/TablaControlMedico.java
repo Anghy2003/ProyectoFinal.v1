@@ -5,8 +5,7 @@
  */
 package Vista.crud.Veterinario;
 
-import DUENO.*;
-import DUENO.*;
+
 import Modelo.conexion;
 import javax.swing.JPanel;
 import Vista.menu.Menu;
