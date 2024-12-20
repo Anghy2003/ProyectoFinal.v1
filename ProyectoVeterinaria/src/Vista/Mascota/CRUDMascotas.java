@@ -5,6 +5,7 @@
  */
 package Vista.Mascota;
 
+import DUENO.DuenoDb;
 import javax.accessibility.AccessibleContext;
 import javax.swing.JButton;
 import javax.swing.JLabel;
@@ -17,8 +18,10 @@ import Modelo.*;
 import Vista.menu.Menu;
 import com.toedter.calendar.JDateChooser;
 import java.awt.BorderLayout;
+import java.awt.event.KeyEvent;
 import javax.swing.JComboBox;
 import java.util.Date;
+import javax.swing.JScrollBar;
 
 /**
  *
@@ -45,7 +48,10 @@ public class CRUDMascotas extends javax.swing.JPanel {
 
         // Manejar las respuestas
         if (opcion == JOptionPane.YES_OPTION) {
-
+            pnlBotones.setVisible(false);
+            panelBotonesOpcionales.setVisible(false);
+            JScrollBar verticalScrollBar = scrollMascota.getVerticalScrollBar();
+            verticalScrollBar.setValue(100);
             //PARA BUSQUEDA
             lblIdMascota.setVisible(true);
             cmbIdMascota.setVisible(true);
@@ -58,7 +64,7 @@ public class CRUDMascotas extends javax.swing.JPanel {
             lblRaza.setVisible(false);
             txtRaza.setVisible(false);
             lblCedDuenio.setVisible(true);
-            cmbCedula.setVisible(true);
+            txtCedulaDueno.setVisible(true);
             lblFechaNacimiento.setVisible(false);
             jDateFecha.setVisible(false);
             bloquearDate(jDateFecha);
@@ -69,10 +75,12 @@ public class CRUDMascotas extends javax.swing.JPanel {
             conexion Base = new conexion();
 
             MascotaDb masDb = new MascotaDb(Base);
-            masDb.llenarComboBoxDueños(cmbCedula);
-            masDb.llenarComboBoxMascotasPorDueño(cmbIdMascota, cmbCedula.getSelectedItem().toString());
+            masDb.llenarComboBoxMascotasPorDueño(cmbIdMascota,txtCedulaDueno.getText().trim());
+            masDb.mostrarMascotasYDueno(tblMascotas);
 
         } else if (opcion == JOptionPane.NO_OPTION) {
+            pnlBotones.setVisible(true);
+            panelBotonesOpcionales.setVisible(true);
             lblIdMascota.setVisible(false);
             cmbIdMascota.setVisible(false);
             btnGuardar.setVisible(true);
@@ -83,7 +91,7 @@ public class CRUDMascotas extends javax.swing.JPanel {
             lblRaza.setVisible(true);
             txtRaza.setVisible(true);
             lblCedDuenio.setVisible(true);
-            cmbCedula.setVisible(true);
+            txtCedulaDueno.setVisible(true);
             lblFechaNacimiento.setVisible(true);
             jDateFecha.setVisible(true);
             bloquearDate(jDateFecha);
@@ -96,7 +104,8 @@ public class CRUDMascotas extends javax.swing.JPanel {
             //agregar datos de dueños  a combobox
             conexion Base = new conexion();
             MascotaDb masDb = new MascotaDb(Base);
-            masDb.llenarComboBoxDueños(cmbCedula);
+            
+            masDb.mostrarMascotasYDueno(tblMascotas);
 
         } else {
             JOptionPane.showMessageDialog(null, "No seleccionaste ninguna opción.");
@@ -334,28 +343,33 @@ public class CRUDMascotas extends javax.swing.JPanel {
         pnlPrincipal = new javax.swing.JPanel();
         btnSalir = new javax.swing.JButton();
         lblMASCOTAS = new javax.swing.JLabel();
+        lblIdOculto = new javax.swing.JLabel();
+        scrollMascota = new javax.swing.JScrollPane();
         jPanel1 = new javax.swing.JPanel();
+        pnlColorado = new javax.swing.JPanel();
         pnlCRUDS = new javax.swing.JPanel();
         pnlBotones = new javax.swing.JPanel();
         btnGuardar = new javax.swing.JButton();
         btnModificar = new javax.swing.JButton();
         btnEliminar = new javax.swing.JButton();
-        btnBuscar = new javax.swing.JButton();
         btnRegresar = new javax.swing.JButton();
         pnlCampos = new javax.swing.JPanel();
-        txtRaza = new javax.swing.JTextField();
-        lblRaza = new javax.swing.JLabel();
-        lblEspecie = new javax.swing.JLabel();
-        lblNombre = new javax.swing.JLabel();
         lblIdMascota = new javax.swing.JLabel();
         lblCedDuenio = new javax.swing.JLabel();
+        cmbIdMascota = new javax.swing.JComboBox<>();
+        btnBuscar = new javax.swing.JButton();
+        txtCedulaDueno = new javax.swing.JTextField();
+        panelBotonesOpcionales = new javax.swing.JPanel();
+        lblRaza = new javax.swing.JLabel();
         lblFechaNacimiento = new javax.swing.JLabel();
+        txtRaza = new javax.swing.JTextField();
+        lblEspecie = new javax.swing.JLabel();
+        jDateFecha = new com.toedter.calendar.JDateChooser();
+        lblNombre = new javax.swing.JLabel();
         txtEspecie = new javax.swing.JTextField();
         txtNombre = new javax.swing.JTextField();
-        jDateFecha = new com.toedter.calendar.JDateChooser();
-        cmbCedula = new javax.swing.JComboBox<>();
-        cmbIdMascota = new javax.swing.JComboBox<>();
-        lblIdOculto = new javax.swing.JLabel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        tblMascotas = new javax.swing.JTable();
 
         pnlLogo.setBackground(new java.awt.Color(255, 255, 255));
         pnlLogo.setForeground(new java.awt.Color(204, 204, 204));
@@ -403,12 +417,29 @@ public class CRUDMascotas extends javax.swing.JPanel {
         lblMASCOTAS.setForeground(new java.awt.Color(78, 108, 152));
         lblMASCOTAS.setText("MASCOTAS");
 
+        lblIdOculto.setFont(new java.awt.Font("Dialog", 1, 2)); // NOI18N
+        lblIdOculto.setForeground(new java.awt.Color(183, 224, 210));
+        lblIdOculto.setText("jLabel1");
+
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
-        pnlCRUDS.setBackground(new java.awt.Color(183, 224, 210));
-        pnlCRUDS.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(78, 108, 152), 1, true));
+        pnlColorado.setBackground(new java.awt.Color(255, 255, 255));
 
-        pnlBotones.setBackground(new java.awt.Color(183, 224, 210));
+        javax.swing.GroupLayout pnlColoradoLayout = new javax.swing.GroupLayout(pnlColorado);
+        pnlColorado.setLayout(pnlColoradoLayout);
+        pnlColoradoLayout.setHorizontalGroup(
+            pnlColoradoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 573, Short.MAX_VALUE)
+        );
+        pnlColoradoLayout.setVerticalGroup(
+            pnlColoradoLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 384, Short.MAX_VALUE)
+        );
+
+        pnlCRUDS.setBackground(new java.awt.Color(255, 255, 255));
+        pnlCRUDS.setMaximumSize(new java.awt.Dimension(563, 633));
+
+        pnlBotones.setBackground(new java.awt.Color(255, 255, 255));
         pnlBotones.setForeground(new java.awt.Color(183, 224, 210));
 
         btnGuardar.setBackground(new java.awt.Color(183, 224, 210));
@@ -442,17 +473,6 @@ public class CRUDMascotas extends javax.swing.JPanel {
             }
         });
 
-        btnBuscar.setBackground(new java.awt.Color(183, 224, 210));
-        btnBuscar.setForeground(new java.awt.Color(78, 108, 152));
-        btnBuscar.setText("Buscar");
-        btnBuscar.setToolTipText("ID Necesario");
-        btnBuscar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnBuscarActionPerformed(evt);
-            }
-        });
-
         btnRegresar.setBackground(new java.awt.Color(183, 224, 210));
         btnRegresar.setForeground(new java.awt.Color(78, 108, 152));
         btnRegresar.setText("Regresar");
@@ -471,9 +491,7 @@ public class CRUDMascotas extends javax.swing.JPanel {
             .addGroup(pnlBotonesLayout.createSequentialGroup()
                 .addGap(13, 13, 13)
                 .addComponent(btnGuardar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(btnBuscar)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(94, 94, 94)
                 .addComponent(btnModificar)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(btnEliminar)
@@ -487,14 +505,58 @@ public class CRUDMascotas extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(pnlBotonesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnGuardar)
-                    .addComponent(btnBuscar)
                     .addComponent(btnModificar)
                     .addComponent(btnEliminar)
                     .addComponent(btnRegresar))
                 .addContainerGap(16, Short.MAX_VALUE))
         );
 
-        pnlCampos.setBackground(new java.awt.Color(183, 224, 210));
+        pnlCampos.setBackground(new java.awt.Color(255, 255, 255));
+
+        lblIdMascota.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        lblIdMascota.setForeground(new java.awt.Color(78, 108, 152));
+        lblIdMascota.setText("Mascota:");
+
+        lblCedDuenio.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        lblCedDuenio.setForeground(new java.awt.Color(78, 108, 152));
+        lblCedDuenio.setText("Cedula Dueño:");
+
+        cmbIdMascota.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cmbIdMascota.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                cmbIdMascotaMouseEntered(evt);
+            }
+        });
+
+        btnBuscar.setBackground(new java.awt.Color(183, 224, 210));
+        btnBuscar.setForeground(new java.awt.Color(78, 108, 152));
+        btnBuscar.setText("Buscar");
+        btnBuscar.setToolTipText("ID Necesario");
+        btnBuscar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBuscarActionPerformed(evt);
+            }
+        });
+
+        txtCedulaDueno.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtCedulaDuenoKeyReleased(evt);
+            }
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtCedulaDuenoKeyTyped(evt);
+            }
+        });
+
+        panelBotonesOpcionales.setBackground(new java.awt.Color(255, 255, 255));
+
+        lblRaza.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        lblRaza.setForeground(new java.awt.Color(78, 108, 152));
+        lblRaza.setText("Raza:");
+
+        lblFechaNacimiento.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        lblFechaNacimiento.setForeground(new java.awt.Color(78, 108, 152));
+        lblFechaNacimiento.setText("Fecha Nacimiento:");
 
         txtRaza.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
         txtRaza.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -503,31 +565,17 @@ public class CRUDMascotas extends javax.swing.JPanel {
             }
         });
 
-        lblRaza.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        lblRaza.setForeground(new java.awt.Color(78, 108, 152));
-        lblRaza.setText("Raza:");
-
         lblEspecie.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         lblEspecie.setForeground(new java.awt.Color(78, 108, 152));
         lblEspecie.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         lblEspecie.setText("Especie:");
 
+        jDateFecha.setForeground(new java.awt.Color(0, 0, 0));
+
         lblNombre.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         lblNombre.setForeground(new java.awt.Color(78, 108, 152));
         lblNombre.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         lblNombre.setText("Nombre:");
-
-        lblIdMascota.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        lblIdMascota.setForeground(new java.awt.Color(78, 108, 152));
-        lblIdMascota.setText("Mascota:");
-
-        lblCedDuenio.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        lblCedDuenio.setForeground(new java.awt.Color(78, 108, 152));
-        lblCedDuenio.setText("Dueño:");
-
-        lblFechaNacimiento.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
-        lblFechaNacimiento.setForeground(new java.awt.Color(78, 108, 152));
-        lblFechaNacimiento.setText("Fecha Nacimiento:");
 
         txtEspecie.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
         txtEspecie.addKeyListener(new java.awt.event.KeyAdapter() {
@@ -537,96 +585,140 @@ public class CRUDMascotas extends javax.swing.JPanel {
         });
 
         txtNombre.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+        txtNombre.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtNombreActionPerformed(evt);
+            }
+        });
         txtNombre.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 txtNombreKeyTyped(evt);
             }
         });
 
-        jDateFecha.setForeground(new java.awt.Color(0, 0, 0));
-
-        cmbCedula.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        cmbCedula.addItemListener(new java.awt.event.ItemListener() {
-            public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                cmbCedulaItemStateChanged(evt);
-            }
-        });
-
-        cmbIdMascota.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        cmbIdMascota.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseEntered(java.awt.event.MouseEvent evt) {
-                cmbIdMascotaMouseEntered(evt);
-            }
-        });
+        javax.swing.GroupLayout panelBotonesOpcionalesLayout = new javax.swing.GroupLayout(panelBotonesOpcionales);
+        panelBotonesOpcionales.setLayout(panelBotonesOpcionalesLayout);
+        panelBotonesOpcionalesLayout.setHorizontalGroup(
+            panelBotonesOpcionalesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelBotonesOpcionalesLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(panelBotonesOpcionalesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panelBotonesOpcionalesLayout.createSequentialGroup()
+                        .addGap(90, 90, 90)
+                        .addComponent(lblNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 80, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(10, 10, 10)
+                        .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, 256, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(panelBotonesOpcionalesLayout.createSequentialGroup()
+                        .addGap(80, 80, 80)
+                        .addComponent(lblEspecie, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(7, 7, 7)
+                        .addComponent(txtEspecie, javax.swing.GroupLayout.PREFERRED_SIZE, 256, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(panelBotonesOpcionalesLayout.createSequentialGroup()
+                        .addGap(120, 120, 120)
+                        .addComponent(lblRaza)
+                        .addGap(10, 10, 10)
+                        .addComponent(txtRaza, javax.swing.GroupLayout.PREFERRED_SIZE, 256, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(panelBotonesOpcionalesLayout.createSequentialGroup()
+                        .addComponent(lblFechaNacimiento)
+                        .addGap(14, 14, 14)
+                        .addComponent(jDateFecha, javax.swing.GroupLayout.PREFERRED_SIZE, 260, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
+        );
+        panelBotonesOpcionalesLayout.setVerticalGroup(
+            panelBotonesOpcionalesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(panelBotonesOpcionalesLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(panelBotonesOpcionalesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblNombre)
+                    .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(6, 6, 6)
+                .addGroup(panelBotonesOpcionalesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblEspecie)
+                    .addComponent(txtEspecie, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(6, 6, 6)
+                .addGroup(panelBotonesOpcionalesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblRaza)
+                    .addComponent(txtRaza, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(6, 6, 6)
+                .addGroup(panelBotonesOpcionalesLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(lblFechaNacimiento)
+                    .addComponent(jDateFecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
+        );
 
         javax.swing.GroupLayout pnlCamposLayout = new javax.swing.GroupLayout(pnlCampos);
         pnlCampos.setLayout(pnlCamposLayout);
         pnlCamposLayout.setHorizontalGroup(
             pnlCamposLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlCamposLayout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(16, 16, 16)
                 .addGroup(pnlCamposLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(lblRaza, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(lblFechaNacimiento, javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlCamposLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(lblNombre, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(lblIdMascota, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(lblEspecie, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblCedDuenio, javax.swing.GroupLayout.Alignment.TRAILING))
-                .addGap(18, 18, 18)
-                .addGroup(pnlCamposLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(cmbCedula, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jDateFecha, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(pnlCamposLayout.createSequentialGroup()
+                        .addGroup(pnlCamposLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblCedDuenio)
+                            .addGroup(pnlCamposLayout.createSequentialGroup()
+                                .addGap(50, 50, 50)
+                                .addComponent(lblIdMascota)))
+                        .addGap(24, 24, 24)
                         .addGroup(pnlCamposLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addComponent(txtRaza, javax.swing.GroupLayout.DEFAULT_SIZE, 256, Short.MAX_VALUE)
-                            .addComponent(txtEspecie)
-                            .addComponent(txtNombre))
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(cmbIdMascota, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                .addContainerGap())
+                            .addComponent(cmbIdMascota, 0, 256, Short.MAX_VALUE)
+                            .addComponent(txtCedulaDueno))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlCamposLayout.createSequentialGroup()
+                        .addComponent(panelBotonesOpcionales, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
+                .addComponent(btnBuscar)
+                .addGap(19, 19, 19))
         );
         pnlCamposLayout.setVerticalGroup(
             pnlCamposLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlCamposLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(pnlCamposLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblCedDuenio)
-                    .addComponent(cmbCedula, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addGroup(pnlCamposLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(lblIdMascota)
-                    .addComponent(cmbIdMascota, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(pnlCamposLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblNombre))
-                .addGap(18, 18, 18)
-                .addGroup(pnlCamposLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtEspecie, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblEspecie))
-                .addGap(18, 18, 18)
-                .addGroup(pnlCamposLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtRaza, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblRaza))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(pnlCamposLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(lblFechaNacimiento)
-                    .addComponent(jDateFecha, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(57, 57, 57))
+                .addComponent(panelBotonesOpcionales, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, 0)
+                .addGroup(pnlCamposLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(pnlCamposLayout.createSequentialGroup()
+                        .addGroup(pnlCamposLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(lblCedDuenio)
+                            .addComponent(txtCedulaDueno, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(4, 4, 4)
+                        .addComponent(lblIdMascota))
+                    .addGroup(pnlCamposLayout.createSequentialGroup()
+                        .addGap(30, 30, 30)
+                        .addComponent(cmbIdMascota, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnBuscar)))
         );
+
+        tblMascotas.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        tblMascotas.setEnabled(false);
+        tblMascotas.setShowVerticalLines(false);
+        jScrollPane2.setViewportView(tblMascotas);
 
         javax.swing.GroupLayout pnlCRUDSLayout = new javax.swing.GroupLayout(pnlCRUDS);
         pnlCRUDS.setLayout(pnlCRUDSLayout);
         pnlCRUDSLayout.setHorizontalGroup(
             pnlCRUDSLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlCRUDSLayout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(pnlCRUDSLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(pnlCRUDSLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(pnlCRUDSLayout.createSequentialGroup()
-                        .addComponent(pnlCampos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(48, 48, 48))
-                    .addComponent(pnlBotones, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGroup(pnlCRUDSLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(pnlCRUDSLayout.createSequentialGroup()
+                                .addGap(59, 59, 59)
+                                .addComponent(pnlBotones, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(pnlCRUDSLayout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(pnlCampos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jScrollPane2))
                 .addContainerGap())
         );
         pnlCRUDSLayout.setVerticalGroup(
@@ -635,44 +727,62 @@ public class CRUDMascotas extends javax.swing.JPanel {
                 .addContainerGap()
                 .addComponent(pnlBotones, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(pnlCampos, javax.swing.GroupLayout.PREFERRED_SIZE, 246, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(pnlCampos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 222, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        jPanel1.add(pnlCRUDS);
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(52, 52, 52)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(pnlCRUDS, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(pnlColorado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(65, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(14, 14, 14)
+                .addComponent(pnlCRUDS, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(pnlColorado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(262, Short.MAX_VALUE))
+        );
 
-        lblIdOculto.setFont(new java.awt.Font("Dialog", 1, 2)); // NOI18N
-        lblIdOculto.setForeground(new java.awt.Color(183, 224, 210));
-        lblIdOculto.setText("jLabel1");
+        scrollMascota.setViewportView(jPanel1);
 
         javax.swing.GroupLayout pnlPrincipalLayout = new javax.swing.GroupLayout(pnlPrincipal);
         pnlPrincipal.setLayout(pnlPrincipalLayout);
         pnlPrincipalLayout.setHorizontalGroup(
             pnlPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlPrincipalLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(244, Short.MAX_VALUE)
                 .addComponent(lblMASCOTAS, javax.swing.GroupLayout.PREFERRED_SIZE, 267, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(106, 106, 106)
                 .addComponent(btnSalir, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE))
             .addGroup(pnlPrincipalLayout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 692, Short.MAX_VALUE)
-                .addContainerGap())
-            .addGroup(pnlPrincipalLayout.createSequentialGroup()
                 .addGap(20, 20, 20)
                 .addComponent(lblIdOculto)
                 .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, pnlPrincipalLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(scrollMascota, javax.swing.GroupLayout.DEFAULT_SIZE, 686, Short.MAX_VALUE)
+                .addContainerGap())
         );
         pnlPrincipalLayout.setVerticalGroup(
             pnlPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlPrincipalLayout.createSequentialGroup()
+                .addComponent(scrollMascota, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(pnlPrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnSalir)
-                    .addGroup(pnlPrincipalLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(lblMASCOTAS)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
+                    .addComponent(lblMASCOTAS, javax.swing.GroupLayout.PREFERRED_SIZE, 52, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(lblIdOculto)
                 .addGap(18, 18, 18))
         );
@@ -689,36 +799,11 @@ public class CRUDMascotas extends javax.swing.JPanel {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(pnlPrincipal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(102, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
-        if (txtNombre.getText().isBlank() || txtEspecie.getText().isBlank() || txtRaza.getText().isBlank() || jDateFecha.getDate().toString().isBlank() || cmbCedula.getSelectedItem().toString().isBlank()) {
-            JOptionPane.showMessageDialog(null, "No dejar espacios en blanco");
-        } else {
-            conexion Base = new conexion();
-            MascotaDb miMascota = new MascotaDb(Base);
-            if (miMascota.insertar(txtNombre.getText().trim(), txtEspecie.getText().trim(), txtRaza.getText().trim(), cmbCedula.getSelectedItem().toString(), jDateFecha.getDate())) {
-                txtNombre.setText(null);
-                txtNombre.setText(null);
-                txtEspecie.setText(null);
-                txtRaza.setText(null);
-                cmbCedula.setSelectedItem(null);
-                jDateFecha.setDate(null);
-            }
-
-        }
-    }//GEN-LAST:event_btnGuardarActionPerformed
-
-    //getter setter del combobox
-    public JComboBox<String> getCmbCedula() {
-        return cmbCedula;
-    }
-
-    public void setCmbCedula(JComboBox<String> cmbCedula) {
-        this.cmbCedula = cmbCedula;
-    }
+    
 
 
     private void btnSalirMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSalirMouseClicked
@@ -726,161 +811,86 @@ public class CRUDMascotas extends javax.swing.JPanel {
         Mostrarpanelcrud(pnlLogo);
     }//GEN-LAST:event_btnSalirMouseClicked
 
+    private void txtCedulaDuenoKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCedulaDuenoKeyTyped
+
+    }//GEN-LAST:event_txtCedulaDuenoKeyTyped
+
+    private void txtCedulaDuenoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtCedulaDuenoKeyReleased
+        char c = evt.getKeyChar();
+// Verificar si el carácter ingresado no es un número o si es Backspace
+        if (!Character.isDigit(c) && evt.getKeyCode() != KeyEvent.VK_BACK_SPACE) {
+            evt.consume(); // Ignorar el evento si no es un número
+        } else {
+            // Obtener el texto actual del JTextField
+            String cedula = txtCedulaDueno.getText().trim();
+
+            // Verificar si la longitud es 10
+            if (cedula.length() >= 10) {
+                conexion Base = new conexion();
+                MascotaDb masDb = new MascotaDb(Base);
+                masDb.llenarComboBoxMascotasPorDueño(cmbIdMascota, txtCedulaDueno.getText().trim());
+            } else {
+                // Actualizar la lista de mascotas
+                conexion Base = new conexion();
+                MascotaDb masDb = new MascotaDb(Base);
+                masDb.filtrarMascotasPorCedula(tblMascotas, cedula);
+            }
+        }
+    }//GEN-LAST:event_txtCedulaDuenoKeyReleased
+
     private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
 
-        //BOTONES y campos
-        lblIdMascota.setVisible(false);
-        cmbIdMascota.setVisible(false);
-        btnBuscar.setVisible(false);
-        btnGuardar.setVisible(false);
-        lblNombre.setVisible(true);
-        txtNombre.setVisible(true);
-        lblEspecie.setVisible(true);
-        txtEspecie.setVisible(true);
-        lblRaza.setVisible(true);
-        txtRaza.setVisible(true);
-        lblCedDuenio.setVisible(true);
-        cmbCedula.setVisible(true);
-        lblFechaNacimiento.setVisible(true);
-        jDateFecha.setVisible(true);
-        btnModificar.setVisible(true);
-        btnEliminar.setVisible(true);
-        btnRegresar.setVisible(true);
-        //habilito el id que nadie sabe que existe MUEJEJE
-        lblIdOculto.setVisible(true);
-        //obtengo id
-        conexion Base = new conexion();
-        MascotaDb masDb = new MascotaDb(Base);
-        masDb.obtenerIdMascotaPorCedulaYNombre(cmbCedula.getSelectedItem().toString(), cmbIdMascota.getSelectedItem().toString());
-        lblIdOculto.setText(masDb.quieroId(cmbCedula.getSelectedItem().toString(), cmbIdMascota.getSelectedItem().toString()));
-        //setteos
-        txtNombre.setText(masDb.obtenerNombreMascotaPorId());
-        txtEspecie.setText(masDb.obtenerEspecieMascotaPorId());
-        txtRaza.setText(masDb.obtenerRazaMascotaPorId());
-        jDateFecha.setDate(masDb.obtenerFechaNacimientoMascotaPorId());
+        if (DuenoDb.validarCedula(txtCedulaDueno.getText().trim())) {
+            //obtengo id
+            conexion Base = new conexion();
+            MascotaDb masDb = new MascotaDb(Base);
+            if (masDb.obtenerIdMascotaPorCedulaYNombre(txtCedulaDueno.getText().trim(), cmbIdMascota.getSelectedItem().toString())) {
 
+                panelBotonesOpcionales.setVisible(true);
+                pnlBotones.setVisible(true);
+                //BOTONES y campos
+                lblIdMascota.setVisible(false);
+                cmbIdMascota.setVisible(false);
+                btnBuscar.setVisible(false);
+                btnGuardar.setVisible(false);
+                lblNombre.setVisible(true);
+                txtNombre.setVisible(true);
+                lblEspecie.setVisible(true);
+                txtEspecie.setVisible(true);
+                lblRaza.setVisible(true);
+                txtRaza.setVisible(true);
+                lblCedDuenio.setVisible(true);
+                txtCedulaDueno.setVisible(true);
+                lblFechaNacimiento.setVisible(true);
+                jDateFecha.setVisible(true);
+                btnModificar.setVisible(true);
+                btnEliminar.setVisible(true);
+                btnRegresar.setVisible(true);
+                //habilito el id que nadie sabe que existe MUEJEJE
+                lblIdOculto.setVisible(true);
+
+            } else {
+                JOptionPane.showMessageDialog(null, "No encontrado");
+            }
+
+            lblIdOculto.setText(masDb.quieroId(txtCedulaDueno.getText().trim(), cmbIdMascota.getSelectedItem().toString()));
+            //setteos
+            txtNombre.setText(masDb.obtenerNombreMascotaPorId());
+            txtEspecie.setText(masDb.obtenerEspecieMascotaPorId());
+            txtRaza.setText(masDb.obtenerRazaMascotaPorId());
+            jDateFecha.setDate(masDb.obtenerFechaNacimientoMascotaPorId());
+
+        } else {
+            JOptionPane.showMessageDialog(null, "Ingrese una cedula valida");
+        }
 
     }//GEN-LAST:event_btnBuscarActionPerformed
-
-    private void cmbCedulaItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_cmbCedulaItemStateChanged
-
-    }//GEN-LAST:event_cmbCedulaItemStateChanged
 
     private void cmbIdMascotaMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cmbIdMascotaMouseEntered
         conexion Base = new conexion();
         MascotaDb masDb = new MascotaDb(Base);
-        masDb.llenarComboBoxMascotasPorDueño(cmbIdMascota, cmbCedula.getSelectedItem().toString());
+        masDb.llenarComboBoxMascotasPorDueño(cmbIdMascota, txtCedulaDueno.getText().trim());
     }//GEN-LAST:event_cmbIdMascotaMouseEntered
-
-    private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
-
-//PARA BUSQUEDA
-        lblIdMascota.setVisible(true);
-        cmbIdMascota.setVisible(true);
-        btnBuscar.setVisible(true);
-        btnGuardar.setVisible(false);
-        lblNombre.setVisible(false);
-        txtNombre.setVisible(false);
-        lblEspecie.setVisible(false);
-        txtEspecie.setVisible(false);
-        lblRaza.setVisible(false);
-        txtRaza.setVisible(false);
-        lblCedDuenio.setVisible(true);
-        cmbCedula.setVisible(true);
-        lblFechaNacimiento.setVisible(false);
-        jDateFecha.setVisible(false);
-        btnModificar.setVisible(false);
-        btnEliminar.setVisible(false);
-        btnRegresar.setVisible(false);
-        //agregar datos de dueños  a combobox
-        conexion Base = new conexion();
-
-        MascotaDb masDb = new MascotaDb(Base);
-        masDb.llenarComboBoxDueños(cmbCedula);
-        masDb.llenarComboBoxMascotasPorDueño(cmbIdMascota, cmbCedula.getSelectedItem().toString());
-
-    }//GEN-LAST:event_btnRegresarActionPerformed
-
-    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-        conexion Base = new conexion();
-        MascotaDb masDb = new MascotaDb(Base);
-
-        masDb.obtenerIdMascotayEliminar(cmbCedula.getSelectedItem().toString(), cmbIdMascota.getSelectedItem().toString());
-
-        //mostrar anteriormenu
-        //PARA BUSQUEDA
-        lblIdMascota.setVisible(true);
-        cmbIdMascota.setVisible(true);
-        btnBuscar.setVisible(true);
-        btnGuardar.setVisible(false);
-        lblNombre.setVisible(false);
-        txtNombre.setVisible(false);
-        lblEspecie.setVisible(false);
-        txtEspecie.setVisible(false);
-        lblRaza.setVisible(false);
-        txtRaza.setVisible(false);
-        lblCedDuenio.setVisible(true);
-        cmbCedula.setVisible(true);
-        lblFechaNacimiento.setVisible(false);
-        jDateFecha.setVisible(false);
-        btnModificar.setVisible(false);
-        btnEliminar.setVisible(false);
-        btnRegresar.setVisible(false);
-        //agregar datos de dueños  a combobox
-        masDb.llenarComboBoxDueños(cmbCedula);
-        masDb.llenarComboBoxMascotasPorDueño(cmbIdMascota, cmbCedula.getSelectedItem().toString());
-
-    }//GEN-LAST:event_btnEliminarActionPerformed
-
-    private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
-        //verifico que los campos no esten vacios
-        if (txtNombre.getText().isBlank() || txtEspecie.getText().isBlank() || txtRaza.getText().isBlank() || jDateFecha.getDate() == null) {
-            JOptionPane.showMessageDialog(null, "Ingrese los campos");
-        } else {
-            //Logica de modificacion
-            conexion Base = new conexion();
-            MascotaDb masDb = new MascotaDb(Base);
-            if (masDb.actualizarMascota(lblIdOculto.getText(), cmbCedula.getSelectedItem().toString(), txtNombre.getText(), txtEspecie.getText(), txtRaza.getText(), jDateFecha.getDate())) {
-                JOptionPane.showMessageDialog(null, "Mascota actualizada correctamente");
-                lblIdOculto.setText(null);
-                lblIdOculto.setVisible(false);
-                //reseteo campos
-                cmbCedula.setSelectedItem(null);
-                txtNombre.setText(null);
-                txtEspecie.setText(null);
-                txtRaza.setText(null);
-                jDateFecha.setDate(null);
-
-                //mostrar menu anterior
-                //PARA BUSQUEDA
-                lblIdMascota.setVisible(true);
-                cmbIdMascota.setVisible(true);
-                btnBuscar.setVisible(true);
-                btnGuardar.setVisible(false);
-                lblNombre.setVisible(false);
-                txtNombre.setVisible(false);
-                lblEspecie.setVisible(false);
-                txtEspecie.setVisible(false);
-                lblRaza.setVisible(false);
-                txtRaza.setVisible(false);
-                lblCedDuenio.setVisible(true);
-                cmbCedula.setVisible(true);
-                lblFechaNacimiento.setVisible(false);
-                jDateFecha.setVisible(false);
-                btnModificar.setVisible(false);
-                btnEliminar.setVisible(false);
-                btnRegresar.setVisible(false);
-                //agregar datos de dueños  a combobox
-                masDb.llenarComboBoxDueños(cmbCedula);
-                masDb.llenarComboBoxMascotasPorDueño(cmbIdMascota, cmbCedula.getSelectedItem().toString());
-
-            } else {
-                JOptionPane.showMessageDialog(null, "Error al actualizar Mascota");
-            }
-        }
-
-
-    }//GEN-LAST:event_btnModificarActionPerformed
 
     private void txtNombreKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtNombreKeyTyped
         char caracter = evt.getKeyChar();
@@ -893,6 +903,10 @@ public class CRUDMascotas extends javax.swing.JPanel {
             evt.consume();
         }
     }//GEN-LAST:event_txtNombreKeyTyped
+
+    private void txtNombreActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNombreActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtNombreActionPerformed
 
     private void txtEspecieKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtEspecieKeyTyped
         char caracter = evt.getKeyChar();
@@ -918,6 +932,163 @@ public class CRUDMascotas extends javax.swing.JPanel {
         }
     }//GEN-LAST:event_txtRazaKeyTyped
 
+    private void btnRegresarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnRegresarActionPerformed
+
+        //PARA BUSQUEDA
+        lblIdMascota.setVisible(true);
+        cmbIdMascota.setVisible(true);
+        btnBuscar.setVisible(true);
+        btnGuardar.setVisible(false);
+        lblNombre.setVisible(false);
+        txtNombre.setVisible(false);
+        lblEspecie.setVisible(false);
+        txtEspecie.setVisible(false);
+        lblRaza.setVisible(false);
+        txtRaza.setVisible(false);
+        lblCedDuenio.setVisible(true);
+        txtCedulaDueno.setVisible(true);
+        lblFechaNacimiento.setVisible(false);
+        jDateFecha.setVisible(false);
+        btnModificar.setVisible(false);
+        btnEliminar.setVisible(false);
+        btnRegresar.setVisible(false);
+        //agregar datos de dueños  a combobox
+        conexion Base = new conexion();
+
+        MascotaDb masDb = new MascotaDb(Base);
+        masDb.llenarComboBoxMascotasPorDueño(cmbIdMascota, txtCedulaDueno.getText().trim());
+    }//GEN-LAST:event_btnRegresarActionPerformed
+
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+conexion Base = new conexion();
+        MascotaDb masDb = new MascotaDb(Base);
+
+        //verifico que los campos no esten vacios
+        if (txtNombre.getText().isBlank() || txtEspecie.getText().isBlank() || txtRaza.getText().isBlank() || jDateFecha.getDate() == null || !DuenoDb.validarCedula(txtCedulaDueno.getText().trim())) {
+            JOptionPane.showMessageDialog(null, "Ingrese los campos validos");
+        } else {
+            if (!masDb.verificarExistenciaCedulaEnDueno(txtCedulaDueno.getText().trim())) {
+                JOptionPane.showMessageDialog(null, "Dueño no registrado");
+            } else {
+                //Logica de eliminacion
+                
+                
+                
+                
+                masDb.obtenerIdMascotayEliminar(txtCedulaDueno.getText().trim(), cmbIdMascota.getSelectedItem().toString());
+
+        //mostrar anteriormenu
+        //PARA BUSQUEDA
+        lblIdMascota.setVisible(true);
+        cmbIdMascota.setVisible(true);
+        btnBuscar.setVisible(true);
+        btnGuardar.setVisible(false);
+        lblNombre.setVisible(false);
+        txtNombre.setVisible(false);
+        lblEspecie.setVisible(false);
+        txtEspecie.setVisible(false);
+        lblRaza.setVisible(false);
+        txtRaza.setVisible(false);
+        lblCedDuenio.setVisible(true);
+        txtCedulaDueno.setVisible(true);
+        lblFechaNacimiento.setVisible(false);
+        jDateFecha.setVisible(false);
+        btnModificar.setVisible(false);
+        btnEliminar.setVisible(false);
+        btnRegresar.setVisible(false);
+        
+                masDb.filtrarMascotasPorCedula(tblMascotas, txtCedulaDueno.getText().trim());
+        masDb.llenarComboBoxMascotasPorDueño(cmbIdMascota, txtCedulaDueno.getText().trim());
+                
+                
+                
+                
+                
+                
+                
+            }
+
+        }
+
+
+
+
+
+        
+        
+    }//GEN-LAST:event_btnEliminarActionPerformed
+
+    private void btnModificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnModificarActionPerformed
+        conexion Base = new conexion();
+        MascotaDb masDb = new MascotaDb(Base);
+        //verifico que los campos no esten vacios
+        if (txtNombre.getText().isBlank() || txtEspecie.getText().isBlank() || txtRaza.getText().isBlank() || jDateFecha.getDate() == null || !DuenoDb.validarCedula(txtCedulaDueno.getText().trim())) {
+            JOptionPane.showMessageDialog(null, "Ingrese los campos validos");
+        } else {
+            if (!masDb.verificarExistenciaCedulaEnDueno(txtCedulaDueno.getText().trim())) {
+                JOptionPane.showMessageDialog(null, "Dueño no registrado");
+            } else {
+                //Logica de modificacion
+                if (masDb.actualizarMascota(lblIdOculto.getText(), txtCedulaDueno.getText().trim(), txtNombre.getText(), txtEspecie.getText(), txtRaza.getText(), jDateFecha.getDate())) {
+                    JOptionPane.showMessageDialog(null, "Mascota actualizada correctamente");
+                    lblIdOculto.setText(null);
+                    lblIdOculto.setVisible(false);
+                    //reseteo campos
+                    txtCedulaDueno.setText(null);
+                    txtNombre.setText(null);
+                    txtEspecie.setText(null);
+                    txtRaza.setText(null);
+                    jDateFecha.setDate(null);
+
+                    //mostrar menu anterior
+                    //PARA BUSQUEDA
+                    lblIdMascota.setVisible(true);
+                    cmbIdMascota.setVisible(true);
+                    btnBuscar.setVisible(true);
+                    btnGuardar.setVisible(false);
+                    lblNombre.setVisible(false);
+                    txtNombre.setVisible(false);
+                    lblEspecie.setVisible(false);
+                    txtEspecie.setVisible(false);
+                    lblRaza.setVisible(false);
+                    txtRaza.setVisible(false);
+                    lblCedDuenio.setVisible(true);
+                    txtCedulaDueno.setVisible(true);
+                    lblFechaNacimiento.setVisible(false);
+                    jDateFecha.setVisible(false);
+                    btnModificar.setVisible(false);
+                    btnEliminar.setVisible(false);
+                    btnRegresar.setVisible(false);
+                masDb.filtrarMascotasPorCedula(tblMascotas, txtCedulaDueno.getText().trim());
+                    masDb.llenarComboBoxMascotasPorDueño(cmbIdMascota, txtCedulaDueno.getText().trim());
+                } else {
+                    JOptionPane.showMessageDialog(null, "Error al actualizar Mascota");
+                }
+
+            }
+
+        }
+
+    }//GEN-LAST:event_btnModificarActionPerformed
+
+    private void btnGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGuardarActionPerformed
+        if (txtNombre.getText().isBlank() || txtEspecie.getText().isBlank() || txtRaza.getText().isBlank() || jDateFecha.getDate() == null || txtCedulaDueno.getText().isBlank()||txtCedulaDueno.getText().length()!=10) {
+            JOptionPane.showMessageDialog(null, "No dejar espacios en blanco ni fechas sin seleccionar");
+        } else {
+            conexion Base = new conexion();
+            MascotaDb miMascota = new MascotaDb(Base);
+            if (miMascota.insertar(txtNombre.getText().trim(), txtEspecie.getText().trim(), txtRaza.getText().trim(), txtCedulaDueno.getText().trim(), jDateFecha.getDate())) {
+                txtNombre.setText(null);
+                txtNombre.setText(null);
+                txtEspecie.setText(null);
+                txtRaza.setText(null);
+                txtCedulaDueno.setText(null);
+                jDateFecha.setDate(null);
+            }
+
+        }
+    }//GEN-LAST:event_btnGuardarActionPerformed
+
     private void Mostrarpanelcrud(JPanel p) {
         p.setSize(700, 460);
         p.setLocation(0, 0);
@@ -941,11 +1112,11 @@ public class CRUDMascotas extends javax.swing.JPanel {
     private javax.swing.JButton btnModificar;
     private javax.swing.JButton btnRegresar;
     private javax.swing.JButton btnSalir;
-    private javax.swing.JComboBox<String> cmbCedula;
     private javax.swing.JComboBox<String> cmbIdMascota;
     private com.toedter.calendar.JDateChooser jDateFecha;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel lblCedDuenio;
     private javax.swing.JLabel lblEspecie;
     private javax.swing.JLabel lblFechaNacimiento;
@@ -954,11 +1125,16 @@ public class CRUDMascotas extends javax.swing.JPanel {
     private javax.swing.JLabel lblMASCOTAS;
     private javax.swing.JLabel lblNombre;
     private javax.swing.JLabel lblRaza;
+    private javax.swing.JPanel panelBotonesOpcionales;
     private javax.swing.JPanel pnlBotones;
     private javax.swing.JPanel pnlCRUDS;
     private javax.swing.JPanel pnlCampos;
+    private javax.swing.JPanel pnlColorado;
     public static javax.swing.JPanel pnlLogo;
     private javax.swing.JPanel pnlPrincipal;
+    private javax.swing.JScrollPane scrollMascota;
+    private javax.swing.JTable tblMascotas;
+    private javax.swing.JTextField txtCedulaDueno;
     private javax.swing.JTextField txtEspecie;
     private javax.swing.JTextField txtNombre;
     private javax.swing.JTextField txtRaza;

@@ -1,15 +1,15 @@
 package Modelo;
 
 import java.beans.Statement;
-import java.sql.Connection;
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.swing.JComboBox;
 import javax.swing.JOptionPane;
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
@@ -143,7 +143,7 @@ public class MascotaDb extends Mascotas {
 
     public void llenarComboBoxDueños(JComboBox<String> comboBox) {
         // Consulta SQL para obtener el ID, nombre y apellido de los dueños
-        String sql = "SELECT CEDULA, INITCAP(NOMBRE) || ' ' || INITCAP(APELLIDO) AS NOMBRE_COMPLETO FROM  DUENO";
+        String sql = "SELECT CEDULA, INITCAP(NOMBRE) || ' ' || INITCAP(APELLIDO) AS NOMBRE_COMPLETO FROM DUENO";
 
         try (Connection connection = Base.conectarBD();
                 PreparedStatement preparedStatement = connection.prepareStatement(sql);
@@ -157,13 +157,13 @@ public class MascotaDb extends Mascotas {
             // Procesar resultados
             while (resultSet.next()) {
                 hayDueños = true;
-                int cedulaDueño = resultSet.getInt("CEDULA");  // Obtener el ID del dueño
+                String cedulaDueño = resultSet.getString("CEDULA");  // Obtener la cédula como String
                 String nombreCompleto = resultSet.getString("NOMBRE_COMPLETO");  // Obtener el nombre completo
 
-                // Concatenar cedula al inicio del nombre completo
+                // Concatenar cédula al inicio del nombre completo
                 String itemComboBox = cedulaDueño + " " + nombreCompleto;
 
-                System.out.println("Dueño encontrado: " + itemComboBox);
+                //System.out.println("Dueño encontrado: " + itemComboBox);
 
                 // Agregar el item al ComboBox
                 comboBox.addItem(itemComboBox);
@@ -213,7 +213,7 @@ public class MascotaDb extends Mascotas {
                 while (resultSetMascotas.next()) {
                     hayMascotas = true; // Si entra aquí, hay mascotas
                     String nombreMascota = resultSetMascotas.getString("NOMBRE_MASCOTA");
-                    System.out.println(nombreMascota);
+                    //System.out.println(nombreMascota);
                     comboBox.addItem(nombreMascota);
                 }
 
@@ -227,66 +227,111 @@ public class MascotaDb extends Mascotas {
             e.printStackTrace();
         }
     }
-
-//        public void mostrarNombreYApellidoDueños() {
-//    // Consulta SQL para obtener el nombre y apellido de todos los dueños
-//    String sql = "SELECT INITCAP(NOMBRE) AS NOMBRE, INITCAP(APELLIDO) AS APELLIDO FROM BASEU4COPY.DUEÑO";
+    
+//    public void obtenerIdMascotaPorCedulaYNombre(String cedulaDueno, String nombreMascota) {
+//        // Consulta SQL para obtener el ID de la mascota usando la cédula del dueño y el nombre de la mascota
+//        String sql = "SELECT ID FROM  MASCOTA WHERE CEDULA_DUENO = ? AND INITCAP(NOMBRE) = ?";
 //
-//    try (Connection connection = Base.conectarBD();
-//         PreparedStatement preparedStatement = connection.prepareStatement(sql);
-//         ResultSet resultSet = preparedStatement.executeQuery()) {
+//        try (Connection connection = Base.conectarBD();
+//                PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 //
-//        // Mostrar un mensaje en consola indicando que la conexión fue exitosa
-//        System.out.println("Conexión exitosa. Ejecutando consulta...");
+//            // Establecer los parámetros de la consulta
+//            preparedStatement.setString(1, obtenerIdDeString(cedulaDueno));
+//            preparedStatement.setString(2, nombreMascota);
 //
-//        // Procesar los resultados de la consulta
-//        while (resultSet.next()) {
-//            // Obtener el nombre y apellido del dueño
-//            String nombre = resultSet.getString("NOMBRE");
-//            String apellido = resultSet.getString("APELLIDO");
+//            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+//                if (resultSet.next()) {
+//                    // Si encontramos la mascota, obtenemos el ID
+//                    String idMascota = resultSet.getString("ID");
 //
-//            // Imprimir los datos de cada dueño en la consola
-//            System.out.println("Nombre: " + nombre + ", Apellido: " + apellido);
+//                    System.out.println("ID de la mascota: " + idMascota);
+//                    idMascotaActual = idMascota;
+//                    nombreMascotaActual = nombreMascota;
+//                    ceduladuenoActual = obtenerIdDeString(cedulaDueno);
+//
+//                    // Realizar alguna acción adicional con el ID si es necesario
+//                } else {
+//                    // Si no se encuentra la mascota, imprimir un mensaje
+//                    System.out.println("Mascota no encontrada.");
+//                }
+//            }
+//        } catch (SQLException e) {
+//            JOptionPane.showMessageDialog(null, "Error al obtener el ID de la mascota: " + e.getMessage());
+//            e.printStackTrace();
 //        }
-//
-//    } catch (SQLException e) {
-//        // Si hay un error, mostrarlo en la consola
-//        System.out.println("Error al obtener los datos de los dueños.");
-//        e.printStackTrace();
 //    }
-//}
-    public void obtenerIdMascotaPorCedulaYNombre(String cedulaDueno, String nombreMascota) {
-        // Consulta SQL para obtener el ID de la mascota usando la cédula del dueño y el nombre de la mascota
-        String sql = "SELECT ID FROM  MASCOTA WHERE CEDULA_DUENO = ? AND INITCAP(NOMBRE) = ?";
-
-        try (Connection connection = Base.conectarBD();
-                PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
-
-            // Establecer los parámetros de la consulta
-            preparedStatement.setString(1, obtenerIdDeString(cedulaDueno));
-            preparedStatement.setString(2, nombreMascota);
-
-            try (ResultSet resultSet = preparedStatement.executeQuery()) {
-                if (resultSet.next()) {
-                    // Si encontramos la mascota, obtenemos el ID
-                    String idMascota = resultSet.getString("ID");
-
-                    System.out.println("ID de la mascota: " + idMascota);
-                    idMascotaActual = idMascota;
-                    nombreMascotaActual = nombreMascota;
-                    ceduladuenoActual = obtenerIdDeString(cedulaDueno);
-
-                    // Realizar alguna acción adicional con el ID si es necesario
-                } else {
-                    // Si no se encuentra la mascota, imprimir un mensaje
-                    System.out.println("Mascota no encontrada.");
-                }
-            }
-        } catch (SQLException e) {
-            JOptionPane.showMessageDialog(null, "Error al obtener el ID de la mascota: " + e.getMessage());
-            e.printStackTrace();
-        }
+    
+    
+    
+    public boolean obtenerIdMascotaPorCedulaYNombre(String cedulaDueno, String nombreMascota) {
+    // Primero, verificar si la cédula del dueño existe en la tabla DUENO
+    if (!existeCedulaEnDueno(cedulaDueno)) {
+        System.out.println("La cédula del dueño no existe.");
+        return false; // Retornar false si la cédula no existe
     }
+
+    // Consulta SQL para obtener el ID de la mascota usando la cédula del dueño y el nombre de la mascota
+    String sql = "SELECT ID FROM MASCOTA WHERE CEDULA_DUENO = ? AND INITCAP(NOMBRE) = ?";
+
+    try (Connection connection = Base.conectarBD();
+         PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+
+        // Establecer los parámetros de la consulta
+        preparedStatement.setString(1, obtenerIdDeString(cedulaDueno));
+        preparedStatement.setString(2, nombreMascota);
+
+        try (ResultSet resultSet = preparedStatement.executeQuery()) {
+            if (resultSet.next()) {
+                // Si encontramos la mascota, obtenemos el ID
+                String idMascota = resultSet.getString("ID");
+
+                System.out.println("ID de la mascota: " + idMascota);
+                idMascotaActual = idMascota;
+                nombreMascotaActual = nombreMascota;
+                ceduladuenoActual = obtenerIdDeString(cedulaDueno);
+
+                // Retornar true si se encuentra la mascota
+                return true;
+            } else {
+                // Si no se encuentra la mascota, imprimir un mensaje
+                System.out.println("Mascota no encontrada.");
+                return false; // Retornar false si no se encuentra
+            }
+        }
+    } catch (SQLException e) {
+        JOptionPane.showMessageDialog(null, "Error al obtener el ID de la mascota: " + e.getMessage());
+        e.printStackTrace();
+        return false; // Retornar false en caso de error
+    }
+}
+
+// Método adicional para verificar si la cédula existe en la tabla DUENO
+private boolean existeCedulaEnDueno(String cedulaDueno) {
+    String sql = "SELECT COUNT(*) FROM DUENO WHERE CEDULA = ?";
+
+    try (Connection connection = Base.conectarBD();
+         PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+
+        // Establecer el parámetro de la consulta
+        preparedStatement.setString(1, obtenerIdDeString(cedulaDueno));
+
+        try (ResultSet resultSet = preparedStatement.executeQuery()) {
+            if (resultSet.next()) {
+                int count = resultSet.getInt(1);
+                return count > 0; // Retornar true si hay al menos un registro
+            }
+        }
+    } catch (SQLException e) {
+        JOptionPane.showMessageDialog(null, "Error al verificar la cédula del dueño: " + e.getMessage());
+        e.printStackTrace();
+    }
+    return false; // Retornar false en caso de error o si no se encuentra
+}
+
+
+
+
+
 
     public String obtenerNombreMascotaPorId() {
         // Consulta SQL para obtener el nombre de la mascota usando el ID
@@ -476,42 +521,6 @@ public class MascotaDb extends Mascotas {
     private String ceduladuenoActual;
     private String nombreMascotaActual;
 
-//     public boolean actualizarMascota(String cedulaDueño, String nombre, String especie, String raza, Date fecha) {
-//        // Tomar solo la parte antes del primer espacio en cedulaDueño
-//        String cedulaSolo = cedulaDueño.split(" ")[0];
-//         System.out.println("Id de la mascota: "+idMascotaActual+" tambien ");
-//
-//        // Consulta SQL para actualizar los datos de la mascota con el ID proporcionado
-//        String sql = "UPDATE MASCOTA SET CEDULA_DUENO = ?, NOMBRE = ?, ESPECIE = ?, RAZA = ?, FECHANACIMIENTO = ? WHERE ID = ?";
-//
-//        try (Connection connection = Base.conectarBD();  // Reemplaza con tu método para conectar a la BD
-//             PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
-//
-//            // Establecer los parámetros en el PreparedStatement
-//            preparedStatement.setString(1, cedulaSolo);  // Asignar la cédula procesada
-//            preparedStatement.setString(2, nombre);      // Asignar el nombre de la mascota
-//            preparedStatement.setString(3, especie);     // Asignar la especie
-//            preparedStatement.setString(4, raza);        // Asignar la raza
-//
-//            // Convertir el objeto java.util.Date a java.sql.Date
-//            java.sql.Date sqlDate = new java.sql.Date(fecha.getTime());
-//            preparedStatement.setDate(5, sqlDate);       // Asignar la fecha
-//
-//            preparedStatement.setString(6, idMascotaActual);          // Asignar el ID de la mascota
-//
-//            // Ejecutar la actualización
-//            int filasActualizadas = preparedStatement.executeUpdate();
-//
-//            // Retornar true si al menos una fila fue actualizada
-//            return filasActualizadas > 0;
-//
-//        } catch (SQLException e) {
-//            // Manejo de excepciones
-//            System.err.println("Error al actualizar la mascota: " + e.getMessage());
-//            e.printStackTrace();
-//            return false;
-//        }
-//    }
     public String quieroId(String cedulaDueno, String nombreMascota) {
         // Consulta SQL para obtener el ID de la mascota usando la cédula del dueño y el nombre de la mascota
         String sql = "SELECT ID FROM  MASCOTA WHERE CEDULA_DUENO = ? AND INITCAP(NOMBRE) = ?";
@@ -638,5 +647,154 @@ public class MascotaDb extends Mascotas {
             }
         }
     }
+    
+    
+    public void mostrarMascotasYDueno(JTable tabla) {
+    Connection connection = Base.conectarBD();
+    if (connection == null) {
+        System.out.println("No se pudo establecer la conexión a la base de datos.");
+        return; // Salir del método si no hay conexión
+    }
+
+    // Consulta SQL para obtener los dueños, sus cédulas y sus mascotas
+    String query = "SELECT D.NOMBRE || ' ' || D.APELLIDO AS NOMBRE_DUENO, " +
+                   "D.CEDULA AS CEDULA_DUENO, " +
+                   "M.NOMBRE AS NOMBRE_MASCOTA, " +
+                   "M.ID AS ID_MASCOTA " +
+                   "FROM DUENO D " +
+                   "JOIN MASCOTA M ON UPPER(TRIM(M.CEDULA_DUENO)) = UPPER(TRIM(D.CEDULA)) " +
+                   "ORDER BY D.NOMBRE, D.APELLIDO";
+
+    DefaultTableModel model = new DefaultTableModel();
+    model.addColumn("Dueño");
+    model.addColumn("Cédula Dueño");
+    model.addColumn("Mascota");
+    model.addColumn("ID Mascota");
+
+    try {
+        java.sql.Statement statement = connection.createStatement();
+        ResultSet resultSet = statement.executeQuery(query);
+
+        int rowCount = 0;
+        while (resultSet.next()) {
+            rowCount++;
+            String nombreDueno = resultSet.getString("NOMBRE_DUENO"); // Obtener el nombre del dueño
+            String cedulaDueno = resultSet.getString("CEDULA_DUENO"); // Obtener la cédula del dueño
+            String nombreMascota = resultSet.getString("NOMBRE_MASCOTA");
+            int idMascota = resultSet.getInt("ID_MASCOTA");
+
+            model.addRow(new Object[]{nombreDueno, cedulaDueno, nombreMascota, idMascota});
+        }
+        //System.out.println("Número de filas recuperadas: " + rowCount);
+
+        // Asignar el modelo a la tabla
+        tabla.setModel(model);
+    } catch (SQLException e) {
+        System.out.println("Error al ejecutar la consulta.");
+        e.printStackTrace();
+    } finally {
+        try {
+            if (connection != null) {
+                connection.close(); // Cerrar la conexión
+                System.out.println("Conexión cerrada.");
+            }
+        } catch (SQLException e) {
+            System.out.println("Error al cerrar la conexión.");
+            e.printStackTrace();
+        }
+    }
+}
+    
+    public void filtrarMascotasPorCedula(JTable tabla, String prefijoCedula) {
+    Connection connection = Base.conectarBD();
+    if (connection == null) {
+        System.out.println("No se pudo establecer la conexión a la base de datos.");
+        return; // Salir del método si no hay conexión
+    }
+
+    // Consulta SQL para obtener los dueños, sus cédulas y sus mascotas filtrando por el prefijo de la cédula
+    String query = "SELECT D.NOMBRE || ' ' || D.APELLIDO AS NOMBRE_DUENO, " +
+                   "D.CEDULA AS CEDULA_DUENO, " +
+                   "M.NOMBRE AS NOMBRE_MASCOTA, " +
+                   "M.ID AS ID_MASCOTA " +
+                   "FROM DUENO D " +
+                   "JOIN MASCOTA M ON UPPER(TRIM(M.CEDULA_DUENO)) = UPPER(TRIM(D.CEDULA)) " +
+                   "WHERE D.CEDULA LIKE ? " + // Filtrar por cédula
+                   "ORDER BY D.NOMBRE, D.APELLIDO";
+
+    DefaultTableModel model = new DefaultTableModel();
+    model.addColumn("Dueño");
+    model.addColumn("Cédula Dueño");
+    model.addColumn("Mascota");
+    model.addColumn("ID Mascota");
+
+    try {
+        PreparedStatement preparedStatement = connection.prepareStatement(query);
+        preparedStatement.setString(1, prefijoCedula + "%"); // Establecer el prefijo con el comodín
+
+        ResultSet resultSet = preparedStatement.executeQuery();
+
+        int rowCount = 0;
+        while (resultSet.next()) {
+            rowCount++;
+            String nombreDueno = resultSet.getString("NOMBRE_DUENO"); // Obtener el nombre del dueño
+            String cedulaDueno = resultSet.getString("CEDULA_DUENO"); // Obtener la cédula del dueño
+            String nombreMascota = resultSet.getString("NOMBRE_MASCOTA");
+            int idMascota = resultSet.getInt("ID_MASCOTA");
+
+            model.addRow(new Object[]{nombreDueno, cedulaDueno, nombreMascota, idMascota});
+        }
+
+        // Verificar si se encontraron filas
+        if (rowCount == 0) {
+            JOptionPane.showMessageDialog(null, "No se encontraron resultados para la cédula: " + prefijoCedula);
+            // Limpiar el modelo de la tabla si no hay resultados
+            model.setRowCount(0); // Asegurarse de que el modelo esté vacío
+        } else {
+            System.out.println("Número de filas recuperadas: " + rowCount);
+        }
+
+        // Asignar el modelo a la tabla
+        tabla.setModel(model);
+    } catch (SQLException e) {
+        System.out.println("Error al ejecutar la consulta.");
+        e.printStackTrace();
+    } finally {
+        try {
+            if (connection != null) {
+                connection.close(); // Cerrar la conexión
+                System.out.println("Conexión cerrada.");
+            }
+        } catch (SQLException e) {
+            System.out.println("Error al cerrar la conexión.");
+            e.printStackTrace();
+        }
+    }
+}
+    
+    
+    
+    public boolean verificarExistenciaCedulaEnDueno(String cedulaDueno) {
+    // Consulta SQL para verificar si la cédula existe en la tabla DUENO
+    String sql = "SELECT COUNT(*) FROM DUENO WHERE CEDULA = ?";
+
+    try (Connection connection = Base.conectarBD();
+         PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+
+        // Establecer el parámetro de la consulta
+        preparedStatement.setString(1, obtenerIdDeString(cedulaDueno));
+
+        try (ResultSet resultSet = preparedStatement.executeQuery()) {
+            if (resultSet.next()) {
+                int count = resultSet.getInt(1);
+                return count > 0; // Retornar true si hay al menos un registro
+            }
+        }
+    } catch (SQLException e) {
+        JOptionPane.showMessageDialog(null, "Error al verificar la cédula del dueño: " + e.getMessage());
+        e.printStackTrace();
+    }
+    return false; // Retornar false en caso de error o si no se encuentra
+}
 
 }
