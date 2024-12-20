@@ -14,6 +14,7 @@ import javax.swing.JComboBox;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JTable;
 import javax.swing.event.EventListenerList;
 import javax.swing.plaf.ComponentUI;
 import rojeru_san.RSButtonRiple;
@@ -94,6 +95,8 @@ public class ControlVacu extends javax.swing.JPanel {
         jTable1.setVisible(false);
         jDateChooser1.setDate(new Date());
         bdControlvacu.bloquearFechaMaxima(jDateChooser1);
+        cmbMascota.setVisible(false);
+        lblmasco1.setVisible(false);
         
 
     } else {
@@ -128,6 +131,7 @@ public class ControlVacu extends javax.swing.JPanel {
         txtdueno = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
+        lblIdOculto = new javax.swing.JLabel();
         btnRegresar = new javax.swing.JButton();
         btnSalir = new javax.swing.JButton();
 
@@ -185,6 +189,9 @@ public class ControlVacu extends javax.swing.JPanel {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnBuscarMouseClicked(evt);
             }
+            public void mouseEntered(java.awt.event.MouseEvent evt) {
+                btnBuscarMouseEntered(evt);
+            }
         });
 
         btnEditar.setBackground(new java.awt.Color(183, 224, 210));
@@ -194,6 +201,11 @@ public class ControlVacu extends javax.swing.JPanel {
         btnEditar.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 btnEditarMouseClicked(evt);
+            }
+        });
+        btnEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditarActionPerformed(evt);
             }
         });
 
@@ -266,6 +278,11 @@ public class ControlVacu extends javax.swing.JPanel {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable1MouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTable1);
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
@@ -289,29 +306,35 @@ public class ControlVacu extends javax.swing.JPanel {
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addComponent(jDateChooser1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(cmbVacunas, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(txtDOsis, javax.swing.GroupLayout.DEFAULT_SIZE, 258, Short.MAX_VALUE)))
+                            .addComponent(txtDOsis, javax.swing.GroupLayout.DEFAULT_SIZE, 258, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(lblIdOculto))
                     .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(lblmasco1)
-                            .addComponent(lbldueno))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(cmbMascota, javax.swing.GroupLayout.PREFERRED_SIZE, 271, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                                .addComponent(txtdueno, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(28, 28, 28))))
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addGap(67, 67, 67)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 430, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(130, Short.MAX_VALUE))
+                            .addGroup(jPanel4Layout.createSequentialGroup()
+                                .addContainerGap()
+                                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(lblmasco1)
+                                    .addComponent(lbldueno))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(cmbMascota, javax.swing.GroupLayout.PREFERRED_SIZE, 271, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                                        .addComponent(txtdueno, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(28, 28, 28))))
+                            .addGroup(jPanel4Layout.createSequentialGroup()
+                                .addGap(67, 67, 67)
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 430, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtDOsis, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lbldosis, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(lbldosis, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lblIdOculto))
                 .addGap(9, 9, 9)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -339,6 +362,11 @@ public class ControlVacu extends javax.swing.JPanel {
         btnRegresar.setText("Regresar");
         btnRegresar.setToolTipText("NO CAMBIAR");
         btnRegresar.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        btnRegresar.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                btnRegresarMouseClicked(evt);
+            }
+        });
         btnRegresar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnRegresarActionPerformed(evt);
@@ -456,11 +484,32 @@ public class ControlVacu extends javax.swing.JPanel {
     }//GEN-LAST:event_btnEliminarMouseClicked
 
     private void btnBuscarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBuscarMouseClicked
-conexion Base = new conexion();
-            bdControlvacu Db = new bdControlvacu(Base);
-
+        int idSeleccionado = obtenerIdDeFilaSeleccionada(jTable1);
+        if (idSeleccionado != -1) {
+            txtDOsis.setVisible(true);
+        lbldosis.setVisible(true);
+        jDateChooser1.setVisible(true);
+        lblfecha.setVisible(true);
+        cmbVacunas.setVisible(true);
+        lblvacu.setVisible(true);
+        cmbMascota.setVisible(true);
+        lblmasco1.setVisible(true);
+        btnBuscar.setVisible(false);
+        btnEditar.setVisible(true);
+        btnEliminar.setVisible(true);
+        conexion Base = new conexion();
+        bdControlvacu masDb = new bdControlvacu(Base);
         
-        Db.cargarControlVacunaPorCedula(txtdueno.getText().trim(), jTable1);
+        masDb.cargarDatosPorId(idSeleccionado, txtDOsis, jDateChooser1, cmbVacunas, cmbMascota, txtdueno);
+        
+        
+        
+        
+        
+        } 
+        
+        
+        
                 
 
     }//GEN-LAST:event_btnBuscarMouseClicked
@@ -828,7 +877,127 @@ private void resetCampos() {
         }
     }
     }//GEN-LAST:event_txtduenoKeyReleased
-private void Mostrarpanelcrud(JPanel p) {
+
+    private void btnBuscarMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBuscarMouseEntered
+        
+    }//GEN-LAST:event_btnBuscarMouseEntered
+
+    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+        int idSeleccionado = obtenerIdDeFilaSeleccionada(jTable1);
+        if (idSeleccionado != -1) {
+        } else {
+            // Manejar el caso en que no se seleccionó ninguna fila o hubo un error
+        }
+    }//GEN-LAST:event_jTable1MouseClicked
+
+    private void btnRegresarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnRegresarMouseClicked
+        btnGuardar.setVisible(false);
+        btnEliminar.setVisible(false);
+        btnEditar.setVisible(false);
+        btnBuscar.setVisible(true);
+        lbldueno.setVisible(true);
+        txtdueno.setVisible(true);
+        lbldosis.setVisible(false);
+        lblmasco1.setVisible(true);
+        cmbMascota.setVisible(true);
+        txtDOsis.setVisible(false);
+        lblfecha.setVisible(false);
+        jDateChooser1.setVisible(false);
+        lblvacu.setVisible(false);
+        cmbVacunas.setVisible(false);
+        cmbMascota.setVisible(false);
+        lblmasco1.setVisible(false);
+      
+    }//GEN-LAST:event_btnRegresarMouseClicked
+
+    private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
+ try {
+        // Obtener el ID desde el label oculto
+        int id = Integer.parseInt(lblIdOculto.getText());
+
+        if (id != -1) { // Verificamos que el ID sea válido
+            // Obtener la dosis desde el JTextField
+            String dosis = txtDOsis.getText().trim();
+            if (dosis.isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Por favor, ingrese la dosis.");
+                return;
+            }
+
+            // Obtener la fecha desde el JDateChooser
+            Date fecha = jDateChooser1.getDate();
+            if (fecha == null) {
+                JOptionPane.showMessageDialog(null, "Por favor, seleccione una fecha.");
+                return;
+            }
+
+            // Obtener el nombre de la vacuna desde el JComboBox
+            String vacuna = (String) cmbVacunas.getSelectedItem();
+            if (vacuna == null || vacuna.isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Por favor, seleccione una vacuna.");
+                return;
+            }
+
+            // Obtener la cédula del dueño desde el JTextField
+            String cedulaDueno = txtdueno.getText().trim();
+            if (cedulaDueno.isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Por favor, ingrese la cédula del dueño.");
+                return;
+            }
+
+            // Crear la instancia del objeto que maneja la base de datos
+            bdControlvacu bd = new bdControlvacu();
+
+            // Llamar al método editarDatosPorId con los parámetros correctos
+            boolean resultado = bd.editarDatosPorId(id, dosis, fecha, vacuna, cedulaDueno);
+            if (resultado) {
+                JOptionPane.showMessageDialog(null, "Datos editados correctamente.");
+            } else {
+                JOptionPane.showMessageDialog(null, "Error al editar los datos.");
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Seleccione un registro válido para editar.");
+        }
+    } catch (NumberFormatException e) {
+        JOptionPane.showMessageDialog(null, "Error al obtener los datos, verifique los valores.");
+        e.printStackTrace();
+    } catch (Exception e) {
+        JOptionPane.showMessageDialog(null, "Ocurrió un error inesperado.");
+        e.printStackTrace();
+    }
+
+    }//GEN-LAST:event_btnEditarActionPerformed
+
+    
+    
+    public int obtenerIdDeFilaSeleccionada(JTable table) {
+    // Obtener el índice de la fila seleccionada
+    int rowIndex = table.getSelectedRow();
+    
+    // Verificar si se ha seleccionado una fila
+    if (rowIndex != -1) {
+        // Obtener el valor de la columna "ID" (supongamos que es la primera columna)
+        // Cambiar el índice de columna si "ID" no está en la primera posición (índice 0)
+        Object idValue = table.getValueAt(rowIndex, 0); // 0 es el índice de la columna "ID"
+        lblIdOculto.setText(idValue.toString());
+        System.out.println("id valorsito: "+ idValue);
+        
+        // Verificar si el valor de la columna "ID" es de tipo Integer
+        if (idValue instanceof Integer) {
+            return (Integer) idValue;
+        } else {
+            // Si el tipo no es Integer, convertirlo o manejar el error
+            JOptionPane.showMessageDialog(null, "El valor de la columna ID no es un número entero.");
+            return -1; // Valor de error
+        }
+    } else {
+        JOptionPane.showMessageDialog(null, "Seleccione una fila en la Tabla");
+        return -1; // Valor de error
+    }
+}
+
+    
+    
+    private void Mostrarpanelcrud(JPanel p) {
         p.setSize(700, 460);
         p.setLocation(0, 0);
         Menu.PanelPrincipal.removeAll();
@@ -855,6 +1024,7 @@ private void Mostrarpanelcrud(JPanel p) {
     private javax.swing.JPanel jPanel6;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
+    private javax.swing.JLabel lblIdOculto;
     private javax.swing.JLabel lbldosis;
     private javax.swing.JLabel lbldueno;
     private javax.swing.JLabel lblfecha;
