@@ -11,6 +11,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.JComboBox;
+import javax.swing.JTextField;
 import rojeru_san.RSMTextFull;
 
 public class bdControlvacu extends Control_Vacunas {
@@ -31,6 +32,10 @@ public class bdControlvacu extends Control_Vacunas {
     public bdControlvacu(int DOSIS, Date FECHA, String ID_VACUNA, String ID_MASCOTA) {
         super(DOSIS, FECHA, ID_VACUNA, ID_MASCOTA);
     }
+
+  
+
+    
 
     public void INSERTAR(int DOSIS, Date FECHA, String ID_VACUNA, String ID_MASCOTA) {
         String SQL = "INSERT INTO CONTROLVACUNA (DOSIS, FECHA, ID_VACUNA, ID_MASCOTA) VALUES (?, ?, ?, ?)";
@@ -187,24 +192,8 @@ public void eliminar(String ID) {
         e.printStackTrace();
     }
 }
-public boolean verificarControlVacuna(String ID) {
-    String sql = "SELECT COUNT(*) FROM CONTROLVACUNA WHERE ID = ?";
-    try (Connection connection = Base.conectar();
-         PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
 
-        preparedStatement.setString(1, ID);
-        ResultSet resultSet = preparedStatement.executeQuery();
 
-        if (resultSet.next()) {
-            int count = resultSet.getInt(1);
-            return count > 0;
-        }
-    } catch (SQLException e) {
-        JOptionPane.showMessageDialog(null, "Error al verificar el control de vacuna: " + e.getMessage());
-        e.printStackTrace();
-    }
-    return false;
-}
 public void editarControlVacuna(String idControlVacuna, int dosis, Date fecha, String idVacuna, String idMascota) {
 
     String sql = "UPDATE CONTROLVACUNA SET DOSIS = ?, FECHA = ?, ID_VACUNA = ?, ID_MASCOTA = ? WHERE ID = ?";
@@ -304,56 +293,241 @@ private boolean cargarOpcionesComboBox(JComboBox<String> comboBox, String tabla,
     return cargado;
 }
 
+public void llenarComboBoxConIdYNombre(JComboBox<String> comboBox, String cedula) {
+    // Consulta SQL para obtener ID y nombre de mascotas asociadas a la cédula del dueño
+    String sqlMascotas = "SELECT m.ID, INITCAP(m.NOMBRE) AS NOMBRE_MASCOTA " +
+                         "FROM MASCOTA m " +
+                         "WHERE m.CEDULA_DUENO = ?";
 
-private void cargarOpcionesVacunas(JComboBox<String> cmbVacunas) {
-    String sqlVacunas = "SELECT ID, NOMBRE FROM VACUNA";
-    
     try (Connection connection = Base.conectar();
-         PreparedStatement preparedStatement = connection.prepareStatement(sqlVacunas);
-         ResultSet rs = preparedStatement.executeQuery()) {
+         PreparedStatement preparedStatementMascotas = connection.prepareStatement(sqlMascotas)) {
 
-        cmbVacunas.removeAllItems(); 
+        // Establecer el parámetro de la consulta (cédula del dueño)
+        preparedStatementMascotas.setString(1, cedula);
 
-        while (rs.next()) {
-            String id = rs.getString("ID");
-            String nombre = rs.getString("NOMBRE");
-            cmbVacunas.addItem(id + " - " + nombre); 
+        try (ResultSet resultSetMascotas = preparedStatementMascotas.executeQuery()) {
+            // Limpiar el comboBox antes de llenarlo
+            comboBox.removeAllItems();
+
+            boolean hayMascotas = false; // Variable para verificar si hay mascotas
+
+            // Llenar el comboBox con los resultados (ID y Nombre)
+            while (resultSetMascotas.next()) {
+                hayMascotas = true; // Si hay registros, cambiar el estado
+                int idMascota = resultSetMascotas.getInt("ID");
+                String nombreMascota = resultSetMascotas.getString("NOMBRE_MASCOTA");
+                comboBox.addItem(idMascota + " - " + nombreMascota);
+            }
+
+            // Si no hay mascotas, agregar el mensaje "No hay mascotas"
+            if (!hayMascotas) {
+                comboBox.addItem("No hay mascotas");
+            }
         }
     } catch (SQLException e) {
-        JOptionPane.showMessageDialog(null, "Error al cargar las opciones de vacunas: " + e.getMessage());
+        JOptionPane.showMessageDialog(null, "Error al llenar el comboBox: " + e.getMessage());
+        e.printStackTrace();
+    }
+}
+public void llenarComboBoxMascotasPorDueño(JComboBox<String> comboBox, String cedula) {
+    String sql = "SELECT m.ID, INITCAP(m.NOMBRE) AS NOMBRE_MASCOTA FROM MASCOTA m WHERE m.CEDULA_DUENO = ?";
+    try (Connection connection = Base.conectar();
+         PreparedStatement ps = connection.prepareStatement(sql)) {
+        ps.setString(1, cedula);
+
+        try (ResultSet rs = ps.executeQuery()) {
+            comboBox.removeAllItems(); // Limpiar el comboBox antes de llenarlo
+
+            boolean hayMascotas = false;
+
+            while (rs.next()) {
+                hayMascotas = true;
+                int idMascota = rs.getInt("ID");
+                String nombreMascota = rs.getString("NOMBRE_MASCOTA");
+                comboBox.addItem(idMascota + " - " + nombreMascota); // Cargar ID y nombre
+            }
+
+            // Si no hay mascotas, mostrar un mensaje en el comboBox
+            if (!hayMascotas) {
+                comboBox.addItem("No hay mascotas");
+            }
+        }
+    } catch (SQLException e) {
+        JOptionPane.showMessageDialog(null, "Error al llenar el comboBox: " + e.getMessage());
         e.printStackTrace();
     }
 }
 
-private void cargarOpcionesMascotas(JComboBox<String> cmbMascota) {
-    String sqlMascotas = "SELECT ID, NOMBRE FROM MASCOTA";
 
-    try (Connection connection = Base.conectar();
-         PreparedStatement preparedStatement = connection.prepareStatement(sqlMascotas);
-         ResultSet rs = preparedStatement.executeQuery()) {
 
-        cmbMascota.removeAllItems(); 
 
-        while (rs.next()) {
-            String id = rs.getString("ID");
-            String nombre = rs.getString("NOMBRE");
-            cmbMascota.addItem(id + " - " + nombre); 
+
+
+
+public void mostrarVacunasMascotasYDuenoPorCedula(JTable tabla, String cedulaDueno) {
+    Connection connection = Base.conectar(); // Usar tu clase de conexión
+    if (connection == null) {
+        System.out.println("No se pudo establecer la conexión a la base de datos.");
+        return; // Salir del método si no hay conexión
+    }
+
+    // Consulta SQL con filtro por cédula del dueño
+    String query = "SELECT CV.ID AS ID_VACUNA, " +
+                   "CV.DOSIS AS DOSIS, " +
+                   "M.NOMBRE AS NOMBRE_MASCOTA, " +
+                   "M.CEDULA_DUENO AS CEDULA_DUENO, " +
+                   "D.NOMBRE || ' ' || D.APELLIDO AS NOMBRE_COMPLETO_DUENO " +
+                   "FROM CONTROLVACUNA CV " +
+                   "JOIN MASCOTA M ON CV.ID_MASCOTA = M.ID " +
+                   "JOIN DUENO D ON M.CEDULA_DUENO = D.CEDULA " +
+                   "WHERE TRIM(UPPER(D.CEDULA)) = TRIM(UPPER(?)) " +
+                   "ORDER BY D.NOMBRE, D.APELLIDO, M.NOMBRE";
+
+    DefaultTableModel model = new DefaultTableModel();
+    model.addColumn("ID Vacuna");
+    model.addColumn("Dosis");
+    model.addColumn("Nombre Mascota");
+    model.addColumn("Cédula Dueño");
+    model.addColumn("Nombre Completo Dueño");
+
+    try (PreparedStatement statement = connection.prepareStatement(query)) {
+        // Establecer el parámetro de la cédula
+        statement.setString(1, cedulaDueno);
+
+        // Depuración: Verifica los valores
+        System.out.println("Ejecutando consulta: " + query);
+        System.out.println("Cédula proporcionada: " + cedulaDueno);
+
+        ResultSet resultSet = statement.executeQuery();
+
+        boolean hasResults = false;
+        while (resultSet.next()) {
+            hasResults = true;
+
+            int idVacuna = resultSet.getInt("ID_VACUNA");
+            String dosis = resultSet.getString("DOSIS");
+            String nombreMascota = resultSet.getString("NOMBRE_MASCOTA");
+            String cedulaDuenoResult = resultSet.getString("CEDULA_DUENO");
+            String nombreCompletoDueno = resultSet.getString("NOMBRE_COMPLETO_DUENO");
+
+            model.addRow(new Object[]{idVacuna, dosis, nombreMascota, cedulaDuenoResult, nombreCompletoDueno});
         }
+
+        if (!hasResults) {
+            System.out.println("No se encontraron resultados para la cédula: " + cedulaDueno);
+        }
+
+        // Asignar el modelo a la tabla
+        tabla.setModel(model);
     } catch (SQLException e) {
-        JOptionPane.showMessageDialog(null, "Error al cargar las opciones de mascotas: " + e.getMessage());
+        System.out.println("Error al ejecutar la consulta.");
         e.printStackTrace();
+    } finally {
+        try {
+            if (connection != null) {
+                connection.close(); // Cerrar la conexión
+                System.out.println("Conexión cerrada.");
+            }
+        } catch (SQLException e) {
+            System.out.println("Error al cerrar la conexión.");
+            e.printStackTrace();
+        }
     }
 }
 
-private void setComboBoxSelection(JComboBox<String> comboBox, String id) {
-    for (int i = 0; i < comboBox.getItemCount(); i++) {
-        String item = comboBox.getItemAt(i);
-        if (item.startsWith(id + " - ")) { 
-            break;
-        }
+
+public static void bloquearFechaMaxima(JDateChooser dateChooser) {
+        // Obtener la fecha actual
+        Date fechaActual = new Date();
+
+        // Establecer la fecha máxima como la fecha actual
+        dateChooser.setMaxSelectableDate(fechaActual);
     }
 
 
 
 
-}}
+
+public boolean cargarControlVacunaPorCedula(String cedula, JTable table) {
+    // Verificar si la tabla es nula
+    if (table == null) {
+        JOptionPane.showMessageDialog(null, "Error: La tabla no está inicializada.");
+        return false;
+    }
+
+    String query = "SELECT CV.ID, CV.DOSIS, CV.FECHA, V.NOMBRE AS VACUNA, M.NOMBRE AS NOMBRE_MASCOTA, D.CEDULA " +
+                   "FROM CONTROLVACUNA CV " +
+                   "JOIN MASCOTA M ON CV.ID_MASCOTA = M.ID " +
+                   "JOIN VACUNA V ON CV.ID_VACUNA = V.ID " +
+                   "JOIN DUENO D ON M.CEDULA_DUENO = D.CEDULA " +
+                   "WHERE TRIM(UPPER(D.CEDULA)) = TRIM(UPPER(?))";
+
+    try (Connection conn = Base.conectarBD()) {
+        if (conn == null) {
+            JOptionPane.showMessageDialog(null, "No se pudo establecer la conexión a la base de datos.");
+            return false;
+        }
+
+        try (PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setString(1, cedula); // Establecer la cédula en el query
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                // Crear el modelo de tabla con las columnas necesarias
+                DefaultTableModel model = new DefaultTableModel();
+                model.addColumn("ID Control"); // Columna ID
+                model.addColumn("DOSIS");
+                model.addColumn("FECHA");
+                model.addColumn("VACUNA");
+                model.addColumn("NOMBRE MASCOTA");
+                model.addColumn("CEDULA");
+
+                // Llenar la tabla con los datos
+                boolean foundData = false;
+                while (rs.next()) {
+                    int id = rs.getInt("ID"); // Obtener el ID de la tabla CONTROLVACUNA
+                    String dosis = rs.getString("DOSIS");
+                    Date fecha = rs.getDate("FECHA");
+                    String vacuna = rs.getString("VACUNA");
+                    String nombreMascota = rs.getString("NOMBRE_MASCOTA");
+                    String cedulaDueno = rs.getString("CEDULA");
+
+                    // Agregar los datos a la tabla
+                    model.addRow(new Object[]{id, dosis, fecha, vacuna, nombreMascota, cedulaDueno});
+                    foundData = true;
+                }
+
+                // Asignar el modelo de tabla a la JTable
+                if (foundData) {
+                    table.setModel(model);
+                    return true;
+                } else {
+                    JOptionPane.showMessageDialog(null, "No se encontraron registros para la cédula ingresada.");
+                    return false;
+                }
+            } catch (SQLException e) {
+                JOptionPane.showMessageDialog(null, "Error al ejecutar la consulta.");
+                e.printStackTrace();
+                return false;
+            }
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(null, "Error al preparar la consulta.");
+            e.printStackTrace();
+            return false;
+        }
+    } catch (SQLException e) {
+        JOptionPane.showMessageDialog(null, "Error al conectar a la base de datos.");
+        e.printStackTrace();
+        return false;
+    }
+}
+
+
+
+
+
+
+
+
+}
+
+

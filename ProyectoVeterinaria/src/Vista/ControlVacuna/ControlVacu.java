@@ -6,6 +6,7 @@ import Modelo.conexion;
 import Vista.menu.Menu;
 import com.toedter.calendar.JDateChooser;
 import java.awt.BorderLayout;
+import java.awt.event.KeyEvent;
 import java.util.Date;
 import javax.accessibility.AccessibleContext;
 import javax.swing.JButton;
@@ -21,6 +22,7 @@ import rojeru_san.RSMTextFull;
 
 
 public class ControlVacu extends javax.swing.JPanel {
+   
 
     public JComboBox<String> getCmbVacunas() {
         return cmbVacunas;
@@ -40,7 +42,9 @@ public class ControlVacu extends javax.swing.JPanel {
 
    
     public ControlVacu() {
+        
         initComponents();
+      
                 int opcion = JOptionPane.showOptionDialog(
             null, 
             "¿  El Control de la Vacuna ya se encuentra registrado en el sistema?", 
@@ -57,14 +61,14 @@ public class ControlVacu extends javax.swing.JPanel {
         btnEliminar.setVisible(false);
         btnEditar.setVisible(false);
         btnBuscar.setVisible(true);
-        lblid.setVisible(true);
-        cmbId.setVisible(true);
+        lbldueno.setVisible(true);
+        txtdueno.setVisible(true);
         lbldosis.setVisible(false);
+        lblmasco1.setVisible(true);
+        cmbMascota.setVisible(true);
         txtDOsis.setVisible(false);
         lblfecha.setVisible(false);
         jDateChooser1.setVisible(false);
-        lblmasco.setVisible(false);
-        cmbMascota.setVisible(false);
         lblvacu.setVisible(false);
         cmbVacunas.setVisible(false);
       
@@ -74,16 +78,22 @@ public class ControlVacu extends javax.swing.JPanel {
         btnEliminar.setVisible(false);
         btnEditar.setVisible(false);
         btnBuscar.setVisible(false);
-        lblid.setVisible(false);
-        cmbId.setVisible(false);
+        lbldueno.setVisible(false);
+        txtdueno.setVisible(true);
         lbldosis.setVisible(true);
         txtDOsis.setVisible(true);
         lblfecha.setVisible(true);
         jDateChooser1.setVisible(true);
-        lblmasco.setVisible(true);
+        lbldueno.setVisible(true);
         cmbMascota.setVisible(true);
         lblvacu.setVisible(true);
         cmbVacunas.setVisible(true);
+        conexion Base = new conexion();
+        bdControlvacu masDb = new bdControlvacu(Base);
+        masDb.ComboboxVacuna(cmbVacunas);
+        jTable1.setVisible(false);
+        jDateChooser1.setDate(new Date());
+        bdControlvacu.bloquearFechaMaxima(jDateChooser1);
         
 
     } else {
@@ -109,13 +119,15 @@ public class ControlVacu extends javax.swing.JPanel {
         lbldosis = new javax.swing.JLabel();
         txtDOsis = new rojeru_san.RSMTextFull();
         jDateChooser1 = new com.toedter.calendar.JDateChooser();
-        lblmasco = new javax.swing.JLabel();
+        lbldueno = new javax.swing.JLabel();
         cmbMascota = new javax.swing.JComboBox<>();
         lblfecha = new javax.swing.JLabel();
         lblvacu = new javax.swing.JLabel();
         cmbVacunas = new javax.swing.JComboBox<>();
-        lblid = new javax.swing.JLabel();
-        cmbId = new javax.swing.JComboBox<>();
+        lblmasco1 = new javax.swing.JLabel();
+        txtdueno = new javax.swing.JTextField();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
         btnRegresar = new javax.swing.JButton();
         btnSalir = new javax.swing.JButton();
 
@@ -148,7 +160,7 @@ public class ControlVacu extends javax.swing.JPanel {
         jLabel2.setFont(new java.awt.Font("Segoe Print", 0, 30)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(79, 107, 155));
         jLabel2.setText("Registro del Control de  Vacunas");
-        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 10, 510, 40));
+        jPanel1.add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(100, 0, 510, 40));
 
         jPanel5.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -207,9 +219,9 @@ public class ControlVacu extends javax.swing.JPanel {
         txtDOsis.setFont(new java.awt.Font("Roboto Light", 1, 12)); // NOI18N
         txtDOsis.setPlaceholder("");
 
-        lblmasco.setFont(new java.awt.Font("Roboto Medium", 1, 16)); // NOI18N
-        lblmasco.setForeground(new java.awt.Color(79, 107, 155));
-        lblmasco.setText("Mascota:");
+        lbldueno.setFont(new java.awt.Font("Roboto Medium", 1, 16)); // NOI18N
+        lbldueno.setForeground(new java.awt.Color(79, 107, 155));
+        lbldueno.setText("Cedula Del Dueño:");
 
         cmbMascota.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Sin registros" }));
         cmbMascota.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -233,59 +245,74 @@ public class ControlVacu extends javax.swing.JPanel {
             }
         });
 
-        lblid.setFont(new java.awt.Font("Roboto Medium", 1, 16)); // NOI18N
-        lblid.setForeground(new java.awt.Color(79, 107, 155));
-        lblid.setText("Id:");
+        lblmasco1.setFont(new java.awt.Font("Roboto Medium", 1, 16)); // NOI18N
+        lblmasco1.setForeground(new java.awt.Color(79, 107, 155));
+        lblmasco1.setText("Mascota:");
 
-        cmbId.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Sin registros" }));
-        cmbId.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                cmbIdMouseClicked(evt);
+        txtdueno.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyReleased(java.awt.event.KeyEvent evt) {
+                txtduenoKeyReleased(evt);
             }
         });
+
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane1.setViewportView(jTable1);
 
         javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
         jPanel4.setLayout(jPanel4Layout);
         jPanel4Layout.setHorizontalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                .addContainerGap(63, Short.MAX_VALUE)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+            .addGroup(jPanel4Layout.createSequentialGroup()
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(lblmasco, javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(lblvacu, javax.swing.GroupLayout.Alignment.TRAILING))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(cmbMascota, javax.swing.GroupLayout.PREFERRED_SIZE, 257, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(cmbVacunas, javax.swing.GroupLayout.PREFERRED_SIZE, 256, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(jPanel4Layout.createSequentialGroup()
+                                .addGap(99, 99, 99)
+                                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(lbldosis)
+                                    .addComponent(lblfecha, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(lblvacu)
+                                .addGap(11, 11, 11)))
+                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(jDateChooser1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(cmbVacunas, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(txtDOsis, javax.swing.GroupLayout.DEFAULT_SIZE, 258, Short.MAX_VALUE)))
                     .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addContainerGap()
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(lblfecha, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(lbldosis)
-                            .addComponent(lblid))
+                            .addComponent(lblmasco1)
+                            .addComponent(lbldueno))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addComponent(txtDOsis, javax.swing.GroupLayout.DEFAULT_SIZE, 257, Short.MAX_VALUE)
-                                .addComponent(jDateChooser1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                            .addComponent(cmbId, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(1, 1, 1)))
-                .addGap(19, 19, 19))
+                            .addComponent(cmbMascota, javax.swing.GroupLayout.PREFERRED_SIZE, 271, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
+                                .addComponent(txtdueno, javax.swing.GroupLayout.PREFERRED_SIZE, 237, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(28, 28, 28))))
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addGap(67, 67, 67)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 430, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(130, Short.MAX_VALUE))
         );
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel4Layout.createSequentialGroup()
-                .addGap(15, 15, 15)
-                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(lbldosis, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(jPanel4Layout.createSequentialGroup()
-                        .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(lblid, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(cmbId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(txtDOsis, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(18, 18, 18)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtDOsis, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(lbldosis, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(9, 9, 9)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblfecha, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -295,9 +322,16 @@ public class ControlVacu extends javax.swing.JPanel {
                     .addComponent(lblvacu, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(cmbMascota, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(lblmasco, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(27, Short.MAX_VALUE))
+                    .addComponent(lbldueno, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtdueno, javax.swing.GroupLayout.PREFERRED_SIZE, 31, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(lblmasco1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel4Layout.createSequentialGroup()
+                        .addComponent(cmbMascota)
+                        .addGap(6, 6, 6)))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(32, Short.MAX_VALUE))
         );
 
         btnRegresar.setBackground(new java.awt.Color(183, 224, 210));
@@ -317,33 +351,30 @@ public class ControlVacu extends javax.swing.JPanel {
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel6Layout.createSequentialGroup()
                 .addGap(24, 24, 24)
-                .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel6Layout.createSequentialGroup()
-                        .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnRegresar))
-                    .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(27, Short.MAX_VALUE))
+                .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(btnRegresar)
+                .addContainerGap(118, Short.MAX_VALUE))
+            .addComponent(jPanel4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         jPanel6Layout.setVerticalGroup(
             jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel6Layout.createSequentialGroup()
-                .addGap(15, 15, 15)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnBuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnEditar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnGuardar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnRegresar))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 20, Short.MAX_VALUE)
-                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(16, 16, 16))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jPanel4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
@@ -351,19 +382,19 @@ public class ControlVacu extends javax.swing.JPanel {
         jPanel5Layout.setHorizontalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel5Layout.createSequentialGroup()
-                .addGap(54, 54, 54)
+                .addGap(17, 17, 17)
                 .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(88, Short.MAX_VALUE))
+                .addContainerGap(34, Short.MAX_VALUE))
         );
         jPanel5Layout.setVerticalGroup(
             jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel5Layout.createSequentialGroup()
-                .addGap(16, 16, 16)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel5Layout.createSequentialGroup()
+                .addContainerGap(14, Short.MAX_VALUE)
                 .addComponent(jPanel6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(35, Short.MAX_VALUE))
+                .addGap(15, 15, 15))
         );
 
-        jPanel1.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 50, 680, 410));
+        jPanel1.add(jPanel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 50, 680, 430));
 
         btnSalir.setBackground(new java.awt.Color(183, 224, 210));
         btnSalir.setForeground(new java.awt.Color(78, 108, 152));
@@ -389,108 +420,104 @@ public class ControlVacu extends javax.swing.JPanel {
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 470, Short.MAX_VALUE)
+            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, 489, Short.MAX_VALUE)
         );
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnEliminarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEliminarMouseClicked
-String idControlVacuna = cmbId.getSelectedItem().toString().trim();
-
-    if (idControlVacuna.isEmpty() || idControlVacuna.equals("No hay controles de vacunas registrados")) {
-        JOptionPane.showMessageDialog(null, "Por favor, seleccione un control de vacuna válido");
-        return;
-    }
-
-    int opcion = JOptionPane.showOptionDialog(
-            null,
-            "¿Está seguro de eliminar este control de vacuna?",
-            "Eliminar control de vacuna",
-            JOptionPane.YES_NO_OPTION,
-            JOptionPane.QUESTION_MESSAGE,
-            null,
-            new Object[] {"Sí", "No"},
-            "No");
-
-    if (opcion == JOptionPane.YES_OPTION) {
-        conexion Base = new conexion();
-        bdControlvacu controlVacuna = new bdControlvacu(Base);
-
-        // Eliminar el control de vacuna
-        controlVacuna.eliminar(idControlVacuna);
-    } else {
-        JOptionPane.showMessageDialog(null, "Operación de eliminación cancelada.");
-    }
+//String idControlVacuna = cmbId.getSelectedItem().toString().trim();
+//
+//    if (idControlVacuna.isEmpty() || idControlVacuna.equals("No hay controles de vacunas registrados")) {
+//        JOptionPane.showMessageDialog(null, "Por favor, seleccione un control de vacuna válido");
+//        return;
+//    }
+//
+//    int opcion = JOptionPane.showOptionDialog(
+//            null,
+//            "¿Está seguro de eliminar este control de vacuna?",
+//            "Eliminar control de vacuna",
+//            JOptionPane.YES_NO_OPTION,
+//            JOptionPane.QUESTION_MESSAGE,
+//            null,
+//            new Object[] {"Sí", "No"},
+//            "No");
+//
+//    if (opcion == JOptionPane.YES_OPTION) {
+//        conexion Base = new conexion();
+//        bdControlvacu controlVacuna = new bdControlvacu(Base);
+//
+//        // Eliminar el control de vacuna
+//        controlVacuna.eliminar(idControlVacuna);
+//    } else {
+//        JOptionPane.showMessageDialog(null, "Operación de eliminación cancelada.");
+//    }
 
 
     }//GEN-LAST:event_btnEliminarMouseClicked
 
     private void btnBuscarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnBuscarMouseClicked
-String idControlVacuna = cmbId.getSelectedItem().toString().trim();
+conexion Base = new conexion();
+            bdControlvacu Db = new bdControlvacu(Base);
 
-    if (idControlVacuna.isEmpty() || idControlVacuna.equals("No hay controles de vacunas registrados")) {
-        JOptionPane.showMessageDialog(null, "Por favor, seleccione un control de vacuna válido");
-        return;
-    }
-
-    conexion Base = new conexion();
-    bdControlvacu controlVacuna = new bdControlvacu(Base);
-
-    if (controlVacuna.verificarControlVacuna(idControlVacuna)) {
-        // Cargar los datos en los campos correspondientes
-        controlVacuna.cargarControlVacuna(idControlVacuna, cmbVacunas, cmbMascota, txtDOsis, jDateChooser1);
         
-        // Hacer visibles los botones para editar y eliminar
-        btnEditar.setVisible(true);
-        btnEliminar.setVisible(true);
-        // Hacer visibles los campos de texto para modificar
-        lbldosis.setVisible(true);
-        lblvacu.setVisible(true);
-        lblmasco.setVisible(true);
-        lblfecha.setVisible(true);
-        txtDOsis.setVisible(true);
-        cmbVacunas.setVisible(true);
-        cmbMascota.setVisible(true);
-        jDateChooser1.setVisible(true);
-        btnBuscar.setVisible(false);
-        lblid.setVisible(false);
-        cmbId.setVisible(false);
-        
-    } else {
-        JOptionPane.showMessageDialog(null, "Control de vacuna no encontrado");
-    }
+        Db.cargarControlVacunaPorCedula(txtdueno.getText().trim(), jTable1);
+                
+
     }//GEN-LAST:event_btnBuscarMouseClicked
 
+    
+    private boolean verificarCedulaValida(String cedula) {
+    if (cedula == null || cedula.trim().isEmpty()) {
+        return false;
+    }
+
+    cedula = cedula.trim();
+    if (!cedula.matches("\\d+")) {
+        return false;
+    }
+
+    // Verificar longitud (ejemplo: 10 caracteres)
+    if (cedula.length() != 10) {
+        return false;
+    }
+
+    return true;
+}
+
+    
+    
+    
     private void btnEditarMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnEditarMouseClicked
-String idControlVacuna = cmbId.getSelectedItem().toString().trim();
-    String dosisText = txtDOsis.getText().trim();
-    Date fecha = jDateChooser1.getDate();
-    String idVacuna = cmbVacunas.getSelectedItem().toString().split(" ")[0]; // Obtener el ID de la vacuna
-    String idMascota = cmbMascota.getSelectedItem().toString().split(" ")[0]; // Obtener el ID de la mascota
-
-    if (dosisText.isBlank() || fecha == null || idVacuna.isBlank() || idMascota.isBlank()) {
-        JOptionPane.showMessageDialog(null, "No dejar espacios en blanco ni fechas sin seleccionar");
-        return;
-    }
-
-    try {
-        int dosis = Integer.parseInt(dosisText); // Convertir dosis a número
-
-        // Validar si el control de vacuna existe
-        conexion Base = new conexion();
-        bdControlvacu controlVacuna = new bdControlvacu(Base);
-
-        if (controlVacuna.verificarControlVacuna(idControlVacuna)) {
-            // Editar el control de vacuna
-            controlVacuna.editarControlVacuna(idControlVacuna, dosis, fecha, idVacuna, idMascota);
-            resetCampos();
-        } else {
-            JOptionPane.showMessageDialog(null, "El control de vacuna no existe");
-        }
-    } catch (NumberFormatException e) {
-        JOptionPane.showMessageDialog(null, "La dosis debe ser un número válido");
-    } catch (Exception e) {
-        JOptionPane.showMessageDialog(null, "Error inesperado: " + e.getMessage());
-    }
+//String idControlVacuna = cmbId.getSelectedItem().toString().trim();
+//    String dosisText = txtDOsis.getText().trim();
+//    Date fecha = jDateChooser1.getDate();
+//    String idVacuna = cmbVacunas.getSelectedItem().toString().split(" ")[0]; // Obtener el ID de la vacuna
+//    String idMascota = cmbMascota.getSelectedItem().toString().split(" ")[0]; // Obtener el ID de la mascota
+//
+//    if (dosisText.isBlank() || fecha == null || idVacuna.isBlank() || idMascota.isBlank()) {
+//        JOptionPane.showMessageDialog(null, "No dejar espacios en blanco ni fechas sin seleccionar");
+//        return;
+//    }
+//
+//    try {
+//        int dosis = Integer.parseInt(dosisText); // Convertir dosis a número
+//
+//        // Validar si el control de vacuna existe
+//        conexion Base = new conexion();
+//        bdControlvacu controlVacuna = new bdControlvacu(Base);
+//
+//        if (controlVacuna.verificarControlVacuna(idControlVacuna)) {
+//            // Editar el control de vacuna
+//            controlVacuna.editarControlVacuna(idControlVacuna, dosis, fecha, idVacuna, idMascota);
+//            resetCampos();
+//        } else {
+//            JOptionPane.showMessageDialog(null, "El control de vacuna no existe");
+//        }
+//    } catch (NumberFormatException e) {
+//        JOptionPane.showMessageDialog(null, "La dosis debe ser un número válido");
+//    } catch (Exception e) {
+//        JOptionPane.showMessageDialog(null, "Error inesperado: " + e.getMessage());
+//    }
     }//GEN-LAST:event_btnEditarMouseClicked
 private void resetCampos() {
     // Limpiar los campos de texto
@@ -545,16 +572,10 @@ private void resetCampos() {
     }//GEN-LAST:event_cmbVacunasMouseClicked
 
     private void cmbMascotaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cmbMascotaMouseClicked
-        conexion Base = new conexion();
-        bdControlvacu masDb = new bdControlvacu(Base);
-        masDb.ComboboxMascota(cmbMascota);
+//        conexion Base = new conexion();
+//        bdControlvacu masDb = new bdControlvacu(Base);
+//        masDb.ComboboxMascota(cmbMascota);
     }//GEN-LAST:event_cmbMascotaMouseClicked
-
-    private void cmbIdMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cmbIdMouseClicked
-       conexion Base = new conexion();
-        bdControlvacu masDb = new bdControlvacu(Base);
-        masDb.ComboboxControlVacuna(cmbId);
-    }//GEN-LAST:event_cmbIdMouseClicked
 
     public RSButtonRiple getBtnBuscar() {
         return btnBuscar;
@@ -604,13 +625,7 @@ private void resetCampos() {
         this.btnSalir = btnSalir;
     }
 
-    public JComboBox<String> getCmbId() {
-        return cmbId;
-    }
-
-    public void setCmbId(JComboBox<String> cmbId) {
-        this.cmbId = cmbId;
-    }
+    
 
     public JDateChooser getjDateChooser1() {
         return jDateChooser1;
@@ -684,20 +699,14 @@ private void resetCampos() {
         this.lblfecha = lblfecha;
     }
 
-    public JLabel getLblid() {
-        return lblid;
-    }
-
-    public void setLblid(JLabel lblid) {
-        this.lblid = lblid;
-    }
+   
 
     public JLabel getLblmasco() {
-        return lblmasco;
+        return lbldueno;
     }
 
     public void setLblmasco(JLabel lblmasco) {
-        this.lblmasco = lblmasco;
+        this.lbldueno = lblmasco;
     }
 
     public JLabel getLblvacu() {
@@ -766,18 +775,59 @@ private void resetCampos() {
         // Hacer visibles los campos de texto para modificar
         lbldosis.setVisible(true);
         lblvacu.setVisible(true);
-        lblmasco.setVisible(true);
+        lbldueno.setVisible(true);
         lblfecha.setVisible(true);
         txtDOsis.setVisible(true);
         cmbVacunas.setVisible(true);
         cmbMascota.setVisible(true);
         jDateChooser1.setVisible(true);
         btnBuscar.setVisible(false);
-        lblid.setVisible(false);
-        cmbId.setVisible(false);
+       
         
     
     }//GEN-LAST:event_btnRegresarActionPerformed
+
+    private void cargarComboBoxMascotas(String cedula) {
+    // Crear la instancia de la conexión y de MascotaDb
+    conexion Base = new conexion(); // Clase conexión
+    bdControlvacu masDb = new bdControlvacu(Base); // Clase de operaciones con mascotas
+
+    // Llamar al método que llena el comboBox con las mascotas
+    masDb.llenarComboBoxMascotasPorDueño(cmbMascota, cedula);
+}
+    
+    
+    
+    
+    
+  
+    private void txtduenoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtduenoKeyReleased
+      char c = evt.getKeyChar();
+    // Verificar si el carácter ingresado no es un número o si es Backspace
+    if (!Character.isDigit(c) && evt.getKeyCode() != KeyEvent.VK_BACK_SPACE) {
+        evt.consume(); // Ignorar el evento si no es un número
+    } else {
+        // Obtener el texto actual del JTextField
+        String cedula = txtdueno.getText().trim();
+
+        // Verificar si la longitud es mayor o igual a 10 (asumiendo una cédula válida)
+        if (cedula.length() > 10) {
+            cargarComboBoxMascotas(cedula); // Llama al método para llenar el comboBox
+        } else {
+          // Actualizar la lista de mascotas
+                conexion Base = new conexion();
+                bdControlvacu cVac = new bdControlvacu(Base);
+                cVac.mostrarVacunasMascotasYDuenoPorCedula(jTable1, cedula);
+                cargarComboBoxMascotas(cedula); // Llama al método para llenar el comboBox
+                if (cedula.length()==10) {
+                    bdControlvacu Db = new bdControlvacu(Base);
+            Db.cargarControlVacunaPorCedula(txtdueno.getText().trim(), jTable1);
+                
+            }
+            
+        }
+    }
+    }//GEN-LAST:event_txtduenoKeyReleased
 private void Mostrarpanelcrud(JPanel p) {
         p.setSize(700, 460);
         p.setLocation(0, 0);
@@ -794,7 +844,6 @@ private void Mostrarpanelcrud(JPanel p) {
     private rojeru_san.RSButtonRiple btnGuardar;
     private javax.swing.JButton btnRegresar;
     private javax.swing.JButton btnSalir;
-    private javax.swing.JComboBox<String> cmbId;
     private javax.swing.JComboBox<String> cmbMascota;
     private javax.swing.JComboBox<String> cmbVacunas;
     private com.toedter.calendar.JDateChooser jDateChooser1;
@@ -804,12 +853,15 @@ private void Mostrarpanelcrud(JPanel p) {
     private javax.swing.JPanel jPanel4;
     private javax.swing.JPanel jPanel5;
     private javax.swing.JPanel jPanel6;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable jTable1;
     private javax.swing.JLabel lbldosis;
+    private javax.swing.JLabel lbldueno;
     private javax.swing.JLabel lblfecha;
-    private javax.swing.JLabel lblid;
-    private javax.swing.JLabel lblmasco;
+    private javax.swing.JLabel lblmasco1;
     private javax.swing.JLabel lblvacu;
     public static javax.swing.JPanel pnlLogo;
     private rojeru_san.RSMTextFull txtDOsis;
+    private javax.swing.JTextField txtdueno;
     // End of variables declaration//GEN-END:variables
 }
