@@ -94,9 +94,9 @@ public class TablaVeterinario extends javax.swing.JPanel {
         lblMASCOTAS.setForeground(new java.awt.Color(78, 108, 152));
         lblMASCOTAS.setText("VETERINARIO");
 
-        jPanel1.setBackground(new java.awt.Color(183, 224, 210));
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
 
-        pnlTabla.setBackground(new java.awt.Color(183, 224, 210));
+        pnlTabla.setBackground(new java.awt.Color(255, 255, 255));
         pnlTabla.setBorder(new javax.swing.border.LineBorder(new java.awt.Color(78, 108, 152), 1, true));
 
         tbLVeterinario.setBackground(new java.awt.Color(255, 255, 255));
@@ -121,17 +121,13 @@ public class TablaVeterinario extends javax.swing.JPanel {
         pnlTabla.setLayout(pnlTablaLayout);
         pnlTablaLayout.setHorizontalGroup(
             pnlTablaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(pnlTablaLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 500, Short.MAX_VALUE)
-                .addContainerGap())
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 500, Short.MAX_VALUE)
         );
         pnlTablaLayout.setVerticalGroup(
             pnlTablaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlTablaLayout.createSequentialGroup()
-                .addContainerGap()
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 318, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGap(0, 12, Short.MAX_VALUE))
         );
 
         jPanel1.add(pnlTabla);
