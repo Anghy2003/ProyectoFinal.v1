@@ -1,1 +1,0 @@
-1.-Para conectar la base de datos, pegar la carpeta BasedeDatos en el Disco local(C:) de su computador.
